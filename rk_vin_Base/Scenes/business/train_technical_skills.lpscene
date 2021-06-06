@@ -1,0 +1,120 @@
+WHAT: none
+WHERE: alcohol:business, bag:business, bakery:business, bar:business, beauty:business, beverages:business, bicycle:business, biergarten:business, books:business, butcher:business, cafe:business, car:business, chemist:business, cinema:business, clothes:business, coffee:business, computer:business, confectionery:business, convenience:business, copyshop:business, cosmestics:business, deli:business, doityourself:business, electronics:business, fast_food:business, florist:business, furniture:business, gift:business, greengrocer:business, hairdresser:business, hotel:business, ice_cream:business, jewellery:business, laundry:business, mobile_phone:business, motorcycle:business, musical_instrument:business, newsagent:business, nightclub:business, optician:business, outdoor:business, pet:business, pharmacy:business, photo:business, pub:business, restaurant:business, seafood:business, shoes:business, sports:business, sports_centre:business, stationery:business, supermarket:business, tea:business, theatre:business, tobacco:business, toys:business, variety_store:business, travel_agency:business
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+
+        last = Actor.getActorVar(rk_VBase_LastJobTraining)
+        daysSinceBirth = (Player:Age * 365) // get the current date 
+        NotYetWait = daysSinceBirth - last
+        newId = Actor.getID()
+        traningPrice = Random(300, 1000)
+        traningPriceLocal = traningPrice.convertToLocalCurrency()
+            
+        // If the player is dating someone we need to end the date, so we can check this NPCs stats as well
+        If CurrentCompanion.isValid()
+            Player::"<CurrentCompanion.Name>, I need to take care of my business. See you later!"
+            endDate()
+        EndIf
+        
+        If NotYetWait < 7 && last < daysSinceBirth
+        
+            timeToWait = 7 - NotYetWait
+            Player(Annoyed)::"<MainActor.Name> already had a job training this week. I will have to wait <timeToWait> days."
+            
+        ElseIf Actor:intelligence => 100
+            
+            Player(Annoyed)::"<MainActor.Name> already fully trained for the job. I will have to choose an another employee."
+            
+        Else
+
+            "I decided to meet with one of my employees to offer <Actor.him_or_her> a training in order to improve <Actor.his_or_her> technical skills."
+            "A job training will surely improves <Actor.Name>'s skills. Do I pay <traningPriceLocal> for <Actor.p> training?"
+            0:: "Yes!"
+            1:: "No, too expensive!"
+            2:: "No, I will train <Actor.him_or_her> myself!"
+                
+            If 0
+                
+                Actor.setActorVar(rk_VBase_LastJobTraining, daysSinceBirth) // remember last training
+                Actor.setActorVar(rk_VBase_JobEmployeeId, newId)
+                // Actor.setActorVar(rk_VBase_JobEmployeeLoc, IDCityLocation)
+                    
+                Actor.dress()
+                Actor.show(1)
+                    
+                Random
+                    Player(Serene)::"Listen, <Actor.Name> I want you to attend to a job training. Immediately!"
+                    Player(Serene)::"<Actor.Name> I just wanted to let you know that I am going to send you for a training to improve your technical skills. I called the taxi!"
+                    Player(Serene)::"How about improving your skills a little, my dear <Actor.Name>? It's time for a training!"
+                EndRandom
+                    
+                Random
+                    MainActor(Serene)::"Sure, thanks for the job training. I'm sure I will learn a lot!"
+                    MainActor(Serene)::"That very really cool to you. I really need to improve my technical skills!"
+                    MainActor(Serene)::"Cool, I love participating in a training. Thank you for inviting me!"
+                EndRandom
+
+                Actor:intelligence += intelligence*0.005
+                money -= traningPrice
+                Actor.hide()
+                Actor.saveAndDelete()
+            
+            ElseIf 2
+
+                Player(Serene)::"My dear <Actor.Name>, did you know that your technical skills are not satisfying, I have no choice to train you myself, that is why you are here."
+                Actor(Embarassed)::"Sorry boss, I will do everything to meet your expectations!"
+                "What training am I going to make <Actor.him_or_her> do?"
+                0::"Make <Actor.him_or_her> read work procedures"
+                1::isModEnabled(vin_Corruption)::"Offer <Actor.him_or_her> a sex training instead"
+                
+                If 0
+                    Player(Serene)::"<Actor.Name>, I want you to read the working procedures of our company, they will help you better understand your work."
+                    Actor(Serene)::"Ok boss, I'm doing it right away!"
+                    Player(Serene)::"I will stay next to you, if you have any questions ..."
+                    Actor:intelligence += intelligence*0.0025
+                    Actor.hide()
+                    Actor.saveAndDelete()
+                
+                ElseIf 1
+                
+                    Random
+                        Player(Flirty)::"Maybe you're too shy, if a little fuck can help you get out of your shyness, we can sort it out right away? Let's strip down babe!"
+                        Player(Flirty)::"Would you be more interested for a sex training, actually your skills are pretty good but I was curious if you would like to hang out with me!"
+                    EndRandom
+                    
+                    If Actor.isInterestedIn(Player) && Actor:arousal > 25
+                    
+                        Actor(Happy)::"Sure boss, I'm always willing for sex..."
+                        Player.strip()
+                        Actor.strip()
+                        "We stripped and I started caressing <Actor.him_or_her>..."
+                        Sex(Actor, Player)
+                        mood += 2
+                        passTime(0.5, 1)
+                        Actor:attractiontoplayer += 2
+                        Actor:rapportwithplayer += 2
+                        
+                    ElseIf Actor.isInterestedIn(Player)
+                    
+                        Actor(Happy)::"Sorry boss, I'm not interested..."
+                        Actor.hide()
+                    
+                    Else
+                        
+                        Actor(Angry)::"Sorry boss, I think you're going too far..."
+                        Actor:attractiontoplayer -= 2
+                        Actor:rapportwithplayer -= 2
+                        Actor.hide()
+                    
+                    EndIf
+                    
+                EndIf
+                
+            EndIf
+            
+        EndIf
+
+    SceneEnd()

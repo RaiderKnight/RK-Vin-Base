@@ -1,0 +1,197 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+
+    SceneStart()
+    
+        dressFormal()
+        Actor = generatePersonTemporary()
+        Rent = calculateRent()
+        RentConverted = Rent.convertToLocalCurrency(true)
+        "I decided to talk to one of the owners about taking over <Actor.his_or_her> business, I think it is worth it!"
+        Actor.show()
+        Actor.dress()
+        Actor.moveToPersonStand(Player, 50)
+        Actor.animate(socialize)
+        Player.animate(socialize)
+        Actor(Curious)::"Hi, what can I do for you my dear <Player.sir_or_lady>?"
+        Player(Curious)::"Hi, I just want to know if you're looking for someone to take over your business?"
+        
+        ownerrenewingC = Random(1, 3)
+        ownerrenewingC = ownerrenewingC.round()
+ 
+        // If the player is dating someone we need to end the date, so we can check this NPCs stats as well
+        If CurrentCompanion.isValid()
+            Player::"<CurrentCompanion.Name>, I need to make business. See you later!"
+            endDate()
+        EndIf
+        
+        If ownerrenewingC <= 2 
+            "The owner tell me that the rent of this property for commercial use is <RentConverted> per month, and the current tenant is not renewing. Do I lease it?"
+            0:: "Yes"
+            1:: "No"
+    
+            If 0
+        
+                Actor.animate(socialize)
+                Player.animate(socialize)
+                "I had a long discussion with the previous owner about taking over <Actor.his_or_her> business ... We came to an agreement and ... "
+                passTime(0.25, 0.5)
+                Player.animate(write)
+                "I signed the lease on the property and took over the business."
+                "What should I name this business?"
+                enterBusinessName()
+                startBusiness()
+                karma += 5
+                mood += 5
+            
+                If arousal > 25 && perversion > 50
+            
+                    "I'm so horny, do I ask <Actor.him_or_her> to fuck?"
+                    0::"Yes"
+                    1::"No"
+                
+                    If 0
+                
+                        "Before the owner leaves the building, I ask <Actor.him_or_her>... "
+                        Player(Flirty)::"Just before you leave, pretty <Actor.boy_or_girl>, would you like to celebrate this with sex?"
+                    
+                        If Actor.isInterestedIn(Player) && arousal > 15
+                        
+                            Actor(Happy)::"Sure yeah!"
+                            Player.strip()
+                            Actor.strip()
+                            "We stripped and I started caressing <Actor.him_or_her>..."
+                            Sex(Actor, Player)
+                            mood += 2
+                            passTime(0.5, 1)
+                    
+                        ElseIf Actor.isInterestedIn(Player)
+                    
+                            Actor(Happy)::"You're funny, but I'm not interested!"
+                    
+                        Else
+                    
+                            If Actor.isMale() && Player.isFemale()
+                        
+                                Actor(Angry)::"I will have to ask you to apologize my dear madam. It's not because you have the money to buy a business it mean you can buy my body like a gigolo ..."
+                                Actor(Angry)::"Secondly, you are really not my style...!"
+                                Player(Flirty)::"Are you gay or what? Don't be offended, it was just a question! Damn you're so prude!"
+                                Actor(Angry)::"Fuck off!"
+                        
+                            ElseIf Actor.isMale() && Player.isGay()
+                        
+                                Actor(Angry)::"I will have to ask you to apologize my dear sir. It's not because you have the money to buy a business it mean you can buy my body like a gigolo ..."
+                                Actor(Angry)::"Secondly, I'm not interested in men in any way dude!"
+                                Player(Flirty)::"Don't be offended, it was just a question! We would have had fun! You're so prude!"
+                                Actor(Angry)::"Fuck off!"
+                            
+                            ElseIf Actor.isFemale() && Player.isGay()
+                        
+                                Actor(Angry)::"I will have to ask you to apologize my dear girl. It's not because you have the money to buy a business it mean you can buy my body like a whore ..."
+                                Actor(Angry)::"Secondly, I'm not interested in women in any way!"
+                                Player(Flirty)::"Don't be offended, it was just a question! We would have had fun! You're so prude!"
+                                Actor(Angry)::"Fuck off!"
+                        
+                            ElseIf Actor.isFemale() && Player.isMale()
+                        
+                                Actor(Angry)::"I will have to ask you to apologize my dear sir. It's not because you have the money to buy a business it mean you can buy my body like a whore ..."
+                                Actor(Angry)::"Secondly, I'm not interested in you anyway!"
+                                Player(Flirty)::"Are you gay or what? Don't be offended, it was just a question! Damn you're so prude!"
+                                Actor(Angry)::"Fuck off!"
+                        
+                            Else
+                        
+                                Actor(Angry)::"I will have to ask you to apologize my dear. It's not because you have the money to buy a business it mean you can buy my body like a cake ..."
+                                Actor(Angry)::"Secondly, I'm not interested in you anyway!"
+                                Player(Flirty)::"Don't be offended, it was just a question! Damn you're so prude"
+                                Actor(Angry)::"Fuck off!"
+                        
+                            EndIf
+                        
+                        EndIf
+                
+                    EndIf
+            
+                EndIf
+            
+            Else
+            
+                If Actor.isInterestedIn(Player) && Actor:arousal > 25 && Actor:perversion > 50
+            
+                    "Before the owner leaves the building, <Actor.he_or_she> asked me... "
+                    Actor(Flirty)::"Just before I leave, pretty <Actor.boy_or_girl>, would you like to celebrate this with sex? I'm so horny!"
+                    0::"Yes"
+                    1::"No"
+                
+                    If 0
+
+                        Player(Happy)::"Sure yeah!"
+                        Player.strip()
+                        Actor.strip()
+                        "We stripped and I started caressing <Actor.him_or_her>..."
+                        Sex(Actor, Player)
+                        mood += 2
+                        passTime(0.5, 1)
+                    
+                    Else
+                        
+                        If Player.isInterestedIn(Actor)
+                    
+                            Player(Happy)::"You're funny, but I'm not interested!"
+                    
+                        ElseIf Player.isMale() && Actor.isFemale()
+                        
+                            Player(Angry)::"I will have to ask you to apologize my dear madam. It's not because you have the money to buy a business it mean you can buy my body like a gigolo ..."
+                            Player(Angry)::"Secondly, you are really not my style...!"
+                            Actor(Flirty)::"Are you gay or what? You're the first who say no! Damn you're so prude!"
+                            Player(Angry)::"Fuck off slut!"
+                        
+                        ElseIf Player.isMale() && Actor.isGay()
+                        
+                            Player(Angry)::"I will have to ask you to apologize my dear sir. It's not because you have the money to buy a business it mean you can buy my body like a gigolo ..."
+                            Player(Angry)::"Secondly, I'm not interested in men in any way dude!"
+                            Actor(Flirty)::"Don't be offended, it was just a question! We would have had fun! You're so prude!"
+                            Player(Angry)::"Fuck off!"
+                            
+                        ElseIf Player.isFemale() && Actor.isGay()
+                        
+                            Player(Angry)::"I will have to ask you to apologize my dear girl. It's not because you have the money to buy a business it mean you can buy my body like a whore ..."
+                            Player(Angry)::"Secondly, I'm not interested in women in any way!"
+                            Actor(Flirty)::"Don't be offended, it was just a question! We would have had fun! You're so prude!"
+                            Player(Angry)::"Fuck off!"
+                        
+                        ElseIf Player.isFemale() && Actor.isMale()
+                        
+                            Player(Angry)::"I will have to ask you to apologize my dear sir. It's not because you have the money to buy a business it mean you can buy my body like a whore ..."
+                            Player(Angry)::"Secondly, I'm not interested in you anyway!"
+                            Actor(Flirty)::"Are you gay or what? Don't be offended, it was just a question! Damn you're so prude!"
+                            Player(Angry)::"Fuck off!"
+                        
+                        Else
+                        
+                            Player(Angry)::"I will have to ask you to apologize my dear. It's not because you have the money to buy a business it mean you can buy my body like a cake ..."
+                            Player(Angry)::"Secondly, I'm not interested in you anyway!"
+                            Actor(Flirty)::"Don't be offended, it was just a question! Damn you're so prude"
+                            Player(Angry)::"Fuck off!"
+                        
+                        EndIf
+                
+                    EndIf
+            
+                EndIf
+        
+            Endif
+
+        Else
+        
+            "The owner tell me that <Actor.his_or_her> property is not for rent at the moment!"
+            "Ok, let's find another store or ask another owner, you never know!"
+            passTime(0.25, 0.5)
+        
+        Endif
+        
+    SceneEnd()
