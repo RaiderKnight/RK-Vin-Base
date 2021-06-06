@@ -1,0 +1,78 @@
+WHAT: all
+WHERE: all, -home
+WHEN: 0 - 24
+WHO: Actor = getPerson(false); If Actor.isDeflowerer()
+OTHER:
+
+    SceneStart()
+    
+        "Wait, is that ...?"
+        Actor.dress()
+        Actor.show()
+        "It's <Actor.name>, the <Actor.man_or_woman> who took my virginity ..."
+        "I haven't seen <Actor.name> in a while and we lost contact but seeing <Actor.him_or_her>, I can't help but think back about that special passion we shared."
+        0:: "Get <Actor.his_or_her> number again"
+        1:: "Some things and people should stay in the past"
+    
+        If 0
+        
+            "What's so wrong about at least keeping in touch with the person who was the main co-star in one of the most important events of my life anyway ..."
+            "I summoned the courage to approach <Actor.name> and exchanged numbers with <Actor.him_or_her>."
+            Player.moveToPerson(Actor)
+            Player.animate(socialize)
+            Actor.animate(socialize)
+            Player(Happy)::"Hey <Actor.name>, what's up? Long time no see ..."
+            Actor(Happy)::"Hey <Player.name>, happy to see you, yeah..."
+            "We talked for a while and then we exchanged our numbers!"
+            exchangeContact(Actor)
+            passTime(0.50, 1)
+            Player.animate()
+            Actor.animate()
+            
+        Else
+        
+            "Ok, I think I'll go another way, I don't want <Actor.him_or_her> to see me! "
+            
+        Endif
+        
+        If arousal > 25 && perversion > 50
+
+            "Wait, I'm horny, <Actor.he_or_she>'s so tasty !! Do I ask <Actor.him_or_her> if <Actor.he_or_she> wants to fuck? To recall the good old days ..."
+            0::"Yes"
+            1::"Some things and people should stay in the past"
+            
+            If 0
+            
+                If Actor.isInterestedIn(Player) && Actor:arousal > 25
+        
+                    Actor(Flirty)::"All the way baby, let's do it!"
+                    "We undress right away and start to caress each other sensually"
+                    Sex(Player, Actor)
+                    Actor:attractiontoplayer += 5
+                    Actor:rapportwithplayer += 5
+                    passTime(1, 2.50)
+            
+                ElseIf Actor.isInterestedIn(Player)
+        
+                    Actor(Sad)::"Not now, I'm not in the mood!"
+                    Player(Serene)::"Ok that's fine!"
+            
+                Else
+        
+                    Actor(Sad)::"I'm not interested anymore, you should have given me more attention if you want sex from me!"
+                    Player(Sad)::"Oh well, we'll see!"
+                    Actor:attractiontoplayer -= 1
+                    Actor:rapportwithplayer -= 1
+            
+                EndIf
+            
+            Else
+        
+                "Ok, I'll go another way, before <Actor.he_or_she> sees me!"
+            
+            EndIf
+        
+        EndIf
+        
+    SceneEnd()
+    timeout(2000, deflowerer_feeling)
