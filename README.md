@@ -17,9 +17,8 @@ C:\Games\LifePlay_4_0_Stable_64bit\LifePlay\Content\Modules\vin_Base\Stats<br>
 After, enable the mod.<br>
 <br>
 <br>
-<br>
 <strong>What else does this mod bring more?</strong><br>
-In my eyes, 80% of the scenes were created on the corner of a table ... I made the decision to create a mod better suited to my mods and everyday life in the LifePlay world, containing more complete scenes, more texts, more actions and possible consequences ...<br>
+In my eyes, 80% of the scenes were created on the corner of a table ... I made the decision to create a mod better suited to my mods and everyday life in the LifePlay world, containing more complete scenes, more texts, more fun to play, more actions and possible consequences ...<br>
 <br>
 I also want to include all remaked scenes, that I liked, already made from other modders.
 <br>
