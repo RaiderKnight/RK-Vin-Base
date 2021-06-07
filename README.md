@@ -20,11 +20,10 @@
 <p><strong>What else does this mod bring more?</strong></p>
 <p>In my eyes, 75% of the scenes are not complete enough or lack choice of actions or consequences ...</p>
 <br>
-<p>I made the decision to create a mod better suited to my mods and expand the LifePlay world, containing more full / still scenes, more texts, more possible actions and consequences, less contextual scenes, menu user with fewer elements (group actions / scenes into a single element), ...</p>
+<p>I made the decision to create a mod better suited to my mods and to expand the LifePlay world, containing more completed/fixed scenes, more texts, more possible actions and consequences, less popup scenes, menu user with fewer elements (group actions / scenes into a single element), ...</p>
 <br>
 <p><strong>Objective of the project :</strong></p>
-<p>The goal is simply to help Vinfamy build his game faster. This gives Vinfamy more time to correct its coding, create functions, new content, ...</p>
-<p>By creating a team of "Lone Wolf modders" without any conditions, to extend and redo the vin_Base mod to our liking. So if Vinfamy likes what has been achieved, he can dig in and take whatever he wants to improve the LifePlay game.</p>
+<p>The goal is simply to help Vinfamy build his game faster. This gives Vinfamy more time to correct its coding, create functions, new content, ... By creating a team of "Lone Wolf modders" without any conditions, to extend and redo the vin_Base mod to our liking. So if Vinfamy likes what has been achieved, he can dig in and take whatever he wants to improve the LifePlay game.</p>
 <br>
 <p><strong>The goal is:</strong></p>
 <p>- Add more texts</p>
@@ -34,7 +33,7 @@
 <p>- Correct coding errors</p>
 <p>- Create scenes for "lpaction" files which do not have an assigned scene.</p>
 <p>- Improve navigation in the user menu (menu on the left inside the game)</p>
-<p>- Basically completely improve this mod</p>
+<p>- Basically, completely improve this mod</p>
 <p>- Add more texts and choices;)</p>
 <br>
 <p>I will also include all remaked scenes already made, who fit with rk_vin_Base, from other modders who are in/will join this project.</p>
