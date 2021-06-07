@@ -18,25 +18,27 @@
 <br>
 <br>
 <p><strong>What else does this mod bring more?</strong></p>
-<p>In my eyes, 80% of the scenes were created on the corner of a table ... I made the decision to create a mod better suited to my mods and everyday life in the LifePlay world, containing more complete/fixed scenes, more texts, more fun to play, more actions and possible consequences ...</p>
+<p>In my eyes, 75% of the scenes are not complete enough or lack choice of actions or consequences ...</p>
+<br>
+<p>I made the decision to create a mod better suited to my mods and expand the LifePlay world, containing more full / still scenes, more texts, more possible actions and consequences, less contextual scenes, menu user with fewer elements (group actions / scenes into a single element), ...</p>
+<br>
+<p><strong>Objective of the project :</strong></p>
+<p>The goal is simply to help Vinfamy build his game faster. This gives Vinfamy more time to correct its coding, create functions, new content, ...</p>
+<p>By creating a team of "Lone Wolf modders" without any conditions, to extend and redo the vin_Base mod to our liking. So if Vinfamy likes what has been achieved, he can dig in and take whatever he wants to improve the LifePlay game.</p>
+<br>
+<p><strong>The goal is:</strong></p>
+<p>- Add more texts</p>
+<p>- Add more choices</p>
+<p>- Add missing bonuses on certain scenes (mood, fitness, arousal, ...)</p>
+<p>- Correct spelling mistakes</p>
+<p>- Correct coding errors</p>
+<p>- Create scenes for "lpaction" files which do not have an assigned scene.</p>
+<p>- Improve navigation in the user menu (menu on the left inside the game)</p>
+<p>- Basically completely improve this mod</p>
+<p>- Add more texts and choices;)</p>
 <br>
 <p>I will also include all remaked scenes already made, who fit with rk_vin_Base, from other modders who are in/will join this project.</p>
 <br>
-<p>The goals with modders, example:</p>
-<p>We have a file called sceneA.lpscene done by Vin</p>
-<p>If the scene "sceneA" has been remade by Joe, we create a new version mixed with the version of Joe and that of Vin.</p>
-<p>But Sophie, also has a version for the "sceneA" scene which can be included with the existing version in rk_vin_Base, made by Joe last time. So we mixed it to this story!</p>
-<br>
-<p>Other example:</p>
-<p>Joe add this line to sceneA.lpscene</p>
-<p>MainActor(Serene)::"That very really cool to you. I really need to improve my technical skills!"</p>
-<br>
-<p>But Alice, want to add a line to it, to make it less redundant.</p>
-<p>So it became:</p>
-<p>Random</p>
-<p>    MainActor(Serene)::"That very really cool to you. I really need to improve my technical skills!" // Original Joe addition</p>
-<p>   MainActor(Serene)::"Cool, I love participating in a training. Thank you for inviting me!" // Alice addition</p>
-<p>EndRandom</p>
 <br>
 <hr>
 <br>
