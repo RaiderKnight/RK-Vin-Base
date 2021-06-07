@@ -4,10 +4,50 @@ WHEN: 0-24
 WHO: none
 OTHER: none
 
-SceneStart()
+    SceneStart()
 
-    Player.strip()
-    Filter(Solo)
-    Sex(Player)
+        Masturb_TimesS = Player.getActorVar(VB_Masturb_TimesS)
+        SetMasturb_TimesS = Player.getActorVar(VB_SetMasturb_TimesS)
+        
+        If [Player.isFemale() && SetMasturb_TimesS >= 55] || [Player.isMale() && SetMasturb_TimesS >= 30] || WHEN > 23.5
+        
+            Player.setActorVar(VB_Masturb_TimesS, 0)
+            Player.setActorVar(VB_SetMasturb_TimesS, 0)
+            
+        ElseIf isTimingOut(masturbate)
+    
+            "It's too soon since the last time I played with my <Player.dick_or_pussy>. It takes at least 8 hours to recover..."
+            
+        ElseIf Player.isMale() && Masturb_TimesS > 5 && SetMasturb_TimesS > 25 && [WHEN > 0 && WHEN < 23]
+    
+            "I played too many times with my dick today.... I need to take a break!"
+            Player.setActorVar(VB_Masturb_TimesS, 0)
+            Player.setActorVar(VB_SetMasturb_TimesS, 0)
+            timeoutPrecise(8, masturbate)
+        
+        ElseIf Player.isFemale() && Masturb_TimesS > 10 && SetMasturb_TimesS > 50 && [WHEN > 0 && WHEN < 23]
+    
+            "I played too many times with my pussy today.... I need to take a break!"
+            Player.setActorVar(VB_Masturb_TimesS, 0)
+            Player.setActorVar(VB_SetMasturb_TimesS, 0)
+            timeoutPrecise(8, masturbate)
+            
+        Else
+        
+            Player.strip()
+            Filter(Solo)
+            Sex(Player)
+            Player.modifyActorVar(VB_Masturb_TimesS, 1)
+            Player.modifyActorVar(VB_SetMasturb_TimesS, 5)
+            passTime(0.25, 1)
+            
+            If [Player.isFemale() && SetMasturb_TimesS >= 55] || [Player.isMale() && SetMasturb_TimesS >= 30] || WHEN > 23.5
+        
+                Player.setActorVar(VB_Masturb_TimesS, 0)
+                Player.setActorVar(VB_SetMasturb_TimesS, 0)
+            
+            EndIf
+            
+        EndIf
 
-SceneEnd()
+    SceneEnd()
