@@ -1,0 +1,68 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+
+        If HungerEnable > 0 && Hunger < 9
+            
+            "You need to eat something... You don't have enough energy!"
+            
+        ElseIf energy < 9
+            
+            "You don't have enough energy...."
+            
+        Else
+        
+            "What should I do?"
+            6::"Practice cooking"
+            4:: stock_book > 0.8:: "Read a book" 
+            5:: stock_comic > 0.8:: "Read a comic"
+            99:: "Go back!"
+            
+            If 4
+                
+                Player.animate(write)
+                "I decided to read a book..."
+                mood += 3
+                intelligence += 0.05
+                stock_book -= 0.05
+                energy -= 1
+
+                passTime(0.5, 1)
+                
+            ElseIf 5
+                
+                Player.animate(write)
+                "I decided to read a comic..."
+                mood += 3
+                intelligence += 0.03
+                stock_comic -= 1
+                energy -= 1
+
+                passTime(0.5, 1.5)
+                
+            ElseIf 6
+                
+                // Player.animate(cooking) not yet...
+                "I decided to practice cooking..."
+                cooking += 0.75
+                mood += 5
+                energy -= 5
+
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+                passTime(0.5, 1.5)
+
+            EndIf
+            
+        EndIf
+
+
+    SceneEnd()

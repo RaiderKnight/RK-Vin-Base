@@ -8,6 +8,7 @@ OTHER: none
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        stock_cocktail = Player.getActorVar(rk_VB_stock_cocktail)
         
         If HungerEnable > 0 && Hunger > 99
             
@@ -17,6 +18,7 @@ OTHER: none
         
             "What should I drink or eat?"
             0:: stock_alcohol >= 0.8 ::"Drink alcohol"
+            11:: stock_cocktail >= 0.8  ::"Drink cocktail"
             1:: stock_coffee >= 0.8 ::"Drink coffee"
             2:: stock_juice >= 0.8::"Drink juice"
             3:: stock_soda >= 0.8 ::"Drink soda"
@@ -44,12 +46,25 @@ OTHER: none
             ElseIf 1
             
                 Player.animate(drinktea)
-                "I decided to drink coffee..."
+                "I decided to drink a coffee..."
                 stock_coffee -= 1
                 mood += 2
                 energy += 10
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, 10)
+                    Player.modifyActorVar(rk_VB_Hunger, 5)
+                EndIf
+                passTime(0.15, 0.5)
+            
+            ElseIf 11
+            
+                Player.animate(drinkglass)
+                "I decided to drink a cocktail..."
+                Player.modifyActorVar(rk_VB_stock_cocktail, -1)
+                mood += 1
+                energy += 1
+                intoxication += 15
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 0.5)
                 EndIf
                 passTime(0.15, 0.5)
                 
@@ -69,7 +84,7 @@ OTHER: none
             ElseIf 3
             
                 Player.animate(drinkbottle)
-                "I decided to drink soda..."
+                "I decided to drink a soda..."
                 stock_soda -= 1
                 mood += 1
                 fitness -= 0.02
@@ -82,7 +97,7 @@ OTHER: none
             ElseIf 4
             
                 Player.animate(drinktea)
-                "I decided to drink tea..."
+                "I decided to drink a tea..."
                 stock_tea -= 1
                 mood += 2
                 energy += 3

@@ -26,12 +26,17 @@ OTHER: none
         Else
         
             "What should I do?"
+            2::"Call a hooker"
             3:: stock_movie > 0 && WHERE != prison :: "Watch a movie"
             4:: WHERE != prison :: "Watch sport"
             5::"Watch TV"
             99:: "Go back!"
             
-            If 3
+            If 2
+            
+                followUp(call_a_hooker)
+            
+            ElseIf 3
                 
                 Player.animate(sofawatch)
                 "I decided to watch a movie..."
@@ -64,7 +69,6 @@ OTHER: none
                 "I decided to watch TV..."
                 mood += 2
                 intelligence += 0.01
-                
                 
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -1)

@@ -5,22 +5,73 @@ WHO: Actor = getCompanion(); If Player.isInterestedIn(Actor)
 OTHER: Random(20, 300) < perversion
 
     SceneStart()
-    "I'm working out together with <Actor.name>. There are plenty of excuses to get a bit touchy-feely here."
-    0:: "Feel <Actor.him_or_her> up a bit"
-    1:: "Behave myself and just work out"
     
-    If 0
-        If Actor.isInterestedIn(Player) && Random(0, 200) < Actor:attractiontoplayer + Actor:perversion + Actor:incest
-            "I ended up basically groping <Actor.him_or_her>, but <Actor.he_or_she> didn't seem to mind at all ... Maybe <Actor.he_or_she> actually enjoys my touches."
-            Actor:attractiontoplayer += Random(0, 1)
-            Actor:incest += Random(0, 1)
-        Else
-            "My behaviour seems to make <Actor.name> uncomfortable and <Actor.he_or_she> didn't seem a tiny bit receptive to my advances." 
-            Actor:rapportwithplayer -= Random(0, 1)
-            karma -= 1
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        
+        "I'm working out with <Actor.name>"
+        "There are plenty of excuses to get a bit touchy-feely here."
+        0:: "Feel <Actor.him_or_her> up a bit"
+        1:: "Behave myself and just work out"
+    
+        If 0
+        
+            If Actor.isInterestedIn(Player) && Random(100, 200) < Actor:attractiontoplayer + Actor:perversion + Actor:arousal
+                Actor:attractiontoplayer += 0.5
+                Actor:perversion += 0.5
+                Actor(Flirty):: "I must say that you have soft hands. Wanna show me what you can do with them?"
+                0:: "It's my lucky day!"
+                1:: "Sorry, I didn't intend to do this, my hand slipped ..."
+        
+                If 0
+                    Sex(Player, Actor)
+                    
+                Else
+                
+                    If Actor.isInterestedIn(Player)
+                
+                        Actor:attractiontoplayer += Random(0, 1)
+                        Actor:arousal += Random(0, 1)
+                        Actor:rapportwithplayer += Random(0, 1)
+                        
+                    Else
+                    
+                        Actor:attractiontoplayer -= Random(0, 5)
+                        Actor:arousal -= Random(0, 2)
+                        Actor:rapportwithplayer -= Random(0, 1)
+                        
+                    Endif
+                    
+                Endif
+            
+            ElseIf Actor.isInterestedIn(Player) && Random(0, 200) < Actor:attractiontoplayer + Actor:perversion + Actor:incest
+            
+                "I ended up basically groping <Actor.him_or_her>, but <Actor.he_or_she> didn't seem to mind at all ... Maybe <Actor.he_or_she> actually enjoys my touches."
+                Actor:attractiontoplayer += Random(0, 1)
+                Actor:arousal += Random(0, 1)
+                Actor:incest += Random(0, 1)
+            
+            ElseIf Actor.isInterestedIn(Player) && Random(0, 200) < Actor:attractiontoplayer + Actor:perversion
+            
+                "I ended up basically groping <Actor.him_or_her>, but <Actor.he_or_she> didn't seem to mind at all ... Maybe <Actor.he_or_she> actually enjoys my touches."
+                Actor:attractiontoplayer += Random(0, 1)
+                Actor:arousal += Random(0, 1)
+                
+            Else
+            
+                "My behaviour seems to make <Actor.name> uncomfortable and <Actor.he_or_she> didn't seem a tiny bit receptive to my advances." 
+                Actor:rapportwithplayer -= Random(0, 1)
+                karma -= 1
+                
+            Endif
+            
         Endif
-    Endif
-    SceneEnd()
+        
+        If HungerEnable > 0
+        
+            Player.modifyActorVar(rk_VB_Hunger, -1)
+            
+        EndIf
+    
+    SceneEnd() // Scene improved by: Raddeck
     timeout(2, work_out_with_date)
-    
-    

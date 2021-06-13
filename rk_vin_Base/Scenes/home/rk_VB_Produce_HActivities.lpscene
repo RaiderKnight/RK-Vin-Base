@@ -1,0 +1,79 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        
+        stock_cocktail = Player.getActorVar(rk_VB_stock_cocktail)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+
+        If HungerEnable > 0 && Hunger < 9
+            
+            "You need to eat something... You don't have enough energy!"
+            
+        ElseIf energy < 9
+            
+            "You don't have enough energy...."
+            
+        Else
+        
+            "What should I produce?"
+            1:: stock_ingredient >= 1.8 ::"Cook a meal (-2 ingredient)" 
+            3:: stock_alcohol >= 0.8 ::"Make a cocktail (-1 alcohol)" 
+            6:: stock_ingredient >= 0.8 ::"Make a snack (-1 ingredient)" 
+            99:: "Go back!"
+            
+            If 1
+                
+                // Player.animate(cooking)
+                "I decided to cook a meal..."
+                stock_ingredient -= 2
+                stock_meal += 1
+                cooking += 0.2
+                energy -= 2
+                mood += 5
+                mood -= 1
+                "1 meal added to my invetory!"
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                passTime(0.5, 1)
+                
+            ElseIf 3
+                
+                // Player.animate(cooking)
+                "I decided to make a cocktail..."
+                stock_alcohol -= 1
+                mood += 1
+                "2 cocktails added to my invetory!"
+                Player.modifyActorVar(rk_VB_stock_cocktail, 2)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -0.5)
+                EndIf
+                passTime(0.15, 0.5)
+
+            ElseIf 6
+                
+                // Player.animate(cooking)
+                "I decided to make a snack..."
+                stock_ingredient -= 1
+                stock_snack += 1
+                cooking += 0.1
+                mood += 2
+                "1 snack added to my invetory!"
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -0.5)
+                EndIf
+                passTime(0.15, 0.5)
+
+            EndIf
+            
+        EndIf
+
+    SceneEnd()
