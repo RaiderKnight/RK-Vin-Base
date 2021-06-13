@@ -8,24 +8,17 @@
 <br>
 <p><strong>Mod in Work In Progress (WIP)</strong></p>
 <br>
-<p>At the moment, to try the modifications, inside vin_base folder (C:\Games\LifePlay_4_0_Stable_64bit\LifePlay\Content\Modules\vin_Base\), you need to delete or move these folders</p>
-<ul>
-<li>"Actions"</li>
-<li>"Descriptions"</li>
-<li>"DirtyTalks"</li>
-<li>"Interactions"</li>
-<li>"Quests"</li>
-<li>"Scenes"</li>
-<li>"Stats"</li>
-<li>"TF"</li>
-<li>"virginity"</li>
-</ul>
+<p>At the moment, to try the modifications, you need to delete or move the vin_base folder</p>
 <br>
 <p>Example:</p>
-<p>Just delete or move the "Stats" folder to an another places in your pc for backup.</p>
-<p>C:\Games\LifePlay_4_0_Stable_64bit\LifePlay\Content\Modules\vin_Base\Stats</p>
+<p>Just delete or move folder to an another places in your pc for backup.</p>
+<p>C:\...\LifePlay\Content\Modules\vin_Base\</p>
 <br>
-<p>After, enable the mod.</p>
+<p><strong>Inside C:\Download\RK-Vin-Base\ folder</strong></p>
+<p>Copy and paste: vin_Base and rk_vin_Base, inside:</p>
+<p>C:\...\LifePlay\Content\Modules\vin_Base\</p>
+<br>
+<p>Finally, enable the mod.</p>
 <br>
 <br>
 <p><strong>What else does this mod bring more?</strong></p>
@@ -39,6 +32,7 @@
 <p><strong>The goal is:</strong></p>
 <p>- Add more texts</p>
 <p>- Add more choices</p>
+<p>- Add more possibilities</p>
 <p>- Add missing bonuses on certain scenes (mood, fitness, arousal, ...)</p>
 <p>- Correct spelling mistakes</p>
 <p>- Correct coding errors</p>
