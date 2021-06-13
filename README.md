@@ -16,9 +16,9 @@
 <br>
 <p><strong>Inside C:\Download\RK-Vin-Base\ folder</strong></p>
 <p>Copy and paste: vin_Base and rk_vin_Base, inside:</p>
-<p>C:\...\LifePlay\Content\Modules\vin_Base\</p>
+<p>C:\...\LifePlay\Content\Modules\</p>
 <br>
-<p>Finally, enable the mod.</p>
+<p>Finally, enable the mod rk_vin_Base.</p>
 <br>
 <br>
 <p><strong>What else does this mod bring more?</strong></p>
