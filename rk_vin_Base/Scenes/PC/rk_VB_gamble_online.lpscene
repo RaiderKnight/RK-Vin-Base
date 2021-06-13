@@ -1,0 +1,332 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        stock_ZellVostro = Player.getActorVar(stock_ZellVostro)
+        stock_LPPavilion = Player.getActorVar(stock_LPPavilion)
+        stock_LPware = Player.getActorVar(stock_LPware)
+        stock_LPX = Player.getActorVar(stock_LPX)
+        Stock_Computers = stock_ZellVostro + stock_LPPavilion + stock_LPware + stock_LPX
+        
+        stock_IPhone = Player.getActorVar(stock_IPhone)
+        stock_Samsung = Player.getActorVar(stock_Samsung)
+        stock_OnePlus = Player.getActorVar(stock_OnePlus)
+        stock_LPGPower = Player.getActorVar(stock_LPGPower)
+        Stock_phones = stock_IPhone + stock_Samsung + stock_OnePlus + stock_LPGPower
+        CashOnlineBid = 100
+        CashOnlineBid_loc = CashOnlineBid.convertToLocalCurrency()
+        
+        If money < 100
+            
+            "You don't have enough money to bet online..."
+        
+        ElseIf Stock_Computers <= 0 && Stock_phones <= 0
+        
+            "You don't have any device to go online... Go buy a computer or a phone at any shop!"
+            
+        Else
+        
+            If WHERE != home && WHERE != fraternity
+                
+                SceneStart()
+                    "You cannot use your pc here!"
+                    "You can go online with your pc only if your are at home or in fraternity"
+                    "Buy a phone to be able to go online everywhere!"
+                SceneEnd()
+                    
+            Else
+            
+                "You open your computer to bet online..."
+                
+            EndIf
+
+            OnlineBet1 = 100
+            OnlineBet2 = 500
+            OnlineBet3 = 1000
+            OnlineBet4 = 10000
+            OnlineBet5 = 50000
+            TotalOnlineBet  = OnlineBet1 + OnlineBet2 + OnlineBet3 + OnlineBet4 + OnlineBet5
+            OnlineBet1_loc = OnlineBet1.convertToLocalCurrency()
+            OnlineBet2_loc = OnlineBet2.convertToLocalCurrency()
+            OnlineBet3_loc = OnlineBet3.convertToLocalCurrency()
+            OnlineBet4_loc = OnlineBet4.convertToLocalCurrency()
+            OnlineBet5_loc = OnlineBet5.convertToLocalCurrency()
+            ChanceToWin1P = Random(0, 1000000)
+            ChanceToWin1P = ChanceToWin1P.round()
+            Win1P = 1000000
+            Win1P_loc = Win1P.convertToLocalCurrency()
+            
+            ChanceToWin2P = Random(0, 100000)
+            ChanceToWin2P = ChanceToWin2P.round()
+            Win2P = 100000
+            Win2P_loc = Win2P.convertToLocalCurrency()
+            
+            ChanceToWin3P = Random(0, 50000)
+            ChanceToWin3P = ChanceToWin3P.round()
+            Win3P = 50000
+            Win3P_loc = Win3P.convertToLocalCurrency()      
+            
+            BettingOnline = true
+            While BettingOnline || money > 100
+            
+                PriceRolling = Random(1, 1000000)
+                PriceRolling = PriceRolling.round()
+                
+                "How many do you want to bet?"
+                0:: money > OnlineBet1 :: "Bet <OnlineBet1_loc>"
+                1:: money > OnlineBet2 :: "Bet <OnlineBet2_loc>"
+                2:: money > OnlineBet3 :: "Bet <OnlineBet3_loc>"
+                3:: money > OnlineBet4 :: "Bet <OnlineBet4_loc>"
+                4:: money > OnlineBet5 :: "Bet <OnlineBet5_loc>"
+                99::"Go back"
+            
+                If 0
+            
+                    ChanceToWinPrice1 = ChanceToWin1P + 1
+                    ChanceToWinPrice2 = ChanceToWin2P + 1
+                    ChanceToWinPrice3 = ChanceToWin3P + 1
+                    
+                    If PriceRolling == ChanceToWinPrice1
+                    
+                        money -= OnlineBet1
+                        "You won <Win1P_loc>!"
+                        
+                        money += Win1P
+                    
+                    EndIf
+                        
+                    If PriceRolling == ChanceToWinPrice2
+                    
+                        money -= OnlineBet1
+                        "You won <Win2P_loc>!"
+                        
+                        money += Win2P
+                    
+                    EndIf
+                        
+                    If PriceRolling == ChanceToWinPrice3
+                    
+                        money -= OnlineBet1
+                        "You won <Win1P_loc>!"
+                        
+                        money += Win3P
+                    
+                    EndIf
+                        
+                    If PriceRolling == 0
+                    
+                        "You won nothing!"
+                        
+                        money -= OnlineBet1
+                        
+                    Else
+                    
+                        "You won nothing!"
+                        
+                        money -= OnlineBet1
+                        
+                    EndIf
+            
+                ElseIf 1
+            
+                    ChanceToWinPrice1 = ChanceToWin1P + 5
+                    ChanceToWinPrice2 = ChanceToWin2P + 5
+                    ChanceToWinPrice3 = ChanceToWin3P + 5
+                    
+                    If PriceRolling == ChanceToWinPrice1
+                    
+                        money -= OnlineBet2
+                        "You won <Win1P_loc>!"
+                        
+                        money += Win1P
+                    
+                    EndIf
+                        
+                    If PriceRolling == ChanceToWinPrice2
+                    
+                        money -= OnlineBet2
+                        "You won <Win2P_loc>!"
+                        
+                        money += Win2P
+                    
+                    EndIf
+                        
+                    If PriceRolling == ChanceToWinPrice3
+                    
+                        money -= OnlineBet2
+                        "You won <Win1P_loc>!"
+                        
+                        money += Win3P
+                    
+                    EndIf
+                        
+                    If PriceRolling == 0
+                    
+                        "You won nothing!"
+                        
+                        money -= OnlineBet2
+                        
+                    Else
+                    
+                        "You won nothing!"
+                        
+                        money -= OnlineBet2
+                        
+                    EndIf
+            
+                ElseIf 2
+            
+                    ChanceToWinPrice1 = ChanceToWin1P + 10
+                    ChanceToWinPrice2 = ChanceToWin2P + 10
+                    ChanceToWinPrice3 = ChanceToWin3P + 10
+                    
+                    If PriceRolling == ChanceToWinPrice1
+                    
+                       money -= OnlineBet3
+                       "You won <Win1P_loc>!"
+                        
+                        money += Win1P
+                    
+                    EndIf
+                        
+                    If PriceRolling == ChanceToWinPrice2
+                    
+                        money -= OnlineBet3
+                        "You won <Win2P_loc>!"
+                        
+                        money += Win2P
+                    
+                    EndIf
+                        
+                    If PriceRolling == ChanceToWinPrice3
+                    
+                        money -= OnlineBet3
+                        "You won <Win1P_loc>!"
+                        
+                        money += Win3P
+                    
+                    EndIf
+                        
+                    If PriceRolling == 0
+                    
+                        "You won nothing!"
+                        
+                        money -= OnlineBet3
+                        
+                    Else
+                    
+                        "You won nothing!"
+                        
+                        money -= OnlineBet3
+                        
+                    EndIf
+            
+                ElseIf 3
+            
+                    ChanceToWinPrice1 = ChanceToWin1P + 100
+                    ChanceToWinPrice2 = ChanceToWin2P + 100
+                    ChanceToWinPrice3 = ChanceToWin3P + 100
+                    
+                    If PriceRolling == ChanceToWinPrice1
+                    
+                        money -= OnlineBet4
+                        "You won <Win1P_loc>!"
+                        
+                        money += Win1P
+                    
+                    EndIf
+                        
+                    If PriceRolling == ChanceToWinPrice2
+                    
+                        money -= OnlineBet4
+                        "You won <Win2P_loc>!"
+                        
+                        money += Win2P
+                    
+                    EndIf
+                        
+                    If PriceRolling == ChanceToWinPrice3
+                    
+                        money -= OnlineBet4
+                        "You won <Win1P_loc>!"
+                        
+                        money += Win3P
+                    
+                    EndIf
+                        
+                    If PriceRolling == 0
+                    
+                        "You won nothing!"
+                        
+                        money -= OnlineBet4
+                        
+                    Else
+                    
+                        "You won nothing!"
+                        
+                        money -= OnlineBet4
+                        
+                    EndIf
+            
+                ElseIf 4
+            
+                    ChanceToWinPrice1 = ChanceToWin1P + 1000
+                    ChanceToWinPrice2 = ChanceToWin2P + 1000
+                    ChanceToWinPrice3 = ChanceToWin3P + 1000
+                    
+                    If PriceRolling == ChanceToWinPrice1
+                    
+                        money -= OnlineBet5
+                        "You won <Win1P_loc>!"
+                        
+                        money += Win1P
+                    
+                    EndIf
+                        
+                    If PriceRolling == ChanceToWinPrice2
+                    
+                        money -= OnlineBet5
+                        "You won <Win2P_loc>!"
+                        
+                        money += Win2P
+                    
+                    EndIf
+                        
+                    If PriceRolling == ChanceToWinPrice3
+                    
+                        money -= OnlineBet5
+                        "You won <Win1P_loc>!"
+                        
+                        money += Win3P
+                    
+                    EndIf
+                        
+                    If PriceRolling == 0
+                    
+                        "You won nothing!"
+                        
+                        money -= OnlineBet5
+                        
+                    Else
+                    
+                        "You won nothing!"
+                        
+                        money -= OnlineBet5
+                        
+                    EndIf
+                
+                Else
+                
+                    BettingOnline = false
+            
+                EndIf
+
+            EndWhile
+            
+        EndIf
+    
+    SceneEnd()

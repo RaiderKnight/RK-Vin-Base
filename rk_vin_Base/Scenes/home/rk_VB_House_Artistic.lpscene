@@ -1,0 +1,105 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getActorVar()
+        
+        stock_ZellVostro = Player.getActorVar(stock_ZellVostro)
+        stock_LPPavilion = Player.getActorVar(stock_LPPavilion)
+        stock_LPware = Player.getActorVar(stock_LPware)
+        stock_LPX = Player.getActorVar(stock_LPX)
+        Stock_Computers = stock_ZellVostro + stock_LPPavilion + stock_LPware + stock_LPX
+
+        If HungerEnable > 0 && Hunger < 9
+            
+            "You need to eat something... You don't have enough energy!"
+            
+        ElseIf energy < 9
+            
+            "You don't have enough energy...."
+            
+        Else
+        
+            "What should I do?"
+            0::"Draw"
+            1:: stock_musicalinstrument >= 1 :: "Learn a musical instrument"
+            20:: Stock_Computers > 0 && WHERE != prison :: "Make a mod"
+            2:: WHERE != prison :: "Practice singing"
+            3:: "Write creatively"
+            99:: "Go back!"
+            
+            If 0
+                
+                Player.animate(write)
+                "I decided to draw..."
+                mood +=3
+                intelligence +=0.02
+                energy -=1
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                passTime(0.5, 1)
+                
+            ElseIf 1
+                
+                Player.animate(socialize)
+                "I decided to learn a musical instrument..."
+                mood +=1
+                intelligence +=0.02
+                music +=0.02
+                energy -=5
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -5)
+                EndIf
+                passTime(0.5, 1.5)
+
+                
+            ElseIf 20
+
+                Player.animate(browse)
+                "I decided to make a mod..."
+                intelligence += 0.5
+                mood += 1
+                karma += 1
+                energy -= 1
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                passTime(0.35, 1)
+
+            ElseIf 2
+                
+                Player.animate(socialize)
+                "I decided to practice singing..."
+                mood +=1
+                intelligence +=0.01
+                music +=0.01
+                energy -=3
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+                passTime(0.5, 1.5)
+
+            ElseIf 3
+                
+                Player.animate(write)
+                "I decided to write creatively..."
+                mood +=1
+                intelligence +=0.01
+                energy -=1
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                passTime(0.5, 1.5)
+
+            EndIf
+            
+        EndIf
+
+
+    SceneEnd()

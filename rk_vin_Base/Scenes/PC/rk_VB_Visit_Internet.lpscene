@@ -53,6 +53,9 @@ OTHER: none
                 EndIf
             
             EndIf
+            
+            CashOnlineBid = 100
+            CashOnlineBid_loc = CashOnlineBid.convertToLocalCurrency()
     
             "What do you want to do on internet?"
             1::"Browse the web"
@@ -62,6 +65,7 @@ OTHER: none
             5::"Support LifePlay on Patreon :P"
             6::"Watch YouTube"
             7::"Collaborate with another YouTube creator"
+            8:: money > CashOnlineBid :: "Gamble online - <CashOnlineBid_loc> min. bid"
             90::isModEnabled(vin_Bestiality):: "Look for bestiality porn"
             99::"Go back"
     
@@ -118,6 +122,10 @@ OTHER: none
             ElseIf 7
                 
                 followUp(youtube_collab_cms)
+            
+            ElseIf 8
+                
+                followUp(rk_VB_gamble_online)
                 
             ElseIf 90
                 

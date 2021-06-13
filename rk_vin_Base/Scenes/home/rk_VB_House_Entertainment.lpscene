@@ -1,0 +1,78 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getActorVar()
+        
+        stock_ZellVostro = Player.getActorVar(stock_ZellVostro)
+        stock_LPPavilion = Player.getActorVar(stock_LPPavilion)
+        stock_LPware = Player.getActorVar(stock_LPware)
+        stock_LPX = Player.getActorVar(stock_LPX)
+        Stock_Computers = stock_ZellVostro + stock_LPPavilion + stock_LPware + stock_LPX
+
+        If HungerEnable > 0 && Hunger < 9
+            
+            "You need to eat something... You don't have enough energy!"
+            
+        ElseIf energy < 9
+            
+            "You don't have enough energy...."
+            
+        Else
+        
+            "What should I do?"
+            3:: stock_movie > 0 && WHERE != prison :: "Watch a movie"
+            4:: WHERE != prison :: "Watch sport"
+            5::"Watch TV"
+            99:: "Go back!"
+            
+            If 3
+                
+                Player.animate(sofawatch)
+                "I decided to watch a movie..."
+                stock_movie -= 1
+                mood += 3
+                intelligence += 0.01
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                passTime(1, 1.5)
+
+            ElseIf 4
+                
+                Player.animate(sofawatch)
+                "I decided to watch sport..."
+                fitness += 0.01
+                mood += 1
+                intelligence += 0.01
+                energy -= 1
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                passTime(1, 1.5)
+                
+            ElseIf 5
+                
+                Player.animate(sofawatch)
+                "I decided to watch TV..."
+                mood += 2
+                intelligence += 0.01
+                
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                passTime(1, 1.5)
+
+            EndIf
+            
+        EndIf
+
+    SceneEnd()

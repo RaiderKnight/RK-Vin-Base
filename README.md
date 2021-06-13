@@ -3,23 +3,10 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Version: 0.0.2</p>
+<p>Version: 0.0.3</p>
 <br>
 <br>
 <p><strong>Mod in Work In Progress (WIP)</strong></p>
-<br>
-<p>At the moment, to try the modifications, you need to delete or move the vin_base folder</p>
-<br>
-<p>Example:</p>
-<p>Just delete or move folder to an another places in your pc for backup.</p>
-<p>C:\...\LifePlay\Content\Modules\vin_Base\</p>
-<br>
-<p><strong>Inside C:\Download\RK-Vin-Base\ folder</strong></p>
-<p>Copy and paste: vin_Base and rk_vin_Base, inside:</p>
-<p>C:\...\LifePlay\Content\Modules\</p>
-<br>
-<p>Finally, enable the mod rk_vin_Base.</p>
-<br>
 <br>
 <p><strong>What else does this mod bring more?</strong></p>
 <p>In my eyes, 75% of the scenes are not complete enough or lack choice of actions or consequences ...</p>
@@ -47,11 +34,21 @@
 <hr>
 <br>
 <h3> How to install</h3>
-<p>Download the mod and add it to : ..\LifePlay\Content\Modules</p>
+<p>At the moment, to try the modifications, you need to delete or move the vin_base folder</p>
+<br>
+<p>Example:</p>
+<p>Just delete or move folder to an another places in your pc for backup.</p>
+<p>C:\...\LifePlay\Content\Modules\vin_Base\</p>
+<br>
+<p><strong>After, nside C:\Download\RK-Vin-Base\ folder</strong></p>
+<p>Copy and paste: vin_Base and rk_vin_Base, inside:</p>
+<p>C:\...\LifePlay\Content\Modules\</p>
 <p>Make sure you don't leave an extra directory level for the mod. For example, it should go like this:</p>
+<p>c:\..\LifePlay\Content\Modules\vin_Base</p>
 <p>c:\..\LifePlay\Content\Modules\rk_vin_Base</p>
 <p><strong>NOT</strong></p>
 <p>c:\..\LifePlay\Content\Modules\RK-Vin-Base\rk_vin_Base</p>
+<p>c:\..\LifePlay\Content\Modules\RK-Vin-Base\rk_vin_Base\vin_Base</p>
 <p>After the mod have been installed, make sure the mod is active in the Mod Manager.</p>
 <br>
 <hr>
