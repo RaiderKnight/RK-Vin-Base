@@ -1,0 +1,71 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        stock_ZellVostro = Player.getActorVar(stock_ZellVostro)
+        stock_LPPavilion = Player.getActorVar(stock_LPPavilion)
+        stock_LPware = Player.getActorVar(stock_LPware)
+        stock_LPX = Player.getActorVar(stock_LPX)
+        Stock_Computers = stock_ZellVostro + stock_LPPavilion + stock_LPware + stock_LPX
+
+        If !isModEnabled(rk_ShopAddons)
+            
+            "You need to enable Shop-Addons mod to be able to use a computer...."
+            
+        ElseIf Stock_Computers <= 0
+        
+            "You don't have any computer to go online... Go buy a computer at any shop!"
+        
+        Else
+        
+            If WHERE != home && WHERE != fraternity
+                
+                SceneStart()
+                    "You cannot use your pc here!"
+                    "You can use your pc only if your are at home or in fraternity"
+                SceneEnd()
+                    
+            Else
+            
+                "You open your computer to..."
+            
+            EndIf
+    
+            "What do you want to do with your computer?"
+            1::"Browse the web"
+            20::"Make a mod"
+            30::"Play a video game"
+            99::"Go back"
+    
+            If 1
+            
+                followUp(rk_VB_Visit_Internet)
+            
+            ElseIf 20
+
+                Player.animate(browse)
+                "I decided to make a mod..."
+                intelligence += 0.5
+                mood += 1
+                karma += 1
+                energy -= 1
+                passTime(0.35, 1)
+            
+            ElseIf 30
+
+                Player.animate(browse)
+                "I decided to play a video game..."
+                intelligence += 0.2
+                mood += 3
+                energy -= 1
+                passTime(0.9, 2)
+                
+            EndIf
+    
+        EndIf
+    
+    SceneEnd()

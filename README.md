@@ -3,12 +3,23 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Version: 0.0.1</p>
+<p>Version: 0.0.2</p>
 <br>
 <br>
 <p><strong>Mod in Work In Progress (WIP)</strong></p>
 <br>
-<p>At the moment, to try the modifications, you need to delete or move the folder "stats" from C:\Games\LifePlay_4_0_Stable_64bit\LifePlay\Content\Modules\vin_Base\.</p>
+<p>At the moment, to try the modifications, inside vin_base folder (C:\Games\LifePlay_4_0_Stable_64bit\LifePlay\Content\Modules\vin_Base\), you need to delete or move these folders</p>
+<ul>
+<li>"Actions"</li>
+<li>"Descriptions"</li>
+<li>"DirtyTalks"</li>
+<li>"Interactions"</li>
+<li>"Quests"</li>
+<li>"Scenes"</li>
+<li>"Stats"</li>
+<li>"TF"</li>
+<li>"virginity"</li>
+</ul>
 <br>
 <p>Example:</p>
 <p>Just delete or move the "Stats" folder to an another places in your pc for backup.</p>

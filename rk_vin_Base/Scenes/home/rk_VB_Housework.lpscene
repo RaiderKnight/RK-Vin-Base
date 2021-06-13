@@ -1,0 +1,133 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getActorVar()
+        
+        rk_VB_Stock_Washingmachine = Player.getActorVar(rk_VB_Stock_Washingmachine)
+        rk_VB_Stock_Tumbledryer = Player.getActorVar(rk_VB_Stock_Tumbledryer)
+        rk_VB_Stock_Washingmachine1 = Player.getActorVar(rk_VB_Stock_Washingmachine1)
+        rk_VB_Stock_Tumbledryer1 = Player.getActorVar(rk_VB_Stock_Tumbledryer1)
+        rk_VB_Stock_Washingmachine2 = Player.getActorVar(rk_VB_Stock_Washingmachine2)
+        rk_VB_Stock_Tumbledryer2 = Player.getActorVar(rk_VB_Stock_Tumbledryer2)
+        
+        StockWS = rk_VB_Stock_Washingmachine + rk_VB_Stock_Washingmachine1 + rk_VB_Stock_Washingmachine2
+        StockTD = rk_VB_Stock_Tumbledryer + rk_VB_Stock_Tumbledryer1 + rk_VB_Stock_Tumbledryer2
+        
+        If HungerEnable > 0 && Hunger < 9
+            
+            "You need to eat something... You don't have enough energy!"
+            
+        ElseIf energy < 9
+            
+            "You don't have enough energy...."
+            
+        Else
+        
+            "What should I do inside my house?"
+            0::"Do housework"
+            11::"Clean House"
+            1:: "Do laundry"
+            2::"Home-repair"
+            3::"Move out"
+            4::""
+            5::""
+            6::""
+            7::""
+            8::""
+            9::""
+            10::""
+            99::"Go back!"
+            
+            If 0
+                
+                Player.animate(sweep)
+                "I decided to do some housework..."
+                mood += 2.5
+                energy -= 10
+                fitness += 0.05
+                karma += 0.25
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -10)
+                EndIf
+                passTime(0.5, 1.5)
+                
+            ElseIf 1
+                
+                "Go to the laundry shop or will I do it at home?"
+                0::StockWS > 0 && StockTD > 0::"At home"
+                1::"Go to laundry shop"
+                99::"Go back!"
+                
+                If 0
+                
+                    Player.animate(sweep)
+                    "I decided to do some laundry..."
+                    energy -= 5
+                    attractiveness += 2.5
+                    mood -= 5
+                    karma += 0.25
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -5)
+                    EndIf
+                    passTime(1, 2.5)
+                    
+                Else
+                
+                    setBackground(laundry)
+                    moveTo(laundry)
+                    "I decided to go to the laundry shop..."
+                    energy -= 5
+                    money -= 2
+                    attractiveness += 2.5
+                    mood -= 5
+                    karma += 0.25
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -5)
+                    EndIf
+                    passTime(1, 2.5)
+                    
+                EndIf
+                
+            ElseIf 2
+                
+                Player.animate(sweep)
+                "I decided to do some home-repair..."
+                energy -= 3
+                mood -= 1
+                fitness += 0.01
+                intelligence += 0.02
+                karma += 0.25
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+                passTime(1, 3)
+                
+            ElseIf 3
+            
+               followUp(move_out)
+            
+            ElseIf 11
+                
+                Player.animate(sweep)
+                "I decided to clean the house a little bit..."
+                mood += 2.5
+                energy -= 10
+                fitness += 0.05
+                karma += 0.25
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -10)
+                EndIf
+                passTime(0.5, 1.5)
+                
+            EndIf
+            
+        EndIf
+
+
+    SceneEnd()

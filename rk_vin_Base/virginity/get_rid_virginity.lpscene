@@ -1,11 +1,32 @@
 WHAT: none
-WHERE: home
+WHERE: none
 WHEN: 0 - 24
 WHO: none
 OTHER: none
 
 
     SceneStart()
+    
+        If AmNotVirgin >= 1 && !isWithCompanion()
+    
+            SceneStart()
+            
+                "You're not virgin anymore"
+                AmNotVirgin => 1
+            
+            SceneEnd()
+    
+        EndIf
+        
+        If isWithCompanion()
+    
+            SceneStart()
+            
+                "Uh! let's make a scene for that!"
+            
+            SceneEnd()
+    
+        EndIf
     
         "I'm still a virgin ..."
         0:: "And I'm proud of it!"
@@ -74,4 +95,4 @@ OTHER: none
         Endif
         
     SceneEnd()
-    timeout(200, get_rid_virginity)
+    //timeout(200, get_rid_virginity)

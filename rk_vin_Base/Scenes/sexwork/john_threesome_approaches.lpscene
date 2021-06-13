@@ -1,0 +1,44 @@
+WHAT: whore_out, whore_out_brothel
+WHERE: sexwork, brothel
+WHEN: 0 - 24
+WHO: none
+OTHER: Random(0, 250)*Random(0, 250) < attractiveness*attractiveness
+
+    SceneStart()
+    Dice = Random(150, 750)
+    P1C = Dice.convertToLocalCurrency(true)
+    P2 = Dice/2
+    P2C = P2.convertToLocalCurrency(true)
+    P3 = Dice/3
+    P3C = P3.convertToLocalCurrency(true)
+    Actor = generatePersonTemporary()
+    Actor.dress()
+    Actor.show(2)
+    Actor2 = generatePersonTemporary()
+    Actor2.dress()
+    Actor2.show(3)
+    "Here comes two Johns ..."
+    Actor(Flirty):: "How much for you to have fun with both of us?"
+    0:: "Turn <Actor.him_or_her> down"
+    1:: "Rip <Actor.him_or_her> off (<P1C>)"
+    2:: "Offer a fair price (<P2C>)"
+    3:: "Give <Actor.him_or_her> a bargain (<P3C>)"
+    
+    If 0
+        Player(Sad):: "Sorry, but I'm not working right now ..."
+    Elseif choice*attractiveness > Actor:intelligence + Actor:interpersonal
+        Actor(Flirty):: "It looks like we have a deal, darling."
+        If WHERE == brothel
+            "Soon enough, I was following them to one of the brothel's rooms."
+        Else
+            "Soon enough, I was following them to a nearby motel room."
+            setBackground(home)
+        Endif
+        Sex(Actor, Player, Actor2)
+        money => money + Dice/choice        
+        perversion += 0.5
+    Else
+        Actor(Angry):: "No way, that's too expensive! You have too high an opinion of yourself, honey. I'll find us another whore elsewhere."
+    Endif
+    
+    SceneEnd()
