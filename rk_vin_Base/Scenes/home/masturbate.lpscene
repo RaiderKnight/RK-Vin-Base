@@ -5,6 +5,9 @@ WHO: none
 OTHER: none
 
     SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
 
         Masturb_TimesS = Player.getActorVar(VB_Masturb_TimesS)
         SetMasturb_TimesS = Player.getActorVar(VB_SetMasturb_TimesS)
@@ -48,6 +51,10 @@ OTHER: none
             
             EndIf
             
+        EndIf
+        
+        If HungerEnable > 0
+            Player.modifyActorVar(rk_VB_Hunger, -0.5)
         EndIf
 
     SceneEnd()

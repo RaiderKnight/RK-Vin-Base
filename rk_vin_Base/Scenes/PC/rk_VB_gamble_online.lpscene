@@ -6,6 +6,9 @@ OTHER: none
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+    
         stock_ZellVostro = Player.getActorVar(stock_ZellVostro)
         stock_LPPavilion = Player.getActorVar(stock_LPPavilion)
         stock_LPware = Player.getActorVar(stock_LPware)
@@ -94,7 +97,7 @@ OTHER: none
                     
                         money -= OnlineBet1
                         "You won <Win1P_loc>!"
-                        
+                        mood += 15
                         money += Win1P
                     
                     EndIf
@@ -103,7 +106,7 @@ OTHER: none
                     
                         money -= OnlineBet1
                         "You won <Win2P_loc>!"
-                        
+                        mood += 10
                         money += Win2P
                     
                     EndIf
@@ -112,7 +115,7 @@ OTHER: none
                     
                         money -= OnlineBet1
                         "You won <Win1P_loc>!"
-                        
+                        mood += 5
                         money += Win3P
                     
                     EndIf
@@ -120,13 +123,13 @@ OTHER: none
                     If PriceRolling == 0
                     
                         "You won nothing!"
-                        
+                        mood -= 1
                         money -= OnlineBet1
                         
                     Else
                     
                         "You won nothing!"
-                        
+                        mood -= 1
                         money -= OnlineBet1
                         
                     EndIf
@@ -141,7 +144,7 @@ OTHER: none
                     
                         money -= OnlineBet2
                         "You won <Win1P_loc>!"
-                        
+                        mood += 15
                         money += Win1P
                     
                     EndIf
@@ -150,7 +153,7 @@ OTHER: none
                     
                         money -= OnlineBet2
                         "You won <Win2P_loc>!"
-                        
+                        mood += 10
                         money += Win2P
                     
                     EndIf
@@ -159,7 +162,7 @@ OTHER: none
                     
                         money -= OnlineBet2
                         "You won <Win1P_loc>!"
-                        
+                        mood += 5
                         money += Win3P
                     
                     EndIf
@@ -167,13 +170,13 @@ OTHER: none
                     If PriceRolling == 0
                     
                         "You won nothing!"
-                        
+                        mood -= 1
                         money -= OnlineBet2
                         
                     Else
                     
                         "You won nothing!"
-                        
+                        mood -= 1
                         money -= OnlineBet2
                         
                     EndIf
@@ -188,7 +191,7 @@ OTHER: none
                     
                        money -= OnlineBet3
                        "You won <Win1P_loc>!"
-                        
+                        mood += 15
                         money += Win1P
                     
                     EndIf
@@ -197,7 +200,7 @@ OTHER: none
                     
                         money -= OnlineBet3
                         "You won <Win2P_loc>!"
-                        
+                        mood += 10
                         money += Win2P
                     
                     EndIf
@@ -206,7 +209,7 @@ OTHER: none
                     
                         money -= OnlineBet3
                         "You won <Win1P_loc>!"
-                        
+                        mood += 5
                         money += Win3P
                     
                     EndIf
@@ -214,13 +217,13 @@ OTHER: none
                     If PriceRolling == 0
                     
                         "You won nothing!"
-                        
+                        mood -= 1
                         money -= OnlineBet3
                         
                     Else
                     
                         "You won nothing!"
-                        
+                        mood -= 1
                         money -= OnlineBet3
                         
                     EndIf
@@ -235,7 +238,7 @@ OTHER: none
                     
                         money -= OnlineBet4
                         "You won <Win1P_loc>!"
-                        
+                        mood += 15
                         money += Win1P
                     
                     EndIf
@@ -244,7 +247,7 @@ OTHER: none
                     
                         money -= OnlineBet4
                         "You won <Win2P_loc>!"
-                        
+                        mood += 10
                         money += Win2P
                     
                     EndIf
@@ -253,7 +256,7 @@ OTHER: none
                     
                         money -= OnlineBet4
                         "You won <Win1P_loc>!"
-                        
+                        mood += 5
                         money += Win3P
                     
                     EndIf
@@ -261,13 +264,13 @@ OTHER: none
                     If PriceRolling == 0
                     
                         "You won nothing!"
-                        
+                        mood -= 1
                         money -= OnlineBet4
                         
                     Else
                     
                         "You won nothing!"
-                        
+                        mood -= 1
                         money -= OnlineBet4
                         
                     EndIf
@@ -282,7 +285,7 @@ OTHER: none
                     
                         money -= OnlineBet5
                         "You won <Win1P_loc>!"
-                        
+                        mood += 15
                         money += Win1P
                     
                     EndIf
@@ -291,7 +294,7 @@ OTHER: none
                     
                         money -= OnlineBet5
                         "You won <Win2P_loc>!"
-                        
+                        mood += 10
                         money += Win2P
                     
                     EndIf
@@ -300,7 +303,7 @@ OTHER: none
                     
                         money -= OnlineBet5
                         "You won <Win1P_loc>!"
-                        
+                        mood += 5
                         money += Win3P
                     
                     EndIf
@@ -308,13 +311,13 @@ OTHER: none
                     If PriceRolling == 0
                     
                         "You won nothing!"
-                        
+                        mood -= 1
                         money -= OnlineBet5
                         
                     Else
                     
                         "You won nothing!"
-                        
+                        mood -= 1
                         money -= OnlineBet5
                         
                     EndIf
@@ -326,6 +329,10 @@ OTHER: none
                 EndIf
 
             EndWhile
+            
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
             
         EndIf
     
