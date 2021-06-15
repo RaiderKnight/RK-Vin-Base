@@ -33,6 +33,19 @@
 <br>
 <hr>
 <br>
+<h3>Module requirements</h3>
+<p>At least the game LifePlay 4.0.4</p>
+<p>- rk_MoreRides </p>
+<p>- rk_MoneyMaker</p>
+<p>- rk_Home_Inventories</p>
+<p>- rk_Personal_Inventories</p>
+<p>- rk_ShopAddons</p>
+<br>
+<h3>Module conflict</h3>
+<p>None</p>
+<br>
+<hr>
+<br>
 <h3> How to install</h3>
 <p>At the moment, to try the modifications, you need to delete or move the vin_base folder</p>
 <br>

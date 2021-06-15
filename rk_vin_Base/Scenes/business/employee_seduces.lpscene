@@ -5,23 +5,369 @@ WHO: Actor = getSpecific(Employee); If !Actor.isDating() && Actor.isInterestedIn
 OTHER: none
 
     SceneStart()
-    "The best thing about being a business owner is that some of the more attractive employees tend to be a lot more flirtatous to me than the case if I wasn't their boss."
-    "One employee in particular, <Actor.name>, has been flirting intensely with me recently."
-    Actor:attractiontoplayer += 3
-    "However, I couldn't tell if <Actor.he_or_she> is just acting that way to give me false hope and benefit from any bias I might give <Actor.him_or_her> at work. I don't know if <Actor.he_or_she> would chicken out if things actually get heated."
-    0:: "Be bolder and try to take <Actor.him_or_her> to bed"
-    1:: "Just enjoy the attention"
     
-    If 0
-        If Actor.hadSex() || Random(30, 100) < Actor:attractiontoplayer
-            "I invited <Actor.name> over to my place after work, not being very subtle at all about what I really want from <Actor.him_or_her>. To my delight, <Actor.he_or_she> accepted my invitation."
-            moveTo(home)
-            setBackground(home)
-            Sex(Player, Actor)
-        Else
-            "I invited <Actor.name> over to my place after work, not being very subtle at all about what I really want from <Actor.him_or_her>. Unfortunately, <Actor.he_or_she> declined my invitation. <Actor.He_or_She> was just pretending to like me for career benefits, it seems."
-            Actor:attractiontoplayer -= 3
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        
+        "The best thing about being a business owner is that some of the more attractive employees tend to be a lot more flirtatous to me than the case if I wasn't their boss."
+        "One employee in particular, <Actor.name>, has been flirting intensely with me recently. <Actor.He_or_She> almost a have a brown nose, if you know what I mean..."
+        Actor:attractiontoplayer += 3
+        "However, I couldn't tell if <Actor.he_or_she> is just acting that way to give me false hope and benefit from any bias I might give <Actor.him_or_her> at work. I don't know if <Actor.he_or_she> would chicken out if things actually get heated."
+        0:: "Be bolder and try to take <Actor.him_or_her> to bed"
+        1:: "Just enjoy the attention"
+    
+        If 0
+        
+            If Actor.hadSex() || Random(30, 100) < Actor:attractiontoplayer
+            
+                "I invited <Actor.name> over to my place after work, not being very subtle at all about what I really want from <Actor.him_or_her>."
+                
+                If Actor.isDating() || Actor.isRelative() || [Random(30, 100) < interpersonal && [Actor:rapportwithplayer > 30 || Actor:attractiontoplayer > 30]] 
+                    Actor(Happy):: "Of course, let's go back to your place and chill."
+                    
+                    moveTo(home)
+                    setBackgroundCustom(livingroom)
+                    "We're now inside the apartment."
+                    choice = -1
+                    ate = false
+                    hadSex = false    
+                    Vanilla = IsModEnabled(vin_VanillaRealistic)
+                    MyHome = true
+            
+                    While choice < 5
+                        Kissed = false
+                        "What should I suggest to <Actor.name> that we do?"
+                        0:: "Chat"
+                        1:: !ate && stock_snack > 0.8:: "Eat something together"
+                        2:: stock_movie > 0.8 ::"Watch a movie"
+                        3:: stock_alcohol >= 0.8 :: "Drink alcohol"
+                        4:: !hadSex:: "Kiss <Actor.him_or_her>"
+                        5:: MyHome:: "Politely ask <Actor.him_or_her> to leave"
+            
+                        If 5
+                        
+                            "We said goodbye and went our ways."
+                            
+                            If HungerEnable > 0
+            
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                
+                            EndIf
+                            
+                        Else
+                        
+                            If 0
+                            
+                                "We simply sat and chat for a while about different things ..."
+                                mood += 1
+                                Actor:attractiontoplayer += 1
+                                Actor:rapportwithplayer += 1
+                                passTime(0.1, 0.2)
+                                
+                            Elseif 1
+                            
+                                "We made some quick snacks and enjoyed them together ..."
+                                ate = true
+                                If HungerEnable > 0
+            
+                                    Player.modifyActorVar(rk_VB_Hunger, 5)
+                
+                                EndIf
+                                Actor:attractiontoplayer += 1
+                                Actor:rapportwithplayer += 1
+                                mood += 1
+                                stock_snack -= 1
+                                energy += 5
+                                passTime(0.2, 0.4)
+                                
+                            Elseif 2
+                            
+                                "We watched a movie together ..."
+                                stock_movie -= 1
+                                mood += 1
+                                Actor:attractiontoplayer += 1
+                                Actor:rapportwithplayer += 1
+                                If HungerEnable > 0
+            
+                                    Player.modifyActorVar(rk_VB_Hunger, -0.5)
+                
+                                EndIf
+                                energy -= 1
+                                passTime(1, 2)
+                                
+                            Elseif 3
+                            
+                                Player.animate(drinkglass)
+                                Actor.animate(drinkglass)
+                                "We had a drink alcohol together ..."
+                                Player:intoxication += Random(0,10)
+                                Actor:intoxication += Random(0,10)
+                                stock_alcohol -= 1
+                                passTime(0.1, 0.2)
+                                Player.animate()
+                                Actor.animate()
+                                
+                            Elseif 4
+                            
+                                Kissed = true
+                                
+                            Endif
+
+                            If Kissed || [Actor.isInterestedIn(Player) && !hadSex && Actor:attractiontoplayer > Random(0, 200)]
+                            
+                                AnimatePair(Player, Actor, Kissing)
+                                Player(Kiss):: "..."
+                                Actor(Kiss):: "..."
+                                
+                                If Dating
+                                
+                                    "We kissed. It started slow but soon became more passionate. It was obvious what we both wanted ..."
+                                    
+                                Else
+                                
+                                    "We had a kiss, an awkward one at first, but soon moving towards a more passionate direction."
+                                    
+                                Endif
+                                
+                                "Should I let this escalate further?"
+                                0:: Vanilla:: "Make out"
+                                1:: "Stop"
+                    
+                                If 0
+                                
+                                    If Actor.isDating() || [Actor.isInterestedIn(Player) && [Actor.IsDominantSex(Player) || Actor:attractiontoplayer + Actor:perversion > Random(50, 200) || Actor:intoxication > 80]]
+                                        
+                                        "Our kiss got more and more steamy and soon we were making out, our hands all over each other."
+                                        
+                                        If TfGame() && Actor.isMale()
+                                        
+                                            "I'm a man trapped inside a woman's body. I don't think I'm gay, but here I am, about to hook up with my male date."
+                                        
+                                        Endif
+                                        
+                                        hadSex = true
+                                        Player:perversion += Random(0, 1)
+                                        Sex(Player, Actor)
+                                        Actor.show(2)
+                                        "The sex was amazing. We put our clothes back on afterwards and continued our date."
+                                        If HungerEnable > 0
+            
+                                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                
+                                        EndIf
+                                        passTime(0.2, 0.5)
+                                        
+                                    Else
+                                    
+                                        "Unfortunately for me, <Actor.name> didn't seem interested in letting things escalate any further and pulled away."
+                                        
+                                    Endif
+                                    
+                                Else
+                                
+                                    "I decided to stop it there and not go any further."
+                                    
+                                Endif
+
+                            Elseif Random(0, 100) < 20
+                                
+                                If Dating
+                                    "After a while, we were both exhausted and went to bed together for the night."
+                                    passTime(4, 8)
+                                    energy += Random(50, 100)
+                                    "The next morning ..."
+                                    If MyHome
+                                    
+                                        Actor(Happy):: "I've gotta go now, honey. Thanks for letting me stay the night. I can't wait to see you again soon!"
+                                    
+                                    Else
+                                    
+                                        Player(Happy):: "I've gotta go now, honey. Thanks for letting me stay the night. I can't wait to see you again soon!"
+                                    
+                                    Endif
+                                    
+                                    Actor:attractiontoplayer += Random(0, 1)
+                                    
+                                Else
+                                
+                                    If MyHome
+                                    
+                                        Actor(Happy):: "I've gotta go now. Thank you for inviting me in."
+                                        Player(Happy):: "Alright. Thank you for staying. Goodbye!"
+                                        
+                                    Else
+                                    
+                                        Actor(Happy):: "It has been a great day, but I'm getting quite tired now. Do you mind ..."
+                                        "Getting the message from <Actor.name>, I said goodbye."
+                                        
+                                    Endif
+                                    
+                                    "We parted ways."
+                                    
+                                Endif
+                                
+                                choice = 5
+                                
+                            Endif
+                            
+                        Endif
+                        
+                        If Actor:intoxication > 95
+                            
+                            "<Actor.name> is totally wasted, <Actor.he_or_she> can barely move... Do I take this opportunity to..."
+                            0::"Try to undress <Actor.him_or_her>"
+                            1::"Steal inside <Actor.his_or_her> bag/pockets"
+                            2::"Rape <Actor.him_or_her>"
+                            99::"Do nothing"
+                            
+                            If 0
+                                
+                                karma -= 1
+                                "Seeing that <Actor.his_or_her> is too drunk to account for what is going on around <Actor.him_or_her>, I take this opportunity to remove <Actor.his_or_her> some clothes ... "
+                                0::"Take off foot"
+                                1:: StrippingA == 1 ::"Take off bottom"
+                                2:: StrippingA == 2 ::"Take off outerwear"
+                                3:: StrippingA == 3 ::"Take off top"
+                                4::"Take off headwear"
+                                5::"Take off eyewear"
+                                99::"I changed my mind!"
+                                
+                                If 0
+                                
+                                    "I manage to strip off <Actor.his_or_her> feets!"
+                                    Actor.stripOne(Foot)
+                                    StrippingA += 1
+                                
+                                Elseif 1
+                                
+                                    "I manage to take off <Actor.his_or_her> bottom clothes!"
+                                    Actor.stripOne(Bottom)
+                                    StrippingA += 1
+                                    
+                                Elseif 2
+                                
+                                    "I manage to take off <Actor.his_or_her> outerwear!"
+                                    Actor.stripOne(Outerwear)
+                                    StrippingA += 1
+                                    
+                                Elseif 3
+                                
+                                    "I manage to take off <Actor.his_or_her> top clothes!"
+                                    Actor.stripOne(Top)
+                                    
+                                
+                                Elseif 4
+                                
+                                    "I manage to take off <Actor.his_or_her> headwear!"
+                                    Actor.stripOne(Headwear)
+                                    
+                                Elseif 5
+                                
+                                    "I manage to take off <Actor.his_or_her> eyewear!"
+                                    Actor.stripOne(Eyewear)
+                                    
+                                Endif
+                            
+                            Elseif 1
+                            
+                                StealChance = Random(1, 10)
+                                StealChance = StealChance.round()
+                                MoneyFoundSmall = Random(1, 200)
+                                MoneyFoundSmall_loc = MoneyFoundSmall.convertToLocalCurrency()
+                                MoneyFoundBig = Random(100, 600)
+                                MoneyFoundBig_loc = MoneyFoundBig.convertToLocalCurrency()
+                                karma -= 1
+                                
+                                If StealChance == 1
+                                
+                                    "I found <MoneyFoundSmall_loc> inside <Actor.his_or_her> pockets and <Actor.his_or_her> stuffs..."
+                                    money += MoneyFoundSmall
+                                    mood += 5
+                                    
+                                Elseif StealChance == 2
+                                
+                                    "I found nothing interesting inside <Actor.his_or_her> pockets and <Actor.his_or_her> stuffs..."
+                                    
+                                Elseif StealChance == 3
+                                
+                                    "I found <MoneyFoundSmall_loc> and 3 condoms inside <Actor.his_or_her> pockets and <Actor.his_or_her> stuffs..."
+                                    money += MoneyFoundSmall
+                                    stock_condom += 3
+                                    mood += 1
+                                    
+                                Elseif StealChance == 4
+                                
+                                    "I found 6 condoms and 20 pills inside <Actor.his_or_her> pockets and <Actor.his_or_her> stuffs..."
+                                    stock_condom += 6
+                                    stock_pill += 20
+                                    mood += 1
+                                    
+                                Elseif StealChance == 5
+                                
+                                    "I found <MoneyFoundBig_loc> inside <Actor.his_or_her> pockets and <Actor.his_or_her> stuffs..."
+                                    money += MoneyFoundBig
+                                    mood += 10
+                                    
+                                Elseif StealChance == 6
+                                
+                                    "I found nothing interesting inside <Actor.his_or_her> pockets and <Actor.his_or_her> stuffs..."
+                                    
+                                Elseif StealChance == 7
+                                
+                                    "I found 25 tobacco inside <Actor.his_or_her> pockets and <Actor.his_or_her> stuffs..."
+                                    stock_tobacco += 25
+                                    mood += 1
+                                    
+                                Elseif StealChance == 8
+                                
+                                    "I found <MoneyFoundSmall_loc> inside <Actor.his_or_her> pockets and <Actor.his_or_her> stuffs..."
+                                    money += MoneyFoundSmall
+                                    mood += 5
+                                    
+                                Elseif StealChance == 9
+                                
+                                    "I found 6 condoms inside <Actor.his_or_her> pockets and <Actor.his_or_her> stuffs..."
+                                    stock_condom += 6
+                                    mood += 1
+                                    
+                                Elseif StealChance == 10
+                                
+                                    "I found nothing interesting inside <Actor.his_or_her> pockets and <Actor.his_or_her> stuffs..."
+                                
+                                Endif
+                                
+                            Elseif 2
+                            
+                                karma -= 5
+                                "Seeing that <Actor.his_or_her> is too drunk to account for what is going on around <Actor.him_or_her>, I take this opportunity to rape <Actor.his_or_her> outright ... "
+                                Player:perversion += Random(2, 5)
+                                "So I pull down <Actor.his_or_her> pants and start have fun with that wasted <Actor.guy_or_girl>..."
+                                Actor.makeInterested(Player)
+                                Sex(Player, Actor)
+                                Player:arousal -= 10
+                            
+                            Else
+                            
+                               "I decided to stop it there and not go any further."
+
+                            EndIf
+
+                        Endif       
+
+                    Endwhile
+                    
+                Else
+                    Actor(Sad):: "Sorry, I don't feel like I know you enough to go home with you."
+                Endif
+  
+            Else
+            
+                "I invited <Actor.name> over to my place after work, not being very subtle at all about what I really want from <Actor.him_or_her>. Unfortunately, <Actor.he_or_she> declined my invitation. <Actor.He_or_She> was just pretending to like me for career benefits, it seems."
+                Actor:attractiontoplayer -= 3
+                
+            Endif
+            
         Endif
-    Endif
+    
     SceneEnd()
-    timeout(100, employee_seduces)
+    timeout(200, employee_seduces) // Scene improved by Raddeck
