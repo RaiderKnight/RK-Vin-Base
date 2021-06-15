@@ -5,52 +5,95 @@ WHO: Actor = getSpecific(Employee); Actor2 = getSpecific(Employee); If !Actor.is
 OTHER: none
 
     SceneStart()
-    Actor2.dress()
-    Actor.dress()
-    Actor2.show(3)
-    Actor.show(2)
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Actor2.dress()
+        Actor.dress()
+        Actor2.show(3)
+        Actor.show(2)
 
-    "Wait, are those my employees <Actor2.name> and <Actor.name> walking together towards a storeroom?"
-    "What should I do?"
-    0:: "Follow them"
-    1:: "No big deal"
+        "Wait, are those my employees <Actor2.name> and <Actor.name> walking together towards a storeroom?"
+        "What should I do?"
+        0:: "Follow them"
+        1:: "No big deal"
     
-    If 0
-        "Could they be having an affair? In the middle of their shift, no less!"
-        "What should I do now?"
-        0:: "Peep"
-        1:: "Leave it"
-        
         If 0
-            SneakGame()
-            If Random(0, 100) < sneak
-                "Luckily, they forgot to lock the door behind them, leaving me an easy opening to have a peek."
-                Sex(Actor, Actor2)
-                Actor.hide()
-                Actor2.hide()
-                Player.show(0)
-            Else
-                "Unfortunately, they locked the door as soon as they went inside the storeroom and I couldn't see a thing."
-                "Still, I could hear sounds of moaning. It was obvious what they were doing in there."
+        
+            "Could they be having an affair? In the middle of their shift, no less!"
+            "What should I do now?"
+            0:: "Peep"
+            1:: "Leave it"
+        
+            If 0
+            
+                SneakGame()
+                If Random(0, 100) < sneak
+                
+                    "Luckily, they forgot to fully closed the door behind them, leaving me an easy opening to have a peek."
+                    Sex(Actor, Actor2)
+                    Actor.hide()
+                    Actor2.hide()
+                    Player.show(0)
+                    arousal += 1
+                    perversion += 2
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    
+                Else
+                
+                    "Unfortunately, they closed and locked the door as soon as they went inside the storeroom and I couldn't see a thing."
+                    "Still, I could hear sounds of moaning. It was obvious what they were doing in there."
+                    
+                Endif
+                
             Endif
-        Endif
         
-        "Now, what should I do about what I saw?"
-        0:: "Fire them"
-        1:: "Stay silent"
+            energy -= 3
+            "Now, what should I do about what I saw?"
+            0:: "Fire them, it is against the rules of the company"
+            1:: "Suspend them for 3 days"
+            2:: "Stay silent"
+            3:: "Stay silent but show them that you are aware"
         
-        If 0
-            "I decided to fire their asses for this unacceptable behaviour at work."        
-            Actor:rapportwithplayer -= Random(0, 50)
-            Actor2:rapportwithplayer -= Random(0, 50)
-            Actor.removeEmployee()
-            Actor2.removeEmployee()
+            If 0
+                
+                "I decided to fire their asses for this unacceptable behaviour at work."        
+                Actor:rapportwithplayer -= Random(0, 50)
+                Actor2:rapportwithplayer -= Random(0, 50)
+                Actor.removeEmployee()
+                Actor2.removeEmployee()
+                mood -= 5
+            
+            ElseIf 1
+            
+                "<Actor2.name> and <Actor.name>, they're valuable employees for the company nevertheless."
+                "So, I decided to suspend them for 3 days without salary, next time they will think before doing sex at job."
+                Actor:rapportwithplayer -= Random(0, 10)
+                Actor2:rapportwithplayer -= Random(0, 10)
+                mood -= 5
+            
+            ElseIf 2
+            
+                "Let's be honest: I has my own sex at work fantasies. They're valuable employees for the company nevertheless."
+            
+            Else
+            
+                "In fact, I can't afford losing these two employees, they're valuable for the company. I give them a chance..."
+                karma += 1
+                
+            Endif
+            
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -0.5)
+            EndIf
+            
         Else
-            "Let's be honest: I has my own sex at work fantasies. They're valuable employees for the company nevertheless."
+        
+            "Who cares? They're probably just looking for some supplies together."
+            
         Endif
-    Else
-        "Who cares? They're probably just looking for some supplies together."
-    Endif
     
-    SceneEnd()
-    timeout(200, employee_affair)
+    SceneEnd()  // Scene improved by Raddeck
+    timeout(400, employee_affair)

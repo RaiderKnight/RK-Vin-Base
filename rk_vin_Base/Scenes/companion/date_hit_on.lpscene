@@ -6,6 +6,8 @@ OTHER: none
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         Actor2 = generatePersonTemporary()
         Actor2.dress()
         Actor2.show(2)
@@ -17,83 +19,128 @@ OTHER: none
         1:: "Let <Actor2.him_or_her> continue flirting with <Actor.name>"
     
         If 0
+        
             Player(Angry):: "Fuck off! <Actor.He_or_She>'s taken!"
             Actor:attractiontoplayer += Random(0, 2)
             masochist -= Random(0, 1)
+            
         Else
+        
             "No point making a big deal of this ... <Actor.name> is the type of <Actor.guy_or_girl> that gets a lot of attention anyway."
             Actor:attractiontoplayer -= Random(0, 2)
             masochist += Random(0, 1)
+            
             If Random(35, 65) < Actor:perversion && Actor.isInterestedIn(Actor2) && isModEnabled(vin_NTR)
+            
                 "<Actor.name> doesn't seem a tiny bit put off by my presence there and also doesn't mind the aggressive flirting from <Actor2.name>."
                 "They continue to flirt as if I wasn't there!"
-                Actor2:: "Let's get out of here, darling? I can't wait to get to know you more ... "
+                Actor2(Flirty):: "Let's get out of here, darling? I can't wait to get to know you more ... "
                 "<Actor2.He_or_She> can't be serious in inviting <Actor.name> to come with <Actor2.him_or_her> right in front of me ... have I turned invisible or something?"
+                
                 If masochist > Actor:masochist + 20
+                
                     "For some reason, my tongue seems to be all tied up and I can't mutter a word of disapproval."
                     "<Actor2.name> took my silence as submission and didn't have to think twice about stealing my date away right in front of me."
-                    Actor:: "Don't wait up on me, I'm gonna go play with my new friend"
+                    Actor(Excited):: "Don't wait up on me, I'm gonna go play with my new friend"
                     Went = true
+                    
                 Else
+                
                     "Maybe I should stop this before it's too late. I'm not THAT much of a pushover, am I?"
                     0:: "Put an end to it"
                     1:: "Let them go"
                 
                     If 0
+                    
                         Player:: "Excuse me, but <Actor.he_or_she> is with me."
                         Went = false
                         "<Actor2.name> got the message and left us alone."
+                        Actor:attractiontoplayer += 1
+                        Actor:rapportwithplayer += 1
+                        masochist -= Random(0, 2)
+                        
                     Else
+                    
                         "I stayed silent and just like that the stranger took my date with <Actor2.him_or_her>"
                         Actor:: "Don't worry. We're just going to hang out a bit and check out this club that <Actor2.name> just told me about."
                         Went = true
                         masochist += Random(0, 2)
+                        mood -= Random(0, 2)
+                        
                     Endif
+                    
                 Endif
            
                 If Went
+                
                     "<Actor2.name> and <Actor.name> is about to leave together. Should I leave them alone or secretly follow them?"
                     0:: "Let them be"
                     1:: "Follow them"
                 
                     If 1
+                    
                         setBackground(hotel)
                         "I knew it ... The cheeky <Actor2.guy_or_girl> took <Actor.name> straight to the nearest hotel ..."
                         0:: "Peep on them"
                         1:: "It's humiliating enough already"
                     
                         If 0
+                        
                             Player.hide()
                             "I couldn't have imagined when I first invited <Actor.name> to hang out that tonight would end with me watching <Actor.him_or_her> fucking some random <Actor2.guy_or_girl> <Actor.he_or_she>'s just met."
                             setBackground(home)
                             Sex(Actor2, Actor)
                             masochist += Random(0, 3)
+                            
+                            If Actor.isDating()
+                
+                                mood -= 10
+                    
+                            Elseif Actor.isRelative()
+                
+                                mood -= 1
+                    
+                            Else
+                
+                                mood -= 5
+                    
+                            Endif
+                
                         Endif
+                        
                     Endif
                     endDate()
                     Player.show()
+                    
                 Endif
+                
             Else
+            
                 If Actor.isDating()
                 
                     Actor:: "Can't you see I'm already here with my <Player.boyfriend_or_girlfriend>?"
+                    mood += 1
                     
                 Elseif Actor.isRelative()
                 
                     Actor:: "Can't you see I'm already here with my <Actor.callplayer>?"
+                    mood += 1
                     
                 Else
                 
                     Actor:: "Can't you see I'm already here with someone?"
+                    mood += 1
                     
                 Endif
                 
                 Actor:: "Please leave me alone!"
                 "<Actor.name> firmly rejected the advances from the stranger."
+                mood += 3
+                arousal += 1
                 
             Endif
             
         Endif
         
-    SceneEnd()
+    SceneEnd() // Scene improved by: Raddeck
     timeout(24, date_hit_on)

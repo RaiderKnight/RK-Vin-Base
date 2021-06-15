@@ -1,0 +1,30 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        
+        If HungerEnable > 0 && Hunger <= 0
+            
+            "GAME OVER! You just die of starvation!"
+            0:: "Load last save"
+            1:: "Revive my character (cheat)"
+    
+            If 0
+            
+                sceneEndLoadLastSave()
+                
+            Else
+            
+                sceneEnd()
+                
+            Endif
+            
+        EndIf
+        
+    SceneEnd()

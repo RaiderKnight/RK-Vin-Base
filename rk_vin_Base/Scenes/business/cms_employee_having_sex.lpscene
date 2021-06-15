@@ -6,6 +6,8 @@ OTHER: none
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         stock_ZellVostro = Player.getActorVar(stock_ZellVostro)
         stock_LPPavilion = Player.getActorVar(stock_LPPavilion)
         stock_LPware = Player.getActorVar(stock_LPware)
@@ -93,7 +95,10 @@ OTHER: none
                         Actor.strip()
                         Actor.show()
                         Sex(Player, Actor)
-                        
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                
                     Else
                        
                        perversion += 1
@@ -130,6 +135,9 @@ OTHER: none
                     Actor.strip()
                     Actor.show()
                     Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
                     
                 Else
                 

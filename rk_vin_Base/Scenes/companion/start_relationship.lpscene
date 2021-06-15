@@ -41,7 +41,9 @@ OTHER: !Player.isDating() || [isModEnabled(vin_Polyamorous) && OpenRelationship(
                         CurrentCompanion(Curious):: "Of course, <Player.name>. What is it?"
                     
                         If interpersonal < 50
+                        
                             "Alright, this is the moment. <Player.name>, you can do this! Be brave. Keep calm ... Keep calm ... Don't screw this up!"
+                            
                         Endif
                     
                         Player(Happy):: "You know, although we haven't known each other for too long, I have grown quite fond of you and I hope you feel the same ..."
@@ -67,6 +69,9 @@ OTHER: !Player.isDating() || [isModEnabled(vin_Polyamorous) && OpenRelationship(
                                 perversion += Random(0, 0.5)
                                 CurrentCompanion.show(2)
                                 "After having sex, we continued our date, now as a new couple."
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
                                 
                             Else
                             

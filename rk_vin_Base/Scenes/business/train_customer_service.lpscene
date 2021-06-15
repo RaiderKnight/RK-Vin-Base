@@ -6,6 +6,8 @@ OTHER: none
 
     SceneStart()
 
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         last = Actor.getActorVar(rk_VBase_LastJobTrainingCS)
         daysSinceBirth = (Player:Age * 365) // get the current date 
         NotYetWait = daysSinceBirth - last
@@ -96,6 +98,9 @@ OTHER: none
                         passTime(0.5, 1)
                         Actor:attractiontoplayer += 2
                         Actor:rapportwithplayer += 2
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
                         
                     ElseIf Actor.isInterestedIn(Player)
                     

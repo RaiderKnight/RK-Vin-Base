@@ -7,6 +7,8 @@ OTHER: none
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         dressFormal()
         Actor = generatePersonTemporary()
         Rent = calculateRent()
@@ -68,6 +70,9 @@ OTHER: none
                             Sex(Actor, Player)
                             mood += 2
                             passTime(0.5, 1)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
                     
                         ElseIf Actor.isInterestedIn(Player)
                     
@@ -136,6 +141,9 @@ OTHER: none
                         Sex(Actor, Player)
                         mood += 2
                         passTime(0.5, 1)
+                        If HungerEnable > 0
+                           Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
                     
                     Else
                         

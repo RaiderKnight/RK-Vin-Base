@@ -6,6 +6,8 @@ OTHER: none
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         // If the player is dating someone we need to end the date, so we can check this NPCs stats as well
         If CurrentCompanion.isValid()
             Player::"<CurrentCompanion.Name>, I need to take care of my business. See you later!"
@@ -83,6 +85,9 @@ OTHER: none
                         Sex(Player, Actor)
                         Player.show(0)
                         Actor.show(2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
                         Sex = true
                         Hired = true
                     Else
