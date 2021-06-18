@@ -5,82 +5,171 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    setBackground(street)
-    "Should I attempt a home invasion?"
-    0:: "Yes"
-    1:: "No"
     
-    "That house looks like it's got some valuables inside."
-    SneakGame()
-    If Random(0, 100) < sneak
-        setBackground(home)
-        "I found a way into the house without getting detected."
-        karma -= 1
-        Actor = generatePersonTemporary()
-        Actor.show(2)
-        Actor.closeEyes(true)
-        "The owner is fast asleep. What a shock it will be for <Actor.him_or_her> to wake up to a cleared-out home tomorrow!"
-        0:: "Grab some valuables quickly and run"
-        1:: "Try to take everything"
-        2:: isModEnabled(vin_NonConsensual):: "The home owner is kinda hot ..."
+        stock_cheapJType = Player.getActorVar(stock_cheapJType)
+        stock_AffordableJType = Player.getActorVar(stock_AffordableJType)
+        stock_ClassyJType = Player.getActorVar(stock_ClassyJType)
+        stock_NiceJType = Player.getActorVar(stock_NiceJType)
+        stock_FashionJType = Player.getActorVar(stock_FashionJType)
+        stock_HandcraftedJType = Player.getActorVar(stock_HandcraftedJType)
+        stock_FinestJType = Player.getActorVar(stock_FinestJType)
+        stock_FirstQualityJType = Player.getActorVar(stock_FirstQualityJType)
+        jewel_value = Player.getActorVar(jewel_value)
+        jewel_value = stock_cheapJType + stock_AffordableJType + stock_ClassyJType + stock_NiceJType + stock_FashionJType + stock_HandcraftedJType + stock_FinestJType + stock_FirstQualityJType
         
-        If 0
-             "I grabbed any valuables in sight as quickly as possible and got out of there as soon as I can. Can't risk the home owner waking up."
-             money += Random(100, 250)
-        Elseif 1
-            SneakGame()
-            If Random(0, 150) < sneak
-                "I took my time to clear out the house of absolutely everything remotely valuable. It should be worth the effort ... and the extra risk."
-                money += Random(250, 500)            
-            Else
-                Actor.closeEyes(false)
-                Actor(Surprised):: "What? Who are you? Help!!!! Thief!"
-                0:: "Run"
-                
-                If Random(0, 100) < fitness
-                    "Thankfully, I made a safe escape before the cops arrived. That was close, phew ..."
-                Else
-                    "I tried to run, but the cops arrived too quickly and arrested me."
-                    sentence => 730
-                    followUp(imprisoned)
-                Endif
-            Endif
-        Else
-            "I couldn't help but notice how hot the home owner is ... Maybe it's my lucky day."
-            0:: "Rape <Actor.him_or_her>"
-            1:: "Just grab some valuables quickly"
-            
+        setBackground(street)
+        "Should I attempt a home invasion?"
+        0:: "Yes"
+        1:: "No"
+    
+        "That house looks like it's got some valuables inside."
+        SneakGame()
+        
+        If Random(0, 100) < sneak
+        
+            setBackground(home)
+            "I found a way into the house without getting detected."
+            karma -= 1
+            sneak += 1
+            Actor = generatePersonTemporary()
+            Actor.show(2)
+            Actor.closeEyes(true)
+            "The owner is fast asleep. What a shock it will be for <Actor.him_or_her> to wake up to a cleared-out home tomorrow!"
+            0:: "Grab some valuables quickly and run"
+            1:: "Try to take everything"
+            2:: isModEnabled(vin_NonConsensual):: "The home owner is kinda hot ..."
+        
             If 0
-                karma -= 10
-                filter(Aggressive)
-                TalkNonConsensual()
-                SexNoAffair(Player, Actor)
-                Actor.hide()
+            
+                 "I grabbed any valuables in sight as quickly as possible and got out of there as soon as I can. Can't risk the home owner waking up."
+                 money += Random(100, 250)
+                 sneak += 1
+                 
+            Elseif 1
+            
                 SneakGame()
                 If Random(0, 150) < sneak
-                    "That was something else. Enjoy waking up tomorrow with a belly full of cum, whore!"
-                    money += Random(100, 250)            
-                Else
-                    Actor.show(2)
-                    Actor.closeEyes(false)
-                    Actor(Surprised):: "What? Who are you? Help!!!! Rapist!"
-                    0:: "Run"
+                
+                    "I took my time to clear out the house of absolutely everything remotely valuable. It should be worth the effort ... and the extra risk."
+                    DoIfindJewel = Random(0, 1)
+                    DoIfind2Jewels = Random(0, 2)
+                    money += Random(100, 250)
+                    Player.modifyActorVar(stock_cheapJType, DoIfind2Jewels)
+                    Player.modifyActorVar(stock_AffordableJType, DoIfind2Jewels)
+                    Player.modifyActorVar(stock_ClassyJType, DoIfind2Jewels)
+                    Player.modifyActorVar(stock_NiceJType, DoIfind2Jewels)
+                    Player.modifyActorVar(stock_FashionJType, DoIfindJewel)
+                    Player.modifyActorVar(stock_HandcraftedJType, DoIfindJewel)
+                    Player.modifyActorVar(stock_FinestJType, DoIfindJewel)
+                    Player.modifyActorVar(stock_FirstQualityJType, DoIfindJewel)
+                    mood += 2
+                    sneak += 1
                     
+                Else
+                    Actor.closeEyes(false)
+                    Actor(Surprised):: "What? Who are you? Help!!!! Thief!"
+                    0:: "Run"
+                
                     If Random(0, 100) < fitness
+                    
                         "Thankfully, I made a safe escape before the cops arrived. That was close, phew ..."
+                        sneak += 1
+                        
                     Else
+                    
                         "I tried to run, but the cops arrived too quickly and arrested me."
-                        sentence => 2920
+                        sentence => 730
+                        mood -= 5
+                        sneak -= 5
                         followUp(imprisoned)
+                        
                     Endif
-                Endif           
+                    
+                Endif
+                
             Else
-                money += Random(100, 250)
+            
+                "I couldn't help but notice how hot the home owner is ... Maybe it's my lucky day."
+                0:: "Rape <Actor.him_or_her>"
+                1:: "Just grab some valuables quickly"
+            
+                If 0
+                
+                    karma -= 10
+                    filter(Aggressive)
+                    TalkNonConsensual()
+                    SexNoAffair(Player, Actor)
+                    Actor.hide()
+                    SneakGame()
+                    
+                    If Random(0, 150) < sneak
+                    
+                        "<Actor.He_or_She> didn't notice anything... <Actor.He_or_She> didn't awake... Enjoy waking up tomorrow with a ass full of cum, whore!"
+                        DoIfindJewel = Random(0, 1)
+                        DoIfind2Jewels = Random(0, 2)
+                        money += Random(100, 250)
+                        Player.modifyActorVar(stock_cheapJType, DoIfind2Jewels)
+                        Player.modifyActorVar(stock_AffordableJType, DoIfind2Jewels)
+                        Player.modifyActorVar(stock_ClassyJType, DoIfind2Jewels)
+                        Player.modifyActorVar(stock_NiceJType, DoIfind2Jewels)
+                        Player.modifyActorVar(stock_FashionJType, DoIfindJewel)
+                        Player.modifyActorVar(stock_HandcraftedJType, DoIfindJewel)
+                        Player.modifyActorVar(stock_FinestJType, DoIfindJewel)
+                        Player.modifyActorVar(stock_FirstQualityJType, DoIfindJewel)
+                        mood += 2
+                        sneak += 1
+                        
+                    Else
+                    
+                        Actor.show(2)
+                        Actor.closeEyes(false)
+                        Actor(Surprised):: "What? Who are you? Help!!!! Rapist!"
+                        0:: "Run"
+                    
+                        If Random(0, 100) < fitness
+                        
+                            "Thankfully, I made a safe escape before the cops arrived. That was close, phew ..."
+                            sneak += 1
+                            
+                        Else
+                        
+                            "I tried to run, but the cops arrived too quickly and arrested me."
+                            sentence => 2920
+                            mood -= 5
+                            sneak -= 5
+                            followUp(imprisoned)
+                            
+                        Endif
+                        
+                    Endif 
+                    
+                Else
+                
+                    DoIfindJewel = Random(0, 1)
+                    DoIfind2Jewels = Random(0, 2)
+                    money += Random(100, 250)
+                    Player.modifyActorVar(stock_cheapJType, DoIfind2Jewels)
+                    Player.modifyActorVar(stock_AffordableJType, DoIfind2Jewels)
+                    Player.modifyActorVar(stock_ClassyJType, DoIfind2Jewels)
+                    Player.modifyActorVar(stock_NiceJType, DoIfind2Jewels)
+                    Player.modifyActorVar(stock_FashionJType, DoIfindJewel)
+                    Player.modifyActorVar(stock_HandcraftedJType, DoIfindJewel)
+                    Player.modifyActorVar(stock_FinestJType, DoIfindJewel)
+                    Player.modifyActorVar(stock_FirstQualityJType, DoIfindJewel)
+                    mood += 2
+                    sneak += 1
+                    
+                Endif
+                
             Endif
+            
+        Else
+        
+            "Unfortunately for me, despite my best efforts, I couldn't find a way into the house without alerting the owners, who promptly called the cops."
+            "I couldn't risk getting caught. Let's get out of here before the cops arrive."
+            mood -= 2
+            sneak -= 2
+            
         Endif
-    Else
-        "Unfortunately for me, despite my best efforts, I couldn't find a way into the house without alerting the owners, who promptly called the cops."
-        "I couldn't risk getting caught. Let's get out of here before the cops arrive."
-    Endif
     
-    SceneEnd()
+    SceneEnd() // Scene improved by Raddeck
