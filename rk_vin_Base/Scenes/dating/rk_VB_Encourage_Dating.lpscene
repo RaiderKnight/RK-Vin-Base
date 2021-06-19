@@ -1,0 +1,34 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: Dating = getSpecific(Dating); If Dating.isInterestedIn(Player)
+OTHER: none
+
+    SceneStart()
+
+        "How I should encourage <Dating.name>?"
+        0:: attractiveness > 70 ::"Encourage <Dating.name> to be better-dressed"
+        1:: interpersonal > 70"Encourage <Dating.name> to be more social"
+        2:: fitness > 70 ::"Encourage <Dating.name> to exercise more"
+        5:: intelligence > 70 ::"Encourage <Dating.name> to read more"
+        99::"I changed my mind"
+
+        If 0
+        
+            followUp(ugly_dating) //better-dressed
+        
+        ElseIf 1
+        
+            followUp(awkward_dating) //social
+            
+        ElseIf 2
+        
+            followUp(weak_dating) //exercise
+
+        ElseIf 5
+        
+            followUp(ignorant_dating) //read
+
+        EndIf
+
+    SceneEnd() // Scene improved by Raddeck
