@@ -14,7 +14,7 @@
 <p>I made the decision to create a mod better suited to my mods and to expand the LifePlay world, containing more completed/fixed scenes, more texts, more possible actions and consequences, less popup scenes, menu user with fewer elements (group actions / scenes into a single element), ...</p>
 <br>
 <p><strong>Objective of the project :</strong></p>
-<p>The goal is simply to help Vinfamy build his game faster. This gives Vinfamy more time to correct its coding, create functions, new content, ... By creating a team of "Lone Wolf modders" without any conditions, to extend and redo the vin_Base mod to our liking. So if Vinfamy likes what has been achieved, he can dig in and take whatever he wants to improve the LifePlay game.</p>
+<p>The goal is simply to help Vinfamy build his game faster. This gives Vinfamy more time to correct its coding, create functions, new content, ... By creating a team of "Lone Wolf modders" without any conditions, to extend and redo the vin_Base mod to our liking. So if Vinfamy likes what has been achieved, he can dig in and take whatever he wants to improve the LifePlay game, in condition to mentioned who did the modifications.</p>
 <br>
 <p><strong>The goal is:</strong></p>
 <p>- Add more texts</p>
@@ -23,13 +23,17 @@
 <p>- Add missing bonuses on certain scenes (mood, fitness, arousal, ...)</p>
 <p>- Correct spelling mistakes</p>
 <p>- Correct coding errors</p>
+<p>- Reduce number of popup scenes</p>
 <p>- Create scenes for "lpaction" files which do not have an assigned scene.</p>
 <p>- Improve navigation in the user menu (menu on the left inside the game)</p>
 <p>- Basically, completely improve this mod</p>
-<p>- Add more texts and choices;)</p>
+<p>- Add more texts and choices ;)</p>
 <br>
 <p>I will also include all remaked scenes already made, who fit with rk_vin_Base, from other modders who are in/will join this project.</p>
 <br>
+<h3>How to contribute or Join</h3>
+<p>- Contact me on <a href="https://discord.gg/d3U9E2wb4Y">Discord</a></p>
+<p>No need to be a modder to join this project, you can only be a writer, and I will do the coding.<p>
 <br>
 <hr>
 <br>
@@ -53,8 +57,8 @@
 <p>Just delete or move folder to an another places in your pc for backup.</p>
 <p>C:\...\LifePlay\Content\Modules\vin_Base\</p>
 <br>
-<p><strong>After, nside C:\Download\RK-Vin-Base\ folder</strong></p>
-<p>Copy and paste: vin_Base and rk_vin_Base, inside:</p>
+<p><strong>After, inside C:\Download\RK-Vin-Base\ folder</strong></p>
+<p>Copy and paste these two folders: vin_Base and rk_vin_Base, inside:</p>
 <p>C:\...\LifePlay\Content\Modules\</p>
 <p>Make sure you don't leave an extra directory level for the mod. For example, it should go like this:</p>
 <p>c:\..\LifePlay\Content\Modules\vin_Base</p>
