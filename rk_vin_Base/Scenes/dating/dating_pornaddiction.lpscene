@@ -20,6 +20,9 @@ OTHER: !isWithCompanion() && Random(0, 1000) < intelligence
         
             "I decided to take the moral high ground and be quite judgemental to <Dating.him_or_her> about his porn habits. I hope that being embarrassed would stop <Dating.him_or_her> from watching so much porn all the time."
             Dating:attractiontoplayer -= Random(0, 2)
+            masochist -= 1
+            mood -= 1
+            arousal -= 5
             
         Else
         
@@ -27,12 +30,13 @@ OTHER: !isWithCompanion() && Random(0, 1000) < intelligence
             Dating.dress()
             Dating.show(2)
             Dating(Sad):: "Okay baby, I'm willing to give counseling a try."
+            mood += 3
             "After a few sessions, <Dating.name>'s addiction seems to have reduced a bit and <Dating.he_or_she> thanked me for encouraging <Dating.him_or_her> to seek help in the first place."
             karma += 2.5
-            Dating:perversion -= Random(0, 2)
+            Dating:perversion -= Random(0, 5)
             Dating:attractiontoplayer += Random(0, 2)
             
         Endif
 
-        timeout(200, dating_pornaddiction)
+        timeout(400, dating_pornaddiction)
     SceneEnd() // Scene improved by Raddeck

@@ -4,29 +4,43 @@ WHEN: 16 - 24
 WHO: Dating = getSpecific(Dating)
 OTHER: none
 
-SceneStart()
+    SceneStart()
 
-"Today is the anniversary of me and <Dating.name>. We decided to go to a fancy restaurant together."
-karma += 10
-Loc = findNearbyBuilding(restaurant)
-moveTo(Loc)
-Dating.dress()
-Dating.show(2)
-"The dinner was great and <Dating.name> also gave me an expensive gift, but it's obvious what <Dating.name> truly wants from me as an anniversary gift ..."
-0:: "Invite <Dating.him_or_her> home for sex"
-1:: "Say goodbye"
-
-If 0
-    Dating:attractiontoplayer += Random(0, 2)
-    moveTo(home)
-    Sex(Player, Dating)
-    Dating.show(2)
-    "Anniversary sex is the best! I feel like nothing can separate us right now. May our relationship continue forever ...."
-    karma += 2.5
-Else
-    "I just don't feel like it today. After the dinner, we went back to our respective homes instead. <Dating.name> was clearly disappointed."
-    Dating:attractiontoplayer -= Random(0, 10)
-Endif
-
-timeoutprecise(8760, anniversary)
-SceneEnd()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        "Today is the anniversary of me and <Dating.name>. We decided to go to a fancy restaurant together."
+        mood += 5
+        karma += 10
+        arousal += 1
+        Loc = findNearbyBuilding(restaurant)
+        moveTo(Loc)
+        Dating.dress()
+        Dating.show(2)
+        "The dinner was great and <Dating.name> also gave me an expensive gift, but it's obvious what <Dating.name> truly wants from me as an anniversary gift ..."
+        0:: arousal > 15::"Invite <Dating.him_or_her> home for sex"
+        1:: "Say goodbye"
+        
+        If 0
+        
+            Dating:attractiontoplayer += Random(0, 2)
+            Dating:rapportwithplayer += Random(0, 2)
+            moveTo(home)
+            Sex(Player, Dating)
+            Dating.show(2)
+            "Anniversary sex is the best! I feel like nothing can separate us right now. May our relationship continue forever ...."
+            karma += 2.5
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+            
+        Else
+        
+            "I just don't feel like it today. After the dinner, we went back to our respective homes instead. <Dating.name> was clearly disappointed."
+            Dating:attractiontoplayer -= Random(0, 10)
+            Dating:rapportwithplayer += Random(0, 5)
+            
+        Endif
+        
+        timeoutprecise(8760, anniversary)
+        
+    SceneEnd() // Scene improved by Raddeck
