@@ -8,15 +8,15 @@ OTHER: !isWithCompanion() && [jobexperience > 60 || money > 20000] && age > 30
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
-        SugarBabe = SugarBabe.getGlobal()
+        SugarParent = SugarParent.getGlobal()
         
-        If SugarBabe > 0
+        If SugarParent > 0
         
-            Actor = getSpecific(SugarBabe)
+            Actor = getSpecific(SugarParent)
             secondScreen(Actor)
             Actor.dress()
             Actor.show(2)
-            "What should I ask to my sugarbabe?"
+            "What should I ask to my Sugar<Actor.Daddy_or_Mommy>?"
             0:: "Ask to hangout tonight"
             1:: "No"
             2:: "End arrangement"
@@ -24,12 +24,12 @@ OTHER: !isWithCompanion() && [jobexperience > 60 || money > 20000] && age > 30
             If 0
             
                 Player(Happy):: "Honey, I miss you. Let's meet tonight."
-                Actor(Happy):: "I miss you too, <Player.Daddy_or_Mommy>. Let's meet."
+                Actor(Happy):: "I miss you too, <Player.name>. Let's meet."
                 secondScreen()
                 Loc = findNearbyBuilding(restaurant, bar, nightclub)
                 moveTo(Loc)
                 Actor.show()
-                "With that said, that evening, I took my sugarbabe to a nice expensive date and as usual, we ended up in luxury hotel suite afterwards."
+                "With that said, that evening, we meet to a nice expensive restaurant and as usual, we ended up in luxury hotel suite afterwards."
                 Loc = findNearbyBuilding(hotel)
                 moveTo(Loc)
                 setBackground(home)
@@ -38,25 +38,26 @@ OTHER: !isWithCompanion() && [jobexperience > 60 || money > 20000] && age > 30
                     Player.modifyActorVar(rk_VB_Hunger, -1)
                 EndIf
                 Actor.show(2)
-                "With the deed done, we spent the night together and I left <Actor.name> a big fat envelope in the morning. Getting pampered and spoiled, having great sex AND getting paid - no wonder <Actor.he_or_she> can't say no."
+                "With the deed done, we spent the night together and <Actor.name> give me a big fat envelope, as usual."
                 money -= Random(100, 300)
-                perversion += Random(0, 0.25)   
+                perversion += Random(0, 0.25)
+                moood += 2
                 
             Elseif 1
             
-                "Not today. These dates can be quite expensive."
+                "Not today. I'm not in the mood actually!"
                 
             Else
             
-                "To be honest, I'm getting bored of <Actor.name>, so I told <Actor.him_or_her> our arrangement was over. I have no doubt <Actor.he_or_she> will find another sugarparent soon though."
-                SugarParent.clearGlobal()
-                timeout(500, sugardaddy)
+                "To be honest, I'm getting bored of <Actor.name>, so I told <Actor.him_or_her> our arrangement was over. I have no doubt <Actor.he_or_she> will find another sugarbabe soon though."
+                SugarBabe.clearGlobal()
+                timeout(500, rk_VB_call_sugardaddy)
                 
             Endif
 
         Else
 
-            "You don't have any sugarbabe!"        
+            "You don't have any sugarparent!"        
 
         Endif
         

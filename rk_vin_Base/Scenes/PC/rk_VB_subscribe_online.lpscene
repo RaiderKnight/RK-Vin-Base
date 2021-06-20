@@ -1,0 +1,246 @@
+WHAT: all, -sleep, -nap, -sleep_hotel, -nap_hotel
+WHERE: all
+WHEN: 16 - 22
+WHO: none
+OTHER: !isWithCompanion() && [jobexperience > 60 || money > 20000] && age > 30
+    
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        SugarBabe = SugarBabe.getGlobal()
+        SugarParent = SugarParent.getGlobal()
+        
+        stock_ZellVostro = Player.getActorVar(stock_ZellVostro)
+        stock_LPPavilion = Player.getActorVar(stock_LPPavilion)
+        stock_LPware = Player.getActorVar(stock_LPware)
+        stock_LPX = Player.getActorVar(stock_LPX)
+        Stock_Computers = stock_ZellVostro + stock_LPPavilion + stock_LPware + stock_LPX
+        
+        stock_IPhone = Player.getActorVar(stock_IPhone)
+        stock_Samsung = Player.getActorVar(stock_Samsung)
+        stock_OnePlus = Player.getActorVar(stock_OnePlus)
+        stock_LPGPower = Player.getActorVar(stock_LPGPower)
+        Stock_phones = stock_IPhone + stock_Samsung + stock_OnePlus + stock_LPGPower
+
+        If Stock_Computers <= 0 && Stock_phones <= 0
+        
+            "You don't have any device to go online... Go buy a computer or a phone at any shop!"
+        
+        Else
+        
+            If !isModEnabled(rk_ShopAddons)
+                
+                "You need to enable Shop-Addons mod to be able to use internet...."
+                
+            ElseIf Stock_phones > 0
+                
+                "You open your phone to visit websites...."
+                
+            ElseIf Stock_Computers <= 0
+                    
+                "You don't have any device to go online... Go buy a computer or a phone at any shop!"
+                
+            Else
+                
+                If WHERE != home && WHERE != fraternity
+                    
+                    SceneStart()
+                        "You cannot use your pc here!"
+                        "You can go online with your pc only if your are at home or in fraternity"
+                        "Buy a phone to be able to go online everywhere!"
+                    SceneEnd()
+                        
+                Else
+                
+                    "You open your computer to visit websites..."
+                    
+                EndIf
+                
+            EndIf
+        
+            "What kind of website I would like to subscribe to?"
+            0::SugarBabe < 0 && age > 40::"Website to find a sugarbabe"
+            1::SugarParent < 0 && age < 22::"Website to find a sugarparent"
+            99::"I changed my mind!"        
+                
+            If 0
+            
+                "To be honest, with so much going on in my career, I'm not having enough free time to get laid that often. I recently found a website that specialised in sugarparent-sugarbabe arrangements, basically wealthy men and women like me paying for companionship and sex. Should I sign myself up?"
+                0:: perversion > 20:: "Yes"
+                1:: "No"
+                
+                If 0
+                
+                    "It's worth a try. It's not like I'm committing to anything just from signing up."
+                    If Random(0, 100) < jobexperience
+                    
+                        Actor = generatePersonTemporary()
+                        While !Actor.isInterestedIn(Player) || !Player.isInterestedIn(Actor)
+                            Actor = generatePersonTemporary()
+                        Endwhile
+                        Actor.blendPreset(twenties)
+                        If Actor:age > age
+                            Actor:age => 18
+                        Endif
+                        Actor.randomizeFace()
+                        Actor.randomizeHairs()
+                        
+                        "Eventually, I got approached by a potential sugarbabe."
+                        Actor.dress()
+                        secondScreen(Actor)
+                        Actor.show(2)
+                        "Should I invite <Actor.name> on a first date?"
+                        0:: "Yes"
+                        1:: "No"
+                        
+                        If 0
+                        
+                            "Why not? I'll be sure to be extra generous on the first date."
+                            secondScreen()
+                            Loc = findNearbyBuilding(restaurant)
+                            moveTo(Loc)
+                            Actor.show()
+                            Actor.dress()
+                            Player.dress()
+                            "I took <Actor.name> to a really fancy restaurant and wined and dined <Actor.him_or_her> like money was no object. Afterwards, I suggested that we head to a suite I had booked at a 5-star hotel nearby."
+                            
+                            Loc = findNearbyBuilding(hotel)
+                            moveTo(Loc)                    
+                            setBackground(home)
+                            Actor.makePermanent()
+                            "This hotel suite cost me a fortune. And I hope that <Actor.name> knows what I'm expecting from <Actor.him_or_her> for my generousity."
+                            Sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
+                            perversion += Random(0, 0.5)
+                            Actor.show(2)
+                            "We spent the night together. The morning after, I paid for breakfast, and before heading off to work, I told <Actor.name> that I will call <Actor.him_or_her> soon and left <Actor.him_or_her> a generous envelope. Needless to say, <Actor.name> is now my sugarbabe."
+                            money -= Random(100, 500)
+                            SugarBabe = Actor.getID()
+                            SugarBabe.setGlobal(SugarBabe)
+                            
+                        Else
+                        
+                            "For that sort of money, I expected someone better looking ..."
+                            timeout(500, rk_VB_subscribe_online)
+                            
+                        Endif
+                        
+                    Else
+                    
+                        "Unfortunately, I received no interest from any potential sugarbabes. It seemed there simply was just too much competition and I was not ... rich enough."
+                        timeout(500, rk_VB_subscribe_online)
+                        
+                    Endif
+                    
+                Else
+                
+                    "No way. I'm not so desperate as to pay for sex and companionship."
+                    timeout(1000, rk_VB_subscribe_online)
+                    
+                Endif
+            
+            Elseif 1
+            
+                "To be honest, I'm not earning all that much and it's expensive to live here. After rent and basic expenses, I really don't have much left. Sometimes, looking at celebrities and executives, I wish I can afford some of same luxuries they get."
+                "I recently found a website that specialised in sugarparent-sugarbabe arrangements, basically wealthy older men and women pay for companionship and sex. Should I sign myself up?"
+                0:: perversion > 20:: "Yes"
+                1:: "No"
+                
+                If 0
+                
+                    "It's worth a try. It's not like they will force me to do anything just from signing up."
+                    If Random(0, 100) < attractiveness 
+                    
+                        Actor = generatePersonTemporary()
+                        While !Actor.isInterestedIn(Player)
+                            Actor = generatePersonTemporary()
+                        Endwhile
+                        Random
+                            Actor.blendPreset(fourties)
+                            Actor.blendPreset(fifties)
+                            Actor.blendpreset(sixties)
+                        endRandom
+                        Actor.randomizeFace()
+                        Actor.randomizeHairs()
+                        
+                        "Eventually, I got approached by a potential <Actor.sugardaddy_or_sugarmommy>, who invited me to a first date."
+                        secondScreen(Actor)
+                        Actor.dress()
+                        Actor.show(2)
+                        "Should I agree to go on a date with <Actor.name>?"
+                        0:: "Yes"
+                        1:: "No"
+                        
+                        If 0
+                        
+                            "Why not? I'm sure <Actor.he_or_she> will be extra generous on the first date."
+                            mood += 1
+                            secondScreen()
+                            Loc = findNearbyBuilding(restaurant)
+                            moveTo(Loc)
+                            Actor.show()
+                            Actor.dress()
+                            Player.dress()
+                            "<Actor.name> took me to a really fancy restaurant and wined and dined me like money was no object. Afterwards, <Actor.he_or_she> suggested that we go to a suite <Actor.he_or_she> had booked at a 5-star hotel nearby."
+                            0:: "Yes"
+                            1:: "No"
+                            
+                            If 0
+                            
+                                Loc = findNearbyBuilding(hotel)
+                                moveTo(Loc)
+                                setBackground(home)
+                                Actor.makePermanent()
+                                "Wow, this is a nice hotel suite! Must have cost a fortune. And I know very well what <Actor.name> is expecting from me for <Actor.his_or_her> generousity."
+                                Sex(Actor, Player)
+                                perversion += Random(0, 0.5)
+                                Actor.show(2)
+                                "The sex wasn't too bad. We spent the night together. The morning after, <Actor.name> paid for breakfast, and before heading off to work, told me that <Actor.he_or_she> will call me soon and left me a generous envelope. Needless to say, <Actor.name> is now my <Actor.sugardaddy_or_sugarmommy>."
+                                money += Random(100, 500)
+                                Actor:rapportwithplayer += 2
+                                Actor:attractiontoplayer += 2
+                                SugarParent = Actor.getID()
+                                SugarParent.setGlobal(SugarParent)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
+                                
+                            Else
+                            
+                                "I turned down <Actor.name>'s offer to go back to the hotel. <Actor.He_or_She> was obviously disappointed and needless to say, never got in contact with me again."
+                                Actor:rapportwithplayer -= 3
+                                Actor:attractiontoplayer -= 3
+                                timeout(500, rk_VB_subscribe_online)
+                                
+                            Endif
+                            
+                        Else
+                        
+                            "Ew, even for money, I can't sleep with someone that old and ugly."
+                            timeout(500, rk_VB_subscribe_online)
+                            
+                        Endif
+                        
+                    Else
+                    
+                        "Unfortunately, I received no interest from any potential sugarparents. It seemed there simply was just too much competition and I was not ... attractive enough."
+                        mood -= 5
+                        timeout(500, rk_VB_subscribe_online)
+                        
+                    Endif
+                    
+                Else
+                
+                    "No way. There are more self-respecting ways to make money than that. It's basically glorified prostitution."
+                    timeout(1000, rk_VB_subscribe_online)
+                    
+                Endif
+                
+            Endif
+        
+        Endif
+        
+    SceneEnd()  // Scene improved by Raddeck
