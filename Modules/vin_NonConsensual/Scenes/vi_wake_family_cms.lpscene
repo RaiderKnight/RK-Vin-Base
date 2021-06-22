@@ -1,0 +1,39 @@
+WHAT: sleep
+WHERE: home
+WHEN: 22 - 4
+WHO: Actor = getRelative(); If Actor.livesWithPlayer() && Actor.isInterestedIn(Player) && Actor:perversion > 70 && !Actor.hadSex() && Actor:masochist < -50 && Actor:incest < 30
+OTHER: isModEnabled(vin_Incest) && !Player.isAsexual() && Random(2, 50) > karma
+
+    SceneStart()
+    Player.animate(na_sleep)
+    Actor.show()
+    "In the middle of the night ..."
+    Actor.animate(na_sleep)
+    "I was suddenly awakened to the sight of horror, my <Actor.relationship> <Actor.name> already naked in my bed trying to rape me ..."
+    0:: "Resist"
+    1:: "I might enjoy this actually ..."
+    
+    If 0
+        If martial < Actor:martial
+            "Unfortunately, my <Actor.relationship> was too strong for me ..."
+            Rape = true
+        Else
+            "I managed to push my <Actor.relationship> off me. Defeated, <Actor.he_or_she> promptly left ..."
+            "Phew, that was close ... don't know if I should report this to the police though ... we're family after all. Maybe <Actor.he_or_she> was drunk and didn't know what <Actor.he_or_she> was doing ..."
+            Rape = false
+        Endif
+    Else
+        Rape = true
+        masochist += 2
+    Endif
+    If Rape
+        If !Actor.isMale() && Player.isMale()
+            Filter(AggressiveFM)
+        Else
+            Filter(Aggressive)
+        Endif
+        TalkNonConsensual()
+        Sex(Actor, Player)
+    Endif
+    SceneEnd()
+    timeout(200, vi_wake_family_cms) // Improved by Ravenger6660
