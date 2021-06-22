@@ -1,0 +1,59 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: Relative = getSpecific(PassedOn)
+OTHER: 
+
+SceneStart()
+
+    If 0
+        Relative:incest += Random(0, 2)
+        Relative.dress()
+        Relative.show(2)
+        Relative(Embarassed):: "<Relative.Callplayer>, can I confess something with you?"
+        Player(Surprised):: "That sounds strange. What is it?"
+        Relative(Embarassed):: "You and your partner were so loud last night - I couldn't help but peep a bit ..."
+        0:: "Tell <Relative.him_or_her> off"
+        1:: "It's okay"
+        
+        If 0
+            Player(Angry):: "That's a really weird thing to do. I'm your <Relative.callplayer>!"
+            Relative:incest -= Random(1, 5)
+            Relative:attractiontoplayer -= Random(1, 5)
+        Else
+            Player(Embarassed):: "That's okay ... I guess you were just being curious. Sorry for doing it so loud!"
+            Relative(Embarassed):: "Compared to me, you are so much more experienced in bed. I have no idea what I'm doing. I'm embarassed about my terrible skills in the bedroom and wish I could be as good as you"
+            0:: "Give some advice"
+            1:: "Suggest that <Relative.he_or_she> practice with me"
+            2:: "End the conversation"
+            
+            If 0
+                "I decided to give my <Relative.relationship> some advice. Surely <Relative.he_or_she> should feel more comfortable talking about such sensitive topics with me than with some random sexologist."
+                Relative:incest += Random(1, 5)
+                Relative:attractiontoplayer += Random(1, 5)
+
+            Elseif 1
+                Player(Embarassed):: "You know ... You might be more comfortable practicing with me. I won't judge you like your other lovers. And I don't want you to just sleep with random strangers you've just met."                    
+                Love = 0
+                Love += Relative:attractiontoplayer
+                Love += Relative:incest
+                Love += interpersonal
+                If Random(150, 250) < Love
+                    Relative(Embarassed):: "This is so wrong ... but I guess you have a point. I don't want to risk getting STDs or the danger of casual hookups either. I can trust you more."
+                    "After an awkward conversation, we finally started making out. Despite <Relative.him_or_her> being my own <Relative.relationship>, I'm in my element again and start to rise to the task of being my <Relative.relationship> bedroom mentor."
+                    Relative:incest += 10
+                    Relative:attractiontoplayer += 10
+                    Relative:perversion
+                    Sex(Player, Relative)
+                Else
+                    Relative(Surprised):: "What? Are you crazy? I'm your <Relative.relationship>! We can't do that, no way ..."
+                Endif                   
+            Else
+                "I found a way to change the topic before the conversation got any more awkward."
+            Endif
+        Endif
+    Endif
+
+SceneEnd() // Improved by Ravenger6660
+timeout(10, help_family_practice)
+    

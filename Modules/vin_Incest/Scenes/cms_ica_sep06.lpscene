@@ -1,0 +1,121 @@
+WHAT: sleep, nap
+WHERE: home
+WHEN: 22 - 4
+WHO: Actor = getRelative(); If Actor.livesWithPlayer() && Actor:age <= age
+OTHER: isAtHome()
+
+SceneStart()
+If perversion > 85 || arousal > 85
+    Player.strip()
+    arousal += 5
+Endif
+Player.animate(na_sleep)
+Actor.dressExcept(Outerwear, Foot, Headwear)
+Actor.show(2)
+"It's the middle of the night when my <Actor.relationship> comes into my room."
+"<Actor.He_or_She> is disturbed and scared of this loud thunderstorm and comes into my room asking if <Actor.he_or_she> can sleep alongside me."
+0:: "Yes"
+1:: "No"
+    
+If 0
+    Actor.animate(na_sleep)
+    If [Actor:perversion > 85 || Actor:arousal > 85] && !Actor.isNaked() 
+        Actor.strip()
+        arousal += 5
+        "My <Actor.relationship> strips naked. To sleep in nude."
+    Endif   
+    
+    If Player.isNaked() && Actor.isNaked() && [Actor.isInterestedIn(Player) || Actor.hadsex()]
+        "I thank god we're already naked."
+        "Makes... making love real easy."
+        Sex(Player, Actor)
+        Actor:incest += 25
+        Actor:attractiontoplayer += 25
+    Else
+        Love = 0
+        Love += Actor:attractiontoplayer
+        Love += Actor:incest
+        "Now that <Actor.he_or_she>'s lying in bed with me, how should I behave."
+        0:: "Touch <Actor.him_or_her>"
+        1:: "Masturbate"
+        2:: "Nothing"
+        
+        If 0
+            Actor:incest += 5
+            If Love > Random(100, 150) && [Actor.isInterestedIn(Player) || Actor.hadsex()]
+                Actor:: "You wanted this for a long time, didn't you?"
+                Sex(Player, Actor)
+                Actor:incest += 25
+                Actor:attractiontoplayer += 25
+            Endif
+        Elseif 1
+            Player.strip()
+            Sex(Player)
+            perversion += 2
+            If sneak < 50
+                "Shit, I think they hear me."
+                Actor:incest += 10
+                Actor:perversion += 10
+                Actor:arousal += 20
+                Love += Actor:perversion
+                Love += Actor:arousal
+                If [Love > Random(200, 350) && Actor.isInterestedIn(Player) || Actor.hadsex()]
+                    Actor:: "You wanted this for a long time, didn't you?"
+                    Sex(Player, Actor)
+                    Actor:incest += 25
+                    Actor:attractiontoplayer += 25
+                Else
+                    Actor:: "What are you doing! Gross!"
+                    Actor:incest -= 5
+                    Actor:attractiontoplayer -= 5                   
+                Endif
+            Elseif perversion > 75
+                "My resistance is futile as I begin groping my <Actor.relationship>"
+                Actor:incest += 15
+                Actor:perversion += 15
+                Actor:arousal += 40
+                Love += Actor:perversion
+                Love += Actor:arousal
+                If [Love > Random(200, 350) && Actor.isInterestedIn(Player) || Actor.hadsex()]
+                    Actor:: "You wanted this for a long time, didn't you?"
+                    Sex(Player, Actor)
+                    Actor:incest += 25
+                    Actor:attractiontoplayer += 25
+                Else
+                    Actor:: "What are you doing! Gross leave me alone." 
+                    Actor:incest -= 5
+                    Actor:attractiontoplayer -= 5
+                Endif
+            Else
+                Actor:incest += 2
+                "They were none the wiser"          
+            Endif
+        Else
+            Love += Actor:perversion
+            Love += Actor:arousal
+            Love -= masochist           
+            If Love > Random(200, 450) && Actor.isInterestedIn(Player)
+                "<Actor.name> is touching me!"
+                0:: "Touch <Actor.him_or_her> back"
+                1:: "Reject <Actor.his_or_her> advance"
+                
+                If 0
+                    Actor:incest += 5
+                    Actor:: "You wanted this for a long time, didn't you?"
+                    Sex(Player, Actor)
+                    Actor:incest += 25
+                    Actor:attractiontoplayer += 25              
+                Elseif isModEnabled(vin_NonConsensual)
+                    If Actor:masochist < -50
+                        "My <Actor.relationship> wasn't one to take no for an answer ..."
+                        Filter(Aggressive)
+                        Sex(Actor, Player)
+                    Endif
+                Endif
+            Endif
+        Endif
+    Endif   
+Endif
+SceneEnd()
+timeoutActor(600, cms_ica_sep06, Actor)
+timeout(300, cms_ica_sep06) // Improved by Ravenger6660

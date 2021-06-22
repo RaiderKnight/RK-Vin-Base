@@ -1,0 +1,77 @@
+WHAT: masturbate
+WHERE: home
+WHEN: 0 - 24
+WHO: Peeping = getRelative(); If Peeping.isInterestedIn(Player) && Peeping.livesWithPlayer()
+OTHER: isAtHome()
+
+
+    SceneStart()
+    Player.strip()    
+    setBackground(home)
+    Filter(Solo)
+    Sex(Player)
+    Player(Pain):: "God damn it! This feels so good ..."
+    Player(Embarassed):: "What? Who's there?"
+    "I was enjoying a bit of alone time when suddenly I heard a noise. I thought someone might be peeping on me!"
+    0:: "Get dressed"
+    1:: "Continue pleasuring myself"
+    
+    If 0 
+        Player.dress()
+        "I quickly put some clothes on and went looking around but couldn't find anyone. Whoever the peeping Tom was must have quick feet."
+    Else
+        perversion += 2
+        Peeping:attractiontoplayer += 2
+        
+        "I won't lie: The thought of someone watching me turned me on even further ... I might as well give my peeping Tom a show to remember"
+        Peeping:incest += 1
+        Love = 0
+        Love += Peeping:attractiontoplayer
+        Love += Peeping:incest
+        Love += Peeping:perversion
+        
+        If Random(150, 250) < Love
+            "My bedroom door slowly crept open and behind it revealed my not-so-secret admirer. It was no other than my <Peeping.relationship>!"
+            Peeping.dress()
+            Peeping.show(2)
+            Peeping(Flirty):: "You look like you could do with a hand ..."
+            0:: "Invite <Peeping.him_or_her> into bed with you"
+            1:: "Turn <Peeping.him_or_her> down"
+            
+            If 0
+                Player(Flirty):: "This is so wrong ... but I think you could be of help indeed ... Family should always help each other out in times of need, right?"
+                perversion += Random(0, 0.2)
+                Peeping:incest += 10
+                Peeping:perversion += 10
+                Sex(Player, Peeping)
+                Peeping.show(2)
+                "Well, that was a much better release than I expected!"
+            Else
+                "I quickly grabbed the blanket to cover myself."
+                Player(Embarassed):: "Hey! Get out! What the fuck? You're my <Peeping.relationship>! Remember to knock next time, you perv!"
+                
+                If Peeping:masochist < -50
+                    Peeping(Flirty):: "You know what. I think I'm going to have some fun with you."
+                    If !Peeping.isMale()
+                       Filter(AggressiveFM)
+                    Else
+                       Filter(Aggressive)
+                    Endif
+                    Sex(Peeping, Player)
+                    masochist += 10
+                Else
+                    Peeping:incest -= 10
+                    Peeping.hide()
+                    Player.dress()
+                    "Disappointed, my <Peeping.relationship> retreated, while I put on my clothes."
+                Endif
+            Endif   
+        Else
+            "A while later ..."
+            Player(Pain):: "Yes! Yes! Yes!"
+            "I came. I must have given my peeping Tom one hell of a show!"
+        Endif
+    Endif
+    timeoutActor(200, family_catches_masturbating, Peeping)
+    timeout(24, family_catches_masturbating) // Improved by Ravenger6660
+    SceneEnd()

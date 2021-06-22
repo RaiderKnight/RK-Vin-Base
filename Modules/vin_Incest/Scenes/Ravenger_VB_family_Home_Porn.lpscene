@@ -1,0 +1,146 @@
+WHAT: all
+WHERE: home
+WHEN: 0 - 24
+WHO: Actor = getRelative(); If !Actor.isAsexual() && Actor.livesWithPlayer() && Actor:pornfame > 5
+OTHER: isAtHome()
+
+    SceneStart()
+
+    "What's that sound? If it is what I think it is, then my <Actor.relationship> is shooting a porn video in their room. They are moaning very loudly."
+    0:: "Ignore"
+    1:: "Complain"
+    2:: "Peep"
+
+    If 0
+        "I don't care so long as I'm not involved."
+        Actor:pornfame += Random(0,5)
+    Elseif 1
+        Player(Angry):: "For god's sake, keep it down. Do you want the entire building to know what you're up to?"
+        Actor:rapportwithplayer -= Random(0, 5)
+        Actor:incest -= Random(0,5)
+        Actor:pornfame -= Random(0,5)
+        Actor:perversion -= Random(0,5)
+        perversion -= Random(2,5)
+    Else
+        perversion += Random(0, 0.5)
+        "My curiosity got the better of me and I just had to see this ..."
+        SneakGame()
+        If Random(0, 100) < sneak
+            "Luckily, my <Actor.relationship> didn't quite shut <Actor.his_or_her> door completely - probably too busy with fooling around with <Actor.his_or_her> partner to pay attention to the door. With my sneaking talent, I managed to get a pretty good view of what was going on ..."
+            Actor2 = Actor2.generatePersonTemporary()
+            While !Actor.isInterestedIn(Actor2)
+                Actor2 = generatePersonTemporary()
+            Endwhile
+            Sex(Actor, Actor2)
+            arousal += Random(0, 30)
+            "This is so wrong, I know. <Actor.He_or_She> is my <Actor.relationship> after all ... but for some reason, I'm getting so excited watching <Actor.him_or_her> getting it on. In fact, as much as the thought is quite fucked up, I can't help but imagine myself in the place of the lucky <Actor2.guy_or_girl> ..."
+            Actor.show(2)
+            Actor2.show(3)
+            Player.show(0)
+            
+            nothing = true
+            Actor2:: "Baby, I'm exhausted. Let's take a break while I get some water and we'll continue."
+            Actor2.hide()
+            "<Actor2.He_or_She> went out, leaving my <Actor.relationship> alone in the room. Maybe this is my opportunity?"
+            0:: "Wait for <Actor2.name>'s return"
+            1:: "Go back to my room"
+            2:: "Try to seduce my <Actor.relationship>"
+            3:: "Try to seduce my <Actor.relationship>'s sex partner"
+            
+            If 1
+                nothing = false
+                If [Actor:intelligence + Random(-20, 20)] > sneak
+                    "How ever later my <Actor.relationship> came to confront me about what I saw." 
+                    Actor(Angry):: "I know you were outside my room."
+                    Love = 0
+                    Love += Actor:attractiontoplayer
+                    Love += Actor:incest
+                    Love += Actor:perversion
+                    Love -= Actor:masochist
+                
+                    If Random(200, 350) < Love && Actor.isInterestedIn(Player)
+                        Actor(Flirty):: "You know what. I think I'm going to have some fun with you."
+                        Sex(Player, Actor)
+                        Actor:incest += 20
+
+                    Else
+                        Actor(Angry):: "I better not catch you again!"
+                        Actor:rapportwithplayer -= Random(0, 9)
+                    Endif
+                
+                Endif
+            Elseif 2
+                nothing = false
+                Love = 0
+                Love += Actor:attractiontoplayer
+                Love += Actor:incest
+                Love += Actor:perversion
+                If Random(150, 250) < Love
+                    Actor:: "Okay then, since <Actor2.his_or_her> water break is taking too long and I don't see any Round 2 coming from <Actor2.him_or_her> tonight."
+                    Sex(Player, Actor)
+                    "Thankfully, we managed to finish the deed without <Actor2.name> ever noticing."
+                    Actor:pornfame += 2
+                    Actor:attractiontoplayer += 5
+                    Actor:incest += 5
+                    Actor:perversion += 10
+                    perversion += 5
+                    If pornfame > 0
+                        pornfame += 2
+                        Actor:pornfame += 2
+                    Endif
+                Else
+                    Actor(Angry):: "What are you doing here, peeping Tom? And what's up with that perverted proposal? You're my <Actor.callplayer>, for God's sake!"
+                endif
+            Elseif 3
+                nothing = false
+                setBackground(kitchen)
+                If Random(50, 150) < [Actor2:attractiontoplayer + Actor2:perversion]
+                    Actor2:: "Sure."
+                    Sex(Player, Actor2)
+                    "Thankfully, we managed to finish the deed without my <Actor.relationship> ever noticing."
+                Else
+                    Actor2:: "Sorry I'm here to fuck <Actor.name> not their <Actor.callplayer>."
+                endif
+            Endif
+            
+            If nothing       
+                Actor2.show()
+                "It looks like they're already ready for another round ..."
+                0:: "Offer to join them"
+                1:: "Enough"
+                
+                If 0
+                    Player(Flirty):: "Looks like you guys are having some fun there? Mind if I join you?"
+                    Love = 0
+                    Love += Actor:attractiontoplayer
+                    Love += Actor:incest
+                    Love += Actor:perversion
+                
+                    If Random(150, 250) < Love
+                        Actor(Flirty):: "I didn't realize how much of a pervert my <Actor.callplayer> is ... Come on and join us then, what are you waiting for?"
+                        Sex(Player, Actor, Actor2)
+                        Actor:pornfame += 2
+                        Actor:attractiontoplayer += 5
+                        Actor:incest += 5
+                        Actor:perversion += 5
+                        perversion += 5
+                        If pornfame > 0
+                            pornfame += 2
+                            Actor:pornfame += 2
+                        Endif
+                    Else
+                        Actor(Angry):: "What are you doing here, peeping Tom? And what's up with that perverted proposal? You're my <Actor.callplayer>, for God's sake!"
+                        Actor:rapportwithplayer -= Random(0, 3)
+                    Endif
+                Else
+                    "I should get out of here before I get caught."
+                Endif
+            Endif
+        Else
+            "Unfortunately for me, the door was fully closed and all the curtains were pulled down. There's no way I can get a look ..."
+        Endif
+    Endif
+
+    SceneEnd()
+    timeoutActor(200, Ravenger_VB_family_Home_Porn, Actor)
+    timeout(100, Ravenger_VB_family_Home_Porn)

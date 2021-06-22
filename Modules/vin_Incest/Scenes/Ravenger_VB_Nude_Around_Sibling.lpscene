@@ -1,0 +1,89 @@
+WHAT: all
+WHERE: home
+WHEN: 0-24
+WHO: Actor = getRelative(); If Actor.livesWithPlayer() 
+OTHER: [!Player.isVisible(Bottom) && !Player.isVisible(Bottom_Under)] || [!Player.isVisible(Top) && !Player.isVisible(Top_Under) && !Player.isMale()]
+
+
+sceneStart()
+
+Player():: "I was hanging around, pretty much naked."
+Actor.dress()
+Actor.show(2)
+Player():: "When I see my <Actor.relationship> comes into the room."
+Actor:arousal += Random(5, 20)
+Love = 0
+Love += Actor:attractiontoplayer
+Love += Actor:incest
+Love += Actor:perversion
+
+If Love > Random(150, 250) && Actor.isInterestedIn(Player)
+    Actor():: "Hi <Actor.callplayer>. Why are you naked?"
+    Player():: "Just enjoying my freedom. Like what you see?"
+    Actor(Flirty):: "Mind if I join you?"
+    0:: "Sure, I don't mind."
+    1:: "No, I would like to be alone."
+
+    If 0 
+        Player():: "Sure, I don't mind."
+        Actor.strip()
+        Actor.setNoRedress()
+        "To my surprise my <Actor.relationship> strips naked right in front of me."
+        Actor(Flirty):: "There much better."
+        Actor:arousal += 20
+        Actor:perversion += 10
+        Player(Flirty):: "..."
+        arousal += 20
+        
+        If Player:arousal > 75
+            Player(Kiss)
+            Actor(Attentive)
+            "You take the opportunity while you have <Actor.p> attention to press your lips to <Actor.p>"
+
+            If Actor:arousal > 75 
+                Actor(Kiss)
+                "<Actor.S> responds positively."
+                Actor:perversion += Random(5, 20)
+                Actor:incest += Random(0, 50)
+                Actor:attractiontoplayer += Random(0, 50)
+                Sex(Player, Actor)
+                perversion += Random(0, 0.5)
+                mood += 30
+            
+            Else
+                "We just enjoy each other's company for a while."
+            
+            Endif
+            
+        Elseif Actor:arousal > 75
+            "In an another surprise twist. My <Actor.relationship> Starts making out with me."
+            "My resistance is futile."
+            Actor:perversion += Random(5, 20)
+            Actor:incest += Random(0, 50)
+            Actor:attractiontoplayer += Random(0, 50)
+            Sex(Player, Actor)
+            perversion += Random(0, 0.5)
+            mood += 30
+        
+        Else
+            "We just enjoy each other's company for a while." 
+
+        Endif
+
+    Else
+        Player():: "No, I would like to be alone.."             
+
+    Endif
+Else
+    Actor(Angry):: "What the hell <Player.Name>! Why are you naked!"
+    Player:: "What? I'm just hanging"
+    Actor.hide()
+    Actor(Angry):: "Gross, get some damn cloths on!"
+    Actor:attractiontoplayer -= Random(0, 5)
+
+Endif
+
+passTime(0.5, 1.5) 
+sceneEnd()
+timeoutActor(200, Ravenger_VB_Nude_Around_Sibling, Actor)
+timeoutPrecise(50, Ravenger_VB_Nude_Around_Sibling) 

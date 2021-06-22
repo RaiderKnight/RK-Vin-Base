@@ -1,0 +1,82 @@
+WHAT: watch_tv, watch_a_movie_in, watch_sport_in
+WHERE: all
+WHEN: 8 - 24
+WHO: Actor = getRelative(); If Actor.livesWithPlayer() && !Actor.isMale() && Player.isInterestedIn(Actor)
+OTHER: isAtHome() && !Player.isFemale() 
+
+    SceneStart()
+    "We're having a family gathering today over a movie. Only <Actor.name> is not here yet."
+    Love = 0
+    Love += Actor:attractiontoplayer
+    Love += Actor:incest
+    Love += Actor:perversion
+    Player(Happy):: "There you are! Come join us!"
+    If Actor:perversion > 85
+        "Can't help but notice they are naked. But whatever."
+    Else
+        Actor.dress()
+    Endif
+    Actor.show(2)
+    "Now that I've had a chance to look, there are no seats left on the sofa for <Actor.him_or_her> ..."
+    0:: "Stand up"
+    1:: "Keep sitting"
+    
+    If 0
+        "I'll just stand behind the sofa to watch the movie and leave my seat for my <Actor.relationship>."
+    Else
+        "To my surprise, <Actor.name> proceeded to sit on my lap."
+        "I guess <Actor.he_or_she> it is fine. No big deal."
+        "A while later ..."
+        "Oh no, I don't feel so good. My <Actor.relationship> sitting on my lap is strangely arousing and giving me a boner. Damn, I really need to calm myself down before <Actor.he_or_she> notices my hard rod underneath <Actor.him_or_her>."
+        Actor:incest += Random(0, 2)
+        Actor:attractiontoplayer += 5
+        If [!Player.isVisible(Bottom) && !Player.isVisible(Bottom_Under)] && [!Actor.isVisible(Bottom) && !Actor.isVisible(Bottom_Under)]
+            "I regret not where anything below the belt."
+            "Because the next thing I know, my member is slipping inside."
+            Sex(Actor, Player)
+            Actor:incest += 10
+            Actor:attractiontoplayer += 5
+                
+        Elseif Love > Random(150, 250)
+            "Suddenly, my <Actor.relationship> started whispering into my ear."
+            Actor(Flirty):: "I got you all excited, didn't I?"
+            0:: "Apologize"
+            1:: "Yes, you did."
+            
+            If 0
+                Player(Embarrassed):: "I'm so sorry. I didn't mean to ..."
+                Actor:incest -= 1
+                Rape = 0
+                Rape -= Actor:masochist
+                Rape += Actor:arousal
+                Rape += Actor:perversion
+                If Random(150, 250) < Rape && isModEnabled(vin_NonConsensual)
+                    "My <Actor.relationship> has other plans. <Actor.He_or_She> pulls my dick out of my pants and sit on it."
+                    Sex(Actor, Player)
+                    Actor:incest += 15
+                    Actor:attractiontoplayer += 15
+                Endif
+            Else
+                If [!Actor.isVisible(Bottom) && !Actor.isVisible(Bottom_Under)]
+                    "I can help myself. I pull my dick out of my pants and make <Actor.him_or_her> sit on it"
+                    Sex(Actor, Player)
+                    Actor:incest += 25
+                    Actor:attractiontoplayer += 25
+                                
+                Else
+                    "I whispered back into <Actor.his_or_her> ear."
+                    Player(Flirty):: "Let's sneak away from here, shall we?"
+                    setBackground(home)
+                    Sex(Actor, Player)
+                    Actor:incest += 15
+                    Actor:attractiontoplayer += 15
+                Endif
+            Endif           
+        Else 
+            "Beyond that nothing happend."      
+        
+        Endif
+    Endif
+    SceneEnd()
+    timeoutActor(200, Ravenger_VB_family_sit_on_lap2, Actor)
+    timeout(100, Ravenger_VB_family_sit_on_lap2)

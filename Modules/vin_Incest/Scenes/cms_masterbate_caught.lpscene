@@ -1,0 +1,52 @@
+WHAT: masturbate
+WHERE: home
+WHEN: 0 - 24
+WHO: Actor = getRelative(); If Actor.livesWithPlayer() && Actor.isInterestedIn(Player) && Actor:perversion > 30 && Actor:incest > 10
+OTHER: isAtHome() && intelligence > Actor:sneak
+
+    SceneStart()
+    "I was getting ready for bed and relieving a little stress.... when I noticed somebody at my door. From the shadows, I could guess it's my <Actor.relationship> <Actor.name>"
+    0:: "Ignore"
+    1:: "Scold <Actor.him_or_her>"
+    2:: "Invite <Actor.him_or_her> in"
+    
+    If 0
+        perversion += 2
+        Actor:perversion += 2
+        "I pretend not to notice"
+        Love = 0
+        Love += Actor:attractiontoplayer
+        Love += Actor:incest
+        Love += Actor:perversion
+        Love -= Actor:masochist
+                
+        If Random(100, 350) < Love || Actor.hadsex()
+            "My <Actor.relationship> decided that I needed help."
+            Sex(Player, Actor)
+            Actor:incest += 10  
+        Endif
+    Elseif 1
+        Player(Angry):: "<Actor.relationship>! Stop peeping on me!"
+        Actor:incest -= 5
+        Actor:perversion -= 5
+        Actor:rapportwithplayer -= 5
+    Else
+        perversion += 2
+        Love = 0
+        Love += Actor:attractiontoplayer
+        Love += Actor:incest
+        Love += Actor:perversion
+        If Actor.hadSex() || Random(150, 250) < Love 
+            "My <Actor.relationship> slowly comes into the room"
+            Sex(Player, Actor)
+            Actor:perversion += 10
+            Actor:incest += 10            
+        Else
+            "My <Actor.relationship> blushes and runs back to <Actor.his_or_her> room."
+            Actor:incest += 5     
+        Endif
+    Endif
+    
+    SceneEnd()
+    timeoutActor(200, cms_masterbate_caught, Actor)
+    timeout(50, cms_masterbate_caught) // Improved by Ravenger6660

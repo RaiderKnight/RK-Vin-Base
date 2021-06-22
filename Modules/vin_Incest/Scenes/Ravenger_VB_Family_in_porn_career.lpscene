@@ -1,0 +1,50 @@
+WHAT: watch_porn
+WHERE: all
+WHEN: 0 - 24
+WHO: Family = getRelative(); If Family:perversion > 80 && Family:intelligence < Random(0, 90) && Family:intelligence > Random(0, 200) && Family:attractiveness > 80 && Family:age < 40 && Family:pornfame < 1
+OTHER: none
+
+SceneStart()
+"Oh, look a new pornstar?..."
+"Wait is that my <Family.relationship> <Family.name>! Since when did they become a pornstar!"
+0:: "Deny it."
+1:: "Check with <Family.name>?"
+2:: "Confront them."
+    
+If 0
+    "I'm just going to pretent I don't see that..."
+    If Random(0, 100) > 25
+        "A few days later I keep on seeing more porn with my <Family.relationship> in it."
+        Family:pornfame += 50
+    Else
+        "Must have been a mistake." 
+    Endif
+    
+Elseif 1
+    "No, that's a crazy idea. But just to make sure?"
+    Player():: "I was surfing the internet and saw an interesing film called 'The Family Pie, featuring: <Family.name>."
+    Player():: "Do you know anything about it?"
+    If Random(0, 90) < Family:perversion
+        Family():: "Well, of course I know it. That's me."
+        Family():: "I'm sorry that you just found that this way, I should've told you earlier."
+        Family:pornfame += 50
+        Family:attractiontoplayer += 5
+        Family:incest += 5
+        Family:perversion += 5
+    Else
+        Family():: "What? Show me what you're talking about. You must have been a mistakened."
+        "A few days later all the porn vanished"
+        Family:pornfame => 0
+    Endif
+Else
+    Player():: "I was surfing the internet and saw an interesing film called 'The Family Pie, featuring: <Family.name>."
+    Player():: "I'm shocked that you would go so far..."
+    Family():: "Whats done is done. I can't go back in time, though I wish I could."
+    Player():: "What do you think your relatives will think? How will they feel when they discover the 'star' in the familly?"
+    Family:rapportwithplayer -= Random(2,5)
+    "A few days later all the porn vanished"
+    Family:pornfame => 0
+Endif
+timeoutActor(1800, Ravenger_VB_Family_in_porn_career, Family)
+timeout(500, Ravenger_VB_Family_in_porn_career)    
+SceneEnd()

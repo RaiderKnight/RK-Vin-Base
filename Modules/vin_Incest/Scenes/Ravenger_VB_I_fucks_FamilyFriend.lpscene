@@ -1,0 +1,125 @@
+WHAT: all,
+WHERE: home
+WHEN: 0 - 24
+WHO: Family = getRelative(); If Family.livesWithPlayer() && Family:interpersonal > 50
+OTHER: !IsWithCompanion() && Random(40, 80) < attractiveness && !isWithCompanionCreature() 
+
+sceneStart()
+Friend = Friend.generatePersonTemporary()
+While !Friend.isInterestedIn(Player) && !Player.isInterestedIn(Friend)
+    Friend = generatePersonTemporary()
+Endwhile
+Friend:perversion += Random(10, 50)
+Friend:attractiontoplayer => Random(50, 100)
+"Looks like my <Family.relationship> got a friend over."
+Do = Random(0, 9)
+If Do < 2
+    "And they are watching a movie."
+    setBackground(livingroom)
+Elseif Do < 4   
+    "And they are playing video games."
+    setBackground(home)
+Elseif Do < 6       
+    "And they are having lunch."
+    setBackground(kitchen)
+Elseif Do < 8
+    "And they are talking about work."
+    setBackground(livingroom)
+Else    
+    "From modder: Does anyone even read the text I write down?"
+    setBackground(home)
+Endif
+Friend.dress()
+Friend.show()
+Family.dress()
+Family.show()
+Family:: "Hey <Family.callplayer>."
+Player:: "Hi <Family.name>"
+Player(Flirty):: "Oh, hey <Friend.name>."
+If Friend:masochist < Player:masochist
+    Friend(Flirty):: "Hi <Player.name>"
+    Friend(Flirty):: "Did you have a nice day?"
+    Player(Flirty):: "It could be better..."
+    Family:: "Stop flirting with my <Family.callplayer>. You are such a slut..."
+Else
+    Friend(Angry):: "What are you looking at?"
+    Player(Flirty):: "Oh, come on I know you want me."
+    Friend(Angry):: "Gross, as if."
+Endif
+Player:: "Alright, I'm heading to my room. See you later..."
+Family.hide()
+Friend.hide()
+setBackground(home)
+Do2 = Random(0, 9)
+If Do2 < 2
+    "Time to change."
+    Player.strip()
+Elseif Do2 < 4   
+    "Think I'll go take a shower"
+    setBackground(shower)
+    Player.strip()
+Elseif Do2 < 6 && perversion > 50       
+    "Think I'll take a watch some porn"
+    Player.strip()
+Elseif Do2 < 8 && fitness > 50
+    "Think I'll change and do some exercise"
+    Player.strip()
+Else    
+    "Think I'll take a nap"
+    Player.strip()
+Endif
+Friend.show()
+Friend(Flirty):: "Excuse me, <Player.name>"
+Player(Surprised):: "What the fuck! <Friend.name> what are you doing?"
+Friend.strip()
+Friend(Flirty):: "I'm here because I want to fuck your sexy body."
+"Um...."
+0:: "Fuck my <Family.relationship>'s friend <Friend.name>"
+1:: "Stop"
+
+If 0
+    Sex(Player, Friend)
+    Family:arousal += Random(10, 30)
+    Family.show(2)
+    Friend.show(3)
+    Player.show(0)
+    AnimatePair(Player, Friend, Kissing)
+    Player.strip()
+    Friend.strip()
+    Love = 0
+    Love += Family:attractiontoplayer
+    Love += Family:incest
+    Love += Family:perversion       
+    If Random(150, 250) < Love
+        Family(Flirty):: "I didn't realize how much of a pervert my <Family.callplayer> and friend is..."
+        Friend(Flirty):: "Come on and join us then, what are you waiting for?"
+            Sex(Family, Player, Friend)
+            Family:incest += Random(15, 50)
+            Family:attractiontoplayer += Random(15, 50)
+            Friend:attractiontoplayer += Random(15, 50)
+
+    Endif       
+    If !Friend.isContactExchanged()
+            "Should I ask for <Friend.name>'s number?"
+            0:: "Yes"
+            1:: "No"
+                    
+            If 0
+                "We exchanged numbers."
+                Friend.makePermanent()
+                exchangeContact(Friend)
+            Else
+                "I decided not to."
+            Endif
+    Endif
+Else
+    Player:: "Sorry, I can't."
+    If isModEnabled(vin_NonConsensual) && Friend:masochist < -60
+        Friend(Angry):: "I don't think you have a choice."
+        Filter(Aggressive)
+        Sex(Friend, Player)
+    Endif
+
+Endif
+timeout(300, Ravenger_VB_I_fucks_FamilyFriend)
+sceneEnd()
