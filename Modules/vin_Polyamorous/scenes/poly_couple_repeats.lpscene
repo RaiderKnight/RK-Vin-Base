@@ -1,0 +1,26 @@
+WHAT: all
+WHERE: all
+WHEN: 7-19
+WHO: Actor = getRelatedPeople(Poly); If Actor0.isContactExchanged() && [Random(20, 100) < Actor0:attractiontoplayer || Random(20, 100) < Actor1:attractiontoplayer]
+OTHER:
+
+    SceneStart()
+    secondScreen(Actor0)
+    Actor0.show()
+    "It's no secret that <Actor0.name> and <Actor1.name> are a polyamorous couple, frequently sleeping with other people. They're inviting me over to their place for dinner tonight. It doesn't take a rocket scientist to figure out what they have in mind for dessert ..."
+    0:: "Have a threesome with <Actor0.name> and <Actor1.name>"
+    1:: "They should find somebody else"
+    
+    If 0
+        secondScreen()
+        setBackgroundCustom(kitchen)
+        Actor0.dress()
+        Actor1.dress()
+        Actor0.show()
+        Actor1.show()
+        "I came over for dinner with the kinky couple and soon enough we ended up in the bedroom together"
+        setBackground(home)
+        Sex(Actor0, Actor1, Player)
+    Endif
+    SceneEnd()
+    timeout(300, poly_couple_repeats)
