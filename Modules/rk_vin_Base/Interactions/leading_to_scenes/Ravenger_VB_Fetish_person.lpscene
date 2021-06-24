@@ -1,0 +1,320 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+sceneStart()
+"I want to talk about sexual positions with <Actor.name>"    
+0:: Actor:perversion > 65 :: "Be blatant"
+1:: "Be subtle"
+2:: "Never mind"
+
+If 0
+    Vag = false
+    Bond = false
+    Teas = false
+    Cow = false
+    Rcow = false
+    Dog = false
+    Miss = false
+    Publ = false
+    Rouf = false
+    Side = false
+    Lez = false
+    Ass = false
+    choice = -1
+    While choice < 12 
+        0:: !Vag:: "Talk about Vaginal sex."
+        1:: !Bond:: "Talk about bondage."
+        2:: !Teas:: "Talk about Foreplay"
+        3:: !Cow:: "Talk about Cowgirl"
+        4:: !Rcow:: "Talk about Reverse Cowgirl"
+        5:: !Dog:: "Talk about Doggy style"
+        6:: !Miss:: "Talk about Missionary style"      
+        7:: !Publ:: "Talk about Sex in public"
+        8:: !Rouf:: "Talk about breaking a hip while fucking"
+        9:: !Side:: "Talk about sidefuck and why you can't find it?"
+        10:: [!Lez && Player.isFemale() && Actor.isFemale()] :: "Talk about scissoring"
+        11:: !Ass:: "Talk about how gross anal is. 'negative'"
+        12:: "I'm done talking sex."
+
+        If 12
+            "I'm done talking sex."
+                
+        Else
+            If 0
+                "Without a condom, every sensation is a little more intense and a little warmer."
+                "I love the feeling of a penis inside <Actor.me_or_her> and our skin rubbing."
+                "As <Actor.He_or_I> ejaculating inside of <Actor.me_or_her>, the sexual sensation is such a turn on."
+                Player:likes_vaginal += Random(50, 100)
+                Actor:likes_vaginal += Random(50, 100)
+                Baby = 0
+                Baby += Actor:attractiontoplayer
+                Baby += Actor:incest
+                Baby += Actor:fertility
+                If Baby > Random(50, 200)
+                    Actor.setWantsBabies(true)
+                    "I think <Actor.he_or_she> are alittle baby crazy now."
+                Endif
+                Vag = true   
+            Elseif 1
+                "Bondage alters the balance of power. Strong can be made weak & weak Strong."
+                "Bondage can be used to expiate guilt. Good <Actor.boy_or_girl> 'forced' to be naughty without shame."
+                "A secure embrace of ropes."
+                Actor:likes_bondage += Random(25, 50)
+                Player:likes_bondage += Random(25, 50)
+                Bond = true   
+                
+            Elseif 2
+                "Engaging in foreplay helps build emotional intimacy with you and your partner."
+                "Foreplay also lowers inhibitions, which can make sex hotter between couples and strangers alike."
+                Player:likes_boobjob += Random(25, 50)
+                Player:likes_oral += Random(25, 50)
+                Player:likes_toys += Random(25, 50)
+                Player:likes_handjob += Random(25, 50)
+                Actor:likes_boobjob += Random(25, 50)
+                Actor:likes_oral += Random(25, 50)
+                Actor:likes_toys += Random(25, 50)
+                Actor:likes_handjob += Random(25, 50)
+                Teas = true   
+                    
+            Elseif 3 
+                If !Player.isFemale()
+                    Player():: "I love watching my lover ride me as they take control of my orgasm."
+                Else
+                    Player():: "I love the control and the intense feeling I get while riding my lover."
+                Endif
+                Player():: "As we stare into each-others eyes"
+                Actor:likes_cowgirl += Random(25, 50)
+                Player:likes_cowgirl += Random(25, 50)
+                Cow = true   
+                                    
+            Elseif 4
+                If !Player.isFemale()
+                    Player():: "I love watching my lover ride me as they take control of my orgasm."
+                Else
+                    Player():: "I love the control and the intense feeling I get while riding my lover."
+                Endif
+                Actor:likes_rcowgirl += Random(25, 50)
+                Player:likes_rcowgirl += Random(25, 50)
+                Rcow = true   
+                    
+            Elseif 5
+                If !Player.isFemale()
+                    Player():: "I love how deep I can drive my cock inside my lover from behide."
+                    Player():: "And how I drive her G-spot crazy."
+                Else
+                    Player():: "I love how deep my lover can drive his cock inside my pussy from behide."
+                    Player():: "And how my G-spot goes crazy."
+                Endif
+                Actor:likes_doggy += Random(25, 50)
+                Player:likes_doggy += Random(25, 50)
+                Dog = true   
+                    
+            Elseif 6
+                Player():: "This sex position is simple, elegant, effective, and surprisingly versatile."
+                Player():: "Plus allows for quality face time and a deeper connection with my lover."
+                Actor:likes_missionary += Random(25, 50)
+                Player:likes_missionary += Random(25, 50)
+                Miss = true   
+                    
+            Elseif 7
+                "Sex has been so strongly relegated to the private sphere"
+                "So bringing it into the public can be empowering, freeing, and exciting."
+                "The feel of fresh air against the skin."
+                "Escaping the familiar and predictable surroundings to increase passion and excitement."
+                Actor:likes_public += Random(25, 50)
+                Player:likes_public += Random(25, 50)
+                Publ = true   
+ 
+            Elseif 8
+                "Ricky Bobby Quote- I Want To Go Fast"
+                If !Player.isFemale()
+                    Player():: "And I want her to walk wrong for a week... because we fucked so hard."
+                Else
+                    Player():: "And I want to walk wrong for a week... because we fucked so hard."
+                Endif
+                Actor:likes_rough += Random(25, 50)
+                Player:likes_rough += Random(25, 50)
+                Rouf = true   
+                
+            Elseif 9
+                "From modder: I'm going to be honest with you."
+                "I have no idea what sex positions are available for sidefuck."
+                "Let find out together..."
+                Actor:likes_sidefuck += Random(25, 50)
+                Player:likes_sidefuck += Random(25, 50)
+                Side = true   
+                    
+            Elseif 10 
+                Player():: "Have you never even thought of being with another woman?"
+                Actor():: "I mean... I don't even understand how town women can make love..."
+                Actor():: "I mean, unless they kind of scissor or something..."
+                Actor:likes_tribadism += Random(25, 50)
+                Player:likes_tribadism += Random(25, 50)
+                Lez = true   
+                                    
+            Else
+                "I tell <Actor.name> about this one scene in the movie 'Zack and Miri Make a Porno'"
+                "And how during an anal shoot the girl let loose diarrhea all over the place."
+                "<Actor.name> looks like <Actor.he_or_she> is about to vomit."
+                Actor:likes_anal -= 100
+                Player:likes_anal -= 100
+                Ass = true   
+                    
+            Endif   
+        Endif
+    Endwhile
+
+Elseif 1
+    Vag = false
+    Bond = false
+    Teas = false
+    Cow = false
+    Rcow = false
+    Dog = false
+    Miss = false
+    Publ = false
+    Rouf = false
+    Side = false
+    Lez = false
+    Ass = false
+    choice = -1
+    While choice < 12 
+        0:: !Vag:: "Talk about rabbits."
+        1:: !Bond:: "Talk about ropes"
+        2:: !Teas:: "Talk about warm ups"
+        3:: !Cow:: "Talk about riding a horse"
+        4:: !Rcow:: "Talk about riding a horse backwards"
+        5:: !Dog:: "Talk about dogs"
+        6:: !Miss:: "Talk about kissing"      
+        7:: !Publ:: "Talk about the wilds"
+        8:: !Rouf:: "Talk about jackhammers"
+        9:: !Side:: "Talk about some that does not exist."
+        10:: [!Lez && Player.isMale && Actor.isMale] :: "Talk about scissors "
+        11:: !Ass:: "Talk about a gross movie scene 'negative'"
+        12:: "I'm done talking sex subtly..."
+
+        If 12
+            "I'm done talking sex subtly..."
+                
+        Else
+            If 0
+                "I talk about rabbit mating habbits..."
+                "And how I dislike the feel of rubber..."
+                Player:likes_vaginal += Random(5, 25)
+                Actor:likes_vaginal += Random(5, 25)
+                Baby = 0
+                Baby += Actor:attractiontoplayer
+                Baby += Actor:incest
+                Baby += Actor:fertility
+                If Baby > Random(85, 200)
+                    Actor.setWantsBabies(true)
+                    "I think <Actor.he_or_she> are alittle baby crazy now."
+                Endif
+                Vag = true   
+            Elseif 1
+                "I talk about how strong and secure ropes grab things..."
+                Actor:likes_bondage += Random(5, 25)
+                Player:likes_bondage += Random(5, 25)
+                Bond = true   
+                
+            Elseif 2
+                "Before engaging in any exercise it is important to warm up..."
+                Player:likes_boobjob += Random(5, 25)
+                Player:likes_oral += Random(5, 25)
+                Player:likes_toys += Random(5, 25)
+                Player:likes_handjob += Random(5, 25)
+                Actor:likes_boobjob += Random(5, 25)
+                Actor:likes_oral += Random(5, 25)
+                Actor:likes_toys += Random(5, 25)
+                Actor:likes_handjob += Random(5, 25)
+                Teas = true   
+                    
+            Elseif 3 
+                If !Player.isFemale()
+                    Player():: "I love watching people riding horses..."
+                Else
+                    Player():: "I love riding horses..."
+                Endif
+                "I stare long into <Actor.his_or_her> eyes"
+                Actor:likes_cowgirl += Random(5, 25)
+                Player:likes_cowgirl += Random(5, 25)
+                Cow = true   
+                                    
+            Elseif 4
+                If !Player.isFemale()
+                    Player():: "How hard would it be for someone to ride horse backwards?..."
+                Else
+                    Player():: "How hard would it be if I ride horse backwards?..."
+                Endif
+                Actor:likes_rcowgirl += Random(5, 25)
+                Player:likes_rcowgirl += Random(5, 25)
+                Rcow = true   
+                    
+            Elseif 5
+                "Why to dogs sometimes hump your leg?..."
+                Actor:likes_doggy += Random(5, 25)
+                Player:likes_doggy += Random(5, 25)
+                Dog = true   
+                    
+            Elseif 6
+                Player():: "If I'm with someone I want a deeper connection with them."
+                Actor:likes_missionary += Random(5, 25)
+                Player:likes_missionary += Random(5, 25)
+                Miss = true   
+                    
+            Elseif 7
+                "Do animal feel shame, from being naked?..."
+                Actor:likes_public += Random(5, 25)
+                Player:likes_public += Random(5, 25)
+                Publ = true   
+ 
+            Elseif 8
+                "Ever used a jackhammer?..."
+                Actor:likes_rough += Random(5, 25)
+                Player:likes_rough += Random(5, 25)
+                Rouf = true   
+                
+            Elseif 9
+                "From modder: I'm going to be honest with you."
+                "I have no idea what sex positions are available for sidefuck."
+                "Do you want to find out together?..."
+                Actor:likes_sidefuck += Random(5, 25)
+                Player:likes_sidefuck += Random(5, 25)
+                Side = true   
+                    
+            Elseif 10 
+                Player():: "Have you never even thought of being with another woman?"
+                Actor():: "I mean... I don't even understand how town women can make love..."
+                Actor():: "I mean, unless they kind of scissor or something..."
+                Actor:likes_tribadism += Random(5, 25)
+                Player:likes_tribadism += Random(5, 25)
+                Lez = true   
+                                    
+            Else
+                "I tell <Actor.name> about this one scene in the movie 'Zack and Miri Make a Porno'"
+                "And how during an anal shoot the girl let loose diarrhea all over the place."
+                "<Actor.name> looks like <Actor.he_or_she> is about to vomit."
+                Actor:likes_anal -= 100
+                Player:likes_anal -= 100
+                Ass = true   
+                    
+            Endif   
+        Endif
+    Endwhile
+
+Else
+    "Never mind" 
+endIf
+Actor.perversion += Random(1, 5)
+Player.perversion += Random(1, 5)
+Saved = getPerson(tag_Saved); 
+If Saved:perversion > 15 && !Saved.isMarried()
+    Saved:perversion -= 1000
+    Saved:masochist => 0
+    Saved:incest => 0
+Endif
+passTime(0.1, 0.5)
+sceneEnd()

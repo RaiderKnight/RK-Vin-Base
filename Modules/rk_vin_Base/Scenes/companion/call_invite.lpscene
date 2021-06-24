@@ -42,7 +42,44 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Random(0, 200) < 75
                 
             Endif
             passTime(0.25, 1)
-            SecondScreen()
+            // Start edit Ravenger6660
+            If [!Player.isVisible(Bottom) && !Player.isVisible(Bottom_Under)] || [!Player.isVisible(Top) && !Player.isVisible(Top_Under) && !Player.isMale()] 
+
+                If Friend.perversion < Random(60, 75)
+                    Friend(Surprised):: "Wow! You're a brave person, I like it!"
+                    Friend:rapportwithplayer += Random(0, 3)
+                    If Friend.isInterestedIn(Player)
+                        Friend:attractiontoplayer += Random(0, 3)
+                    Endif
+                Else
+                    Friend(Shocked):: "What is this?! Have you lost your mind?!"
+        
+                    "What should I do?"
+                    0:: "Apologize"
+                    1:: "Call <Friend.name> for being too prissy!"
+        
+                    If 0
+                        Player(Embarassed):: "Sorry, I've gone too far. I hope you're not angry at me"
+                        If interpersonal > Random(50, 65)
+                            Friend(Bored):: "OK, maybe I've overreacted a bit, sorry. It's OK."
+                        Else
+                            Friend(Irritated):: "Call me next time when you're ready to treat me seriously... or don't. Bye."
+                            Friend:attractiontoplayer -= Random(0, 1)
+                            Friend:rapportwithplayer -= Random(0, 3)
+                            sceneEnd()
+                        Endif
+                        
+                    Elseif 1
+                        Friend(Angry):: "I have enough of this! Bye!"
+                        Friend:attractiontoplayer -= Random(0, 10)
+                        Friend:rapportwithplayer -= Random(10, 30)
+                        Friend.hide()
+                        Player(Embarassed):: "Well"
+                        sceneEnd()
+                    Endif 
+                Endif
+            Endif  // End edit Ravenger6660
+            
             Friend.StartDate()
             timeout(12, call_invite)
             
@@ -64,5 +101,7 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Random(0, 200) < 75
             timeout(6, call_invite)
             
         Endif
+        
+        //timeout(50, call_invite, call_invite_co, call_invite_f, family_invite_workout, invite_workout, call_invite_co_pregnant)
 
-    sceneEnd() // Scene improved by: Raddeck
+    sceneEnd() // Scene improved by: Raddeck - Edited by Ravenger6660

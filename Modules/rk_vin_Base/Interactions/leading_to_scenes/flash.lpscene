@@ -6,11 +6,18 @@ OTHER: none
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         Player.stripOne()
         "I quickly flashed <Actor.name> my private parts."
         perversion += 0.5
+        //Edited by Ravenger6660
+        Love = 0
+        Love += Actor:attractiontoplayer
+        Love += Actor:perversion
+        //End edit
         
-        If Random(100, 200) < Actor:attractiontoplayer + perversion
+        If Random(100, 200) < Love
         
             Actor:attractiontoplayer += 0.5
             Actor:perversion += 0.5
@@ -21,16 +28,22 @@ OTHER: none
             If 0
             
                 Sex(Player, Actor)
-                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                mood += 3
+                Actor:attractiontoplayer += 0.5
+                Actor:perversion += 0.5
+            
             Endif
             
-        Elseif Actor.hadSex() || Random(40, 100) < Actor:attractiontoplayer + perversion
+        Elseif Actor.hadSex() || Random(40, 100) < Love
         
             "<Actor.name> didn't say a word but smiled at me. <Actor.He_or_She> definitely enjoyed what <Actor.he_or_she> saw."
             Actor:attractiontoplayer += 0.5
             Actor:perversion += 0.5
             
-        Elseif Actor:attractiontoplayer < 60 || Actor:rapportwithplayer < 60
+        Elseif [Actor:attractiontoplayer > 40 && Actor:attractiontoplayer] < 60 || [Actor:rapportwithplayer > 40 && Actor:rapportwithplayer < 60]
         
             Actor(Shocked):: "What the fuck are you doing! Cover up idiot!"
             Actor:attractiontoplayer -= 1
@@ -49,4 +62,4 @@ OTHER: none
             
         Endif
         
-    SceneEnd() // Scene improved by Raddeck
+    SceneEnd() // Scene improved by Raddeck - Edited by Ravenger6660

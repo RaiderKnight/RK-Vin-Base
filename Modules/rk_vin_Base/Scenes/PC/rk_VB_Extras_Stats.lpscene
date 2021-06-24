@@ -11,7 +11,22 @@ OTHER: none
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         
         If HungerEnable > 0
+            
+            If Hunger > 100
+            
+                Totalpoopenergy = Hunger - 100
+                "You reach maximum of hunger level, maximum is 100. All excess food have been poop away... transform into energy..."
+                Player.setActorVar(rk_VB_Hunger, 100)
+                energy += Totalpoopenergy
+            
+            ElseIf Hunger < 10
+            
+                "Just don't forget to eat, your hunger level is very low..."
+                
+            EndIf
+            
             "Hunger level | <Hunger>/100"
+            
         EndIf
 
         

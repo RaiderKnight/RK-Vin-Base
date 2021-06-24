@@ -1,0 +1,761 @@
+WHAT: all
+WHERE: hotel
+WHEN: 0 - 24
+WHO: none
+OTHER: money > 2000
+
+    SceneStart()
+    setBackground(home)
+    Warning = false
+    Actor = getPerson(tag_maidH)
+    If !Actor.isValid()   // HIRE
+        "I found a maid."
+        Actor = generatePersonTemporary()
+        Actor.dress()
+        Actor.show()
+        Actor:: "Hello if you wish I can clean your home."
+        If Actor.isInterestedIn(Player) && Actor:attractiontoplayer > 50
+            "I couldn't help but notice that <Actor.name> seem to be flirting with me."
+        Endif
+        "Should I let <Actor.him_or_her> clean home?"
+        0:: "Hire maid"
+        1:: "I don't need a maid actually"
+        
+        If 0
+            Actor.makePermanent()
+            Actor.setActorVar(tag_maidH, 1)
+            exchangeContact(Actor)
+            "I decided to hire <Actor.name> as my maid."
+        Else
+            "Let's stop looking for a maid altogether. I'm not used to having one."
+            timeout(9000, Maid_Hotel)
+        Endif
+    Else
+        Actor.dress()
+        Actor.show()
+        "<Actor.name> is my current maid."
+        0:: "I'm happy with <Actor.him_or_her>"
+        1:: "Don't need to come in today."
+        2:: "Fire <Actor.him_or_her>"
+        
+        If 0       
+            If Actor:attractiontoplayer > 50
+                "And they like me."
+            Endif
+            If [!Player.isVisible(Bottom) && !Player.isVisible(Bottom_Under)] || [!Player.isVisible(Top) && !Player.isVisible(Top_Under) && !Player.isMale()]
+                "<Actor.name> can't help but notice my naked body."
+                Actor.arousal += 10
+            Endif   
+            stage = Actor.getActorVar(tag_maidH)
+            If stage < 2
+                "What should I ask <Actor.name> to do today?"
+                0:: "Watch them work"
+                1:: "Suggest working in Underwear."
+                
+                If 0
+                    Actor:attractiontoplayer += 1
+                    "Should I flirt a bit with <Actor.name>?"
+                    0:: "Yes"
+                    1:: "No"
+                    
+                    If 0
+                        Actor:attractiontoplayer += 2
+                        "I took every opportunity we had flirt with <Actor.name>."
+                        If Actor:attractiontoplayer > 50
+                            "They enjoy my company."
+                        Endif
+                        If isModEnabled(vin_NonConsensual) && masochist < -30
+                            "Should I grope them?"
+                            0:: "Yes"
+                            1:: "No"
+                            
+                            If 0
+                                "I begin groping them."
+                                Actor:perversion += 1
+                                If Actor:perversion > 35 || Actor:arousal > 35 || masochist > 30
+                                    "They don't seem to mind"
+                                    Actor:perversion += 1
+                                    Actor:attractiontoplayer += 2
+                                    If Actor:masochist > 30
+                                        "I think they enjoy it."
+                                    Endif
+                                Else
+                                    "<Actor.name> doesn't like you touching them."
+                                Endif
+                                
+                            Endif   
+                        
+                        Endif
+                        
+                    Endif
+                Else
+                    Expo = 0
+                    Expo += Actor:attractiontoplayer
+                    Expo += Actor:perversion
+                    
+                    If Expo > 50
+                        Actor:: "Sure I don't mind. So long as you don't mind paying extra."
+                        "From now on, <Actor.name> will be work in underwear."
+                        Actor.setActorVar(tag_maidH, 2)
+                    Else
+                        Actor:: "That's a joke, right?"
+                        "Should I bribe <Actor.his_or_her>."
+                        0:: "Yes"
+                        1:: "No"
+
+                        If 0
+                            Player:: "I'll pay extra if you do."
+                            money -= 100
+                            Actor:: "Fine. So long as you're paying extra."
+                            "From now on, <Actor.name> will be work in underwear."
+                            Actor.setActorVar(tag_maidH, 2)
+                        Else
+                            "Oh well, at least <Actor.he_or_she> didn't quit."
+                        Endif
+                    Endif
+                Endif
+            elseif stage < 3
+                money -= [25 - Actor:attractiontoplayer]
+                Actor.strip(Bottom, Outerwear, Top, Foot, Headwear)
+                Random
+                    Actor.dress(Cool-Bra_1_F,Cool-Panties_1_F)
+                    Actor.dress(Cool-Bra_1_F,Cool-Panties_2_F)
+                    Actor.dress(Cool-Bra_1_F,Appealing-Panties_1_F)
+                    Actor.dress(Cool-Bra_1_F,Appealing-Panties_2_F)
+                    Actor.dress(Cool-Bra_1_F,Appealing-Panties_3_F)
+                    Actor.dress(Cool-Bra_1_F,Appealing-Panties_4_F)
+                    Actor.dress(Cool-Bra_2_F,Cool-Panties_1_F)
+                    Actor.dress(Cool-Bra_2_F,Cool-Panties_2_F)
+                    Actor.dress(Cool-Bra_2_F,Appealing-Panties_1_F)
+                    Actor.dress(Cool-Bra_2_F,Appealing-Panties_1_F,Stockings_2_F)
+                    Actor.dress(Cool-Bra_2_F,Appealing-Panties_2_F)
+                    Actor.dress(Cool-Bra_2_F,Appealing-Panties_2_F,Stockings_2_F)
+                    Actor.dress(Cool-Bra_2_F,Appealing-Panties_3_F)
+                    Actor.dress(Cool-Bra_2_F,Appealing-Panties_3_F,Stockings_2_F)
+                    Actor.dress(Cool-Bra_2_F,Appealing-Panties_4_F)
+                    Actor.dress(Cool-Bra_2_F,Appealing-Panties_4_F,Stockings_2_F)
+                    Actor.dress(Cool-Bra_3_F,Cool-Panties_1_F)
+                    Actor.dress(Cool-Bra_3_F,Cool-Panties_2_F)
+                    Actor.dress(Cool-Bra_3_F,Appealing-Panties_1_F)
+                    Actor.dress(Cool-Bra_3_F,Appealing-Panties_2_F)
+                    Actor.dress(Cool-Bra_3_F,Appealing-Panties_3_F)
+                    Actor.dress(Cool-Bra_3_F,Appealing-Panties_4_F)
+                EndRandom
+                "<Actor.name> procede to remove clothing and work in underwear."
+                If Actor:attractiontoplayer > 75
+                    "And they like to tease me."
+                Endif
+                Player.arousal += 10
+                perversion += Random(0, 0.5)
+                "What should I ask <Actor.name> to do today?"
+                0:: "Watch them work"
+                1:: "Suggest working in nude."
+                
+                If 0
+                    Actor:attractiontoplayer += 4
+                    Actor:perversion += 1
+                    "Should I flirt a bit with <Actor.name>?"
+                    0:: "Yes"
+                    1:: "No"
+                    
+                    If 0
+                        Actor:attractiontoplayer += 4
+                        Actor:perversion += 2
+                        "I took every opportunity we had flirt with <Actor.name>."
+                        If Actor:attractiontoplayer > 75
+                            "They enjoy my company."
+                        Endif
+                        If isModEnabled(vin_NonConsensual) && masochist < -30
+                            "Should I grope them?"
+                            0:: "Yes"
+                            1:: "No"
+                            
+                            If 0
+                                "I begin groping them."
+                                Actor:perversion += 2
+                                Actor:masochist += 1
+                                Actor:arousal += 1
+                                If Actor:perversion > 65 || Actor:arousal > 65 || masochist > 65
+                                    "They don't seem to mind"
+                                    Actor:attractiontoplayer += 4
+                                    Actor:perversion += 2
+                                    Player:arousal += 15
+                                    Actor:arousal += 15
+                                    If Actor:masochist > 65
+                                        "I think they enjoy it."
+                                        Actor:arousal += 15
+                                    Endif
+                                    If Player:arousal > 85
+                                        Player():: "You look so sexy in you underwear. I want you now!"
+                                        If Actor:arousal > 85 
+                                            Actor():: "Take me NOW!"
+                                            Actor:attractiontoplayer += Random(1, 10)
+                                            Actor:perversion += Random(5, 20)
+                                            Sex(Player, Actor)
+                                            perversion += Random(0, 2)
+                                            mood += 30
+                                            Actor.setActorVar(tag_maidH, 3)
+                                        Else
+                                            Actor():: "Calm down. Just let me do my work."
+                                            0:: "Trick them."
+                                            1:: isModEnabled(vin_NonConsensual) && masochist < -30:: "Force them."
+                                            2:: "Nothing"
+                        
+                                            If 0
+                                                "How about you do mop the floors."
+                                                If Actor:intelligence < intelligence
+                                                    Actor.animate(sweep)
+                                                    Player.strip()
+                                                    "While they mop the floors, I begin masturbating."
+                                                    Sex(Player)
+                                                    Actor:arousal += 50
+                                                    If Actor:arousal > 85
+                                                        "I think they want a play too?"
+                                                        Actor:attractiontoplayer += Random(1, 10)
+                                                        Actor:perversion += Random(5, 20)
+                                                        Sex(Player, Actor)
+                                                        perversion += Random(0, 2)
+                                                        mood += 30
+                                                        Actor.setActorVar(tag_maidH, 3)                                                      
+                                                    Else
+                                                        "They quickly leave."
+                                                        Actor:attractiontoplayer -= Random(1, 10)
+                                                        Actor:perversion -= Random(5, 20)
+                                                        perversion += Random(0, 2)
+                                                        mood -= 15
+                                                        Actor.setActorVar(tag_maidH, 1)
+                                                    Endif
+                                
+                                                Else
+                                                    "They are not falling for my tricks"
+                                                Endif
+                        
+                                            Elseif 1
+                                                "Taking <Actor.him_or_her> completely by surprise, I grabbed the <Actor.handsome_or_beautiful> <Actor.man_or_woman> by the <Actor.dick_or_pussy> from behind."
+                                                karma -= 20
+                                                If martial < Actor:martial
+                                                    Player(Pain):: "Ah!"
+                                                    Actor(Angry):: "That should teach you to not sexually assault people!"
+                                                Else
+                                                    "The element of surprise was too great. <Actor.He_or_She> was overwhelmed before <Actor.he_or_she> could even react to the assault."
+                                                    Actor(Crying):: "No! Please stop ... I beg you ... Somebody help ..."
+                                                    "<Actor.His_or_Her> cries for help went unheard and <Actor.he_or_she> had no choice but endure it all at my hand."
+                                                    Filter(Aggressive)
+                                                    TalkNonConsensual()
+                                                    SexNoAffair(Player, Actor)
+                                                Endif
+                                                Actor.setActorVar(tag_maidH, 0)
+                                                Actor:attractiontoplayer -= 100
+                                                blockContact(Actor)
+                                            Endif
+                                        Endif
+                                    
+                                    Elseif Actor:arousal > 85 
+                                        "<Actor.name> is starting to get too close for comfort. And now they are in a very suggestive position..."
+                                        "My resistance is futile."
+                                        Actor:attractiontoplayer += Random(1, 10)
+                                        Actor:perversion += Random(5, 20)
+                                        Sex(Player, Actor)
+                                        perversion += Random(0, 2)
+                                        mood += 30
+                                        Actor.setActorVar(tag_maidH, 3)
+                                    
+                                    Endif
+                                Else
+                                    "<Actor.name> doesn't like you touching them."
+                                Endif
+                                
+                            Endif   
+                        
+                        Endif
+                    Endif
+                Else
+                    Expo = 0
+                    Expo += Actor:attractiontoplayer
+                    Expo += Actor:perversion
+                    
+                    If Expo > 100
+                        Actor:: "Sure I don't mind. So long as you don't mind paying extra."
+                        "From now on, <Actor.name> will be work in nude."
+                        Actor.setActorVar(tag_maidH, 3)
+                    Else
+                        Actor:: "That's a joke, right?"
+                        "Should I bribe <Actor.his_or_her>."
+                        0:: "Yes"
+                        1:: "No"
+
+                        If 0
+                            Player:: "I'll pay extra if you do."
+                            money -= 200
+                            Actor:: "Fine. So long as you paying extra."
+                            "From now on, <Actor.name> will be work in nude."
+                            Actor.setActorVar(tag_maidH, 3)
+                        Else
+                            "Oh well, at least <Actor.he_or_she> didn't quit."
+                        Endif
+                    Endif
+                Endif
+            Else
+                Actor.strip()
+                money -= [50 - Actor:attractiontoplayer]
+                Player.arousal += 20
+                perversion += Random(0, 1)
+                "<Actor.name> procede to remove clothing and work in nude."
+                "What should I ask <Actor.name> to do today?"
+                0:: "Watch them work"
+                1:: "Ask for sexual favours"
+                
+                If 0
+                    If [!Player.isVisible(Bottom) && !Player.isVisible(Bottom_Under)] || [!Player.isVisible(Top) && !Player.isVisible(Top_Under) && !Player.isMale()]
+                        "During the Cleaning <Actor.name> can't help but stare a my naked body."
+                        Actor.arousal += 15
+                        Lust = 0
+                        Lust += Actor:arousal
+                        Lust += Actor:attractiontoplayer
+                        Lust += Actor:perversion
+                        If Player:arousal > 75
+                            Player():: "How about a real cleaning?"
+                            If [Actor.hadsex() && Lust > 100] || Lust > Random(150, 250)
+                                Actor():: "Just the cleaning I needed."
+                                Actor:attractiontoplayer += Random(1, 10)
+                                Actor:perversion += Random(5, 20)
+                                Sex(Player, Actor)
+                                perversion += Random(0, 2)
+                                mood += 30
+                            Else
+                                Actor():: "Only if you pay."
+                                0:: "Pay ?200?"
+                                1:: "refuse"
+                                
+                                If 0
+                                    money -= [200 - Actor:attractiontoplayer]
+                                    "Money well spent"
+                                    Actor:attractiontoplayer += Random(1, 10)
+                                    Actor:perversion += Random(5, 20)
+                                    Sex(Player, Actor)
+                                    perversion += Random(0, 2)
+                                    mood += 30
+                                Else
+                                    "Sorry"
+                                
+                                Endif
+                            
+                            Endif
+                
+                       Elseif [Actor.hadsex() && Lust > 100] || Lust > Random(150, 250)
+                            "<Actor.name> is starting to get too close for comfort. And now they are in a very suggestive position..."
+                            "My resistance is futile."
+                            Actor:attractiontoplayer += Random(1, 10)
+                            Actor:perversion += Random(5, 20)
+                            Sex(Player, Actor)
+                            perversion += Random(0, 2)
+                            mood += 30
+        
+                        Else
+                            "I watch <Actor.name> clean room."
+                            mood += 15
+                            perversion += Random(0, 1)                      
+                            Actor:attractiontoplayer += 4
+                            Actor:perversion += 1
+                            "Should I flirt a bit with <Actor.name>?"
+                            0:: "Yes"
+                            1:: "No"
+                    
+                            If 0
+                                Actor:attractiontoplayer += 5
+                                Actor:perversion += 3
+                                "I took every opportunity we had flirt with <Actor.name>."
+                                If Actor:attractiontoplayer > 75
+                                    "They enjoy my company."
+                                Endif
+                                If isModEnabled(vin_NonConsensual) && masochist < -30
+                                    "Should I grope them?"
+                                    0:: "Yes"
+                                    1:: "No"
+                            
+                                    If 0
+                                        "I begin groping them."
+                                        Actor:perversion += 3
+                                        Actor:masochist += 2
+                                        Actor:arousal += 2
+                                        If Actor:perversion > 65 || Actor:arousal > 65 || masochist > 65
+                                            "They don't seem to mind"
+                                            Actor:attractiontoplayer += 4
+                                            Actor:perversion += 2
+                                            Player:arousal += 15
+                                            Actor:arousal += 15
+                                            If Actor:masochist > 65
+                                                "I think they enjoy it."
+                                                Actor:arousal += 15
+                                            Endif
+                                            If Player:arousal > 85
+                                                Player():: "You look so sexy in you underwear. I want you now!"
+                                                If Actor:arousal > 85 
+                                                    Actor():: "Take me NOW!"
+                                                    Actor:attractiontoplayer += Random(1, 10)
+                                                    Actor:perversion += Random(5, 20)
+                                                    Sex(Player, Actor)
+                                                    perversion += Random(0, 2)
+                                                    mood += 30
+                                                    Actor.setActorVar(tag_maidH, 3)
+                                                Else
+                                                    Actor():: "Calm down. Just let me do my work."
+                                                    0:: "Trick them."
+                                                    1:: isModEnabled(vin_NonConsensual) && masochist < -30:: "Force them."
+                                                    2:: "Nothing"
+                        
+                                                    If 0
+                                                    "How about you do mop the floors."
+                                                        If Actor:intelligence < intelligence
+                                                            Actor.animate(sweep)
+                                                            Player.strip()
+                                                            "While they mop the floors, I begin masturbating."
+                                                            Sex(Player)
+                                                            Actor:arousal += 50
+                                                            If Actor:arousal > 85
+                                                                "I think they want a play too?"
+                                                                Actor:attractiontoplayer += Random(1, 10)
+                                                                Actor:perversion += Random(5, 20)
+                                                                Sex(Player, Actor)
+                                                                perversion += Random(0, 2)
+                                                                mood += 30
+                                                                Actor.setActorVar(tag_maidH, 3)                                                      
+                                                            Else
+                                                               "They quickly leave."
+                                                                Actor:attractiontoplayer -= Random(1, 10)
+                                                                Actor:perversion -= Random(5, 20)
+                                                                perversion += Random(0, 2)
+                                                                mood -= 15
+                                                                Actor.setActorVar(tag_maidH, 1)
+                                                            Endif
+                                
+                                                        Else
+                                                            "They are not falling for my tricks"
+                                                        Endif
+                        
+                                                    Elseif 1
+                                                        "Taking <Actor.him_or_her> completely by surprise, I grabbed the <Actor.handsome_or_beautiful> <Actor.man_or_woman> by the <Actor.dick_or_pussy> from behind."
+                                                        karma -= 20
+                                                        If martial < Actor:martial
+                                                            Player(Pain):: "Ah!"
+                                                            Actor(Angry):: "That should teach you to not sexually assault people!"
+                                                        Else
+                                                            "The element of surprise was too great. <Actor.He_or_She> was overwhelmed before <Actor.he_or_she> could even react to the assault."
+                                                            Actor(Crying):: "No! Please stop ... I beg you ... Somebody help ..."
+                                                            "<Actor.His_or_Her> cries for help went unheard and <Actor.he_or_she> had no choice but endure it all at my hand."
+                                                            Filter(Aggressive)
+                                                            TalkNonConsensual()
+                                                            SexNoAffair(Player, Actor)
+                                                        Endif
+                                                        Actor.setActorVar(tag_maidH, 0)
+                                                        Actor:attractiontoplayer -= 100
+                                                        blockContact(Actor)  
+                                                    Endif
+                                                Endif
+                                    
+                                            Elseif Actor:arousal > 85 || [Actor.hadsex() && Actor:perversion > 85 && Player.isnaked()]
+                                                "<Actor.name> is starting to get too close for comfort. And now they are in a very suggestive position..."
+                                                "My resistance is futile."
+                                                Actor:attractiontoplayer += Random(1, 10)
+                                                Actor:perversion += Random(5, 20)
+                                                Sex(Player, Actor)
+                                                perversion += Random(0, 2)
+                                                mood += 30
+                                                Actor.setActorVar(tag_maidH, 3)
+                                    
+                                            Endif
+                                        Else
+                                            "<Actor.name> doesn't like you touching them."
+                                        Endif
+                                    Endif
+                                Endif   
+                        
+                            Endif
+                    Else
+                        "I watch <Actor.name> clean room."
+                        mood += 15
+                        perversion += 1 
+                        If Actor:attractiontoplayer > 75 || Actor:perversion > 75 || Actor:masochist < -25
+                            Actor():: "I do think it is fair that I'm naked and you are not."
+                            Player():: "What do you want me to do?"
+                            Actor():: "Strip!"
+                            Player.strip()
+                            Actor(Flirty):: "Much better."
+                            "During the Cleaning <Actor.name> can't help but stare a my naked body."
+                            Actor.arousal += 15
+                            Lust = 0
+                            Lust += Actor:arousal
+                            Lust += Actor:attractiontoplayer
+                            Lust += Actor:perversion
+                            If Player:arousal > 75
+                                Player():: "How about a real cleaning?"
+                                If [Actor.hadsex() && Lust > 100] || Lust > Random(150, 250)
+                                    Actor():: "Just the cleaning I needed."
+                                    Actor:attractiontoplayer += Random(1, 10)
+                                    Actor:perversion += Random(5, 20)
+                                    Sex(Player, Actor)
+                                    perversion += Random(0, 2)
+                                    mood += 30
+                                Else
+                                    Actor():: "Only if you pay."
+                                    0:: "Pay ?200?"
+                                    1:: "refuse"
+                                
+                                    If 0
+                                        money -= [200 - Actor:attractiontoplayer]
+                                        "Money well spent"
+                                        Actor:attractiontoplayer += Random(1, 10)
+                                        Actor:perversion += Random(5, 20)
+                                        Sex(Player, Actor)
+                                        perversion += Random(0, 2)
+                                        mood += 30
+                                    Else
+                                        "Sorry"
+                                
+                                    Endif
+                            
+                                Endif
+                
+                            Elseif [Actor.hadsex() && Lust > 100] || Lust > Random(150, 250)
+                                "<Actor.name> is starting to get too close for comfort. And now they are in a very suggestive position..."
+                                "My resistance is futile."
+                                Actor:attractiontoplayer += Random(1, 10)
+                                Actor:perversion += Random(5, 20)
+                                Sex(Player, Actor)
+                                perversion += Random(0, 2)
+                                mood += 30
+        
+                            Else
+                                "I watch <Actor.name> clean room."
+                                mood += 15
+                                perversion += Random(0, 1)                      
+
+                            Endif
+                        Else
+                            Actor:attractiontoplayer += 4
+                            Actor:perversion += 1
+                            "Should I flirt a bit with <Actor.name>?"
+                            0:: "Yes"
+                            1:: "No"
+                    
+                            If 0
+                                Actor:attractiontoplayer += 4
+                                Actor:perversion += 2
+                                "I took every opportunity we had flirt with <Actor.name>."
+                                If Actor:attractiontoplayer > 75
+                                    "They enjoy my company."
+                                Endif
+                                If isModEnabled(vin_NonConsensual) && masochist < -30
+                                    "Should I grope them?"
+                                    0:: "Yes"
+                                    1:: "No"
+                            
+                                    If 0
+                                        "I begin groping them."
+                                        Actor:perversion += 2
+                                        Actor:masochist += 1
+                                        Actor:arousal += 1
+                                        If Actor:perversion > 65 || Actor:arousal > 65 || masochist > 65
+                                            "They don't seem to mind"
+                                            Actor:attractiontoplayer += 4
+                                            Actor:perversion += 2
+                                            Player:arousal += 15
+                                            Actor:arousal += 15
+                                            If Actor:masochist > 65
+                                                "I think they enjoy it."
+                                                Actor:arousal += 15
+                                            Endif
+                                            If Player:arousal > 85
+                                                Player():: "You look so sexy in you underwear. I want you now!"
+                                                If Actor:arousal > 85 
+                                                    Actor():: "Take me NOW!"
+                                                    Actor:attractiontoplayer += Random(1, 10)
+                                                    Actor:perversion += Random(5, 20)
+                                                    Sex(Player, Actor)
+                                                    perversion += Random(0, 2)
+                                                    mood += 30
+                                                    Actor.setActorVar(tag_maidH, 3)
+                                                Else
+                                                    Actor():: "Calm down. Just let me do my work."
+                                                    0:: "Trick them."
+                                                    1:: isModEnabled(vin_NonConsensual) && masochist < -30:: "Force them."
+                                                    2:: "Nothing"
+                        
+                                                    If 0
+                                                        "How about you do mop the floors."
+                                                        If Actor:intelligence < intelligence
+                                                            Actor.animate(sweep)
+                                                            Player.strip()
+                                                            "While they mop the floors, I begin masturbating."
+                                                            Sex(Player)
+                                                            Actor:arousal += 50
+                                                            If Actor:arousal > 85
+                                                                "I think they want a play too?"
+                                                                Actor:attractiontoplayer += Random(1, 10)
+                                                                Actor:perversion += Random(5, 20)
+                                                                Sex(Player, Actor)
+                                                                perversion += Random(0, 2)
+                                                                mood += 30
+                                                                Actor.setActorVar(tag_maidH, 3)                                                      
+                                                            Else
+                                                               "They quickly leave."
+                                                                Actor:attractiontoplayer -= Random(1, 10)
+                                                                Actor:perversion -= Random(5, 20)
+                                                                perversion += Random(0, 2)
+                                                                mood -= 15
+                                                                Actor.setActorVar(tag_maidH, 1)
+                                                            Endif
+                                
+                                                        Else
+                                                            "They are not falling for my tricks"
+                                                        Endif
+                        
+                                                    Elseif 1
+                                                        "Taking <Actor.him_or_her> completely by surprise, I grabbed the <Actor.handsome_or_beautiful> <Actor.man_or_woman> by the <Actor.dick_or_pussy> from behind."
+                                                        karma -= 20
+                                                        If martial < Actor:martial
+                                                            Player(Pain):: "Ah!"
+                                                            Actor(Angry):: "That should teach you to not sexually assault people!"
+                                                        Else
+                                                            "The element of surprise was too great. <Actor.He_or_She> was overwhelmed before <Actor.he_or_she> could even react to the assault."
+                                                            Actor(Crying):: "No! Please stop ... I beg you ... Somebody help ..."
+                                                            "<Actor.His_or_Her> cries for help went unheard and <Actor.he_or_she> had no choice but endure it all at my hand."
+                                                            Filter(Aggressive)
+                                                            TalkNonConsensual()
+                                                            SexNoAffair(Player, Actor)
+                                                        Endif
+                                                        Actor.setActorVar(tag_maidH, 0)
+                                                        Actor:attractiontoplayer -= 100
+                                                        blockContact(Actor)  
+                                                    Endif
+                                                Endif
+                                    
+                                            Elseif Actor:arousal > 85 || [Actor.hadsex() && Actor:perversion > 85 && Player.isnaked()]
+                                                "<Actor.name> is starting to get too close for comfort. And now they are in a very suggestive position..."
+                                                "My resistance is futile."
+                                                Actor:attractiontoplayer += Random(1, 10)
+                                                Actor:perversion += Random(5, 20)
+                                                Sex(Player, Actor)
+                                                perversion += Random(0, 2)
+                                                mood += 30
+                                                Actor.setActorVar(tag_maidH, 3)
+                                    
+                                            Endif
+                                        Else
+                                            "<Actor.name> doesn't like you touching them."
+                                        Endif
+                                    Endif
+                                Endif   
+                        
+                            Endif
+                        Endif
+                    Endif
+                    
+                Else
+                    Player(Flirty):: "<Actor.name>, would you mind taking care of something?"
+                    Slut = 0
+                    Slut += Actor:attractiontoplayer
+                    Slut += Actor:perversion
+                    Slut += Actor:masochist
+                    
+                    If Slut > Random(100, 200) || [Actor.hadsex() && Slut > 100]
+                        Actor(Flirty):: "Of course, boss. So long as you pay."
+                        "Judging from <Actor.his_or_her> face expression, <Actor.he_or_she> already knows exactly what I want."
+                        Actor(Flirty):: "What do you want me to do then, boss?"
+                        0:: "Oral Pay 200"
+                        1:: "Sex Pay 300"
+                       
+                        If 0
+                            money -= [200 - Actor:attractiontoplayer]
+                            Filter(Oral)
+                            Sex(Player, Actor)
+                            Actor:arousal += 15
+                            If Actor:arousal > 75
+                                "I think they want a little more?"
+                                Actor:attractiontoplayer += Random(1, 10)
+                                Actor:perversion += Random(5, 20)
+                                Sex(Player, Actor)
+                                perversion += Random(0, 2)
+                                mood += 30                                                             
+                            Endif
+
+                        Else
+                            money -= [300 - Actor:attractiontoplayer]
+                            Actor:attractiontoplayer += Random(1, 10)
+                            Actor:perversion += Random(5, 20)
+                            Sex(Player, Actor)
+                            perversion += Random(0, 2)
+                            mood += 30
+
+                        Endif
+                    
+                    Else
+                        Actor(Flirty):: "So long as it doesn't involve sex. Of course, boss."
+                        "Judging from <Actor.his_or_her> face expression, They don't want what I'm was offering..."
+                        0:: "Trick them."
+                        1:: isModEnabled(vin_NonConsensual) && masochist < -30:: "Grope/Force them."
+                        2:: "Nothing"
+                        
+                        If 0
+                            "How about you do mop the floors."
+                            If Actor:intelligence < intelligence
+                                Actor.animate(sweep)
+                                Actor.strip()
+                                Player.strip()
+                                "While they mop the floors, I begin masturbating."
+                                Sex(Player)
+                                Actor:arousal += 50
+                                If Actor:arousal > 85
+                                    "I think they want a play too?"
+                                    Actor:attractiontoplayer += Random(1, 10)
+                                    Actor:perversion += Random(5, 20)
+                                    Sex(Player, Actor)
+                                    perversion += Random(0, 2)
+                                    mood += 30                                                             
+                                Else
+                                    "They quickly leave."
+                                    Actor:attractiontoplayer -= Random(1, 10)
+                                    Actor:perversion -= Random(5, 20)
+                                    perversion += Random(0, 2)
+                                    mood -= 15
+                                    Actor.setActorVar(tag_maidH, 2)
+                                Endif
+                                
+                            Else
+                                "They are not falling for my tricks"
+                            Endif
+                        
+                        Elseif 1
+                            "Taking <Actor.him_or_her> completely by surprise, I grabbed the <Actor.handsome_or_beautiful> <Actor.man_or_woman> by the <Actor.dick_or_pussy> from behind."
+                            karma -= 20
+                            If martial < Actor:martial
+                                Player(Pain):: "Ah!"
+                                Actor(Angry):: "That should teach you to not sexually assault people!"
+                            Else
+                                "The element of surprise was too great. <Actor.He_or_She> was overwhelmed before <Actor.he_or_she> could even react to the assault."
+                                Actor(Crying):: "No! Please stop ... I beg you ... Somebody help ..."
+                                "<Actor.His_or_Her> cries for help went unheard and <Actor.he_or_she> had no choice but endure it all at my hand."
+                                Filter(Aggressive)
+                                TalkNonConsensual()
+                                SexNoAffair(Player, Actor)
+                            Endif
+                            Actor.setActorVar(tag_maidH, 0)
+                            Actor:attractiontoplayer -= 100
+                            blockContact(Actor)                       
+                        Endif
+                        
+                    Endif   
+                Endif
+            Endif
+        Elseif 1
+            "I don't need you today." 
+
+        Else
+            "I decided to fire <Actor.name> from the maid position."
+            Actor.setActorVar(tag_maidH, 0)
+        Endif
+        timeout(200, Maid_Hotel)
+    Endif
+    SceneEnd()
+    timeout(100, Maid_Hotel)
+    

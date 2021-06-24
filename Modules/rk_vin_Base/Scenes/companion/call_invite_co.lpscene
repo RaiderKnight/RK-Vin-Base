@@ -32,7 +32,27 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Friend:rapportwithpla
             Endif
             
             passTime(0.25, 1)
-            SecondScreen()
+            // Start edit Ravenger6660
+            If [!Player.isVisible(Bottom) && !Player.isVisible(Bottom_Under)] || [!Player.isVisible(Top) && !Player.isVisible(Top_Under)]
+                Friend(Surprised):: "Wow! Now I've literally got what I asked for! You're a brave person, I love it!"
+                Friend:rapportwithplayer += Random(0, 4)
+                Friend:attractiontoplayer += Random(0, 4)
+                isEF = Friend.getActorVar(tag_Exhibitionistpartier)
+                If !isEF == 1 && !Friend.isDating() 
+                    Friend(Happy):: "Are you an exhibitionist?"
+                
+                    "Am ?"
+                    0:: "Yes"
+                    1:: "No"
+
+                    If 0
+                        Friend(Happy):: "I guess I will keep that in mind"
+                        Friend.setActorVar(tag_Exhibitionistpartier, 1)
+                        Readyexhibition.setGlobal(20)
+                    Endif
+                Endif             
+            Endif
+            // End edit Ravenger6660
             Friend.StartDate()
             timeout(12, call_invite_co, call_invite)
             perversion += Random(0, 0.5)
@@ -55,5 +75,6 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Friend:rapportwithpla
             timeout(6, call_invite_co, call_invite)
             
         Endif
-
-    sceneEnd() // Scene improved by: Raddeck
+        
+        //timeout(50, call_invite, call_invite_co, call_invite_f, family_invite_workout, invite_workout, call_invite_co_pregnant)
+    sceneEnd() // Scene improved by: Raddeck - Edited by Ravenger6660
