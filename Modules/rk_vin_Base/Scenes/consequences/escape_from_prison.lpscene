@@ -31,6 +31,9 @@ OTHER: none
                 
             Else
             
+                PoliceMan = generatePersonTemporary()
+                PoliceMan.dressGuard()
+                PoliceMan.show(2)
                 "'<Player.name_last> is escaping! Stop <Player.him_or_her>!'"
                 Player.animate()
                 "Oh no, one of the prison guards noticed me and shouted out for help. One of them even pulled out his gun."
@@ -52,10 +55,53 @@ OTHER: none
                         
                     Else
                     
-                        "Pow!"
-                        Player.hide()
-                        "A guard fired his gun ... it was a perfect shot, right through my chest."
-                        followup(death)
+                        copfired = 0
+                        While copfired < 5
+                        
+                            If copfired > 0
+                        
+                                PoliceMan(Angry)::"HEY YOU I ASKED YOU TO STOP!"
+                        
+                            EndIf
+                            "Pow!"
+                            Player.hide()
+                    
+                            "A cop fired his gun..."
+                            If Random(0, 30) < fitness
+                
+                                "I managed to dodge the shot. Phew, that was close."
+                                sneak += 1
+                                mood += 1
+                                copfired += 1
+                        
+                            ElseIf copfired >= 5
+                            
+                                "I managed to lose the cops. Phew, that was close."
+                                "And I did it! The prison guards were long left behind. Usain Bolt would be proud of that run!"
+                                "My prison escape was close, but ultimately successful. I'm a free <Player.man_or_woman> again!"
+                                mood += 15
+                                sneak += 1
+                                endPrison()
+                            
+                            ElseIf energy < 50 && sneak < 50
+                            
+                                "More cops was waiting for me at the end of the road..." 
+                                "They catch me easily, they stripped me and also take time to beat me a little bit, and they bring me back to my cell !"
+                                
+                                Player.strip()
+                                energy => 5
+                                mood => 0
+                                sneak -= 5
+                                intelligence -= 5
+                            
+                            Else
+                    
+                                "The cop fired his gun. It was a perfect shot ..."
+                                followUp(death)
+                        
+                            EndIf
+                    
+                        EndWhile
                         
                     Endif
                     

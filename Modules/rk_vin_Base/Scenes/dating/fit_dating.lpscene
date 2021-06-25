@@ -21,6 +21,8 @@ OTHER: none
                 fitness += Random(0, 1)
                 Dating:attractiontoplayer += Random(0, 2)
                 mood += 2
+                Dating.passOn()  // edited by Ravenger6660
+                followUp(Ravenger_VB_D_Private_Workout)  // edited by Ravenger6660
                 
             Else
             
@@ -34,6 +36,14 @@ OTHER: none
             Dating:attractiontoplayer -= Random(0, 1)
             
         Endif
+         // Start edit by Ravenger6660
+        Saved = getPerson(tag_Saved); 
+        If Saved:perversion > 15 && !Saved.isMarried()
+            Saved:perversion -= 1000
+            Saved:masochist => 0
+            Saved:incest => 0
+        Endif
+         // End edit by Ravenger6660
 
         // timeout(200, fit_dating)
-    SceneEnd() // Scene improved by Raddeck
+    SceneEnd() // Scene improved by Raddeck - edited by Ravenger6660

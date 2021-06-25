@@ -1,0 +1,140 @@
+WHAT: watch_tv, watch_a_movie_in, 
+WHERE: home
+WHEN: 0 - 24
+WHO: Actor = getSpecific(Dating, spouses); If Actor:attractiontoplayer > 0 && !Actor.isFemale() && isActorMarried()
+OTHER: [IsAtDatingHome() || IsAtHome()] && isPlayerMarried()
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        "I came home only to find my family gathering in the living room watching a movie."
+        setBackgroundCustom(livingroom)
+        Actor.dress()
+        Actor.show(2)
+        Actor(Happy):: "Come join us!"
+        "As if there is any space left on the sofa for me to sit ..."
+        0:: "Stand"
+        1:: "Sit on <Actor.Relationship>'s lap"
+        
+        If 0
+        
+            "I'll just stand behind the sofa to watch the movie."
+            
+        Else
+        
+            "I to sit on <Actor.relationship> lap. No big deal."
+            "A while later ..."
+            "I feel something moving underneath me ... Wait, is that a boner? Is my <Actor.relationship> getting hard because of me? Sitting on <Actor.his_or_her> lap wasn't the best idea after all ..."
+            Actor:incest += Random(0, 2)
+            Actor:attractiontoplayer += Random(0, 2)
+            Actor:arousal += 25
+            Love = 0
+            Love += Actor:attractiontoplayer
+            Love += Actor:incest
+            
+            If Love > 75
+                "Suddenly, my <Actor.relationship> started whispering into my ear."
+                Actor(Flirty):: "You're doing this deliberately, aren't you?"
+                0:: "Apologize"
+                1:: "Having fun?"
+                
+                If 0
+                    Player(Embarrassed):: "I'm so sorry. I didn't mean to ..."
+                    Actor:incest -= 1
+                    If Actor:masochist < -50
+                        "My <Actor.relationship> has other plans. <Actor.He_or_She> pulls my pants down and makes me sit on their dick."
+                        Sex(Actor, Player)
+                        Actor:incest += 25
+                        Actor:attractiontoplayer += 25
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                    Endif
+    
+                Else
+                    If [!Player.isVisible(Bottom) && !Player.isVisible(Bottom_Under)]
+                        "I regret not where anything below the waist."
+                        "Because the next thing I know, they are slipping their menmber inside."
+                        Sex(Actor, Player)
+                        Actor:incest += 50
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                                    
+                    Else
+                        "I whispered back into <Actor.his_or_her> ear."
+                        Player(Flirty):: "Let's sneak away from here, shall we?"
+                        setBackground(home)
+                        Sex(Actor, Player)
+                        Actor:incest += 50
+                        Actor:attractiontoplayer += 50
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                    Endif   
+                Endif
+            
+            Elseif Actor:arousal > 85
+                "We're alone just the two of us."
+                "My <Actor.relationship> starting to grope me."
+                player:arousal += 25
+                
+                If [!Player.isVisible(Bottom) && !Player.isVisible(Bottom_Under)]
+                    "I regret not where anything below the waist."
+                    "Because the next thing I know, they are slipping their menmber inside."
+                    Sex(Actor, Player)
+                    Actor:incest += 50
+                    Actor:attractiontoplayer += 50
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                                    
+                Else
+                
+                    Actor(Flirty):: "You're doing this deliberately, aren't you?"
+                    0:: "Apologize"
+                    1:: "Lead <Actor.him_or_her> to the bedroom"
+                
+                    If 0
+                    
+                        Player(Embarrassed):: "I'm so sorry. I didn't mean to ..."
+                        Actor:incest -= 1
+                        If Actor:masochist < -50
+                        
+                            "My <Actor.relationship> has other plans. <Actor.He_or_She> pulls my pants down and makes me sit on their dick."
+                            Sex(Actor, Player)
+                            Actor:incest += 25
+                            Actor:attractiontoplayer += 25
+                            
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf 
+                            
+                        Endif
+    
+                    Else
+                    
+                        "I whispered back into <Actor.his_or_her> ear."
+                        Player(Flirty):: "Let's sneak away from here, shall we?"
+                        setBackground(home)
+                        Sex(Actor, Player)
+                        Actor:incest += 50
+                        Actor:attractiontoplayer += 50
+                        
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                    Endif
+                    
+                Endif   
+                
+            Else 
+            
+                "Beyond that nothing happend."      
+            
+            Endif
+        Endif
+    SceneEnd() // Edited by Raddeck
+    timeout(50, Ravenger_VB_Spouse_sit_on_lap)

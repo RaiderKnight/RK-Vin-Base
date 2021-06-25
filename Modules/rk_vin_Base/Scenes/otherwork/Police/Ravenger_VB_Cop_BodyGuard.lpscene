@@ -1,0 +1,740 @@
+WHAT: Cop_Guard_work
+WHERE: all, -home, -hotel
+WHEN: 0 - 24
+WHO: none
+OTHER: !IsWithCompanion() && Random(0, 100) < fitness*actionDuration
+
+    SceneStart()
+        Guard = false 
+        Partner = Random(0, 3)
+        If Partner > 1.5
+            Cop1 = getPerson(tag_Police)
+            If !Cop1.isValid()
+                Cop1 = generatePerson()
+                Cop1:age => Random(18, 50)
+                Cop1.randomizeHairs()
+                Cop1.randomizeFace()
+                Cop1.SetJob(Police)
+                Cop1.setActorVar(tag_Police, 1)
+                Cop1.dressUniform(police)
+                Cop1.show(1)
+                "An officer approached me."
+                Cop1():: "I'm officer <Cop1.name_last>. Nice to meet you."
+                    
+            Else
+                "Looks like officer <Cop1.name_last> is here."
+                Cop1.dressUniform(police)
+                Cop1.show(1)
+                    
+            Endif
+            Guard = true
+                
+        Else
+            "Look like I'm woring alone."
+                
+        Endif
+        
+        "Today I drew the short-straw & will have to do some body-guard work."
+        Target = Random(0, 4)
+        If Target < 1 && karma > 50//Witness
+            setBackground(hotel)
+            "My job is to protect an Eye Witnesses & escort them to the trial."
+            Actor = generatePersonTemporary()
+            Actor.dressUniform(prison)
+            Actor.show(3)
+            "But before that, I received a call from a shady individual who is willing to pay for the witness to be silenced."
+            0:: "Refuse"
+            1:: "Take bribe & Kill witness"
+            
+            If 1 //bribe
+                "I killed the witness & made it look like a suicide. The shady contact stopped all investigation, making it all too easy."
+                "What some would call as 'pulling a Jeffrey Epstein'."
+                "I was payed handsomly for my service."
+                jobperformance -= Random(0, 10)
+                money += Random(1000, 3000)
+                karma -= 50
+            Else
+                "It is the day of trial. Time to headout."
+                setBackground(street)
+                "I can take a direct route and get there early, but risk being attacked in an ambush."
+                "Or take Detours in order to avoid danger."
+                Distance = Random(80, 300)
+                Danger = Random(0, 50)
+                Time = Random(30, 180) + Distance
+                Ambush = false
+                Lost = false
+                choice => -1
+                "Lets go."
+                While choice < 2 && Distance > 0 && !Ambush && !Lost
+                    If Danger < 0
+                        Danger => 0
+                    Endif
+                    "What will I do. <Distance> Distance. <Time> Time" 
+                    0:: "Take a Direct route"
+                    1:: "Take a Detour"
+                
+                    If 0
+                        Distance -= Random(10, 35)
+                        Danger += Random(0, 35)
+                    Else
+                        Distance -= Random(-10, 35)
+                        Danger += Random(-25, 25)
+                    Endif
+                    Time -= 10
+                    If Danger > 100
+                        "Shit! We Are Under Attack"
+                        choice => 4
+                        Ambush = True
+                    Elseif Danger > 85
+                        "Someone is following us."
+                    Elseif Danger > 60
+                        "Hearing a lot of radio chatter"
+                    Else
+                        "So far so good."
+                    Endif
+                    
+                    If Time < 1
+                        choice => 3
+                        "We failed to make it to the trial on time."
+                        Lost = True
+                    Endif
+                    
+                    If Distance < 0
+                        choice => 3
+                        If Time > 50
+                            "I got there really early and with no issue"
+                            jobperformance += Random(15, 30)
+                        Elseif Time > 30
+                            "I got there early and with no issue"
+                            jobperformance += Random(10, 20)
+                        Elseif Time > 10
+                            "I got there right on time and with no issue"
+                            jobperformance += Random(5, 10)
+                        Else
+                            "We are running a little late"
+                        Endif
+                    Endif
+                Endwhile
+                
+                If Ambush
+                    Down = false
+                    Enemy = Distance
+                    Health = fitness + martial + sneak
+                    If Guard
+                        PHealth = Cop1:fitness + Cop1:martial 
+                    Endif   
+                    THealth = Actor:fitness + sneak
+                    
+                    If Guard
+                        choice => -1
+                        "We fight to protect witness."
+                        Player.animate(gun)
+                        Cop1.animate(gun)
+                        While choice < 2 && 
+                            "What will I do. <Health> My Health. <Health> Partner Health. <THealth> Witness Health"
+                            0::"Fight off attackers"
+                            1::"Protect witness"
+                            
+                            If 0
+                                "We fight off attackers"
+                                Enemy -= firearms * 0.1
+                                If Down
+                                   THealth -= Enemy * 0.1
+                                Else
+                                   PHealth -= Enemy * 0.1
+                                   Enemy -= Random(0, 10)
+                                Endif
+                            Else
+                                "I focus on protecting the witness."
+                                Health -= Enemy * 0.1
+                                If !Down
+                                   THealth += 5
+                                   PHealth -= Enemy * 0.1
+                                   Enemy -= Random(0, 5) 
+                                Endif
+                            Endif                   
+                            Enemy -= firearms * 0.1
+                            
+                            If Health < 0
+                                "I was shot down."
+                                choice => 4
+                                jobperformance -= 5
+                                followUp(death)
+                            Endif
+                            
+                            If PHealth < 0
+                                "My partner is out of fight"
+                                Down = true
+                            Endif
+                            
+                            If THealth < 0
+                                "Witness was killed"
+                                choice => 4
+                            Endif
+                            
+                            If Enemy < 0
+                                "We fought off the attackes."
+                                jobperformance += 15
+                                choice => 4
+                            Endif
+                            Time -= 5               
+                        Endwhile
+                        
+                    Else
+                        choice => -1
+                        Player.animate(gun)
+                        "I fight to protect witness."
+                        While choice < 2
+                            "What will I do. <Health> My Health. <THealth> Witness Health"
+                            0::"Fight off attackers"
+                            1::"Protect witness"
+                            
+                            If 0
+                                "I fight off attackers"
+                                Enemy -= firearms * 0.1
+                                THealth -= Enemy * 0.1
+                            Else
+                                "I focus on protecting the witness."
+                                Health -= Enemy * 0.1
+                            Endif                   
+                            Enemy -= firearms * 0.1                 
+                            If Health < 0
+                                "I was shot down."
+                                choice => 4
+                                jobperformance -= 5
+                                followUp(death)
+                            Endif
+                                                
+                            If THealth < 0
+                                "Witness was killed"
+                                choice => 4
+                            Endif
+                            
+                            If Enemy < 0
+                                "I fought off the attackes."
+                                jobperformance += 25
+                                choice => 4
+                            Endif
+                            Time -= 5   
+                        Endwhile
+                    Endif
+                   
+                    If THealth > 0 && Time > 10
+                        Ambush = false
+                    Else    
+                        Lost = true
+                    Endif            
+                Endif
+            
+                If Lost
+                    "We failed to get to the trial on time. A lot of evil people went free."
+                    jobperformance -= Random(1, 10)
+                    mood -= 50
+                Endif
+                
+                If !Lost && !Ambush
+                    setBackground(university)
+                    "We made it. The trial was a success and a lot of evil people went to jail."
+                    karma += 50
+                    If Guard
+                        Cop1:rapportwithplayer += Random(0, 50)
+                    Endif
+                    jobperformance += Random(1, 10)
+                    Actor(Happy):: "We did it. Now that I am no longer a target, what I can do to thank you?"
+                    0:: "It's only the right thing to do"
+                    1:: "Ask for <Actor.his_or_her> number"
+                    
+                    If 0
+                        Player(Happy):: "It's only my duty. Your thanks is all that is required."
+                    Else
+                        Player(Happy):: "You know ... I'd love to get to know you more."
+                        Actor(Happy):: "Of course, here's my number. I'd love to get to know you better too."
+                        Actor.makePermanent()
+                        Actor:attractiontoplayer += Random(0, 50)
+                        Actor:rapportwithplayer += Random(0, 50)
+                        exchangeContact(Actor)
+                    Endif
+                    
+                Endif
+            Endif
+            
+        
+        Elseif Target < 2.75 // Good Senetor 
+            setBackground(university)
+            Actor = generatePersonTemporary()
+            Actor.dressFormal()
+            Actor.show(3)
+            Actor:attractiontoplayer -= Random(0, 50)
+            Actor:rapportwithplayer -= Random(0, 50)
+            "I am to guard Senetor <Actor.name> as <Actor.he_or_she> works to try to get a new law passed."
+            "I'm not going to lie <Actor.he_or_she> is a bit of an asshole and 40% of people hate <Actor.his_or_her> guts & want the Senetor gone."
+            "But despite all the hate/trash-talk from the media, Senetor <Actor.name> knows how to swing a hammer, by crushing unemployment, crime, & sex trafficing."
+            "Senetor <Actor.name> is the best thing to happen to this state, yet so hated. Which is why I was was called to guard them."
+        
+            If intelligence > Random(50, 90)
+                "Wait, I here a noise."
+                0:: "Check it out."
+                1:: "Ignore it."
+                2:: Guard:: "Check with other guard."
+                
+                If 0
+                    "I decide to check out the noise"
+                    If Guard
+                        "Suddenly I heard gun fire. Officer <Cop1.name_last> was hit. I see the assassin."
+                        Cop1.hide()
+                        Actor2 = generatePersonTemporary()
+                        Actor2.dress()
+                        Actor2.show(2)  
+                        Actor2.animate(gun)
+                        Player.animate(gun)
+                        0:: "Protect Senetor <Actor.name>"
+                        1:: "Go after Assassin"
+                        2:: "Shoot Assassin"
+            
+                        If 0
+                            "I go to the Senetor's aid."
+                            "More gun fire."
+                            karma += 25
+                            If karma > 50
+                                "Senetor <Actor.name> was almost hit."
+                            Else
+                                "I block the shot and take the hit."
+                                mood -= 25
+                                fitness -= 10
+                            Endif
+                            Actor2.hide()
+                            "I secure the Senetor to a safe location."
+                            jobperformance += Random(0, 5)
+            
+                        Elseif 1
+                            If Actor2:fitness > 50
+                                "The assassin is making a run for it!"
+                                0:: "Shoot"
+                                1:: "Chase"
+                    
+                                If 0
+                                    "POW"
+                                    If firearms > 70
+                                        "Shot them in the leg."
+                                        "They would live to see jail time."
+                                        jobperformance += 10
+                                    Else
+                                        Actor.hide()
+                                        "Clean kill."
+                                        jobperformance += Random(0, 5)
+                                        Actor2.Delete()
+                                    Endif
+                    
+                                Else
+                                    "I give chase."
+                                    If fitness > Actor2:fitness
+                                        "Assassin didn't get very far. Because I soon arrest them."
+                                        jobperformance += 20
+                                    Else
+                                        Actor2.hide()
+                                        "Shit, I lost them."
+                                        jobperformance -= Random(0, 5)
+                                    Endif   
+                                Endif
+                                
+                            Else
+                                "The assassin gave up quickly. They clearly did not plan this very well."
+                                jobperformance += 30
+                            Endif
+            
+                        Else
+                            "POW"
+                            If firearms > 70
+                                "Shot them in the leg."
+                                "They would live to see jail time."
+                                jobperformance += 10
+                            Else
+                                Actor2.hide()
+                                "Clean kill."
+                                jobperformance += Random(0, 5)
+                                Actor2.Delete()
+                            Endif
+            
+                        Endif
+                    Else
+                        "I see an Assassin ready to strike"
+                        Actor2 = generatePersonTemporary()
+                        Actor2.dress()
+                        Actor2.show(2)
+                        Actor2.animate(gun)
+                        0:: "Freeze!"
+                        1:: "Sneak attack"
+        
+                        If 0
+                            If Actor2:fitness > 60
+                                "The assassin is making a run for it!"
+                                0:: "Shoot"
+                                1:: "Chase"
+                    
+                                If 0
+                                    "POW"
+                                    If firearms > 60
+                                        "Shot them in the leg."
+                                        "They would live to see jail time."
+                                        jobperformance += 10
+                                    Else
+                                        Actor2.hide()
+                                        "Clean kill."
+                                        jobperformance += Random(0, 5)
+                                        Actor2.Delete()
+                                    Endif
+                    
+                                Else
+                                    "I give chase."
+                                    If fitness > Actor2:fitness
+                                        "Assassin didn't get very far. Because I soon arrest them."
+                                        jobperformance += 20
+                                    Else
+                                        Actor2.hide()
+                                        "Shit, I lost them."
+                                        jobperformance -= Random(0, 5)
+                                    Endif   
+                                Endif
+                                
+                            Else
+                                "The assassin gave up quickly. They clearly did not plan this very well."
+                                jobperformance += 30
+                            Endif
+                        Else
+                            "I decided to ambush them."
+                            SneakGame()
+                            Strike = sneak + martialart
+                            If Strike > 100
+                                "I knock <Actor.him_or_her> out."
+                                Actor2.hide()
+                                jobperformance += 30
+                            
+                            Else
+                                "Chap they heard me!"
+                                Player.animate(martialart)
+                                Player.moveToPersonStand(Actor2, 100)                                
+                                Player(Furious):: "Take this!"
+                                faceEachOther(Actor2, Player)
+                                Actor2.animate(martialart)
+                                Actor2(Furious):: "You dare sucker-punch me? I'll teach you a lesson."
+                                "A fierce fight ensued ..."
+                                Player.animate()
+                                Actor2.animate()
+                                If martial > Actor2:martial
+                                    Actor2.animate(fightlost)
+                                    Actor2(Pain):: "Ah!"
+                                    Player(Angry):: "That right I kicked your ass."
+                                    jobperformance += Random(5, 20)
+        
+                                Else
+        
+                                    Player.animate(fightlost)
+                                    Player(Pain):: "Ah!"
+                                    Actor2(Evil):: "Ha! You really thought you could match us in a fight?"
+                                    If Guard && karma > 50
+                                        "POW"
+                                        Actor2.hide()
+                                        Cop1.show(2)
+                                        "<Cop1.name> shot the assassin in the back."
+                                    Else    
+                                        jobperformance -= Random(5, 15)
+                                    Endif   
+                                    
+                                Endif
+                                
+                            Endif
+        
+                        Endif
+                        
+                    Endif
+                            
+                Elseif 1
+                    "It is best that I don't leave my post."
+                    "Suddenly I heard gun fire."
+                    "The Senetor & I manage to take cover."
+                    If Guard
+                        "Officer <Cop1.name_last> heads for assassin."
+                    Endif
+                    "I secure the Senetor to a safe location."
+                    jobperformance += Random(0, 5)
+                    
+                Else
+                    Player():: "Did you hear something?"
+                    Cop1():: "You better go check it out. I'll stand watch."
+                    "I see an Assassin ready to strike"
+                    Actor2 = generatePersonTemporary()
+                    Actor2.dress()
+                    Actor2.show(2)
+                    Actor2.animate(gun)
+                    0:: "Freeze!"
+                    1:: "Sneak attack"
+                    
+                    If 0
+                        If Actor2:fitness > 60
+                            "The assassin is making a run for it!"
+                            0:: "Shoot"
+                            1:: "Chase"
+                    
+                            If 0
+                                "POW"
+                                If firearms > 60
+                                    "Shot them in the leg."
+                                    "They would live to see jail time."
+                                    jobperformance += 10
+                                Else
+                                    Actor2.hide()
+                                    "Clean kill."
+                                    jobperformance += Random(0, 5)
+                                    Actor2.Delete()
+                                Endif
+                    
+                            Else
+                                "I give chase."
+                                If fitness > Actor2:fitness
+                                    "Assassin didn't get very far. Because I soon arrest them."
+                                    jobperformance += 20
+                                Else
+                                    Actor2.hide()
+                                    "Shit, I lost them."
+                                    jobperformance -= Random(0, 5)
+                                Endif   
+                            Endif
+                                
+                        Else
+                            "The assassin gave up quickly. They clearly did not plan this very well."
+                            jobperformance += 30
+                        Endif
+                    Else
+                        "I decided to ambush them."
+                        SneakGame()
+                        Strike = sneak + martialart
+                        If Strike > 100
+                            "I knock <Actor.him_or_her> out."
+                            Actor2.hide()
+                            jobperformance += 30
+                            
+                        Else
+                            "Chap they heard me!"
+                            Player.animate(martialart)
+                            Player.moveToPersonStand(Actor2, 100)                                
+                            Player(Furious):: "Take this!"
+                            faceEachOther(Actor2, Player)
+                            Actor2.animate(martialart)
+                            Actor2(Furious):: "You dare sucker-punch me? I'll teach you a lesson."
+                            "A fierce fight ensued ..."
+                            Player.animate()
+                            Actor2.animate()
+                            If martial > Actor2:martial
+                                Actor2.animate(fightlost)
+                                Actor2(Pain):: "Ah!"
+                                Player(Angry):: "That right I kicked your ass."
+                                jobperformance += Random(5, 20)
+                            
+                            Else
+                                Player.animate(fightlost)
+                                Player(Pain):: "Ah!"
+                                Actor2(Evil):: "Ha! You really thought you could match us in a fight?"
+                                If Guard
+                                    "POW"
+                                    Actor2.hide()
+                                    Cop1.show(2)
+                                    "<Cop1.name> shot the assassin in the back."
+                                Else    
+                                    jobperformance -= Random(5, 15)
+                                Endif   
+                                    
+                            Endif
+                                
+                        Endif
+        
+                    Endif
+                Endif
+            Else
+                "Suddenly I heard gun fire."
+                If karma > 50
+                    "Senetor <Actor.name> was almost hit."
+                Else
+                    "I block the shot and take the hit."
+                    mood -= 25
+                    fitness -= 10
+                Endif
+                Player.animate(gun)
+                0:: "Protect Senetor <Actor.name>"
+                1:: "Go after Assassin"
+                2:: "Shoot at Assassin"
+            
+                If 0
+                    "I go to the Senetor's aid."
+                    "More gun fire."
+                    karma += 25
+                    If karma > 50
+                        "Senetor <Actor.name> was almost hit."
+                    Else
+                        "I block the shot and take the hit."
+                        mood -= 25
+                        fitness -= 10
+                    Endif
+                    "I secure the Senetor to a safe location."
+                    jobperformance += Random(0, 5)
+                Elseif 1
+                    Actor2 = generatePersonTemporary()
+                    Actor2.dress()
+                    Actor2.show(2)
+                    Actor2.animate(gun)
+                    If Actor2:fitness > 50
+                        "The assassin is making a run for it!"
+                        0:: "Shoot"
+                        1:: "Chase"
+                    
+                        If 0
+                            "POW"
+                            If firearms > 70
+                                "Shot them in the leg."
+                                "They would live to see jail time."
+                                jobperformance += 10
+                            Else
+                                Actor.hide()
+                                "Clean kill."
+                                jobperformance += Random(0, 5)
+                                Actor2.Delete()
+                            Endif
+                    
+                        Else
+                            "I give chase."
+                            If fitness > Actor2:fitness
+                                "Assassin didn't get very far. Because I soon arrest them."
+                                jobperformance += 20
+                            Else
+                                Actor2.hide()
+                                "Shit, I lost them."
+                                jobperformance -= Random(0, 5)
+                            Endif   
+                        Endif
+                                
+                    Else
+                        "The assassin gave up quickly. They clearly did not plan this very well."
+                        jobperformance += 30
+                    Endif
+            
+                Else
+                    "POW"
+                    If firearms > 85
+                        Actor2.hide()
+                        "Clean kill."
+                        jobperformance += Random(0, 5)
+                    Else
+                        "I think I scared them off..."
+                    Endif
+            
+                Endif
+            
+            Endif
+            
+            Actor2.hide()
+            Player.animate()
+            "After all the excitement, Senetor <Actor.name> is safe."
+            "<Actor.He_or_She> even congratulated me for protecting <Actor.him_or_her>. And gave more funding for the police."
+            money += 1000
+            jobperformance += Random(5, 25)
+            "I still don't know why people hate <Actor.him_or_her>. If the Senetor is working so hard to make things better."
+        
+        
+        Else // Evil Senetor
+            setBackground(office)
+            Actor = generatePersonTemporary()
+            Actor3 = generatePersonTemporary()
+            Actor.blendPreset(vampire)
+            Actor:age += 40
+            Actor.randomizeHairs()
+            Actor.randomizeFace()
+            Actor.dressFormal()
+            "I think I heard somewhere that all 'career politicians' are blood-sucking vampires."
+            Actor.show(3)
+            Actor:masochist -= 75
+            "Looks like this one is no different..."
+            "I am to guard Senetor <Actor.name> as <Actor.he_or_she> works to try to stay in office."
+            "With votes at 90% <Actor.he_or_she> will mostly stay in another 4 or 100 years..."
+            If !Guard && karma < 50
+                "Looks like the Senetor has his own guards. Guess I'll check in with one of them."
+                Player(Happy):: "Hello, What is your name."
+                Actor2 = generatePersonTemporary(Reaper)
+                Actor2.dressFormal()
+                Actor2.show(2)
+                Actor2():: "Greetings. My name is Tobias Reaper."
+                Player():: "Cool name."
+                Player():: "So where do you need me?"
+                Actor2():: "You can chech the southern perimeter, while I get close to the... Senetor."
+                Player():: "Okay, I'm on it."
+                Actor.hide()
+                Actor2.hide()
+                "The Senetor <Actor.name> was later found dead. Stangled to death by 'piano wire'." 
+                "Clearly a hitman came for <Actor.him_or_her>. I wounder who?"
+                "Turns out the Senetor was heavily involved in drugs, murder, sex trafficing, and other nasty stuff."
+                Actor.Delete()
+                jobperformance -= Random(0, 5)
+            Else
+                Cop1.hide()
+                setBackground(home)
+                "Well after a miserable day we are back to the Senetor's home."
+                Actor3():: "Hello, <Actor.father_or_mother>..."
+                Actor3:masochist += 75
+                Actor3:martial += 10
+                Actor3.dress()
+                Actor3.show(1)
+                Actor(anger):: "What the hell are you doing here! I thought I told you I never want to see you again."
+                Actor3():: "What does my very existance bring you shame..."     
+                Actor(anger):: "I don't give a dame about you. Your just the child of some whore I just fucked."
+                Actor3():: "More like raped! After you fucking drugged them."
+                Actor(anger):: "What do I need to do to get you out of my sight."
+                Actor3():: "You can't keep your dirty little secrets hidden forever. I am going to expose you for the monster you are."
+                Actor():: "Guard, or whatever your name is, I want you this worthless bastard."
+                Actor3():: "What! You can't do that!"
+                Actor():: "I'm a Senetor & you are nothing. I can do what ever I want."
+                Player():: "..."
+                0:: "Kill Corrupt Senetor"
+                1:: "Murder Senetor's <Actor3.son_or_daughter>"
+                2:: "Do nothing"
+                
+                If 1
+                    "I murder the Senetor's <Actor3.son_or_daughter> as they watch with glee. <Actor.He_or_She> then makes me clean up the body."
+                    money += 666
+                    jobperformance += Random(0, 25)
+                    karma -= 50
+                    "The Senetor pays for my work and threatens me not to tell anyone."
+                    Actor3.Delete()
+                
+                Elseif 2
+                    Actor.animate(gun)
+                    "The Senetor then pulls a gun and shoots their <Actor3.son_or_daughter> dead."
+                    If Guard
+                        "The Senetor turn to shoot me."
+                        "POW"
+                        "But Officer <Cop1.name_last> shot the Senetor first."
+                    Elseif karma < 50
+                        "The Senetor turn to shoot me."
+                        "POW"
+                        followUp(death)
+                    Else
+                        "I arrest the Senetor right there for murder."
+                    Endif
+                    jobperformance += Random(0, 10)
+                    
+                Else
+                    Player.animate(gun)
+                    "POW"
+                    "..."
+                    "POW,POW"
+                    Actor.hide()
+                    "One in the chest, bastard doesn't have a heart. And two in the head."
+                    jobperformance += Random(-10, 10)
+                    "I was not charged with murder because the Senetor was heavily involved in drugs, murder, sex trafficing, and other nasty stuff."
+                    karma += 50
+                    Actor.Delete()
+                    
+                Endif
+            Endif
+        
+        Endif
+
+    SceneEnd()
+    timeout(600, Ravenger_VB_Cop_BodyGuard)

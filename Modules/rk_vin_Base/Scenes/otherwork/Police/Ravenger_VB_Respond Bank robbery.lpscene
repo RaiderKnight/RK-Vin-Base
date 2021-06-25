@@ -1,0 +1,1371 @@
+WHAT: Cop_Street_work
+WHERE: all
+WHEN: 0 - 24
+WHO: none
+OTHER: Random(0, 100) < firearms
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        "Alert we have a 10-90 -Bank robbery- in progress please respone."
+        "Sounds serious will I respone?"
+        0:: "Join them"
+        1:: "Decline" 
+        
+        If 0 
+            "I proceed to the location of robery."
+            setBackground(street)
+            Cop1 = getPerson(tag_Police)
+            If !Cop1.isValid()
+                Cop1 = generatePerson()
+                Cop1:age => Random(18, 50)
+                Cop1.randomizeHairs()
+                Cop1.randomizeFace()
+                Cop1.SetJob(Police)
+                Cop1.setActorVar(tag_Police, 1)
+                Cop1.dressUniform(police)
+                Cop1.show(1)
+                "An officer approached me."
+                Cop1():: "I'm officer <Cop1.name_last>. Nice to meet you."
+            Else
+                "Looks like officer <Cop1.name_last> is here."
+                Cop1.dressUniform(police)
+                Cop1.show(1)
+            Endif
+            Cop2 = getPerson(tag_Police)
+            If !Cop2.isValid()
+                Cop2 = generatePerson()
+                Cop2:age => Random(18, 50)
+                Cop2.randomizeHairs()
+                Cop2.randomizeFace()
+                Cop2.SetJob(Police)
+                Cop2.setActorVar(tag_Police, 1)
+                Cop2.dressUniform(police)
+                Cop2.show(2)
+                "An officer approached me."
+                Cop2():: "I'm officer <Cop2.name_last>. Nice to meet you."
+            Else
+                "Looks like officer <Cop2.name_last> is here."
+                Cop2.dressUniform(police)
+                Cop2.show(2)
+            Endif
+            Cop3 = getPerson(tag_Police)
+            If !Cop3.isValid()
+                Cop3 = generatePerson()
+                Cop3:age => Random(18, 50)
+                Cop3.randomizeHairs()
+                Cop3.randomizeFace()
+                Cop3.SetJob(Police)
+                Cop3.setActorVar(tag_Police, 1)
+                Cop3.dressUniform(police)
+                Cop3.show(3)
+                "An officer approached me."
+                Cop3():: "I'm officer <Cop3.name_last>. Nice to meet you."
+            Else
+                "Looks like officer <Cop3.name_last> is here."
+                Cop3.dressUniform(police)
+                Cop3.show(3)
+            Endif
+            Cop4 = getPerson(tag_Police)
+            If !Cop4.isValid()
+                Cop4 = generatePerson()
+                Cop4:age => Random(18, 50)
+                Cop4.randomizeHairs()
+                Cop4.randomizeFace()
+                Cop4.SetJob(Police)
+                Cop4.setActorVar(tag_Police, 1)
+                Cop4.dressUniform(police)
+                Cop4.show(4)
+                "An officer approached me."
+                Cop4():: "I'm officer <Cop4.name_last>. Nice to meet you."
+            Else
+                "Looks like officer <Cop4.name_last> is here."
+                Cop4.dressUniform(police)
+                Cop4.show(4)
+            Endif
+            Player():: "What is the status of the robery?"
+            Bads = Random(2, 8)
+        
+            If Bads > 7
+                Cop1():: "We got eight robbers."
+                Rob1 = generatePersonTemporary()
+                Rob2 = generatePersonTemporary()
+                Rob3 = generatePersonTemporary()
+                Rob4 = generatePersonTemporary()
+                Rob5 = generatePersonTemporary()
+                Rob6 = generatePersonTemporary()
+                Rob7 = generatePersonTemporary()
+                Rob8 = generatePersonTemporary()
+                R1 = true
+                R2 = true
+                R3 = true
+                R4 = true
+                R5 = true
+                R6 = true
+                R7 = true
+                R8 = true
+        
+            Elseif Bads > 6
+                Cop1():: "We got seven robbers."
+                Rob1 = generatePersonTemporary()
+                Rob2 = generatePersonTemporary()
+                Rob3 = generatePersonTemporary()
+                Rob4 = generatePersonTemporary()
+                Rob5 = generatePersonTemporary()
+                Rob6 = generatePersonTemporary()
+                Rob7 = generatePersonTemporary()
+                R1 = true
+                R2 = true
+                R3 = true
+                R4 = true
+                R5 = true
+                R6 = true
+                R7 = true
+        
+        
+            Elseif Bads > 5
+                Cop1():: "We got six robbers."
+                Rob1 = generatePersonTemporary()
+                Rob2 = generatePersonTemporary()
+                Rob3 = generatePersonTemporary()
+                Rob4 = generatePersonTemporary()
+                Rob5 = generatePersonTemporary()
+                Rob6 = generatePersonTemporary()
+                R1 = true
+                R2 = true
+                R3 = true
+                R4 = true
+                R5 = true
+                R6 = true
+        
+            Elseif Bads > 4
+                Cop1():: "We got five robbers."
+                Rob1 = generatePersonTemporary()
+                Rob2 = generatePersonTemporary()
+                Rob3 = generatePersonTemporary()
+                Rob4 = generatePersonTemporary()
+                Rob5 = generatePersonTemporary()
+                R1 = true
+                R2 = true
+                R3 = true
+                R4 = true
+                R5 = true
+        
+                
+            Elseif Bads > 3
+                Cop1():: "We got four robbers."
+                Rob1 = generatePersonTemporary()
+                Rob2 = generatePersonTemporary()
+                Rob3 = generatePersonTemporary()
+                Rob4 = generatePersonTemporary()
+                R1 = true
+                R2 = true
+                R3 = true
+                R4 = true
+        
+            
+            Else
+                Cop1():: "We got three robbers."
+                Rob1 = generatePersonTemporary()
+                Rob2 = generatePersonTemporary()
+                Rob3 = generatePersonTemporary()
+                R1 = true
+                R2 = true
+                R3 = true
+        
+        
+            Endif
+        
+            Arms = Random(0, 3)
+        
+            Bomb = false
+            If Arms > 2
+                Cop1():: "Armed with small weapons."    
+            Elseif Arms > 1
+                Cop1():: "Heavly Armed."    
+            Else
+                Cop1():: "They have a bomb."
+                Bomb = true
+            Endif
+            
+            HAlive = true
+            Hostages = Random(2, 24)
+            Lost = 0
+            Cop1():: "And they got <Hostages> hostages."
+            Time = Random(20, 60)
+            Cop1():: "And robbers say they will begin killing hostages in <Time> unless their demands are not met."
+            Fear = 0
+            Escaped = false
+            Player():: "Let get started."
+            choice = -1
+            BadD = true
+            Save = 0
+            Stolen = false
+            
+            While choice < 5
+                If Time < 0 && [choice < 7]
+                    "A hostage was killed."
+                    Hostages -= 1
+                    Lost += 1
+                    Time += 30
+                Endif
+                setBackground(street)
+                
+                If Fear > 100 && [choice < 7]
+                    If Bomb
+                        "The robbers set off the bomb."
+                        jobperformance -= 30
+                        Lost += Hostages
+                        Hostages => 0
+                        BadD = true
+                        choice => 6
+                        "All the hostages are dead."
+                        HAlive = false
+                    Else
+                        "Robbers are scared and killed a hostage was killed."
+                        Hostages -= 1
+                        Lost += 1
+                    Endif   
+                Endif
+                
+                If [Hostages < 1] && [choice < 7]
+                    choice => 6 
+                Endif
+                
+                If 6
+                    "All the hostages are dead."
+                    HAlive = false
+                    "And the robbers are making an escape!"
+                    Escaped = true
+                
+                Else
+                    "What will I do. <Hostages> Hostages. <Fear> Fear. <Time> Time" 
+                    1:: "Tactical Action"
+                    2:: "Negotiate"
+                    3:: "Sniper Action"
+                    4:: [Fear > 10 && Time > 5] ::"Stall/wait"
+                    5:: "Attack!"
+            
+                    If 1
+                        "What is the plan?" 
+                        setBackground(bank)
+                        0:: "Take out robbers"
+                        1:: "Save Hostages"
+                        2:: Bomb ::"Try to disable bomb"
+                        3:: "never mind"
+                        
+                        If 0
+                            Target?
+                            1:: R1 :: "<Rob1.name>"
+                            2:: R2 :: "<Rob2.name>"
+                            3:: R3 :: "<Rob3.name>"
+                            4:: R4 :: "<Rob4.name>"
+                            5:: R5 :: "<Rob5.name>"
+                            6:: R6 :: "<Rob6.name>"
+                            7:: R7 :: "<Rob7.name>"
+                            8:: R8 :: "<Rob8.name>"
+                            9:: "Exit"
+        
+                            If 1
+                                "I will take out <Rob1.name>."
+                                Rob1.dressUniform()
+                                Rob1.show(1)
+                                SneakGame()
+                                If sneak > 80
+                                    "Chop"
+                                    "<Rob1.name> was knocked out. Don't think anyone noticed."
+                                    R1 = false
+                                Else
+                                    If martial > Rob1:martial
+                                        "Smack"
+                                        "<Rob1.name> was knocked out."
+                                        R1 = false
+                                        Fear += 5
+                                    Else
+                                        "Shit! got to get out of here."
+                                        Fear += 10
+                                    Endif
+                                Endif
+                                choice => 0
+                                Time -= 10
+                                Rob1.hide()
+                                "Look money! should I steal some?"
+                                0:: "Yes"
+                                1:: "No"
+                                
+                                If 0
+                                    money += 1000
+                                    Stolen = true
+                                Endif
+                            Elseif 2
+                                "I will take out <Rob2.name>."
+                                Rob2.dress()
+                                Rob2.show(1)
+                                SneakGame()
+                                If sneak > 80
+                                    "Chop"
+                                    "<Rob2.name> was knocked out. Don't think anyone noticed."
+                                    R2 = false
+                                Else
+                                    If martial > Rob2:martial
+                                        "Smack"
+                                        "<Rob2.name> was knocked out."
+                                        R2 = false
+                                        Fear += 5
+                                    Else
+                                        "Shit! got to get out of here."
+                                        Fear += 10
+                                    Endif
+                                Endif
+                                choice => 0
+                                Time -= 10
+                                Rob2.hide()
+                                "Look money! should I steal some?"
+                                0:: "Yes"
+                                1:: "No"
+                                
+                                If 0
+                                    money += 1000
+                                    karma -= 10
+                                    Stolen = true
+                                Endif
+                            Elseif 3
+                                "I will take out <Rob3.name>."
+                                Rob3.dress()
+                                Rob3.show(1)
+                                SneakGame()
+                                If sneak > 80
+                                    "Chop"
+                                    "<Rob3.name> was knocked out. Don't think anyone noticed."
+                                    R3 = false
+                                Else
+                                    If martial > Rob3:martial
+                                        "Smack"
+                                        "<Rob3.name> was knocked out."
+                                        R3 = false
+                                        Fear += 5
+                                    Else
+                                        "Shit! got to get out of here."
+                                        Fear += 10
+                                    Endif
+                                Endif
+                                choice => 0
+                                Time -= 10
+                                Rob3.hide()
+                                "Look money! should I steal some?"
+                                0:: "Yes"
+                                1:: "No"
+                                
+                                If 0
+                                    money += 1000
+                                    karma -= 10
+                                    Stolen = true
+                                Endif
+                            Elseif 4
+                                "I will take out <Rob4.name>."
+                                Rob4.dress()
+                                Rob4.show(1)
+                                SneakGame()
+                                If sneak > 80
+                                    "Chop"
+                                    "<Rob4.name> was knocked out. Don't think anyone noticed."
+                                    R4 = false
+                                Else
+                                    If martial > Rob4:martial
+                                        "Smack"
+                                        "<Rob4.name> was knocked out."
+                                        R4 = false
+                                        Fear += 5
+                                    Else
+                                        "Shit! got to get out of here."
+                                        Fear += 10
+                                    Endif
+                                Endif
+                                choice => 0
+                                Time -= 10
+                                Rob4.hide()
+                                "Look money! should I steal some?"
+                                0:: "Yes"
+                                1:: "No"
+                                
+                                If 0
+                                    money += 1000
+                                    karma -= 10
+                                    Stolen = true
+                                Endif
+                            Elseif 5
+                                "I will take out <Rob5.name>."
+                                Rob5.dress()
+                                Rob5.show(1)
+                                SneakGame()
+                                If sneak > 80
+                                    "Chop"
+                                    "<Rob5.name> was knocked out. Don't think anyone noticed."
+                                    R1 = false
+                                Else
+                                    If martial > Rob5:martial
+                                        "Smack"
+                                        "<Rob5.name> was knocked out."
+                                        R5 = false
+                                        Fear += 5
+                                    Else
+                                        "Shit! got to get out of here."
+                                        Fear += 10
+                                    Endif
+                                Endif
+                                choice => 0
+                                Time -= 10
+                                Rob5.hide()
+                                "Look money! should I steal some?"
+                                0:: "Yes"
+                                1:: "No"
+                                
+                                If 0
+                                    money += 1000
+                                    karma -= 10
+                                    Stolen = true
+                                Endif
+                            Elseif 6
+                                "I will take out <Rob6.name>."
+                                Rob6.dress()
+                                Rob6.show(1)
+                                SneakGame()
+                                If sneak > 80
+                                    "Chop"
+                                    "<Rob6.name> was knocked out. Don't think anyone noticed."
+                                    R6 = false
+                                Else
+                                    If martial > Rob6:martial
+                                        "Smack"
+                                        "<Rob6.name> was knocked out."
+                                        R6 = false
+                                        Fear += 5
+                                    Else
+                                        "Shit! got to get out of here."
+                                        Fear += 10
+                                    Endif
+                                Endif
+                                choice => 0
+                                Time -= 10  
+                                Rob6.hide()   
+                                "Look money! should I steal some?"
+                                0:: "Yes"
+                                1:: "No"
+                                
+                                If 0
+                                    money += 1000
+                                    karma -= 10
+                                    Stolen = true
+                                Endif                       
+                            Elseif 7
+                                "I will take out <Rob7.name>."
+                                Rob7.dress()
+                                Rob7.show(1)
+                                SneakGame()
+                                If sneak > 80
+                                    "Chop"
+                                    "<Rob7.name> was knocked out. Don't think anyone noticed."
+                                    R7 = false
+                                Else
+                                    If martial > Rob7:martial
+                                        "Smack"
+                                        "<Rob7.name> was knocked out."
+                                        R7 = false
+                                        Fear += 5
+                                    Else
+                                        "Shit! got to get out of here."
+                                        Fear += 10
+                                    Endif
+                                Endif
+                                choice => 0
+                                Time -= 10
+                                Rob7.hide()
+                                "Look money! should I steal some?"
+                                0:: "Yes"
+                                1:: "No"
+                                
+                                If 0
+                                    money += 1000
+                                    karma -= 10
+                                    Stolen = true
+                                Endif
+                            Elseif 8
+                                "I will take out <Rob8.name>."
+                                Rob8.dress()
+                                Rob8.show(1)
+                                SneakGame()
+                                If sneak > 80
+                                    "Chop"
+                                    "<Rob8.name> was knocked out. Don't think anyone noticed."
+                                    R1 = false
+                                Else
+                                    If martial > Rob8:martial
+                                        "Smack"
+                                        "<Rob8.name> was knocked out."
+                                        R8 = false
+                                        Fear += 5
+                                    Else
+                                        "Shit! got to get out of here."
+                                        Fear += 10
+                                    Endif
+                                Endif
+                                choice => 0
+                                Time -= 10
+                                Rob8.hide()
+                                "Look money! should I steal some?"
+                                0:: "Yes"
+                                1:: "No"
+                                
+                                If 0
+                                    money += 1000
+                                    karma -= 10
+                                    Stolen = true
+                                Endif
+                            Else
+                                "never mind"
+                                choice => 0
+                            Endif
+                        Elseif 1
+                            "Need to save hostages."
+                            setBackground(bank)
+                            NumberH => 0
+                            If R1
+                                NumberH += 10                        
+                            Endif
+                            If R2
+                                NumberH += 10            
+                            Endif
+                            If R3
+                                NumberH += 10             
+                            Endif
+                            If R4
+                                NumberH += 10          
+                            Endif
+                            If R5
+                                NumberH += 10            
+                            Endif
+                            If R6
+                                NumberH += 10       
+                            Endif
+                            If R7
+                                NumberH += 10           
+                            Endif
+                            If R8
+                                NumberH += 10   
+                            Endif
+                            SneakGame()
+                            Find = [sneak + karma - [NumberH - [Hostages * 10]]]
+                            If Find > Random(100, 200)
+                                "I successfully saved two hostages."
+                                Hostages -= 2
+                                Save += 2
+                                Time -= 10
+                                Fear += 5
+                            Elseif Find > 50
+                                "I successfully saved a hostages."
+                                Hostages -= 1
+                                Save += 1
+                                Time -= 10
+                                Fear += 5
+                            Else
+                                "Could not reach the hostages"
+                                Time -= 10
+                                Fear += 5
+                            Endif
+                            "Look money! should I steal some?"
+                            0:: "Yes"
+                            1:: "No"
+                                
+                            If 0
+                                money += 1000
+                                karma -= 10
+                                Stolen = true
+                            Endif
+                            
+                        Elseif 2
+                            "Need to disable bomb."
+                            setBackground(bank)
+                            NumberB => 0
+                            If R1
+                                NumberB += 10                        
+                            Endif
+                            If R2
+                                NumberB += 10             
+                            Endif
+                            If R3
+                                NumberB += 10              
+                            Endif
+                            If R4
+                                NumberB += 10           
+                            Endif
+                            If R5
+                                NumberB += 10             
+                            Endif
+                            If R6
+                                NumberB += 10        
+                            Endif
+                            If R7
+                                NumberB += 10            
+                            Endif
+                            If R8
+                                NumberB += 10    
+                            Endif
+                            SneakGame()
+                            Find = [sneak + karma - NumberB]
+                            If Find > Random(50, 170)
+                                "Despite all the odds I reached the bomb."
+                                "Now it is time to disarm it."
+                                SneakGame()
+                                Disarm = [sneak + karma + intelligence]
+                                If Disarm > Random(100, 250)
+                                    "I successfully disarmed the bomb."
+                                    Bomb = false
+                                    Time -= 10
+                                    Fear += 10
+                                Elseif Disarm > 50
+                                    "The bomb is too complex I could not disarm it."
+                                    Time -= 10
+                                    Fear += 10
+                                Else
+                                    "I cut the wrong wire I set off the bomb."
+                                    jobperformance -= 25
+                                    Hostages => 0
+                                    HAlive = false
+                                    BadD = true
+                                    mood -= 20                      
+                                    followUp(death)
+                                Endif
+                            Else
+                                "I was unable to reach the bomb. note:low skill or too many robbers"
+                                Time -= 10
+                                Fear += 10
+                            Endif
+                            "Look money! should I steal some?"
+                            0:: "Yes"
+                            1:: "No"
+                                
+                            If 0
+                                money += 1000
+                                karma -= 10
+                                Stolen = true
+                            Endif
+                        Else
+                            "never mind"
+                        Endif
+                        
+                        
+                    Elseif 2
+                        "What is the plan?" 
+                        0:: "Make them surrender"
+                        1:: "Save Hostages"
+                        2:: "Time"
+                        3:: "Bargin"
+                        4:: "never mind"
+                        
+                        If 0
+                            Player():: "Come out with you hands up and surrender the hostages."
+                            RI => 0
+                            If R1
+                                RI += Rob1:intelligence                        
+                            Endif
+                            If R2
+                                RI += Rob2:intelligence            
+                            Endif
+                            If R3
+                                RI += Rob3:intelligence             
+                            Endif
+                            If R4
+                                RI += Rob4:intelligence           
+                            Endif
+                            If R5
+                                RI += Rob5:intelligence            
+                            Endif
+                            If R6
+                                RI += Rob6:intelligence      
+                            Endif
+                            If R7
+                                RI += Rob7:intelligence         
+                            Endif
+                            If R8
+                                RI += Rob8:intelligence  
+                            Endif
+                            If [[interpersonal + intelligence + fitness + martialart + [Fear * 3]] > [RI + [Hostages * 10]]] || Bomb = true
+                                "The robbers don't like their odds and desided to surrender."
+                                R1 = false
+                                R2 = false
+                                R3 = false
+                                R4 = false
+                                R5= false
+                                R6 = false
+                                R7 = false
+                                R8 = false
+                                choice => 8
+                            Else
+                                "They yell back, 'The way I see it you pigs don't have a chance in hell.'"
+                                If Bomb
+                                    "Does not help that they still have a bomb"
+                                Endif
+                                Time -= 10
+                                Fear += 5
+                            Endif
+                        Elseif 1
+                            Player():: "If you surrender some hostages it can easy some tensions."
+                            If [interpersonal + intelligence] > [2400 / Hostages]
+                                "With so many hostages the robbers give up two."
+                                Hostages -= 2
+                                Save += 2
+                                Time -= 10
+                                Fear += 5
+                            Else
+                                "They yell back, 'No deal, we need them to keep you cops at bay.'"
+                                Time -= 10
+                                Fear += 5
+                            Endif
+                        Elseif 2
+                            Player():: "We need more time! To help with your demands."
+                            RI => 0
+                            If R1
+                                RI += Rob1:intelligence                        
+                            Endif
+                            If R2
+                                RI += Rob2:intelligence            
+                            Endif
+                            If R3
+                                RI += Rob3:intelligence             
+                            Endif
+                            If R4
+                                RI += Rob4:intelligence           
+                            Endif
+                            If R5
+                                RI += Rob5:intelligence            
+                            Endif
+                            If R6
+                                RI += Rob6:intelligence      
+                            Endif
+                            If R7
+                                RI += Rob7:intelligence         
+                            Endif
+                            If R8
+                                RI += Rob8:intelligence  
+                            Endif
+                            If [interpersonal * 3 + intelligence * 3] > [RI + [Fear * 2]]
+                                "They yell back, 'Alright but not too much.'"
+                                Time += 40
+                            Else
+                                "They yell back, 'Stop wasting time!'"
+                            Endif
+                            Time -= 10
+                        Elseif 3
+                            Player():: "Lets make a deal."
+                            If Fear > 100
+                                "And with that the robbers escaped. And the remaining hostages were spared."
+                                Escaped = true
+                                choice => 8
+                                HAlive = true
+                                jobperformance -= 5
+                            Else
+                                "No deals."
+                            Endif
+                            Time -= 10
+                        Else
+                            "Never mind."
+                        Endif
+                        
+                    Elseif 3
+                        "What is the plan?" 
+                        0:: "single kill"
+                        1:: "never mind"        
+        
+                        If 0
+                            Target?
+                            0:: "Wait"
+                            1:: R1 :: "<Rob1.name>"
+                            2:: R2 :: "<Rob2.name>"
+                            3:: R3 :: "<Rob3.name>"
+                            4:: R4 :: "<Rob4.name>"
+                            5:: R5 :: "<Rob5.name>"
+                            6:: R6 :: "<Rob6.name>"
+                            7:: R7 :: "<Rob7.name>"
+                            8:: R8 :: "<Rob8.name>"
+                            9:: "Exit"
+        
+                            If 0
+                                "We wait."
+                                Time -= 5
+                                Fear -= 14
+                                H => 0
+                                Random
+                                    H => 1
+                                    H => 2
+                                    H => 3
+                                    H => 4
+                                    H => 5
+                                    H => 6
+                                    H => 7
+                                    H => 8
+                                Endrandom
+                                If H = 1
+                                    "<Rob1.name> can be killed without notice."
+                                Elseif H = 2
+                                    "<Rob2.name> can be killed without notice."
+                                Elseif H = 3
+                                    "<Rob3.name> can be killed without notice."
+                                Elseif H = 4
+                                    "<Rob4.name> can be killed without notice."
+                                Elseif H = 5
+                                    "<Rob5.name> can be killed without notice."
+                                Elseif H = 6
+                                    "<Rob6.name> can be killed without notice."
+                                Elseif H = 7
+                                    "<Rob7.name> can be killed without notice."
+                                Else
+                                    "<Rob8.name> can be killed without notice."
+                                Endif
+        
+                            Elseif 1
+                                "I will shoot <Rob1.name>."
+                                SneakGame()
+                                Shot = sneak + firearms
+                                If Shot > 185
+                                    "POW"
+                                    "<Rob1.name> was killed. Don't think they noticed yet."
+                                    If H = 1
+                                        "Turn out they won't"
+                                    Else
+                                        Fear += 5
+                                    Endif
+                                    firearms += 2
+                                    R1 = false
+                                Elseif Shot > 100
+                                    "POW...hit"
+                                    "<Rob1.name> was killed."
+                                    If H = 1
+                                        "Turn out they won't"
+                                    Else
+                                        Fear += 20
+                                    Endif
+                                    firearms += 2
+                                    R1 = false
+                                    firearms += 1
+                                Elseif Shot > 50
+                                    "POW...miss"
+                                    "<Rob1.name> Takes cover."
+                                    Fear += 20
+                                    firearms += 1
+                                Else
+                                    "POW...hit hostage"
+                                    Hostages -= 1
+                                    Lost += 1
+                                    jobperformance -= 1
+                                Endif
+                                choice => 0
+                                Time -= 5
+                            Elseif 2
+                                "I will shoot <Rob2.name>."
+                                SneakGame()
+                                Shot = sneak + firearms
+                                If Shot > 185
+                                    "POW"
+                                    "<Rob2.name> was killed. Don't think they noticed yet."
+                                    If H = 2
+                                        "Turn out they won't"
+                                    Else
+                                        Fear += 5
+                                    Endif
+                                    firearms += 2
+                                    R2 = false
+                                Elseif Shot > 100
+                                    "POW...hit"
+                                    "<Rob2.name> was killed."
+                                    If H = 2
+                                        "No one saw a thing"
+                                    Else
+                                        Fear += 20
+                                    Endif
+                                    firearms += 2
+                                    R2 = false
+                                    firearms += 1
+                                Elseif Shot > 50
+                                    "POW...miss"
+                                    "<Rob2.name> Takes cover."
+                                    Fear += 20
+                                    firearms += 1
+                                Else
+                                    "POW...hit hostage"
+                                    Hostages -= 1
+                                    Lost += 1
+                                    jobperformance -= 1
+                                Endif
+                                choice => 0
+                                Time -= 5
+                            Elseif 3
+                                "I will shoot <Rob3.name>."
+                                SneakGame()
+                                Shot = sneak + firearms
+                                If Shot > 185
+                                    "POW"
+                                    "<Rob3.name> was killed. Don't think they noticed yet."
+                                    If H = 3
+                                        "Turn out they won't"
+                                    Else
+                                        Fear += 5
+                                    Endif
+                                    firearms += 2
+                                    R3 = false
+                                Elseif Shot > 100
+                                    "POW...hit"
+                                    "<Rob3.name> was killed."
+                                    If H = 3
+                                        "No one saw a thing"
+                                    Else
+                                        Fear += 20
+                                    Endif
+                                    firearms += 2
+                                    R3 = false
+                                    firearms += 1
+                                Elseif Shot > 50
+                                    "POW...miss"
+                                    "<Rob3.name> Takes cover."
+                                    Fear += 20
+                                    firearms += 1
+                                Else
+                                    "POW...hit hostage"
+                                    Hostages -= 1
+                                    Lost += 1
+                                    jobperformance -= 1
+                                Endif
+                                choice => 0
+                                Time -= 5
+                            Elseif 4
+                                "I will shoot <Rob4.name>."
+                                SneakGame()
+                                Shot = sneak + firearms
+                                If Shot > 185
+                                    "POW"
+                                    "<Rob4.name> was killed. Don't think they noticed yet."
+                                    If H = 4
+                                        "Turn out they won't"
+                                    Else
+                                        Fear += 5
+                                    Endif
+                                    firearms += 2
+                                    R4 = false
+                                Elseif Shot > 100
+                                    "POW...hit"
+                                    "<Rob4.name> was killed."
+                                    If H = 4
+                                        "No one saw a thing"
+                                    Else
+                                        Fear += 20
+                                    Endif
+                                    firearms += 2
+                                    R4 = false
+                                    firearms += 1
+                                Elseif Shot > 50
+                                    "POW...miss"
+                                    "<Rob4.name> Takes cover."
+                                    Fear += 20
+                                    firearms += 1
+                                Else
+                                    "POW...hit hostage"
+                                    Hostages -= 1
+                                    Lost += 1
+                                    jobperformance -= 1
+                                Endif
+                                choice => 0
+                                Time -= 5
+                            Elseif 5
+                                "I will shoot <Rob5.name>."
+                                SneakGame()
+                                Shot = sneak + firearms
+                                If Shot > 185
+                                    "POW"
+                                    "<Rob5.name> was killed. Don't think they noticed yet."
+                                    If H = 5
+                                        "Turn out they won't"
+                                    Else
+                                        Fear += 5
+                                    Endif
+                                    firearms += 2
+                                    R5 = false
+                                Elseif Shot > 100
+                                    "POW...hit"
+                                    "<Rob5.name> was killed."
+                                    If H = 5
+                                        "No one saw a thing"
+                                    Else
+                                        Fear += 20
+                                    Endif
+                                    firearms += 2
+                                    R5 = false
+                                    firearms += 1
+                                Elseif Shot > 50
+                                    "POW...miss"
+                                    "<Rob5.name> Takes cover."
+                                    Fear += 20
+                                    firearms += 1
+                                Else
+                                    "POW...hit hostage"
+                                    Hostages -= 1
+                                    Lost += 1
+                                    jobperformance -= 1
+                                Endif
+                                choice => 0
+                                Time -= 5
+                            Elseif 6
+                                "I will shoot <Rob6.name>."
+                                SneakGame()
+                                Shot = sneak + firearms
+                                If Shot > 185
+                                    "POW"
+                                    "<Rob6.name> was killed. Don't think they noticed yet."
+                                    If H = 6
+                                        "Turn out they won't"
+                                    Else
+                                        Fear += 5
+                                    Endif
+                                    firearms += 2
+                                    R6 = false
+                                Elseif Shot > 100
+                                    "POW...hit"
+                                    "<Rob6.name> was killed."
+                                    If H = 6
+                                        "No one saw a thing"
+                                    Else
+                                        Fear += 20
+                                    Endif
+                                    firearms += 2
+                                    R6 = false
+                                    firearms += 1
+                                Elseif Shot > 50
+                                    "POW...miss"
+                                    "<Rob6.name> Takes cover."
+                                    Fear += 20
+                                    firearms += 1
+                                Else
+                                    "POW...hit hostage"
+                                    Hostages -= 1
+                                    Lost += 1
+                                    jobperformance -= 1
+                                Endif
+                                choice => 0
+                                Time -= 5                       
+                            Elseif 7
+                                "I will shoot <Rob7.name>."
+                                SneakGame()
+                                Shot = sneak + firearms
+                                If Shot > 185
+                                    "POW"
+                                    "<Rob7.name> was killed. Don't think they noticed yet."
+                                    If H = 7
+                                        "Turn out they won't"
+                                    Else
+                                        Fear += 5
+                                    Endif
+                                    firearms += 2
+                                    R7 = false
+                                Elseif Shot > 100
+                                    "POW...hit"
+                                    "<Rob7.name> was killed."
+                                    If H = 7
+                                        "No one saw a thing"
+                                    Else
+                                        Fear += 20
+                                    Endif
+                                    firearms += 2
+                                    R7 = false
+                                    firearms += 1
+                                Elseif Shot > 50
+                                    "POW...miss"
+                                    "<Rob7.name> Takes cover."
+                                    Fear += 20
+                                    firearms += 1
+                                Else
+                                    "POW...hit hostage"
+                                    Hostages -= 1
+                                    Lost += 1
+                                    jobperformance -= 1
+                                Endif
+                                choice => 0
+                                Time -= 5
+                            Elseif 8
+                                "I will shoot <Rob8.name>."
+                                SneakGame()
+                                Shot = sneak + firearms
+                                If Shot > 185
+                                    "POW"
+                                    "<Rob8.name> was killed. Don't think they noticed yet."
+                                    If H = 8
+                                        "Turn out they won't"
+                                    Else
+                                        Fear += 5
+                                    Endif
+                                    firearms += 2
+                                    R8 = false
+                                Elseif Shot > 100
+                                    "POW...hit"
+                                    "<Rob8.name> was killed."
+                                    If H = 8
+                                        "No one saw a thing"
+                                    Else
+                                        Fear += 20
+                                    Endif
+                                    firearms += 2
+                                    R8 = false
+                                    firearms += 1
+                                Elseif Shot > 50
+                                    "POW...miss"
+                                    "<Rob8.name> Takes cover."
+                                    Fear += 20
+                                    firearms += 1
+                                Else
+                                    "POW...hit hostage"
+                                    Hostages -= 1
+                                    Lost += 1
+                                    jobperformance -= 1
+                                Endif
+                                choice => 0
+                                Time -= 5
+                            Endif
+                        Else
+                            "never mind"
+                        Endif
+                    Elseif 4
+                        "We wait."
+                        Time -= 2
+                        Fear -= 7
+                    Else
+                        "It is time to make our assalt."
+                        setBackground(bank)
+                        Player.animate(gun)
+                        Cop1.animate(gun)
+                        Cop2.animate(gun)
+                        Cop3.animate(gun)
+                        Cop4.animate(gun)
+                        If Bomb
+                            "The robbers set off the bomb."
+                            jobperformance -= 50
+                            Hostages => 0
+                            "<Cop1.name> was killed."
+                            Cop1.DeletePerson()
+                            mood -= 20  
+                            "<Cop2.name> was killed."
+                            Cop2.DeletePerson()
+                            mood -= 20  
+                            "<Cop3.name> was killed."
+                            Cop3.DeletePerson()
+                            mood -= 20  
+                            "<Cop4.name> was killed."
+                            Cop4.DeletePerson()
+                            mood -= 20  
+                            "<Cop1.name> was killed."
+                            Cop1.DeletePerson()
+                            mood -= 20                      
+                            followUp(death)
+                        Else
+                            NumberR = 0
+                            NumberA = 0
+                            If R1
+                                NumberR += 1
+                                If Arms > 1 
+                                    NumberA += 2
+                                Else
+                                    NumberA += 1
+                                Endif                           
+                            Endif
+                            If R2
+                                NumberR += 1
+                                If Arms > 1 
+                                    NumberA += 2
+                                Else
+                                    NumberA += 1
+                                Endif                       
+                            Endif
+                            If R3
+                                NumberR += 1
+                                If Arms > 1 
+                                    NumberA += 2
+                                Else
+                                    NumberA += 1
+                                Endif                   
+                            Endif
+                            If R4
+                                NumberR += 1
+                                If Arms > 1 
+                                    NumberA += 2
+                                Else
+                                    NumberA += 1
+                                Endif                   
+                            Endif
+                            If R5
+                                NumberR += 1
+                                If Arms > 1 
+                                    NumberA += 2
+                                Else
+                                    NumberA += 1
+                                Endif                   
+                            Endif
+                            If R6
+                                NumberR += 1
+                                If Arms > 1 
+                                    NumberA += 2
+                                Else
+                                    NumberA += 1
+                                Endif                   
+                            Endif
+                            If R7
+                                NumberR += 1
+                                If Arms > 1 
+                                    NumberA += 2
+                                Else
+                                    NumberA += 1
+                                Endif                   
+                            Endif
+                            If R8
+                                NumberR += 1
+                                If Arms > 1 
+                                    NumberA += 2
+                                Else
+                                    NumberA += 1
+                                Endif               
+                            Endif
+                            While NumberR > 0 || Hostages > 0
+                                "The <NumberR> robbers killed <NumberA> hostage." 
+                                Hostages -= NumberA
+                                Lost += NumberA
+                                If Hostages < 0
+                                    "All the hostages are dead."
+                                    HAlive = false
+                                    "And the robbers are making an escape!"
+                                    Escaped = true
+                                    Hostages => 0
+                                Endif
+                                SneakGame()
+                                Shot = sneak + firearms
+                                If Shot > 185
+                                    "POW...POW"
+                                    NumberR -= 2
+                                    NumberA -= 4
+                                    firearms += 2
+                                Elseif Shot > 100
+                                    "POW...hit"
+                                    NumberR -= 1
+                                    NumberA -= 2
+                                    firearms += 1
+                                Elseif Shot > 50
+                                    "POW...miss"
+                                    NumberA -= 1
+                                    firearms += 1
+                                Else
+                                    "POW...hit hostage"
+                                    Hostages -= 1
+                                    Lost += 1
+                                    NumberA += 1
+                                    jobperformance -= 1
+                                Endif
+                                
+                                "My fellow officers open fire."
+                                If karma > 80
+                                    "Four down."
+                                    NumberR -= 4
+                                    NumberA -= 8
+                                Elseif karma > 60
+                                    "Three down."
+                                    NumberR -= 3
+                                    NumberA -= 6
+                                Elseif karma > 40
+                                    "Two down."
+                                    NumberR -= 2
+                                    NumberA -= 4
+                                Elseif karma > 20
+                                    "One down."
+                                    NumberR -= 1
+                                    NumberA -= 2
+                                Else
+                                    "Robber took cover"
+                                    NumberA += 1 
+                                Endif
+                                
+                                If NumberR < 0
+                                    BadD = true
+                                Endif
+                                
+                                If NumberA < 0
+                                    "We Saved a Hostage!"
+                                    Save += 1
+                                    NumberA += 12
+                                    If Hostages < 0
+                                        HAlive = true
+                                        Escaped = false
+                                    Endif
+                                Else
+                                    NumberA += 3
+                                Endif
+                            Endwhile
+                        Endif
+                    Endif
+            
+                Endif
+                If [!R1 && !R2 && !R3 && !R4 && !R5 && !R6 && !R7 && !R8]
+                    choice => 8
+                    "The hostages are safe."
+                    HAlive = true
+                    "And the robbers are taken out!"
+                    Escaped = false 
+                Endif
+            
+                If Hostages < 0
+                    choice => 7
+                    "The hostages are safe."
+                    HAlive = true
+                    "And the robbers are trapped!"
+                    Escaped = false
+                Endif
+            Endwhile
+            
+            If HAlive 
+                "<Save> were recued. <Hostages> Hostages were saved and <Lost> were killed"
+                jobperformance += [Save + Hostages - Lost] 
+            Else
+                "All <Lost> Hostages were killed. <Save> were saved."
+                jobperformance -= [Lost - Save]
+            Endif
+        
+            If !BadD
+                If Escaped
+                    "Some robbers escaped."
+                    jobperformance -= 10
+                Else
+                    "All the robbers were captured"
+                    jobperformance += 10
+                    If [Stolen && intelligence < 50]
+                        "Upon further investigation. I was discoved that I had stolen money from the bank."
+                        "I was fired and arrested"
+                        sentence => 3000
+                        CopLevel => 0
+                        followUp(imprisoned)
+                    Endif
+                Endif   
+            Else
+                "All the Robbers are dead."
+                jobperformance += 5
+            Endif
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -10)
+            EndIf
+            
+        Else
+            "Heard later that the robbery went south & an officer was killed."
+            Dead = getPerson(tag_Police)
+            If !Actor.isValid() || Random(0, 60) > karma
+                "It is good that it was someone I did not know. I guess"
+            Else
+                "<Dead.name> was killed."
+                Dead.DeletePerson()
+                mood -= 20
+            Endif
+        Endif
+
+    SceneEnd() // Scene edited by Raddeck
+    timeout(600, Ravenger_VB_Respond Bank robbery)

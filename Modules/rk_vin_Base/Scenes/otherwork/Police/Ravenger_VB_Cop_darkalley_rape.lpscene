@@ -1,0 +1,493 @@
+WHAT: Cop_Street_work
+WHERE: all, -home, -hotel
+WHEN: 19 - 6
+WHO: none
+OTHER: !IsWithCompanion() && Random(0, 500) < interpersonal*actionDuration
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        setBackground(street)
+        "Damn it's dark in here. I shouldn't have gone for that shortcut just to save a few minutes. Too late to regret now - I'll just walk fast and get the hell out of here - I don't feel safe."
+        Actor.randomizeFace()
+        Actor.randomizeHairs()
+        Actor.dress()
+        Actor.show(2)
+        Known = false
+        If isModEnabled(vin_NTR) && Random(0, 100) < 50
+            If Random(0, 100) < 40
+                Random
+                    Actor2 = getRelative()
+                    Actor2 = getSpecific(Dating)
+                endRandom
+            Else
+                Actor2 = getPerson(true)
+            Endif
+            Known = true
+        Else
+            Actor2 = generatePersonTemporary()
+            Known = false
+        Endif
+        If !Actor2.isValid()
+            Known = false
+            Actor2 = generatePersonTemporary()
+        Endif
+        Actor2.dress()
+        Actor2.show(3)
+        
+        Actor(Evil):: "Alright, I'll make this quick: hand over your ...."
+        Actor(Flirty):: "... Oh, what a surprise to see a beauty like you alone here. It must be my lucky day. I think you can give me something a hell lot better than your money ..."
+        Actor2(Scared):: "Please, just take my money ... Don't harm me ..."
+        Actor(Evil):: "Thanks for handing over your money so nicely. But you're naive to think I'll let a hottie like you go, just like that."
+    
+        If Known
+            "Oh no, <Actor2.name> is getting mugged and threatened with rape ..."        
+        Else
+            "Oh no, that poor <Actor2.guy_or_girl> is getting mugged and threatened with rape ..."
+        Endif
+        "What should do?"
+        0:: "Freeze!"
+        1:: "Sneak Attack"
+        2:: "Peep"
+        
+        If 0
+            karma += 2.5
+            "Freeze! Put your hands up!"
+            Player.animate(gun)
+            If Actor:masochist < -30 && Actor2:fitness < Actor:fitness
+                "Shit <Actor.he_or_she> has a knife to <Actor2.his_or_her> neck."
+                Actor(Evil):: "Alright pig, now walk away or I will kill this bitch."
+                0:: "Aim & Shoot"
+                1:: "give up"
+                2:: "Talk them down"
+                
+                If 0
+                    SneakGame()
+                    Shot = sneak + firearms
+                    If Shot > 170
+                        "POW"
+                        Actor.hide()
+                        Actor.DeletePerson()
+                        "Perfect shot. The thug is dead."
+                        jobperformance += Random(1, 30)
+                        Actor2(Happy):: "My hero! You taught that thug a lesson. I don't know what I can do to thank you, honestly."
+                        0:: "It's only the right thing to do"
+                        1:: "Ask for <Actor2.his_or_her> number"
+                
+                        If 0
+                            Player(Happy):: "That's my job. I cannot let criminals like that get away with their horrendous acts of violence."
+                        Else
+                            Player(Happy):: "You know ... I'd love to get to know you more."
+                            Actor2(Happy):: "Of course, here's my number. I'd love to get to know a strong <Player.gentleman_or_lady> like you better too."
+                            Actor2.makePermanent()
+                            Actor2:attractiontoplayer += Random(0, 50)
+                            Actor2:rapportwithplayer += Random(0, 50)
+                            exchangeContact(Actor2)
+                        Endif
+                        
+                    Elseif Shot > 100
+                        "POW"
+                        Actor.hide()
+                        Actor2.hide()
+                        Actor.DeletePerson()
+                        "The thug is dead."
+                        "Shit the <Actor2.guy_or_girl> is injured."
+                        "I need to take them to hospital."
+                        Loc = findNearbyBuilding(hospital)
+                        moveTo(Loc)
+                        choice = -1
+                        Random
+                            choice => 1
+                            choice => 2
+                            choice => 3
+                            choice => 1
+                        Endrandom                   
+                        Actor3 = generatePersonTemporary()
+                        Actor3.dress()
+                        Actor3.show(2)
+                        
+                        If 1
+                            Actor3(Happy):: "Hello officer, good new the injury was not serious <Actor2.name> will make a full recovery."
+                            
+                        Elseif 2
+                            Actor3(Sad):: "Hello officer, the injury was pretty serious <Actor2.name> will have a long recovery."
+                            Actor3.hide()
+                            "<Actor2.name> later sued me for their injuries." 
+                            money -= 1000
+                            jobperformance -= Random(0, 15)
+                            mood -= 10
+                        Else
+                            Actor3(Sad):: "Hello officer, the injury was pretty serious <Actor2.name> will not recover."
+                            Actor3.hide()
+                            Actor2.DeletePerson()
+                            "I was later sued by the family for <Actor2.name> death." 
+                            money -= 3500
+                            jobperformance -= Random(5, 30)
+                            mood -= 20
+                        Endif
+                    Else
+                        "POW"
+                        Actor.hide()
+                        Actor2.hide()
+                        "The thug is dead."
+                        Actor.DeletePerson()
+                        "Shit! the <Actor2.guy_or_girl> is down."
+                        "Check their pulse..."
+                        "They're dead... too"
+                        Actor2.DeletePerson()
+                        "I was later sued by the family for <Actor2.name> death." 
+                        money -= 5000
+                        jobperformance -= Random(10, 45)
+                        mood -= 30
+                    Endif
+                
+                Elseif 1
+                    Actor.hide()
+                    Actor2.hide()
+                    Actor2.DeletePerson()
+                    "I stood by as I watched that monster take their victim out of sight."
+                    karma -= 75
+                    mood -= 100
+                Else
+                    "I try to talk them down."
+                        
+                    Me = false
+                    Danger = false
+                    Clever = false
+                    Open = false
+                    GiveUp = false
+                    Victim = true
+                    choice = -1
+                    While choice < 4
+                        0:: !Clever:: "Smooth talk <Actor.him_or_her>."
+                        1:: !Danger:: "You will doom yourself."
+                        2:: [!Me && perversion > 70]:: "How about a trade?"
+                        3:: [Clever && Danger && Me]::"Stall"
+                        4:: GiveUp:: "Make arrest"
+                        5:: "Shoot"
+                        
+                        If 0
+                            Player():: "You know this will not end well, unless you give yourself up."
+                            If [interpersonal + intelligence] > [Actor:interpersonal + Actor:intelligence]
+                                Actor():: "Alright, I let <Actor2.him_or_her> go and surrender myself."                         
+                                GiveUp = true
+                            Else
+                                Actor():: "Fuck you cop! The way I see it, I'm to one in control."                      
+                            Endif
+                            If karma > Random(59, 90)
+                                "I have a clear shot"
+                                Open = true
+                            Endif
+                            Clever = true 
+                        Elseif 1
+                            Player(evil):: "You do something stupid. I will hunt you down until you are dead. This will not end well for you!"                  
+                            If [interpersonal + fitness + martialart] > [Actor:interpersonal + Actor:fitness + Actor:martialart]
+                                Actor(Scared):: "Wait... wait... Okay I will let <Actor2.him_or_her> go and surrender myself. Please don't kill me."                            
+                                GiveUp = true
+                                Open = true
+                            Else
+                                Actor():: "Good luck with that. Your threats mean nothing."
+                            Endif
+                            If karma > Random(69, 90)
+                                "I have a clear shot"
+                                Open = true
+                            Endif
+                            Danger = true 
+                        Elseif 2
+                            Player(Flirty):: "Why have <Actor2.him_or_her> when you could have me! Let them go and I will give myself to you."  
+                            If [interpersonal + attractiveness] > [Actor:interpersonal + Actor2:attractiveness]
+                                Actor(Evil):: "Well now. Not offen do I find myself a volunteer. Okay I will let <Actor2.him_or_her> go and have my way with you."                                  
+                                Rape2 = true
+                                Open = true
+                            Else
+                                Actor():: "Sorry I don't swing that way. I got myself a better prize."
+                            Endif
+                            If karma > Random(49, 90)
+                                "I have a clear shot"
+                                Open = true
+                            Endif
+                            Me = true 
+                        Elseif 3
+                            "I stall for more time. By asking questions."
+                            If interpersonal > Actor:intelligence
+                                "They sure like to talk"
+                                If karma > Random(49, 90)
+                                    "I have a clear shot"
+                                    Open = true
+                                Endif
+                                karma += 2
+                            Else
+                                karma -= 2
+                                If karma < Random(49, 60)
+                                    Actor2.hide()
+                                    Actor2.DeletePerson()
+                                    Actor(Evil):: "I'm done playing games..."
+                                    Open = true
+                                    jobperformance -= Random(5, 30)
+                                    mood -= 20
+                                    "Shit! the <Actor2.guy_or_girl> is dead."
+                                    Victim = false
+                                Endif
+                            Endif
+                             
+                        Elseif 4
+                            "The thug gave up and I arrest them."
+                            jobperformance += 40
+                            Actor.hide()
+                            Actor2(Happy):: "My hero! You taught that thug a lesson. I don't know what I can do to thank you, honestly."
+                            0:: "It's only the right thing to do"
+                            1:: "Ask for <Actor2.his_or_her> number"
+                
+                            If 0
+                                Player(Happy):: "That's my job. I cannot let criminals like that get away with their horrendous acts of violence."
+                            Else
+                                Player(Happy):: "You know ... I'd love to get to know you more."
+                                Actor2(Happy):: "Of course, here's my number. I'd love to get to know a strong <Player.gentleman_or_lady> like you better too."
+                                Actor2.makePermanent()
+                                Actor2:attractiontoplayer += Random(0, 50)
+                                Actor2:rapportwithplayer += Random(0, 50)
+                                exchangeContact(Actor2)
+                            Endif
+    
+                            
+                        Else
+                            If Open = true
+                                "POW"
+                                Actor.hide()
+                                Actor.DeletePerson()
+                                "Perfect shot. The thug is dead."
+                                If GiveUp = true
+                                    karma -= 50
+                                    "Like shooting in a lame horse."
+                                Endif
+                                Rape2 = false
+                                jobperformance += Random(1, 30)
+                                If Victim = true
+                                    Actor2(Happy):: "My hero! You taught that thug a lesson. I don't know what I can do to thank you, honestly."
+                                    0:: "It's only the right thing to do"
+                                    1:: "Ask for <Actor2.his_or_her> number"
+                
+                                    If 0
+                                        Player(Happy):: "That's my job. I cannot let criminals like that get away with their horrendous acts of violence."
+                                    Else
+                                        Player(Happy):: "You know ... I'd love to get to know you more."
+                                        Actor2(Happy):: "Of course, here's my number. I'd love to get to know a strong <Player.gentleman_or_lady> like you better too."
+                                        Actor2.makePermanent()
+                                        Actor2:attractiontoplayer += Random(0, 50)
+                                        Actor2:rapportwithplayer += Random(0, 50)
+                                        exchangeContact(Actor2)
+                                    Endif
+                                Endif
+                            Else
+                                SneakGame()
+                                Shot = sneak + firearms
+                                If Shot > 170
+                                    "POW"
+                                    Actor.hide()
+                                    Actor.DeletePerson()
+                                    "Perfect shot. The thug is dead."
+                                    jobperformance += Random(1, 30)
+                                    Actor2(Happy):: "My hero! You taught that thug a lesson. I don't know what I can do to thank you, honestly."
+                                    0:: "It's only the right thing to do"
+                                    1:: "Ask for <Actor2.his_or_her> number"
+                
+                                    If 0
+                                        Player(Happy):: "That's my job. I cannot let criminals like that get away with their horrendous acts of violence."
+                                    Else
+                                        Player(Happy):: "You know ... I'd love to get to know you more."
+                                        Actor2(Happy):: "Of course, here's my number. I'd love to get to know a strong <Player.gentleman_or_lady> like you better too."
+                                        Actor2.makePermanent()
+                                        Actor2:attractiontoplayer += Random(0, 50)
+                                        Actor2:rapportwithplayer += Random(0, 50)
+                                        exchangeContact(Actor2)
+                                    Endif
+                        
+                                Elseif Shot > 100
+                                    "POW"
+                                    Actor.hide()
+                                    Actor2.hide()
+                                    "The thug is dead."
+                                    Actor.DeletePerson()
+                                    "Shit the <Actor2.guy_or_girl> is injured."
+                                    "I need to take them to hospital."
+                                    Loc = findNearbyBuilding(hospital)
+                                    moveTo(Loc)
+                                    choice = -1
+                                    Random
+                                        choice => 1
+                                        choice => 2
+                                        choice => 3
+                                        choice => 1
+                                    Endrandom                   
+                                    Actor3 = generatePersonTemporary()
+                                    Actor3.dress()
+                                    Actor3.show(2)
+                        
+                                    If 1
+                                        Actor3(Happy):: "Hello officer, good new the injury was not serious <Actor2.name> will make a full recovery."
+                            
+                                    Elseif 2
+                                        Actor3(Sad):: "Hello officer, the injury was pretty serious <Actor2.name> will have a long recovery."
+                                        Actor3.hide()
+                                        "<Actor2.name> later sued me for their injuries." 
+                                        money -= 1000
+                                        jobperformance -= Random(0, 15)
+                                        mood -= 10
+                                    Else
+                                        Actor3(Sad):: "Hello officer, the injury was pretty serious <Actor2.name> will not recover."
+                                        Actor3.hide()
+                                        Actor2.DeletePerson()
+                                        "I was later sued by the family for <Actor2.name> death." 
+                                        money -= 3500
+                                        jobperformance -= Random(5, 30)
+                                        mood -= 20
+                                    Endif
+                                Else
+                                    "POW"
+                                    Actor.hide()
+                                    Actor2.hide()
+                                    Actor.Delete()
+                                    "The thug is dead."
+                                    "Shit! the <Actor2.guy_or_girl> is down."
+                                    "Check their pulse..."
+                                    "They're dead... too"
+                                    Actor2.DeletePerson()
+                                    "I was later sued by the family for <Actor2.name> death." 
+                                    money -= 5000
+                                    jobperformance -= Random(10, 45)
+                                    mood -= 30
+                                Endif
+                            Endif
+                        Endif
+                    Endwhile
+                    
+                Endif
+                
+            Else
+                Actor2.hide()
+                "The thug is making a run for it!"
+                0:: "Shoot"
+                1:: "Chase"
+                
+                If 0
+                    "POW"
+                    If firearms > 70
+                        "Shot them in the leg."
+                        "They would live to see jail time."
+                        jobperformance += 10
+                    Else
+                        Actor.hide()
+                        "Clean kill."
+                        jobperformance += Random(0, 5)
+                        Actor.Delete()
+                    Endif
+                
+                Else
+                    "I give chase."
+                    If fitness > Actor:fitness
+                        "Thug didn't get very far. Because I soon arrest them."
+                        jobperformance += 20
+                    Else
+                        Actor.hide()
+                        "Shit, I lost them."
+                        jobperformance -= Random(0, 5)
+                    Endif
+                
+                Endif
+                
+            Endif
+            Rape = false
+        Elseif 1
+            masochist -= Random(0, 2)
+            karma += 5
+            Player.animate(martialart)
+            Player.moveToPersonStand(Actor, 100)        
+            Player(Furious):: "You can't get away with this, rapist! Take this!"
+            faceEachOther(Actor, Player)
+            Actor.animate(martialart)
+            Actor(Furious):: "You dare sucker-punch me? I'll teach you a lesson for being nosy."
+            "A fierce fight ensued ..."
+            Player.animate()
+            Actor.animate()
+            If martial > Actor:martial || !isModEnabled(vin_NTR)
+                Rape = false
+                Actor.animate(fightlost)
+                Actor(Pain):: "Ah!"
+                Player(Angry):: "That should teach you to never ambush innocent people in dark alleys anymore."
+                Actor.hide()
+                jobperformance += Random(1, 10)
+                Actor2(Happy):: "My hero! You taught that thug a lesson. I don't know what I can do to thank you, honestly."
+                0:: "It's only the right thing to do"
+                1:: "Ask for <Actor2.his_or_her> number"
+                
+                If 0
+                    Player(Happy):: "It's only my citizen's duty. I cannot let criminals like that get away with their horrendous acts of violence."
+                Else
+                    Player(Happy):: "You know ... I'd love to get to know you more."
+                    Actor2(Happy):: "Of course, here's my number. I'd love to get to know a strong <Player.gentleman_or_lady> like you better too."
+                    Actor2.makePermanent()
+                    Actor2:attractiontoplayer += Random(0, 50)
+                    Actor2:rapportwithplayer += Random(0, 50)
+                    exchangeContact(Actor2)
+                Endif
+            Else
+            
+                money -= Random(30, 300)
+                Rape = true
+                jobperformance -= Random(0, 5)
+                Player.animate(fightlost)
+                Player(Pain):: "Ah!"
+                Actor(Evil):: "Ha! You really thought you could match me in a fight? I have to say - this just makes me want to fuck <Actor2.his_or_her> brain out even more and make you watch it all, wannabe hero!"
+                
+            Endif
+        Elseif 3
+            karma -= 100
+            "My curiosity got the better of me. I really should do something to help, but I decided not to. Instead, I got all excited wanting to watch some forced porn playing out live in front of my eyes."
+            "I hid in the corner, allowing me the perfect view of what was going on without being detected by the thug."
+            perversion += Random(0, 2)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+            arousal += 1
+        Endif
+        
+        If Rape
+            "Soon, the thug was ripping the poor <Actor2.guy_or_girl>'s clothes off and proceeded to force <Actor.himself_or_herself> upon <Actor.his_or_her> victim."
+            Actor2(Crying):: "No! Please stop ... I beg you ... Somebody help ..."
+            "<Actor2.His_or_Her> cries for help went unheard in the dark alley and <Actor2.he_or_she> had no choice but endure it all at the hand of this vile <Actor.man_or_woman>."
+            Filter(Aggressive)
+            TalkNonConsensual()
+            SexNoAffair(Actor, Actor2)
+            Actor2.impregnate(Actor)
+            Player.animate()
+            Actor.animate()
+            "The thug unfortunately was not paying attention to me, as I pull out my gun, and empty an entire clip into their skull."
+            Actor.hide()
+            Actor.DeletePerson()
+            firearms += 6
+            jobperformance -= Random(0, 5)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+            
+        Endif
+        
+        If Rape2
+            "Soon, the thug was ripping my clothes off and proceeded to force <Actor.himself_or_herself> upon me."
+            "I had no choice but endure it all at the hand of this vile <Actor.man_or_woman>."
+            Actor:fertility += 100
+            Filter(Aggressive)
+            TalkNonConsensual()
+            SexNoAffair(Actor, Player)
+            Player.animate()
+            Actor.animate()
+            masochist += 25
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+            
+        Endif
+        
+    SceneEnd() // Edited by Raddeck
+    timeout(600, Ravenger_VB_Cop_darkalley_rape)

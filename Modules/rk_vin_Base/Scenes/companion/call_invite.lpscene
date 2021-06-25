@@ -101,6 +101,12 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Random(0, 200) < 75
             timeout(6, call_invite)
             
         Endif
+        Saved = getPerson(tag_Saved); 
+        If Saved:perversion > 15 && !Saved.isMarried()
+            Saved:perversion -= 1000
+            Saved:masochist =< 0
+            Saved:incest =< 0
+        Endif
         
         //timeout(50, call_invite, call_invite_co, call_invite_f, family_invite_workout, invite_workout, call_invite_co_pregnant)
 

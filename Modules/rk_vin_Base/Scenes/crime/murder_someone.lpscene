@@ -6,6 +6,7 @@ OTHER: none
 
     SceneStart()
     
+        KillCount = Player.getActorVar(rk_VB_KillCount)
         "Who do I want dead?"
         selectNPC()
         Actor2 = getSelectedNPC()
@@ -42,7 +43,7 @@ OTHER: none
                 If NeighborSee > 7
                 
                     "Damn it, the gun make too much noise. Someone call the cops. In panic, I try to escape the scene..."
-                    followUp(rk_VB_Police_Arrest)
+                    followUp(rk_VB_Murder_Arrest)
                     
                 EndIf
                 
@@ -62,6 +63,12 @@ OTHER: none
                     
                 Else
                 
+                    PoliceMan = generatePersonTemporary()
+                    PoliceMan.dressGuard()
+                    PoliceMan.show(2)
+                    Actor1 = generatePersonTemporary()
+                    Actor1.dressGuard()
+                    Actor1.show(4)
                     "Sure enough, the cops promptly arrived at the scene."
                     "'Hands in the air, now!'"
                     0:: "Run"

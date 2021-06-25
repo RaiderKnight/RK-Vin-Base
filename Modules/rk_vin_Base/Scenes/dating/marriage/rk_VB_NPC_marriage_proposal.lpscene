@@ -1,0 +1,59 @@
+WHAT: all, -go_to_the_bathroom
+WHERE: all, -toilets, -PC, -office
+WHEN: 0-24
+WHO: Companion = getCompanion(); If CurrentCompanion.isDating() && CurrentCompanion:attractiontoplayer > Random(65, 90) && CurrentCompanion:rapportwithplayer > Random(65, 90)
+OTHER: !isPlayerMarried()
+
+    SceneStart()
+        
+        NPCisEngaged = rk_VB_isEngaged.getGlobal()
+        setBackground(restaurant)
+        CurrentCompanion(Anxious):: "Baby, I have something really important to tell you ..."
+        "<CurrentCompanion.name> has taken me to a fancy restaurant but been acting rather weirdly today, as if he had something important to say to me all day."
+        Player(Curious):: "Of course, darling. What is it?"
+            
+        If CurrentCompanion:interpersonal > Random(0, 30)
+            CurrentCompanion(Happy):: "You know, although we haven't been in a relationship with each other for too long, I am totally in love with you and I know you feel the same ..."
+            CurrentCompanion(Happy):: "I would love nothing more than to take our relationship to the next level and be able to call you my <Player.husband_or_wife>."
+            CurrentCompanion(Happy):: "<Player.name>, will you marry me?"
+            Player(Surprised):: "<CurrentCompanion.name>! I ..."
+            0:: "Agree to marry <CurrentCompanion.name>"
+            1:: "Reject <CurrentCompanion.him_or_her>"
+                
+            If 0
+            
+                Player(Happy):: "Yes! Yes! Of course, I'll be your <Player.husband_or_wife>! I'd love nothing more than spending the rest of my life with you."
+                Engaged = true
+                rk_VB_isEngaged.setGlobal(1)
+                mood += 100
+                "So we embraced and kissed, treasuring our first moment as an engaged couple."
+                
+                If Saved > 0 || CurrentCompanion.isVirgin()  // Edited by Ravenger6660
+                    "<CurrentCompanion.name> wants to save themselves for the wedding night." // Edited by Ravenger6660
+                Else // Edited by Ravenger6660
+                        
+                    Sex(Player, CurrentCompanion)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                            
+                Endif // Edited by Ravenger6660
+            Else
+                    Player(Surprised):: "<CurrentCompanion.name> ... I love you too ... but I'm not quite ready for marriage yet. We're too young for that."
+                    mood -= 30
+                    "It was a difficult conversation to have. We're still a couple, although this rejection has put some serious doubt on the strength of our relationship."
+                    CurrentCompanion:attractiontoplayer -= Random(0, 40)
+            Endif
+        Else
+            CurrentCompanion(Scared):: "I ... I ... Actually, can you believe it? I completely forgot what I wanted to say. Nevermind me!"
+            "And so <CurrentCompanion.name> went back to acting weird for the rest of the day ..."
+        Endif
+        
+        If Engaged || NPCisEngaged > 0
+        
+            followUp(rk_VB_bachelor_Party)
+        
+        Endif
+
+    SceneEnd() // Scene edited by Ravenger6660
+    timeout(1000, rk_VB_NPC_marriage_proposal)

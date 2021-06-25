@@ -22,6 +22,17 @@ OTHER: none
                 Dating:attractiontoplayer += Random(0, 2)
                 mood += 2
                 
+                // Start edit Ravenger6660
+                Dating(Happy):: "There is a party we could go to if your interested?" // edited by Raddeck
+                0:: "Okay, lets go!"
+                1:: "Not now!" // edited by Raddeck
+            
+                If 0
+                    Dating.StartDate()
+                    followUp(Ravenger_VB_Interpersonal_House_Party)
+                Endif
+                // End edit Ravenger6660
+                
             Else
             
                 "Although <Dating.name> promised to help me, <Dating.he_or_she> ended up being too busy to really spend time as my social mentor."
@@ -34,6 +45,14 @@ OTHER: none
             Dating:attractiontoplayer -= Random(0, 1)
             
         Endif
+         // Start edit by Ravenger6660
+        Saved = getPerson(tag_Saved); 
+        If Saved:perversion > 15 && !Saved.isMarried()
+            Saved:perversion -= 1000
+            Saved:masochist => 0
+            Saved:incest => 0
+        Endif
+         // End edit by Ravenger6660
 
        // timeout(200, sociable_dating)
     SceneEnd() // Scene improved by Raddeck
