@@ -6,96 +6,188 @@ OTHER: isAtDatingHome()
 
 
     SceneStart()
-    "I heard a knock on the door."
-    Player(Surprised):: "Coming!"
-    "It's <Actor.name>, a close friend of <Dating.name>."
-    Actor.dress()
-    Actor.show(2)
-    Actor(Happy):: "Oh hey, <Player.name>. Is <Dating.name> home?"
-    Player(Sad):: "<Dating.He_or_She> is away for the day, I'm afraid."
-    Actor(Irritated):: "Oh, that's a shame. No matter, I'll just come back tomorrow."
-    0:: "Invite <Actor.him_or_her> inside"
-    1:: "Say farewell"
-    
-    If 0
-        Player(Happy):: "Actually, do you want to come in for a drink? I'd like to get to know my <Dating.boyfriend_or_girlfriend>'s friend better anyway."
-        If Actor:attractiontoplayer > 10 || Actor:rapportwithplayer > 10
-            Actor(Wink):: "Of course, it wouldn't be too polite of me if I turn down a friendly offer from my close friend's <Player.boyfriend_or_girlfriend>, would it?"
-            
-            choice = -1    
-            ate = false
-            hadSex = false
-                
-            While choice < 5
-                Kissed = false
-                "What should I suggest to <Actor.name> that we do?"
-                0:: "Chat"
-                1:: !ate:: "Eat something together"
-                2:: "Watch a movie"
-                3:: "Drink alcohol"
-                4:: !hadSex:: "Kiss <Actor.him_or_her>"
-                5:: "Politely ask <Actor.him_or_her> to leave"
-                
-                If 5
-                    "We said goodbye and went our ways."
-                Else
-                    Actor:rapportwithplayer += Random(0, 0.5)
-                    Actor:attractiontoplayer += Random(0, 0.5)
-                    If 0
-                        "We simply sat and chat for a while ..."
-                    Elseif 1
-                        "We made some quick snacks and enjoyed them together ..."
-                        ate = true
-                    Elseif 2
-                        "We watched a movie together ..."
-                    Elseif 3
-                        "We had a drink together ..."
-                        Player:intoxication += Random(0,10)
-                        Actor:intoxication += Random(0,10)
-                    Elseif 4
-                        Kissed = true
-                    Endif
 
-                    If Kissed || [!hadSex && Actor.isInterestedIn(Player) && Actor:attractiontoplayer > Random(30, 200)]
-                        AnimatePair(Player, Actor, Kissing)
-                        Player(Kiss):: "..."
-                        Actor(Kiss):: "..."
-                        "We had a kiss, an awkward one at first, but soon moving towards a more passionate direction."
-                        karma -= 1
-                        "Should I let this escalate further?"
-                        0:: "Make out"
-                        1:: "Stop"
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        "I heard a knock on the door."
+        Player(Surprised):: "Coming!"
+        "It's <Actor.name>, a close friend of <Dating.name>."
+        Actor.dress()
+        Actor.show(2)
+        Actor(Happy):: "Oh hey, <Player.name>. Is <Dating.name> home?"
+        Player(Sad):: "<Dating.He_or_She> is away for the day, I'm afraid."
+        Actor(Irritated):: "Oh, that's a shame. No matter, I'll just come back tomorrow."
+        0:: "Invite <Actor.him_or_her> inside"
+        1:: "Say farewell"
+        
+        If 0
+            Player(Happy):: "Actually, do you want to come in for a drink? I'd like to get to know my <Dating.boyfriend_or_girlfriend>'s friend better anyway."
+            If Actor:attractiontoplayer > 10 || Actor:rapportwithplayer > 10
+                
+                Actor(Wink):: "Of course, it wouldn't be too polite of me if I turn down a friendly offer from my close friend's <Player.boyfriend_or_girlfriend>, would it?"
+                
+                choice = -1    
+                ate = false
+                hadSex = false
+                    
+                While choice < 5
+                    Kissed = false
+                    "What should I suggest to <Actor.name> that we do?"
+                    0:: "Chat"
+                    1:: !ate && stock_snack > 0.8:: "Eat something together"
+                    2:: stock_movie > 0.8 :: "Watch a movie"
+                    3:: stock_alcohol >= 1.8 :: "Drink alcohol"
+                    4:: !hadSex:: "Kiss <Actor.him_or_her>"
+                    5:: "Politely ask <Actor.him_or_her> to leave"
+                    
+                    If 5
+                        "We said goodbye and went our ways."
+                        If HungerEnable > 0
+                    
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
                         
+                        EndIf
+                    Else
                         If 0
-                            If Actor.isInterestedIn(Player) && [Actor.IsDominantSex(Player) || Actor:attractiontoplayer + Actor:perversion > Random(75, 200) || Actor:intoxication > 90]
-                                "Our kiss got more and more steamy and soon we were making out, our hands all over each other."
-                                hadSex = true
-                                Player:perversion += Random(0, 1)
-                                Sex(Player, Actor)
-                                Actor.show(2)
-                                "The sex was amazing. However, <Actor.name> immediately realized what <Actor.he_or_she> had done: breaking the first rule of friendship, and was overcome with guilt. <Actor.He_or_She> left in a hurry."
-                                choice = 5
-                            Else
-                                "Unfortunately for me, <Actor.name> didn't seem interested in letting things escalate any further and pulled away."
-                                Actor(Anxious):: "<Player.name>, you know we really shouldn't have done that. What if <Dating.name> finds out? Sorry ... I've got to go now."
-                                choice = 5
-                            Endif
-                        Else
-                            "I decided to stop it there and not go any further."
+                            
+                            "We simply sat and chat for a while ..."
+                            mood += 1
+                            Actor:attractiontoplayer += 1
+                            Actor:rapportwithplayer += 1
+                            passTime(0.1, 0.2)
+                                
+                        Elseif 1
+                            
+                            "We made some quick snacks and enjoyed them together ..."
+                            ate = true
+                            If HungerEnable > 0
+                    
+                                Player.modifyActorVar(rk_VB_Hunger, 5)
+                        
+                            EndIf
+                            Actor:attractiontoplayer += 1
+                            Actor:rapportwithplayer += 1
+                            mood += 1
+                            stock_snack -= 1
+                            energy += 5
+                            passTime(0.2, 0.4)
+                                
+                        Elseif 2
+                            
+                            "We watched a movie together ..."
+                            stock_movie -= 1
+                            mood += 1
+                            Actor:attractiontoplayer += 1
+                            Actor:rapportwithplayer += 1
+                            If HungerEnable > 0
+                    
+                                Player.modifyActorVar(rk_VB_Hunger, -0.5)
+                        
+                            EndIf
+                            energy -= 1
+                            passTime(1, 2)
+                                
+                        Elseif 3
+                            
+                            "We had a drink together ..."
+                                
+                            Player.animate(drinkglass)
+                            Actor.animate(drinkglass)
+                            "We had a drink alcohol together ..."
+                            Player:intoxication += Random(0,10)
+                            Actor:intoxication += Random(0,10)
+                            stock_alcohol -= 2
+                            passTime(0.1, 0.2)
+                            Player.animate()
+                            Actor.animate()
+                                
+                        Elseif 4
+                            Kissed = true
                         Endif
-                    Elseif Random(0, 100) < 20
-                        Actor(Happy):: "I've gotta go now. Thank you for inviting me in."
-                        "We parted ways."
-                        choice = 5            
-                    Endif        
-                Endif
-            Endwhile        
+        
+                        If Kissed || [Actor.isInterestedIn(Player) && !hadSex && Actor:attractiontoplayer > Random(0, 200)]
+                            AnimatePair(Player, Actor, Kissing)
+                            Player(Kiss):: "..."
+                            Actor(Kiss):: "..."
+                            If Dating
+                                "We kissed. It started slow but soon became more passionate. It was obvious what we both wanted ..."
+                            Else
+                                "We had a kiss, an awkward one at first, but soon moving towards a more passionate direction."
+                            Endif
+                            "Should I let this escalate further?"
+                            0:: Vanilla:: "Make out"
+                            1:: "Stop"
+                            
+                            If 0
+                                    
+                                If Actor.isDating() || [Actor.isInterestedIn(Player) && [Actor.IsDominantSex(Player) || Actor:attractiontoplayer + Actor:perversion > Random(50, 200) || Actor:intoxication > 80]]
+                                        
+                                    "Our kiss got more and more steamy and soon we were making out, our hands all over each other."
+                                        
+                                    If TfGame() && Actor.isMale()
+                                        "I'm a man trapped inside a woman's body. I don't think I'm gay, but here I am, about to hook up with my male date."
+                                    Endif
+                                        
+                                    hadSex = true
+                                    Player:perversion += Random(0, 1)
+                                    Sex(Player, Actor)
+                                    Actor.show(2)
+                                    "The sex was amazing. We put our clothes back on afterwards and continued our date."
+                                    If HungerEnable > 0
+                    
+                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                        
+                                    EndIf
+                                    passTime(0.2, 0.5)
+                                        
+                                Else
+                                    
+                                    "Unfortunately for me, <Actor.name> didn't seem interested in letting things escalate any further and pulled away."
+                                        
+                                Endif
+                                    
+                            Else
+                                
+                                "I decided to stop it there and not go any further."
+                                    
+                            Endif
+                                
+                        Elseif Random(0, 100) < 20
+                        
+                            If Dating
+                            
+                                "After a while, we were both exhausted and went to bed together for the night."
+                                passTime(4, 8)
+                                energy += Random(50, 100)
+                                "The next morning ..."
+                                Actor(Happy):: "I've gotta go now, honey. Thanks for letting me stay the night. I can't wait to see you again soon!"
+                                Actor:attractiontoplayer += Random(0, 1)
+                                
+                            Else
+                            
+                                Actor(Happy):: "I've gotta go now. Thank you for inviting me."
+                                Player(Happy):: "Alright. Thank you for staying. Goodbye!"
+                                "We parted ways."
+                                
+                            Endif
+                            choice = 5            
+                        Endif  
+                            
+                    Endif
+                        
+                Endwhile  
+                
+            Else
+            
+                Actor(Happy):: "Not now, I'm busy. I'll see you soon!"
+                
+            Endif
+            
         Else
-            Actor(Happy):: "That's okay. Don't worry. I've got to go."
+        
+            Player(Happy):: "I'll see you soon then!"
+            
         Endif
-    Else
-        Player(Happy):: "I'll see you soon then!"
-    Endif
         
     SceneEnd() // Scene improved by Raddeck
     timeout(72, dating_friend_visits)
