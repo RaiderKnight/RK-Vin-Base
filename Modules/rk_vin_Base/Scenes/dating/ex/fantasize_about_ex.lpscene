@@ -5,16 +5,37 @@ WHO: Actor = getSpecific(ExDating)
 OTHER: Random(0, 100) < perversion
 
     SceneStart()
-    "I was pleasuring myself when a thought about someone suddenly came to my head: my ex <Actor.name>."
-    0:: "Fantasize about us"
-    1:: "Force that thought away"
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        "I was pleasuring myself when a thought about someone suddenly came to my head: my ex <Actor.name>."
+        0:: "Fantasize about us"
+        1:: "Force that thought away"
     
-    If 0
-        "Fantasies don't hurt ..."
-        SexNoAffair(Player, Actor)
-    Else
-        "I've moved on from <Actor.him_or_her> now. I shouldn't fantasize about the past ..."
-    Endif
+        If 0
+        
+            "Fantasies don't hurt ..."
+            SexNoAffair(Player, Actor)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+            
+        Else
+            
+            If arousal > 25
+            
+                "I just had a wet dream, now my bed is juicy and slimy ... damn!"
+                mood -= 2
+                arousal -= 10
+                perversion += Random(0, 0.5)
+            
+            Else
+            
+                "I've moved on from <Actor.him_or_her> now. I shouldn't fantasize about the past ..."
+                
+            Endif
+            
+        Endif
     
-    SceneEnd()
+    SceneEnd() // Scene improved by Raddeck
     timeout(200, fantasize_about_ex)
