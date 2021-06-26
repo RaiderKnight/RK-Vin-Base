@@ -2,19 +2,18 @@ WHAT: all, -sleep, -nap, -sleep_hotel, -nap_hotel
 WHERE: all, -work
 WHEN: 17 - 22
 WHO: none
-OTHER: Random(80, 200) < intelligence
+OTHER: Random(50, 200) < martial Random(80, 200) < fitness 
     
     SceneStart()
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
-        ChannelStarted = politics_channel.getGlobal()
-        POchannelVids = Player.getActorVar(rk_VB_POchannelVids) // Politics channel
+        ChannelStarted = rk_VB_martial_channel.getGlobal()
+        MAchannelVids = Player.getActorVar(rk_VB_MAchannelVids) // martial channel
         
         If ChannelStarted == 0
         
-            "I consider myself quite up-to-date with current affairs. I can be quite eloquent when debating hot-button political issues"
-            "I reckon I might just have some success starting a politics channel on YouTube. Should I?"
+            "I consider myself in good shape and I do quite well with martial arts. I reckon I might just have some success starting a martial art channel on YouTube. Should I?"
             0:: "Yes"
             1:: "No"
             
@@ -22,18 +21,18 @@ OTHER: Random(80, 200) < intelligence
             
                 "Why not? It's certainly worth a shot. Might be a good way to supplement my income."
                 mood += 3
-                politics_channel.setGlobal(1)
+                rk_VB_martial_channel.setGlobal(1)
                 
             Else
             
                 "No, I should stop daydreaming and focus on my real job."
-                //timeout(500, politics_channel)
+                //timeout(500, martial_channel)
                 
             Endif
             
         Else
         
-            "I've got some spare time. Should I make a new video for my politics channel?"
+            "I've got some spare time. Should I make a new video on new tricks for my martial art channel?"
             0:: "Yes"
             1:: "No"
             2:: "Close channel"
@@ -41,12 +40,12 @@ OTHER: Random(80, 200) < intelligence
             If 0
             
                 "Yes, it's important to upload regularly to keep my audience growing."
-                intelligence += Random(0, 0.25)
+                martial += Random(0, 0.25)
                 
-                If Random(0, 100) < intelligence
+                If Random(0, 100) < martial
                 
                     "The new video turned out to be a success, earning a decent amount of views and a bit of money for myself."
-                    money += Random(0.5, 5)*intelligence
+                    money += Random(0.5, 5)*martial
                     mood += 10
                     
                 Else
@@ -55,7 +54,7 @@ OTHER: Random(80, 200) < intelligence
                     mood -= 10
                     
                 Endif
-                Player.modifyActorVar(rk_VB_POchannelVids, 1)
+                Player.modifyActorVar(rk_VB_MAchannelVids, 1)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -1)
                 EndIf
@@ -67,12 +66,12 @@ OTHER: Random(80, 200) < intelligence
             Else
             
                 "This thing isn't working out. It's time to shut it down."
-                politics_channel.clearGlobal()
-                //timeout(500, politics_channel)
+                rk_VB_martial_channel.clearGlobal()
+                //timeout(500, rk_VB_martial_channel)
                 
             Endif
             
         Endif
     
     SceneEnd()  // Scene improved by Raddeck
-    // timeout(48, politics_channel)
+    // timeout(48, martial_channel)

@@ -1,0 +1,123 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: !isWithCompanion() && age > 18
+    
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        BchannelVids = Player.getActorVar(rk_VB_BchannelVids) // Beauty channel
+        BChannelStarted = rk_VB_beauty_channel.getGlobal()
+        CchannelVids = Player.getActorVar(rk_VB_CchannelVids) // Cooking channel
+        CChannelStarted = rk_VB_cooking_channel.getGlobal()
+        FchannelVids = Player.getActorVar(rk_VB_FchannelVids) // Fitness channel
+        FChannelStarted = fitness_channel.getGlobal()
+        MAchannelVids = Player.getActorVar(rk_VB_MAchannelVids) // Martial art channel
+        MAChannelStarted = rk_VB_martial_channel.getGlobal()
+        MchannelVids = Player.getActorVar(rk_VB_MchannelVids) // Music channel
+        MChannelStarted = music_channel.getGlobal()
+        POchannelVids = Player.getActorVar(rk_VB_POchannelVids) // Politics channel
+        POChannelStarted = politics_channel.getGlobal()
+        PRchannelVids = Player.getActorVar(rk_VB_PRchannelVids) // Porn channel
+        PRChannelStarted = porn_channel.getGlobal()
+        VchannelVids = Player.getActorVar(rk_VB_VchannelVids) // Vlog channel
+        VChannelStarted = vlog_channel.getGlobal()
+        
+        stock_ZellVostro = Player.getActorVar(stock_ZellVostro)
+        stock_LPPavilion = Player.getActorVar(stock_LPPavilion)
+        stock_LPware = Player.getActorVar(stock_LPware)
+        stock_LPX = Player.getActorVar(stock_LPX)
+        Stock_Computers = stock_ZellVostro + stock_LPPavilion + stock_LPware + stock_LPX
+        
+        stock_IPhone = Player.getActorVar(stock_IPhone)
+        stock_Samsung = Player.getActorVar(stock_Samsung)
+        stock_OnePlus = Player.getActorVar(stock_OnePlus)
+        stock_LPGPower = Player.getActorVar(stock_LPGPower)
+        Stock_phones = stock_IPhone + stock_Samsung + stock_OnePlus + stock_LPGPower
+
+        If Stock_Computers <= 0 && Stock_phones <= 0
+        
+            "You don't have any device to go online... Go buy a computer or a phone at any shop!"
+        
+        Else
+        
+            If !isModEnabled(rk_ShopAddons)
+                
+                "You need to enable Shop-Addons mod to be able to use internet...."
+                
+            ElseIf Stock_phones > 0
+                
+                "You open your phone to visit websites...."
+                
+            ElseIf Stock_Computers <= 0
+                    
+                "You don't have any device to go online... Go buy a computer or a phone at any shop!"
+                
+            Else
+                
+                If WHERE != home && WHERE != fraternity
+                    
+                    SceneStart()
+                        "You cannot use your pc here!"
+                        "You can go online with your pc only if your are at home or in fraternity"
+                        "Buy a phone to be able to go online everywhere!"
+                    SceneEnd()
+                        
+                Else
+                
+                    "You open your computer to visit websites..."
+                    
+                EndIf
+                
+            EndIf
+
+            "Which channel I would like to start or maintain?"
+            0::"Beauty channel (<BchannelVids> vids)"
+            1:: isAtHome():: "Cooking channel (<CchannelVids> vids)"
+            2::"Fitness channel (<FchannelVids> vids)"
+            29::"Martial art channel (<MAchannelVids> vids)"
+            3::"Music channel (<MchannelVids> vids)"
+            4::"Politics channel (<POchannelVids> vids)"
+            5::"Porn channel (<PRchannelVids> vids)"
+            6::"Vlog channel (<VchannelVids> vids)"
+            99::"I changed my mind!"        
+                
+            If 0
+            
+                followUp(rk_VB_beauty_channel)
+                
+            ElseIf 1
+            
+                followUp(rk_VB_cooking_channel)
+                
+            ElseIf 2
+            
+                followUp(fitness_channel)
+                
+            ElseIf 29
+            
+                followUp(rk_VB_martial_channel)
+                
+            ElseIf 3
+            
+                followUp(music_channel)
+                
+            ElseIf 4
+            
+                followUp(politics_channel)
+                
+            ElseIf 5
+            
+                followUp(porn_channel)
+                
+            ElseIf 6
+            
+                followUp(vlog_channel)
+                
+            Endif
+            
+        Endif
+        
+    SceneEnd()  // Scene improved by Raddeck
