@@ -20,6 +20,7 @@ OTHER: none
         Else
         
             "What should I do?"
+            10:: "Do cardio"
             1:: "Do light exercises" 
             3:: "Lift weights" 
             6:: "Practice martial art" 
@@ -64,11 +65,26 @@ OTHER: none
                 mood += 2
                 interpersonal += 0.01
                 attractiveness -= 0.01
+                muscle += 0.01
                 
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -10)
                 EndIf
                 passTime(0.5, 1.5)
+
+            ElseIf 10
+                
+                Player.animate(yoga)
+                "I decided to do some cardio..."
+                energy -= 10
+                fitness += 0.05
+                mood += 2
+                muscle -= 0.01
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -5)
+                EndIf
+                passTime(0.5, 1)
 
             EndIf
             

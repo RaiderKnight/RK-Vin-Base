@@ -5,46 +5,59 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    "Using a dating app is a good way to meet new potential lovers, friends with benefits and one-night stands"
-    If PercentageOrcs + PercentageVampires + PercentageElves > 0
-        "Should I state a preference for a particular race?"
-        0:: "Orcs"
-        1:: "Vampires"
-        2:: "Elves"
-        3:: "No preference"
+    
+        If isWithCompanion() || isPlayerMarried() || Player.isDating()
         
-        "Alright, let's get swiping"
-    Else
-        choice = 3
-    Endif
-    
-    "After some time swiping right on those I like, I finally got a match."
-    Actor = generatePersonTemporary()
-    While !Player.isInterestedIn(Actor)
+            "I'm not alone... it's better to do this later...."
+            SceneEnd()
+            
+        Endif
+        
+        "Using a dating app is a good way to meet new potential lovers, friends with benefits and one-night stands"
+        If PercentageOrcs + PercentageVampires + PercentageElves > 0
+            "Should I state a preference for a particular race?"
+            0:: "Orcs"
+            1:: "Vampires"
+            2:: "Elves"
+            3:: "Humans"
+            99:: "No preference"
+            
+            "Alright, let's get swiping"
+        Else
+            choice = 99
+        Endif
+        
+        "After some time swiping right on those I like, I finally got a match."
         Actor = generatePersonTemporary()
-    Endwhile
-    If choice == 0
-        Actor.blendPreset(Orc)
-    Elseif choice == 1
-        Actor.blendPreset(Vampire)
-    Elseif choice == 2
-        Actor.blendPreset(Elf)
-        Actor.randomizeRace()
-    Endif
-    Actor.dress()
-    secondScreen(Actor)
-    Actor.show()
-    "I was matched with <Actor.name>."
-    0:: "Arrange a date with <Actor.name>"
-    1:: "Turn <Actor.him_or_her> down"
-    
-    If 0
-        Actor.makeInterested(Player)
-        Actor.makePermanent()
-        secondScreen()
-        "Soon enough, we meet up for our first date."
-        Actor.startDate()
+        While !Player.isInterestedIn(Actor)
+            Actor = generatePersonTemporary()
+        Endwhile
+        If choice == 0
+            Actor.blendPreset(Orc)
+        Elseif choice == 1
+            Actor.blendPreset(Vampire)
+        Elseif choice == 2
+            Actor.blendPreset(Elf)
+            Actor.randomizeRace()
+        Elseif choice == 3
+            Actor.randomizeFace()
+            Actor.randomizeHairs()
+            Actor.randomizeSexy()
+        Endif
+        Actor.dress()
+        secondScreen(Actor)
         Actor.show()
-        "Hopefully it will be a good experience"
-    Endif
-    SceneEnd()
+        "I was matched with <Actor.name>."
+        0:: "Arrange a date with <Actor.name>"
+        1:: "Turn <Actor.him_or_her> down"
+        
+        If 0
+            Actor.makeInterested(Player)
+            Actor.makePermanent()
+            secondScreen()
+            "Soon enough, we meet up for our first date."
+            Actor.startDate()
+            Actor.show()
+            "Hopefully it will be a good experience"
+        Endif
+    SceneEnd() // Improved by Raddeck

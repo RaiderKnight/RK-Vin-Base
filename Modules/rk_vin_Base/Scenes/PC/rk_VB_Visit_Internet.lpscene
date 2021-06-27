@@ -6,6 +6,8 @@ OTHER: none
 
     SceneStart()
     
+        personal_pics = Player.getActorVar(rk_VB_personal_pics)
+        personal_vids = Player.getActorVar(rk_VB_personal_vids)
         stock_ZellVostro = Player.getActorVar(stock_ZellVostro)
         stock_LPPavilion = Player.getActorVar(stock_LPPavilion)
         stock_LPware = Player.getActorVar(stock_LPware)
@@ -60,50 +62,129 @@ OTHER: none
             "What do you want to do on internet?"
             1::"Browse the web"
             2::"Check social media"
-            3::"Look for CMS porn"
             4::"Post on a forum"
-            5::"Support LifePlay on Patreon :P"
-            6::"Watch YouTube"
-            7::"Collaborate with another YouTube creator"
-            8:: money > CashOnlineBid :: "Gamble online - <CashOnlineBid_loc> min. bid"
+            42::"Learn a language"
+            6::"Go on Youtube"
+            7::"Manage finances"
+            8::"Play a game online"
             84::"Subscribe on websites"
-            86:: "Start a Youtube channel"
-            87:: "Make a new video for my Youtube channel"
-            90::isModEnabled(vin_Bestiality):: "Look for bestiality porn"
+            5::"Support LifePlay on Patreon :P"
             99::"Go back"
     
             If 1
             
-                Player.animate(browse)
-                "I decided to browse the web for a moment..."
-                intelligence += 0.1
-                mood += 1.5
-                energy -= 1
-                passTime(0.15, 1)
+                "What I want to browse for?"
+                0::"Only browsing for fun"
+                2::"Use dating app"
+                3::"Look for CMS porn"
+                90::isModEnabled(vin_Bestiality):: "Look for bestiality porn"
+                99::"Go back"
+                
+                If 0
+                
+                    Player.animate(browse)
+                    "I decided to browse the web for a moment..."
+                    intelligence += 0.1
+                    mood += 1.5
+                    energy -= 1
+                    passTime(0.15, 1)
+                
+                ElseIf 2
+                    
+                    followUp(fantasy_dating_app)
+                    
+                ElseIf 3
+                
+                    followUp(search_porn_cms)
+                
+                ElseIf 90
+                    
+                    followUp(bestiality_porn)
+                
+                Else
+                
+                    SceneEnd()
+                
+                EndIf
             
             ElseIf 2
 
                 Player.animate(browse)
                 "I decided to check different social media..."
-                intelligence += 0.05
-                interpersonal += 0.025
-                mood += 2
-                energy -= 1
-                passTime(0.35, 1)
-            
-            ElseIf 3
+                "What should I do?"
+                0::personal_pics > 0::"Post a photo"
+                1::personal_vids > 0::"Post a video"
+                2::"Post a message"
+                99::"Do nothing"
                 
-                followUp(search_porn_cms)
+                If 0
+                
+                    intelligence += 0.05
+                    interpersonal += 0.025
+                    mood += 1
+                    energy -= 0.5
+                    Player.modifyActorVar(rk_VB_personal_pics, -1)
+                    "As soon as I posted, I have already received likes!"
+                    passTime(0.35, 1)
+                    
+                ElseIf 1
+                
+                    intelligence += 0.05
+                    interpersonal += 0.025
+                    mood += 1
+                    energy -= 0.5
+                    Player.modifyActorVar(rk_VB_personal_vids, -1)
+                    "As soon as I posted, I have already received likes!"
+                    passTime(0.35, 1)
+                
+                ElseIf 2
+                
+                    intelligence += 0.05
+                    interpersonal += 0.025
+                    mood += 0.5
+                    energy -= 0.5
+                    "As soon as I posted, I received few likes!"
+                    passTime(0.35, 1)
+                
+                Else
+                
+                    SceneEnd()
+                
+                EndIf
             
             ElseIf 4
                 
                 Player.animate(browse)
                 "I decided to post on a different forums..."
-                intelligence += 0.2
-                interpersonal += 0.1
-                mood += 1
-                energy -= 1
-                passTime(0.35, 1)
+                "What should I do?"
+                0::personal_pics > 0::"Post a photo"
+                2::"Post a message"
+                99::"Do nothing"
+                
+                If 0
+                
+                    intelligence += 0.25
+                    interpersonal += 0.2
+                    mood += 1
+                    energy -= 0.5
+                    Player.modifyActorVar(rk_VB_personal_pics, -1)
+                    "As soon as I posted, I have already received likes!"
+                    passTime(0.35, 1)
+                
+                ElseIf 2
+                
+                    intelligence += 0.2
+                    interpersonal += 0.1
+                    mood += 1
+                    energy -= 0.5
+                    "As soon as I posted, I received few likes!"
+                    passTime(0.35, 1)
+                
+                Else
+                
+                    SceneEnd()
+                
+                EndIf
             
             ElseIf 5
                 
@@ -114,34 +195,89 @@ OTHER: none
                 passTime(0.15, 0.50)
             
             ElseIf 6
-            
-                Player.animate(browse)
-                "I decided to watch YouTube for a moment..."
-                intelligence += 0.05
-                mood += 2
-                energy -= 1
-                passTime(0.35, 1)
+                
+                "What I want to do on Youtube?"
+                0::"Watch videos"
+                86::"Start a Youtube channel"
+                87::"Make a new video for my Youtube channel"
+                7::"Collaborate with another YouTube creator"
+                99::"Go back to game!"
+                
+                If 0
+                
+                    Player.animate(browse)
+                    "I decided to watch YouTube for a moment..."
+                    intelligence += 0.05
+                    mood += 2
+                    energy -= 1
+                    passTime(0.35, 1)
             
             ElseIf 7
                 
-                followUp(youtube_collab_cms)
+                Player.animate(managefinances)
+                "I decided to Manage my finances..."
+                intelligence += 0.05
+                mood -= 5
+                
+                passTime(0.35, 1)
+                    
+                ElseIf 86 || 87
+                
+                    followUp(rk_VB_Youtube_Channels)
+                
+                ElseIf 7
+                
+                    followUp(youtube_collab_cms)
+                
+                EndIf
             
             ElseIf 8
+            
+                "What kind of game I want to play?"
+                10:: money > CashOnlineBid :: "Gamble online - <CashOnlineBid_loc> min. bid"
+                20::"Play chess"
+                30::"Play tabletop"
+                99::"Do nothing"
                 
-                followUp(rk_VB_gamble_online)
+                If 10
+                
+                    followUp(rk_VB_gamble_online)
+                    
+                ElseIf 20
+                
+                    Player.animate(browse)
+                    "I decided to play chess online..."
+                    mood += 0.5
+                    interpersonal += 0.05
+                    intelligence += 0.5
+
+                    passTime(0.5, 3.5)
+                    
+                ElseIf 30
+                
+                    Player.animate(browse)
+                    "I decided to play tabletop online..."
+                    mood += 1
+                    interpersonal += 0.2
+                    intelligence += 0.3
+
+                    passTime(0.5, 2.5)
+                
+                EndIf
+            
+            ElseIf 42
+                
+                Player.animate(browse)
+                "I decided to learn a language..."
+                mood += 3
+                intelligence += 0.03
+                interpersonal += 0.05
+
+                passTime(0.5, 1.5)
                 
             ElseIf 84
                 
                 followUp(rk_VB_subscribe_online)
-                
-            ElseIf 86 || 87
-                
-                followUp(rk_VB_Youtube_Channels)
-                
-                
-            ElseIf 90
-                
-                followUp(bestiality_porn)
                 
             EndIf
     

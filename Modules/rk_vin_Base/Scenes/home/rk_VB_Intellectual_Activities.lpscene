@@ -20,7 +20,10 @@ OTHER: none
         Else
         
             "What should I do?"
+            62::"Do some self-study"
+            63::"Meditate"
             6::"Practice cooking"
+            65::"Pray"
             4:: stock_book > 0.8:: "Read a book" 
             5:: stock_comic > 0.8:: "Read a comic"
             99:: "Go back!"
@@ -34,6 +37,9 @@ OTHER: none
                 stock_book -= 0.05
                 energy -= 1
 
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -0.5)
+                EndIf
                 passTime(0.5, 1)
                 
             ElseIf 5
@@ -45,7 +51,10 @@ OTHER: none
                 stock_comic -= 1
                 energy -= 1
 
-                passTime(0.5, 1.5)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -0.5)
+                EndIf
+                passTime(0.5, 1)
                 
             ElseIf 6
                 
@@ -59,6 +68,42 @@ OTHER: none
                     Player.modifyActorVar(rk_VB_Hunger, -3)
                 EndIf
                 passTime(0.5, 1.5)
+                
+            ElseIf 62
+                
+                Player.animate(write)
+                "I decided to do some self-study..."
+                mood -= 1
+                intelligence += 0.025
+                jobexperience -= 0.01
+                energy -= 1
+
+                passTime(0.5, 1.5)
+                
+            ElseIf 63
+                
+                Player.animate(pray)
+                "I decided to meditate..."
+                mood += 5
+                intelligence += 0.01
+                perversion -= 0.15
+                arousal -= 15
+                energy -= 1
+                karma += 0.5
+
+                passTime(0.5, 1.5)
+                
+            ElseIf 65
+                
+                Player.animate(pray)
+                "I decided to pray..."
+                mood += 1
+                perversion -= 0.05
+                arousal -= 5
+                energy -= 1
+                karma += 0.25
+
+                passTime(0.1, 0.5)
 
             EndIf
             
