@@ -5,26 +5,37 @@ WHO: Dating = getRelative(); If Dating:rapportwithplayer > 0 && Dating:attractiv
 OTHER: attractiveness > 70
 
     SceneStart()
-    secondScreenIfHidden(Dating)
-    Dating.dress()
-    Dating.show(2)
-    "My <Dating.relationship> isn't the most attractive person in the world and is also rather clueless on fashion. Worse, <Dating.he_or_she> seems to make no attempts to dress better."
-    0:: "Encourage my <Dating.relationship> to be better-dressed"
-    1:: "Do nothing"
-
-    If 0
-        If Random(0, 150) < interpersonal + attractiveness 
-            "Motivated by my encouragements, my <Dating.relationship> became a bit more fashionable and at least tries to look good in public."
-            Dating:attractiveness += Random(0, 2)
-            karma += 2.5
+    
+        secondScreenIfHidden(Dating)
+        Dating.dress()
+        Dating.show(2)
+        "My <Dating.relationship> isn't the most attractive person in the world and is also rather clueless on fashion. Worse, <Dating.he_or_she> seems to make no attempts to dress better."
+        0:: "Encourage my <Dating.relationship> to be better-dressed"
+        1:: "Do nothing"
+    
+        If 0
+        
+            If Random(0, 150) < interpersonal + attractiveness 
+            
+                "Motivated by my encouragements, my <Dating.relationship> became a bit more fashionable and at least tries to look good in public."
+                Dating:attractiveness += Random(0, 2)
+                karma += 2.5
+                mood += 3
+                
+            Else
+            
+                "Unfortunately, despite my encouragements, my <Dating.relationship> still refused to wear decent clothes. <Dating.He_or_She> even accused me of being shallow."
+                Dating:rapportwithplayer -= Random(0, 2)
+                mood -= 5
+                
+            Endif
+            
         Else
-            "Unfortunately, despite my encouragements, my <Dating.relationship> still refused to wear decent clothes. <Dating.He_or_She> even accused me of being shallow."
-            Dating:rapportwithplayer -= Random(0, 2)
+        
+            "It doesn't matter. That's just the way my <Dating.relationship> is."
+            Dating:rapportwithplayer += Random(0, 1)
+            
         Endif
-    Else
-        "It doesn't matter. That's just the way my <Dating.relationship> is."
-        Dating:rapportwithplayer += Random(0, 1)
-    Endif
-
-    timeout(200, ugly_family)
-    SceneEnd()
+    
+        //timeout(200, ugly_family)
+    SceneEnd()  // Scene improved by Raddeck
