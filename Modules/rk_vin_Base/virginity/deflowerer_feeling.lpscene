@@ -6,6 +6,8 @@ OTHER:
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         "Wait, is that ...?"
         Actor.dress()
         Actor.show()
@@ -28,6 +30,9 @@ OTHER:
             passTime(0.50, 1)
             Player.animate()
             Actor.animate()
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -0.5)
+            EndIf
             
         Else
         
@@ -51,6 +56,9 @@ OTHER:
                     Actor:attractiontoplayer += 5
                     Actor:rapportwithplayer += 5
                     passTime(1, 2.50)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
             
                 ElseIf Actor.isInterestedIn(Player)
         
@@ -63,6 +71,7 @@ OTHER:
                     Player(Sad)::"Oh well, we'll see!"
                     Actor:attractiontoplayer -= 1
                     Actor:rapportwithplayer -= 1
+                    mood -= 5
             
                 EndIf
             

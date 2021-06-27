@@ -6,6 +6,8 @@ OTHER: !isWithCompanion()
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         SecondScreen(Actor)
         Actor.dress()
         Actor.show()
@@ -26,6 +28,10 @@ OTHER: !isWithCompanion()
                 moveTo(Dest)
                 Sex(Actor, Player)
                 passTime(1, 1.50)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                perversion += 0.5
             
             Else
         
@@ -34,6 +40,8 @@ OTHER: !isWithCompanion()
                 masochist -= 1
                 Actor:attractiontoplayer -= 1
                 Actor:rapportwithplayer -= 1
+                mood -= 5
+                arousal -= 1
             
             EndIf
         
@@ -52,6 +60,9 @@ OTHER: !isWithCompanion()
                 Actor:attractiontoplayer += 5
                 Actor:rapportwithplayer += 5
                 passTime(1, 2.50)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
             
             EndIf
         
@@ -60,6 +71,8 @@ OTHER: !isWithCompanion()
             Actor(Flirty)::"I'm so horny <Player.name>. Do you want me to show you new sex positions?"
             Player(Sad)::"Not now, I'm not horny as you!"
             Actor(Serene)::"Don't be sad, I'll wait!"
+            Actor:attractiontoplayer += 0.5
+            Actor:rapportwithplayer += 0.5
         
         Else
         
@@ -71,5 +84,5 @@ OTHER: !isWithCompanion()
             
         EndIf
     
-    SceneEnd()
+    SceneEnd() // Scene improved by Raddeck
     timeout(100, deflowerer_takes_advantage)

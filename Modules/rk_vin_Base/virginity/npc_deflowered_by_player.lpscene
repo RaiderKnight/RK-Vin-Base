@@ -6,6 +6,8 @@ OTHER: none
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         Actor = getSpecific(PassedOn)
         Actor.dress()
         Actor.show()
@@ -37,6 +39,9 @@ OTHER: none
                     Actor:attractiontoplayer += 5
                     Actor:rapportwithplayer += 5
                     passTime(1, 2.50)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
                     
                 Else
                 
@@ -46,11 +51,13 @@ OTHER: none
             
             Else
             
-                Player(Happy):: "Oh, <Actor.name>, you have no idea how happy I am to hear that ..."
-                Player:: "I feel like the luckiest <Player.man_or_woman> alive to be your first ..."
-                Player:: "I hope I managed to make it feel as special to you as it was to me."
+                Player(Surprised):: "Oh, <Actor.name>, you have no idea how happy I am to hear that ..."
+                mood += 1
+                Player(Happy):: "I feel like the luckiest <Player.man_or_woman> alive to be your first ..."
+                Player(Flirty):: "I hope I managed to make it feel as special to you as it was to me."
                 Actor:attractiontoplayer += 50
                 Actor(Happy):: "Oh, <Player.name>, you will forever be special in my heart ..."
+                Actor:rapportwithplayer += Random(2, 10)
             
             EndIf
             
@@ -58,12 +65,16 @@ OTHER: none
         
             Player(Surprised):: "Oh really? There's a first time for everything, I suppose."
             "<Actor.name> doesn't look too happy with my carefree response to such a personal revelation. Maybe <Actor.he_or_she> is regretting giving up <Actor.his_or_her> virginity to me already."
+            Actor:attractiontoplayer -= Random(0, 3)
+            Actor:rapportwithplayer -= Random(0, 3)
         
         Else
         
             Player(Serene):: "And it showed! You were like a dead fish the whole time! You clearly need more practice!"
-            "<Actor.name> is visibly upset with my insulting response to such a personal revelation. Maybe <Actor.he_or_she> is regretting giving up <Actor.his_or_her> virginity to me already."    
+            "<Actor.name> is visibly upset with my insulting response to such a personal revelation. Maybe <Actor.he_or_she> is regretting giving up <Actor.his_or_her> virginity to me already."
+            Actor:attractiontoplayer -= 5
+            Actor:rapportwithplayer -= 5
         
         Endif
     
-    SceneEnd()
+    SceneEnd() // Scene improved by Raddeck

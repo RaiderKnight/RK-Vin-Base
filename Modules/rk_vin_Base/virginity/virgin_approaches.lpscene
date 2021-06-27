@@ -6,6 +6,9 @@ OTHER: !Player.isVirgin()
 
 
     SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         Actor2 = getSpecific(Dating)
         "<Actor.name> and I are good friends, enough that <Actor.he_or_she> has become very comfortable with personal revelations recently ..."
         "The biggest reveal is of course that <Actor.he_or_she> is still a virgin!"
@@ -31,6 +34,9 @@ OTHER: !Player.isVirgin()
                 Actor:attractiontoplayer += 5
                 Actor:rapportwithplayer += 5
                 passTime(1, 2.50)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
                 
             Else
             
@@ -49,6 +55,9 @@ OTHER: !Player.isVirgin()
                 Sex(Actor2, Actor)
                 Actor:masochist -= 1
                 passTime(1, 1.50)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
                 
             Else
             

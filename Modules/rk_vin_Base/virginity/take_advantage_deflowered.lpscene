@@ -6,6 +6,8 @@ OTHER: !isWithCompanion()
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         SecondScreen(Actor)
         Actor.dress()
         Actor.show()
@@ -29,11 +31,16 @@ OTHER: !isWithCompanion()
                 Actor:attractiontoplayer += 5
                 Actor:rapportwithplayer += 5
                 passTime(1, 2.50)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
             
             ElseIf Actor.isInterestedIn(Player)
         
                 Actor(Sad)::"Not now, I'm not horny as you!"
                 Player(Serene)::"Don't be sad, I'll wait!"
+                Actor:attractiontoplayer += 1
+                Actor:rapportwithplayer += 1
             
             Else
         
@@ -41,20 +48,24 @@ OTHER: !isWithCompanion()
                 Player(Sad)::"Oh well, we'll see!"
                 Actor:attractiontoplayer -= 1
                 Actor:rapportwithplayer -= 1
+                mood -= 2
             
             EndIf
     
         ElseIf 1
 
-            Player:: "I'm horny. Come over. I want to fuck you!"
-            Player:: "What's taking you so long? Don't pretend like you don't want it."
-            Player:: "I know you fantasize about me every day. I'm your first after all."
+            Player(Flirty):: "I'm horny. Come over. I want to fuck you!"
+            Player(Furious):: "What's taking you so long? Don't pretend like you don't want it."
+            Player(Evil):: "I know you fantasize about me every day. I'm your first after all."
             SecondScreen()
             Actor.show()
             "As expected, <Actor.name> couldn't help but bear the humiliation and come to satisfy <Actor.his_or_her> 'special someone', aka me."
             masochist -= 1
             Sex(Player, Actor)
             passTime(1, 1.50)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
         
         Endif
         

@@ -7,6 +7,8 @@ OTHER: none
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         If AmNotVirgin >= 1 && !isWithCompanion()
     
             SceneStart()
@@ -55,6 +57,9 @@ OTHER: none
                     "Needless to say, the opportunity to pop someone's cherry doesn't come up too often in someone's lifetime so <Actor.name> jumped at the opportunity."
                     Sex(Player, Actor)
                     AmNotVirgin => 1
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
                     
                 Else
                     "Unfortunatly, <Actor.name> turned down my offer ..."
@@ -83,6 +88,9 @@ OTHER: none
                     SecondScreen()
                     Sex(Player, Actor)
                     AmNotVirgin => 1
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
                     
                 Endif
             
@@ -94,5 +102,5 @@ OTHER: none
             
         Endif
         
-    SceneEnd()
+    SceneEnd() // Scene improved by Raddeck
     //timeout(200, get_rid_virginity)

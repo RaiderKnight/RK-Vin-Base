@@ -6,6 +6,8 @@ OTHER: none
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         Actor.show()
         Actor.dress()
         
@@ -23,10 +25,15 @@ OTHER: none
                 "We undress right away and start to caress each other sensually"
                 Sex(Player, Actor)
                 Actor(Happy)::"Ok that was more fun than I thought, I was a little scared of sex before now, to be honest ..."
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
                 
             Else
             
                 Actor(Angry):: "<Player.name>, I told you I'm not ready ... Is a relationship nothing more than sex for you?"
+                Actor:attractiontoplayer -= Random(0, 2)
+                Actor:attractiontoplayer -= Random(0, 2)
                 
             Endif
             

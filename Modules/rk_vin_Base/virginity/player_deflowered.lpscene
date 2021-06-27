@@ -5,6 +5,9 @@ WHO: none
 OTHER: none
 
     SceneStart()
+        
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         Actor = getSpecific(PassedOn)
         Actor.dress()
         Actor.show()
@@ -38,6 +41,9 @@ OTHER: none
                     Actor:attractiontoplayer += 15
                     Actor:rapportwithplayer += 15
                     passTime(1, 2.50)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
                 
                 EndIf
             
@@ -59,9 +65,11 @@ OTHER: none
                 Actor(Serene):: "And it showed! You were like a dead fish the whole time! You clearly need more practice!"
                 Player(Sad):: "Ok, so you're telling me you're a sex expert now ... get lost!"
                 "I'm not happy at all with <Actor.his_or_her> insulting response to such a personal revelation. Maybe I'm regretting giving up my virginity to <Actor.him_or_her> already."
+                mood -= 10
+                arousal -= 1
             
             Endif
             
         Endif
     
-    SceneEnd()
+    SceneEnd() // Scene improved by Raddeck
