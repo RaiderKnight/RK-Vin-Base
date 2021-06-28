@@ -9,13 +9,17 @@ OTHER: none
         "Information page for extra player stats"
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        personal_pics = Player.getActorVar(rk_VB_personal_pics)
+        personal_vids = Player.getActorVar(rk_VB_personal_vids)
+        KillCount = Player.getActorVar(rk_VB_KillCount) // as murderer
+        RubCWAPITM = Player.getActorVar(RubCWAPITM)
         
         If HungerEnable > 0
             
             If Hunger > 100
             
                 Totalpoopenergy = Hunger - 100
-                "You reach maximum of hunger level, maximum is 100. All excess food have been poop away... transform into energy..."
+                "You have reached the maximum level for hunger, maximum is 100. All excess food have been poop away... and transformed into energy..."
                 Player.setActorVar(rk_VB_Hunger, 100)
                 energy += Totalpoopenergy
             
@@ -25,9 +29,13 @@ OTHER: none
                 
             EndIf
             
-            "Hunger level | <Hunger>/100"
-            
         EndIf
-
         
+        0::"Your hunger level is <Hunger>/100"
+        0::"You have <personal_pics> homemade photo(s)"
+        0::"You have <personal_vids> homemade video(s)"
+        0::"You murdered <KillCount> people"
+        0::"You have <RubCWAPITM> Rubber chicken with a pulley"
+        99::"Back to the game!"
+
     SceneEnd()

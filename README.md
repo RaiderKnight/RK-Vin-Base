@@ -3,7 +3,7 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Version: 0.0.5</p>
+<p>Version: 0.0.6</p>
 <br>
 <br>
 <p><strong>Rework In Progress (WIP)</strong></p>
@@ -45,6 +45,7 @@
 <p>- rk_Home_Inventories</p>
 <p>- rk_Personal_Inventories</p>
 <p>- rk_ShopAddons</p>
+<p>- nn_HomeExpander</p>
 <br>
 <h3>Module conflict</h3>
 <p>None</p>
