@@ -1,4 +1,4 @@
-<h1>rk_vin_Base a remake of élifePlay</h1>
+<h1>rk_vin_Base a remake of LifePlay</h1>
 <p>Total remake of the game LifePlay</p>
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
