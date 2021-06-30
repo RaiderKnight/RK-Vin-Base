@@ -5,34 +5,40 @@ WHO: Friend = getRelative(Sibling, StepSibling, Cousin); If Friend:rapportwithpl
 OTHER: !IsWithCompanion() && Random(0, 100) < fitness
 
     sceneStart()
-    Friend.dress()
-
-    "My phone rang ... It's my <Friend.relationship>, <Friend.name>, calling."
-    secondScreen(Friend)
-    Friend.show(2)
-    Friend(Happy):: "Hey <Player.name>, do you want to hit the gym today?"
-    "Go to the gym with <Friend.name>?"
-    0:: "Yes"
-    1:: "No"
-
-    If 0
-        Player(Happy):: "Of course. I'll see you in a bit!"
-        Friend(Happy):: "See you soon!"
-        secondScreen()
-        Loc = findNearbyBuilding(sports_centre)
-        moveTo(Loc)        
-        Friend.show()
+    
         Friend.dress()
-        Player.dress()
-        "We headed to the gym together and had a good workout."
-        Friend:rapportwithplayer += Random(0, 2)
-        fitness += Random(0, 0.25)
-        energy -= Random(0, 25)
-        mood += Random(0, 10)
-    Else
-        Player(Sad):: "Sorry, I'm busy today. Maybe next time ..."
-        Friend(Sad):: "Oh? That's a shame. I'll see you around then."
-    Endif
+    
+        "My phone rang ... It's my <Friend.relationship>, <Friend.name>, calling."
+        secondScreen(Friend)
+        Friend.show(2)
+        Friend(Happy):: "Hey <Player.name>, do you want to hit the gym today?"
+        "Go to the gym with <Friend.name>?"
+        0:: "Yes"
+        1:: "No"
+    
+        If 0
+        
+            Player(Happy):: "Of course. I'll see you in a bit!"
+            mood += 1
+            Friend(Happy):: "See you soon!"
+            secondScreen()
+            Loc = findNearbyBuilding(sports_centre)
+            moveTo(Loc)        
+            Friend.show()
+            Friend.dress()
+            Player.dress()
+            "We headed to the gym together and had a good workout."
+            Friend:rapportwithplayer += Random(0, 2)
+            fitness += Random(0, 0.25)
+            energy -= Random(0, 25)
+            mood += Random(0, 9)
+            
+        Else
+        
+            Player(Sad):: "Sorry, I'm busy today. Maybe next time ..."
+            Friend(Sad):: "Oh? That's a shame. I'll see you around then."
+            
+        Endif
 
-    sceneEnd()
-    timeout(48, family_invite_workout)
+    sceneEnd()  // Scene improved by Raddeck
+    timeout(548, family_invite_workout)

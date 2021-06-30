@@ -71,13 +71,38 @@ OTHER: none
             
             ElseIf 30
 
-                Player.animate(browse)
-                "I decided to play a video game..."
-                intelligence += 0.2
-                mood += 3
-                energy -= 1
-                If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                Random
+                    Game1 = "Card games"
+                    Game1 = "MahJong"
+                EndRandom
+                "What I should do?"
+                0::"Play LifePlay"
+                30::"Play a video game"
+                
+                If 0
+                
+                    Player.animate(browse)
+                    "I decided to play LifePlay on my pc..."
+                    intelligence += 0.2
+                    mood += 3
+                    arousal += 3
+                    energy -= 1
+                    If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    
+                ElseIf 
+                ElseIf 
+                ElseIf 30
+                    Player.animate(browse)
+                    "I decided to play <Game1> on my pc..."
+                    intelligence += 0.2
+                    mood += 3
+                    energy -= 1
+                    If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                
                 EndIf
                 passTime(0.9, 2)
                 

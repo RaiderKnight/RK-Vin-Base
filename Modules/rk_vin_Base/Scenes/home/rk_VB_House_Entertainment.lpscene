@@ -27,8 +27,9 @@ OTHER: none
         
             "What should I do?"
             2::"Call a hooker"
-            3:: stock_movie > 0 && WHERE != prison :: "Watch a movie"
-            4:: WHERE != prison :: "Watch sport"
+            3:: stock_movie > 0 :: "Watch a movie"
+            35:: stock_movie > 0 :: "Watch a porn movie"
+            4::"Watch sport"
             5::"Watch TV"
             99:: "Go back!"
             
@@ -48,6 +49,20 @@ OTHER: none
                     Player.modifyActorVar(rk_VB_Hunger, -1)
                 EndIf
                 passTime(1, 1.5)
+            
+            ElseIf 35
+                
+                Player.animate(sofawatch)
+                "I decided to watch a porn movie..."
+                stock_movie -= 1
+                mood += 3
+                perversion += 1
+                arousal += 5
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                passTime(1, 1.5)
 
             ElseIf 4
                 
@@ -56,7 +71,6 @@ OTHER: none
                 fitness += 0.01
                 mood += 1
                 intelligence += 0.01
-                energy -= 1
                 
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -1)

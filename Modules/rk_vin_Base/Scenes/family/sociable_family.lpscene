@@ -5,25 +5,48 @@ WHO: Dating = getRelative(); If Dating:rapportwithplayer > 0 && Dating:interpers
 OTHER: interpersonal < Random(0, 60)
 
     SceneStart()
-    secondScreenIfHidden(Dating)
-    Dating.dress()
-    Dating.show(2)
-    "My <Dating.relationship> is far better-spoken and more outgoing than me and is rather comfortable in social situations. I sometimes feel like the socially awkward one in the family."
-    0:: "Ask my <Dating.relationship> for help"
-    1:: "Do nothing"
-
-    If 0
-        If Random(0, 50) < Dating:rapportwithplayer
-            "My <Dating.relationship> agreed to help me become more confident socially. <Dating.He_or_She> took me with <Dating.him_or_her> to many social events and taught me many party tricks."
-            interpersonal += Random(0, 1)
-            Dating:rapportwithplayer += Random(0, 2)
+    
+        secondScreenIfHidden(Dating)
+        Dating.dress()
+        Dating.show(2)
+        "My <Dating.relationship> is far better-spoken and more outgoing than me and is rather comfortable in social situations. I sometimes feel like the socially awkward one in the family."
+        0:: "Ask my <Dating.relationship> for help"
+        1:: "Do nothing"
+    
+        If 0
+        
+            If Random(0, 50) < Dating:rapportwithplayer
+            
+                "My <Dating.relationship> agreed to help me become more confident socially. <Dating.He_or_She> took me with <Dating.him_or_her> to many social events and taught me many party tricks."
+                interpersonal += Random(0, 1)
+                Dating:rapportwithplayer += Random(0, 2)
+                
+                // Start edit Ravenger6660
+                Dating(Curious):: "There is a party we could go to if your interested?"
+                0:: "Lets go."
+                1:: "We should practice first"
+            
+                If 0
+                
+                    Dating.StartDate()
+                    followUp(Ravenger_VB_Interpersonal_House_Party)
+                    
+                Endif
+                // end edit Ravenger6660
+                
+            Else
+            
+                "Although my <Dating.relationship> promised to help me, <Dating.he_or_she> ended up being too busy to really spend time as my social mentor."
+                mood -= 2
+                
+            Endif
+            
         Else
-            "Although my <Dating.relationship> promised to help me, <Dating.he_or_she> ended up being too busy to really spend time as my social mentor."
+        
+            "It doesn't matter. I'm proud of who I am and my family should be too."
+            Dating:rapportwithplayer -= Random(0, 1)
+            
         Endif
-    Else
-        "It doesn't matter. I'm proud of who I am and my family should be too."
-        Dating:rapportwithplayer -= Random(0, 1)
-    Endif
-
-    timeout(200, sociable_family)
-    SceneEnd()
+    
+        // timeout(200, sociable_family)
+    SceneEnd()  // Scene improved by Raddeck - Ravenger6660
