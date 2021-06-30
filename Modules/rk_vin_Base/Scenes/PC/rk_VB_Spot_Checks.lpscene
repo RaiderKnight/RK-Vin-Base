@@ -1,24 +1,159 @@
-WHAT: none
+WHAT: all
 WHERE: all
 WHEN: 0 - 24
 WHO: none
 OTHER: 5 < Random(1, 10) || money < 10 || energy < 10
 
 
-        Hunger = Player.getActorVar(rk_VB_Hunger)
-        HungerEnable = rk_VB_EnableHunger.getGlobal()
+    Hunger = Player.getActorVar(rk_VB_Hunger)
+    HungerEnable = rk_VB_EnableHunger.getGlobal()
         
-        If HungerEnable > 0 
+    If HungerEnable > 0 
         
-            If Hunger <= 0
+        If Hunger <= 0
             
-                followUp(rk_VB_Spot_Checks_Result)
+            followUp(rk_VB_Spot_Checks_Result)
+                
+        Else
+                
+            Player.modifyActorVar(rk_VB_Hunger, -0.05)
+                
+        EndIf
+             
+    EndIf
+        
+    // Start edit DBCaf
+    If Player.isNaked() && !isWithCompanion() && Random(10, 50) > karma && WHERE !=home && WHERE !=work && WHERE !=hotel && WHERE !=university:school && WHERE !=university:work 
+
+    sceneStart()
+    
+        Actor = generatePersonTemporary()
+        While !Actor.isInterestedIn(Player)
+            Actor = generatePersonTemporary()
+        endWhile
+        
+        Actor2 = generatePersonTemporary()
+        While !Actor2.isSameGender(Actor) || !Actor2.isInterestedIn(Player)
+            Actor2 = generatePersonTemporary()
+        endWhile
+        Actor.dress()
+        Actor.show(2)
+        Actor2.dress()
+        Actor2.show(3)
+        Actor(Evil):: "It looks like you don't know what to do with your body, do you? Let us take care of yourself!"
+        Actor2(Evil):: "Hahaha!"
+        Player(Scared):: "Oh my god!"
+        Rapist = 0
+        Rapist += Actor:martial
+        Rapist += Actor2:martial
+        Odds = martial - Rapist
+        "It looks like they're going to rape me! What should I do?"
+        0:: "Try to fight them.<Odds>"
+        1:: "Try to flee"
+        2:: "Let it happen"
+        
+        If 0
+        
+            Player(Furious):: "You messed with the wrong <Player.guy_or_girl>! Take this."
+            Actor(Furious):: "You dare sucker-punch me? I'll teach you a lesson."
+            
+            If Rapist < martial
+                Player(Furious):: "Haha!"
+                Actor(Shocked):: "Ouch!"
+                Actor2(Shocked):: "Ouch!"
+                Player(Angry):: "This will teach you a lesson!"
+                Actor.hide()
+                Actor2.hide()
+        
+            Else
+            
+                Player(Tired):: "Ouch!"
+                Actor(Evil):: "Haha!"
+                Actor2(Evil):: "You really thought you could beat two people like that? Sucker!"
+                Actor.strip()
+                Filter(Aggressive)
+                TalkNonConsensual()
+                SexNoAffair(Actor, Player)
+                
+                Actor.hide()
+                Actor2.strip()
+                Actor2.show(4)
+                Actor2(Evil):: "Now its my turn!"
+        
+                Filter(Aggressive)
+                TalkNonConsensual()
+                SexNoAffair(Actor2, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+        
+                If Random(50, 120) > masochist
+                    mood -= Random(20, 40)
+                Endif
+                
+            Endif
+        
+        Elseif 1
+        
+            Run = 0
+            Run += Actor:fitness
+            Run += Actor2:fitness
+            Run /= 2 // average speed of rapists.
+            
+            If Run < fitness
+                Actor.hide()
+                Actor2.hide()
+                "I successfully ran away. Looks like I'm safe now."
+                Player(Tired): "Uff!"
                 
             Else
-                
-                Player.modifyActorVar(rk_VB_Hunger, -0.05)
-                
-            EndIf
-             
-        EndIf
+                "Oh, no! They were able to catch me!"
+                Player(Scared):: "Nooo! Please someone help me!"
+                Actor(Evil):: "Haha!"
+                Actor2(Evil):: "You are our toy now!"
+                Actor.strip()
+                Filter(Aggressive)
+                TalkNonConsensual()
+                SexNoAffair(Actor, Player)
+                Actor.hide()
+                Actor2.strip()
+                Actor2.show(4)
+                Actor2(Evil):: "Now its my turn!"
         
+                Filter(Aggressive)
+                TalkNonConsensual()
+                SexNoAffair(Actor2, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+                If Random(50, 120) > masochist
+                    mood -= Random(20, 40)
+                Endif
+                
+            Endif
+            
+        Else
+            "I was outnumbered and outpowered, there was no point in fighting"
+            Actor.strip()
+            Filter(Aggressive)
+            TalkNonConsensual()
+            SexNoAffair(Actor, Player)
+            Actor.hide()
+            Actor2.strip()
+            Actor2.show(4)
+            Actor2(Evil):: "Now its my turn!"
+        
+            Filter(Aggressive)
+            TalkNonConsensual()
+            SexNoAffair(Actor2, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -3)
+            EndIf
+            If Random(50, 120) > masochist
+                mood -= Random(20, 40)
+            Endif
+        
+        Endif
+        
+        passTime(0.5, 1.0) 
+    sceneEnd() // End edit DBCaf
