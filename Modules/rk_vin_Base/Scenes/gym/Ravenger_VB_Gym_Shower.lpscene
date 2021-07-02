@@ -1,0 +1,180 @@
+WHAT: all,
+WHERE: sports_centre
+WHEN: 0 - 24
+WHO: none
+OTHER: !isWithCompanion() && Random(0, 50) < perversion
+
+    
+    SceneStart()
+        
+        Hunger = Player.getActorVar(rk_VB_Hunger) // Edit Raddeck
+        HungerEnable = rk_VB_EnableHunger.getGlobal() // Edit Raddeck
+        Actor = generatePersonTemporary()
+        "I can hear water running in the bathroom: Someone must be taking shower ..."
+        0:: "Peep on <Actor.him_or_her>"
+        1:: "Better not"
+    
+        If 0
+        
+            SneakGame()
+            If Random(0, 150) < Actor:perversion + sneak
+            
+                "Fortunately for me, <Actor.he_or_she> didn't lock the door, allowing me to sneak behind it to get a decent view of <Actor.him_or_her> in all <Actor.his_or_her> glory."
+                Actor.strip()
+                Actor.show(2)
+                setBackground(shower)
+                Hot = 0
+                Hot += Actor:perversion
+                Hot += Actor:arousal
+                
+                If Hot > 100
+                    Filter(solo)
+                    Actor:perversion += Random(1, 5)
+                    arousal += Random(10, 30)
+                    Actor:arousal += Random(10, 30)
+                Else
+                    Filter(Shower)
+                Endif   
+                
+                arousal += Random(0, 20)
+                Sex(Actor)
+                Actor.show(2)
+                Player.show(0)
+                Hot = 0
+                Hot += Actor:perversion
+                Hot += Actor:arousal
+                
+                If Hot > 100
+                    "Wow <Actor.he_or_she> watching masturbate got me all horny. Maybe I can just join <Actor.him_or_her>?"
+                    0:: "Join in"
+                    1:: "Leave"
+       
+                    If 0
+                    
+                        Player.strip()
+                        Player(Flirty):: "Damn it baby, you got me all horny. Mind if I join you in there?"            
+                        Hot += Actor:attractiontoplayer
+                
+                        If Random(150, 250) < Hot
+                            Sex(Player, Actor)
+                            Actor:perversion += Random(0, 5)
+                            Actor:attractiontoplayer += Random(0, 5)
+                            If HungerEnable > 0 // Edit Raddeck
+                                Player.modifyActorVar(rk_VB_Hunger, -1) // Edit Raddeck
+                            EndIf // Edit Raddeck
+
+                        Else
+                        
+                            Actor(Angry):: "What are you doing here, peeping Tom? And what's up with that perverted proposal? Get out!"
+                            Actor:attractiontoplayer -= Random(0, 10)
+
+                        Endif
+
+                    Else
+                    
+                        "I better not push my luck."
+                        If [Actor:intelligence + Random(0, 20)] > sneak
+                        
+                            If !Actor.ismale()
+                                Actor.dress(Towel_1_F)
+                            Endif
+                            
+                            "How ever later my <Actor.name> to confront me about what I saw." 
+                            Actor(Angry):: "I know you were outside my room."
+                            Love = 0
+                            Love += Actor:attractiontoplayer
+                            Love += Actor:perversion
+                            Love -= Actor:masochist
+                
+                            If Random(125, 225) < Love && Actor.isInterestedIn(Player)
+                            
+                                Actor(Flirty):: "You know what. I think I'm going to have some fun with you."
+                                Sex(Player, Actor)
+                                Actor:attractiontoplayer += Random(0, 50)
+                                If HungerEnable > 0 // Edit Raddeck
+                                    Player.modifyActorVar(rk_VB_Hunger, -1) // Edit Raddeck
+                                EndIf // Edit Raddeck
+                                
+                            Else
+                            
+                                Actor(Angry):: "I better not catch you again!"
+                                Actor:rapportwithplayer -= Random(0, 9)
+                                
+                            Endif
+                
+                        Endif
+
+                    Endif
+                
+                Else
+                
+                    "Wow that was hot watching <Actor.him_or_her>. Maybe I can just join <Actor.him_or_her>?"
+                    0:: "Join in"
+                    1:: "Leave"
+       
+                    If 0
+                    
+                        Player.strip()
+                        Player(Flirty):: "Damn it baby, you got me all horny. Mind if I join you in there?"            
+                        Love = 0
+                        Love += Actor:attractiontoplayer
+                        Love += Actor:perversion
+                
+                        If Random(100, 150) < Love
+                        
+                            Sex(Player, Actor)
+                            Actor:perversion += Random(0, 5)
+                            Actor:attractiontoplayer += Random(0, 5)
+                            If HungerEnable > 0 // Edit Raddeck
+                                Player.modifyActorVar(rk_VB_Hunger, -1) // Edit Raddeck
+                            EndIf // Edit Raddeck
+
+                        Else
+                            Actor(Angry):: "What are you doing here, peeping Tom? And what's up with that perverted proposal? Get out!"
+                            Actor:attractiontoplayer -= Random(0, 10)
+
+                        Endif
+
+                    Else
+                        "I better not push my luck."
+                        If [Actor:intelligence + Random(0, 20)] > sneak
+                        
+                            If !Actor.ismale()
+                                Actor.dress(Towel_1_F)
+                            Endif
+                            
+                            "How ever later my <Actor.name> to confront me about what I saw." 
+                            Actor(Angry):: "I know you were outside my room."
+                            Love = 0
+                            Love += Actor:attractiontoplayer
+                            Love += Actor:perversion
+                            Love -= Actor:masochist
+                
+                            If Random(150, 250) < Love && Actor.isInterestedIn(Player)
+                            
+                                Actor(Flirty):: "You know what. I think I'm going to have some fun with you."
+                                Sex(Player, Actor)
+                                Actor:attractiontoplayer += Random(0, 50)
+                                If HungerEnable > 0 // Edit Raddeck
+                                    Player.modifyActorVar(rk_VB_Hunger, -1) // Edit Raddeck
+                                EndIf // Edit Raddeck
+                            Else
+                            
+                                Actor(Angry):: "I better not catch you again!"
+                                Actor:rapportwithplayer -= Random(0, 9)
+                                
+                            Endif
+                
+                        Endif
+
+                    Endif
+                Endif
+            Else
+                "Damn I think they heard me. [run]"
+                sneak -= 1 // Edit Raddeck
+            Endif
+            
+        Endif
+        
+    SceneEnd()
+    timeout(148, Ravenger_VB_Gym_Shower) // Edited by Raddeck
