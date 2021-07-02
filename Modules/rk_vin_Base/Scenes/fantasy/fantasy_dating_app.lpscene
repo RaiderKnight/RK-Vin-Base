@@ -6,7 +6,7 @@ OTHER: none
 
     SceneStart()
     
-        If isWithCompanion() || isPlayerMarried() || Player.isDating()
+        If isWithCompanion() || isPlayerMarried() || isDating()
         
             "I'm not alone... it's better to do this later...."
             SceneEnd()
@@ -23,8 +23,11 @@ OTHER: none
             99:: "No preference"
             
             "Alright, let's get swiping"
+            
         Else
+        
             choice = 99
+            
         Endif
         
         "After some time swiping right on those I like, I finally got a match."
@@ -44,6 +47,7 @@ OTHER: none
             Actor.randomizeHairs()
             Actor.randomizeSexy()
         Endif
+        
         Actor.dress()
         secondScreen(Actor)
         Actor.show()
@@ -60,4 +64,5 @@ OTHER: none
             Actor.show()
             "Hopefully it will be a good experience"
         Endif
+        
     SceneEnd() // Improved by Raddeck
