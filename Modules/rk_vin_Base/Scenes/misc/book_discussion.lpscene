@@ -5,35 +5,55 @@ WHO: none
 OTHER: Random(0, 200) < intelligence
 
     SceneStart()
-    Actor = generatePerson()
-    Actor.dress()
-    Actor.show(2)
-    Actor(Excited):: "This book is such a masterpiece ..."
-    0:: "Play it safe"
-    1:: "Show off my book knowledge"
     
-    If 0
-        Player(Happy):: "Yes it is a good book indeed ..."
-        "My knowledge of books leaves a lot to be desired and I know it. No point trying to sound sophisticated here ..."
-    Else
-        "I tried my best to show off extensive reading to engage in a intelligent discussion with <Actor.name>."
-        If Random(0, 100) < intelligence
-            Actor(Happy):: "It's rare nowadays to meet someone with the same appreciation of literature. Let's exchange numbers."
-            0:: "Yes"
-            1:: "No"
+        Actor = generatePerson()
+        Actor.dress()
+        Actor.show(2)
+        Actor(Excited):: "This book is such a masterpiece ..."
+        0:: "Play it safe"
+        1:: "Show off my book knowledge"
+        
+        If 0
+        
+            Player(Happy):: "Yes it is a good book indeed ..."
+            "My knowledge of books leaves a lot to be desired and I know it. No point trying to sound sophisticated here ..."
+            Actor:attractiontoplayer += Random(0, 1)
+            Actor:rapportwithplayer += Random(0, 1)
             
-            If 0
-                Player(Happy):: "Of course, I'd love to exchange numbers."
-                exchangeContact(Actor)
-            Else
-                Player(Sad):: "Sorry, but I don't normally exchange numbers with someone I just met."
-            Endif
         Else
-            "Unfortunately, my knowledge of literature really wasn't deep enough to hold an intelligent conversation about it. From <Actor.his_or_her> facial expression, I could tell that <Actor.he_or_she> saw right through me as a dumb-ass."
-            Actor:attractiontoplayer -= Random(0, 20)
-            Actor:rapportwithplayer -= Random(0, 20)
+        
+            "I tried my best to show off extensive reading to engage in a intelligent discussion with <Actor.name>."
+            
+            If Random(0, 100) < intelligence
+            
+                Actor(Happy):: "It's rare nowadays to meet someone with the same appreciation of literature. Let's exchange numbers."
+                0:: "Yes"
+                1:: "No"
+                
+                If 0
+                
+                    Player(Happy):: "Of course, I'd love to exchange numbers."
+                    exchangeContact(Actor)
+                    Actor:attractiontoplayer += Random(0, 3)
+                    Actor:rapportwithplayer += Random(0, 3)
+                    
+                Else
+                
+                    Player(Sad):: "Sorry, but I don't normally exchange numbers with someone I just met."
+                    Actor:attractiontoplayer -= Random(0, 2)
+                    Actor:rapportwithplayer -= Random(0, 2)
+                    
+                Endif
+                
+            Else
+            
+                "Unfortunately, my knowledge of literature really wasn't deep enough to hold an intelligent conversation about it. From <Actor.his_or_her> facial expression, I could tell that <Actor.he_or_she> saw right through me as a dumb-ass."
+                Actor:attractiontoplayer -= Random(0, 20)
+                Actor:rapportwithplayer -= Random(0, 20)
+                
+            Endif
+            
         Endif
-    Endif
     
-    SceneEnd()
-    timeout(296, book_discussion)
+    SceneEnd() // Improved by Raddeck
+    timeout(1400, book_discussion)

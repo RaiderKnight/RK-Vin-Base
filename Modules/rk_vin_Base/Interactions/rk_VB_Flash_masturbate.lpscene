@@ -1,0 +1,75 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+SceneStart()
+
+    Hunger = Player.getActorVar(rk_VB_Hunger)
+    HungerEnable = rk_VB_EnableHunger.getGlobal()
+    Player.show()
+    "I quickly flashed <Actor.name> my private parts and started masturbate in front of <Actor.him_or_her>."
+    Actor.show()
+    Player.moveToPersonStand(Actor, 0)
+    perversion += 1
+    
+    Player.strip()
+    filter(solo)
+    Sex(Player)
+    
+    If Random(100, 200) < Actor:attractiontoplayer + perversion
+        Actor:attractiontoplayer += 1
+        Actor:perversion += 1
+        Actor(Flirty):: "I must say that you know how to use your hands. Want to show me what you can do with it on me?"
+        0:: "My pleasure!"
+        1:: "Actually, I don't want to fuck, I just wanted you to watch..."
+        2:: "I run away!"
+        
+        If 0
+            
+            "We strip righ away and started having sex right here, right now!"
+            Actor.strip()
+            Actor.show()
+            Player.strip()
+            Player.show()
+            Sex(Player, Actor)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+        
+        Elseif 1
+        
+            "So I continue to masturbate in front of <Actor.him_or_her> with more passion!"
+            Actor.dress()
+            Actor.show()
+            Player.strip()
+            Player.show()
+            filter(solo)
+            Sex(Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -0.25)
+            EndIf
+            
+        Else
+        
+            Actor(Shocked):: "What the fuck was that! Keep running Forest...! Next time I'll call the cops!"
+            Actor:attractiontoplayer -= 3
+
+        Endif
+    Elseif Actor.hadSex() || Random(40, 100) < Actor:attractiontoplayer + perversion
+    
+        "<Actor.name> didn't say a word but smiled at me. <Actor.He_or_She> definitely enjoyed the show."
+        Actor:attractiontoplayer += 1
+        Actor:perversion += 1
+        
+    Else
+    
+        Actor(Angry):: "What the fuck are you doing! That's so fucking gross! Cover up you pervert!"
+        Actor:attractiontoplayer -= 5
+        If WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != stripclub && WHERE != prison
+            followUp(public_indecency)
+        Endif
+        
+    Endif
+SceneEnd()

@@ -5,36 +5,134 @@ WHO: none
 OTHER: isModEnabled(vin_NonConsensual) && !Player.isMale()
 
     SceneStart()
-    "You were invited to a nude drawing class by a famous art school."
-    Player:: "I don’t know what to expect, but that could be a great experience! It’s only be naked, it’s not a big deal…"
-    0:: "Go"
-    1:: "No"
     
-    If 0
-        setBackground(university)
-        Actor = generatePersonTemporary()
-        While !Actor.isMale()
-            Actor = generatePersonTemporary()
-        Endwhile
-        Actor.dress()
-        Actor.show()
-        Actor:: "Thank you for coming, <Player.name>. My name is <Actor.na,e> and I am the teacher for this class."
-        Actor:: "Your job is very simple: You only have to remove all your clothes and make some poses, standing still while the students stares at you and draw. What you think?"
-        0:: "Yes"
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        "I just got an invitation from a famous art school to be a model at a nude drawing class."
+        Player(Anxious):: "I don’t know what to expect, but that could be a great experience! It’s only be naked, it’s not a big deal…"
+        0:: "Go"
         1:: "No"
         
         If 0
-            Actor:: "Great, let’s begin then…"
-            "The class begins and all the students stares at me, seeing my entire body naked while they draw. The teacher is starring at me in a creep way and is touching me, saying that he need to ajust my pose, but he is going in my private parts too…"
-            Actor:: "Great, class. Knowing how to draw a gorgeous body, the next subject is human reproduction. All great artists need to learn that."
-            Player:: "Wait, what he means by…"
-            Actor.strip()
-            "Suddenly the teacher strips down, then he grabs me and insert his d*ck inside me, in front of everyone without my consent."
-            Player:: "No! wait…"
-            Sex(Actor, Player)
-            Actor:: "Uff…That is all, class. I hope you don’t missed any pose. Don’t forget the homework for tomorrow… Thanks again, lady." 
-            "Everyone leaves while I’m confused and scared by what just happened. I hope I didn’t get pregnant…"
+        
+            setBackground(university)
+            Actor = generatePersonTemporary()
+            While !Actor.isMale()
+                Actor = generatePersonTemporary()
+            Endwhile
+            Actor.dress()
+            Actor.show()
+            Actor(Happy):: "Thank you for coming, <Player.name>. My name is <Actor.na,e> and I am the teacher for this class."
+            Actor(Serene):: "Your job is very simple: You only have to remove all your clothes and make some poses, standing still while the students stares at you and draw. What you think?"
+            0:: "Yes"
+            1:: "No"
+            
+            If 0
+            
+                GetFucked = false
+                Actor(Serene):: "Great, let’s begin then…"
+                Player.strip()
+                "The class begins and all the students stares at me, seeing my entire body naked while they draw. The teacher is starring at me in a creep way and is touching me, saying that he need to ajust my pose, but he is going in my private parts too…"
+                
+                If Actor.isInterestedIn(Player) && Actor:arousal > 25 && Actor:perversion > 50
+                    Actor(Happy):: "Great, class. Knowing how to draw a gorgeous body, the next subject is human reproduction. All great artists need to learn that."
+                    Player(Surprised):: "Wait, what do you means by…"
+                    
+                    If arousal > 25 && perversion > 70
+                    
+                        "Okay, the party is started...."
+                        Actor.strip()
+                        "Suddenly the teacher strips down, then he grabs me and insert his d*ck inside me, in front of everyone without my consent."
+                        Sex(Actor, Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        perversion += 2
+                        GetFucked = true
+
+                    Else
+                    
+                        "Do I resist?"
+                        0::"No"
+                        1::"Yes"
+                        
+                        If 0
+                    
+                            "Okay, the party is started...."
+                            Actor.strip()
+                            "Suddenly the teacher strips down, then he grabs me and insert his d*ck inside me, in front of everyone without my consent."
+                            Sex(Actor, Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
+                            perversion += 2
+                            GetFucked = true
+                            
+                        Else
+                        
+                            Player(Shocked):: "No! wait… Are you kidding, if you think I will let you do that, you are dreaming?"
+                            Actor(Wink)::"Sorry miss, that's a bad joke!"
+                            
+                        Endif
+                        
+                    Endif
+                    
+                Endif
+
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                
+                Actor(Happy):: "Ok…That is all, class. I hope you don’t missed any pose. Don’t forget the homework for tomorrow… Thanks again, lady."
+                
+                If GetFucked
+                
+                    "Do I swindle the professor because he fucked me?"
+                    0::"Yes"
+                    1::"No"
+                    
+                    If 0
+                    
+                        CashGives = Random(500, 5000)
+                        CashGives_loc = CashGives.convertToLocalCurrency()
+                        "I wait until everyone leaves the class and ask the teacher…"
+                        Player(Wink)::"Well, since everyone is gone my little comic, it's time to pay your debt my dear friend!"
+                        Actor(Wink)::"What are you talking about !"
+                        Player(Wink)::"Should I call the police to remind you of our little unconventional fuck or would you rather give me <CashGives_loc> in exchange for shutting my mouth up."
+                        
+                        If Actor:masochist > masochist
+                        
+                            Actor(Angry)::"Go on, call the police and I will break your neck right here, bitch!"
+                            Actor(Wink)::"You had plenty of time to stop me, but you didn't! So it's not my problem if didn't like the fuck!"
+                            Actor(Angry)::"Get the fuck out!"
+                            masochist += 2
+                        
+                        Elseif Actor:masochist < masochist
+                        
+                            Actor(Angry)::"Ok, no choice to pay... here's your <CashGives_loc>."
+                            money += CashGives
+                            masochist -= 2
+                            mood += 1
+                        
+                        Else
+                        
+                            Actor(Angry)::"Bitch, you're just a profiteer, fuck you!"
+                            Player(Wink)::"All right then,...I call the police..."
+                            Player.animate(call)
+                            "And I call the cops who arrest <Dating.him_or_her> right away at <Dating.his_or_her> house!"
+                            mood += 5
+                            masochist -= 1
+                            Actor.hide()
+                        
+                        Endif
+                        
+                    Endif
+                    
+                Endif
+            
+            Endif
+            
         Endif
-    Endif
-    SceneEnd()
-    timeout(1000, nude_draw_cms)
+        
+    SceneEnd() // Improved by Raddeck
+    timeout(2000, nude_draw_cms)
