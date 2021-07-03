@@ -1,0 +1,280 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+SceneStart()
+    
+    stock_BTwin = Player.getActorVar(stock_BTwin)
+    stock_Rocky = Player.getActorVar(stock_Rocky)
+    stock_Defy = Player.getActorVar(stock_Defy)
+    stock_SystemSix = Player.getActorVar(stock_SystemSix)
+    stock_Look = Player.getActorVar(stock_Look)
+    stock_Specialized = Player.getActorVar(stock_Specialized)
+    stock_Litespeed = Player.getActorVar(stock_Litespeed)
+    stock_Trek = Player.getActorVar(stock_Trek)
+    
+    velo_value = Player.getActorVar(stock_velos)
+    stock_velos = stock_BTwin + stock_Rocky + stock_Defy + stock_SystemSix + stock_Look + stock_Specialized + stock_Litespeed + stock_Trek
+
+    "What do I want to do?"
+    0:: stock_velos >= 0:: "Buy a new bicycle"
+    1:: stock_velos > 0:: "Sell bicycle"
+    2:: stock_velos > 0:: "Trade bicycle for a new one"
+    3:: "Do nothing"
+    
+    If 0
+        Price0 = Random(500, 1000)
+        Price0C = Price0.convertToLocalCurrency()
+        Price1 = Random(1500, 3500)
+        Price1C = Price1.convertToLocalCurrency()
+        Price2 = Random(4000, 5000)
+        Price2C = Price2.convertToLocalCurrency()
+        Price3 = Random(5500, 8000)
+        Price3C = Price3.convertToLocalCurrency()
+        Price4 = Random(9000, 14000)
+        Price4C = Price4.convertToLocalCurrency()
+        Price5 = Random(15000, 20000)
+        Price5C = Price5.convertToLocalCurrency()
+        Price6 = Random(28000, 45000)
+        Price6C = Price6.convertToLocalCurrency()
+        Price7 = Random(50000, 75000)
+        Price7C = Price7.convertToLocalCurrency()
+        
+        "There are many different price for bicycles there. Honestly, a more expensive bicycle won't really get me from A to B any faster than a cheaper one ... but an expensive bicycle will give me a social advantage."
+        0:: money >= Price0:: "BTwin Ultra 920 AF for <Price0C>"
+        1:: money >= Price1:: "Rocky Mountain Solo 30 for <Price1C>"
+        2:: money >= Price2:: "Giant Defy Advanced Pro 2 for <Price2C>"
+        3:: money >= Price3:: "Cannondale SystemSix Carbon Ultegra for <Price3C>"
+        4:: money >= Price4:: "Look 795 Blade RS for <Price4C>"
+        5:: money >= Price5:: "Specialized WORKS LEVO SL 2021 for <Price5C>"
+        6:: money >= Price6:: "Litespeed Blade for <Price6C>"
+        7:: money >= Price7:: "Trek Madone7 Diamond for <Price7C>"
+        8:: "Buy nothing"
+        
+        If 0
+            
+            Player.modifyActorVar(stock_BTwin, 1)
+            money -= Price0
+            Player(Happy)::"1 more bicycle inside my garage!"
+            
+        Elseif 1
+            
+            Player.modifyActorVar(stock_Rocky, 1)
+            money -= Price1
+            Player(Happy)::"1 more bicycle inside my garage!"
+            
+        Elseif 2
+            
+            Player.modifyActorVar(stock_Defy, 1)
+            money -= Price2
+            Player(Happy)::"1 more bicycle inside my garage!"
+            
+        Elseif 3
+            
+            Player.modifyActorVar(stock_SystemSix, 1)
+            money -= Price3
+            Player(Happy)::"1 more bicycle inside my garage!"
+            
+        Elseif 4
+            
+            Player.modifyActorVar(stock_Look, 1)
+            money -= Price4
+            Player(Happy)::"1 more bicycle inside my garage!"
+            
+        Elseif 5
+            
+            Player.modifyActorVar(stock_Specialized, 1)
+            money -= Price5
+            Player(Happy)::"1 more bicycle inside my garage!"
+            
+        Elseif 6
+            
+            Player.modifyActorVar(stock_Litespeed, 1)
+            money -= Price6
+            Player(Happy)::"1 more bicycle inside my garage!"
+            
+        Elseif 7
+            
+            Player.modifyActorVar(stock_Trek, 1)
+            money -= Price7
+            Player(Happy)::"1 more bicycle inside my garage!"
+            
+        Endif
+        
+    Elseif 1
+    
+        SPrice0 = Random(300, 600)
+        SPrice0C = SPrice0.convertToLocalCurrency()
+        SPrice1 = Random(1000, 3000)
+        SPrice1C = SPrice1.convertToLocalCurrency()
+        SPrice2 = Random(3500, 4500)
+        SPrice2C = SPrice2.convertToLocalCurrency()
+        SPrice3 = Random(5000, 7500)
+        SPrice3C = SPrice3.convertToLocalCurrency()
+        SPrice4 = Random(8500, 13000)
+        SPrice4C = SPrice4.convertToLocalCurrency()
+        SPrice5 = Random(14000, 19000)
+        SPrice5C = SPrice5.convertToLocalCurrency()
+        SPrice6 = Random(27000, 44000)
+        SPrice6C = SPrice6.convertToLocalCurrency()
+        SPrice7 = Random(49000, 74000)
+        SPrice7C = SPrice7.convertToLocalCurrency()
+        
+        "It's time to sell a bicycle!"
+        0:: stock_BTwin >= 1:: "Sell 1 BTwin Ultra 920 for <SPrice0C> | <stock_BTwin> in garage"
+        1:: stock_Rocky >= 1:: "Sell 1 Rocky Mountain Solo for <SPrice1C> | <stock_Rocky> in garage"
+        2:: stock_Defy >= 1:: "Sell 1 Giant Defy Advanced for <SPrice2C> | <stock_Defy> in garage"
+        3:: stock_SystemSix >= 1:: "Sell 1 Cannondale SystemSix for <SPrice3C> | <stock_SystemSix> in garage"
+        4:: stock_Look >= 1:: "Sell 1 Look 795 Blade RS for <SPrice4C> | <stock_Look> in garage"
+        5:: stock_Specialized >= 1:: "Sell 1 Specialized LEVO for <SPrice5C> | <stock_Specialized> in garage"
+        6:: stock_Litespeed >= 1:: "Sell 1 Litespeed Blade for <SPrice6C> | <stock_Litespeed> in garage"
+        7:: stock_Trek >= 1:: "Sell 1 Trek Madone7 for <SPrice7C> | <stock_Trek> in garage"
+        99:: "Trade nothing"
+        
+        If 0
+            
+            Player.modifyActorVar(stock_BTwin, -1)
+            money += Price0
+            Player(Happy)::"<SPrice0C> inside my pockets and more spaces inside my garage!"
+            
+        Elseif 1
+            
+            Player.modifyActorVar(stock_Rocky, -1)
+            money += Price1
+            Player(Happy)::"<SPrice1C> inside my pockets and more spaces inside my garage!"
+            
+        Elseif 2
+            
+            Player.modifyActorVar(stock_Defy, -1)
+            money += Price2
+            Player(Happy)::"<SPrice2C> inside my pockets and more spaces inside my garage!"
+            
+        Elseif 3
+            
+            Player.modifyActorVar(stock_SystemSix, -1)
+            money += Price3
+            Player(Happy)::"<SPrice3C> inside my pockets and more spaces inside my garage!"
+            
+        Elseif 4
+            
+            Player.modifyActorVar(stock_Look, -1)
+            money += Price4
+            Player(Happy)::"<SPrice4C> inside my pockets and more spaces inside my garage!"
+            
+        Elseif 5
+            
+            Player.modifyActorVar(stock_Specialized, -1)
+            money += Price5
+            PPlayer(Happy)::"<SPrice5C> inside my pockets and more spaces inside my garage!"
+            
+        Elseif 6
+            
+            Player.modifyActorVar(stock_Litespeed, -1)
+            money += Price6
+            Player(Happy)::"<SPrice6C> inside my pockets and more spaces inside my garage!"
+            
+        Elseif 7
+            
+            Player.modifyActorVar(stock_Trek, -1)
+            money += Price7
+            Player(Happy)::"<SPrice7C> inside my pockets and more spaces inside my garage!"
+            
+        Elseif 99
+            "I should look around first. That seems like a low-ball figure they're offering for that bicycle. It must be worth more than that!"
+        Endif
+        
+    Elseif 2
+        
+        Price0 = Random(500, 1000)
+        Price0C = Price0.convertToLocalCurrency()
+        Price1 = Random(1500, 3500)
+        Price1C = Price1.convertToLocalCurrency()
+        Price2 = Random(4000, 5000)
+        Price2C = Price2.convertToLocalCurrency()
+        Price3 = Random(5500, 8000)
+        Price3C = Price3.convertToLocalCurrency()
+        Price4 = Random(9000, 14000)
+        Price4C = Price4.convertToLocalCurrency()
+        Price5 = Random(15000, 20000)
+        Price5C = Price5.convertToLocalCurrency()
+        Price6 = Random(28000, 45000)
+        Price6C = Price6.convertToLocalCurrency()
+        Price7 = Random(50000, 75000)
+        Price7C = Price7.convertToLocalCurrency()
+        
+        SPrice0 = Random(300, 600)
+        SPrice0C = SPrice0.convertToLocalCurrency()
+        SPrice1 = Random(1000, 3000)
+        SPrice1C = SPrice1.convertToLocalCurrency()
+        SPrice2 = Random(3500, 4500)
+        SPrice2C = SPrice2.convertToLocalCurrency()
+        SPrice3 = Random(5000, 7500)
+        SPrice3C = SPrice3.convertToLocalCurrency()
+        SPrice4 = Random(8500, 13000)
+        SPrice4C = SPrice4.convertToLocalCurrency()
+        SPrice5 = Random(14000, 19000)
+        SPrice5C = SPrice5.convertToLocalCurrency()
+        SPrice6 = Random(27000, 44000)
+        SPrice6C = SPrice6.convertToLocalCurrency()
+        SPrice7 = Random(49000, 74000)
+        SPrice7C = SPrice7.convertToLocalCurrency()
+        
+        "There are many different options for trading there. Honestly, having a new bicycle won't really change my life... but it's the best way to show off."
+        0:: stock_BTwin >= 1:: "Trade 1 BTwin Ultra 920 | <stock_BTwin> in garage"
+        1:: stock_Rocky >= 1:: "Trade 1 Rocky Mountain Solo | <stock_Rocky> in garage"
+        2:: stock_Defy >= 1:: "Trade 1 Giant Defy Advanced | <stock_Defy> in garage"
+        3:: stock_SystemSix >= 1:: "Trade 1 Cannondale SystemSix | <stock_SystemSix> in garage"
+        4:: stock_Look >= 1:: "Trade 1 Look 795 Blade RS | <stock_Look> in garage"
+        5:: stock_Specialized >= 1:: "Trade 1 Specialized LEVO | <stock_Specialized> in garage"
+        6:: stock_Litespeed >= 1:: "Trade 1 Litespeed Blade | <stock_Litespeed> in garage"
+        7:: stock_Trek >= 1:: "Trade 1 Trek Madone7 | <stock_Trek> in garage"
+        99:: "Trade nothing"
+        
+        If 0
+            
+            money -= Price0 - SPrice0
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            
+        Elseif 1
+            
+            money -= Price1 - SPrice1
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            
+        Elseif 2
+        
+            money -= Price2 - SPrice2
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            
+        Elseif 3
+            
+            money -= Price3 - SPrice3
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            
+        Elseif 4
+
+            money -= Price4 - SPrice4
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            
+        Elseif 5
+
+            money -= Price5 - SPrice5
+            PPlayer(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            
+        Elseif 6
+
+            money -= Price6 - SPrice6
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            
+        Elseif 7
+
+            money -= Price7 - SPrice7
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            
+        Elseif 99
+            "I should look around first. That seems like a low-ball figure they're offering for that bicycle. It must be worth more than that!"
+        Endif
+    Endif
+    
+SceneEnd()

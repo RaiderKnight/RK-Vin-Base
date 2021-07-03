@@ -1,0 +1,284 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+SceneStart()
+    
+    stock_VULCAN = Player.getActorVar(stock_VULCAN)
+    stock_Ruckus = Player.getActorVar(stock_Ruckus)
+    stock_VStar = Player.getActorVar(stock_VStar)
+    stock_NC750X = Player.getActorVar(stock_NC750X)
+    stock_Husqvarna = Player.getActorVar(stock_Husqvarna)
+    stock_Ducati = Player.getActorVar(stock_Ducati)
+    stock_INDIAN = Player.getActorVar(stock_INDIAN)
+    stock_Ninja = Player.getActorVar(stock_Ninja)
+    
+    stock_motorcycle = stock_VULCAN + stock_Ruckus + stock_VStar + stock_NC750X + stock_Husqvarna + stock_Ducati + stock_INDIAN + stock_Ninja
+    motorcycle_value = Player.getActorVar(stock_motorcycle) 
+    
+    "What do I want to do?"
+    0:: stock_motorcycle == 0:: "Buy a new motorcycle"
+    1:: stock_motorcycle > 0:: "Sell my motorcycle"
+    2:: stock_motorcycle > 0:: "Trade my motorcycle for a new one"
+    3:: "Do nothing"
+    
+    If 0
+        Price0 = Random(700, 2400)
+        Price0C = Price0.convertToLocalCurrency()
+        Price1 = Random(2500, 3500)
+        Price1C = Price1.convertToLocalCurrency()
+        Price2 = Random(4000, 5000)
+        Price2C = Price2.convertToLocalCurrency()
+        Price3 = Random(5500, 8000)
+        Price3C = Price3.convertToLocalCurrency()
+        Price4 = Random(9000, 11000)
+        Price4C = Price4.convertToLocalCurrency()
+        Price5 = Random(15000, 20000)
+        Price5C = Price5.convertToLocalCurrency()
+        Price6 = Random(28000, 35000)
+        Price6C = Price6.convertToLocalCurrency()
+        Price7 = Random(50000, 75000)
+        Price7C = Price7.convertToLocalCurrency()
+        
+        "There are many different price for motorcycle here. Honestly, living in a crowded area, a more expensive motorcycle won't really get me from A to B any faster than a cheap motorcycle ..."
+        0:: money >= Price0 :: "2018 Kawasaki VULCAN VN800 for <Price0C>"
+        1:: money >= Price1 :: "2021 Honda Ruckus for <Price1C>"
+        2:: money >= Price2 :: "2021 Yamaha V-Star 250 for <Price2C>"
+        3:: money >= Price3 :: "2019 Honda NC750X for <Price3C>"
+        4:: money >= Price4 :: "2019 Husqvarna Svartpilen 701 for <Price4C>"
+        5:: money >= Price5 :: "2020 Ducati Panigale V2 for <Price5C>"
+        6:: money >= Price6 :: "2021 INDIAN Challenger for <Price6C>"
+        7:: money >= Price7 :: "2021 Kawasaki Ninja H2R for <Price7C>"
+        8:: "Buy nothing"
+        
+        If 0
+        
+            Player.modifyActorVar(stock_VULCAN, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price0
+            
+        Elseif 1
+        
+            Player.modifyActorVar(stock_Ruckus, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price1
+            
+        Elseif 2
+        
+            Player.modifyActorVar(stock_VStar, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price2
+            
+        Elseif 3
+        
+            Player.modifyActorVar(stock_NC750X, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price3
+            
+        Elseif 4
+        
+            Player.modifyActorVar(stock_Husqvarna, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price4
+            
+        Elseif 5
+        
+            Player.modifyActorVar(stock_Ducati, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price5
+            
+        Elseif 6
+        
+            Player.modifyActorVar(stock_INDIAN, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price6
+            
+        Elseif 7
+        
+            Player.modifyActorVar(stock_Ninja, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price7
+            
+        Endif
+        
+    Elseif 1
+        
+        Price0S = Random(500, 2000)
+        Price1S = Random(2000, 3000)
+        Price2S = Random(3500, 4000)
+        Price3S = Random(4000, 7000)
+        Price4S = Random(8000, 10000)
+        Price5S = Random(14000, 19000)
+        Price6S = Random(27000, 34000)
+        Price7S = Random(49000, 74000)
+        
+        Price0S_loc = Price0S.convertToLocalCurrency()
+        Price1S_loc = Price1S.convertToLocalCurrency()
+        Price2S_loc = Price2S.convertToLocalCurrency()
+        Price3S_loc = Price3S.convertToLocalCurrency()
+        Price4S_loc = Price4S.convertToLocalCurrency()
+        Price5S_loc = Price5S.convertToLocalCurrency()
+        Price6S_loc = Price6S.convertToLocalCurrency()
+        Price7S_loc = Price7S.convertToLocalCurrency()
+
+        Player::"It's time to sell a motorcycle!"
+        0:: stock_VULCAN >= 1::"Sell 1 Kawasaki VULCAN for <Price0S_loc> | <stock_VULCAN> in garage"
+        1:: stock_Ruckus >= 1::"Sell 1 Honda Ruckus for <Price1S_loc> | <stock_Ruckus> in garage"
+        2:: stock_VStar >= 1::"Sell 1 Yamaha V-Star for <Price2S_loc> | <stock_VStar> in garage"
+        3:: stock_NC750X >= 1::"Sell 1 Honda NC750X for <Price3S_loc> | <stock_NC750X> in garage"
+        4:: stock_Husqvarna >= 1::"Sell 1 Svartpilen 701 for <Price4S_loc> | <stock_Husqvarna> in garage"
+        5:: stock_Ducati >= 1::"Sell 1 Ducati Panigale for <Price5S_loc> | <stock_Ducati> in garage"
+        6:: stock_INDIAN >= 1::"Sell 1 INDIAN Challenger for <Price6S_loc> | <stock_INDIAN> in garage"
+        7:: stock_Ninja >= 1::"Sell 1 Ninja H2R for <Price7S_loc> | <stock_Ninja> in garage"
+        99:: "Do nothing"
+        
+        If 0
+        
+            Player.modifyActorVar(stock_VULCAN, -1)
+            Player(Happy)::"<Price0S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price0S
+            
+        Elseif 1
+        
+            Player.modifyActorVar(stock_Ruckus, -1)
+            Player(Happy)::"<Price1S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price1S
+            
+        Elseif 2
+        
+            Player.modifyActorVar(stock_VStar, -1)
+            Player(Happy)::"<Price2S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price2S
+            
+        Elseif 3
+        
+            Player.modifyActorVar(stock_NC750X, -1)
+            Player(Happy)::"<Price3S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price3S
+            
+        Elseif 4
+        
+            Player.modifyActorVar(stock_Husqvarna, -1)
+            Player(Happy)::"<Price4S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price4S
+            
+        Elseif 5
+        
+            Player.modifyActorVar(stock_Ducati, -1)
+            Player(Happy)::"<Price5S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price5S
+            
+        Elseif 6
+        
+            Player.modifyActorVar(stock_INDIAN, -1)
+            Player(Happy)::"<Price6S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price6S
+            
+        Elseif 7
+        
+            Player.modifyActorVar(stock_Ninja, -1)
+            Player(Happy)::"<Price7S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price7S
+            
+        Elseif 99
+            "I should look around first. That seems like a low-ball figure they're offering for that motorcycle. My bike worth more than that!"
+        Endif
+    
+        
+    Elseif 2
+    
+        Price0S = Random(500, 2000)
+        Price1S = Random(2000, 3000)
+        Price2S = Random(3500, 4000)
+        Price3S = Random(4000, 7000)
+        Price4S = Random(8000, 10000)
+        Price5S = Random(14000, 19000)
+        Price6S = Random(27000, 34000)
+        Price7S = Random(49000, 74000)
+        
+        Price0S_loc = Price0S.convertToLocalCurrency()
+        Price1S_loc = Price1S.convertToLocalCurrency()
+        Price2S_loc = Price2S.convertToLocalCurrency()
+        Price3S_loc = Price3S.convertToLocalCurrency()
+        Price4S_loc = Price4S.convertToLocalCurrency()
+        Price5S_loc = Price5S.convertToLocalCurrency()
+        Price6S_loc = Price6S.convertToLocalCurrency()
+        Price7S_loc = Price7S.convertToLocalCurrency()
+        
+        Price0 = Random(700, 2400)
+        Price0C = Price0.convertToLocalCurrency()
+        Price1 = Random(2500, 3500)
+        Price1C = Price1.convertToLocalCurrency()
+        Price2 = Random(4000, 5000)
+        Price2C = Price2.convertToLocalCurrency()
+        Price3 = Random(5500, 8000)
+        Price3C = Price3.convertToLocalCurrency()
+        Price4 = Random(9000, 11000)
+        Price4C = Price4.convertToLocalCurrency()
+        Price5 = Random(15000, 20000)
+        Price5C = Price5.convertToLocalCurrency()
+        Price6 = Random(28000, 35000)
+        Price6C = Price6.convertToLocalCurrency()
+        Price7 = Random(50000, 75000)
+        Price7C = Price7.convertToLocalCurrency()
+        
+        Player::"Let's trade one of my old motorcycle for a new one!"
+        0:: stock_VULCAN >= 1::"Trade 1 Kawasaki VULCAN | <stock_VULCAN> in garage"
+        1:: stock_Ruckus >= 1::"Trade 1 Honda Ruckus | <stock_Ruckus> in garage"
+        2:: stock_VStar >= 1::"Trade 1 Yamaha V-Star | <stock_VStar> in garage"
+        3:: stock_NC750X >= 1::"Trade 1 Honda NC750X | <stock_NC750X> in garage"
+        4:: stock_Husqvarna >= 1::"Trade 1 Svartpilen 701 | <stock_Husqvarna> in garage"
+        5:: stock_Ducati >= 1::"Trade 1 Ducati Panigale | <stock_Ducati> in garage"
+        6:: stock_INDIAN >= 1::"Trade 1 INDIAN Challenger | <stock_INDIAN> in garage"
+        7:: stock_Ninja >= 1::"Trade 1 Ninja H2R | <stock_Ninja> in garage"
+        99:: "Do nothing"
+        
+        If 0
+ 
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price0 - Price0S
+            
+        Elseif 1
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price1 - Price1S
+            
+        Elseif 2
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price2 - Price2S
+            
+        Elseif 3
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price3 - Price3S
+            
+        Elseif 4
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price4 - Price4S
+            
+        Elseif 5
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price5 - Price5S
+            
+        Elseif 6
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price6 - Price6S
+            
+        Elseif 7
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price7 - Price7S
+            
+        Elseif 99
+            "I should look around first. That seems like a low-ball figure they're offering for that motorcycle. My bike worth more than that!"
+        Endif
+        
+    Endif
+    
+SceneEnd()

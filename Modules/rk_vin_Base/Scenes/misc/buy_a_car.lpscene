@@ -4,84 +4,290 @@ WHEN: 0 - 24
 WHO: none
 OTHER: none
 
-    SceneStart()
+SceneStart()
+    
     setBackground(car)
-    PreciseModify()
+    
+    stock_Tesla = Player.getActorVar(stock_Tesla)
+    stock_Ferrari = Player.getActorVar(stock_Ferrari)
+    stock_Lambo = Player.getActorVar(stock_Lambo)
+    stock_Mercedez = Player.getActorVar(stock_Mercedez)
+    stock_Mazda = Player.getActorVar(stock_Mazda)
+    stock_BMW = Player.getActorVar(stock_BMW)
+    stock_Lada = Player.getActorVar(stock_Lada)
+    
+    stock_cars = stock_Lada + stock_Mazda + stock_BMW + stock_Mercedez + stock_Tesla + stock_Ferrari + stock_Lambo
+    
     "What do I want to do?"
-    0:: car_value == 0:: "Buy a new car"
-    1:: car_value > 0:: "Sell my car"
-    2:: car_value > 0:: "Trade my car in for a new car"
+    0:: stock_cars == 0:: "Buy a new car"
+    1:: stock_cars > 0:: "Sell a car"
+    2:: stock_cars > 0:: "Trade a car for a new one"
     3:: "Do nothing"
     
-    If 0 || 2
-        Price0 = Random(1800, 2200)
-        Price0C = Price0.convertToLocalCurrency(true)
-        Price1 = Random(4500, 5500)
-        Price1C = Price1.convertToLocalCurrency(true)
-        Price2 = Random(6500, 9000)
-        Price2C = Price2.convertToLocalCurrency(true)
-        Price3 = Random(10000, 20000)
-        Price3C = Price3.convertToLocalCurrency(true)
-        Price4 = Random(30000, 50000)
-        Price4C = Price4.convertToLocalCurrency(true)
-        Price5 = Random(80000, 120000)
-        Price5C = Price5.convertToLocalCurrency(true)
-        Price6 = Random(280000, 350000)
-        Price6C = Price6.convertToLocalCurrency(true)
-        Price7 = Random(500000, 750000)
-        Price7C = Price7.convertToLocalCurrency(true)
+    If 0
+    
+        Price0 = Random(7000, 18000)
+        Price0C = Price0.convertToLocalCurrency()
+        Price1 = Random(15000, 35000)
+        Price1C = Price1.convertToLocalCurrency()
+        Price2 = Random(30000, 55000)
+        Price2C = Price2.convertToLocalCurrency()
+        Price3 = Random(60000, 80000)
+        Price3C = Price3.convertToLocalCurrency()
+        Price4 = Random(80000, 250000)
+        Price4C = Price4.convertToLocalCurrency()
+        Price5 = Random(300000, 650000)
+        Price5C = Price5.convertToLocalCurrency()
+        Price6 = Random(400000, 850000)
+        Price6C = Price6.convertToLocalCurrency()
         
-        "There are many different price points for cars here. Honestly, living in a crowded area, a more expensive car won't really get me from A to B any faster than a cheap car ... although the prestige factor is huge and an expensive car will give me a social advantage."
-        0:: money + car_value >= Price0:: "2006 Honda Civic for <Price0C>"
-        1:: money + car_value >= Price1:: "2007 Volkswagen Passat for <Price1C>"
-        2:: money + car_value >= Price2:: "2011 Mazda CX-7 for <Price2C>"
-        3:: money + car_value >= Price3:: "2015 Hyundai Sonata for <Price3C>"
-        4:: money + car_value >= Price4:: "2017 Audi A4 for <Price4C>"
-        5:: money + car_value >= Price5:: "2018 Tesla Model S for <Price5C>"
-        6:: money + car_value >= Price6:: "2001 Lamborghini Diablo for <Price6C>"
-        7:: money + car_value >= Price7:: "2018 Rolls-Royce Phantom for <Price7C>"
-        8:: "Buy nothing"
+        "There are many different price for car here. Honestly, living in a crowded area, a more expensive car won't really get me from A to B any faster than a cheap car ..."
+        0:: money >= Price0 :: "Lada for <Price0C>"
+        1:: money >= Price1 :: "Mazda for <Price1C>"
+        2:: money >= Price2 :: "BMW for <Price2C>"
+        3:: money >= Price3 :: "Mercedez for <Price3C>"
+        4:: money >= Price4 :: "Tesla for <Price4C>"
+        5:: money >= Price5 :: "Ferrari for <Price5C>"
+        6:: money >= Price6 :: "Lamborghini for <Price6C>"
+        99:: "Buy nothing"
         
         If 0
-            money -= Price0 - car_value
-            car_value => Price0
+        
+            Player.modifyActorVar(stock_Lada, 1)
+            Player(Happy)::"1 more car inside my garage!"
+            money -= Price0
+            car_value += Price0
+            
         Elseif 1
-            money -= Price1 - car_value
-            car_value => Price1        
+        
+            Player.modifyActorVar(stock_Mazda, 1)
+            Player(Happy)::"1 more car inside my garage!"
+            money -= Price1
+            car_value += Price1
+            
         Elseif 2
-            money -= Price2 - car_value
-            car_value => Price2
+        
+            Player.modifyActorVar(stock_BMW, 1)
+            Player(Happy)::"1 more car inside my garage!"
+            money -= Price2
+            car_value += Price2
+            
         Elseif 3
-            money -= Price3 - car_value
-            car_value => Price3
+        
+            Player.modifyActorVar(stock_Mercedez, 1)
+            Player(Happy)::"1 more car inside my garage!"
+            money -= Price3
+            car_value += Price3
+            
         Elseif 4
-            money -= Price4 - car_value
-            car_value => Price4 
+        
+            Player.modifyActorVar(stock_Tesla, 1)
+            Player(Happy)::"1 more car inside my garage!"
+            money -= Price4
+            car_value += Price4
+            
         Elseif 5
-            money -= Price5 - car_value
-            car_value => Price5 
+        
+            Player.modifyActorVar(stock_Ferrari, 1)
+            Player(Happy)::"1 more car inside my garage!"
+            money -= Price5
+            car_value += Price5
+            
         Elseif 6
-            money -= Price6 - car_value
-            car_value => Price6 
-        Elseif 7
-            money -= Price7 - car_value
-            car_value => Price7
+        
+            Player.modifyActorVar(stock_Lambo, 1)
+            Player(Happy)::"1 more car inside my garage!"
+            money -= Price6
+            car_value += Price6
+
         Endif
+        
     Elseif 1
-        "It's not worth it after all to have a car ... I'd rather just walk."
-        Price = car_value*interpersonal*Random(0.0045, 0.0115)
-        PriceConverted = Price.convertToLocalCurrency(true)
-        "After some tough negotiation, the best price I could get for the car from this dealership was <PriceConverted>. Should I go ahead with the sale?"
-        0:: "Yes"
-        1:: "No"
+        
+        Price0S = Random(700, 8000)
+        Price1S = Random(10000, 15000)
+        Price2S = Random(20000, 45000)
+        Price3S = Random(40000, 80000)
+        Price4S = Random(60000, 150000)
+        Price5S = Random(200000, 550000)
+        Price6S = Random(300000, 750000)
+        
+        Price0S_loc = Price0S.convertToLocalCurrency()
+        Price1S_loc = Price1S.convertToLocalCurrency()
+        Price2S_loc = Price2S.convertToLocalCurrency()
+        Price3S_loc = Price3S.convertToLocalCurrency()
+        Price4S_loc = Price4S.convertToLocalCurrency()
+        Price5S_loc = Price5S.convertToLocalCurrency()
+        Price6S_loc = Price6S.convertToLocalCurrency()
+
+        Player::"It's time to sell a car!"
+        0:: stock_Lada >= 1::"Sell 1 Lada for <Price0S_loc> | <stock_Lada> in garage"
+        1:: stock_Mazda >= 1::"Sell 1 Mazda for <Price1S_loc> | <stock_Mazda> in garage"
+        2:: stock_BMW >= 1::"Sell 1 BMW for <Price2S_loc> | <stock_BMW> in garage"
+        3:: stock_Mercedez >= 1::"Sell 1 Mercedez for <Price3S_loc> | <stock_Mercedez> in garage"
+        4:: stock_Tesla >= 1::"Sell 1 Tesla for <Price4S_loc> | <stock_Tesla> in garage"
+        5:: stock_Ferrari >= 1::"Sell 1 Ferrari for <Price5S_loc> | <stock_Ferrari> in garage"
+        6:: stock_Lambo >= 1::"Sell 1 Lamborghini for <Price6S_loc> | <stock_Lambo> in garage"
+        99:: "Do nothing"
         
         If 0
-            "That's a fair enough offer I suppose. It's time to say goodbye to my old faithful travel companion then ..."
-            money += Price
-            car_value => 0
-        Else
-            "I should look around first. That seems like a low-ball figure they're offering for my car. It must be worth more than that!"
+        
+            Player.modifyActorVar(stock_Lada, -1)
+            Player(Happy)::"<Price0S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price0S
+            car_value -= Price0S
+            
+        Elseif 1
+        
+            Player.modifyActorVar(stock_Mazda, -1)
+            Player(Happy)::"<Price1S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price1S
+            car_value -= Price1S
+            
+        Elseif 2
+        
+            Player.modifyActorVar(stock_BMW, -1)
+            Player(Happy)::"<Price2S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price2S
+            car_value -= Price2S
+            
+        Elseif 3
+        
+            Player.modifyActorVar(stock_Mercedez, -1)
+            Player(Happy)::"<Price3S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price3S
+            car_value -= Price3S
+            
+        Elseif 4
+        
+            Player.modifyActorVar(stock_Tesla, -1)
+            Player(Happy)::"<Price4S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price4S
+            car_value -= Price4S
+            
+        Elseif 5
+        
+            Player.modifyActorVar(stock_Ferrari, -1)
+            Player(Happy)::"<Price5S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price5S
+            car_value -= Price5S
+            
+        Elseif 6
+        
+            Player.modifyActorVar(stock_Lambo, -1)
+            Player(Happy)::"<Price6S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price6S
+            car_value -= Price6S
+            
+        Elseif 99
+            "I should look around first. That seems like a low-ball figure they're offering for that car. My car worth more than that!"
         Endif
+    
+    Elseif 2
+        
+        Price0S = Random(700, 8000)
+        Price1S = Random(10000, 15000)
+        Price2S = Random(20000, 45000)
+        Price3S = Random(40000, 80000)
+        Price4S = Random(60000, 150000)
+        Price5S = Random(200000, 550000)
+        Price6S = Random(300000, 750000)
+        
+        Price0S_loc = Price0S.convertToLocalCurrency()
+        Price1S_loc = Price1S.convertToLocalCurrency()
+        Price2S_loc = Price2S.convertToLocalCurrency()
+        Price3S_loc = Price3S.convertToLocalCurrency()
+        Price4S_loc = Price4S.convertToLocalCurrency()
+        Price5S_loc = Price5S.convertToLocalCurrency()
+        Price6S_loc = Price6S.convertToLocalCurrency()
+        
+        Price0 = Random(7000, 18000)
+        Price0C = Price0.convertToLocalCurrency()
+        Price1 = Random(15000, 35000)
+        Price1C = Price1.convertToLocalCurrency()
+        Price2 = Random(30000, 55000)
+        Price2C = Price2.convertToLocalCurrency()
+        Price3 = Random(60000, 80000)
+        Price3C = Price3.convertToLocalCurrency()
+        Price4 = Random(80000, 250000)
+        Price4C = Price4.convertToLocalCurrency()
+        Price5 = Random(300000, 650000)
+        Price5C = Price5.convertToLocalCurrency()
+        Price6 = Random(400000, 850000)
+        Price6C = Price6.convertToLocalCurrency()
+
+        Player::"Let's trade one of my old car for a new one!"
+        0:: stock_Lada >= 1::"Trade 1 Lada | <stock_Lada> in garage"
+        1:: stock_Mazda >= 1::"Trade 1 Mazda | <stock_Mazda> in garage"
+        2:: stock_BMW >= 1::"Trade 1 BMW | <stock_BMW> in garage"
+        3:: stock_Mercedez >= 1::"Trade 1 Mercedez | <stock_Mercedez> in garage"
+        4:: stock_Tesla >= 1::"Trade 1 Tesla | <stock_Tesla> in garage"
+        5:: stock_Ferrari >= 1::"Trade 1 Ferrari | <stock_Ferrari> in garage"
+        6:: stock_Lambo >= 1::"Trade 1 Lamborghini | <stock_Lambo> in garage"
+        99:: "Do nothing"
+        
+        If 0
+ 
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price0 - Price0S
+            TotalPrice = Price0 - Price0S
+            TotalValue = car_value + TotalPrice
+            car_value => TotalValue
+            
+        Elseif 1
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price1 - Price1S
+            TotalPrice = Price1 - Price1S
+            TotalValue = car_value + TotalPrice
+            car_value => TotalValue
+            
+        Elseif 2
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price2 - Price2S
+            TotalPrice = Price2 - Price2S
+            TotalValue = car_value + TotalPrice
+            car_value => TotalValue
+            
+        Elseif 3
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price3 - Price3S
+            TotalPrice = Price3 - Price3S
+            TotalValue = car_value + TotalPrice
+            car_value => TotalValue
+            
+        Elseif 4
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price4 - Price4S
+            TotalPrice = Price4 - Price4S
+            TotalValue = car_value + TotalPrice
+            car_value => TotalValue
+            
+        Elseif 5
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price5 - Price5S
+            TotalPrice = Price5 - Price5S
+            TotalValue = car_value + TotalPrice
+            car_value => TotalValue
+            
+        Elseif 6
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price6 - Price6S
+            TotalPrice = Price6 - Price6S
+            TotalValue = car_value + TotalPrice
+            car_value => TotalValue
+            
+        Elseif 99
+        
+            "I should look around first. That seems like a low-ball figure they're offering for that car. My car worth more than that!"
+            
+        Endif
+        
     Endif
     
-    SceneEnd()
+SceneEnd() // Improved by Raddeck

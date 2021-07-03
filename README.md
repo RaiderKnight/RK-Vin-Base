@@ -3,7 +3,7 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Version: 0.0.6</p>
+<p>Version: 0.0.7</p>
 <br>
 <br>
 <p><strong>Rework In Progress (WIP)</strong></p>
@@ -40,7 +40,6 @@
 <br>
 <h3>Module requirements</h3>
 <p>At least the game LifePlay 4.0.4</p>
-<p>- rk_MoreRides </p>
 <p>- rk_MoneyMaker</p>
 <p>- rk_Home_Inventories</p>
 <p>- rk_Personal_Inventories</p>
@@ -48,7 +47,7 @@
 <p>- nn_HomeExpander</p>
 <br>
 <h3>Module conflict</h3>
-<p>None</p>
+<p>rk_MoreInteractions - rk_MoreRides</p>
 <br>
 <hr>
 <br>
