@@ -864,37 +864,9 @@ OTHER: none
                 
             Endif
             
-        Else   /// INTERVIEW
-        
-            "Should I apply for a job as a prison warden?"
-            0:: "Yes"
-            1:: "No"
-            
-            If 0
-            
-                Actor2 = generatePerson()
-                Actor2.setActorVar(tag_wardenboss, 1)
-                Actor2.dress()
-                Actor2.show()
-                Actor2(Serene):: "I'm quite impressed with you today. When can you start?"
-                "The interview was pretty easy and I got the job, which pays per shift. After which I was introduced to my colleagues - fellow prison wardens."
-                
-                jobperformance => 50
-                count = 0
-                While count < 5
-                    count += 1
-                    Actor = generatePerson()
-                    Actor.setActorVar(tag_warden, 1)
-                    Actor.dress()
-                    Actor.show()
-                    Actor.moveToPerson(Player)
-                    Actor(Happy):: "Hi, I'm Warden <Actor.name> <Actor.name_last>. Nice to you meet you."
-                    Player(Happy):: "Hi, I'm <Player.name> <Player.name_last>"
-                    Actor.SaveAndDelete()
-                Endwhile
-                
-            Endif
-            
+            jobperformance += Random(0, 2)
+            jobexperience += Random(0, 2)
+ 
         Endif
         
     SceneEnd() // Scene improved by Raddeck

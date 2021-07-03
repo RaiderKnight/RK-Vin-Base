@@ -75,7 +75,8 @@ OTHER: none
             
                 "What I want to browse for?"
                 0::"Only browsing for fun"
-                2::"Use dating app"
+                1::"Use dating app"
+                2::"Use fantasy dating app"
                 3::"Look for CMS porn"
                 35::"Watch Porn Tube"
                 90::isModEnabled(vin_Bestiality):: "Look for bestiality porn"
@@ -89,6 +90,10 @@ OTHER: none
                     mood += 1.5
                     energy -= 1
                     passTime(0.15, 1)
+                
+                ElseIf 1
+                    
+                    followUp(dating_app)
                 
                 ElseIf 2
                     
@@ -127,6 +132,7 @@ OTHER: none
                 0::personal_pics > 0::"Post a photo"
                 1::personal_vids > 0::"Post a video"
                 2::"Post a message"
+                3::"Stalking on Facebook"
                 99::"Do nothing"
                 
                 If 0
@@ -157,6 +163,10 @@ OTHER: none
                     energy -= 0.5
                     "As soon as I posted, I received few likes!"
                     passTime(0.35, 1)
+                
+                Elseif 3
+                
+                    followUp(stalk_facebook)
                 
                 Else
                 

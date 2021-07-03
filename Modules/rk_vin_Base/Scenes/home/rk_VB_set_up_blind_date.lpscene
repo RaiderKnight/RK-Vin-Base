@@ -1,0 +1,26 @@
+WHAT: none
+WHERE: home
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+
+        "For who I want to set up a blind date?"
+        0::"For a family member"
+        1::"For a friends"
+        
+        If 0
+        
+            followUp(set_up_blind_date_family)
+        
+        Elseif 1
+        
+            followUp(set_up_blind_date)
+
+        Endif
+
+    SceneEnd() // Improved by Raddeck
