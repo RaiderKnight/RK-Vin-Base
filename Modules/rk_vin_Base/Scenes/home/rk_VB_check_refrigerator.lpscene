@@ -29,7 +29,7 @@ SceneStart()
     
         stock_meatprod = stock_Jerkey + stock_Cheesesteak + stock_Chicken + stock_SaltNPepper + stock_WrappedPork + stock_ChickenKebabs + stock_ChineseBeef + stock_SurfNTurf
         
-        refrigerator_inventory = stock_veganmeal + stock_meatprod
+        refrigerator_inventory = stock_veganmeal + stock_meatprod + stock_juice + stock_meal
     
     If refrigerator_inventory < 1 
         Player(Anxious)::"My refrigerator is totally empty!"
@@ -39,10 +39,16 @@ SceneStart()
         While stayInMenu
         
             Player(Curious)::"Let see what I got in my refrigerator"
-            0:: isModEnabled(rk_VeganShop) || stock_veganmeal > 0 ::"Check vegan meal(s) inventory (<stock_veganmeal>)"
-            10:: isModEnabled(rk_MeatShop) || stock_meatprod > 0 ::"Check meat dish(es) inventory (<stock_meatprod>)"
-            50:: isModEnabled(rk_VeganShop) || stock_veganmeal > 0 ::"Eat a vegan meal"
-            60:: isModEnabled(rk_MeatShop) || stock_meatprod > 0 ::"Eat a meat dish"
+            2:: stock_juice >= 0.8::"Juice inventory (<stock_juice>)"
+            7:: stock_meal >= 0.8 ::"Meal inventory (<stock_meal>)"
+            0:: "Check vegan meal(s) inventory (<stock_veganmeal>)"
+            10:: "Check meat dish(es) inventory (<stock_meatprod>)"
+            30:: "--------------"
+            40:: "Drink water"
+            42:: stock_juice >= 0.8::"Drink juice"
+            47:: stock_meal >= 0.8 ::"Have a meal"
+            50:: "Eat a vegan meal"
+            60:: "Eat a meat dish"
             99::"Nevermind, I will check later !"
         
             If 0
@@ -81,6 +87,42 @@ SceneStart()
             
                 Endif
             
+            ElseIf 40
+            
+                Player.animate(drinkglass)
+                "I decided to drink water..."
+                mood += 0.5
+                fitness += 0.01
+                energy += 1
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 1)
+                EndIf
+                passTime(0.15, 0.5)
+            
+            ElseIf 40 || 2
+            
+                Player.animate(drinkglass)
+                "I decided to drink juice..."
+                stock_juice -= 1
+                mood += 0.8
+                fitness += 0.015
+                energy += 1
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 1)
+                EndIf
+                passTime(0.15, 0.5)
+            
+            ElseIf 47 || 7
+            
+                Player.animate(eat)
+                "I decided to have a meal.."
+                stock_meal -= 1
+                mood += 3
+                energy += 15
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 15)
+                EndIf
+                passTime(0.25, 0.5)
                 
             ElseIf 50
             
