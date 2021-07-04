@@ -1,0 +1,98 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        clearGetList()
+        hasLivingroom = RE_has_lvingroom.getGlobal()
+        hasKitchen = RE_has_kitchen.getGlobal()
+        hasOfficeroom = RE_has_officeroom.getGlobal()
+        hasSecBedroom = RE_has_secondbedroom.getGlobal()
+        hasThirdBedroom = RE_has_thirdbedroom.getGlobal()
+
+        If !PlayerHasHome()
+        
+            SceneStart()
+            
+                "You need to find a personal home first!"
+                
+            SceneEnd()
+            
+        Else
+            
+            "What do I want to verify?"
+            0::"Check adult toy box"
+            1::"Check freezer"
+            2::"Check garage"
+            3::"Check jewelry box"
+            4::isModEnabled(nn_HomeExpander) && hasKitchen::"Check kitchen"
+            5::isModEnabled(nn_HomeExpander) && hasLivingroom ::"Check living room"
+            12::"Check my bedroom"
+            6::isModEnabled(nn_HomeExpander) && hasOfficeroom::"Check office room"
+            7::"Check pantry"
+            8::"Check refrigerator"
+            9::isModEnabled(nn_HomeExpander) && hasSecBedroom::"Check second bedroom"
+            10::"Check storage room"
+            11::isModEnabled(nn_HomeExpander) && hasThirdBedroom::"Check third bedroom"
+            99::"I changed my mind"
+            
+            If 0
+            
+                followUp(rk_VB_check_AdultToyBox)
+            
+            ElseIf 1
+            
+                followUp(rk_VB_check_freezer)
+            
+            ElseIf 2
+            
+                followUp(rk_VB_check_Garage)
+            
+            ElseIf 3
+            
+                followUp(rk_VB_check_jewelbox)
+            
+            ElseIf 4
+            
+                followUp(rk_VB_check_kitchen)
+            
+            ElseIf 5
+            
+                followUp(rk_VB_check_livingroom)
+            
+            ElseIf 12
+            
+                followUp(rk_VB_check_mydbedroom)
+            
+            ElseIf 6
+            
+                followUp(rk_VB_check_officeroom)
+            
+            ElseIf 7
+            
+                followUp(rk_VB_check_pantry)
+            
+            ElseIf 8
+            
+                followUp(rk_VB_check_refrigerator)
+            
+            ElseIf 9
+            
+                followUp(rk_VB_check_secondbedroom)
+            
+            ElseIf 10
+            
+                followUp(rk_VB_check_storage_room)
+            
+            ElseIf 11
+            
+                followUp(rk_VB_check_thirdbedroom)
+            
+            EndIf
+
+        EndIf
+        
+    SceneEnd()

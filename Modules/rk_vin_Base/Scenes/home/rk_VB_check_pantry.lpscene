@@ -1,0 +1,98 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+SceneStart()
+
+        // Get current items inside pantry inventory
+        stock_PlainPopcorn = Player.getActorVar(stock_PlainPopcorn)
+        stock_ButterPopcorn = Player.getActorVar(stock_ButterPopcorn)
+        stock_PopcornMix = Player.getActorVar(stock_PopcornMix)
+        stock_HealthyPopcorn = Player.getActorVar(stock_HealthyPopcorn)
+    
+        stock_popcorn = stock_PlainPopcorn + stock_ButterPopcorn + stock_PopcornMix + stock_HealthyPopcorn
+    
+        stock_Pita = Player.getActorVar(stock_Pita)
+        stock_Bread = Player.getActorVar(stock_Bread)
+        stock_Bagel = Player.getActorVar(stock_Bagel)
+        stock_BaltikBread = Player.getActorVar(stock_BaltikBread)
+        stock_ProteinCookie = Player.getActorVar(stock_ProteinCookie)
+        stock_VdolkyDonut = Player.getActorVar(stock_VdolkyDonut)
+        stock_ApplePie = Player.getActorVar(stock_ApplePie)
+        stock_RoyalCake = Player.getActorVar(stock_RoyalCake)
+        
+        stock_bakery = stock_Pita + stock_Bread + stock_Bagel + stock_BaltikBread + stock_ProteinCookie + stock_VdolkyDonut + stock_ApplePie + stock_RoyalCake
+        
+        pantry_inventory = stock_popcorn + stock_bakery
+    
+    If pantry_inventory < 1
+
+        Player(Anxious)::"I got nothing inside my pantry!"
+        
+    Else
+    
+        stayInMenu = true
+        While stayInMenu
+
+            Player(Curious)::"Let see what I got in my pantry"
+            0:: stock_popcorn > 0 ::"Check popcorn inventory (<stock_popcorn>)"
+            10:: stock_bakery > 0 ::"Check bread/pastry inventory (<stock_bakery>)"
+            50:: stock_popcorn > 0 ::"Eat a popcorn"
+            60:: stock_bakery > 0 ::"Eat a bread/pastry"
+            99::"Nevermind, I will check later !"
+        
+            If 0
+        
+                If stock_popcorn  < 1
+                    Player(Anxious)::"Ok, I don't have any popcorn! I have to go shopping !"
+                Else
+        
+                    0::"<stock_PlainPopcorn> bag(s) of plain popcorn"
+                    0::"<stock_ButterPopcorn> bag(s) of butter popcorn"
+                    0::"<stock_PopcornMix> bag(s) of popcorn sweet mix"
+                    0::"<stock_HealthyPopcorn> bag(s) of healthy popcorn"
+                    99:: "Go back !"
+                
+                Endif
+            
+            Elseif 10
+
+                if stock_bakery  < 1
+                    Player(Anxious)::"Ok, I don't have any bread or pastry! I have to go to the bakery shop!"
+                Else
+            
+                    0:: "<stock_Pita> pita(s)"
+                    0:: "<stock_Bread> Nutricious bread(s)"
+                    0:: "<stock_Bagel> Whole grain bagel(s)"
+                    0:: "<stock_BaltikBread> Baltik bread(s)"
+                    0:: "<stock_ProteinCookie> Protein cookie(s)"
+                    0:: "<stock_VdolkyDonut> Vdolky donut(s)"
+                    0:: "<stock_ApplePie> piece Homemade apple pie(s)"
+                    0:: "<stock_RoyalCake> piece of Royal cake(s)"
+                    99:: "Go back !"
+            
+                Endif
+ 
+            ElseIf 50
+            
+                followUp(eat_popcorns_in)
+                stayInMenu = false
+                
+            ElseIf 60
+            
+                followUp(eat_bakery_in)
+                stayInMenu = false
+            
+            ElseIf 99
+            
+                stayInMenu = false
+        
+            Endif
+            
+        EndWhile
+        
+    Endif
+
+SceneEnd()

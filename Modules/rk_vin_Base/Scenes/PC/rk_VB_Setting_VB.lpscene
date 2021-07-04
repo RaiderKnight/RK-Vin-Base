@@ -5,13 +5,14 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    
+
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         
         0::"-- Setting for Vin_Base --"
         1::"Enable hunger"
         2::"Disnable hunger"
+        90::"Stuff in hand to store"
         99::"Go back!"
         
         If 1
@@ -23,6 +24,10 @@ OTHER: none
             
             "Not totally implemented yet!"
             // rk_VB_EnableHunger.setGlobal(0)
+        
+        ElseIf 90
+        
+            followUp(rk_VB_HandSwitchInv_VB)
             
         EndIf
         
