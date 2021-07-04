@@ -6,6 +6,53 @@ OTHER: none
 
     SceneStart()
     
+        clearGetList()
+        
+        hasLivingroom = RE_has_lvingroom.getGlobal()
+        hasKitchen = RE_has_kitchen.getGlobal()
+        hasOfficeroom = RE_has_officeroom.getGlobal()
+        hasSecBedroom = RE_has_secondbedroom.getGlobal()
+        hasThirdBedroom = RE_has_thirdbedroom.getGlobal()
+        
+        Kstock_ZellVostro = Player.getActorVar(Kstock_ZellVostro)
+        LRstock_ZellVostro = Player.getActorVar(LRstock_ZellVostro)
+        MBstock_ZellVostro = Player.getActorVar(MBstock_ZellVostro)
+        Ostock_ZellVostro = Player.getActorVar(Ostock_ZellVostro)
+        SBstock_ZellVostro = Player.getActorVar(SBstock_ZellVostro)
+        SRstock_ZellVostro = Player.getActorVar(SRstock_ZellVostro)
+        TBstock_ZellVostro = Player.getActorVar(TBstock_ZellVostro)
+
+        Kstock_LPPavilion = Player.getActorVar(Kstock_LPPavilion)
+        LRstock_LPPavilion = Player.getActorVar(LRstock_LPPavilion)
+        MBstock_LPPavilion = Player.getActorVar(MBstock_LPPavilion)
+        Ostock_LPPavilion = Player.getActorVar(Ostock_LPPavilion)
+        SBstock_LPPavilion = Player.getActorVar(SBstock_LPPavilion)
+        SRstock_LPPavilion = Player.getActorVar(SRstock_LPPavilion)
+        TBstock_LPPavilion = Player.getActorVar(TBstock_LPPavilion)
+
+        Kstock_LPware = Player.getActorVar(Kstock_LPware)
+        LRstock_LPware = Player.getActorVar(LRstock_LPware)
+        MBstock_LPware = Player.getActorVar(MBstock_LPware)
+        Ostock_LPware = Player.getActorVar(Ostock_LPware)
+        SBstock_LPware = Player.getActorVar(SBstock_LPware)
+        SRstock_LPware = Player.getActorVar(SRstock_LPware)
+        TBstock_LPware = Player.getActorVar(TBstock_LPware)
+
+        Kstock_LPX = Player.getActorVar(Kstock_LPX)
+        LRstock_LPX = Player.getActorVar(LRstock_LPX)
+        MBstock_LPX = Player.getActorVar(MBstock_LPX)
+        Ostock_LPX = Player.getActorVar(Ostock_LPX)
+        SBstock_LPX = Player.getActorVar(SBstock_LPX)
+        SRstock_LPX = Player.getActorVar(SRstock_LPX)
+        TBstock_LPX = Player.getActorVar(TBstock_LPX)
+        
+        stock_ZellVostro = Player.getActorVar(stock_ZellVostro)
+        stock_LPPavilion = Player.getActorVar(stock_LPPavilion)
+        stock_LPware = Player.getActorVar(stock_LPware)
+        stock_LPX = Player.getActorVar(stock_LPX)
+        
+        stock_Computer = stock_ZellVostro + stock_LPPavilion + stock_LPware + stock_LPX
+        
         stock_musicalinstrument_LR = Player.getActorVar(stock_musicalinstrument_LR)
         stock_musicalinstrument_MB = Player.getActorVar(stock_musicalinstrument_MB)
         stock_musicalinstrument_O = Player.getActorVar(stock_musicalinstrument_O)
@@ -14,11 +61,222 @@ OTHER: none
         stock_musicalinstrument_TB = Player.getActorVar(stock_musicalinstrument_TB)
         
         "If you own item in your hand, click on the item you want to store!"
-        0:: stock_musicalinstrument > 0 ::"Musical instrument (<stock_musicalinstrument>)"
+        5:: stock_Computer > 0 ::"Computers (<stock_Computer>)"
+        90:: stock_musicalinstrument > 0 ::"Musical instrument (<stock_musicalinstrument>)"
         99::"Go back to game!"
             
             
-        If 0
+        If 5
+        
+            0:: stock_ZellVostro > 0 ::"Compact desktop Zell Vostro"
+            1:: stock_LPPavilion > 0 ::"LP Pavilion All-in-One"
+            2:: stock_LPware > 0 ::"LPware Aurora R12 Gaming Desktop"
+            3:: stock_LPX > 0 ::"LPX RA Ryzen Battlebox ultimate"
+            99:: "Nothing"
+            
+            If 0
+            
+                Player.modifyActorVar(stock_ZellVostro, -1)
+                
+                "Where I will store this computer?"
+                1::isModEnabled(nn_HomeExpander) && hasKitchen::"Inside my kitchen"
+                2::isModEnabled(nn_HomeExpander) && hasLivingroom ::"Inside my living room"
+                3::"Inside my bedroom"
+                4::isModEnabled(nn_HomeExpander) && hasOfficeroom::"Inside my office room"
+                5::isModEnabled(nn_HomeExpander) && hasSecBedroom::"Inside my second bedroom"
+                6::isModEnabled(rk_MoneyMaker) || isModEnabled(rk_Art_items_Shop)::"Inside my storage room"
+                7::isModEnabled(nn_HomeExpander) && hasThirdBedroom::"Inside my third bedroom"
+                
+                If 1
+                
+                    "Added to your kitchen!"
+                    Player.modifyActorVar(Kstock_ZellVostro, 1)
+                
+                ElseIf 2
+                
+                    "Added to your living room!"
+                    Player.modifyActorVar(LRstock_ZellVostro, 1)
+                    
+                ElseIf 3
+                
+                    "Added to your bedroom!"
+                    Player.modifyActorVar(MBstock_ZellVostro, 1)
+                    
+                ElseIf 4
+                
+                    "Added to your office room!"
+                    Player.modifyActorVar(Ostock_ZellVostro, 1)
+                    
+                ElseIf 5
+                
+                    "Added to your second bedroom!"
+                    Player.modifyActorVar(SBstock_ZellVostro, 1)
+                    
+                ElseIf 6
+                
+                    "Added to your storage room!"
+                    Player.modifyActorVar(SRstock_ZellVostro, 1)
+                    
+                ElseIf 7
+                
+                    "Added to your third bedroom!"
+                    Player.modifyActorVar(TBstock_ZellVostro, 1)
+                    
+                EndIf
+            
+            ElseIf 1
+            
+                Player.modifyActorVar(stock_LPPavilion, -1)
+                
+                "Where I will store this computer?"
+                1::isModEnabled(nn_HomeExpander) && hasKitchen::"Inside my kitchen"
+                2::isModEnabled(nn_HomeExpander) && hasLivingroom ::"Inside my living room"
+                3::"Inside my bedroom"
+                4::isModEnabled(nn_HomeExpander) && hasOfficeroom::"Inside my office room"
+                5::isModEnabled(nn_HomeExpander) && hasSecBedroom::"Inside my second bedroom"
+                6::isModEnabled(rk_MoneyMaker) || isModEnabled(rk_Art_items_Shop)::"Inside my storage room"
+                7::isModEnabled(nn_HomeExpander) && hasThirdBedroom::"Inside my third bedroom"
+                
+                If 1
+                
+                    "Added to your kitchen!"
+                    Player.modifyActorVar(Kstock_LPPavilion, 1)
+                
+                ElseIf 2
+                
+                    "Added to your living room!"
+                    Player.modifyActorVar(LRstock_LPPavilion, 1)
+                    
+                ElseIf 3
+                
+                    "Added to your bedroom!"
+                    Player.modifyActorVar(MBstock_LPPavilion, 1)
+                    
+                ElseIf 4
+                
+                    "Added to your office room!"
+                    Player.modifyActorVar(Ostock_LPPavilion, 1)
+                    
+                ElseIf 5
+                
+                    "Added to your second bedroom!"
+                    Player.modifyActorVar(SBstock_LPPavilion, 1)
+                    
+                ElseIf 6
+                
+                    "Added to your storage room!"
+                    Player.modifyActorVar(SRstock_LPPavilion, 1)
+                    
+                ElseIf 7
+                
+                    "Added to your third bedroom!"
+                    Player.modifyActorVar(TBstock_LPPavilion, 1)
+                    
+                EndIf
+            
+            ElseIf 2
+            
+                Player.modifyActorVar(stock_LPware, -1)
+                
+                "Where I will store this computer?"
+                1::isModEnabled(nn_HomeExpander) && hasKitchen::"Inside my kitchen"
+                2::isModEnabled(nn_HomeExpander) && hasLivingroom ::"Inside my living room"
+                3::"Inside my bedroom"
+                4::isModEnabled(nn_HomeExpander) && hasOfficeroom::"Inside my office room"
+                5::isModEnabled(nn_HomeExpander) && hasSecBedroom::"Inside my second bedroom"
+                6::isModEnabled(rk_MoneyMaker) || isModEnabled(rk_Art_items_Shop)::"Inside my storage room"
+                7::isModEnabled(nn_HomeExpander) && hasThirdBedroom::"Inside my third bedroom"
+                
+                If 1
+                
+                    "Added to your kitchen!"
+                    Player.modifyActorVar(Kstock_LPware, 1)
+                
+                ElseIf 2
+                
+                    "Added to your living room!"
+                    Player.modifyActorVar(LRstock_LPware, 1)
+                    
+                ElseIf 3
+                
+                    "Added to your bedroom!"
+                    Player.modifyActorVar(MBstock_LPware, 1)
+                    
+                ElseIf 4
+                
+                    "Added to your office room!"
+                    Player.modifyActorVar(Ostock_LPware, 1)
+                    
+                ElseIf 5
+                
+                    "Added to your second bedroom!"
+                    Player.modifyActorVar(SBstock_LPware, 1)
+                    
+                ElseIf 6
+                
+                    "Added to your storage room!"
+                    Player.modifyActorVar(SRstock_LPware, 1)
+                    
+                ElseIf 7
+                
+                    "Added to your third bedroom!"
+                    Player.modifyActorVar(TBstock_LPware, 1)
+                    
+                EndIf
+            
+            ElseIf 3
+            
+                Player.modifyActorVar(stock_LPX, -1)
+
+                "Where I will store this computer?"
+                1::isModEnabled(nn_HomeExpander) && hasKitchen::"Inside my kitchen"
+                2::isModEnabled(nn_HomeExpander) && hasLivingroom ::"Inside my living room"
+                3::"Inside my bedroom"
+                4::isModEnabled(nn_HomeExpander) && hasOfficeroom::"Inside my office room"
+                5::isModEnabled(nn_HomeExpander) && hasSecBedroom::"Inside my second bedroom"
+                6::isModEnabled(rk_MoneyMaker) || isModEnabled(rk_Art_items_Shop)::"Inside my storage room"
+                7::isModEnabled(nn_HomeExpander) && hasThirdBedroom::"Inside my third bedroom"
+                
+                If 1
+                
+                    "Added to your kitchen!"
+                    Player.modifyActorVar(Kstock_LPX, 1)
+                
+                ElseIf 2
+                
+                    "Added to your living room!"
+                    Player.modifyActorVar(LRstock_LPX, 1)
+                    
+                ElseIf 3
+                
+                    "Added to your bedroom!"
+                    Player.modifyActorVar(MBstock_LPX, 1)
+                    
+                ElseIf 4
+                
+                    "Added to your office room!"
+                    Player.modifyActorVar(Ostock_LPX, 1)
+                    
+                ElseIf 5
+                
+                    "Added to your second bedroom!"
+                    Player.modifyActorVar(SBstock_LPX, 1)
+                    
+                ElseIf 6
+                
+                    "Added to your storage room!"
+                    Player.modifyActorVar(SRstock_LPX, 1)
+                    
+                ElseIf 7
+                
+                    "Added to your third bedroom!"
+                    Player.modifyActorVar(TBstock_LPX, 1)
+                    
+                EndIf
+            
+            EndIf
+        
+        ElseIf 90
             
             "Where I will store this musical instrument?"
             2::isModEnabled(nn_HomeExpander) && hasLivingroom ::"Inside my living room"
