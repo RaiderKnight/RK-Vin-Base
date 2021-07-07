@@ -3,7 +3,7 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Version: 0.0.7</p>
+<p>Version: 0.0.8</p>
 <br>
 <br>
 <p><strong>Rework In Progress (WIP)</strong></p>
@@ -40,14 +40,20 @@
 <br>
 <h3>Module requirements</h3>
 <p>At least the game LifePlay 4.0.4</p>
-<p>- rk_MoneyMaker</p>
-<p>- rk_Home_Inventories</p>
-<p>- rk_Personal_Inventories</p>
-<p>- rk_ShopAddons</p>
-<p>- nn_HomeExpander</p>
+<p>Optional - rk_MoneyMaker - Soon will be included</p>
+<p>Optional - rk_Personal_Inventories - Soon will be included</p>
+<p>Optional - rk_ShopAddons - Soon will be included</p>
+<p>Optional - nn_HomeExpander</p>
 <br>
 <h3>Module conflict</h3>
-<p>rk_MoreInteractions - rk_MoreRides</p>
+<p>All other mods (For the moment...)</p>
+<br>
+<hr>
+<br>
+<h3>Safe Mods</h3>
+<p>- nn_GangsOfLifePlay, nn_PornEmpire, nn_NPCManager, nn_HomeExpander</p>
+<p>- rk_God_Mod, rk_Sex_Guru, rk_Weed_biz</p>
+<p>- vim_RoomPresets</p>
 <br>
 <hr>
 <br>
