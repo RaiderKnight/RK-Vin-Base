@@ -9,6 +9,45 @@ OTHER: none
         stock_cocktail = Player.getActorVar(rk_VB_stock_cocktail)
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        
+        rk_VB_Stock_Ovenandstoves = Player.getActorVar(rk_VB_Stock_Ovenandstoves)
+        rk_VB_Stock_Microwave = Player.getActorVar(rk_VB_Stock_Microwave)
+        
+        rk_VB_Stock_Ovenandstoves1 = Player.getActorVar(rk_VB_Stock_Ovenandstoves1)
+        rk_VB_Stock_Microwave1 = Player.getActorVar(rk_VB_Stock_Microwave1)
+        
+        rk_VB_Stock_Ovenandstoves2 = Player.getActorVar(rk_VB_Stock_Ovenandstoves2)
+        rk_VB_Stock_Microwave2 = Player.getActorVar(rk_VB_Stock_Microwave2)
+        
+        rk_VB_Stock_OvenandstovesSR = Player.getActorVar(rk_VB_Stock_OvenandstovesSR)
+        rk_VB_Stock_MicrowaveSR = Player.getActorVar(rk_VB_Stock_MicrowaveSR)
+        
+        rk_VB_Stock_Ovenandstoves1SR = Player.getActorVar(rk_VB_Stock_Ovenandstoves1SR)
+        rk_VB_Stock_Microwave1SR = Player.getActorVar(rk_VB_Stock_Microwave1SR)
+        
+        rk_VB_Stock_Ovenandstoves2SR = Player.getActorVar(rk_VB_Stock_Ovenandstoves2SR)
+        rk_VB_Stock_Microwave2SR = Player.getActorVar(rk_VB_Stock_Microwave2SR)
+        
+        rk_VB_Stock_OvenandstovesMB = Player.getActorVar(rk_VB_Stock_OvenandstovesMB)
+        rk_VB_Stock_MicrowaveMB = Player.getActorVar(rk_VB_Stock_MicrowaveMB)
+        
+        rk_VB_Stock_Ovenandstoves1MB = Player.getActorVar(rk_VB_Stock_Ovenandstoves1MB)
+        rk_VB_Stock_Microwave1MB = Player.getActorVar(rk_VB_Stock_Microwave1MB)
+        
+        rk_VB_Stock_Ovenandstoves2MB = Player.getActorVar(rk_VB_Stock_Ovenandstoves2MB)
+        rk_VB_Stock_Microwave2MB = Player.getActorVar(rk_VB_Stock_Microwave2MB)
+        
+        rk_VB_Stock_OvenandstovesK = Player.getActorVar(rk_VB_Stock_OvenandstovesK)
+        rk_VB_Stock_MicrowaveK = Player.getActorVar(rk_VB_Stock_MicrowaveK)
+        
+        rk_VB_Stock_Ovenandstoves1K = Player.getActorVar(rk_VB_Stock_Ovenandstoves1K)
+        rk_VB_Stock_Microwave1K = Player.getActorVar(rk_VB_Stock_Microwave1K)
+        
+        rk_VB_Stock_Ovenandstoves2K = Player.getActorVar(rk_VB_Stock_Ovenandstoves2K)
+        rk_VB_Stock_Microwave2K = Player.getActorVar(rk_VB_Stock_Microwave2K)
+        
+        Stock_Ovenandstoves = rk_VB_Stock_Ovenandstoves + rk_VB_Stock_Ovenandstoves1 + rk_VB_Stock_Ovenandstoves2 + rk_VB_Stock_OvenandstovesSR + rk_VB_Stock_Ovenandstoves1SR + rk_VB_Stock_Ovenandstoves2SR + rk_VB_Stock_OvenandstovesMB + rk_VB_Stock_Ovenandstoves1MB + rk_VB_Stock_Ovenandstoves2MB + rk_VB_Stock_OvenandstovesK + rk_VB_Stock_Ovenandstoves1K + rk_VB_Stock_Ovenandstoves2K
+        Stock_Microwaves = rk_VB_Stock_Microwave + rk_VB_Stock_Microwave1 + rk_VB_Stock_Microwave2 + rk_VB_Stock_MicrowaveSR + rk_VB_Stock_Microwave1SR + rk_VB_Stock_Microwave2SR + rk_VB_Stock_MicrowaveMB + rk_VB_Stock_Microwave1MB + rk_VB_Stock_Microwave2MB + rk_VB_Stock_MicrowaveK + rk_VB_Stock_Microwave1K + rk_VB_Stock_Microwave2K
 
         If HungerEnable > 0 && Hunger < 9
             
@@ -21,7 +60,7 @@ OTHER: none
         Else
         
             "What should I produce?"
-            1:: stock_ingredient >= 1.8 ::"Cook a meal (-2 ingredient)" 
+            1:: stock_ingredient >= 1.8 && [Stock_Ovenandstoves > 0 || Stock_Microwaves > 0] ::"Cook a meal (-2 ingredient)" 
             3:: stock_alcohol >= 0.8 ::"Make a cocktail (-1 alcohol)" 
             6:: stock_ingredient >= 0.8 ::"Make a snack (-1 ingredient)" 
             99:: "Go back!"
