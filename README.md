@@ -3,7 +3,7 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Version: 0.0.8</p>
+<p>Version: 0.0.9</p>
 <br>
 <br>
 <p><strong>Rework In Progress (WIP)</strong></p>
@@ -41,8 +41,6 @@
 <h3>Module requirements</h3>
 <p>At least the game LifePlay 4.0.4</p>
 <p>Optional - rk_MoneyMaker - Soon will be included</p>
-<p>Optional - rk_Personal_Inventories - Soon will be included</p>
-<p>Optional - rk_ShopAddons - Soon will be included</p>
 <p>Optional - nn_HomeExpander</p>
 <br>
 <h3>Module conflict</h3>
@@ -96,8 +94,9 @@
 <h3>Contributors</h3>
 <a href="https://raiderknight-mods.fandom.com/wiki/List_of_contributors_for_Remake_of_LifePlay" title="List of contributions">List of contributions made by contributors.</a>
 <br>
-<ul><li>Ravenger6660 - Modder
-</li></ul>
+<ul>
+<li>Ravenger6660 - Modder</li>
+</ul>
 <br>
 <hr>
 <br>

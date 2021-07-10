@@ -1,0 +1,98 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        IBuyMeat = Player.getActorVar(rk_VB_IBuyMeat)
+        
+        If money < -1
+            Player(Anxious)::"I am in debt. The stores will not sell me anything."
+        Else
+        
+            Player(Curious)::"There is a lot of good meaty dishes here."
+            
+            // Get current meat dishes prices for each types
+            price_Jerkey = Random(3, 6)
+            price_Jerkey_local = price_Jerkey.convertToLocalCurrency()
+            price_Cheesesteak = Random(5, 9)
+            price_Cheesesteak_local = price_Cheesesteak.convertToLocalCurrency()
+            price_Chicken = Random(12, 14)
+            price_Chicken_local = price_Chicken.convertToLocalCurrency()
+            price_SaltNPepper = Random(15, 16)
+            price_SaltNPepper_local = price_SaltNPepper.convertToLocalCurrency()
+            price_WrappedPork = Random(17, 19)
+            price_WrappedPork_local = price_WrappedPork.convertToLocalCurrency()
+            price_ChickenKebabs = Random(20, 23)
+            price_ChickenKebabs_local = price_ChickenKebabs.convertToLocalCurrency()
+            price_ChineseBeef = Random(25, 28)
+            price_ChineseBeef_local = price_ChineseBeef.convertToLocalCurrency()
+            price_SurfNTurf = Random(30, 35)
+            price_SurfNTurf_local = price_SurfNTurf.convertToLocalCurrency()
+     
+            Player(Curious)::"Which type of meal shall I buy?"
+            0:: money >= 1 ::"1 Beef Jerkey bag for <price_Jerkey_local>"
+            1:: money >= 3 ::"1 Philly Cheesesteak for <price_Cheesesteak_local>"
+            2:: money >= 10 ::"1 Chicken schnitzel for <price_Chicken_local>"
+            3:: money >= 13 ::"1 Salt-and-Pepper Steak for <price_SaltNPepper_local>"
+            4:: money >= 15 ::"1 Bacon-Wrapped Pork for <price_WrappedPork_local>"
+            5:: money >= 18 ::"1 Chicken Kebabs with rice for <price_ChickenKebabs_local>"
+            6:: money >= 22 ::"1 Chinese Beef & Broccoli for <price_ChineseBeef_local>"
+            7:: money >= 28 ::"1 Surf 'n Turf for <price_SurfNTurf_local>"
+            99:: "Don't buy anything"
+                   
+            If 0
+                Player.modifyActorVar(stock_Jerkey, 1)
+                money -= price_Jerkey
+                Player(Excited)::"1 Beef Jerkey bag added to my refrigerator!"
+                Player.modifyActorVar(rk_VB_IBuyMeat, 1)
+                        
+            ElseIf 1
+                Player.modifyActorVar(stock_Cheesesteak, 1)
+                money -= price_Cheesesteak
+                Player(Excited)::"1 Philly Cheesesteak added to my refrigerator!"
+                Player.modifyActorVar(rk_VB_IBuyMeat, 1)
+                        
+            ElseIf 2
+                Player.modifyActorVar(stock_Chicken, 1)
+                money -= price_Chicken
+                Player(Excited)::"1 Chicken schnitzel added to my refrigerator!"
+                Player.modifyActorVar(rk_VB_IBuyMeat, 1)
+                        
+            ElseIf 3
+                Player.modifyActorVar(stock_SaltNPepper, 1)
+                money -= price_SaltNPepper
+                Player(Excited)::"1 Salt-and-Pepper Steak added to my refrigerator!"
+                Player.modifyActorVar(rk_VB_IBuyMeat, 1)
+            
+            ElseIf 4
+                Player.modifyActorVar(stock_WrappedPork, 1)
+                money -= price_WrappedPork
+                Player(Excited)::"1 Bacon-Wrapped Pork added to my refrigerator!"
+                Player.modifyActorVar(rk_VB_IBuyMeat, 1)
+                
+            ElseIf 5
+                Player.modifyActorVar(stock_ChickenKebabs, 1)
+                money -= price_ChickenKebabs
+                Player(Excited)::"1 Chicken Kebabs added to my refrigerator!"
+                Player.modifyActorVar(rk_VB_IBuyMeat, 1)
+    
+            ElseIf 6
+                Player.modifyActorVar(stock_ChineseBeef, 1)
+                money -= price_ChineseBeef
+                Player(Excited)::"1 Chinese Beef & Broccoli added to my refrigerator!"
+                Player.modifyActorVar(rk_VB_IBuyMeat, 1)
+    
+            ElseIf 7
+                Player.modifyActorVar(stock_SurfNTurf, 1)
+                money -= price_SurfNTurf
+                Player(Excited)::"1 Surf 'n Turf added to my refrigerator!"
+                Player.modifyActorVar(rk_VB_IBuyMeat, 1)
+       
+            EndIf
+            
+        EndIf
+    
+    SceneEnd()

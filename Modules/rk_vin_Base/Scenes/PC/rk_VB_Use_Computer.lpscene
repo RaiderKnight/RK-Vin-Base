@@ -109,15 +109,13 @@ OTHER: none
         
         Ostock_Computer = Ostock_ZellVostro + Ostock_LPPavilion + Ostock_LPware + Ostock_LPX
         OStock_phones = Ostock_IPhone + Ostock_Samsung + Ostock_OnePlus + Ostock_LPGPower
+        Ostock_Computer = Ostock_ZellVostro + Ostock_LPPavilion + Ostock_LPware + Ostock_LPX
 
+        Stock_Computers = Ostock_Computer + SRstock_Computer + LRstock_Computer + MBstock_Computer + SBstock_Computer + Kstock_Computer + TBstock_Computer + stock_Computer
+        IBuyaComputer = Player.getActorVar(rk_VB_IBuyaComputer) // How many computers I buy?
         
-        Stock_Computers = Ostock_Computer + SRstock_Computer + LRstock_Computer + MBstock_Computer + SBstock_Computer + Kstock_Computer + TBstock_Computer
 
-        If !isModEnabled(rk_ShopAddons)
-            
-            "You need to enable Shop-Addons mod to be able to use a computer...."
-            
-        ElseIf Stock_Computers <= 0
+        If Stock_Computers <= 0 || IBuyaComputer <= 0
         
             "You don't have any computer to play with... Go buy a computer at any shop!"
         
@@ -172,6 +170,9 @@ OTHER: none
                 Random
                     Game1 = "Card games"
                     Game1 = "MahJong"
+                    Game1 = "Minesweeper"
+                    Game1 = "Sudoku"
+                    Game1 = "Word Games"
                 EndRandom
                 "What I should do?"
                 0::"Play LifePlay"
@@ -188,9 +189,7 @@ OTHER: none
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
                     EndIf
-                    
-                ElseIf 10
-                ElseIf 20
+
                 ElseIf 30
                     Player.animate(browse)
                     "I decided to play <Game1> on my pc..."

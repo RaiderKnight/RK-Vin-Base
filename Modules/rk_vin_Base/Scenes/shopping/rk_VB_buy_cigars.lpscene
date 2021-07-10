@@ -1,0 +1,75 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        If money < -15
+            Player(Anxious)::"I am in debt. The store will not sell me any cigars."
+        Else
+            // Get current cigars strains
+            price_Davidoff = Random(20, 24)
+            price_Davidoff_local = price_Davidoff.convertToLocalCurrency()
+            price_RomeoJulieta = Random(25, 40)
+            price_RomeoJulieta_local = price_RomeoJulieta.convertToLocalCurrency()
+            price_Montecristo = Random(50, 75)
+            price_Montecristo_local = price_Montecristo.convertToLocalCurrency()
+            price_KingDenmark = Random(100, 150)
+            price_KingDenmark_local = price_KingDenmark.convertToLocalCurrency()
+            price_Cohiba = Random(1000, 2000)
+            price_Cohiba_local = price_Cohiba.convertToLocalCurrency()
+            IBuyaCigar = Player.getActorVar(rk_VB_IBuyaCigar)
+            
+            Player::"Which cigar I will buy?"
+            Player::"There are many variety of cigars here. Honestly, I will take my time to smell each of them !"
+            0:: money >= 0:: "1 Davidoff Yamasá for <price_Davidoff_local>"
+            1:: money >= 0:: "1 Romeo y Julieta for <price_RomeoJulieta_local>"
+            2:: money >= 0:: "1 Montecristo for <price_Montecristo_local>"
+            3:: money >= 0:: "1 King of Denmark Limited Edition for <price_KingDenmark_local>"
+            4:: money >= 0:: "1 Cohiba for <price_Cohiba_local>"
+            8:: "Buy nothing"
+        
+            If 0
+            
+                "1 Davidoff added to my pockets"
+                Player.modifyActorVar(stock_Davidoff, 1)
+                money -= price_Davidoff
+                Player.modifyActorVar(rk_VB_IBuyaCigar, 1)
+                                
+            Elseif 1
+            
+                "1 Romeo y Julieta added to my pockets"
+            
+                Player.modifyActorVar(stock_Romeo, 1)
+                money -= price_RomeoJulieta
+                Player.modifyActorVar(rk_VB_IBuyaCigar, 1)
+                
+            Elseif 2
+            
+                "1 Montecristo added to my pockets"
+            
+                Player.modifyActorVar(stock_Montecristo, 1)
+                money -= price_Montecristo
+                Player.modifyActorVar(rk_VB_IBuyaCigar, 1)
+                
+            Elseif 3
+            
+                "1 King of Denmark added to my pockets"
+            
+                Player.modifyActorVar(stock_KDcigars, 1)
+                money -= price_KingDenmark
+                Player.modifyActorVar(rk_VB_IBuyaCigar, 1)
+                
+            Elseif 4
+            
+                "1 Cohiba added to my pockets"
+            
+                Player.modifyActorVar(stock_Cohiba, 1)
+                money -= price_Cohiba
+                Player.modifyActorVar(rk_VB_IBuyaCigar, 1)
+                
+            Endif
+        Endif   
+    SceneEnd()

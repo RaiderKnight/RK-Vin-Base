@@ -1,0 +1,162 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        If  money < -1 
+            Player(Anxious)::"Ok, no money to eat! I need to find a job I guess... !"
+        Else
+            
+            Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            IBuyBakery = Player.getActorVar(rk_VB_IBuyBakery)
+            // Get current pastry and breads prices for each types
+            price_Pita = Random(1.5, 3)
+            price_Pita_local = price_Pita.convertToLocalCurrency()
+            price_Bread = Random(3, 4)
+            price_Bread_local = price_Bread.convertToLocalCurrency()
+            price_Bagel = Random(4, 5)
+            price_Bagel_local = price_Bagel.convertToLocalCurrency()
+            price_BaltikBread = Random(5, 6)
+            price_BaltikBread_local = price_BaltikBread.convertToLocalCurrency()
+            price_ProteinCookie = Random(2.5, 4)
+            price_ProteinCookie_local = price_ProteinCookie.convertToLocalCurrency()
+            price_VdolkyDonut = Random(3.5, 5)
+            price_VdolkyDonut_local = price_VdolkyDonut.convertToLocalCurrency()
+            price_ApplePie = Random(5, 6)
+            price_ApplePie_local = price_ApplePie.convertToLocalCurrency()
+            price_RoyalCake = Random(7, 8)
+            price_RoyalCake_local = price_RoyalCake.convertToLocalCurrency()
+            
+            Player::"Which type of bread or pastry shall I buy?"
+            0:: money >= 0 ::"1 pita for <price_Pita_local>"
+            1:: money >= 2 ::"1 Nutricious bread for <price_Bread_local>"
+            2:: money >= 3 ::"1 Whole grain bagel for <price_Bagel_local>"
+            3:: money >= 4 ::"1 Baltik bread for <price_BaltikBread_local>"
+            4:: money >= 1 ::"1 Protein cookie for <price_ProteinCookie_local>"
+            5:: money >= 2 ::"1 Vdolky donut for <price_VdolkyDonut_local>"
+            6:: money >= 4 ::"1 Homemade apple pie for <price_ApplePie_local>"
+            7:: money >= 5 ::"1 Royal cake for <price_RoyalCake_local>"
+            8:: "Bah! I'm not hungry !"
+            
+            If 0
+                mood += 0.5
+                energy += 1
+                fitness += 1
+                money -= price_Pita
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 1)
+                EndIf
+                
+                
+            Elseif 1
+                mood += 1
+                energy += 3
+                fitness += 2
+                money -= price_Bread
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 3)
+                EndIf
+            
+            Elseif 2
+                mood += 1
+                energy += 4
+                fitness += 3
+                money -= price_Bagel
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 4)
+                EndIf
+            
+            Elseif 3
+                mood += 2
+                energy += 5
+                fitness += 4
+                money -= price_BaltikBread
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger,5)
+                EndIf
+            
+            Elseif 4
+                mood += 2
+                energy += 3
+                fitness += 1
+                money -= price_ProteinCookie
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 5)
+                EndIf
+            
+            Elseif 5
+                mood += 3
+                energy += 3
+                fitness -= 1
+                money -= price_VdolkyDonut
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 3)
+                EndIf
+            
+            Elseif 6
+                mood += 4
+                energy += 4
+                fitness -= 1
+                money -= price_ApplePie
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 4)
+                EndIf
+            
+            Elseif 7
+                mood += 6
+                energy += 5
+                fitness -= 2
+                money -= price_RoyalCake
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 3)
+                EndIf
+                
+            Endif
+            
+        Endif
+    
+    SceneEnd()

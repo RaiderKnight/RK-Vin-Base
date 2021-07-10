@@ -1,0 +1,283 @@
+WHAT: all
+WHERE: all, -prison
+WHEN: 18-24
+WHO: Friend = getPerson(true); If Friend.isInterestedIn(Player) && Random(50, 100) < Friend:perversion && Random(30, 100) < Friend:attractiontoplayer
+OTHER: Player.isMale() && Player:perversion > 35
+
+    SceneStart()
+        
+        IBuyPopcorn = Player.getActorVar(rk_VB_IBuyPopcorn)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Friend.dress()
+        price_movie = Random(10, 16)
+        price_movie_local = price_movie.convertToLocalCurrency()
+        
+        price_ButterPopcorn = Random(5, 8)
+        price_ButterPopcorn_local = price_ButterPopcorn.convertToLocalCurrency()
+        
+        Total_price_movie = price_movie + price_ButterPopcorn
+        Total_price_movie_local = Total_price_movie.convertToLocalCurrency()
+        
+        "I get a call from my <Friend.relationship> <Friend.name>, <Friend.he_or_she> asks me if I want to go see a movie at the cinema with <Friend.him_or_her>."
+        "What I answer <Friend.him_or_her>?"
+        0:: Player:money >= Total_price_movie ::"Yes"
+        1::"No"
+        
+        If 0
+            
+            Friend.dress()
+            Friend.show(2)
+            moveTo(cinema)
+            setBackground(cinema)
+            
+            "A few minutes later, we meet at the cinema, I pay <Friend.him_or_her> <Friend.his_or_her> admission and we enter the cinema room to find a seat ..."
+            Player:money -= price_movie
+            
+            passTime(0.25, 0.50)
+            
+            "I'm watching a movie with <Friend.name>. There's hardly no one in the cinema room and it's really dark in here."
+            "Do I take advantage of the situation:"
+            0:: Player:perversion >= 50 ::"By inserting my penis in the popcorn"
+            1:: "By trying to caress and kiss <Friend.him_or_her>"
+            2:: "Just watch the movie"
+            
+            If 0
+            
+                Player(Happy):: "I want to eat popcorns ! You want some?"
+                Friend(Happy):: "No, but I will take some from your bucket, so take a big one! Extra butter!"
+                Player(Happy):: "I'll go buy some and I'm back in a few..."
+                
+                Player.hide()
+    
+                "Few minutes later... I buy a popcorns bucket at <price_ButterPopcorn_local>"
+                Player:money -= price_ButterPopcorn
+                Player:perversion += Random(0, 1)
+                
+                passTime(0.1, 0.15)
+                
+                "Right before I go sit next to <Friend.name>, I decide to discreetly make a hole in the bottom of the popcorn bucket."
+                "A hole big enough to slip my cock in. Once done, I head to the cinema room to join <Friend.name>, with one hand holding the popcorn down."
+                "But, on the way I pass <Friend.name>, I don't even have time to ask <Friend.him_or_her> where <Friend.he_or_she>'s going! <Friend.He_or_She> answers me:"
+                Friend(Happy):: "I'm just going to the bathroom, the movie didn't start yet, so,..I'll be right back."
+                
+                Friend.hide()
+                
+                "Good, that will give me time to put my plan into action, put a surprise in the popcorn!"
+                
+                Player.show()
+                
+                "I sit comfortably, discreetly insert my cock into the hole at the bottom of the popcorn bucket, hide my penis and continue to watch the movie while waiting for <Friend.name>."
+                "<Friend.name> finally come back from the bathroom...it's been 5 minutes since the film started!"
+                
+                Friend.show()
+                
+                Friend(Happy)::"Humm! The popcorns looks very yummy!"
+                "<Friend.He_or_She> starts taking a big handful of popcorn and eating her tasty popcorn,... after the third handful of popcorn..."          
+    
+                If Friend.isDating() || Random(50, 125) < Friend:attractiontoplayer + Friend:perversion
+                
+                    Friend(Happy)::"Humm! Looks like they put a surprise inside!"
+                    "<Friend.He_or_She> discreetly begins to throw popcorn under the seat, giving it enough room to play with my penis during the movie."
+                    
+                    Friend.strip()
+                    Player.strip()
+                    Sex(Friend, Player)
+                    Filter(Handjob)
+
+                    Player:perversion += Random(0, 1)
+                    Friend:attractiontoplayer += Random(0, 2)
+                    
+                    If Friend:attractiontoplayer + Friend:perversion > Random(75, 150)
+                        "After I cum in the popcorns, <Friend.he_or_she> eat the rest of the popcorn like an hungry wolf! It's almost disturbing..."
+                        "I wipe my dick off and put it back into my pants. By seeing this,..."
+                        "Do I suggest <Friend.him_or_her> that we could have more fun?"                    
+                    Else
+                        "After I cum in the popcorns,... wipe my dick off and put it back into my pants."
+                        "Do I suggest <Friend.him_or_her> that we could have more fun?"
+                    Endif
+                    
+                    
+                    0:: "Stop it there"
+                    1:: Player:perversion > 15:: "Invite <Friend.him_or_her> home"
+                    2:: Player:perversion > 50:: "Have sex right here"
+                    
+                    If 0
+                    
+                        "That's enough. We should stop before another moviegoer spots us and complains to the manager..."
+                        
+                    Elseif 1
+                    
+                        "I whispered into <Friend.his_or_her> ear, suggesting that we could go to my place."
+                        
+                        If Friend.isDating() || Random(50, 125) < Friend:attractiontoplayer + Friend:perversion
+                            
+                            "<Friend.name> grab my dick and nods at me, which means yes! So we leave together in the direction of my place."
+                            moveTo(home)
+                            setBackground(home)
+                            "As soon as we are inside, the sexual urges have become too strong to resist any longer. We undress right away and we start having fun!"
+                            
+                            Friend.strip()
+                            Player.strip()
+                            Sex(Friend, Player)
+                            Player:perversion += Random(0, 0.25)
+                            Friend:attractiontoplayer += Random(0, 2)
+                            
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
+                            
+                        Else
+                        
+                            "<Friend.name> shook <Friend.his_or_her> head, clearly signalling that <Friend.he_or_she> didn't want to go any further than a handjob."
+                            Friend:attractiontoplayer -= Random(0, 1)
+                            
+                        Endif
+                        
+                    Else
+                        "I whispered into <Friend.his_or_her> ear, suggesting that we get much more intimate right here in the cinema."
+                        
+                        If Friend.isDating() || Random(75, 150) < Friend:attractiontoplayer + Friend:perversion
+                            
+                            "<Friend.name> nodded and soon enough, we were undressing each other right there in the cinema."
+                            
+                            Friend.strip()
+                            Player.strip()
+                            Sex(Friend, Player)
+                            Player:perversion += Random(0, 1)
+                            Friend:attractiontoplayer += Random(0, 2)
+                            
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
+                            
+                        Else
+                        
+                            "<Friend.name> shook <Friend.his_or_her> head, clearly signalling that <Friend.he_or_she> didn't think such shameless public sex is a good idea."
+                            Friend:attractiontoplayer -= Random(0, 1)
+                        
+                        Endif
+                        
+                    Endif
+                
+                Else
+                    Friend(Angry):: "What the fuck <Player.name>! You are a fucking disgusting person, you know that! You really need a doctor, damn pervert!"
+                    Player(Flirty)::"What's the matter? I thought you wanted popcorns with extra butter..."
+                    Friend.hide()
+                    "And just like that, <Friend.name> slapped the popcorns bucket away and stormed out of the cinema, leaving me behind feeling embarrassed with all the other cinema goers now looking at me as a pervert."
+                    Player:mood -= 50
+                    Friend:attractiontoplayer -= Random(0, 6)
+                    Friend:rapportwithplayer -= Random(0, 6)
+                    endDate()
+                EndIf
+
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 0.25)
+                EndIf
+            
+            ElseIf 1
+            
+                "I try to caress and kiss <Friend.name>!"
+                
+                If Friend.isDating() || Random(20, 75) < Friend:attractiontoplayer + Friend:perversion
+                    
+                    "<Friend.name> responded in kind and started caressing me as well."
+                    AnimatePair(Player, Friend, Kissing)
+                    Player(Kiss):: "..."
+                    Friend(Kiss):: "..."
+                    "Eventually, we started making out, right there in the theatre."
+                    Friend:attractiontoplayer += Random(0, 2)
+                    
+                    0:: "Stop it there"
+                    1:: Player:perversion > 5:: "Invite <Friend.him_or_her> home"
+                    2:: Player:perversion > 50:: "Have sex right here"
+                    
+                    If 0
+                    
+                        "That's enough. We should stop before another moviegoer spots us and complains to the manager..."
+                        
+                    Elseif 1
+                    
+                        "I whispered into <Friend.his_or_her> ear, suggesting that we could go to my place."
+                        
+                        If Friend.isDating() || Random(50, 125) < Friend:attractiontoplayer + Friend:perversion
+                            
+                            "<Friend.name> touches my thigh and nods at me, which means yes! So we leave together in the direction of my place."
+                            moveTo(home)
+                            setBackground(home)
+                            "As soon as we are inside, the sexual urges have become too strong to resist any longer. We undress right away and we start having fun!"
+                            
+                            Friend.strip()
+                            Player.strip()
+                            Sex(Friend, Player)
+                            Player:perversion += Random(0, 0.25)
+                            Friend:attractiontoplayer += Random(0, 2)
+                            
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
+                            
+                        Else
+                        
+                            "<Friend.name> shook <Friend.his_or_her> head, clearly signalling that <Friend.he_or_she> didn't want to go any further than kissing."
+                            Friend:attractiontoplayer -= Random(0, 1)
+                            
+                        Endif
+                        
+                    Else
+                        "I whispered into <Friend.his_or_her> ear, suggesting that we get much more intimate right here in the cinema."
+                        
+                        If Friend.isDating() || Random(75, 150) < Friend:attractiontoplayer + Friend:perversion
+                            
+                            "<Friend.name> nodded and soon enough, we were undressing each other right there in the cinema."
+                            
+                            Friend.strip()
+                            Player.strip()
+                            Sex(Friend, Player)
+                            Player:perversion += Random(0, 1)
+                            Friend:attractiontoplayer += Random(0, 2)
+                            
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
+                            
+                        Else
+                        
+                            "<Friend.name> shook <Friend.his_or_her> head, clearly signalling that <Friend.he_or_she> didn't think such shameless public sex is a good idea."
+                            Friend:attractiontoplayer -= Random(0, 1)
+                        
+                        Endif
+                        
+                    Endif
+    
+                Else
+                
+                    Friend(Angry):: "Eh, <Player.name>! What do you think you're doing? I don't want to kiss and never fuck on the first night!"
+                    "Calm yourself cry baby! Ok, maybe it was too fast!"
+                    
+                    Friend.hide()
+                    Player:mood -= 50
+                    
+                    "And just like that, <Friend.name> pushed me away and walked out of the cinema, leaving me behind and embarrassed."
+                    Friend:attractiontoplayer -= Random(0, 5)
+                    Friend:rapportwithplayer -= Random(0, 5)
+                    endDate()
+                    
+                EndIf
+                
+            ElseIf 2
+            
+                "Let's not try anything funny and just enjoy the movie."
+                "We watched the movie together and enjoyed our lovely evening."
+                "After the film, we chatted a bit outside the cinema and then we each went home."
+            
+            EndIf
+            
+        ElseIf 1
+        
+            Player(Sad):: "Sorry, I would have liked to go but I have some important things to do today!"
+            
+        EndIf
+        
+    SceneEnd()
+    timeout(98, rk_Deep_in_Popcorns)

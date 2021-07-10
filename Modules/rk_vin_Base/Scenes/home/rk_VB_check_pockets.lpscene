@@ -1,0 +1,186 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        
+        // Get current items inside inventory
+        stock_IPhone = Player.getActorVar(stock_IPhone)
+        stock_Samsung = Player.getActorVar(stock_Samsung)
+        stock_OnePlus = Player.getActorVar(stock_OnePlus)
+        stock_LPGPower = Player.getActorVar(stock_LPGPower)
+        Stock_phones = Pockstock_IPhone + Pockstock_Samsung + Pockstock_OnePlus + Pockstock_LPGPower
+
+        Pockstock_IPhone = Player.getActorVar(Pockstock_IPhone)
+        Pockstock_Samsung = Player.getActorVar(Pockstock_Samsung)
+        Pockstock_OnePlus = Player.getActorVar(Pockstock_OnePlus)
+        Pockstock_LPGPower = Player.getActorVar(Pockstock_LPGPower)
+        
+        stock_AK47weed = Player.getActorVar(stock_AK47weed)
+        stock_SSweed = Player.getActorVar(stock_SSweed)
+        stock_WWweed = Player.getActorVar(stock_WWweed)
+        stock_PEweed = Player.getActorVar(stock_PEweed)
+        stock_OGKweed = Player.getActorVar(stock_OGKweed)
+        stock_GSCweed = Player.getActorVar(stock_GSCweed)
+        stock_BBweed = Player.getActorVar(stock_BBweed)
+        stock_GGweed = Player.getActorVar(stock_GGweed)
+        
+        weedstck = stock_AK47weed + stock_SSweed + stock_WWweed + stock_PEweed + stock_OGKweed + stock_GSCweed + stock_BBweed + stock_GGweed
+        
+        stock_Davidoff = Player.getActorVar(stock_Davidoff)
+        stock_Romeo = Player.getActorVar(stock_Romeo)
+        stock_KDcigars = Player.getActorVar(stock_KDcigars)
+        stock_Cohiba = Player.getActorVar(stock_Cohiba)
+        stock_Montecristo = Player.getActorVar(stock_Montecristo)
+
+        emptycigarStck = stock_Davidoff + stock_Romeo + stock_KDcigars + stock_Cohiba + stock_Montecristo
+        
+        stock_PopRocks = Player.getActorVar(stock_PopRocks)
+        stock_CottonCandy = Player.getActorVar(stock_CottonCandy)
+        stock_GummiBears = Player.getActorVar(stock_GummiBears)
+        stock_Smarties = Player.getActorVar(stock_Smarties)
+        stock_JollyRanchers = Player.getActorVar(stock_JollyRanchers)
+        stock_PeanutCups = Player.getActorVar(stock_PeanutCups)
+        stock_Licorice = Player.getActorVar(stock_Licorice)
+        stock_PowerBar = Player.getActorVar(stock_PowerBar)
+        stock_BigBallHickey = Player.getActorVar(stock_BigBallHickey)
+        stock_SweetTarts  = Player.getActorVar(stock_SweetTarts)
+        stock_confectioneryprod = stock_BigBallHickey + stock_PopRocks + stock_CottonCandy + stock_GummiBears + stock_Smarties + stock_JollyRanchers + stock_PeanutCups + stock_Licorice + stock_PowerBar + stock_SweetTarts
+        
+        stock_Vapraspberry = Player.getActorVar(stock_Vapraspberry)
+        stock_Vapgrape = Player.getActorVar(stock_Vapgrape)
+        stock_Vapstrawberry = Player.getActorVar(stock_Vapstrawberry)
+        stock_Vaplemon = Player.getActorVar(stock_Vaplemon)
+        stock_VapKanzi = Player.getActorVar(stock_VapKanzi)
+    
+        vapProdStck = stock_Vapraspberry + stock_Vapgrape + stock_Vapstrawberry + stock_Vaplemon + stock_VapKanzi
+    
+        pockets_inventory = weedstck + emptycigarStck + stock_confectioneryprod + vapProdStck + Stock_phones
+    
+    If pockets_inventory < 1 
+        Player(Anxious)::"I got nothing inside my pockets !"
+    Else
+
+        stayInMenu = true
+        While stayInMenu
+        
+            Player(Curious)::"Let see what I have inside my pockets."
+            0:: stock_confectioneryprod > 0 ::"Check candy inventory (<stock_confectioneryprod>)"
+            10:: emptycigarStck > 0 ::"Check cigars inventory (<emptycigarStck>)"
+            20:: vapProdStck > 0 ::"Check vape juice inventory (<vapProdStck>)"
+            30:: weedstck > 0 ::"Check weed inventory (<weedstck>)"
+            40:: Stock_phones > 0 ::"Check mobile phone inventory (<Stock_phones>)"
+            50:: stock_confectioneryprod > 0 ::"Eat a candy"
+            60:: emptycigarStck > 0 ::"Smoke a cigars"
+            70:: vapProdStck > 0 ::"Smoke vape juice"
+            80:: weedstck > 0 ::"Smoke weed"
+            99::"Nevermind, I will check later !"
+        
+            If 0
+                If  stock_confectioneryprod  < 1
+                    Player(Anxious)::"Ok, I don't have any candies! I have to go shopping or stopping eating too much candies !"
+                Else
+                    0:: "<stock_PopRocks> box(es) of Pop Rocks"
+                    0:: "<stock_CottonCandy> Cotton Candy"
+                    0:: "<stock_BigBallHickey> Lollipop(s)"
+                    0:: "<stock_GummiBears> pack(s) of Gummi Bears"
+                    0:: "<stock_Smarties> box(es) of Smarties"
+                    0:: "<stock_JollyRanchers> pack(s) of Jolly Ranchers"
+                    0:: "<stock_PeanutCups> pack(s) of Peanut Butter Cups"
+                    0:: "<stock_Licorice> pack(s) of Licorices"
+                    0:: "<stock_PowerBar> power bar(s)"
+                    0:: "<stock_SweetTarts> pack(s) of Sweet Tarts"
+                    99:: "Go back !"
+                
+                Endif
+            
+            Elseif 10
+                If emptycigarStck  < 1
+                    Player(Anxious)::"Ok, I don't have any cigars! I have to go shopping to the tobacco store !"
+                Else
+                    0:: "<stock_Davidoff> Davidoff Yamasá"
+                    0:: "<stock_Romeo> Romeo y Julieta"
+                    0:: "<stock_Montecristo> Montecristo"
+                    0:: "<stock_KDcigars> King of Denmark Limited Edition"
+                    0:: "<stock_Cohiba> Cohiba Behike"
+                    99:: "Go back !"
+                
+                Endif
+        
+            Elseif 20
+                If vapProdStck  < 1
+                    Player(Anxious)::"Ok, I don't have any vape juices! I have to go shopping to get more vape juice !"
+                Else
+
+                    0:: "<stock_Vapraspberry> bottle(s) of blue raspberry"
+                    0:: "<stock_Vapgrape> bottle(s) of redcurrant, grape & cherry"
+                    0:: "<stock_Vapstrawberry> bottle(s) of strawberry guava"
+                    0:: "<stock_Vaplemon> bottle(s) of lemon berry pie"
+                    0:: "<stock_VapKanzi> bottle(s) of Kanzi"
+                    99:: "Go back !"
+
+                Endif
+            
+            Elseif 30
+                If weedstck  < 1
+                    Player(Anxious)::"Ok, I don't have any weed! Damn! I have to go shopping to the tobacco store to rebatch!"
+                Else
+            
+                    0:: "<stock_AK47weed> gram(s) of AK 47"
+                    0:: "<stock_SSweed> gram(s) of Sunset Sherbet"
+                    0:: "<stock_WWweed> gram(s) of White Widow"
+                    0:: "<stock_PEweed> gram(s) of Pineapple Express"
+                    0:: "<stock_OGKweed> gram(s) of OG Kush"
+                    0:: "<stock_GSCweed> gram(s) of Girl Scout Cookies"
+                    0:: "<stock_BBweed> gram(s) of Bruce Banner"
+                    0:: "<stock_GGweed> gram(s) of Gorilla Glue"
+                    99:: "Go back !"
+                
+                Endif
+            
+            ElseIf 40
+                If Stock_phones  < 1
+                    Player(Anxious)::"Ok, I don't have any phone! Damn! I have to go shopping for a phone if I want to call someone!"
+                Else
+            
+                    0:: "<Pockstock_IPhone> Vinfamy iPhone"
+                    0:: "<Pockstock_Samsung> Galaxy LP ultra"
+                    0:: "<Pockstock_OnePlus> Vin OnePlus Pro"
+                    0:: "<Pockstock_LPGPower> LPlay G Power"
+                    99:: "Go back !"
+            
+                EndIf
+                
+            ElseIf 50
+            
+                followUp(rk_VB_eat_confectionery)
+                stayInMenu = false
+                
+            ElseIf 60
+            
+                followUp(rk_VB_smoke_cigars)
+                stayInMenu = false
+                
+            ElseIf 70
+            
+                followUp(rk_VB_smoke_vape)
+                stayInMenu = false
+                
+            ElseIf 80
+            
+                followUp(rk_VB_smoke_weed)
+                stayInMenu = false
+                
+            ElseIf 99
+            
+                stayInMenu = false
+            
+            Endif
+            
+        EndWhile
+        
+    Endif
+    
+SceneEnd()

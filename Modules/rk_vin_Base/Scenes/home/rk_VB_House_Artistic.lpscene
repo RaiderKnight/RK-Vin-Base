@@ -111,9 +111,14 @@ OTHER: none
         OStock_phones = Ostock_IPhone + Ostock_Samsung + Ostock_OnePlus + Ostock_LPGPower
         
         Stock_phonesP = stock_IPhone + stock_Samsung + stock_OnePlus + stock_LPGPower
+        Stock_phone = stock_IPhone + stock_Samsung + stock_OnePlus + stock_LPGPower
+        stock_Computer = stock_ZellVostro + stock_LPPavilion + stock_LPware + stock_LPX
+        
+        IBuyaComputer = Player.getActorVar(rk_VB_IBuyaComputer) // How many computers I buy?
+        IBuyaPhone = Player.getActorVar(rk_VB_IBuyaPhone) // How many phones I buy?
 
-        Stock_Computers = Ostock_Computer + SRstock_Computer + LRstock_Computer + MBstock_Computer + SBstock_Computer + Kstock_Computer + TBstock_Computer
-        Stock_phones = Stock_phonesP + OStock_phones + SRStock_phones + LRStock_phones + MBStock_phones + SBStock_phones + KStock_phones + TBStock_phones
+        Stock_Computers = Ostock_Computer + SRstock_Computer + LRstock_Computer + MBstock_Computer + SBstock_Computer + Kstock_Computer + TBstock_Computer + stock_Computer
+        Stock_phones = Stock_phonesP + OStock_phones + SRStock_phones + LRStock_phones + MBStock_phones + SBStock_phones + KStock_phones + TBStock_phones + Stock_phone
         
         stock_musicalinstrument_LR = Player.getActorVar(stock_musicalinstrument_LR)
         stock_musicalinstrument_MB = Player.getActorVar(stock_musicalinstrument_MB)
@@ -137,7 +142,7 @@ OTHER: none
             "What should I do?"
             0::"Draw"
             1:: stock_musicalinstruments >= 1 :: "Learn a musical instrument"
-            20:: Stock_Computers > 0 && WHERE != prison :: "Make a mod"
+            20:: [Stock_Computers > 0 || IBuyaComputer > 0] && WHERE != prison :: "Make a mod"
             2:: WHERE != prison :: "Practice singing"
             3:: "Write creatively"
             99:: "Go back!"

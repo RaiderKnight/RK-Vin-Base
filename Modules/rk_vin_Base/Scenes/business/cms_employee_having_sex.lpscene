@@ -110,10 +110,14 @@ OTHER: none
         OStock_phones = Ostock_IPhone + Ostock_Samsung + Ostock_OnePlus + Ostock_LPGPower
         
         Stock_phonesP = stock_IPhone + stock_Samsung + stock_OnePlus + stock_LPGPower
-
+        Stock_phone = stock_IPhone + stock_Samsung + stock_OnePlus + stock_LPGPower
+        stock_Computer = stock_ZellVostro + stock_LPPavilion + stock_LPware + stock_LPX
         
-        Stock_Computers = Ostock_Computer + SRstock_Computer + LRstock_Computer + MBstock_Computer + SBstock_Computer + Kstock_Computer + TBstock_Computer
-        Stock_phones = Stock_phonesP + OStock_phones + SRStock_phones + LRStock_phones + MBStock_phones + SBStock_phones + KStock_phones + TBStock_phones
+        IBuyaComputer = Player.getActorVar(rk_VB_IBuyaComputer) // How many computers I buy?
+        IBuyaPhone = Player.getActorVar(rk_VB_IBuyaPhone) // How many phones I buy?
+
+        Stock_Computers = Ostock_Computer + SRstock_Computer + LRstock_Computer + MBstock_Computer + SBstock_Computer + Kstock_Computer + TBstock_Computer + Stock_Computer
+        Stock_phones = Stock_phonesP + OStock_phones + SRStock_phones + LRStock_phones + MBStock_phones + SBStock_phones + KStock_phones + TBStock_phones + Stock_phone
     
         "Today I was reviewing the weekly recording of my security cameras of my business when I came across a surprise ..."
         Actor2 = generatePersonTemporary()
@@ -122,7 +126,7 @@ OTHER: none
         Actor2.hide()
         "I caught on tape my employee <Actor.name> having a quickie with a customer in the storage room ..."
         0:: "Fire <Actor.him_or_her>"
-        1:: Stock_Computers > 0 || Stock_phones > 0::"Sell video online"
+        1:: Stock_Computers > 0 || Stock_phones > 0 || IBuyaComputer > 0 || IBuyaPhone > 0 ::"Sell video online"
         2:: "Blackmail for sex"
         3:: "Do nothing"
     
@@ -134,11 +138,11 @@ OTHER: none
             
         ElseIf 1
         
-            If Stock_phones > 0
+            If Stock_phones > 0 || IBuyaPhone > 0
             
                 "You open your phone to visit websites...."
             
-            ElseIf Stock_Computers <= 0
+            ElseIf Stock_Computers <= 0 || IBuyaComputer <= 0
                 
                 "You don't have any device to go online... Go buy a computer or a phone at any shop!"
             

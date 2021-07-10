@@ -1,0 +1,104 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        stock_Vapraspberry = Player.getActorVar(stock_Vapraspberry)
+        stock_Vapgrape = Player.getActorVar(stock_Vapgrape)
+        stock_Vapstrawberry = Player.getActorVar(stock_Vapstrawberry)
+        stock_Vaplemon = Player.getActorVar(stock_Vaplemon)
+        stock_VapKanzi = Player.getActorVar(stock_VapKanzi)
+    
+        vapProdStck = stock_Vapraspberry + stock_Vapgrape + stock_Vapstrawberry + stock_Vaplemon + stock_VapKanzi
+        IBuyVapeProd = Player.getActorVar(rk_VB_IBuyVapeProd)
+        
+        SmokeVape = 0
+        If  vapProdStck < 0.5 
+            Player(Anxious)::"After searching everywhere... I don't have enough vape juice for smoking ! Oh well !"
+        Else
+    
+            Player::"Ok, which vape flavour I'm gonna smoke?"
+            0:: stock_Vapraspberry > 0:: "1 bottle of blue raspberry"
+            1:: stock_Vapgrape > 0:: "1 bottle of redcurrant, grape & cherry"
+            2:: stock_Vapstrawberry > 0:: "1 bottle of strawberry guava"
+            3:: stock_Vaplemon > 0:: "1 bottle of lemon berry pie"
+            4:: stock_VapKanzi > 0:: "1 bottle of Kanzi"
+            8:: "Bah! I changed my mind!"
+            
+            If 0
+                
+                Player.modifyActorVar(stock_Vapraspberry, -1)
+                mood += 2
+                energy += 1
+                fitness -= 0.03
+                intoxication += 0.25
+                Player.show()
+                Player.animate(smoke)
+                Player(Excited)::"A sure fire all day vape, perfectly balanced and this one is not too sweet, great value for money."
+                passTime(0.05, 0.15)
+                SmokeVape += 1
+                
+            Elseif 1
+                
+                Player.modifyActorVar(stock_Vapgrape, -1)
+                mood += 1
+                energy -= 1
+                fitness -= 0.03
+                interpersonal += 0.5
+                Player.show()
+                Player.animate(smoke)
+                Player(Excited)::"A rich and complex flavour that balances sweet and sharp perfectly."
+                passTime(0.05, 0.15)
+                SmokeVape += 1
+            
+            Elseif 2
+                
+                Player.modifyActorVar(stock_Vapstrawberry, -1)
+                mood += 4
+                energy += 1
+                fitness -= 0.03
+                interpersonal += 0.75
+                Player.show()
+                Player.animate(smoke)
+                Player(Excited)::"Humm ! A really mouth-watering flavour with only a slight minty hit"
+                passTime(0.05, 0.15)
+                SmokeVape += 1
+            
+            Elseif 3
+                
+                Player.modifyActorVar(stock_Vaplemon, -1)
+                mood += 3
+                energy += 1
+                fitness -= 0.03
+                interpersonal += 1
+                Player.show()
+                Player.animate(smoke)
+                Player(Excited)::"Humm ! A perfect mix of dessert with fruity tones."
+                passTime(0.05, 0.15)
+                SmokeVape += 1
+            
+            Elseif 4
+                
+                Player.modifyActorVar(stock_VapKanzi, -1)
+                mood += 4
+                energy -= 1
+                fitness -= 0.03
+                interpersonal += 1.5
+                Player.show()
+                Player.animate(smoke)
+                Player(Excited)::"Humm ! A nice refreshing combo of watermelon, fresh strawberries with just an edge of tartness from the kiwi."
+                passTime(0.05, 0.15)
+                SmokeVape += 1
+            
+            Endif
+            
+            If SmokeVape > 0
+                Player.modifyActorVar(rk_VB_IBuyVapeProd, -1)
+            Endif
+            
+        Endif
+   
+SceneEnd()

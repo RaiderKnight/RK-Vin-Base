@@ -113,45 +113,62 @@ OTHER: !isWithCompanion() && age > 18
         OStock_phones = Ostock_IPhone + Ostock_Samsung + Ostock_OnePlus + Ostock_LPGPower
         
         Stock_phonesP = stock_IPhone + stock_Samsung + stock_OnePlus + stock_LPGPower
-
+        Stock_phone = stock_IPhone + stock_Samsung + stock_OnePlus + stock_LPGPower
+        stock_Computer = stock_ZellVostro + stock_LPPavilion + stock_LPware + stock_LPX
         
-        Stock_Computers = Ostock_Computer + SRstock_Computer + LRstock_Computer + MBstock_Computer + SBstock_Computer + Kstock_Computer + TBstock_Computer
-        Stock_phones = Stock_phonesP + OStock_phones + SRStock_phones + LRStock_phones + MBStock_phones + SBStock_phones + KStock_phones + TBStock_phones
+        IBuyaComputer = Player.getActorVar(rk_VB_IBuyaComputer) // How many computers I buy?
+        IBuyaPhone = Player.getActorVar(rk_VB_IBuyaPhone) // How many phones I buy?
+        
+        Stock_Computers = Ostock_Computer + SRstock_Computer + LRstock_Computer + MBstock_Computer + SBstock_Computer + Kstock_Computer + TBstock_Computer + stock_Computer
+        Stock_phones = Stock_phonesP + OStock_phones + SRStock_phones + LRStock_phones + MBStock_phones + SBStock_phones + KStock_phones + TBStock_phones + Stock_phone
 
-        If Stock_Computers <= 0 && Stock_phones <= 0
+        If [Stock_Computers <= 0 && Stock_phones <= 0] || [IBuyaComputer <= 0 && IBuyaPhone <= 0]
         
             "You don't have any device to go online... Go buy a computer or a phone at any shop!"
         
         Else
         
-            If !isModEnabled(rk_ShopAddons)
-                
-                "You need to enable Shop-Addons mod to be able to use internet...."
-                
-            ElseIf Stock_phones > 0
+            If Stock_phones > 0 || IBuyaPhone > 0
                 
                 "You open your phone to visit websites...."
                 
-            ElseIf Stock_Computers <= 0
+            ElseIf Stock_Computers <= 0 || IBuyaComputer <= 0
                     
                 "You don't have any device to go online... Go buy a computer or a phone at any shop!"
                 
             Else
-                
-                If WHERE != home && WHERE != fraternity
+        
+                If [Stock_Computers >= 1 && Stock_phones >= 1] || [IBuyaComputer >= 1 && IBuyaPhone >= 1]
                     
-                    SceneStart()
-                        "You cannot use your pc here!"
-                        "You can go online with your pc only if your are at home or in fraternity"
-                        "Buy a phone to be able to go online everywhere!"
-                    SceneEnd()
+                    "Which device you want to use?"
+                    0:: WHERE == home || WHERE == fraternity ::"Computer"
+                    1::"Mobile phone"
+                    
+                    If 0
                         
-                Else
-                
-                    "You open your computer to visit websites..."
+                        "You open your computer to subscribe online..."
+                     
+                    Else
                     
-                EndIf
+                        "You open your phone to subscribe online..."
+                     
+                    EndIf
                 
+                ElseIf Stock_phones >= 1 || IBuyaPhone >= 1
+                
+                    "You open your phone to subscribe online..."
+
+                ElseIf Stock_Computers >= 1 || IBuyaComputer >= 1
+            
+                    "You open your computer to subscribe online..."
+            
+                Else
+            
+                   "You don't have any device to subscribe online!"
+                    SceneEnd()
+                
+                EndIf
+            
             EndIf
         
             "What kind of website I would like to subscribe to?"

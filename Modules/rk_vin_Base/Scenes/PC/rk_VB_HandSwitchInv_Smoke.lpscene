@@ -1,0 +1,81 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        SettingChoiceSwitchS = rk_VB_SettingChoiceSwitchS.getGlobal()
+        
+        stock_Davidoff = Player.getActorVar(stock_Davidoff)
+        stock_Romeo = Player.getActorVar(stock_Romeo)
+        stock_KDcigars = Player.getActorVar(stock_KDcigars)
+        stock_Cohiba = Player.getActorVar(stock_Cohiba)
+        stock_Montecristo = Player.getActorVar(stock_Montecristo)
+        cigarStck = stock_Davidoff + stock_Romeo + stock_KDcigars + stock_Cohiba + stock_Montecristo
+        
+        stock_AK47weed = Player.getActorVar(stock_AK47weed)
+        stock_SSweed = Player.getActorVar(stock_SSweed)
+        stock_WWweed = Player.getActorVar(stock_WWweed)
+        stock_PEweed = Player.getActorVar(stock_PEweed)
+        stock_OGKweed = Player.getActorVar(stock_OGKweed)
+        stock_GSCweed = Player.getActorVar(stock_GSCweed)
+        stock_BBweed = Player.getActorVar(stock_BBweed)
+        stock_GGweed = Player.getActorVar(stock_GGweed)
+        weedstck = stock_AK47weed + stock_SSweed + stock_WWweed + stock_PEweed + stock_OGKweed + stock_GSCweed + stock_BBweed + stock_GGweed
+        
+        stock_Vapraspberry = Player.getActorVar(stock_Vapraspberry)
+        stock_Vapgrape = Player.getActorVar(stock_Vapgrape)
+        stock_Vapstrawberry = Player.getActorVar(stock_Vapstrawberry)
+        stock_Vaplemon = Player.getActorVar(stock_Vaplemon)
+        stock_VapKanzi = Player.getActorVar(stock_VapKanzi)
+
+        vapProdStck = stock_Vapraspberry + stock_Vapgrape + stock_Vapstrawberry + stock_Vaplemon + stock_VapKanzi
+        
+        IBuyaCigar = Player.getActorVar(rk_VB_IBuyaCigar)
+        IBuyWeed = Player.getActorVar(rk_VB_IBuyWeed)
+        IBuyVapeProd = Player.getActorVar(rk_VB_IBuyVapeProd)
+        
+        If SettingChoiceSwitchS == 1
+            If cigarStck <= 0 || IBuyaCigar < 0
+            
+                "You don't have any cigar to smoke...!"
+            
+            ElseIf cigarStck > 0
+
+                "You own <cigarStck> cigar"
+                Player.setActorVar(rk_VB_IBuyaCigar, cigarStck)
+               "Now fixed!"
+            
+            EndIf
+            
+        ElseIf SettingChoiceSwitchS == 2
+            If weedstck <= 0 || IBuyWeed < 0
+            
+                "You don't have any weed to smoke...!"
+            
+            ElseIf weedstck > 0
+
+                "You own <weedstck>g of weed."
+                Player.setActorVar(rk_VB_IBuyWeed, weedstck)
+               "Now fixed!"
+            
+            EndIf
+
+        ElseIf SettingChoiceSwitchS == 3
+            If vapProdStck <= 0 || IBuyVapeProd < 0
+            
+                "You don't have any vape juice...!"
+            
+            ElseIf vapProdStck > 0
+
+                "You own <vapProdStck> bottle of vape juice."
+                Player.setActorVar(rk_VB_IBuyVapeProd, vapProdStck)
+               "Now fixed!"
+            
+            EndIf        
+            
+        EndIf
+        
+    SceneEnd()

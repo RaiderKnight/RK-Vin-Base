@@ -1,0 +1,62 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        If money < -1
+            Player(Anxious)::"I am in debt. The stores will not sell me anything."
+        Else
+        
+            Player(Curious)::"There is a lot of popcorns here."
+            IBuyPopcorn = Player.getActorVar(rk_VB_IBuyPopcorn)
+    
+            // Get current popcorn prices for each types
+            price_PlainPopcorn = Random(1, 2)
+            price_PlainPopcorn_local = price_PlainPopcorn.convertToLocalCurrency()
+            price_ButterPopcorn = Random(3, 4)
+            price_ButterPopcorn_local = price_ButterPopcorn.convertToLocalCurrency()
+            price_PopcornMix = Random(5, 7)
+            price_PopcornMix_local = price_PopcornMix.convertToLocalCurrency()
+            price_HealthyPopcorn = Random(8, 12)
+            price_HealthyPopcorn_local = price_HealthyPopcorn.convertToLocalCurrency()
+    
+    
+            Player(Curious)::"Which type of popcorn shall I buy?"
+            0:: money >= 0 ::"1 bag of plain popcorns for <price_PlainPopcorn_local>"
+            1:: money >= 1 ::"1 bag of butter popcorns for <price_ButterPopcorn_local>"
+            2:: money >= 2 ::"1 bag of popcorn sweet mix for <price_PopcornMix_local>"
+            3:: money >= 6 ::"1 bag of healthy popcorns for <price_HealthyPopcorn_local>"
+            99:: "Don't buy anything"
+                   
+            If 0
+                Player.modifyActorVar(stock_PlainPopcorn, 1)
+                money -= price_PlainPopcorn
+                Player(Excited)::"1 bag of plain popcorns added to my pantry!"
+                Player.modifyActorVar(rk_VB_IBuyPopcorn, 1)
+                        
+            ElseIf 1
+                Player.modifyActorVar(stock_ButterPopcorn, 1)
+                money -= price_ButterPopcorn
+                Player(Excited)::"1 bag of butter popcorns added to my pantry!"
+                Player.modifyActorVar(rk_VB_IBuyPopcorn, 1)
+                        
+            ElseIf 2
+                Player.modifyActorVar(stock_PopcornMix, 1)
+                money -= price_PopcornMix
+                Player(Excited)::"1 bag of popcorn sweet mix added to my pantry!"
+                Player.modifyActorVar(rk_VB_IBuyPopcorn, 1)
+                        
+            ElseIf 3
+                Player.modifyActorVar(stock_HealthyPopcorn, 1)
+                money -= price_HealthyPopcorn
+                Player(Excited)::"1 bag of healthy popcorns added to my pantry!"
+                Player.modifyActorVar(rk_VB_IBuyPopcorn, 1)
+            
+            EndIf
+            
+        EndIf
+    
+    SceneEnd()

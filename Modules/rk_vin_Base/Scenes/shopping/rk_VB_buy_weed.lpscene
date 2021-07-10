@@ -1,0 +1,94 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        If money < -5
+            Player(Anxious)::"I am in debt. The store will not sell me any weed."
+        
+        Else
+            // Get current weed strains
+            price_AK47Weed = Random(5, 10)
+            price_AK47Weed_local = price_AK47Weed.convertToLocalCurrency()
+            price_SSWeed = Random(11, 12)
+            price_SSWeed_local = price_SSWeed.convertToLocalCurrency()
+            price_WWWeed = Random(13, 15)
+            price_WWWeed_local = price_WWWeed.convertToLocalCurrency()
+            price_PEWeed = Random(16, 17)
+            price_PEWeed_local = price_PEWeed.convertToLocalCurrency()
+            price_OGKWeed = Random(18, 19)
+            price_OGKWeed_local = price_OGKWeed.convertToLocalCurrency()
+            price_GSCWeed = Random(20, 21)
+            price_GSCWeed_local = price_GSCWeed.convertToLocalCurrency()
+            price_BBWeed = Random(22, 23)
+            price_BBWeed_local = price_BBWeed.convertToLocalCurrency()
+            price_GGWeed = Random(24, 25)
+            price_GGWeed_local = price_GGWeed.convertToLocalCurrency()
+            IBuyWeed = Player.getActorVar(rk_VB_IBuyWeed)
+            
+            Player::"Which strain I will buy?"
+            Player::"There are many variety of weeds here. Honestly, I will take my time to smell each of them !"
+            0:: money >= 0:: "1 gram of AK 47 (13-20%) for <price_AK47Weed_local>"
+            1:: money >= 0:: "1 gram of Sunset Sherbet (15-19%) for <price_SSWeed_local>"
+            2:: money >= 0:: "1 gram of White Widow (18-25%) for <price_WWWeed_local>"
+            3:: money >= 0:: "1 gram of Pineapple Express (19-25%) for <price_PEWeed_local>"
+            4:: money >= 0:: "1 gram of OG Kush (20-25%) for <price_OGKWeed_local>"
+            5:: money >= 0:: "1 gram of Girl Scout Cookies (25-28%) for <price_GSCWeed_local>"
+            6:: money >= 0:: "1 gram of Bruce Banner (25-29%) for <price_BBWeed_local>"
+            7:: money >= 0:: "1 gram of Gorilla Glue (25-30%) for <price_GGWeed_local>"
+            8:: "Buy nothing"
+        
+            If 0
+                Player.modifyActorVar(stock_AK47weed, 1)
+                money -= price_AK47Weed
+                Player(Excited)::"This strain produces happy memories, which makes me laugh and smile, during bad moments."
+                Player.modifyActorVar(rk_VB_IBuyWeed, 1)
+                                
+            Elseif 1
+                Player.modifyActorVar(stock_SSweed, 1)
+                money -= price_SSWeed
+                Player(Excited)::"Powerful psychoactive effects which boost your motivation, creativity, imagination and inspiration."
+                Player.modifyActorVar(rk_VB_IBuyWeed, 1)
+                
+            Elseif 2
+                Player.modifyActorVar(stock_WWweed, 1)
+                money -= Price_WWweed
+                Player(Excited)::"A delicious blend of earthy, wooded and flowery tastes. That one, smell very strong !"
+                Player.modifyActorVar(rk_VB_IBuyWeed, 1)
+                
+            Elseif 3
+                Player.modifyActorVar(stock_PEweed, 1)
+                money -= Price_PEweed
+                Player(Excited)::"Perfect for smoking with friends during parties and social gatherings."
+                Player.modifyActorVar(rk_VB_IBuyWeed, 1)
+                
+            Elseif 4
+                Player.modifyActorVar(stock_OGKweed, 1)
+                money -= Price_OGKweed
+                Player(Excited)::"For a rapid headrush, an uplifted mood and euphoria as well as increased mental stimulation."
+                Player.modifyActorVar(rk_VB_IBuyWeed, 1)
+                
+            Elseif 5
+                Player.modifyActorVar(stock_GSCweed, 1)
+                money -= Price_GSCweed
+                Player(Excited)::"It can help to feel creative, euphoric, relaxed and couch-locked."
+                Player.modifyActorVar(rk_VB_IBuyWeed, 1)
+                
+            Elseif 6
+                Player.modifyActorVar(stock_BBweed, 1)
+                money -= Price_BBweed
+                Player(Excited)::"The top wake and bake strains due to its ability to make you creative and inspired."
+                Player.modifyActorVar(rk_VB_IBuyWeed, 1)
+                
+            Elseif 7
+                Player.modifyActorVar(stock_GGweed, 1)
+                money -= price_GGWeed
+                Player(Excited)::"Increased mental clarity, stimulation, energy and uber-relaxing effects"
+                Player.modifyActorVar(rk_VB_IBuyWeed, 1)
+                
+            Endif
+        Endif   
+    SceneEnd()

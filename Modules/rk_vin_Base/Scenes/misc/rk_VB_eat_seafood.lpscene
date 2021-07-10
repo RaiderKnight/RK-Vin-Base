@@ -1,0 +1,122 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+    
+        IBuySeafood = Player.getActorVar(rk_VB_IBuySeafood)
+        
+        If  money < -1 
+            Player(Anxious)::"Ok, no money to eat! I need to find a job I guess... !"
+        Else
+            
+            // Get current seafood types
+            price_Oysters = Random(7, 12)
+            price_Oysters_local = price_Oysters.convertToLocalCurrency()
+            price_Shrimps = Random(14, 15)
+            price_Shrimps_local = price_Shrimps.convertToLocalCurrency()
+            price_Sushi = Random(17, 18)
+            price_Sushi_local = price_Sushi.convertToLocalCurrency()
+            price_Lobster = Random(19, 30)
+            price_Lobster_local = price_Lobster.convertToLocalCurrency()
+            price_Caviar = Random(75, 122)
+            price_Caviar_local = price_Caviar.convertToLocalCurrency()
+            
+            Player::"Which type of seafood shall I eat?"
+            0:: money >= 5 ::"1 Oysters dish for <price_Oysters_local>"
+            1:: money >= 12 ::"1 Shrimp dish for <price_Shrimps_local>"
+            2:: money >= 15 ::"1 Sushi dish for <price_Sushi_local>"
+            3:: money >= 17 ::"1 Lobster dish for <price_Lobster_local>"
+            4:: money >= 70 ::"1 Caviar dish for <price_Caviar_local>"
+            8:: "Bah! I'm not hungry !"
+            
+            If 0
+                mood += 1
+                energy += 3
+                fitness += 1
+                intelligence += 1
+                arousal += 1
+                money -= price_Oysters
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 3)
+                EndIf
+                
+            Elseif 1
+                mood += 2
+                energy += 4
+                fitness += 2
+                intelligence += 2
+                arousal += 1.25
+                money -= price_Shrimps
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 4)
+                EndIf
+            
+            Elseif 2
+                mood += 3
+                energy += 6
+                fitness += 3
+                intelligence += 3
+                arousal += 1.5
+                money -= price_Sushi
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 6)
+                EndIf
+            
+            Elseif 3
+                mood += 4
+                energy += 8
+                fitness += 4
+                intelligence += 4
+                arousal += 2
+                money -= price_Lobster
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 8)
+                EndIf
+            
+            Elseif 4
+                mood += 5
+                energy += 10
+                fitness += 5
+                intelligence += 5
+                arousal += 3
+                money -= price_Caviar
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 10)
+                EndIf
+            
+            Endif
+            
+        Endif
+    
+    SceneEnd()

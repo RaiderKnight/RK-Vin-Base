@@ -1,0 +1,109 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        stock_Davidoff = Player.getActorVar(stock_Davidoff)
+        stock_Romeo = Player.getActorVar(stock_Romeo)
+        stock_KDcigars = Player.getActorVar(stock_KDcigars)
+        stock_Cohiba = Player.getActorVar(stock_Cohiba)
+        stock_Montecristo = Player.getActorVar(stock_Montecristo)
+        cigarStck = stock_Davidoff + stock_Romeo + stock_KDcigars + stock_Cohiba + stock_Montecristo
+        IBuyaCigar = Player.getActorVar(rk_VB_IBuyaCigar)
+        
+        SmokeCigar = 0
+        If  cigarStck < 0.5 
+            Player(Anxious)::"After searching everywhere... I don't have any cigars !"
+        Else
+            
+            Player::"Ok, which cigar I'm gonna smoke?"
+            0:: stock_Davidoff > 0 :: "1 Davidoff Yamasá"
+            1:: stock_Romeo > 0:: "1 Romeo y Julieta"
+            2:: stock_Montecristo > 0:: "1 Montecristo"
+            3:: stock_KDcigars > 0:: "1 King of Denmark Limited Edition"
+            4:: stock_Cohiba > 0:: "1 Cohiba Behike"
+            8:: "Bah! I changed my mind!"
+            
+            If 0
+                Player.modifyActorVar(stock_Davidoff, -1)
+                mood += 1
+                attractiveness -= 0.07
+                intoxication += 2.5
+                fitness -= 0.08
+                energy += 1
+                Player.show()
+                Player.animate(smoke)
+                Player(Happy)::"Hmm, a good Davidoff Yamasá cigar!"
+                passTime(0.25, 0.5)
+                SmokeCigar += 1
+                
+            Elseif 1
+                Player.modifyActorVar(stock_Romeo, -1)
+                mood += 2
+                attractiveness -= 0.06
+                intoxication += 2
+                fitness -= 0.07
+                energy += 1.25
+                Player.show()
+                Player.animate(smoke)
+                Player(Happy)::"Hmm, a good Romeo y Julieta cigar!"
+                passTime(0.25, 0.5)
+                SmokeCigar += 1
+            
+            Elseif 2
+                Player.modifyActorVar(stock_Montecristo, -1)
+                mood += 3
+                attractiveness -= 0.05
+                intoxication -= 0.5
+                fitness -= 0.06
+                energy += 1.5
+                Player.show()
+                Player.animate(smoke)
+                Player(Happy)::"Hmm, a good Montecristo cigar!"
+                passTime(0.25, 0.5)
+                SmokeCigar += 1
+            
+            Elseif 3
+                Player.modifyActorVar(stock_KDcigars, -1)
+                mood += 4
+                attractiveness -= 0.04
+                intoxication += 1
+                fitness -= 0.05
+                energy += 1.75
+                Player.show()
+                Player.animate(smoke)
+                Player(Happy)::"Hmm, a good King of Denmark Limited Edition cigar!"
+                passTime(0.25, 0.5)
+                SmokeCigar += 1
+            
+            Elseif 4
+                Player.modifyActorVar(stock_Cohiba, -1)
+                mood += 5
+                attractiveness -= 0.03
+                intoxication += 0.5
+                fitness -= 0.04
+                energy += 2
+                Player.show()
+                Player.animate(smoke)
+                Player(Happy)::"Hmm, a good Cohiba Behike cigar! The people around doesn't even realize the value of my cigar, but hey!"
+                passTime(0.25, 0.5)
+                SmokeCigar += 1
+            
+            Endif
+            
+            If SmokeCigar > 0 
+                Player.modifyActorVar(rk_VB_IBuyaCigar, -1)
+            EndIf
+            
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -0.25)
+            EndIf
+            
+        Endif
+    
+SceneEnd()
