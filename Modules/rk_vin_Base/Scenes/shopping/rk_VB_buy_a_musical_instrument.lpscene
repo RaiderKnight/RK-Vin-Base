@@ -12,6 +12,9 @@ OTHER: none
         stock_musicalinstrument_SB = Player.getActorVar(stock_musicalinstrument_SB)
         stock_musicalinstrument_SR = Player.getActorVar(stock_musicalinstrument_SR)
         stock_musicalinstrument_TB = Player.getActorVar(stock_musicalinstrument_TB)
+        TotalInstMusik = stock_musicalinstrument_LR + stock_musicalinstrument_MB + stock_musicalinstrument_O + stock_musicalinstrument_SB + stock_musicalinstrument_SR + stock_musicalinstrument_TB + stock_musicalinstrument + stock_musicalinstrument_P
+        IBuyIMusick = Player.getActorVar(rk_VB_IBuyIMusick)
+        
         "Where I will store this musical instrument?"
         2::isModEnabled(nn_HomeExpander) && hasLivingroom ::"Inside my living room"
         3::"Inside my bedroom"
@@ -25,43 +28,51 @@ OTHER: none
                 
             "Added to your living room!"
             Player.modifyActorVar(stock_musicalinstrument_LR, 1)
-            stock_musicalinstrument -= 1
+            Player.modifyActorVar(rk_VB_IBuyIMusick, 1)
                     
         ElseIf 3
                 
             "Added to your bedroom!"
             Player.modifyActorVar(stock_musicalinstrument_MB, 1)
-            stock_musicalinstrument -= 1
+            Player.modifyActorVar(rk_VB_IBuyIMusick, 1)
                     
         ElseIf 4
                 
             "Added to your office room!"
             Player.modifyActorVar(stock_musicalinstrument_O, 1)
-            stock_musicalinstrument -= 1
+            Player.modifyActorVar(rk_VB_IBuyIMusick, 1)
                     
         ElseIf 5
                 
             "Added to your second bedroom!"
             Player.modifyActorVar(stock_musicalinstrument_SB, 1)
-            stock_musicalinstrument -= 1
+            Player.modifyActorVar(rk_VB_IBuyIMusick, 1)
                     
         ElseIf 6
                 
             "Added to your storage room!"
             Player.modifyActorVar(stock_musicalinstrument_SR, 1)
-            stock_musicalinstrument -= 1
+            Player.modifyActorVar(rk_VB_IBuyIMusick, 1)
                     
         ElseIf 7
                 
             "Added to your third bedroom!"
             Player.modifyActorVar(stock_musicalinstrument_TB, 1)
-            stock_musicalinstrument -= 1
-                    
+            Player.modifyActorVar(rk_VB_IBuyIMusick, 1)
+        
         ElseIf 8
                 
             "Added to my pocket!"
-            stock_musicalinstrument += 1
-                    
+            Player.modifyActorVar(stock_musicalinstrument_P, 1)
+            Player.modifyActorVar(rk_VB_IBuyIMusick, 1)
+            
+        EndIf
+        
+        If stock_musicalinstrument > 0
+        
+            Player.setActorVar(rk_VB_IBuyIMusick, TotalInstMusik)
+            stock_musicalinstrument => 0
+            
         EndIf
         
     SceneEnd()

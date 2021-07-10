@@ -13,7 +13,6 @@ OTHER: none
         hasOfficeroom = RE_has_officeroom.getGlobal()
         hasSecBedroom = RE_has_secondbedroom.getGlobal()
         hasThirdBedroom = RE_has_thirdbedroom.getGlobal()
-
         
         stock_musicalinstrument_LR = Player.getActorVar(stock_musicalinstrument_LR)
         stock_musicalinstrument_MB = Player.getActorVar(stock_musicalinstrument_MB)
@@ -21,6 +20,9 @@ OTHER: none
         stock_musicalinstrument_SB = Player.getActorVar(stock_musicalinstrument_SB)
         stock_musicalinstrument_SR = Player.getActorVar(stock_musicalinstrument_SR)
         stock_musicalinstrument_TB = Player.getActorVar(stock_musicalinstrument_TB)
+        TotalInstMusik = stock_musicalinstrument_LR + stock_musicalinstrument_MB + stock_musicalinstrument_O + stock_musicalinstrument_SB + stock_musicalinstrument_SR + stock_musicalinstrument_TB
+        
+        IBuyIMusick = Player.getActorVar(rk_VB_IBuyIMusick)
         
         "Where I will store this musical instrument?"
         2::isModEnabled(nn_HomeExpander) && hasLivingroom ::"Inside my living room"
@@ -65,7 +67,19 @@ OTHER: none
             "Added to your third bedroom!"
             Player.modifyActorVar(stock_musicalinstrument_TB, 1)
             stock_musicalinstrument -= 1
+        
+        ElseIf 8
+                
+            "Added to my pocket!"
+            Player.modifyActorVar(stock_musicalinstrument_P, 1)
+            stock_musicalinstrument -= 1
 
+        EndIf
+        
+        If TotalInstMusik > 0
+        
+            Player.setActorVar(rk_VB_IBuyIMusick, TotalInstMusik)
+            
         EndIf
         
     SceneEnd()

@@ -8,6 +8,7 @@ OTHER: none
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        DieHungerEnable = rk_VB_DieHungerEnable.getGlobal()
         
         If HungerEnable > 0 && Hunger <= 0
             
@@ -21,9 +22,11 @@ OTHER: none
                 
             Else
             
+                Player.modifyActorVar(rk_VB_Hunger, 15)
                 sceneEnd()
                 
             Endif
+            rk_VB_DieHungerEnable.setGlobal(0)
             
         EndIf
         
