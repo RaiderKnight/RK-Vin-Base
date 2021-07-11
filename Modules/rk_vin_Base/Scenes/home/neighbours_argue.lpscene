@@ -5,6 +5,10 @@ WHO: Actor = getSpecific(Neighbour); If !Actor.isAsexual() && Actor:masochist < 
 OTHER: isAtHome()
 
     Dating = Actor.getRelatedPerson(Dating, Spouses)
+    
+    Hunger = Player.getActorVar(rk_VB_Hunger)
+    HungerEnable = rk_VB_EnableHunger.getGlobal()
+    
     If !Dating.isValid()
         Dating = generatePersonTemporary()
         While !Actor.isInterestedIn(Dating)
@@ -36,9 +40,12 @@ OTHER: isAtHome()
     1:: "Invite <Actor.him_or_her> inside"
 
     If 0
+    
         Player(Sad):: "Oh no, that's horrible to hear. But these things happen in relationships. I hope you guys will figure it out soon."
         Actor(Sad):: "I hope so too ..."
+        
     Else
+    
         Player(Sad):: "Oh no, that's horrible to hear. Do you want to come in my apartment and chat for a while? You shouldn't stay here all alone."
         Actor(Sad):: "I guess you're right. I don't really know where else to go right now anyway. Thank you!"
         "I opened my apartment door and invited <Actor.name> in."
@@ -53,9 +60,9 @@ OTHER: isAtHome()
             Kissed = false
             "What should I suggest to <Actor.name> that we do?"
             0:: "Chat"
-            1:: !ate:: "Eat something together"
-            2:: "Watch a movie"
-            3:: "Drink alcohol"
+            1:: !ate && stock_snack > 0.8:: "Eat something together"
+            2:: stock_movie > 0.8::"Watch a movie"
+            3:: stock_alcohol > 1.8 ::"Drink alcohol"
             4:: !hadSex:: "Kiss <Actor.him_or_her>"
             5:: "Politely ask <Actor.him_or_her> to leave"
 
@@ -65,16 +72,27 @@ OTHER: isAtHome()
                 Actor:rapportwithplayer += Random(0, 0.5)
                 Actor:attractiontoplayer += Random(0, 0.5)
                 If 0
+                
                     "We simply sat and chat for a while ..."
+                    
                 Elseif 1
+                
                     "We made some quick snacks and enjoyed them together ..."
+                    stock_snack -= 2
                     ate = true
+                    
                 Elseif 2
+                
                     "We watched a movie together ..."
+                    stock_movie -= 1
+                    
                 Elseif 3
+                
                     "We had a drink together ..."
+                    stock_alcohol -= 2
                     Player:intoxication += Random(0,10)
                     Actor:intoxication += Random(0,10)
+                    
                 Elseif 4
                     Kissed = true
                 Endif
@@ -94,6 +112,9 @@ OTHER: isAtHome()
                             hadSex = true
                             Player:perversion += Random(0, 1)
                             Sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
                             Actor.show(2)
                             "The sex was amazing. We put our clothes back on afterwards and continued our date."
                         Else
@@ -102,15 +123,20 @@ OTHER: isAtHome()
                     Else
                         "I decided to stop it there and not go any further."
                     Endif
+                    
                 Elseif Random(0, 100) < 20
                     Actor(Happy):: "I've gotta go now. Thank you for inviting me in."
                     Player(Happy):: "Alright. Thank you for staying. Goodbye! Good luck with your <SORefer>."
                     "We parted ways."
                     choice = 5
+                    
                 Endif
+                
             Endif
+            
         Endwhile
+        
     Endif
 
-    SceneEnd()
-    timeout(200, neighbours_argue)
+    SceneEnd() // Improved by Raddeck
+    timeout(1200, neighbours_argue)

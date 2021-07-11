@@ -1,0 +1,460 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: isAtHome()
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger) // Edit by Raddeck
+        HungerEnable = rk_VB_EnableHunger.getGlobal()// Edit by Raddeck
+    
+        "I decided to see how my neighbours are doing."
+        Find = Random(0, 9)
+        If Find < 5
+            Actor = getSpecific(Neighbour)
+        Elseif < 6
+            Actor2 = getSpecific(Neighbour)
+            Actor = Actor.getRelatedPerson(Dating, Spouses)
+        Elseif < 7  
+            Actor2 = getSpecific(Neighbour, Landlord)
+            Actor = Actor2.generatePersonMatchRace()
+            Actor.matchLastName(Actor2)
+            Actor:age => Actor2:age - Random(20, 40)
+            Actor:age += 1
+            Actor.randomizeHairs()
+            Actor.randomizeFace()
+            Actor.dress()
+            addNpcRelationship(ParentChild, Actor2, Actor)
+        Else
+            Actor = getSpecific(Landlord)
+        Endif
+        If !Actor.isValid() || Actor.isCreature() || Actor.isRelative() || Actor.isContactExchanged()
+            Actor = generatePersonTemporary()
+            "Is that a new neighbour moving in?"
+        Endif
+        
+        Actor.dress()
+        Actor.show(3)
+        "<Actor.name> and I begin to chat."
+        "Shall we have a friendly conversation "    
+        0:: "Yes"
+        1:: "No"
+        
+        If 0
+        
+            Me = false
+            Dress = false
+            Geek = false
+            Party = false
+            Sport = false
+            Music = false
+            Them = false
+            Lewd = false
+            choice = -1
+            While choice < 8 
+                0:: !Me:: "Tell <Actor.him_or_her> how my day is going."
+                1:: !Dress:: "Talk about stye choices of celebity."
+                2:: !Geek:: "Did you get the latest tech?"
+                3:: !Party:: "Know about any parties?"
+                4:: !Sport:: "Do you like sports?"
+                5:: !Music:: "Ask if <Actor.he_or_she> heard this one song?"
+                6:: !Them:: "How are you doing?"      
+                7:: [!Lewd && perversion > 70]:: "Talk about person you hooked up with."
+                8:: "Got nothing more to talk about."
+        
+                If 8
+                
+                    "Got nothing more to talk about."
+                        
+                Else
+                    If 0
+                        "Tell <Actor.him_or_her> how my day is going."
+                        Actor:rapportwithplayer += Random(0, 7)
+                        If interpersonal < 50
+                            Actor:rapportwithplayer -= Random(0, 3)
+                            "<Actor.He_or_She> seem kind of bored."
+                        Endif
+                        Me = true   
+                    Elseif 1
+                        "Talk about stye choices of celebity."
+                        Actor:rapportwithplayer += Random(0, 7)
+                        If Actor:attractiveness < 50
+                            Actor:rapportwithplayer -= Random(0, 3)
+                            "<Actor.He_or_She> doesn't seem to care."
+                        Endif
+                        Dress = true    
+                        
+                    Elseif 2
+                        "Did you get the latest tech?"
+                        Actor:rapportwithplayer += Random(0, 7)
+                        If Actor:intelligence < 50
+                            Actor:rapportwithplayer -= Random(0, 3)
+                            "<Actor.He_or_She> has no clue what you are talking about."
+                        Endif
+                        Geek = true   
+                            
+                    Elseif 3 
+                        "Know about any parties?"
+                        Actor:rapportwithplayer += Random(0, 7)
+                        If Actor:dance < 50
+                            Actor:rapportwithplayer -= Random(0, 3)
+                            "<Actor.He_or_She> not invited to many parties."
+                        Endif
+                        Party = true   
+                                            
+                    Elseif 4
+                        "Do you like sports?"
+                        Actor:rapportwithplayer += Random(0, 7)
+                        If Actor:fitness < 50
+                            Actor:rapportwithplayer -= Random(0, 3)
+                            "<Actor.He_or_She> like chess."
+                        Endif
+                        Sport = true     
+                            
+                    Elseif 5
+                        "Ask if <Actor.he_or_she> heard this one song?"
+                        Actor:rapportwithplayer += Random(0, 7)
+                        If Actor:music < 50
+                            Actor:rapportwithplayer -= Random(0, 3)
+                            "<Actor.He_or_She> likes this one song by Phil Collins."
+                        Endif
+                        Music = true     
+                            
+                    Elseif 6
+                        "How are you doing?"
+                        If Actor:rapportwithplayer > 65
+                            "They began to tell their whole life story."
+                            If karma > 49
+                                Actor:rapportwithplayer += 5
+                            Else
+                                "I wish they would stop talking."
+                                Actor:rapportwithplayer += 4
+                            Endif
+                        Elseif Actor:rapportwithplayer > 32
+                            "Talked about family & stuff."
+                            If karma > 49
+                                Actor:rapportwithplayer += 3
+                            Else
+                                Actor:rapportwithplayer += 2
+                            Endif
+                        Else
+                            Actor():: "Fine"
+                            If karma > 49
+                                Actor:rapportwithplayer += 1
+                            Else
+                                Actor:rapportwithplayer -= 3
+                            Endif
+                        Endif
+                        Them = true   
+                            
+                    Else 7
+                        "Talk about person you hooked up with."
+                        Actor:rapportwithplayer += Random(0, 7)
+                        If Actor:perversion < 50
+                            Actor:rapportwithplayer -= Random(0, 3)
+                            "<Actor.He_or_She> is very uncomfortable."
+                        Endif
+                        Lewd = true
+                                            
+                    Endif   
+                Endif
+            Endwhile
+            
+        Endif
+        
+        "Should I use my charms?"    
+        0:: "Yes"
+        1:: "No"
+        
+        If 0
+        
+            Charms = false
+            Looks = false
+            Smarts = false
+            Dance = false
+            Fitness = false
+            Sing = false
+            Jokes = false
+            Seduce = false
+            kinkyS = false
+            kinkyD = false
+            choice = -1
+            While choice < 8 
+                0:: !Charms:: "Smooth talk <Actor.him_or_her>."
+                1:: !Looks:: "Give <Actor.him_or_her> a smile."
+                2:: !Smarts:: "Impress <Actor.him_or_her> with KNOWLEDGE!"
+                3:: !Dance:: "Start dancing."
+                4:: !Fitness:: "Flex your muscles."
+                5:: !Sing:: "Serenade <Actor.him_or_her> with music."
+                6:: !Jokes:: "Tell a joke"      
+                7:: [!Seduce && perversion > 70]:: "Use your sex appeal"
+                8:: "Done trying to woo them."
+        
+                If 8
+                
+                    "I'm done trying to woo them."
+                        
+                Else
+                
+                    If 0
+                    
+                        "I try to smooth talk <Actor.him_or_her>."
+                        If interpersonal > 65
+                            Player():: "Why would I want to look at the stars when I can look in your eyes?"
+                            If karma > 49
+                                Actor:attractiontoplayer += 5
+                            Else
+                                Actor:attractiontoplayer += 4
+                            Endif
+                        Elseif interpersonal > 32
+                            Player():: "Are you a bank loan? Because you got my interest."
+                            If karma > 49
+                                Actor:attractiontoplayer += 3
+                            Else
+                                Actor:attractiontoplayer += 2
+                            Endif
+                        Else
+                            Player():: "Did you just fart? Because you blow me away!"
+                            If karma > 49
+                                Actor:attractiontoplayer += 1
+                            Else
+                                Actor:attractiontoplayer -= 3
+                            Endif
+                        Endif
+                        Charms = true   
+                    Elseif 1
+                        "Give <Actor.him_or_her> a smile."
+                        If attractiveness > 65
+                            Actor():: "You are gorgeous."
+                            If karma > 49
+                                Actor:attractiontoplayer += 5
+                            Else
+                                Actor:attractiontoplayer += 4
+                            Endif
+                        Elseif attractiveness > 32
+                            Actor():: "You are nice to look at."
+                            If karma > 49
+                                Actor:attractiontoplayer += 3
+                            Else
+                                Actor:attractiontoplayer += 2
+                            Endif
+                        Else
+                            If karma > 49
+                                Actor():: "You have a stain on you."
+                                Actor:attractiontoplayer += 1
+                                Actor():: "Here let me help you with that."
+                            Else
+                                Actor():: "Gross."
+                                Actor:attractiontoplayer -= 3
+                            Endif
+                        Endif
+                        Looks = true   
+                        
+                    Elseif 2
+                        "Impress <Actor.him_or_her> with KNOWLEDGE!"
+                        If intelligence > 65
+                            Player():: "We are in a video game, and the player is trying to raise your attraction to me!"
+                            If karma > 49
+                                Actor:attractiontoplayer += 5
+                            Else
+                                Actor:attractiontoplayer += 4
+                            Endif
+                        Elseif intelligence > 32
+                            Player():: "It was super effective."
+                            If karma > 49
+                                Actor:attractiontoplayer += 3
+                            Else
+                                Actor:attractiontoplayer += 2
+                            Endif
+                        Else
+                            Player():: "All your base are belong to us."
+                            If karma > 49
+                                Actor:attractiontoplayer += 1
+                            Else
+                                Actor:attractiontoplayer -= 3
+                                Actor():: "WTF?"
+                            Endif
+                        Endif
+                        Smarts = true   
+                            
+                    Elseif 3 
+                        "I start dancing"
+                        If dance > 65
+                            "<Actor.He_or_She> followed suit."
+                            If karma > 49
+                                Actor:attractiontoplayer += 5
+                            Else
+                                Actor:attractiontoplayer += 4
+                            Endif
+                        Elseif dance > 32
+                            "I gave a pretty good performance."
+                            If karma > 49
+                                Actor:attractiontoplayer += 3
+                            Else
+                                Actor:attractiontoplayer += 2
+                            Endif
+                        Else
+                            "With little to no music. I look like a morron."
+                            If karma > 49
+                                Actor:attractiontoplayer += 1
+                                "<Actor.He_or_She> gives me a sympathy clap."
+                            Else
+                                Actor:attractiontoplayer -= 3
+                            Endif
+                        Endif
+                        Dance = true   
+                                            
+                    Elseif 4
+                        "I begin to flex my muscles."
+                        If fitness > 65
+                            Actor():: "Wow! Very nice."
+                            If karma > 49
+                                Actor:attractiontoplayer += 5
+                            Else
+                                Actor:attractiontoplayer += 4
+                            Endif
+                        Elseif fitness > 32
+                            Actor():: "Impressive."
+                            If karma > 49
+                                Actor:attractiontoplayer += 3
+                            Else
+                                Actor:attractiontoplayer += 2
+                            Endif
+                        Else
+                            "I black out from over exerting myself."
+                            If karma > 49
+                                Actor:attractiontoplayer += 1
+                                Actor():: "Poor baby."
+                            Else
+                                Actor:attractiontoplayer -= 3
+                            Endif
+                        Endif
+                        Fitness = true   
+                            
+                    Elseif 5
+                        "Serenade <Actor.him_or_her> with music."
+                        If music > 65
+                            Player():: "I know you, I walked with you once upon a dream" 
+                            Player():: "I know you, that look in your eyes is so familiar a gleam"
+                            "And I was hit hard with a copy-right strike."
+                            If karma > 49
+                                Actor:attractiontoplayer += 5
+                            Else
+                                Actor:attractiontoplayer += 4
+                            Endif
+                        Elseif music > 32
+                            Player():: "Remember me, Though I have to say goodbye, Remember me, Don't let it make you cry,..." 
+                            If karma > 49
+                                Actor:attractiontoplayer += 3
+                            Else
+                                Actor:attractiontoplayer += 2
+                            Endif
+                        Else
+                            Player():: "Hit me baby one more time."
+                            If karma > 49
+                                Actor:attractiontoplayer += 1
+                            Else
+                                Actor:attractiontoplayer -= 3
+                                "And they did hit me. Everyone & their mother hit me."
+                            Endif
+                        Endif
+                        Sing = true   
+                            
+                    Elseif 6
+                        Player():: "Knock, knock"
+                        Actor():: "Who’s there?"
+                        If Actor:rapportwithplayer > 65
+                            Player():: "Leon"
+                            Actor():: "Leon Who?"
+                            Player():: "Leon me when you’re not strong!"
+                            If karma > 49
+                                Actor:attractiontoplayer += 5
+                            Else
+                                Actor:attractiontoplayer += 4
+                            Endif
+                        Elseif Actor:rapportwithplayer > 32
+                            Player():: "Quiche"
+                            Actor():: "Quiche Who?"
+                            Player():: "Can I have a hug and a quiche?"
+                            If karma > 49
+                                Actor:attractiontoplayer += 3
+                            Else
+                                Actor:attractiontoplayer += 2
+                            Endif
+                        Else
+                            Player():: "A leaf"
+                            Actor():: "A leaf who?"
+                            Player():: "A leaf you alone if you leaf me alone."
+                            If karma > 49
+                                Actor:attractiontoplayer += 1
+                            Else
+                                Actor:attractiontoplayer -= 3
+                            Endif
+                        Endif
+                        Jokes = true   
+                            
+                    Else 7
+                        If !Player.isMale()
+                            "I spread my legs out in front of them."
+                            "They can see my pussy."
+                        Else
+                            "Send them a dick pick."
+                        Endif
+                        If Actor:attractiontoplayer > 65
+                            "They are getting hotter"
+                            If karma > 49
+                                Actor:attractiontoplayer += 5
+                            Else
+                                Actor:attractiontoplayer += 4
+                            Endif
+                        Elseif Actor:attractiontoplayer > 32
+                            "Seem to like it."
+                            If karma > 49
+                                Actor:attractiontoplayer += 3
+                            Else
+                                Actor:attractiontoplayer += 2
+                            Endif
+                        Else
+                            If karma > 49
+                                Actor:attractiontoplayer += 1
+                                "Don't think they noticed."
+                            Else
+                                Actor:attractiontoplayer -= 3
+                                "Did not go over so well."
+                            Endif
+                        Endif
+                        Seduce = true   
+                                            
+                    Endif   
+                Endif
+            Endwhile
+            // Start edited by Raddeck
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -3)
+            EndIf
+            // End edited by Raddeck
+            
+        Endif
+        
+        If !Actor.isContactExchanged()
+            "Should I ask for <Actor.name>'s number?"
+            0:: "Yes"
+            1:: "I never want to see them again."
+            2:: "No"
+                            
+            If 0
+                "We exchanged numbers."
+                Actor.makePermanent()
+                exchangeContact(Actor)
+                Actor.addNeighbour()
+            Elseif 1
+                Actor.DeletePerson()
+            Else    
+                "I decided not to."
+                Actor.makePermanent()
+                Actor.addNeighbour()
+            Endif
+        Endif
+        
+    SceneEnd() // Edited by Raddeck

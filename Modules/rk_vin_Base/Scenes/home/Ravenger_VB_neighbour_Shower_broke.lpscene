@@ -1,0 +1,261 @@
+WHAT: all, -sleep, -nap
+WHERE: home
+WHEN: 0 - 24
+WHO: Actor = getSpecific(Neighbour);
+OTHER: isAtHome() && !isWithCompanion() && Random(0, 90) < interpersonal
+
+    
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        
+        Actor.dress()
+        Actor.show(2)
+        Actor(Sad)::"Excuse me ..."
+        If Player.isNaked()
+            Actor:arousal += 15
+        Endif   
+        Player(Happy)::"It's my neighbour <Actor.name>. I wonder what <Actor.he_or_she> wants?"
+    
+        Actor(Sad)::"My shower broke and I was wonder if I could borow your?"    
+        1:: "Wish <Actor.him_or_her> luck"
+        2:: "Offer help"
+        
+        If 1
+            Player(Sad):: "Oh, that sucks. Good luck with your shower."
+            Actor(Sad):: "Thanks."
+    
+        Else
+            Player(Sad):: "Sure, I'll help you out."
+            Actor(Happy):: "Thank you."
+            "<Actor.name> enters my apartment and heads to bathroom."
+            Actor.hide()
+            "I can hear water running in the bathroom: <Actor.name> must be taking shower ..."
+            0:: "Peep on <Actor.him_or_her>"
+            1:: "Better not"
+        
+            If 0
+                SneakGame()
+                If Random(0, 150) < Actor:perversion + sneak
+                    "Fortunately for me, <Actor.he_or_she> didn't lock the door, allowing me to sneak behind it to get a decent view of <Actor.him_or_her> in all <Actor.his_or_her> glory."
+                    Actor.strip()
+                    Actor.show(2)
+                    setBackground(shower)
+                    Hot = 0
+                    Hot += Actor:perversion
+                    Hot += Actor:arousal
+                    If Hot > 100
+                        Filter(solo)
+                        Actor:perversion += Random(1, 5)
+                        arousal += Random(10, 30)
+                        Actor:arousal += Random(10, 30)
+                    Else
+                        Filter(Shower)
+                    Endif   
+                    arousal += Random(0, 20)
+                    Sex(Actor)
+                    Actor.show(2)
+                    Player.show(0)
+                    Hot = 0
+                    Hot += Actor:perversion
+                    Hot += Actor:arousal
+                    If Hot > 100
+                        "Wow <Actor.he_or_she> watching masturbate got me all horny. Maybe I can just join <Actor.him_or_her>?"
+                        0:: "Join in"
+                        1:: "Leave"
+           
+                        If 0
+                            Player.strip()
+                            Player(Flirty):: "Damn it baby, you got me all horny. Mind if I join you in there?"            
+                            Hot += Actor:attractiontoplayer
+                    
+                            If Random(150, 250) < Hot
+                                Sex(Player, Actor)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
+                                Actor:perversion += Random(0, 5)
+                                Actor:attractiontoplayer += Random(0, 5)
+    
+                            Else
+                                Actor(Angry):: "What are you doing here, peeping Tom? And what's up with that perverted proposal? Get out!"
+                                Actor:attractiontoplayer -= Random(0, 10)
+    
+                            Endif
+    
+                        Else
+                            "I better not push my luck."
+                            If [Actor:intelligence + Random(0, 20)] > sneak
+                                If !Actor.ismale()
+                                    Actor.dress(Towel_1_F)
+                                Endif
+                                "How ever later <Actor.name> came to confront me about what I saw." 
+                                Actor(Angry):: "I know you were outside my room."
+                                Love = 0
+                                Love += Actor:attractiontoplayer
+                                Love += Actor:perversion
+                                Love -= Actor:masochist
+                    
+                                If Random(125, 225) < Love && Actor.isInterestedIn(Player)
+                                    Actor(Flirty):: "You know what. I think I'm going to have some fun with you."
+                                    Sex(Player, Actor)
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    EndIf
+                                    Actor:attractiontoplayer += Random(0, 50)
+                                Else
+                                    Actor(Angry):: "I better not catch you again!"
+                                    Actor:rapportwithplayer -= Random(0, 9)
+                                Endif
+                    
+                            Endif
+    
+                        Endif
+                    
+                    Else
+                        "Wow that was hot watching <Actor.him_or_her>. Maybe I can just join <Actor.him_or_her>?"
+                        0:: "Join in"
+                        1:: "Leave"
+           
+                        If 0
+                            Player.strip()
+                            Player(Flirty):: "Damn it baby, you got me all horny. Mind if I join you in there?"            
+                            Love = 0
+                            Love += Actor:attractiontoplayer
+                            Love += Actor:perversion
+                    
+                            If Random(100, 150) < Love
+                                Sex(Player, Actor)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
+                                Actor:perversion += Random(0, 5)
+                                Actor:attractiontoplayer += Random(0, 5)
+    
+                            Else
+                                Actor(Angry):: "What are you doing here, peeping Tom? And what's up with that perverted proposal? Get out!"
+                                Actor:attractiontoplayer -= Random(0, 10)
+    
+                            Endif
+    
+                        Else
+                            "I better not push my luck."
+                            If [Actor:intelligence + Random(0, 20)] > sneak
+                                If !Actor.ismale()
+                                    Actor.dress(Towel_1_F)
+                                Endif
+                                "How ever later <Actor.name> came to confront me about what I saw." 
+                                Actor(Angry):: "I know you were outside my room."
+                                Love = 0
+                                Love += Actor:attractiontoplayer
+                                Love += Actor:perversion
+                                Love -= Actor:masochist
+                    
+                                If Random(150, 250) < Love && Actor.isInterestedIn(Player)
+                                    Actor(Flirty):: "You know what. I think I'm going to have some fun with you."
+                                    Sex(Player, Actor)
+                                    
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    EndIf
+                                    Actor:attractiontoplayer += Random(0, 50)
+                                Else
+                                    Actor(Angry):: "I better not catch you again!"
+                                    Actor:rapportwithplayer -= Random(0, 9)
+                                Endif
+                    
+                            Endif
+    
+                        Endif
+                    Endif
+                Else
+                    "Damn I think they heard me. [run]"
+    
+                Endif
+            Else
+                "I deside to leave them be."
+                "Sounds like <Actor.name> is done."
+                Love = 0
+                Love += Actor:perversion
+                Love += Actor:arousal           
+                
+                Relative = getRelative()
+                count = 0
+                While Relative.isfemale() && count < 20
+                    Relative = getRelative()
+                    count += 1
+                Endwhile            
+                If Player.isfemale() && Actor.isfemale() && !Relative.isfemale() &&  Relative.isValid() && Actor.isInterestedIn(Relative) && Relative.isInterestedIn(Actor) && !Relative.isMarried() && !Relative.isdating() && Relative.livesWithPlayer() && Love > Random(100, 150) && Relative:perversion > Random(30, 75)
+                    "..."
+                    Player:: "What's that sound coming out of the bathroom?"
+                    setBackground(shower)
+                    Player(Surprised):: "What the fuck!"
+                    Sex(Relative, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    arousal += Random(0, 30)
+                    Relative.show(2)
+                    Actor.show(3)
+                    Player.show(0)
+                    AnimatePair(Relative, Actor, Kissing)
+                    Relative.strip()
+                    Actor.strip()
+                    "OMg my <Relative.relationship> is fucking my Neighbour!"
+                    "It looks like they're already ready for another round ..."
+                    0:: isModEnabled(vin_Incest):: "Offer to join them"
+                    1:: "Enough"
+                    
+                    If 0
+                        Player.strip()
+                        Player(Flirty):: "Looks like you guys are having some fun there? Mind if I join you?"
+                        RLove = 0
+                        RLove += Relative:attractiontoplayer
+                        RLove += Relative:incest
+                        RLove += Relative:perversion
+                        RLove += Love
+                    
+                        If Random(200, 400) < RLove
+                            Relative(Flirty):: "I didn't realize how much of a pervert my <Relative.callplayer> is ..."
+                            setBackground(home)
+                            Actor(Flirty):: "Come on and join us then, what are you waiting for?"
+                            Sex(Relative, Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
+                            Relative:incest += Random(15, 50)
+                            Relative:attractiontoplayer += Random(15, 50)
+                            Actor:attractiontoplayer += Random(15, 50)
+    
+                        Else
+                            Relative(Angry):: "What are you doing here, peeping Tom?" 
+                            Actor(Angry):: "And what's up with that perverted proposal?" 
+                            Relative(Angry):: "You're my <Relative.callplayer>, for God's sake!"
+                            Relative:rapportwithplayer -= Random(0, 3)
+                        Endif
+                    Else
+                        "Best leave them to their fun."
+                    Endif                   
+                Elseif Random(150, 250) < [Love + Actor:attractiontoplayer] && Actor.isInterestedIn(Player) && Player.isInterestedIn(Actor)
+                    Actor.strip()
+                    Actor.show(2)
+                    Actor(Flirty):: "I just wanted to thank you for letting me use your shower..."
+                    Player(Surprised):: "Um..."
+                    Sex(Player, Actor)
+                    
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    Actor:attractiontoplayer += Random(1, 50)
+                Else
+                    Actor.show(2)
+                    Actor:: "Thanks for letting me use your shower."
+                    Actor:rapportwithplayer += Random(1, 9)
+                Endif
+            
+            Endif
+        Endif   
+    SceneEnd() // Edited by Raddeck
+    timeoutActor(600, neighbour_Shower_broke, Actor)
+    timeout(200, neighbour_Shower_broke)

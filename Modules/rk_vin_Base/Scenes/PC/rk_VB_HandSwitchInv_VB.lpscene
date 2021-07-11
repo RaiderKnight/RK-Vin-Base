@@ -9,7 +9,7 @@ OTHER: none
         SettingChoiceSwitch = rk_VB_SettingChoiceSwitchPC.getGlobal()
         SettingChoiceSwitchS = rk_VB_SettingChoiceSwitchS.getGlobal()
         SettingChoiceSwitchFood = rk_VB_SettingChoiceSwitchFood.getGlobal()
-        
+        SettingChoiceSwitchItems = rk_VB_SettingChoiceSwitchItems.getGlobal()
         
         "What I want to do?"
         0::"Set Inventories"
@@ -99,11 +99,17 @@ OTHER: none
         ElseIf 1
         
             "Click on the item you want to store!"
+            10:: stock_book > 0::"Books (<stock_book>)"
             90:: stock_musicalinstrument > 0 ::"Musical instrument (<stock_musicalinstrument>)"
             99::"Go back to game!"
             
             
-            If 90
+            If 10
+            
+                rk_VB_SettingChoiceSwitchItems.setGlobal(1)
+                followUp(rk_VB_HandSwitchInv_Items)
+            
+            ElseIf 90
             
                 followUp(rk_VB_HandSwitchInv_Musik)
             

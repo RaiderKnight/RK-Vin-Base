@@ -1,45 +1,69 @@
-WHAT: all, -go_to_the_bathroom, -sleep, -nap
+WHAT: none
 WHERE: home
 WHEN: 18 - 24
 WHO: Actor = getPerson(true); If !Actor.isDating() && Player.isInterestedIn(Actor) && Actor:perversion > 80 && Actor:attractiontoplayer > 10
-OTHER: IsAtHome() && arousal > 50 && perversion > 30
+OTHER: none
 
     SceneStart()
-    Actor.dress()
-    SecondScreen(Actor)
-    Actor.show(2)
-    Actor2 = getPerson(true)
-    While Actor2.isValid() && [!Player.isInterestedIn(Actor2) || Actor2:perversion < 60 || Actor2:attractiontoplayer < 5 || Actor.isDating()]
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Actor.dress()
+        SecondScreen(Actor)
+        Actor.show(2)
         Actor2 = getPerson(true)
-    EndWhile
-    "I'm so horny, damn it! Maybe I should give <Actor.name> a booty call? Being a free spirit, I'm sure <Actor.he_or_she> will be down."
-    0:: "Yes"
-    1:: "No"
-    2:: Actor2.isValid():: "Call another fuckbuddy for a threesome"
+        IBuyaPhone = Player.getActorVar(rk_VB_IBuyaPhone)
+        
+        stock_IPhone = Player.getActorVar(stock_IPhone)
+        stock_Samsung = Player.getActorVar(stock_Samsung)
+        stock_OnePlus = Player.getActorVar(stock_OnePlus)
+        stock_LPGPower = Player.getActorVar(stock_LPGPower)
+        Stock_phones = Pockstock_IPhone + Pockstock_Samsung + Pockstock_OnePlus + Pockstock_LPGPower
+        
+        While Actor2.isValid() && [!Player.isInterestedIn(Actor2) || Actor2:perversion < 60 || Actor2:attractiontoplayer < 5 || Actor.isDating()]
+            Actor2 = getPerson(true)
+        EndWhile
+        
+        "I'm so horny, damn it! Maybe I should give <Actor.name> a booty call? Being a free spirit, I'm sure <Actor.he_or_she> will be down."
+        0:: IBuyaPhone > 0 || Stock_phones > 0:: "Yes"
+        1:: "No"
+        2:: Actor2.isValid():: "Call another fuckbuddy for a threesome"
+        
+        If 0
+        
+            SecondScreen()
+            Actor.show()
+            "In no time at all, <Actor.name> arrived and we didn't bother with any dating bullshit, but just got it on immediately."
+            Sex(Player, Actor)
+            perversion += Random(0, 0.5)
+            Actor.hide()
+            "<Actor.name> satisfied my needs, I satisfied <Actor.his_or_hers>. It's a win-win for both sides!"
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+
+        Elseif 1
+        
+            "No way. I'm not so desperate that I would just fuck anyone I know."
+            
+        Else
+        
+            "Lucky me! <Actor.name> isn't the only one on my contact list that is a potential booty call. <Actor2.name> too I'm sure will be up for it."
+            SecondScreen()
+            Actor.show()
+            Actor2.dress()
+            Actor2.show(3)
+            "In no time at all, <Actor.name> and <Actor2.name> arrived and we didn't bother with any dating bullshit, but just got it on immediately."
+            Sex(Player, Actor, Actor2)
+            perversion += Random(0, 1)
+            Actor.hide()
+            Actor2.hide()
+            "<Actor.name>, <Actor2.name> and I satisfied each other's needs. It's a win-win for all three sides!"
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -3)
+            EndIf
+            
+        Endif
     
-    If 0
-        SecondScreen()
-        Actor.show()
-        "In no time at all, <Actor.name> arrived and we didn't bother with any dating bullshit, but just got it on immediately."
-        Sex(Player, Actor)
-        perversion += Random(0, 0.5)
-        Actor.hide()
-        "<Actor.name> satisfied my needs, I satisfied <Actor.his_or_hers>. It's a win-win for both sides!"
-    Elseif 1
-        "No way. I'm not so desperate that I would just fuck anyone I know."
-    Else
-        "Lucky me! <Actor.name> isn't the only one on my contact list that is a potential booty call. <Actor2.name> too I'm sure will be up for it."
-        SecondScreen()
-        Actor.show()
-        Actor2.dress()
-        Actor2.show(3)
-        "In no time at all, <Actor.name> and <Actor2.name> arrived and we didn't bother with any dating bullshit, but just got it on immediately."
-        Sex(Player, Actor, Actor2)
-        perversion += Random(0, 1)
-        Actor.hide()
-        Actor2.hide()
-        "<Actor.name>, <Actor2.name> and I satisfied each other's needs. It's a win-win for all three sides!"        
-    Endif
-    
-    SceneEnd()
-    timeout(96, booty_call)
+    SceneEnd() // Improved by Raddeck
+    //timeout(96, booty_call)

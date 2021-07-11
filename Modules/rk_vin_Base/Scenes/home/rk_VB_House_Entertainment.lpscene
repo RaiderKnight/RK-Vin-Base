@@ -24,18 +24,23 @@ OTHER: none
         Else
         
             "What should I do?"
-            2:: IBuyaPhone > 0 :: "Call a hooker"
-            3:: stock_movie > 0 && IBuyaTV > 0 :: "Watch a movie"
+            10:: IBuyaPhone > 0 :: "Call a hooker"
+            20:: IBuyaPhone > 0 && arousal > 50 && perversion > 30 :: "Give a booty call"
+            30:: stock_movie > 0 && IBuyaTV > 0 :: "Watch a movie"
             35:: stock_movie > 0 && IBuyaTV > 0 :: "Watch a porn movie"
-            4:: IBuyaTV > 0 :: "Watch sport"
-            5:: IBuyaTV > 0 :: "Watch TV"
+            40:: IBuyaTV > 0 :: "Watch sport"
+            50:: IBuyaTV > 0 :: "Watch TV"
             99:: "Go back!"
             
-            If 2
+            If 10
             
                 followUp(call_a_hooker)
             
-            ElseIf 3
+            ElseIf 20
+            
+                followUp(booty_call)
+            
+            ElseIf 30
                 
                 Player.animate(sofawatch)
                 "I decided to watch a movie..."
@@ -62,7 +67,7 @@ OTHER: none
                 EndIf
                 passTime(1, 1.5)
 
-            ElseIf 4
+            ElseIf 40
                 
                 Player.animate(sofawatch)
                 "I decided to watch sport..."
@@ -75,7 +80,7 @@ OTHER: none
                 EndIf
                 passTime(1, 1.5)
                 
-            ElseIf 5
+            ElseIf 50
                 
                 Player.animate(sofawatch)
                 "I decided to watch TV..."

@@ -58,7 +58,9 @@ OTHER: none
         vapProdStck = stock_Vapraspberry + stock_Vapgrape + stock_Vapstrawberry + stock_Vaplemon + stock_VapKanzi
         stock_musicalinstrument_P = Player.getActorVar(stock_musicalinstrument_P)
         stock_book_P = Player.getActorVar(stock_book_P)
-        pockets_inventory = weedstck + emptycigarStck + stock_confectioneryprod + vapProdStck + Stock_phones + stock_musicalinstrument_P
+        TotalPCP = stock_haircare + stock_makeup + stock_supplement + stock_skincare
+        TotalSmoking = emptycigarStck + vapProdStck + weedstck + stock_tobacco
+        pockets_inventory = TotalSmoking + stock_confectioneryprod + Stock_phones + stock_musicalinstrument_P + stock_book_P + stock_flower + stock_gift + TotalPCP + stock_bagproduct + stock_binocular + stock_movie + stock_petfood + stock_toyproduct + stock_xxxmag + stock_travelmap
     
     If pockets_inventory < 1 
         Player(Anxious)::"I got nothing inside my pockets !"
@@ -82,15 +84,86 @@ OTHER: none
             
                 Player(Curious)::"Let see what I have inside my pockets."
                 0::"I have <stock_musicalinstrument_P> musical instrument(s)"
+                0::"I have <stock_bagproduct> fashion bag(s)"
+                0::"I have <stock_binocular> binocular(s)"
                 0::"I have <stock_book_P> book(s)"
-                1:: stock_confectioneryprod > 0 ::"Check candy inventory (<stock_confectioneryprod>)"
-                10:: emptycigarStck > 0 ::"Check cigars inventory (<emptycigarStck>)"
-                20:: vapProdStck > 0 ::"Check vape juice inventory (<vapProdStck>)"
-                30:: weedstck > 0 ::"Check weed inventory (<weedstck>)"
+                0::"I have <stock_flower> flower(s)"
+                0::"I have <stock_gift> gift(s)"
+                0::"I have <stock_movie> movie"
+                0::"I have <stock_petfood> pet food(s)"
+                0::"I have <stock_toyproduct> toy product(s)"
+                0::"I have <stock_travelmap> travel map(s)"
+                0::"I have <stock_xxxmag> XXX magazine(s)"
+                8:: TotalPCP > 0 ::"Check personal care products inventory (<TotalPCP>)"
+                7:: TotalSmoking > 0 ::"Check smoking products inventory (<TotalSmoking>)"
+                9:: stock_confectioneryprod > 0 ::"Check candies inventory (<stock_confectioneryprod>)"
                 40:: Stock_phones > 0 ::"Check mobile phone inventory (<Stock_phones>)"
                 99::"Nevermind, I will check later !"
                 
-                If 1
+                If 7
+                
+                    0::"I have <stock_tobacco> tobacco product(s)"
+                    10:: emptycigarStck > 0 ::"Check cigars inventory (<emptycigarStck>)"
+                    20:: vapProdStck > 0 ::"Check vape juice inventory (<vapProdStck>)"
+                    30:: weedstck > 0 ::"Check weed inventory (<weedstck>)"
+                    99:: "Go back !"
+                    
+                    If 10
+                        If emptycigarStck  < 1
+                            Player(Anxious)::"Ok, I don't have any cigars! I have to go shopping to the tobacco store !"
+                        Else
+                            0:: "<stock_Davidoff> Davidoff Yamasá"
+                            0:: "<stock_Romeo> Romeo y Julieta"
+                            0:: "<stock_Montecristo> Montecristo"
+                            0:: "<stock_KDcigars> King of Denmark Limited Edition"
+                            0:: "<stock_Cohiba> Cohiba Behike"
+                            99:: "Go back !"
+                        
+                        Endif
+                
+                    Elseif 20
+                        If vapProdStck  < 1
+                            Player(Anxious)::"Ok, I don't have any vape juices! I have to go shopping to get more vape juice !"
+                        Else
+        
+                            0:: "<stock_Vapraspberry> bottle(s) of blue raspberry"
+                            0:: "<stock_Vapgrape> bottle(s) of redcurrant, grape & cherry"
+                            0:: "<stock_Vapstrawberry> bottle(s) of strawberry guava"
+                            0:: "<stock_Vaplemon> bottle(s) of lemon berry pie"
+                            0:: "<stock_VapKanzi> bottle(s) of Kanzi"
+                            99:: "Go back !"
+        
+                        Endif
+                    
+                    Elseif 30
+                        If weedstck  < 1
+                            Player(Anxious)::"Ok, I don't have any weed! Damn! I have to go shopping to the tobacco store to rebatch!"
+                        Else
+                    
+                            0:: "<stock_AK47weed> gram(s) of AK 47"
+                            0:: "<stock_SSweed> gram(s) of Sunset Sherbet"
+                            0:: "<stock_WWweed> gram(s) of White Widow"
+                            0:: "<stock_PEweed> gram(s) of Pineapple Express"
+                            0:: "<stock_OGKweed> gram(s) of OG Kush"
+                            0:: "<stock_GSCweed> gram(s) of Girl Scout Cookies"
+                            0:: "<stock_BBweed> gram(s) of Bruce Banner"
+                            0:: "<stock_GGweed> gram(s) of Gorilla Glue"
+                            99:: "Go back !"
+                        
+                        Endif
+                        
+                    Endif
+                
+                ElseIf 8
+                
+                    0::"I have <stock_condom> condom(s)"
+                    0::"I have <stock_haircare> haircare product(s)"
+                    0::"I have <stock_makeup> makeup product(s)"
+                    0::"I have <stock_skincare> skincare product(s)"
+                    0::"I have <stock_supplement> supplement pill(s)"
+                    99:: "Go back !"
+                
+                ElseIf 9
                     If  stock_confectioneryprod  < 1
                         Player(Anxious)::"Ok, I don't have any candies! I have to go shopping or stopping eating too much candies !"
                     Else
@@ -108,49 +181,6 @@ OTHER: none
                     
                     Endif
                 
-                Elseif 10
-                    If emptycigarStck  < 1
-                        Player(Anxious)::"Ok, I don't have any cigars! I have to go shopping to the tobacco store !"
-                    Else
-                        0:: "<stock_Davidoff> Davidoff Yamasá"
-                        0:: "<stock_Romeo> Romeo y Julieta"
-                        0:: "<stock_Montecristo> Montecristo"
-                        0:: "<stock_KDcigars> King of Denmark Limited Edition"
-                        0:: "<stock_Cohiba> Cohiba Behike"
-                        99:: "Go back !"
-                    
-                    Endif
-            
-                Elseif 20
-                    If vapProdStck  < 1
-                        Player(Anxious)::"Ok, I don't have any vape juices! I have to go shopping to get more vape juice !"
-                    Else
-    
-                        0:: "<stock_Vapraspberry> bottle(s) of blue raspberry"
-                        0:: "<stock_Vapgrape> bottle(s) of redcurrant, grape & cherry"
-                        0:: "<stock_Vapstrawberry> bottle(s) of strawberry guava"
-                        0:: "<stock_Vaplemon> bottle(s) of lemon berry pie"
-                        0:: "<stock_VapKanzi> bottle(s) of Kanzi"
-                        99:: "Go back !"
-    
-                    Endif
-                
-                Elseif 30
-                    If weedstck  < 1
-                        Player(Anxious)::"Ok, I don't have any weed! Damn! I have to go shopping to the tobacco store to rebatch!"
-                    Else
-                
-                        0:: "<stock_AK47weed> gram(s) of AK 47"
-                        0:: "<stock_SSweed> gram(s) of Sunset Sherbet"
-                        0:: "<stock_WWweed> gram(s) of White Widow"
-                        0:: "<stock_PEweed> gram(s) of Pineapple Express"
-                        0:: "<stock_OGKweed> gram(s) of OG Kush"
-                        0:: "<stock_GSCweed> gram(s) of Girl Scout Cookies"
-                        0:: "<stock_BBweed> gram(s) of Bruce Banner"
-                        0:: "<stock_GGweed> gram(s) of Gorilla Glue"
-                        99:: "Go back !"
-                    
-                    Endif
                 
                 ElseIf 40
                     If Stock_phones  < 1
@@ -172,6 +202,7 @@ OTHER: none
                 Player(Curious)::"Let see what I have inside my pockets for smoking."
                 60:: emptycigarStck > 0 ::"Smoke a cigars"
                 70:: vapProdStck > 0 ::"Smoke vape juice"
+                75:: stock_tobacco > 0 ::"Smoke tobacco"
                 80:: weedstck > 0 ::"Smoke weed"
                 99::"Nevermind, I will smoke later !"
         
@@ -184,6 +215,18 @@ OTHER: none
             
                     followUp(rk_VB_smoke_vape)
                     stayInMenu = false
+                
+                ElseIf 75
+            
+                    stock_tobacco -= 1
+                    mood += 2
+                    energy += 1
+                    fitness -= 0.02
+                    attractiveness -= 0.01
+                    Player.show()
+                    Player.animate(smoke)
+                    Player(Happy)::"I decide to smoke a some tobacco!"
+                    passTime(0.25, 0.5)
                 
                 ElseIf 80
             

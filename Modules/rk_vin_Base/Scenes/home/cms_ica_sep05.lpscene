@@ -5,23 +5,43 @@ WHO: Actor = getSpecific(Landlord); If Actor:perversion > 80 && Actor.isInterest
 OTHER: isAtHome()
 
     SceneStart()
-    Actor2 = getSpecific(Dating)
-    Actor.dress()
-    Actor.show()
-    "When the landlord comes in to collect the rent today, the pervert offers a big discount if I sleep with <Actor2.him_or_her> ..."
-    0:: "Okay ..."
-    1:: Actor2.isValid() && Actor.isInterestedIn(Actor2):: "Offer <Actor2.name> instead"
-    2:: "No way"
     
-    If 2
-        "What kind of offer is that?"
-    Else
-        If 0
-            Sex(Player, Actor)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Actor2 = getSpecific(Dating)
+        Actor.dress()
+        Actor.show()
+        "When the landlord comes in to collect the rent today, the pervert offers a big discount if I sleep with <Actor2.him_or_her> ..."
+        0:: "Okay ..."
+        1:: Actor2.isValid() && Actor.isInterestedIn(Actor2):: "Offer <Actor2.name> instead"
+        2:: "No way"
+        
+        If 2
+        
+            "What kind of offer is that?"
+            Player(Wink)::"I prefer to pay cash!"
+            
         Else
-            Sex(Actor, Actor2)
+        
+            If 0
+            
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                
+            Else
+            
+                Sex(Actor, Actor2)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                
+            Endif
+            
+            money += 500
+            
         Endif
-        money += 500
-    Endif
-    SceneEnd()
+        
+    SceneEnd() // Improved by Raddeck
     timeout(1000, cms_ica_sep05)

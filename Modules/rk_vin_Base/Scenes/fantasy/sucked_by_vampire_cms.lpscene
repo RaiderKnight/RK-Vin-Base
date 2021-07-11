@@ -3,28 +3,73 @@ WHERE: all
 WHEN: 0 - 24
 WHO: Actor = getCompanion(); If Actor.isRace(Vampire)
 OTHER: !Player.isRace(Vampire)
-
-    SceneStart()
-    "I know <Actor.name> is a vampire, and it's not hard to tell <Actor.he_or_she> is currently thristy for blood ... my blood"
-    If masochist - Actor:masochist > 50
-        "And for some reason, I just can't seem to say no ..."
-        Sucked = true
-    Else
-        "Should I let <Actor.him_or_her>?"
-        0:: "Yes"
-        1:: "No"
-        
-        If 0
-            Sucked = true
-        Else
-            Sucked = false
-        Endif
     
-        If Sucked
-            masochist += 2
-            animatePair(Actor, Player, Kissing)
-            "Sensing my receptiveness to the whole situation, <Actor.name> didn't hesistate anymore for the blood <Actor.he_or_she> has been craving ..."
+    SceneStart()
+        
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        "I know <Actor.name> is a vampire, and it's not hard to tell <Actor.he_or_she> is currently thristy for blood ... my blood"
+        If masochist - Actor:masochist > 50
+        
+            "And for some reason, I just can't seem to say no ..."
+            Sucked = true
+            
+        Else
+        
+            "Should I let <Actor.him_or_her>? -Warning! Possibility of turning into vampire if your human-" // Edit Ravenger6660
+            0:: "Yes"
+            1:: "No"
+            
+            If 0
+                Sucked = true
+            Else
+                Sucked = false
+            Endif
+        
+            If Sucked
+            
+                masochist += 2
+                animatePair(Actor, Player, Kissing)
+                // Start Edit Ravenger6660
+                If Player.isRace(vampire)
+                
+                    "<Actor.name> drank Vampire blood and feels stronger."
+                    energy -= 25
+                    Actor:fitness += 10
+                
+                Elseif Player.isRace(Elf)
+                
+                    Actor():: "Yummy Elf blood that's the good stuff. I think I'm starting to look better"
+                    energy -= 25
+                    Actor:attractiveness += 10
+                
+                Elseif Player.isRace(Orc)
+                
+                    Actor():: "Gross orc blood is just the worst. I feel like fucking something now."
+                    energy -= 25
+                    Actor:fertility_npc += 5
+                    
+                Else
+                    Actor():: "That's some yummy blood, enough to keep my energy level up for a while."
+                    energy -= 25
+                    If Random(5, 15) > energy
+                        Player.blendPreset(vampire)
+                        Player.dress()
+                        Player.show()
+                        "Oops, I was turned into a vampire."
+                    Endif
+                Endif
+                // End Edit Ravenger6660
+                "Sensing my receptiveness to the whole situation, <Actor.name> didn't hesistate anymore for the blood <Actor.he_or_she> has been craving ..."
+                
+                // Start Edit Raddeck
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -15)
+                EndIf
+                // End Edit Raddeck
+            Endif
         Endif
-    Endif
-    SceneEnd()
-    timeout(200, sucked_by_vampire_cms)
+        
+    SceneEnd() // Improved by Raddeck - Ravenger6660
+    timeoutActor(200, sucked_by_vampire_cms, Actor)
+    timeout(100, sucked_by_vampire_cms)
