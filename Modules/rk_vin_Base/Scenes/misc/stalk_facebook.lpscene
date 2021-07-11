@@ -6,6 +6,7 @@ OTHER: none
 
     SceneStart()
     
+        FacebookFriend = rk_VB_FacebookFriend.getGlobal()
         If isTimingOut(stalk_facebook)
         
             "I don't feel like doing more online stalking for now ... Maybe I'll be in the mood again in an hour or two."
@@ -33,6 +34,10 @@ OTHER: none
                     
                         "<Actor.name> accepted my friend request on Facebook. I knew I left a good first impression!"
                         exchangeContact(Actor)
+                        If FacebookFriend <= 0
+                            FBID = Actor.getID()
+                            rk_VB_FacebookFriend.setGlobal(FBID)
+                        Endif
                         
                     Else
                     

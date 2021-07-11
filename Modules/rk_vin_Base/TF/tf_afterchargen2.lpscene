@@ -5,6 +5,11 @@ WHO: none
 OTHER: none
 
     If TfGame()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        FacebookFriend = rk_VB_FacebookFriend.getGlobal()
+        
         SceneStart()
         setBackground(home)
         OldPlayer = getSpecific(OldPlayer)
@@ -19,8 +24,9 @@ OTHER: none
         Else
             "I don't believe what I'm seeing! I lean into the mirror, touching my face, blinking my eyes, unable to help the manic grin spreading across my face. A loud, high-pitched scream of delight passes from my throat. It’s real! It’s impossible, insane, but it’s real!"
         Endif
-        "It's 2019 so my reaction to everything is to of course take out my phone. I immediately clicked on Facebook."
-        "And to add the shock, I'm logged in as some '<Player.name> <Player.name_last>'. My hometown, alma mater and friendlist all remains the same, but I couldn't find a single photo or even mention of <OldPlayer.name> <OldPlayer.name_last> ... I searched for that name on Facebook, then Google, but no matches. It's like I has been erased from the internet, which I didn't know was even possible."
+        
+        "It's 2021 so my reaction to everything is to of course take out my phone. I immediately clicked on Facebook."
+        "And to add the shock, I'm logged in as some '<Player.name> <Player.name_last>'. My hometown and friendlist all remains the same, but I couldn't find a single photo or even mention of <OldPlayer.name> <OldPlayer.name_last> ... I searched for that name on Facebook, then Google, but no matches. It's like I has been erased from the internet, which I didn't know was even possible."
         "Suddenly, I hear a knock on my door ..."
         Actor = getRelative()
         If Actor.isValid()
@@ -29,6 +35,7 @@ OTHER: none
             Actor = getSpecific(Landlord)
             "It's my <Actor.landlord_or_landlady>, <Actor.name>."
         Endif
+        
         Actor:: "Is everything okay in there, <Player.name>? I heard your scream! What's wrong?"
         Player(Sad):: "It's fine. Don't worry ..."
         "Shit, I shouldn't have said anything, how do I explain to <Actor.him_or_her> about my high-pitched voice?"
@@ -38,10 +45,15 @@ OTHER: none
         1:: "No way, I'm <OldPlayer.name>"
         
         If 0
+        
             "Maybe that's my name now ... maybe I'm a woman now ... somehow. And everyone seems to have always known me as a woman."
             masochist += Random(0, 10)
+            
         Else
+        
             "I'm not <Player.name>. I'm not a woman for fuck's sake. This is all a cruel dream. I'll wake up from it and be <OldPlayer.name> again."
+            mood -= 5
+            
         Endif
         "Maybe I should go to a hospital and tell a doctor everything?"
         "I suppose that's the only decent idea I have right now."
@@ -51,4 +63,5 @@ OTHER: none
         SceneEnd()
         OpenMenu(Inventory)
         followUp(tf_afterinventory)
-    Endif
+        
+    Endif // Improved by Raddeck
