@@ -5,26 +5,40 @@ WHO: none
 OTHER:
 
     SceneStart()
-    "My place I work at offers warranties and repair services for all products and sometimes due to the size and weight of the product, it's not reasonable to ask the customer to bring it back to the store for repairs. I've been asked to go to a customer's home to take a look at a malfunctioning product of ours ... Not my favorite part of the job, but it must be done."
-    setBackgroundCustom(livingroom)
-    Actor = generatePersonTemporary()
-    If Random(0, 100) < Actor:perversion
-        Actor.show()
-        Actor.makeInterested(Player)
-        Actor:attractiontoplayer => 30
-        "The customer opened the door to welcome me, completely naked!"
-        Actor:: "You know ... your product is actually working just fine ... It's just I've been very lonely recently after my last breakup ... having the house all to myself. You wouldn't mind keeping me company for a while, would you? After all, you do repairs, so you must have some magic hands."
-        0:: "Fuck the customer"
-        1:: "Just leave"
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        "My place I work at offers warranties and repair services for all products and sometimes due to the size and weight of the product, it's not reasonable to ask the customer to bring it back to the store for repairs. I've been asked to go to a customer's home to take a look at a malfunctioning product of ours ... Not my favorite part of the job, but it must be done."
+        setBackgroundCustom(livingroom)
+        Actor = generatePersonTemporary()
         
-        If 0
-            Sex(Player, Actor)
+        If Random(0, 100) < Actor:perversion
+            Actor.show()
+            Actor.makeInterested(Player)
+            Actor:attractiontoplayer => 30
+            "The customer opened the door to welcome me, completely naked!"
+            Actor(Flirty):: "You know ... your product is actually working just fine ... It's just I've been very lonely recently after my last breakup ... having the house all to myself. You wouldn't mind keeping me company for a while, would you? After all, you do repairs, so you must have some magic hands."
+            0:: "Fuck the customer"
+            1:: "Just leave"
+            
+            If 0
+            
+                Sex(Player, Actor)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                
+            Endif
+            
+        Else
+        
+            Actor.dress()
+            Actor.show()
+            "It was just an usual repair and I even received some tips."
+            money += 5
+            
         Endif
-    Else
-        Actor.dress()
-        Actor.show()
-        "It was just an usual repair and I even received some tips."
-        money += 5
-    Endif
-    SceneEnd()
-    timeout(50, repair_service)
+        
+    SceneEnd() // Improved by Raddeck
+    timeout(250, repair_service)

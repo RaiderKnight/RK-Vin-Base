@@ -5,26 +5,36 @@ WHO: Actor = getPersonHere(true)
 OTHER:
 
     SceneStart()
-    Work = Actor.getBuilding(work)
-    Cur = Actor.getBuilding(current)
-    If Work.isSameBuilding(Cur)
-        "I'm working the night shift today. Thankfully, my workmate <Actor.name> was there to keep me company."
-        Actor:rapportwithplayer += 2
-        Actor:attractiontoplayer += 2
-        If Actor.isInterestedIn(Player) && [Actor:perversion > 50 || Actor:attractiontoplayer > 50 || Actor.hadSex()]
-            Actor:: "This is sooo boring! Let's sneak into the back storage and fuck, what do you say?"
-            0:: "Yes"
-            1:: "No"
-            
-            If 0
-                Sex(Player, Actor)
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Work = Actor.getBuilding(work)
+        Cur = Actor.getBuilding(current)
+        If Work.isSameBuilding(Cur)
+            "I'm working the night shift today. Thankfully, my workmate <Actor.name> was there to keep me company."
+            Actor:rapportwithplayer += 2
+            Actor:attractiontoplayer += 2
+            If Actor.isInterestedIn(Player) && [Actor:perversion > 50 || Actor:attractiontoplayer > 50 || Actor.hadSex()]
+                Actor:: "This is sooo boring! Let's sneak into the back storage and fuck, what do you say?"
+                0:: "Yes"
+                1:: "No"
+                
+                If 0
+                    Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                Endif
+                
             Endif
+            
+        Else
+        
+            "I'm working the night shift today. It's boring as hell."
+            mood -= 2
+            
         Endif
-    Else
-        "I'm working the night shift today. It's boring as hell."
-        mood -= 2
-    Endif
-    SceneEnd()
+    SceneEnd() // Improved by Raddeck
     timeout(100, night_shift)
 
 

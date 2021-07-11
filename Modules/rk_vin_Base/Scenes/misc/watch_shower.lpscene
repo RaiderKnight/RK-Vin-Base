@@ -5,10 +5,16 @@ WHO: none
 OTHER: none
 
     SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
     
         setBackground(shower)
         filter(shower)
         Player.strip()
         Sex(Player)
+        If HungerEnable > 0
+            Player.modifyActorVar(rk_VB_Hunger, -1)
+        EndIf
     
     SceneEnd() // Improved by Raddeck

@@ -5,29 +5,46 @@ WHO: none
 OTHER:
 
     SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
 
-    Actor = generatePersonTemporary()
-    While !Actor.isInterestedIn(Player)
         Actor = generatePersonTemporary()
-    Endwhile
-    Actor.dress()
-    Actor.show()
-    "One of the customers I serve seem clearly attracted to me and is really trying to make a conversation."
-    If Random(0, 100) < Actor:perversion
-        Actor:: "You make me so horny, darling. How about coming back home with me after work? I'll make it worth your while"
-        0:: "Fuck the customer"
-        1:: "Report to the bouncer"
+        While !Actor.isInterestedIn(Player)
+            Actor = generatePersonTemporary()
+        Endwhile
         
-        If 0
-            setBackground(home)
-            Sex(Player, Actor)
-            money += 200
+        Actor.dress()
+        Actor.show()
+        "One of the customers I serve seem clearly attracted to me and is really trying to make a conversation."
+        
+        If Random(0, 100) < Actor:perversion
+        
+            Actor:: "You make me so horny, darling. How about coming back home with me after work? I'll make it worth your while"
+            0:: "Fuck the customer"
+            1:: "Report to the bouncer"
+            
+            If 0
+            
+                setBackground(home)
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                money += 200
+                
+            Else
+            
+                "I'm not a prostitute! I immediately went to the bouncer, who forcefully asked the frisky patron to leave."
+                
+            Endif
+            
         Else
-            "I'm not a prostitute! I immediately went to the bouncer, who forcefully asked the frisky patron to leave."
+        
+            "Thankfully, the customer was well behaved and never harassed me in any way even when intoxicated, just some harmless flirting here and there. <Actor.He_or_She> even left me a big tip."
+            money += 10
+            
         Endif
-    Else
-        "Thankfully, the customer was well behaved and never harassed me in any way even when intoxicated, just some harmless flirting here and there. <Actor.He_or_She> even left me a big tip."
-        money += 10
-    Endif
-    SceneEnd()
-    timeout(50, bartender_frisky)
+        
+    SceneEnd() // Improved by Raddeck
+    timeout(150, bartender_frisky)
