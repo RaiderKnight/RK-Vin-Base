@@ -5,6 +5,9 @@ WHO: none
 OTHER: none
 
     SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
     
         stock_cheapJType = Player.getActorVar(stock_cheapJType)
         stock_AffordableJType = Player.getActorVar(stock_AffordableJType)
@@ -78,7 +81,7 @@ OTHER: none
                     Else
                     
                         "I tried to run, but the cops arrived too quickly and arrested me."
-                        sentence => 730
+                        sentence += 730
                         mood -= 5
                         sneak -= 5
                         followUp(imprisoned)
@@ -101,6 +104,9 @@ OTHER: none
                     SexNoAffair(Player, Actor)
                     Actor.hide()
                     SneakGame()
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                    EndIf
                     
                     If Random(0, 150) < sneak
                     
@@ -124,21 +130,73 @@ OTHER: none
                         Actor.show(2)
                         Actor.closeEyes(false)
                         Actor(Surprised):: "What? Who are you? Help!!!! Rapist!"
+                        PoliceMan = generatePersonTemporary()
+                        PoliceMan.dressGuard()
+                        PoliceMan.show(2)
+                        Actor1 = generatePersonTemporary()
+                        Actor1.dressGuard()
+                        Actor1.show(4)
+                        "Sure enough, the cops promptly arrived at the scene."
+                        "'Hands in the air, now!'"
                         0:: "Run"
+                        1:: "Surrender"
+                
+                        If 0
                     
-                        If Random(0, 100) < fitness
+                            If Random(0, 100) < fitness
                         
-                            "Thankfully, I made a safe escape before the cops arrived. That was close, phew ..."
-                            sneak += 1
+                                "I managed to lose the cops. Phew, that was close."
+                                sneak += 1
+                                mood += 2
                             
+                            Else
+                        
+                                Player(Angry):: "You're not taking me alive."
+                                copfired = 0
+                                While copfired < 5
+                        
+                                    If copfired > 0
+                        
+                                        PoliceMan(Angry)::"HEY YOU I ASKED YOU TO STOP!"
+                        
+                                    EndIf
+                                    "Pow!"
+                                    Player.hide()
+                    
+                                    "A cop fired his gun..."
+                                    If Random(0, 30) < fitness
+                
+                                        "I managed to dodge the shot. Phew, that was close."
+                                        sneak += 1
+                                        mood += 1
+                                        copfired += 1
+                        
+                                    ElseIf copfired >= 5
+                            
+                                        "I managed to lose the cops. Phew, that was close."
+                                        sneak += 3
+                                        mood += 2
+                                        copfired = 6
+                            
+                                    Else
+                    
+                                       "The cop fired his gun. It was a perfect shot ..."
+                                        followUp(death)
+                        
+                                    EndIf
+                    
+                                EndWhile
+                            
+                            Endif
+                        
                         Else
-                        
-                            "I tried to run, but the cops arrived too quickly and arrested me."
-                            sentence => 2920
-                            mood -= 5
-                            sneak -= 5
+                    
+                            Player.animate(fightlost)
+                            Player(Scared):: "Please, don't shoot!"
+                            "I put my hands up and surrendered to the overwhelming number of cops."
+                            sentence += Random(550, 750)
                             followUp(imprisoned)
-                            
+                        
                         Endif
                         
                     Endif 

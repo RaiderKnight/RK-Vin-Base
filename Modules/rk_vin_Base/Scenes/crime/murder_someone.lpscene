@@ -5,6 +5,9 @@ WHO: none
 OTHER: none
 
     SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
     
         KillCount = Player.getActorVar(rk_VB_KillCount)
         "Who do I want dead?"
@@ -127,7 +130,7 @@ OTHER: none
                         Player.animate(fightlost)
                         Player(Scared):: "Please, don't shoot!"
                         "I put my hands up and surrendered to the overwhelming number of cops."
-                        sentence => Random(1850, 3650)
+                        sentence += Random(1850, 3650)
                         followUp(imprisoned)
                         
                     Endif

@@ -5,6 +5,9 @@ WHO: none
 OTHER: none
 
     SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
     
         "That was rather risky doing that in public. I hope there weren't any cops around"
         
@@ -24,36 +27,76 @@ OTHER: none
                     
                 Else
                 
+                    "Sure enough, the cops promptly arrived at the scene."
+                    "'Hands in the air, now!'"
+                    PoliceMan = generatePersonTemporary()
+                    PoliceMan.dressGuard()
+                    PoliceMan.show(2)
+                    Actor1 = generatePersonTemporary()
+                    Actor1.dressGuard()
+                    Actor1.show(4)
+                    
                     Player(Angry):: "You're not taking me alive."
-                    
-                    copfired = 0
-                    While copfired < 5
-                        
-                        "Pow!"
-                        Player.hide()
-                    
-                        "A cop fired his gun..."
-                        If Random(0, 30) < fitness
+                    0:: "Run"
+                    1:: "Surrender"
                 
-                            "I managed to dodge the shot. Phew, that was close."
-                            sneak += 1
-                            mood += 1
-                            copfired += 1
+                    If 0
+                    
+                        If Random(0, 100) < fitness
                         
-                        ElseIf copfired >= 5
-                            
                             "I managed to lose the cops. Phew, that was close."
-                            sneak += 3
+                            sneak += 1
                             mood += 2
                             
                         Else
-                    
-                           "The cop fired his gun. It was a perfect shot ..."
-                            followUp(death)
                         
-                        EndIf
+                            Player(Angry):: "You're not taking me alive."
+                            copfired = 0
+                            While copfired < 5
+                        
+                                If copfired > 0
+                        
+                                    PoliceMan(Angry)::"HEY YOU I ASKED YOU TO STOP!"
+                        
+                                EndIf
+                                "Pow!"
+                                Player.hide()
                     
-                    EndWhile
+                                "A cop fired his gun..."
+                                If Random(0, 30) < fitness
+                
+                                    "I managed to dodge the shot. Phew, that was close."
+                                    sneak += 1
+                                    mood += 1
+                                    copfired += 1
+                        
+                                ElseIf copfired >= 5
+                            
+                                    "I managed to lose the cops. Phew, that was close."
+                                    sneak += 3
+                                    mood += 2
+                                    copfired = 6
+                            
+                                Else
+                    
+                                    "The cop fired his gun. It was a perfect shot ..."
+                                    followUp(death)
+                        
+                                EndIf
+                    
+                            EndWhile
+                            
+                        Endif
+                        
+                    Else
+                    
+                        Player.animate(fightlost)
+                        Player(Scared):: "Please, don't shoot!"
+                        "I put my hands up and surrendered to the overwhelming number of cops."
+                        sentence += Random(150, 300)
+                        followUp(imprisoned)
+                        
+                    Endif 
 
                 Endif
                 
@@ -64,7 +107,7 @@ OTHER: none
                 "I put my hands up and surrendered to the overwhelming number of cops."
                 sneak -= 5
                 mood -= 5
-                sentence => Random(10, 30)
+                sentence += Random(10, 30)
                 followUp(imprisoned)
                 
             Endif

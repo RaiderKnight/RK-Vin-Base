@@ -4,98 +4,106 @@ WHEN: 0 - 24
 WHO: none
 OTHER: none
 
-sceneStart()
-"Greeting my child do you wish to confess?"    
-0:: "Confess"
-1:: "Leave"
+    sceneStart()
 
-If 0
-    choice = -1
-    C = false
-    T = false
-    R = false
-    S = false
-    W = false
-    L = false
-    pray = 0
-    While choice < 6 
-        0:: !C:: "Control over my desire."
-        1:: !T:: "To be a better person."
-        2:: !R:: "Resist Temptation."
-        3:: [sentence > 2 && !S] ::"To seek forgiveness for my crimes."
-        4:: !W:: "Help with work."
-        5:: !L:: "Help with life."
-        6:: pray > 1 :: "Amen"
-
-        If 6
-                "For Great is the power of the God Lord of Heaven & earth." 
-                "Amen."
-                
-        Else
-            If 0
-                Player():: "I have ... needs. And I seek control over my desires. Lord God, Please give me strength."
-                "By your confession I give you strength."
-                arousal -= 85
-                mood += 10
-                pray += 1
-                C = true                
-                    
-            Elseif 1
-                Player():: "I want to become a better person. To help those in need."
-                If masochist > -1
-                    "I call you to lead your fellow man to salvation. For He will lift you up."
-                    masochist =< 0
-                    mood += 10
-                    pray += 1
-                    
-                Else masochist < 0
-                    "Humble yourself before the Lord."
-                    masochist =< 0
-                    mood += 10
-                    pray += 1
-
-                Endif
-                T = true
-            Elseif 2
-                Player():: "My heart & mind is impure."
-                "By your confession you are made clean by the Blood of the Lamb."
-                perversion -= 95
-                mood += 10
-                pray += 1
-                R = true    
-            Elseif 3 
-                Player():: "I have done wrong. I deserve punshment for my crimes."
-                Player():: "I am unworthy of forgiveness."
-                "By your confession you are forgiven go forth and sin no more."
-                sentence /= 1.5
-                mood += 10
-                pray += 1
-                S = true                    
-            Elseif 4
-                Player():: "I fear I may lose my job. Help me."
-                "Have faith in the Lord your God for he will not forsake you."
-                jobperformance *= 1.15
-                mood += 10
-                pray += 1
-                W = true                    
-            Else 5
-                Player():: "I feel the world is against me."
-                "By your confession I shall be your comforter and shelter."
-                karma += 90
-                mood += 50
-                pray += 1
-                L = true    
-            Endif   
-        Endif
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        "Greeting my child do you wish to confess?"    
+        0:: "Confess"
+        1:: "Leave"
         
-    Endwhile
-    
-endIf
-Saved = getPerson(tag_Saved); 
-If Saved:perversion > 15 && !Saved.isMarried()
-    Saved:perversion -= 1000
-    Saved:masochist =< 0
-    Saved:incest =< 0
-Endif
-passTime(0.5, 1)
-sceneEnd()
+        If 0
+            choice = -1
+            C = false
+            T = false
+            R = false
+            S = false
+            W = false
+            L = false
+            pray = 0
+            While choice < 6 
+                0:: !C:: "Control over my desire."
+                1:: !T:: "To be a better person."
+                2:: !R:: "Resist Temptation."
+                3:: [sentence > 2 && !S] ::"To seek forgiveness for my crimes."
+                4:: !W:: "Help with work."
+                5:: !L:: "Help with life."
+                6:: pray > 1 :: "Amen"
+        
+                If 6
+                    "For Great is the power of the God Lord of Heaven & earth." 
+                    "Amen."
+                        
+                Else
+                    If 0
+                        Player():: "I have ... needs. And I seek control over my desires. Lord God, Please give me strength."
+                        "By your confession I give you strength."
+                        arousal -= 85
+                        mood += 10
+                        pray += 1
+                        C = true                
+                            
+                    Elseif 1
+                        Player():: "I want to become a better person. To help those in need."
+                        If masochist > -1
+                            "I call you to lead your fellow man to salvation. For He will lift you up."
+                            masochist =< 0
+                            mood += 10
+                            pray += 1
+                            
+                        Else masochist < 0
+                            "Humble yourself before the Lord."
+                            masochist =< 0
+                            mood += 10
+                            pray += 1
+        
+                        Endif
+                        T = true
+                        
+                    Elseif 2
+                        Player():: "My heart & mind is impure."
+                        "By your confession you are made clean by the Blood of the Lamb."
+                        perversion -= 95
+                        mood += 10
+                        pray += 1
+                        R = true    
+                        
+                    Elseif 3 
+                        Player():: "I have done wrong. I deserve punshment for my crimes."
+                        Player():: "I am unworthy of forgiveness."
+                        "By your confession you are forgiven go forth and sin no more."
+                        sentence /= 1.5
+                        mood += 10
+                        pray += 1
+                        S = true    
+                        
+                    Elseif 4
+                        Player():: "I fear I may lose my job. Help me."
+                        "Have faith in the Lord your God for he will not forsake you."
+                        jobperformance *= 1.15
+                        mood += 10
+                        pray += 1
+                        W = true                    
+                    Else 5
+                        Player():: "I feel the world is against me."
+                        "By your confession I shall be your comforter and shelter."
+                        karma += 90
+                        mood += 50
+                        pray += 1
+                        L = true  
+                        
+                    Endif   
+                    
+                Endif
+                
+            Endwhile
+            
+        endIf
+        Saved = getPerson(tag_Saved); 
+        If Saved:perversion > 15 && !Saved.isMarried()
+            Saved:perversion -= 1000
+            Saved:masochist =< 0
+            Saved:incest =< 0
+        Endif
+    passTime(0.5, 1)
+    sceneEnd()

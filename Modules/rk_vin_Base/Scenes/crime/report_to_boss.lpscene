@@ -5,6 +5,9 @@ WHO: none
 OTHER: none
 
     SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
     
         Actor = getSpecific(Criminal)
         dressFormal()
@@ -100,6 +103,9 @@ OTHER: none
                                 Player.animate()
                                 sneak -= 2                                
                                 Outcome = 3
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -10)
+                                EndIf
                                 
                             Else
                             
@@ -109,6 +115,9 @@ OTHER: none
                                 Player(Furious):: "Anybody else wants to be a hero? Hand over the money, now!"
                                 masochist -= 2
                                 Outcome = 1
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -5)
+                                EndIf
                                 
                             Endif
                             
@@ -193,7 +202,7 @@ OTHER: none
                             Player.animate(fightlost)
                             Player(Scared):: "Please, don't shoot!"
                             "I put my hands up and surrendered to the overwhelming number of cops."
-                            sentence => 3650
+                            sentence += 3650
                             sneak -= 5
                             mood -= 5
                             followUp(imprisoned)
@@ -203,6 +212,7 @@ OTHER: none
                     Endif
                     
                 Elseif Job == 1 // DEBT COLLECTION
+                
                     Boss(Evil):: "One of the local business owners have been paying us for years for protection ... With the increased presence of the cops in the area, the owner has become a bit too ... bold and stopped paying."
                     Boss(Evil):: "You will go there and show that piece of shit how foolish it is to not honor an arrangement with our Family."
                     
@@ -231,10 +241,16 @@ OTHER: none
                         Actor2.animate(fightlost)
                         Actor2(Crying):: "Enough! Enough! I'll pay. Tell <Boss.name> I'm sorry."
                         outcome = 1
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -5)
+                        EndIf
                     Else
                         Player.animate(fightlost)
                         "Unfortunately, the <Actor2.bastard_or_bitch> turned out to be a handful and <Actor2.he_or_she> managed to knock me out. Thankfully, <ACtor.name> was there to save my ass in the end."
                         outcome = 2
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -10)
+                        EndIf
                     Endif
                     
                     If outcome == 1
@@ -254,15 +270,45 @@ OTHER: none
                                 "I managed to lose the cops. Phew, that was close."
                             Else
                                 Player(Angry):: "You're not taking me alive."
-                                "Pow!"
-                                Player.hide()
-                                "A cop fired his gun. It was a perfect shot ..."
-                                followUp(death)
+                                copfired = 0
+                                While copfired < 5
+                        
+                                    If copfired > 0
+                        
+                                        PoliceMan(Angry)::"HEY YOU I ASKED YOU TO STOP!"
+                        
+                                    EndIf
+                                    "Pow!"
+                                    Player.hide()
+                    
+                                    "A cop fired his gun..."
+                                    If Random(0, 30) < fitness
+                
+                                        "I managed to dodge the shot. Phew, that was close."
+                                        sneak += 1
+                                        mood += 1
+                                        copfired += 1
+                        
+                                    ElseIf copfired >= 5
+                            
+                                        "I managed to lose the cops. Phew, that was close."
+                                        sneak += 3
+                                        mood += 2
+                                        copfired = 6
+                            
+                                    Else
+                    
+                                       "The cop fired his gun. It was a perfect shot ..."
+                                        followUp(death)
+                        
+                                    EndIf
+                    
+                                EndWhile
                             Endif
                         Else
                             Player(Scared):: "Please, don't shoot!"
                             "I put my hands up and surrendered to the overwhelming number of cops."
-                            sentence => 365
+                            sentence += 365
                             followUp(imprisoned)
                         Endif                 
                     Endif
@@ -387,16 +433,46 @@ OTHER: none
                                     "I managed to lose the cops. Phew, that was close."
                                 Else
                                     Player(Angry):: "You're not taking me alive."
-                                    "Pow!"
-                                    Player.hide()
-                                    "A cop fired his gun. It was a perfect shot ..."
-                                    followUp(death)
+                                    copfired = 0
+                                    While copfired < 5
+                        
+                                        If copfired > 0
+                        
+                                            PoliceMan(Angry)::"HEY YOU I ASKED YOU TO STOP!"
+                        
+                                        EndIf
+                                        "Pow!"
+                                        Player.hide()
+                    
+                                        "A cop fired his gun..."
+                                        If Random(0, 30) < fitness
+                
+                                            "I managed to dodge the shot. Phew, that was close."
+                                            sneak += 1
+                                            mood += 1
+                                            copfired += 1
+                        
+                                        ElseIf copfired >= 5
+                            
+                                            "I managed to lose the cops. Phew, that was close."
+                                            sneak += 3
+                                            mood += 2
+                                            copfired = 6
+                            
+                                        Else
+                    
+                                            "The cop fired his gun. It was a perfect shot ..."
+                                            followUp(death)
+                        
+                                        EndIf
+                    
+                                    EndWhile
                                 Endif
                             Else
                                 Player.animate(fightlost)
                                 Player(Scared):: "Please, don't shoot!"
                                 "I put my hands up and surrendered to the overwhelming number of cops."
-                                sentence => 1825
+                                sentence += 1825
                                 followUp(imprisoned)
                             Endif
                         Endif            
@@ -440,17 +516,50 @@ OTHER: none
                                 If Random(0, 100) < fitness
                                     "I managed to lose the cops. Phew, that was close."
                                 Else
+                                    
                                     Player(Angry):: "You're not taking me alive."
-                                    "Pow!"
-                                    Player.hide()
-                                    "A cop fired his gun. It was a perfect shot ..."
-                                    followUp(death)
+                                    copfired = 0
+                                    While copfired < 5
+                        
+                                        If copfired > 0
+                        
+                                            PoliceMan(Angry)::"HEY YOU I ASKED YOU TO STOP!"
+                        
+                                        EndIf
+                                        "Pow!"
+                                        Player.hide()
+                    
+                                        "A cop fired his gun..."
+                                        If Random(0, 30) < fitness
+                
+                                            "I managed to dodge the shot. Phew, that was close."
+                                            sneak += 1
+                                            mood += 1
+                                            copfired += 1
+                        
+                                        ElseIf copfired >= 5
+                            
+                                            "I managed to lose the cops. Phew, that was close."
+                                            sneak += 3
+                                            mood += 2
+                                            copfired = 6
+                            
+                                        Else
+                    
+                                            "The cop fired his gun. It was a perfect shot ..."
+                                            followUp(death)
+                        
+                                        EndIf
+                    
+                                    EndWhile
+                                    
                                 Endif
+                                
                             Else
                                 Player.animate(fightlost)
                                 Player(Scared):: "Please, don't shoot!"
                                 "I put my hands up and surrendered to the overwhelming number of cops."
-                                sentence => 365
+                                sentence += 365
                                 followUp(imprisoned)
                             Endif
                         Endif               
@@ -545,6 +654,9 @@ OTHER: none
                         If Boss:masochist > 50 || Boss:perversion > 70
                             Boss(Flirty):: "I guess my best right hand <Player.man_or_woman> deserves some more 'personal' compensation ..."
                             Sex(Boss, Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -3)
+                            EndIf
                         Else
                             Boss(Furious):: "Is this a joke? Who do you think you are to demand sex from me? Your recent little success has got to your head too much?"
                             timeout(500, report_to_boss)

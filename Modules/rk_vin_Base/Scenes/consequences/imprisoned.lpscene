@@ -5,6 +5,9 @@ WHO: none
 OTHER: none
 
     SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
     
         Court = true
         setBackground(police)
@@ -23,6 +26,9 @@ OTHER: none
             
                 masochist -= Random(0, 1)
                 Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
                 Court = false
                 mood -= 1
                 
@@ -40,6 +46,9 @@ OTHER: none
                 
                     Actor(Excited):: "I suppose that's a fair deal!"
                     Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
                     Court = false
                     
                 Else
