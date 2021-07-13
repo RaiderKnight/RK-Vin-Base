@@ -5,13 +5,14 @@ WHO: none
 OTHER: Random(0, 100) < fitness
 
     SceneStart()
-    "There's a flyer asking for volunteers to take part in a clinical trial for a university research. I will be paid some pocket money for my troubles."
-    0:: "Yes"
-    1:: "No"
     
-    If 0
-        money += Random(15, 75)
-        fitness -= Random(0, 0.5)
-    Endif
-    SceneEnd()
+        "There's a flyer asking for volunteers to take part in a clinical trial for a university research. I will be paid some pocket money for my troubles."
+        0:: "Yes"
+        1:: "No"
+        
+        If 0
+            money += Random(15, 75)
+            fitness -= Random(0, 0.5)
+        Endif
+    SceneEnd() // Improved by Raddeck
     timeout(250, clinical_trial)

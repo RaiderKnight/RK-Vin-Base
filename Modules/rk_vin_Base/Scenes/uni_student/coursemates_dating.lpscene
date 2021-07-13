@@ -5,19 +5,20 @@ WHO: Actor = getSpecific(Coursemate); Actor2 = getSpecific(Coursemate); If !Acto
 OTHER: none
 
     SceneStart()
-    Actor.dress()
-    Actor.show(2)
-    Actor2.dress()
-    Actor2.show(3)
-    If WHERE == university:school
-        "Two of my classmates <Actor.name> and <Actor2.name> have been seen together an awful lot these days, inside and outside of class ... I wonder if they are an item now ..."
-    Else
-        "Two of my students <Actor.name> and <Actor2.name> have been seen together an awful lot these days in class ... I wonder if they are an item now ..."        
-    Endif
-    "How should I feel about this?"
-    0:: "Good for them"
-    1:: "That's a shame"
-
-    addNpcRelationship(Dating, Actor, Actor2)
-    SceneEnd()
+    
+        Actor.dress()
+        Actor.show(2)
+        Actor2.dress()
+        Actor2.show(3)
+        If WHERE == university:school
+            "Two of my classmates <Actor.name> and <Actor2.name> have been seen together an awful lot these days, inside and outside of class ... I wonder if they are an item now ..."
+        Else
+            "Two of my students <Actor.name> and <Actor2.name> have been seen together an awful lot these days in class ... I wonder if they are an item now ..."        
+        Endif
+        "How should I feel about this?"
+        0:: "Good for them"
+        1:: "That's a shame"
+    
+        addNpcRelationship(Dating, Actor, Actor2)
+    SceneEnd() // Improved by Raddeck
     timeout(1000, coursemates_dating)

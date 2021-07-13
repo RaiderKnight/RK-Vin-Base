@@ -5,34 +5,34 @@ WHO: Actor = getSpecific(Lecturer); Actor2 = getSpecific(Coursemate); If !Actor.
 OTHER: none
 
     SceneStart()
-    Actor2.dress()
-    Actor2.show(3)
-    dressFormal()
-    Actor.dress()
-    Actor.show(2)
-
-    If WHERE == university:school
-        "Wait, is that my coursemate <Actor2.name> and Dr <Actor.name_last> walking together back to <Actor.his_or_her> office?"
-    Else
-        "Wait, is that my student <Actor2.name> and Dr <Actor.name_last> walking together back to <Actor.his_or_her> office?"
-    Endif
-    "What should I do?"
-    0:: "Gossip"
-    1:: "No big deal"
+        Actor2.dress()
+        Actor2.show(3)
+        dressFormal()
+        Actor.dress()
+        Actor.show(2)
     
-    If 0
         If WHERE == university:school
-            "Could they be having an affair? Having sex with a lecturer, <Actor2.name> is such a <Actor2.stud_or_slut>!"
-            "I decided to spread the rumour to the rest of the course, which <Actor2.name> firmly denied."
+            "Wait, is that my coursemate <Actor2.name> and Dr <Actor.name_last> walking together back to <Actor.his_or_her> office?"
         Else
-            "Could they be having an affair? Having sex with a student, <Actor.name> is such a <Actor.stud_or_slut>!"
-            "I decided to spread the rumour to the rest of the Department, which <Actor.name> firmly denied."        
+            "Wait, is that my student <Actor2.name> and Dr <Actor.name_last> walking together back to <Actor.his_or_her> office?"
         Endif
-        Actor:rapportwithplayer -= Random(0, 2.5)
-        Actor2:rapportwithplayer -= Random(0, 5)
-    Else
-        "Who cares? <Actor.name> is probably just asking for help with coursework."
-    Endif
+        "What should I do?"
+        0:: "Gossip"
+        1:: "No big deal"
+        
+        If 0
+            If WHERE == university:school
+                "Could they be having an affair? Having sex with a lecturer, <Actor2.name> is such a <Actor2.stud_or_slut>!"
+                "I decided to spread the rumour to the rest of the course, which <Actor2.name> firmly denied."
+            Else
+                "Could they be having an affair? Having sex with a student, <Actor.name> is such a <Actor.stud_or_slut>!"
+                "I decided to spread the rumour to the rest of the Department, which <Actor.name> firmly denied."        
+            Endif
+            Actor:rapportwithplayer -= Random(0, 2.5)
+            Actor2:rapportwithplayer -= Random(0, 5)
+        Else
+            "Who cares? <Actor.name> is probably just asking for help with coursework."
+        Endif
     
-    SceneEnd()
+    SceneEnd() // Improved by Raddeck
     timeout(200, coursemate_gossip)
