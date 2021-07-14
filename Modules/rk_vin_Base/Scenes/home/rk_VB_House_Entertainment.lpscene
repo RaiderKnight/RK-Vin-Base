@@ -26,6 +26,7 @@ OTHER: none
             "What should I do?"
             10:: IBuyaPhone > 0 :: "Call a hooker"
             20:: IBuyaPhone > 0 && arousal > 50 && perversion > 30 :: "Give a booty call"
+            29:: "Organize a party"
             30:: stock_movie > 0 && IBuyaTV > 0 :: "Watch a movie"
             35:: stock_movie > 0 && IBuyaTV > 0 :: "Watch a porn movie"
             40:: IBuyaTV > 0 :: "Watch sport"
@@ -39,6 +40,23 @@ OTHER: none
             ElseIf 20
             
                 followUp(booty_call)
+                
+            ElseIf 29
+            
+                "What kind of party you want to make?"
+                10::"A house party"
+                50::"A group sex party"
+                99:: "Go back!"
+                
+                If 10
+                
+                    followUp(house_party)
+                
+                ElseIf 50
+                
+                    followUp(group_sex_party)
+                
+                EndIf
             
             ElseIf 30
                 

@@ -6,13 +6,20 @@ OTHER: Random(0, 100) < 0.1 || [Random(0, 100) < 5 && WHERE == nightclub]
 
     SceneStart()
 
-    "I was about to step into my cubicle when I noticed some moaning from the cubicle next to mine ... Some couple clearly couldn't wait until they get home."
-    0:: "Ignore"
-    1:: perversion > 20:: "Peep"
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+
+        "I was about to step into my cubicle when I noticed some moaning from the cubicle next to mine ... Some couple clearly couldn't wait until they get home."
+        0:: "Ignore"
+        1:: perversion > 20:: "Peep"
         
         If 0
+        
             "There's nothing to see here. I 'did the business' as fast as I could and got the hell out of the bathroom. The couple were too busy fucking to ever notice me coming in and out."
+            perversion -= 1
+            
         Else
+        
             perversion += Random(0, 0.5)
             "Live pornography? Hell yeah, sign me up!"
             karma -= 1
@@ -29,18 +36,32 @@ OTHER: Random(0, 100) < 0.1 || [Random(0, 100) < 5 && WHERE == nightclub]
             1:: "Enough"
             
             If 0
+            
                 Player(Flirty):: "Looks like you guys are having some fun there? Mind if I join?"
                 If Random(30, 100) < Guy:perversion || Random(30, 100) < Guy:attractiontoplayer
+                
                     Guy(Flirty):: "Come on and join us then, what are you waiting for?"
                     Sex(Guy, Girl, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                    EndIf
                     Player:perversion += Random(0, 1)
+                    
                 Else
-                    Guy(Angry):: "What the fuck are you doing here, peeping Tom? Get out or I'll call the police."
+                
+                    Guy(Angry):: "What the fuck are you doing there, peeping Tom? Get out or I'll call the police."
+                    sneak -= 1
+                    
                 Endif
+                
             Else
+            
                 "I should get out of here before I get caught."
+                sneak += 1
+                
             Endif
+            
         Endif
 
     SceneEnd() // Improved by Raddeck
-    timeout(48, peep_bathroom)
+    timeout(148, peep_bathroom)

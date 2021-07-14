@@ -17,6 +17,7 @@ OTHER: none
         1:: "No"
         
         If 0
+        
             moveSchools()
             Tuition.setTuition()
             "Yeah, the education is worth that money. I can get a once-in-a-lifetime experience and a much better job after I graduate."
@@ -26,6 +27,7 @@ OTHER: none
             setBackground(home)
             "A month later ..."
             "My application was successful. I cannot wait to start the course!"
+            mood += 3
             dressFormal()
             setBackground(bar)
             Player.dress()
@@ -54,11 +56,13 @@ OTHER: none
                     exchangeContact(Actor)
                     FBID = Actor2.getID()
                     rk_VB_FacebookFriend.setGlobal(FBID)
+                    
                 Endif
                 
                 Actor.hide()
                 Actor.saveandDelete()
                 count += 1
+                
             Endwhile
             
             Total = Random(5, 8)
@@ -74,6 +78,7 @@ OTHER: none
                 "One of my future lecturers approached me."
                 Actor(Happy):: "Hi there, I'm Dr <Actor.name> <Actor.name_last>. I teach the <Actor.major> module."
                 Player(Happy):: "Nice to meet you, Dr <Actor.name_last>. I'm <Player.name>. I'm looking forward to your class."
+                Actor(Happy):: "Great !"
                 Actor.hide()
                 Actor.saveandDelete()        
                 count += 1

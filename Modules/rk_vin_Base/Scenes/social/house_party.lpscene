@@ -16,6 +16,7 @@ OTHER: none
         
         Else
         
+            Player.animate(call)
             "Should I hand-pick guests for the party? Or should I just make a public event on Facebook that allows my friends to bring their friends along?"
             0:: "Hand-pick guests"
             1:: "I'd rather meet new people"
@@ -111,11 +112,13 @@ OTHER: none
             
             "My preparations are all done. It's time to welcome the guests!"
             Player(Happy):: "Come in, everyone! Don't be shy. Everything's ready."
-        
+            Player.animate()
+            
         Endif
         
         If !isAtHome()
         
+            Player(Happy):: "Let's go back home..."
             moveTo(home)
             setBackgroundCustom(livingroom)
         
