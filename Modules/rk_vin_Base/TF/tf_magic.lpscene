@@ -5,6 +5,9 @@ WHO: none
 OTHER: none
 
     If TfGame()
+        
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         SceneStart()
         setBackground(home)
         "My first week in the new city went pretty well and I settled in fine, but I must admit I'm a bit disappointed ..."
@@ -17,13 +20,22 @@ OTHER: none
         1:: "Laugh it off"
         
         If 1
+        
             "I try to stop that thought as soon as it pops up and start laughing at myself."
+            mood += 1
             "No, I absolutely don't want to go through gender reassignment surgery, although I must confess I have done some research about it out of curiousity and have nothing but respect for the transwomen who endure all the physical and mental pain of transitioning."
             "But I definitely don't think I'm one of them - I'm not a woman trapped in a man's body, just a man who's bored with his life enough to be curious about how different life would be as a woman."
             "Of course, I would never admit that curiousity to anyone, for fear of being called a tranny or a sissy."
+        
         Else
+        
             "I wonder what that would be like. To wake up, a totally different person, in a totally new body. I confess I’ve researched the subject and have nothing but respect for those who endure the physical and mental pain of transition. I’ve never considered it an option for me, but I wanted a new life. If magic could happen, how much newer could you get?"
+        
         Endif
+        
+        If HungerEnable > 0
+            Player.modifyActorVar(rk_VB_Hunger, -1)
+        EndIf
         "Anyway ..."
         
         "That's enough silly thought for today. I'm pretty exhausted after a long day of running errands. Let's head to bed early."
@@ -35,6 +47,11 @@ OTHER: none
         SaveOldPlayer()
         Player.changeSex()
         "7 hours later ..."
+        
+        If HungerEnable > 0
+            Player.modifyActorVar(rk_VB_Hunger, -1)
+        EndIf
+        
         "Wow that was some restful sleep - I needed that."
         "Wait ... something feels different this morning."
         "I moved my hand to wipe my eyes, only to notice something strange: My arms are a lot smaller and softer."
@@ -44,4 +61,4 @@ OTHER: none
         SceneEnd()
         OpenMenu(Chargen)
         followUp(tf_afterchargen2)
-    Endif
+    Endif // Improved by Raddeck

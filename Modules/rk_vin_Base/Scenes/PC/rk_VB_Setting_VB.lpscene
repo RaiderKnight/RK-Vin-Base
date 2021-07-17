@@ -9,26 +9,37 @@ OTHER: none
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         
-        0::"-- Setting for Vin_Base --"
-        1::"Enable hunger"
-        2::"Disnable hunger"
-        90::"Stuff in hand to store"
-        99::"Go back!"
-        
-        If 1
+        If isModEnabled(nn_HomeExpander)
             
-            "Hunger is now enabled!"
-            rk_VB_EnableHunger.setGlobal(1)
+            "The HomeExpander module is currently OFF or don't exist. This particular version of the game has optional inventories if you have this module turned on. You can proceed or you can exit this scene, then Ctrl + M > tick Official nn_HomeExpander Module > Confirm to enjoy all the new inventories."
+            0:: "Proceed, without HomeExpander"
+            1:: "Open Mod Manager"
             
-        ElseIf 2
+            If 1
+                openMenu(ModManager)
+            EndIf
+        
+        Else
+            0::"-- Setting for Vin_Base --"
+            1::"Enable hunger"
+            2::"Disnable hunger"
+            90::"Stuff in hand to store"
+            99::"Go back!"
+        
+            If 1
             
-            "Hunger is now disabled!"
-            rk_VB_EnableHunger.setGlobal(0)
-        
-        ElseIf 90
-        
-            followUp(rk_VB_HandSwitchInv_VB)
+                "Hunger is now enabled!"
+                rk_VB_EnableHunger.setGlobal(1)
             
-        EndIf
+            ElseIf 2
+            
+                "Hunger is now disabled!"
+                rk_VB_EnableHunger.setGlobal(0)
         
+            ElseIf 90
+        
+                followUp(rk_VB_HandSwitchInv_VB)
+            
+            EndIf
+        Endif
     SceneEnd()
