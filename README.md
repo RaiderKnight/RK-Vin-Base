@@ -3,7 +3,7 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Version: 0.0.9</p>
+<p>Version: 0.1.0</p>
 <br>
 <br>
 <p><strong>Rework In Progress (WIP)</strong></p>
@@ -40,11 +40,10 @@
 <br>
 <h3>Module requirements</h3>
 <p>At least the game LifePlay 4.0.4</p>
-<p>Optional - rk_MoneyMaker - Soon will be included</p>
 <p>Optional - nn_HomeExpander</p>
 <br>
 <h3>Module conflict</h3>
-<p>All other mods (For the moment...)</p>
+<p>All other mods who are not in list below (For the moment...)</p>
 <br>
 <hr>
 <br>
@@ -56,24 +55,11 @@
 <hr>
 <br>
 <h3> How to install</h3>
-<p>At the moment, to try the modifications, you need to delete or move the Modules folder</p>
-<br>
-<p>Example:</p>
-<p>Just delete or move folder to an another places in your pc for backup.</p>
-<p>C:\...\LifePlay\Content\Modules</p>
-<br>
-<p><strong>After, inside C:\Download\RK-Vin-Base folder</strong></p>
-<p>Copy and paste this folder: Modules, inside:</p>
-<p>C:\...\LifePlay\Content</p>
-<p>Make sure you don't leave an extra directory level for the mod. For example, it should go like this:</p>
-<p>c:\..\LifePlay\Content\Modules</p>
-<p><strong>NOT</strong></p>
-<p>c:\..\LifePlay\Content\Modules\RK-Vin-Base</p>
-<p>After the Modules folder have been replaced, make sure to activated the mods you need in the Mod Manager.</p>
+<p>Visit the Wiki: <a href="https://raiderknight-mods.fandom.com/wiki/How_to_install_the_LifePlay_Remake_version">RaiderKnight Mods Wiki</a></p>
 <br>
 <hr>
 <br>
-<h3> How to update</h3>
+<h3>How to update</h3>
 <ul>
 <li>At the moment, do as same as "How to install"</li>
 </ul>
@@ -84,6 +70,7 @@
 <ul>
 <li>Supporting me on <a href="https://www.patreon.com/raiderknight">Patreon</a></li>
 <li>Sending your ideas or feedback: Here on Github or on <a href="https://discord.gg/d3U9E2wb4Y">Discord</a></li>
+<li>Sharing tutorials on the <a href="https://raiderknight-mods.fandom.com/wiki/RaiderKnight_Mods_Wiki">RaiderKnight Mods Wiki</a></li>
 <li>Adding more content to the module.</li>
 <li>Improving the module, texts,...</li>
 <li>Reporting bugs, errors and typos</li>
