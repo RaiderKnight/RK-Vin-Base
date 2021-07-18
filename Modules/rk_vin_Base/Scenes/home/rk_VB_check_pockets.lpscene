@@ -62,8 +62,9 @@ OTHER: none
         stock_musicalinstrument_P = Player.getActorVar(stock_musicalinstrument_P)
         stock_book_P = Player.getActorVar(stock_book_P)
         TotalPCP = stock_haircare + stock_makeup + stock_supplement + stock_skincare
+        TotalUII = stock_bagproduct + stock_binocular + stock_book_P + stock_gift + stock_xxxmag + stock_travelmap
         TotalSmoking = emptycigarStck + vapProdStck + weedstck + stock_tobacco
-        pockets_inventory = TotalSmoking + stock_confectioneryprod + Stock_phones + stock_musicalinstrument_P + stock_book_P + stock_flower + stock_gift + TotalPCP + stock_bagproduct + stock_binocular + stock_movie + stock_petfood + stock_toyproduct + stock_xxxmag + stock_travelmap
+        pockets_inventory = TotalSmoking + stock_confectioneryprod + Stock_phones + stock_musicalinstrument_P + stock_flower + TotalPCP + stock_movie + stock_petfood + stock_toyproduct + TotalUII
     
     If pockets_inventory < 1 
         Player(Anxious)::"I got nothing inside my pockets !"
@@ -87,25 +88,30 @@ OTHER: none
             
                 Player(Curious)::"Let see what I have inside my pockets."
                 0::"I have <stock_musicalinstrument_P> musical instrument(s)"
-                0::"I have <stock_bagproduct> fashion bag(s)"
-                0::"I have <stock_binocular> binocular(s)"
-                0::"I have <stock_book_P> book(s)"
                 0::"I have <stock_flower> flower(s)"
-                0::"I have <stock_gift> gift(s)"
                 0::"I have <stock_movie> movie"
                 0::"I have <stock_petfood> pet food(s)"
                 0::"I have <stock_toyproduct> toy product(s)"
-                0::"I have <stock_travelmap> travel map(s)"
-                0::"I have <stock_xxxmag> XXX magazine(s)"
                 0::"I have <personal_pics> homemade photo(s)"
                 0::"I have <personal_vids> homemade video(s)"
+                6:: TotalUII > 0 ::"Check mixed useful items inventory (<TotalUII>)"
                 8:: TotalPCP > 0 ::"Check personal care products inventory (<TotalPCP>)"
                 7:: TotalSmoking > 0 ::"Check smoking products inventory (<TotalSmoking>)"
                 9:: stock_confectioneryprod > 0 ::"Check candies inventory (<stock_confectioneryprod>)"
                 40:: Stock_phones > 0 ::"Check mobile phone inventory (<Stock_phones>)"
                 99::"Nevermind, I will check later !"
                 
-                If 7
+                If 6
+                
+                    0::"I have <stock_bagproduct> fashion bag(s)"
+                    0::"I have <stock_binocular> binocular(s)"
+                    0::"I have <stock_book_P> book(s)"
+                    0::"I have <stock_gift> gift(s)"
+                    0::"I have <stock_travelmap> travel map(s)"
+                    0::"I have <stock_xxxmag> XXX magazine(s)"
+                    99:: "Go back !"
+                
+                ElseIf 7
                 
                     0::"I have <stock_tobacco> tobacco product(s)"
                     10:: emptycigarStck > 0 ::"Check cigars inventory (<emptycigarStck>)"

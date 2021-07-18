@@ -53,20 +53,37 @@ OTHER: none
                 SneakGame()
                 If Random(0, 150) < sneak
                 
-                    "I took my time to clear out the house of absolutely everything remotely valuable. It should be worth the effort ... and the extra risk."
-                    DoIfindJewel = Random(0, 1)
-                    DoIfind2Jewels = Random(0, 2)
-                    money += Random(100, 250)
-                    Player.modifyActorVar(stock_cheapJType, DoIfind2Jewels)
-                    Player.modifyActorVar(stock_AffordableJType, DoIfind2Jewels)
-                    Player.modifyActorVar(stock_ClassyJType, DoIfind2Jewels)
-                    Player.modifyActorVar(stock_NiceJType, DoIfind2Jewels)
-                    Player.modifyActorVar(stock_FashionJType, DoIfindJewel)
-                    Player.modifyActorVar(stock_HandcraftedJType, DoIfindJewel)
-                    Player.modifyActorVar(stock_FinestJType, DoIfindJewel)
-                    Player.modifyActorVar(stock_FirstQualityJType, DoIfindJewel)
-                    mood += 2
-                    sneak += 1
+                    If stock_bagproduct > 0
+                        "I took my time to clear out the house of absolutely everything remotely valuable. It should be worth the effort ... and the extra risk."
+                        DoIfindJewel = Random(0, 1)
+                        DoIfind2Jewels = Random(0, 2)
+                        money += Random(100, 250)
+                        Player.modifyActorVar(stock_cheapJType, DoIfind2Jewels)
+                        Player.modifyActorVar(stock_AffordableJType, DoIfind2Jewels)
+                        Player.modifyActorVar(stock_ClassyJType, DoIfind2Jewels)
+                        Player.modifyActorVar(stock_NiceJType, DoIfind2Jewels)
+                        Player.modifyActorVar(stock_FashionJType, DoIfindJewel)
+                        Player.modifyActorVar(stock_HandcraftedJType, DoIfindJewel)
+                        Player.modifyActorVar(stock_FinestJType, DoIfindJewel)
+                        Player.modifyActorVar(stock_FirstQualityJType, DoIfindJewel)
+                        mood += 2
+                        sneak += 1
+                        
+                    Else
+                    
+                        "Fuck, I forgot to buy a bag to be able to bring more stuff!"
+                        "I grab some valuable. It should be worth the effort ... and the extra risk."
+                        DoIfindJewel = Random(0, 1)
+                        DoIfind2Jewels = Random(0, 2)
+                        money += Random(0, 250)
+                        Player.modifyActorVar(stock_cheapJType, DoIfind2Jewels)
+                        Player.modifyActorVar(stock_AffordableJType, DoIfind2Jewels)
+                        Player.modifyActorVar(stock_ClassyJType, DoIfind2Jewels)
+                        Player.modifyActorVar(stock_FirstQualityJType, DoIfindJewel)
+                        mood += 2
+                        sneak += 1
+                    
+                    Endif
                     
                 Else
                     Actor.closeEyes(false)
@@ -80,11 +97,76 @@ OTHER: none
                         
                     Else
                     
-                        "I tried to run, but the cops arrived too quickly and arrested me."
-                        sentence += 730
-                        mood -= 5
-                        sneak -= 5
-                        followUp(imprisoned)
+                        "I tried to run, but the cops arrived too quickly ..."
+                        PoliceMan = generatePersonTemporary()
+                        PoliceMan.dressGuard()
+                        PoliceMan.show(2)
+                        Actor1 = generatePersonTemporary()
+                        Actor1.dressGuard()
+                        Actor1.show(4)
+                        "'Hands in the air, now!'"
+                        0:: "Run"
+                        1:: "Surrender"
+                        
+                        If 0
+                    
+                            If Random(0, 100) < fitness
+                        
+                                "I managed to lose the cops. Phew, that was close."
+                                sneak += 1
+                                mood += 2
+                            
+                            Else
+                        
+                                Player(Angry):: "You're not taking me alive."
+                                copfired = 0
+                                While copfired < 5
+                        
+                                    If copfired > 0
+                        
+                                        PoliceMan(Angry)::"HEY YOU I ASKED YOU TO STOP!"
+                        
+                                    EndIf
+                                    "Pow!"
+                                    Player.hide()
+                    
+                                    "A cop fired his gun..."
+                                    If Random(0, 30) < fitness
+                
+                                        "I managed to dodge the shot. Phew, that was close."
+                                        sneak += 1
+                                        mood += 1
+                                        copfired += 1
+                        
+                                    ElseIf copfired >= 5
+                            
+                                        "I managed to lose the cops. Phew, that was close."
+                                        sneak += 3
+                                        mood += 2
+                                        copfired = 6
+                            
+                                    Else
+                    
+                                       "The cop fired his gun. It was a perfect shot ..."
+                                        followUp(death)
+                        
+                                    EndIf
+                    
+                                EndWhile
+                            
+                            Endif
+                        
+                        Else
+                    
+                            Player.animate(fightlost)
+                            Player(Scared):: "Please, don't shoot!"
+                            "I put my hands up and surrendered to the overwhelming number of cops."
+                            sentence += Random(550, 750)
+                            mood -= 5
+                            sneak -= 5
+                            followUp(imprisoned)
+                        
+                        Endif
                         
                     Endif
                     

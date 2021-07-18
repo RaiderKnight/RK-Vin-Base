@@ -3,7 +3,7 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Version: 0.1.0</p>
+<p>Version: 0.1.1</p>
 <br>
 <br>
 <p><strong>Rework In Progress (WIP)</strong></p>
