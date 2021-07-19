@@ -1,0 +1,20 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: Actor = getSpecific(Impregnated)
+OTHER: none
+
+    If !Actor.isMale()
+        SceneStart()
+        secondScreen(Actor)
+        Actor.endPregnancy()
+        Actor.dress()
+        Actor.show(2)
+        Actor.setActorVar(tag_Pregnant, 0)
+        Actor2 = Actor.generatePersonMatchRace()
+        Actor2:age => 0
+        addNpcRelationship(ParentChild, Actor, Actor2)
+        Actor2.matchLastName(Actor)
+        "<Actor.name> has recently given birth to a cute baby, whom she named <Actor2.name>. Her baby photos are all over Facebook."
+        SceneEnd()
+    Endif

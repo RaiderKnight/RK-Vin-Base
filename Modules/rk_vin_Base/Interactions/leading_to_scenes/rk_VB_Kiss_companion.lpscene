@@ -4,7 +4,10 @@ WHEN: 0-24
 WHO: none
 OTHER: none
 
-SceneStart()
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
     
         If CurrentCompanion.isDating() || Random(20, 75) < CurrentCompanion:attractiontoplayer + CurrentCompanion:perversion
             "I grab <CurrentCompanion.name> by the hips and start kissing <CurrentCompanion.him_or_her> and take the opportunity to caressing <CurrentCompanion.his_or_her> <CurrentCompanion.cock_or_pussy>..."
@@ -37,6 +40,9 @@ SceneStart()
                 Player.show()
                 CurrentCompanion.show()
                 Sex(Player, CurrentCompanion)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
             
             EndIf
             
@@ -50,4 +56,4 @@ SceneStart()
             
         EndIf
             
-SceneEnd()
+    SceneEnd()

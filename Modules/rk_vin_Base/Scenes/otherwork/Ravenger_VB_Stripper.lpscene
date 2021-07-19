@@ -1,0 +1,337 @@
+WHAT: all
+WHERE: stripclub
+WHEN: 17 - 6
+WHO: none
+OTHER: arousal > 50
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        perversion += Random(0, 2)
+        Fuck = false
+        Stripper = generatePersonTemporary()
+        While !Player.isInterestedIn(Stripper) || age > 39
+            Stripper = generatePersonTemporary()
+        Endwhile
+        If Stripper.isMale()
+            Random
+                Stripper.loadPreset(athletic)
+                Stripper.loadPreset(bodybuilder)
+                Stripper.loadPreset(ideal)
+                Stripper.loadPreset(athletic)
+            Endrandom       
+        Else
+            Random
+                Stripper.loadPreset(hourglass1_F)
+                Stripper.loadPreset(hourglass2_F)
+                Stripper.loadPreset(fashion_model_F)
+                Stripper.loadPreset(fitness_model_F)
+                Stripper.loadPreset(slender_F)
+                Stripper.loadPreset(shapely_F)
+                Stripper.loadPreset(vigorous_F
+                Stripper.loadPreset(triangle1_F)
+                Stripper.loadPreset(triangle2_F)
+            Endrandom
+        Endif
+        Stripper.randomizeRace()
+        Stripper.randomizeFace()
+        Stripper.randomizeHairs()
+        If !Stripper.isFemale()
+            Stripper:fertility_npc => Random(5, 75)
+        Endif
+        Stripper:pornfame += Random(-25, 50)
+        Stripper:likes_bondage += Random(25, 50)
+        Stripper:likes_boobjob += Random(25, 50)
+        Stripper:likes_oral += Random(25, 50)
+        Stripper:likes_toys += Random(25, 50)
+        Stripper:likes_handjob += Random(25, 50)
+        Stripper:likes_cowgirl += Random(25, 50)
+        Stripper:likes_rcowgirl += Random(25, 50)
+        Stripper:likes_doggy += Random(25, 50)
+        Stripper:likes_missionary += Random(25, 50)
+        Stripper:likes_public += Random(25, 50)
+        Stripper:likes_rough += Random(25, 50)
+        Stripper:likes_sidefuck += Random(25, 50)
+        Stripper:likes_tribadism += Random(25, 50)
+        Stripper:fitness += 25
+        Stripper:perversion += Random(10, 45)
+        Stripper.dressuniform(sexwork)
+        Stripper.show()
+        Stripper.animate(dance)
+        Player.animate(receivelapdance)
+        count = 0
+        Stripper.show()
+        "<Stripper.name> is givin a good show."
+        While !Stripper.isNaked() && count < 5
+            "Give a tip"
+            1:: "Yes"
+            0:: "No"
+            
+            If 1
+                money -= 5
+                "Off that goes ..."
+                Stripper.stripOne()
+                Stripper:perversion += 1
+                Stripper:arousal += Random(5, 25)
+                arousal += 5
+            Endif
+            count += 1  
+        Endwhile
+        Stripper.setNoRedress()
+        "I'm getting a lap dance from <Stripper.name>"
+        Player.animate(receivelapdance)
+        Stripper.moveToPerson(Player)
+        Stripper.animate(dance)
+        arousal += Random(0, 30)
+        if player.isNaked()
+            Stripper:arousal += Random(5, 50)
+        Endif   
+        Stripper:intoxication => Random(0, 90)
+        Lust = 0
+        Lust += Stripper:perversion
+        Lust += Stripper:attractiontoplayer
+        Lust += attractiveness
+        Lust += Stripper:arousal
+        If Stripper.isRace(Orc)
+            Lust += 50
+            Stripper:fertility_npc += 5
+        Endif
+        Odds = Random(225, 375)
+        Odds -= Stripper:intoxication
+        
+        If !Player.isFemale() && [!Player.isVisible(Bottom) || !Player.isVisible(Bottom_Under)] && !Stripper.isMale()
+            If Player.isInterestedIn(Stripper) || Stripper.isInterestedIn(player)
+                If 40 > Random(0, 100) && !Stripper.isEquipped(Bottom_Under)
+                    "My cock accidently slips inside <Stripper.name>."
+                    Fuck = true
+                    Filter(ReverseCowgirl, Cowgirl, Sitting)
+                Elseif Lust > Odds && Stripper.isOnPeriod() && !Stripper.isPregnant()
+                    "<Stripper.name>'s sexual desire has taken over."
+                    Fuck = true
+                    Filter(vaginal)                
+                Elseif Lust > Odds && Stripper.isInterestedIn(player)
+                    "<Stripper.name> would happy like to fuck you."
+                    Fuck = true
+                Elseif Stripper:intoxication > 85
+                    "<Stripper.name> is not paying attention, as my cock accidently slips inside."
+                    Fuck = true
+                    Filter(ReverseCowgirl, Cowgirl, Sitting)
+                Else
+                    "<Stripper.name> ingores your 'display'."
+                    1:: "Bribe"
+                    2:: "Enjoy the show"
+        
+                    If 1
+                        Player():: "I'll pay extra if you want?"
+                        Lust = 0
+                        Lust += Stripper:perversion
+                        Lust += Stripper:arousal
+                        Odds = Random(100, 150)
+                        Odds -= Stripper:intoxication
+                        Lust += 25
+                        If Stripper.isRace(Orc)
+                            Lust += 50
+                            Stripper:fertility_npc += 5
+                        Endif
+                        If Lust > Odds
+                            Stripper(flirty):: "Sure baby."
+                            money -= [Random(125, 325) - Stripper:attractiontoplayer]
+                            Fuck = true
+                        Else    
+                            Stripper():: "Sorry, but NO."
+                        Endif
+                    Endif                       
+                Endif
+            Else                
+                "We keep our distance."
+            Endif
+        Elseif [Player.isEquipped(Bottom) && Player.isEquipped(Bottom_Under)] && !player.isFemale() && !Stripper.isMale()
+            If Stripper:masochist < masochist && Lust > [Random(225, 375) - Stripper:intoxication] && Stripper.isInterestedIn(player)
+                "<Stripper.name> is pulling my dick out of my pants!"
+                Player.strip(Bottom, Bottom_Under)
+                Fuck = true
+            Else
+                "Should I pull my dick out?"
+                1:: "Yes"
+                2:: "No"
+                        
+                If 1
+                    Player.strip(Bottom, Bottom_Under)
+                    Stripper:arousal += 5
+                    If 15 > Random(0, 100) && !Stripper.isEquipped(Bottom_Under)
+                        "My cock accidently slips inside <Stripper.name>."
+                        Fuck = true
+                        Filter(ReverseCowgirl, Cowgirl, Sitting)
+                    Elseif Lust > Odds && Stripper.isOnPeriod() && !Stripper.isPregnant()
+                        "<Stripper.name>'s sexual desire has taken over."
+                        Fuck = true
+                        Filter(vaginal)                
+                    Elseif Lust > Odds && Stripper.isInterestedIn(player)
+                        "<Stripper.name> would happy like to fuck you."
+                        Fuck = true
+                    Elseif Stripper:intoxication > 85
+                        "<Stripper.name> is not paying attention, as my cock accidently slips inside."
+                        Fuck = true
+                        Filter(ReverseCowgirl, Cowgirl, Sitting)
+                    Else
+                        "<Stripper.name> ingores your 'display'."
+                        1:: "Bribe"
+                        2:: "Enjoy the show"
+        
+                        If 1
+                            Player():: "I'll pay extra if you want?"
+                            Lust = 0
+                            Lust += Stripper:perversion
+                            Lust += Stripper:arousal
+                            Odds = Random(100, 150)
+                            Odds -= Stripper:intoxication
+                            Lust += 25
+                            If Stripper.isRace(Orc)
+                                Lust += 50
+                                Stripper:fertility_npc += 5
+                            Endif
+                            If Lust > Odds
+                                Stripper(flirty):: "Sure baby."
+                                money -= [Random(125, 325) - Stripper:attractiontoplayer]
+                                Fuck = true
+                            Else    
+                                Stripper():: "Sorry, but NO."
+                            Endif
+                        Endif                       
+                    Endif
+                Endif
+            Endif   
+        Else
+            "Should I flirt a bit with <Stripper.name>?"
+            0:: "Yes"
+            1:: "No"
+                              
+            If 0
+                Stripper:attractiontoplayer += 2
+                "I took every opportunity we had flirt with <Stripper.name>."
+                If [Stripper:attractiontoplayer + Stripper:arousal] > 50
+                    "They enjoy my company."
+                    Stripper:attractiontoplayer += 2
+                Endif
+                "Should I grope <Actor.him_or_her>?"
+                0:: "Yes"
+                1:: "No"
+                                        
+                If 0
+                    "I begin groping <Actor.him_or_her>."
+                    passTime(0.1)
+                    Stripper:perversion += 1
+                    If Stripper.isInterestedIn(player)
+                        "They don't seem to mind"
+                        Stripper:perversion += 1
+                        Stripper:arousal += 20
+                        Stripper:attractiontoplayer += 2
+                        If Stripper:masochist > 30
+                            "I think they enjoy it."
+                            Stripper:perversion += 2
+                        Endif
+                    Else
+                        "<Stripper.name> doesn't like you touching <Actor.him_or_her>."
+                        Stripper:arousal -= 10
+                    Endif        
+                Endif          
+            Endif                        
+                        
+            Lust = 0
+            Lust += Stripper:perversion
+            Lust += Stripper:attractiontoplayer
+            Lust += Stripper:arousal
+            Lust += attractiveness
+            If Stripper.isRace(Orc)
+                Lust += 50
+            Endif
+            Odds = Random(225, 375)
+            Odds -= Stripper:intoxication
+            
+            If Lust < 375
+                "Should I offer <Stripper.name> some alcohol?"
+                0:: "Yes"
+                1:: "No"
+                
+                If 0
+                    "Should I add a little extra..."
+                    0:: "Viagra"
+                    1:: "Breeder's cocktail drug"
+                    2:: "Whisky"
+                    3:: "No"
+                    
+                    If 0
+                        Lust += 50
+                        Stripper:intoxication += 10
+                    Elseif 1
+                        Lust += 50
+                        Stripper:intoxication += 10
+                        Stripper:fertility_npc += 10
+                    Elseif 2
+                        Stripper:intoxication += 20
+                    Else
+                        Stripper:intoxication += 10
+                    Endif
+                Endif
+            Endif
+            
+            If Stripper:intoxication > 97
+                Stripper.hide()
+                "Oops looks like Stripper had too much to drink."
+                "Guess I'm not getting anything more. :\"
+                Fuck = false
+            Elseif Lust > Odds && [[!Stripper.isFemale() && Stripper:fertility_npc > 50 && !Player.isMale() && Player.isOnPeriod() && !Player.isPregnant()] || [!Stripper.isMale() && Stripper.isOnPeriod() && !Stripper.isPregnant()]]
+                "<Stripper.name> sexual desire has taken over."
+                Fuck = true
+                Filter(vaginal)
+        
+            Elseif Lust > Odds && Stripper.isInterestedIn(player)
+                "<Stripper.name> would like to fuck you."
+                0:: "Yes"
+                1:: "No"
+                            
+                If 0
+                    Fuck = true
+                Endif   
+        
+            Else
+                1:: "Bribe"
+                2:: "Enjoy the show"
+        
+                If 1
+                    Player():: "I'll pay extra if you want?"
+                    Lust = 0
+                    Lust += Stripper:perversion
+                    Lust += Stripper:arousal
+                    Odds = Random(100, 150)
+                    Odds -= Stripper:intoxication
+                    Lust += 25
+                    If Stripper.isRace(Orc)
+                        Lust += 50
+                        Stripper:fertility_npc += 5
+                    Endif
+                    If Lust > Odds
+                        Stripper(flirty):: "Sure baby."
+                        money -= [Random(125, 325) - Stripper:attractiontoplayer]
+                        Fuck = true
+                    Else    
+                        Stripper():: "Sorry, but NO."
+                    Endif
+                Endif                                
+            Endif
+        Endif     
+           
+        If Fuck
+            perversion += 5
+            Sex(Player, Stripper)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+            Stripper.show(2)
+            passTime(0.3)
+            "The sex was amazing."
+        Endif
+
+    SceneEnd() // Improved by Raddeck
+    timeout(20, Stripper)

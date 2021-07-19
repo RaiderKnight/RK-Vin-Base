@@ -5,6 +5,9 @@ WHO: none
 OTHER: none
 
     SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         
         "We decided to play the LifePlay game for a few hours."
         If isAtHome()
@@ -27,6 +30,9 @@ OTHER: none
                     Player.show()
                     CurrentCompanion.show()
                     Sex(Player, CurrentCompanion)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
                     
                     mood += 5
                     CurrentCompanion:attractiontoplayer += 2
@@ -61,6 +67,9 @@ OTHER: none
                     Player.show()
                     CurrentCompanion.show()
                     Sex(Player, CurrentCompanion)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
                     
                     mood += 5
                     CurrentCompanion:attractiontoplayer += 2
@@ -74,9 +83,7 @@ OTHER: none
                 "But I don't think it was exciting enough for <CurrentCompanion.name> to make <CurrentCompanion.him_or_her> want to fuck."
             
             EndIf
-        
-            
-        
+
         ElseIf WHERE == prison
 
             If CurrentCompanion:arousal > 25 && Random(20, 75) < CurrentCompanion:attractiontoplayer + CurrentCompanion:perversion
@@ -97,6 +104,9 @@ OTHER: none
                     Player.show()
                     CurrentCompanion.show()
                     SexNoAffair(Player, CurrentCompanion)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
                     
                     mood += 5
                     CurrentCompanion:attractiontoplayer += 2
@@ -132,6 +142,9 @@ OTHER: none
                             Player.show()
                             CurrentCompanion.show()
                             SexNoAffair(Player, CurrentCompanion, Actor2)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
                             
                         EndIf
                         
@@ -168,6 +181,9 @@ OTHER: none
                     Player.show()
                     CurrentCompanion.show()
                     Sex(Player, CurrentCompanion)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
                     perversion += 2
                     CurrentCompanion:perversion += 2
                     

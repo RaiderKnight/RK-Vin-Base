@@ -5,6 +5,9 @@ WHO: none
 OTHER: none
 
     SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
     
         If Actor:perversion > 50 && Actor:arousal > 25
         
@@ -51,6 +54,9 @@ OTHER: none
                         Filter(Aggressive)
                         TalkNonConsensual()
                         SexNoAffair(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
                         passTime(0.5, 1.5)
                         Actor:masochist += 2
                         Actor:mood -= 5
@@ -77,6 +83,9 @@ OTHER: none
                 Filter(Aggressive)
                 TalkNonConsensual()
                 SexNoAffair(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
                 passTime(0.25, 0.5)
                 masochist += 2
                 mood -= 5

@@ -19,7 +19,7 @@ OTHER: !IsWithCompanion() && Random(0, 100) < fitness*actionDuration
                 Cop1.dressUniform(police)
                 Cop1.show(1)
                 "An officer approached me."
-                Cop1():: "I'm officer <Cop1.name_last>. Nice to meet you."
+                Cop1(Serene):: "I'm officer <Cop1.name_last>. Nice to meet you."
                     
             Else
                 "Looks like officer <Cop1.name_last> is here."
@@ -30,7 +30,7 @@ OTHER: !IsWithCompanion() && Random(0, 100) < fitness*actionDuration
             Guard = true
                 
         Else
-            "Look like I'm woring alone."
+            "Look like I'm working alone."
                 
         Endif
         
@@ -658,7 +658,7 @@ OTHER: !IsWithCompanion() && Random(0, 100) < fitness*actionDuration
                 "Looks like the Senetor has his own guards. Guess I'll check in with one of them."
                 Player(Happy):: "Hello, What is your name."
                 Actor2 = generatePersonTemporary(Reaper)
-                Actor2.dressFormal()
+                Actor2.dressUniform(work)
                 Actor2.show(2)
                 Actor2():: "Greetings. My name is Tobias Reaper."
                 Player():: "Cool name."
@@ -681,11 +681,11 @@ OTHER: !IsWithCompanion() && Random(0, 100) < fitness*actionDuration
                 Actor3:martial += 10
                 Actor3.dress()
                 Actor3.show(1)
-                Actor(anger):: "What the hell are you doing here! I thought I told you I never want to see you again."
+                Actor(Angry):: "What the hell are you doing here! I thought I told you I never want to see you again."
                 Actor3():: "What does my very existance bring you shame..."     
-                Actor(anger):: "I don't give a dame about you. Your just the child of some whore I just fucked."
+                Actor(Angry):: "I don't give a dame about you. Your just the child of some whore I just fucked."
                 Actor3():: "More like raped! After you fucking drugged them."
-                Actor(anger):: "What do I need to do to get you out of my sight."
+                Actor(Angry):: "What do I need to do to get you out of my sight."
                 Actor3():: "You can't keep your dirty little secrets hidden forever. I am going to expose you for the monster you are."
                 Actor():: "Guard, or whatever your name is, I want you this worthless bastard."
                 Actor3():: "What! You can't do that!"
@@ -737,4 +737,4 @@ OTHER: !IsWithCompanion() && Random(0, 100) < fitness*actionDuration
         Endif
 
     SceneEnd()
-    timeout(600, Ravenger_VB_Cop_BodyGuard)
+    timeout(600, Ravenger_VB_Cop_BodyGuard) // Improved by Raddeck
