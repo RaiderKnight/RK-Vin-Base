@@ -8,16 +8,17 @@ OTHER: none
     Salary = getSalary()
     Rent = Random(800, 1500)*CostOfLiving+Difficulty*Salary*0.25
     RentConverted = Rent.convertToLocalCurrency(true)
+    Price = Rent*120
 
     sceneStart()
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
-        "Looking for a new place to live, I discovered a nice place that might just fit my budget. The rent per month being advertised, including utility bills, is around <RentConverted>. However, I reckon I can try to negotiate that down."
+        "I was looking for a new place to live, I discovered a nice place that might just fit my budget. The rent per month being advertised, including utility bills, is around <RentConverted>. However, I reckon I can try to negotiate that down."
         
-        If Rent > Salary*0.7
+        If Rent > money
         
-            "I'm not entirely sure if this is really affordable considering my current financial situation." 
+            "I'm not entirely sure it's a good idea considering my current financial situation." 
             
         Else
         
@@ -34,6 +35,9 @@ OTHER: none
             Landlord = generatePerson()
             Landlord.dress()
             Landlord.show(2)
+            Landlord.moveToPersonStand(Player, 50)
+            faceEachOther(Player, Landlord)
+            Landlord.animate(socialize)
             Landlord(Excited):: "So that's the apartment. It's available for just <RentConverted> a month, including bills. You won't get a better deal anywhere else! What do you think? Are you going to go for it? I can prepare the lease contract right away."
             choice = 2
             Knowledge = false
@@ -42,19 +46,33 @@ OTHER: none
             LoweredPrice = false
             Bought = false
             Vanilla = IsModEnabled(vin_VanillaRealistic)
-            
+            GonnaGetFucked = false
             While choice > 1
                 
                 "What should I do?"
-                0:: "Sign the lease"
+                0:: money > Rent::"Sign the lease"
                 1:: "Look elsewhere"
                 2:: !Knowledge && !Seduce:: "Use your knowledge to negotiate"
                 3:: !Charm && !Seduce:: "Use your charm to haggle"
                 4:: !Seduce:: "Use your sex appeal"
-                5:: !Bought:: "Offer to buy"
+                5:: !Bought && money > Price:: "Offer to buy"
                 
                 If 0
                 
+                    If Rent > Salary*0.7
+        
+                        "I'm not entirely sure if this is really affordable considering my current financial situation." 
+                        Player(Sad):: "Actually, I don't think I can afford to rent the apartment right now."
+                        SceneEnd()
+            
+                    Else
+        
+                        "This rent seems reasonable and might just fit in my budget."
+                        Player(Happy):: "Actually, I think I can afford to buy the home outright."
+            
+                    Endif
+                    Landlord.animate(socialize)
+                    Player.animate(write)
                     "I decided to sign the lease at the current rent. It wasn't too bad a deal after all."
                     MoveHome()
                     Landlord.setLandlord()
@@ -62,6 +80,9 @@ OTHER: none
                     If TfGame() && Player.isMale()
                         followUp(tf_afterlandlord)
                     Endif
+                    Player.animate()
+                    Landlord.animate()
+                    mood += 3
                     
                 Elseif 1
                 
@@ -69,16 +90,28 @@ OTHER: none
                     
                 Elseif 5
                 
-                    Bought = true
-                    Player(Happy):: "Actually, I think I can afford to buy the home outright."
-                    Price = Rent*120
                     PriceConverted = Price.convertToLocalCurrency(true)
+                    If money < Price
+        
+                        "I'm not entirely sure if this is really affordable considering my current financial situation." 
+                        Player(Sad):: "Actually, I don't think I can afford to buy the home right now."
+                        SceneEnd()
+            
+                    Else
+        
+                        "This price seems reasonable and might just fit in my budget."
+                        Player(Happy):: "Actually, I think I can afford to buy the home outright."
+            
+                    Endif
+                    Landlord.animate(socialize)
+                    Player.animate(socialize)
                     Landlord(Surprised):: "Oh really? You know what: I'm prepared to sell it to you at <PriceConverted>."
                     0:: "Go for it"
                     1:: "That's too expensive"
                     
                     If 0
                     
+                        Bought = true
                         MoveHome()
                         money => money - Price
                         Zero = 0
@@ -194,8 +227,74 @@ OTHER: none
                     Seduce = true
                     
                 Endif
+                    
+                If Player.isNaked()
+                    
+                    GonnaGetFucked = true
+                    
+                Endif
                 
             endWhile
+            
+            If GonnaGetFucked
+            
+                WantToFucked = 0
+                If Landlord:arousal > 25 && Landlord:pervevrsion > 50 && Landlord.IsInterestedIn(Player)
+                
+                    HornyLandlordTxt = "horny and I only think about fucking your holes...."
+                    WantToFucked += 1
+                
+                Elseif Landlord.IsInterestedIn(Player)
+                
+                    HornyLandlordTxt = "uncomfortable and I think you should wear something before someone rape you..."
+                
+                Else
+                
+                    HornyLandlordTxt = "very uncomfortable and I think you should consult a doctor... now leave before I call the cops!"
+                
+                Endif
+            
+                Landlord(Curious):: "Humm! before you leave, can you tell me why you're naked, it's making me <HornyLandlordTxt>"
+                "What should I say?"
+                0::"I love playing with strangers!"
+                1::"I'm a naturist that's why!"
+                
+                If 0
+                
+                    If WantToFucked > 0
+                    
+                        Landlord(Flirty)::"So I'm I... Let's play!"
+                        "We stripped right away and start caressing each other"
+                        sex(Player, Landlord)
+                        
+                    Else
+                    
+                        Landlord(Annoyed)::"Get out you annoying me...pervert!"
+                        
+                    Endif
+
+                Else
+                    
+                    If WantToFucked > 0
+                    
+                        Landlord(Flirty)::"So ... if you're naked it's because you want to get fucked?"
+                        0::"I love playing with strangers!"
+                        1::"Ew! Not really!"
+                        
+                        If 0
+                            "We stripped right away and start caressing each other"
+                            sex(Player, Landlord)
+                        Endif
+                        
+                    Else
+                    
+                        Landlord(Annoyed)::"Get out perv..."
+                        
+                    Endif
+                
+                Endif
+                
+            Endif
             
         Else
         

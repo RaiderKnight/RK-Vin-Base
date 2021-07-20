@@ -37,7 +37,7 @@ OTHER: isAtHome()
         Actor.dress()
         Actor.show(3)
         "<Actor.name> and I begin to chat."
-        "Shall we have a friendly conversation "    
+        "Shall we have a friendly conversation?"    
         0:: "Yes"
         1:: "No"
         
@@ -53,13 +53,14 @@ OTHER: isAtHome()
             Lewd = false
             choice = -1
             While choice < 8 
+                "So now, what I should do?" // Edited by Raddeck
                 0:: !Me:: "Tell <Actor.him_or_her> how my day is going."
-                1:: !Dress:: "Talk about stye choices of celebity."
-                2:: !Geek:: "Did you get the latest tech?"
-                3:: !Party:: "Know about any parties?"
+                1:: !Dress:: "Talk about celebrity style choices." // Edited by Raddeck
+                2:: !Geek:: "Did you see the latest tech?" // Edited by Raddeck
+                3:: !Party:: "Is there a party soon?" // Edited by Raddeck
                 4:: !Sport:: "Do you like sports?"
-                5:: !Music:: "Ask if <Actor.he_or_she> heard this one song?"
-                6:: !Them:: "How are you doing?"      
+                5:: !Music:: "Ask if <Actor.he_or_she> heard this song?"
+                6:: !Them:: "Tell me something about you!"  // Edited by Raddeck
                 7:: [!Lewd && perversion > 70]:: "Talk about person you hooked up with."
                 8:: "Got nothing more to talk about."
         
@@ -69,77 +70,80 @@ OTHER: isAtHome()
                         
                 Else
                     If 0
-                        "Tell <Actor.him_or_her> how my day is going."
+                        "So, I told <Actor.him_or_her> about my day, what I did, my nonsense, ... " // Edited by Raddeck
                         Actor:rapportwithplayer += Random(0, 7)
                         If interpersonal < 50
                             Actor:rapportwithplayer -= Random(0, 3)
-                            "<Actor.He_or_She> seem kind of bored."
+                            "<Actor.He_or_She> seem kind of bored about what I said."
                         Endif
                         Me = true   
                     Elseif 1
-                        "Talk about stye choices of celebity."
+                        "We talked for quite a while about celebrity outfits and a few big fashion designers." // Edited by Raddeck
                         Actor:rapportwithplayer += Random(0, 7)
                         If Actor:attractiveness < 50
                             Actor:rapportwithplayer -= Random(0, 3)
-                            "<Actor.He_or_She> doesn't seem to care."
+                            "<Actor.He_or_She> doesn't seem to care about what I just said."
                         Endif
                         Dress = true    
                         
                     Elseif 2
-                        "Did you get the latest tech?"
+                        "We talked at length about the latest technologies in the market, the pros and cons ..." // Edited by Raddeck
                         Actor:rapportwithplayer += Random(0, 7)
                         If Actor:intelligence < 50
                             Actor:rapportwithplayer -= Random(0, 3)
-                            "<Actor.He_or_She> has no clue what you are talking about."
+                            "<Actor.He_or_She> has no clue what I was talking about."
                         Endif
                         Geek = true   
                             
                     Elseif 3 
-                        "Know about any parties?"
+                        "So I asked <Actor.him_or_her> if <Actor.he_or_she> knew if there were parties in the area soon ...." // Edited by Raddeck
                         Actor:rapportwithplayer += Random(0, 7)
                         If Actor:dance < 50
                             Actor:rapportwithplayer -= Random(0, 3)
-                            "<Actor.He_or_She> not invited to many parties."
+                            "<Actor.He_or_She> replied that <Actor.he_or_she> doesn't really know because <Actor.he_or_she> doesn't really like parties and no one invited <Actor.him_or_her> anyway..." // Edited by Raddeck
                         Endif
                         Party = true   
                                             
                     Elseif 4
-                        "Do you like sports?"
+                        "We discussed sport in general and the sports and hobby that we practice at the moment." // Edited by Raddeck
                         Actor:rapportwithplayer += Random(0, 7)
                         If Actor:fitness < 50
                             Actor:rapportwithplayer -= Random(0, 3)
-                            "<Actor.He_or_She> like chess."
+                            Actor(Curious)::"I prefer seeing people doing sports than doing it..." // Edited by Raddeck
                         Endif
                         Sport = true     
                             
                     Elseif 5
-                        "Ask if <Actor.he_or_she> heard this one song?"
+                        "I put a song of Metallica in the background... I ask <Actor.him_or_her> if <Actor.he_or_she> know this song?" // Edited by Raddeck
                         Actor:rapportwithplayer += Random(0, 7)
                         If Actor:music < 50
                             Actor:rapportwithplayer -= Random(0, 3)
-                            "<Actor.He_or_She> likes this one song by Phil Collins."
+                            Actor(Curious)::"Is it Phil Collins?" // Edited by Raddeck
+                        Else
+                            Actor(Happy)::"Sure, it's Metallica!" // Edited by Raddeck
                         Endif
                         Music = true     
                             
                     Elseif 6
-                        "How are you doing?"
+                        Player(Curious)::"Tell me something about you!" // Edited by Raddeck
                         If Actor:rapportwithplayer > 65
-                            "They began to tell their whole life story."
+
+                            "We shared stories about our family, friends and some funny situations we had..." // Edited by Raddeck
+                            
                             If karma > 49
                                 Actor:rapportwithplayer += 5
                             Else
-                                "I wish they would stop talking."
                                 Actor:rapportwithplayer += 4
                             Endif
                         Elseif Actor:rapportwithplayer > 32
-                            "Talked about family & stuff."
+                            "We shared stories about our family and stuff..." // Edited by Raddeck
                             If karma > 49
                                 Actor:rapportwithplayer += 3
                             Else
                                 Actor:rapportwithplayer += 2
                             Endif
                         Else
-                            Actor():: "Fine"
+                            Actor(Serene):: "I'm not in the mood to talk about me..." // Edited by Raddeck
                             If karma > 49
                                 Actor:rapportwithplayer += 1
                             Else
@@ -149,11 +153,11 @@ OTHER: isAtHome()
                         Them = true   
                             
                     Else 7
-                        "Talk about person you hooked up with."
+                        "We talked about person we hooked up with in the past." // Edited by Raddeck
                         Actor:rapportwithplayer += Random(0, 7)
                         If Actor:perversion < 50
                             Actor:rapportwithplayer -= Random(0, 3)
-                            "<Actor.He_or_She> is very uncomfortable."
+                            "<Actor.name> look very uncomfortable with that subject..."
                         Endif
                         Lewd = true
                                             
