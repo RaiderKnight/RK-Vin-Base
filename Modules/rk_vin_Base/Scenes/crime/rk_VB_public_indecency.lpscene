@@ -4,13 +4,18 @@ WHEN: 0-24
 WHO: none
 OTHER: none
 
-    SceneStart()
+    SceneStart() // For different type of scenes
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        houseviewing = rk_VB_houseviewing.getGlobal()
     
-        "That was rather risky doing that in public. I hope there weren't any cops around"
+        If houseviewing == 1
         
+            "That was rather risky doing that in front of the Landlord. I hope there weren't any cops around"
+
+        EndIf        
+
         If Random(0, 50) > sneak
         
             "Sure enough, the cops promptly arrived at the scene."
@@ -103,6 +108,7 @@ OTHER: none
                         Player(Scared):: "Please, don't shoot!"
                         "I put my hands up and surrendered to the overwhelming number of cops."
                         sentence += Random(150, 300)
+                        
                         If PoliceMan:arousal > 25 && PoliceMan:perversion > 75 && Actor1:arousal > 25 && Actor1:perversion > 75 && PoliceMan:masochist < 0 && Actor1:masochist < 0
                         
                             "As we drive towards the police station, the police tell me ..."
@@ -172,6 +178,7 @@ OTHER: none
                 sneak -= 5
                 mood -= 5
                 sentence += Random(10, 30)
+                
                 If PoliceMan:arousal > 25 && PoliceMan:perversion > 75 && Actor1:arousal > 25 && Actor1:perversion > 75 && PoliceMan:masochist < 0 && Actor1:masochist < 0
                         
                     "As we drive towards the police station, the police tell me ..."
@@ -227,6 +234,7 @@ OTHER: none
                     EndIf
                         
                 Endif
+
                 followUp(imprisoned)
                 
             Endif
