@@ -129,6 +129,7 @@ OTHER: none
         
             "What should I do?"
             0::"Take a shower"
+            1::"Take a bath"
             3::"Brush my teeth"
             5::"Groom"
             7:: stock_haircare > 0::"Use haircare"
@@ -150,6 +151,17 @@ OTHER: none
                 Filter(Shower)
                 "I decided to take a shower..."
                 sex(Player)
+                mood += 5
+                energy += 1
+                karma += 0.25
+                passTime(0.35, 1)
+            
+            ElseIf 1
+            
+                setBackground(shower)
+                Player.strip()
+                "I decided to take a shower..."
+                Player.animate(bathe)
                 mood += 5
                 energy += 1
                 karma += 0.25

@@ -1,0 +1,53 @@
+WHAT: all
+WHERE: home
+WHEN: 0 - 24
+WHO: Actor = getRelative(); If !Actor.isFemale() && Random(20, 90) < Actor:perversion 
+OTHER: isModEnabled(vin_NonConsensual) && isModEnabled(vin_Incest) && !Player.isMale() && !Player.isPregnant() && Player.isOnPeriod()
+
+    SceneStart()
+    Actor.Show()
+    "I just discovered that my <Actor.relationship> <Actor.name> is jacking off into my squirting dildo ..."
+    0:: "Watch"
+    1:: "WTF"
+    
+    If 0
+        Filter(Solo)
+        Sex(Actor)
+        "Are they trying to get me pregnant?"
+        Actor:perversion += 5
+        Actor.hide()
+        arousal += 15
+        "Should I use my squirting dildo with my <Actor.relationship> cum inside?"
+        0:: "Risk it"
+        1:: "Clean it."
+        
+        If 0
+            "The thought of having some fun with the dildo, except this time it may carry some consequences. Kind of gives me a thrill"
+            masochist += 10
+            perversion += 10
+            Filter(Solo)
+            Sex(Player)
+            Chance = 0
+            Chance += fertility
+            Chance += Actor:fertility_npc
+            If Random(85, 300) < Chance
+                Player.impregnate(Actor)
+                "I feel rather confident that it's still fertile."
+                "I'm half expecting to announce a pregnancy soon ..."
+            Else
+                "Although I used the dildo, it's unlikely that the cum would work."
+            Endif
+            
+        Else
+            "I decided not to risk it and threw my dildo away."
+        Endif
+    Else
+        Player(Angry):: "What the hell are you doing!"
+        Actor.hide()
+        "I ran them off."
+        "I doubt my <Actor.relationship> will try that shit again." 
+        Actor:perversion -= 10
+        timeout(1000, Ravenger_VB_F_dildo_impregnate_P)
+    Endif
+    SceneEnd()
+    timeout(500, Ravenger_VB_F_dildo_impregnate_P)

@@ -1,0 +1,54 @@
+WHAT: all 
+WHERE: all
+WHEN: 0 - 20
+WHO: Breeder = getPerson(true); if [Breeder.WantsBabies() || [Breeder:attractiontoplayer > 85 && Breeder:rapportwithplayer > 60 && Breeder.hadSex()]] && !Breeder.isMale() && Breeder.isOnPeriod() && !Breeder.isPregnant()
+OTHER: !IsWithCompanion() && !Player.isFemale()
+
+Actor2 = Breeder.getRelatedPerson(Spouses, Dating)
+If !Actor2.isvalid()
+    sceneStart()
+    setBackground(home)
+    Breeder.dress()
+    Breeder.show()
+    Breeder():: "Hi <Player.name> here because I'm ovulating right now."
+    Breeder():: "So, I want you to fuck me till I'm pregnant."
+    0:: "Let get started then."
+    1:: "Sorry not today."
+
+    If 0
+        Breeder.Strip()
+        Player.Strip()
+        Player(flirty):: "Let get started then."
+        Breeder:perversion += 45
+        Breeder:likes_vaginal += 100
+        Breeder:attractiontoplayer += 10
+        Filter(vaginal)
+        Sex(Player, Breeder)
+        Player(flirty):: "Wow, that was fun."
+        If !Breeder.isPregnant()
+            Breeder():: "We are not done yet..."
+            Breeder:fertility_npc += 5
+            energy -= 15
+            Filter(vaginal)
+            SexNoAffair(Player, Breeder)
+            Player(tired):: "Done?"
+            If !Breeder.isPregnant()
+                Breeder():: "No keep on cuming"
+                Breeder:fertility_npc += 10
+                energy -= 15
+                Filter(vaginal)
+                SexNoAffair(Player, Breeder)
+                Breeder:attractiontoplayer += Random(0, 30)
+                Player(tired):: "Good lord... I'm empty..."
+            Endif
+        Endif           
+    Else
+        "Sorry not today."
+    Endif
+    If Breeder.isPregnant()
+        "<Breeder.name> got Pregnant."
+    Endif
+    timeoutActor(400, Ravenger_VB_Wants_Baby, Breeder)
+    timeoutPrecise(200, Ravenger_VB_Wants_Baby) 
+    sceneEnd()
+Endif   

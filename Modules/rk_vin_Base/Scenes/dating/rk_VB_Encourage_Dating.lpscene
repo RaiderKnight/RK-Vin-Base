@@ -1,39 +1,48 @@
 WHAT: none
 WHERE: none
 WHEN: 0 - 24
-WHO: Dating = getSpecific(Dating); If Dating.isInterestedIn(Player)
+WHO: none
 OTHER: none
 
     SceneStart()
 
-        "How I should encourage <Dating.name>?"
-        0:: attractiveness > 70 ::"Encourage <Dating.name> to be better-dressed"
-        1:: interpersonal > 70"Encourage <Dating.name> to be more social"
-        2:: fitness > 70 ::"Encourage <Dating.name> to exercise more"
-        5:: intelligence > 70 ::"Encourage <Dating.name> to read more"
-        6:: perversion > 70 ::"Train <Dating.name> sexually"
-        99::"I changed my mind"
-
-        If 0
+        Dating = getSpecific(Dating)
         
-            followUp(ugly_dating) //better-dressed
-        
-        ElseIf 1
-        
-            followUp(awkward_dating) //social
+        If Dating.isInterestedIn(Player)
+            "How I should encourage <Dating.name>?"
+            0:: attractiveness > 70 && Dating:attractiveness < Random(0, 60)::"Encourage <Dating.name> to be better-dressed"
+            1:: interpersonal > 70 && Dating:interpersonal < Random(0, 60)::"Encourage <Dating.name> to be more social"
+            2:: fitness > 70 && Dating:fitness < Random(0, 60)::"Encourage <Dating.name> to exercise more"
+            5:: intelligence > 70 && Dating:intelligence < Random(0, 60)::"Encourage <Dating.name> to read more"
+            6:: perversion > 70 && Dating:perversion < Random(0, 60) ::"Train <Dating.name> sexually"
+            99::"I changed my mind"
+    
+            If 0
             
-        ElseIf 2
-        
-            followUp(weak_dating) //exercise
-
-        ElseIf 5
-        
-            followUp(ignorant_dating) //read
+                followUp(ugly_dating) //better-dressed
             
-        ElseIf 6
+            ElseIf 1
+            
+                followUp(awkward_dating) //social
+                
+            ElseIf 2
+            
+                followUp(weak_dating) //exercise
+    
+            ElseIf 5
+            
+                followUp(ignorant_dating) //read
+                
+            ElseIf 6
+            
+                followUp(inexperienced_dating) //sexually
+    
+            EndIf
+            
+        Else
         
-            followUp(inexperienced_dating) //sexually
-
+            "<Dating.name> is not in the mood for encouragement or advice!"
+        
         EndIf
 
     SceneEnd() // Scene improved by Raddeck
