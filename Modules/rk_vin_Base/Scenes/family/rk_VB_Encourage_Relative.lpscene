@@ -1,16 +1,17 @@
 WHAT: none
 WHERE: none
 WHEN: 0 - 24
-WHO: Dating = getRelative(); If Dating.isInterestedIn(Player)
+WHO: none
 OTHER: none
 
     SceneStart()
 
+        Dating = getRelative()
         "How I should encourage <Dating.relationship>?"
-        0:: attractiveness > 70 ::"Encourage <Dating.name> to be better-dressed"
-        1:: interpersonal > 70"Encourage <Dating.name> to be more social"
-        2:: fitness > 70 ::"Encourage <Dating.name> to exercise more"
-        5:: intelligence > 70 ::"Encourage <Dating.name> to read more"
+        0:: attractiveness > 70 && Dating:attractiveness < Random(0, 60)::"Encourage <Dating.name> to be better-dressed"
+        1:: interpersonal > 70 && Dating:interpersonal < Random(0, 60)::"Encourage <Dating.name> to be more social"
+        2:: fitness > 70 && Dating:fitness < Random(0, 60)::"Encourage <Dating.name> to exercise more"
+        5:: intelligence > 70 && Dating:intelligence < Random(0, 60)::"Encourage <Dating.name> to read more"
         99::"I changed my mind"
 
         If 0

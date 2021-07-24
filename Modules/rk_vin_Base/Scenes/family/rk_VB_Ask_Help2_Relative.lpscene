@@ -1,17 +1,18 @@
 WHAT: none
 WHERE: none
 WHEN: 0 - 24
-WHO: Dating = getRelative(); If Dating.isInterestedIn(Player)
+WHO: none
 OTHER: none
 
     SceneStart()
 
+        Dating = getRelative()
         "What kind of help I need from <Dating.relationship>?"
-        0:: cooking < Random(0, 60) ::"Ask for help with cooking"
-        1:: dance < Random(0, 60) ::"Ask for help with dance"
-        3:: interpersonal < Random(0, 60) ::"Ask for help with my sociability"
-        4:: intelligence < Random(0, 60) ::"Ask for help with reading books"
-        6:: fitness < Random(0, 60) ::"Ask for help with training"
+        0:: cooking < Random(0, 60) && Dating:cooking > 70::"Ask for help with cooking"
+        1:: dance < Random(0, 60) && Dating:dance > 70::"Ask for help with dance"
+        3:: interpersonal < Random(0, 60) && Dating:interpersonal > 70::"Ask for help with my sociability"
+        4:: intelligence < Random(0, 60) && Dating:intelligence > 70::"Ask for help with reading books" 
+        6:: fitness < Random(0, 60) && Dating:fitness > 70::"Ask for help with training"
         7:: money < 0 ::"Ask for help financially"
         99::"I changed my mind"
 
