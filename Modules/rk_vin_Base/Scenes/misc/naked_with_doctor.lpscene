@@ -13,7 +13,7 @@ OTHER: !isWithCompanion()
         Actor.dress()
         Actor.show(2)
         "I decided to go for a health check-up. I was guided through the procedures by my doctor, <Actor.name>."
-        ExamChoiceLot = Random(4, 7) // need more content...
+        ExamChoiceLot = Random(2, 7) // need more content...
         ExamChoiceLot = ExamChoiceLot.round()
         
         If ExamChoiceLot == 1
@@ -22,11 +22,177 @@ OTHER: !isWithCompanion()
             
         Elseif ExamChoiceLot == 2
              
+            If Player.isMale()
+                WDCheckupM = "prostate exam"
             
+            Elseif Player.isFemale()
+                WDCheckupM = "pelvic exam"
+                
+            EndIf
+            money -= 50
+
+            "The doctor asked me to undress completely and lie down on the hospital bed to start <Actor.his_or_her> <WDCheckupM>! "
+            Player.strip()
             
+            If Actor:perversion + Actor:attractiontoplayer > Random(75, 125)
+            
+                Actor(Serene)::"The doctor is in awe of my <Actor.ass_or_pussy>, <Actor.he_or_she> looks at my hole like a cave explorer taking great care to oil <Actor.his_or_her> hand and push it in, pretending it's necessary to do it that way, except <Actor.he_or_she>'s fisting my <Actor.ass_or_pussy> right now!  ..."
+                0:: "Storm out"
+                1:: "Give <Actor.him_or_her> my number"
+                2:: isModEnabled(vin_VanillaPorn) && perversion > 50:: "Enjoy my 'happy ending'"
+                
+                If 0
+                
+                    Player(Furious):: "Sorry! What the fuck are you doing? Since when does a doctor fist <Actor.his_or_her> client?"
+                    "I stormed off and complained to the department head, threatening them with a rape lawsuit if <Actor.name> wasn't fired immediately."
+                    Actor:rapportwithplayer -= 100
+                    Actor:attractiontoplayer -= 100
+                    masochist -= Random(0, 1)
+                    
+                Elseif 1
+                
+                    "I enjoyed <Actor.his_or_her> hand feeling me up but didn't want to do something too crazy right there."
+                    "Instead, I waited it out until the end of this very sensual examination to give <Actor.name> my personal number."
+                    If Player.isMale()
+                        "Right before <Actor.he_or_she> finishes playing with my ass, my penis erupts like a volcano. There was semen all over the hospital bed."
+                        "The kind of exam I like ... "
+                    EndIf
+                    
+                    Player(Flirty)::"Would you like to have my number to give me a special examination?"
+                    "<Actor.He_or_She> was delighted to have it."
+                    Actor(Shy)::"Yeah, sure!"
+                    exchangeContact(Actor)
+                    perversion += Random(0, 0.25)
+                    
+                Else
+                
+                    "It was obvious what the cute doctor really wanted. And I wanted it too, right here, right now!"
+                    "<Actor.His_or_Her> stimulating got more and more intense and soon enough, I got up and started making out with the lucky doctor."
+                    Sex(Actor, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    Player.show(0)
+                    Actor.show(2)
+                    perversion += Random(0, 1)
+                    Actor2 = generatePersonTemporary()
+                    Actor2.dress()
+                    Actor2.show(3)
+                    Actor2(Happy):: "Doctor, what is taking you so long? The next patient has been waiting for half an hour!"
+                    "Ooops, the nurse walked in on us ..."
+                    
+                    If Actor2:perversion > 50 && Actor2:arousal > 15
+                    
+                        Actor2(Flirty):: "Don't mind if I join ..."
+                        Player(Flirty):: "Come on and join us! I'm sure the other patients can wait!"
+                        Actor2(Happy):: "They will, what are playing?"
+                        Player(Wink):: "Searching reflexes...."
+                        Sex(Actor, Player, Actor2)
+                        perversion += Random(0, 1)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        
+                    Else
+                    
+                        Actor2(Shocked):: "Doctor ... What on earth are you doing? This is so unprofessional ..."
+                        Actor2(Shocked)::"This is so embarrassing. I'm getting out of here."
+                        Actor2.hide()
+                        Sex(Actor, Player)
+                        perversion += Random(0, 1)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                    Endif
+                    
+                Endif
+                
+            Else
+            
+                "Despite me being completely naked without even a piece of cloth covering my body, <Actor.name> remained completely professional in <Actor.his_or_her> reflexes examination."
+            
+            Endif
+
         Elseif ExamChoiceLot == 3
              
+            money -= 50
+            "The doctor wants to check my body's reflexes. <Actor.He_or_She> asked me to undress to see my muscles and nerves better!"
+            Player.strip()
             
+            If Actor:perversion + Actor:attractiontoplayer > Random(75, 125)
+            
+                Actor(Serene)::"The doctor is in awe of my body, <Actor.he_or_she> looks at me like I'm a wonder of the world and touches me like a blind man, pretending <Actor.he_or_she>'s trying to find the right place to check my reflexes, but right now <Actor.he_or_she>'s groping my private parts ..."
+                0:: "Storm out"
+                1:: "Give <Actor.him_or_her> my number"
+                2:: isModEnabled(vin_VanillaPorn) && perversion > 50:: "Enjoy my 'happy ending'"
+                
+                If 0
+                
+                    Player(Furious):: "Sorry! What the fuck are you doing? Since when does a doctor check private part reflexes?"
+                    "I stormed off and complained to the department head, threatening them with a rape lawsuit if <Actor.name> wasn't fired immediately."
+                    Actor:rapportwithplayer -= 100
+                    Actor:attractiontoplayer -= 100
+                    masochist -= Random(0, 1)
+                    
+                Elseif 1
+                
+                    "I enjoyed <Actor.his_or_her> hands feeling me up but didn't want to do something too crazy right there."
+                    "Instead, I waited it out until the end of this very sensual examination to give <Actor.name> my personal number. <Actor.He_or_She> was delighted to have it."
+                    Player(Flirty)::"Would you like to have my number to give me a deeper reflexes examination?"
+                    Actor(Shy)::"Yeah, sure!"
+                    exchangeContact(Actor)
+                    perversion += Random(0, 0.25)
+                    
+                Else
+                
+                    "It was obvious what the cute doctor really wanted. And I wanted it too, right here, right now!"
+                    "<Actor.His_or_Her> stimulating got more and more intense and soon enough, I got up and started making out with the lucky doctor."
+                    Sex(Actor, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    Player.show(0)
+                    Actor.show(2)
+                    perversion += Random(0, 1)
+                    Actor2 = generatePersonTemporary()
+                    Actor2.dress()
+                    Actor2.show(3)
+                    Actor2(Happy):: "Doctor, what is taking you so long? The next patient has been waiting for half an hour!"
+                    "Ooops, the nurse walked in on us ..."
+                    
+                    If Actor2:perversion > 50 && Actor2:arousal > 15
+                    
+                        Actor2(Flirty):: "Don't mind if I join ..."
+                        Player(Flirty):: "Come on and join us! I'm sure the other patients can wait!"
+                        Actor2(Happy):: "They will, what are playing?"
+                        Player(Wink):: "Searching reflexes...."
+                        Sex(Actor, Player, Actor2)
+                        perversion += Random(0, 1)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        
+                    Else
+                    
+                        Actor2(Shocked):: "Doctor ... What on earth are you doing? This is so unprofessional ..."
+                        Actor2(Shocked)::"This is so embarrassing. I'm getting out of here."
+                        Actor2.hide()
+                        Sex(Actor, Player)
+                        perversion += Random(0, 1)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                    Endif
+                    
+                Endif
+                
+            Else
+            
+                "Despite me being completely naked without even a piece of cloth covering my body, <Actor.name> remained completely professional in <Actor.his_or_her> reflexes examination."
+            
+            Endif
             
         Elseif ExamChoiceLot == 4
             
@@ -36,7 +202,7 @@ OTHER: !isWithCompanion()
             
             If Actor:perversion + Actor:attractiontoplayer > Random(75, 125)
             
-                Actor(Serene)::"The doctor is starring at me and is touching me like a creep, saying that he need to ajust my pose for the x-ray, but he is groping in my private parts too…"
+                Actor(Serene)::"The doctor is staring at me and is touching me like a creep, saying that he need to ajust my pose for the x-ray, but he is groping in my private parts too…"
                 0:: "Storm out"
                 1:: "Give <Actor.him_or_her> my number"
                 2:: isModEnabled(vin_VanillaPorn) && perversion > 50:: "Enjoy my 'happy ending'"
@@ -89,7 +255,7 @@ OTHER: !isWithCompanion()
                     Else
                     
                         Actor2(Shocked):: "Doctor ... What on earth are you doing? This is so unprofessional ..."
-                        Actor2(Shocked)::"This is so embarrassing. I get out of here."
+                        Actor2(Shocked)::"This is so embarrassing. I'm getting out of here."
                         Actor2.hide()
                         Sex(Actor, Player)
                         perversion += Random(0, 1)
@@ -168,7 +334,7 @@ OTHER: !isWithCompanion()
                     Else
                     
                         Actor2(Shocked):: "Doctor ... What on earth are you doing? This is so unprofessional ..."
-                        Actor2(Shocked)::"This is so embarrassing. I get out of here."
+                        Actor2(Shocked)::"This is so embarrassing. I'm getting out of here."
                         Actor2.hide()
                         Sex(Actor, Player)
                         perversion += Random(0, 1)

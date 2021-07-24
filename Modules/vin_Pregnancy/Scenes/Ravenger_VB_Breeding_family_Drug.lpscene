@@ -1,0 +1,132 @@
+WHAT: all
+WHERE: home
+WHEN: 0 - 24
+WHO: Breeder = getRelative(); If Breeder.livesWithPlayer() && [!Breeder.isSameGender(Player) || Player.istrans() || Breeder.istrans()] && [Breeder:perversion > 40 || Breeder:incest > 50 || Breeder:attractiontoplayer > 70] 
+OTHER: !IsWithCompanion() && isModEnabled(vin_Incest) && Player:stock_chineseaphrodisiac >= 1 && Random(0, 100) > 90
+
+sceneStart()
+
+    Player:stock_chineseaphrodisiac -= 1
+
+    If Player.isMale() || Player.istrans()
+        setBackground(home)
+        Breeder.show()
+        Player:: "Why are you naked?"
+        Breeder():: "I'm sorry, but want to fuck like there is no tomorow."
+        Player:: "What is wrong with you?"
+        Breeder():: "I was taking some vitamins, but I had one of your drugs... by accident."
+        Player:: "What do you want me to do about it?"
+        Breeder():: "I just need you to fuck me."
+        0:: "Let get started then."
+        1:: "Sorry not today."
+
+        If 0
+            Player(flirty):: "Let get started then."
+            Breeder:attractiontoplayer += 10
+            player.strip()
+            Sex(Player, Breeder)
+            Player(flirty):: "Wow, that was fun."
+                If !Breeder.isPregnant()
+                    Breeder():: "We are not done yet..."
+                    energy -= 15
+                    Filter(vaginal)
+                    SexNoAffair(Player, Breeder)
+                    Player(tired):: "Done?"
+                    If !Breeder.isPregnant()
+                        Breeder():: "No keep on cuming"
+                        energy -= 15
+                        Filter(vaginal)
+                        SexNoAffair(Player, Breeder)
+                        Breeder:attractiontoplayer += Random(0, 30)
+                        Player(tired):: "Good lord... I'm empty..."
+                    Endif
+                Endif  
+        
+        Else
+            "Sorry not today."
+            If Breeder:masochist < -50 && isModEnabled(vin_NonConsensual)
+                "My <Breeder.relationship> wasn't one to take no for an answer ..."
+                Filter(AggressiveFM)
+                player.strip()
+                Sex(Breeder, Player)
+                If !Breeder.isPregnant()
+                    Breeder():: "We are not done yet..."
+                    energy -= 15
+                    Filter(vaginal)
+                    SexNoAffair(Player, Breeder)
+                    Player(tired):: "Done?"
+                    If !Breeder.isPregnant()
+                        Breeder():: "No keep on cuming"
+                        energy -= 15
+                        Filter(vaginal)
+                        SexNoAffair(Player, Breeder)
+                        Breeder:attractiontoplayer += Random(0, 30)
+                        Player(tired):: "Good lord... I'm empty..."
+                    Endif
+                Endif
+            Endif
+
+        
+        Endif
+    Else    
+        setBackground(home)
+        Breeder.show()
+        Player:: "Nice boner."
+        Breeder():: "I need your help, want to fuck like there is no tomorow."
+        Player:: "What is wrong with you?"
+        Breeder():: "I was taking some vitamins, but I had one of your drugs... by accident."
+        Player:: "What do you want me to do about it?"
+        Breeder():: "I just need to fuck you."
+        0:: "Let get started then."
+        1:: "Sorry not today."
+
+        If 0
+            Player(flirty):: "Let get started then."
+            Breeder:attractiontoplayer += 10
+            player.strip()
+            Sex(Player, Breeder)
+            Player(flirty):: "Wow, that was fun."
+                If !Breeder.isPregnant()
+                    Breeder():: "We are not done yet..."
+                    energy -= 15
+                    Filter(vaginal)
+                    SexNoAffair(Player, Breeder)
+                    Player(tired):: "Done?"
+                    If !Breeder.isPregnant()
+                        Breeder():: "No keep on cuming"
+                        energy -= 15
+                        Filter(vaginal)
+                        SexNoAffair(Player, Breeder)
+                        Breeder:attractiontoplayer += Random(0, 30)
+                        Player(tired):: "Good lord... I'm empty..."
+                    Endif
+                Endif
+        
+        Else
+            "Sorry not today."
+            If Breeder:masochist < -50 && isModEnabled(vin_NonConsensual)
+                "My <Breeder.relationship> wasn't one to take no for an answer ..."
+                Filter(Aggressive)
+                player.strip()
+                Sex(Breeder, Player)
+                If !Breeder.isPregnant()
+                    Breeder():: "We are not done yet..."
+                    energy -= 15
+                    Filter(vaginal)
+                    SexNoAffair(Player, Breeder)
+                    Player(tired):: "Done?"
+                    If !Breeder.isPregnant()
+                        Breeder():: "No keep on cuming"
+                        energy -= 15
+                        Filter(vaginal)
+                        SexNoAffair(Player, Breeder)
+                        Breeder:attractiontoplayer += Random(0, 30)
+                        Player(tired):: "Good lord... I'm empty..."
+                    Endif
+                Endif
+            Endif
+
+        
+        Endif
+    sceneEnd()
+    timeout(500, Ravenger_VB_Breeding_family_Drug)
