@@ -48,9 +48,13 @@
 <hr>
 <br>
 <h3>Safe Mods</h3>
-<p>- nn_GangsOfLifePlay, nn_PornEmpire, nn_NPCManager, nn_HomeExpander</p>
-<p>- rk_God_Mod, rk_Sex_Guru, rk_Weed_biz</p>
-<p>- vim_RoomPresets</p>
+<p>- nn_NPCManager, nn_HomeExpander - by NickNo</p>
+<p>- rk_God_Mod, rk_Sex_Guru, rk_Weed_biz - by Raddeck</p>
+<p>- Medievalover's Character Presets - by Medievalover</p>
+<p>- Rooms Without Curtains - by @Tristimdorion (Tristim)</p>
+<p>- MattShizzle's Bedroom Replacements - by MattShizzle</p>
+<p>- Vima's Bedroom Presets Collection - by Vima</p>
+<p>- NPC Relationship Manager - by caseyomah</p>
 <br>
 <hr>
 <br>

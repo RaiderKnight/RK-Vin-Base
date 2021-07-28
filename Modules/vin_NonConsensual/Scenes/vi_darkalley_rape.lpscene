@@ -2,7 +2,7 @@ WHAT: all
 WHERE: all, -home, -hotel
 WHEN: 22 - 4
 WHO: none
-OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && Random(2, 50) > karma
+OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && intelligence < Random(0, 100)*Random(0, 1)*Random(0, 1)
 
     SceneStart()
     setBackground(street)
@@ -11,7 +11,7 @@ OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && Random(2, 50) >
     While !Player.isInterestedIn(Actor)
         Actor = generatePersonTemporary()
     Endwhile
-    Actor.dress()
+    Actor.dressUniform(Crime)
     Actor.show(2)
     Actor(Evil):: "Alright, I'll make this quick: hand over your ...."
     Actor(Flirty):: "... Oh, what a surprise to see a beauty like you alone here. It must be my lucky day. I think you can give me something a hell lot better than your <Player.wallet_or_purse> ..."
@@ -19,6 +19,7 @@ OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && Random(2, 50) >
     0:: "Just take my money"
     1:: "Run"
     2:: "Attack"
+    3:: "Accept your fate"
     
     If 0
         Player.animate(fightlost)
@@ -44,7 +45,7 @@ OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && Random(2, 50) >
             Actor(Evil):: "I think you can just run away? You should have saved the energy to endure a hard pounding from me tonight."
             Rape = true
         Endif    
-    Else
+    Elseif 2
         Player.animate(martialart)
         Player.moveToPersonStand(Actor, 100)        
         Player(Furious):: "You messed with the wrong <Player.guy_or_girl>! Take this."
@@ -66,12 +67,19 @@ OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && Random(2, 50) >
             Player(Pain):: "Ah!"
             Actor(Evil):: "Ha! You really thought you could match me in a fight? I have to say - this just makes me want to fuck your brains out even more, you'll see how I conquer this wild bitch tonight!"            
         Endif
+    Else
+        "You don't need to be a rocket scientist to understand what will happen to a pretty <Player.boy_or_girl> cornered in the dark alley by a dangerous criminal ... Might as well let <Actor.him_or_her> have what <Actor.he_or_she> wants and it would be a lot less painful and my life might be spared."
+        Rape = true
     Endif
     
     If Rape
         Player.animate(fightlost)
         "Soon, <Actor.he_or_she> was ripping my clothes off and proceeded to force <Actor.himself_or_herself> upon me."
-        Player(Crying):: "No! Please stop ... I beg you ... Somebody help ..."
+        If 3
+            Player(Crying):: "Please ... you can enjoy my body as much as you want... just don't hurt me ..."
+        Else
+            Player(Crying):: "No! Please stop ... I beg you ... Somebody help ..."
+        Endif
         If Random(0, 100) < 30
             "All of a sudden, I heard a police siren. The thug was terrified and made a run for it."
             Actor.hide()

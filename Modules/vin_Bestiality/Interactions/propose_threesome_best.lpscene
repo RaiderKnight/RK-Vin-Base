@@ -5,15 +5,15 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    "I have already fucked my dog myself, but I reckon he could handle two women at once ..."
+    "I have already fucked my dog myself, but I reckon he could handle two people at once ..."
     0:: "Convince someone to join me"
     1:: "Let's just keep this a little secret between me and <Actor.name>"
     
     If 0
-        "Which woman I invite?"
+        "Which person I invite?"
         selectNPC()
         Actor2 = getSelectedNPC()
-        If !Actor2.isValid() || Actor2.isMale()
+        If !Actor2.isValid()
             "I couldn't decide on who to invite."
         Elseif Actor2.hadSex() || Actor2:perversion > 80
             Actor2.dress()
