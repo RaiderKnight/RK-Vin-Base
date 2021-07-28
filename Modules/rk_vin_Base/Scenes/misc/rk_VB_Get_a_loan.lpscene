@@ -1,0 +1,291 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+
+        rk_VB_Get_A_Loan = rk_VB_Get_A_Loan.getGlobal()
+        Get_Loan_Amount = Player.getActorVar(rk_VB_Get_Loan_Amount)
+        Get_Loan_Date = Player.getActorVar(rk_VB_Get_Loan_Date)
+        TempGet_Loan_Date = Player.getActorVar(rk_VB_Temp_Get_Loan_Date)
+        Salary = getSalary()
+        
+        If Get_Loan_Amount <= 0
+        
+            rk_VB_Get_A_Loan.setGlobal(0)
+        
+        Endif
+        
+        Loan_Amount = 5000
+        Loan_Amount1 = 10000
+        Loan_Amount2 = 25000
+        Loan_Amount3 = 50000
+        Loan_Amount4 = 100000
+            
+        Loan_Amount_loc = Loan_Amount.convertToLocalCurrency(true)
+        Loan_Amount1_loc = Loan_Amount1.convertToLocalCurrency(true)
+        Loan_Amount2_loc = Loan_Amount2.convertToLocalCurrency(true)
+        Loan_Amount3_loc = Loan_Amount3.convertToLocalCurrency(true)
+        Loan_Amount4_loc = Loan_Amount4.convertToLocalCurrency(true)
+        
+        // Set the date
+        daysSinceBirth = (Player:Age * 365)
+        AvailableForLoan = false
+
+        If money < 5000 || Salary <= 0 || !Player.isBoss()
+        
+            BankOwner = generatePerson()
+            BankOwner.hide()
+            "Your status does not allow you to get a loan! Find a job or start your own business and come back to see us!"
+            "Do I ask to see the bank manager to offer him sex in exchange for a bank loan?"
+            0::"Yes"
+            1::"No"
+            
+            If 0
+            
+                BankOwner.show()
+                BankOwner.dress()
+                specialFavor = false
+                
+                If BankOwner.isInterestedIn(Player)
+                
+                    perversion += 1
+                    "The bank manager accepted my offer without hesitation!"
+                    sex(BankOwner, Player)
+                    "It was average sex but hey, I was able to get the right to have a loan of <Loan_Amount_loc>"
+                    specialFavor = true
+                
+                Else
+                
+                    BankOwner(Sad)::"Sorry dear customer but it's a categorical no, please get out before I call security!"
+                    "So I went out into the street to avoid the security guards."
+                    AvailableForLoan = false
+                    setBackground(street)
+                
+                Endif
+            
+            Else
+            
+                AvailableForLoan = false
+                
+            Endif
+            
+        Else
+        
+            AvailableForLoan = true
+        
+        Endif
+        
+        If AvailableForLoan
+
+            "What should I do?"
+            0::"Get a loan"
+            1::"Reimburse a loan"
+            2::"Want to at my loan"
+            99::"Never mind!"
+            
+            If 0
+            
+                If rk_VB_Get_A_Loan > 0
+                
+                    "You already get a loan, pay off your loan first and then you can take another!"
+                
+                Else
+    
+                    "What is the loan amount that I should take?"
+                    0:: money > 5000 || Salary > 0 || Player.isBoss() || specialFavor ::"<Loan_Amount_loc>"
+                    1:: money > 10000 || Salary > 0 || Player.isBoss() ::"<Loan_Amount1_loc>"
+                    2:: money > 25000 || Salary > 0 || Player.isBoss() ::"<Loan_Amount2_loc>"
+                    3:: money > 50000 || Salary > 0 || Player.isBoss() ::"<Loan_Amount3_loc>"
+                    4:: money > 100000 || Salary > 0 || Player.isBoss() ::"<Loan_Amount4_loc>"
+                    99:: "Do nothing"
+            
+                    If 0
+                    
+                        "Your request was accepted, you got a loan of <Loan_Amount_loc>!"
+                        rk_VB_Get_A_Loan.setGlobal(1)
+                        Player.modifyActorVar(rk_VB_Get_Loan_Amount, Loan_Amount)
+                        money += Loan_Amount
+                        Player.modifyActorVar(rk_VB_Get_Loan_Date, daysSinceBirth)
+                    
+                    Elseif 1
+                    
+                        "Your request was accepted, you got a loan of <Loan_Amount1_loc>!"
+                        rk_VB_Get_A_Loan.setGlobal(2)
+                        Player.modifyActorVar(rk_VB_Get_Loan_Amount, Loan_Amount1)
+                        money += Loan_Amount1
+                        Player.modifyActorVar(rk_VB_Get_Loan_Date, daysSinceBirth)
+                    
+                    Elseif 2
+                    
+                        "Your request was accepted, you got a loan of <Loan_Amount2_loc>!"
+                        rk_VB_Get_A_Loan.setGlobal(3)
+                        Player.modifyActorVar(rk_VB_Get_Loan_Amount, Loan_Amount2)
+                        money += Loan_Amount2
+                        Player.modifyActorVar(rk_VB_Get_Loan_Date, daysSinceBirth)
+                    
+                    Elseif 3
+                    
+                        "Your request was accepted, you got a loan of <Loan_Amount3_loc>!"
+                        rk_VB_Get_A_Loan.setGlobal(4)
+                        Player.modifyActorVar(rk_VB_Get_Loan_Amount, Loan_Amount3)
+                        money += Loan_Amount3
+                        Player.modifyActorVar(rk_VB_Get_Loan_Date, daysSinceBirth)
+                    
+                    Elseif 4
+                    
+                        If money > 500000
+                            
+                            "According to our information, you have to deposit some money in the bank or go spend it, before making a loan of this amount."
+                            SceneEnd()
+                            
+                        Endif
+                        
+                        "Your request was accepted, you got a loan of <Loan_Amount4_loc>!"
+                        rk_VB_Get_A_Loan.setGlobal(5)
+                        Player.modifyActorVar(rk_VB_Get_Loan_Amount, Loan_Amount4)
+                        money += Loan_Amount4
+                        Player.modifyActorVar(rk_VB_Get_Loan_Date, daysSinceBirth)
+    
+                    Endif
+                    
+                Endif
+                
+            Elseif 1
+                
+                Reimburse_Amount = 100
+                Reimburse_Amount1 = 500
+                Reimburse_Amount2 = 1000
+                Reimburse_Amount3 = 5000
+                Reimburse_Amount4 = 10000
+                Reimburse_Amount5 = 100000
+                
+                Reimburse_Amount_loc = Reimburse_Amount.convertToLocalCurrency(true)
+                Reimburse_Amount1_loc = Reimburse_Amount1.convertToLocalCurrency(true)
+                Reimburse_Amount2_loc = Reimburse_Amount2.convertToLocalCurrency(true)
+                Reimburse_Amount3_loc = Reimburse_Amount3.convertToLocalCurrency(true)
+                Reimburse_Amount4_loc = Reimburse_Amount4.convertToLocalCurrency(true)
+                Reimburse_Amount5_loc = Reimburse_Amount5.convertToLocalCurrency(true)
+                
+                If rk_VB_Get_A_Loan <= 0
+                
+                    "You don't have any loan to Reimburse!"
+                
+                Else
+                
+                    TempGet_Loan_Date = (Player:Age * 365)
+                    InteretOnLoanDays = TempGet_Loan_Date - Get_Loan_Date
+                    If rk_VB_Get_A_Loan == 1
+                    
+                        InteretOnLoan = InteretOnLoanDays * 0.09
+                        
+                    Elseif rk_VB_Get_A_Loan == 2
+                    
+                        InteretOnLoan = InteretOnLoanDays * 0.1
+                            
+                    Elseif rk_VB_Get_A_Loan == 3
+                    
+                        InteretOnLoan = InteretOnLoanDays * 0.1
+                            
+                    Elseif rk_VB_Get_A_Loan == 4
+                    
+                        InteretOnLoan = InteretOnLoanDays * 0.15
+                         
+                    Elseif rk_VB_Get_A_Loan == 5
+                    
+                        InteretOnLoan = InteretOnLoanDays * 0.15
+                          
+                    Endif
+                    
+                    ToatalLoan = Get_Loan_Amount + InteretOnLoan
+                    
+                    "How much I want to reimburse?"
+                    0:: money > 100 ::"<Reimburse_Amount_loc>"
+                    1:: money > 500 ::"<Reimburse_Amount1_loc>"
+                    2:: money > 1000 ::"<Reimburse_Amount2_loc>"
+                    3:: money > 5000 ::"<Reimburse_Amount3_loc>"
+                    4:: money > 10000 ::"<Reimburse_Amount4_loc>"
+                    4:: money > 100000 ::"<Reimburse_Amount5_loc>"
+                    99:: "Do nothing"
+
+                    If 0
+                    
+                        money -= 100
+                        Player.modifyActorVar(rk_VB_Get_Loan_Amount, -100)
+                        "You decided to reimburse <Reimburse_Amount_loc>"
+                        "Your loan amount at this day, is: <ToatalLoan>"
+                    
+                    Elseif 1
+                    
+                        money -= 500
+                        Player.modifyActorVar(rk_VB_Get_Loan_Amount, -500)
+                        "You decided to reimburse <Reimburse_Amount1_loc>"
+                        "Your loan amount at this day, is: <ToatalLoan>"
+                        
+                    Elseif 2
+                    
+                        money -= 1000
+                        Player.modifyActorVar(rk_VB_Get_Loan_Amount, -1000)
+                        "You decided to reimburse <Reimburse_Amount2_loc>"
+                        "Your loan amount at this day, is: <ToatalLoan>"
+                        
+                    Elseif 3
+                    
+                        money -= 5000
+                        Player.modifyActorVar(rk_VB_Get_Loan_Amount, -5000)
+                        "You decided to reimburse <Reimburse_Amount3_loc>"
+                        "Your loan amount at this day, is: <ToatalLoan>"
+                        
+                    Elseif 4
+                    
+                        money -= 10000
+                        Player.modifyActorVar(rk_VB_Get_Loan_Amount, -10000)
+                        "You decided to reimburse <Reimburse_Amount4_loc>"
+                        "Your loan amount at this day, is: <ToatalLoan>"
+                    
+                    Elseif 5
+                    
+                        money -= 100000
+                        Player.modifyActorVar(rk_VB_Get_Loan_Amount, -100000)
+                        "You decided to reimburse <Reimburse_Amount5_loc>"
+                        "Your loan amount at this day, is: <ToatalLoan>"
+                        
+                    Endif
+
+                Endif
+                
+            Else
+            
+                TempGet_Loan_Date = (Player:Age * 365)
+                InteretOnLoanDays = TempGet_Loan_Date - Get_Loan_Date
+                If rk_VB_Get_A_Loan == 1
+                    
+                    InteretOnLoan = InteretOnLoanDays * 0.09
+                        
+                Elseif rk_VB_Get_A_Loan == 2
+                    
+                    InteretOnLoan = InteretOnLoanDays * 0.1
+                            
+                Elseif rk_VB_Get_A_Loan == 3
+                    
+                    InteretOnLoan = InteretOnLoanDays * 0.1
+                            
+                Elseif rk_VB_Get_A_Loan == 4
+                    
+                    InteretOnLoan = InteretOnLoanDays * 0.15
+                         
+                Elseif rk_VB_Get_A_Loan == 5
+                    
+                    InteretOnLoan = InteretOnLoanDays * 0.15
+                          
+                Endif
+                ToatalLoan = Get_Loan_Amount + InteretOnLoan
+                "Your loan amount is: <ToatalLoan>"
+                
+            Endif
+        
+        Endif
+    
+    SceneEnd()
