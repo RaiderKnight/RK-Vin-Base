@@ -130,17 +130,18 @@ OTHER: none
             "What should I do?"
             0::"Take a shower"
             1::"Take a bath"
-            3::"Brush my teeth"
-            5::"Groom"
-            7:: stock_haircare > 0::"Use haircare"
-            10::"Masturbate"
-            16::"Get a massage"
-            12:: stock_makeup > 0::"Put on makeup"
-            11:: stock_chineseaphrodisiac > 0.8::"Take chinese aphrodisiac"
-            14:: stock_rapedrug > 0::"Take rape drug yourself"
-            15:: stock_supplement > 0::"Take supplements"
-            17:: stock_skincare > 0::"Use skincare"
-            70::"Go for a health check-up"
+            2::"Brush my teeth"
+            3::"Groom"
+            4:: stock_haircare > 0::"Use haircare"
+            5:: stock_makeup > 0::"Put on makeup"
+            6:: stock_skincare > 0::"Use skincare"
+            7:: stock_supplement > 0::"Take supplements"
+            8::"Get a massage"
+            9:: !isWithCompanion()::"Get a sensual massage"
+            10::"Go for a health check-up"
+            11::"Masturbate"
+            12:: stock_chineseaphrodisiac > 0.8::"Take chinese aphrodisiac"
+            13:: stock_rapedrug > 0::"Take rape drug yourself"
             99::"Go back"
     
             If 0
@@ -167,7 +168,7 @@ OTHER: none
                 karma += 0.25
                 passTime(0.35, 1)
             
-            ElseIf 3
+            ElseIf 2
 
                 Player.animate(dental)
                 "I decided to brush my teeth..."
@@ -176,7 +177,7 @@ OTHER: none
                 energy -= 0.5
                 passTime(0.25, 0.5)
             
-            ElseIf 5
+            ElseIf 3
 
                 Player.animate(makeup)
                 "I decided to groom..."
@@ -185,7 +186,7 @@ OTHER: none
                 energy -= 1
                 passTime(0.25, 1)
             
-            ElseIf 7
+            ElseIf 4
             
                 Player.animate(bathe)
                 "I decided to use haircare..."
@@ -195,20 +196,7 @@ OTHER: none
                 energy -= 1
                 passTime(0.05, 0.15)
             
-            ElseIf 10
-
-                followUp(masturbate)
-                
-            ElseIf 11
-            
-                Player.animate(drinkbottle)
-                "I decided to take chinese aphrodisiac..."
-                stock_chineseaphrodisiac -=1
-                mood +=10
-                arousal +=100
-                passTime(0.05, 0.15)
-            
-            ElseIf 12
+            ElseIf 5
             
                 Player.animate(makeup)
                 "I decided to put some makeup..."
@@ -218,7 +206,52 @@ OTHER: none
                 energy -= 1
                 passTime(0.15, 0.5)
             
-            ElseIf 14
+            ElseIf 6
+            
+                Player.animate(makeup)
+                "I decided to use skincare..."
+                stock_skincare -= 0.05
+                attractiveness += 0.025
+                mood += 1
+                energy -= 1
+                passTime(0.05, 0.15)
+            
+            ElseIf 7
+            
+                Player.animate(drinkbottle)
+                "I decided to take supplements..."
+                stock_supplement -= 1
+                fitness += 0.02
+                attractiveness += 0.01
+                intelligence += 0.01
+                passTime(0.05, 0.15)
+            
+            ElseIf 8
+            
+                followUp(get_a_massage)
+            
+            ElseIf 9
+            
+                followUp(rk_VB_get_a_sensual_massage)
+            
+            ElseIf 10
+            
+                followUp(naked_with_doctor)
+
+            ElseIf 11
+
+                followUp(masturbate)
+
+            ElseIf 12
+            
+                Player.animate(drinkbottle)
+                "I decided to take chinese aphrodisiac..."
+                stock_chineseaphrodisiac -=1
+                mood +=10
+                arousal +=100
+                passTime(0.05, 0.15)
+
+            ElseIf 13
 
                 If isModEnabled(sb_BetterPregnancy)
                     "ATTENTION - I suggest to disable Better Pregnancy, this mod has been abandoned!"
@@ -230,35 +263,7 @@ OTHER: none
                     followUp(sb_VB_take_rapedrug)
                     
                 EndIf
-                
-            ElseIf 15
-            
-                Player.animate(drinkbottle)
-                "I decided to take supplements..."
-                stock_supplement -= 1
-                fitness += 0.02
-                attractiveness += 0.01
-                intelligence += 0.01
-                passTime(0.05, 0.15)
-            
-            ElseIf 16
-            
-                followUp(sensual_massage)
-            
-            ElseIf 17
-            
-                Player.animate(makeup)
-                "I decided to use skincare..."
-                stock_skincare -= 0.05
-                attractiveness += 0.025
-                mood += 1
-                energy -= 1
-                passTime(0.05, 0.15)
-            
-            ElseIf 70
-            
-                followUp(naked_with_doctor)
-                
+
             EndIf
     
         EndIf
