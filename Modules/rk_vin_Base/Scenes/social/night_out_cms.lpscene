@@ -8,6 +8,8 @@ OTHER: !isWithCompanion()
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Actor.dress()
         Actor.show(2)
         Actor(Happy):: "Hey, let's go out tonight. There's a new nightclub in town - we should check it out."
@@ -99,6 +101,9 @@ OTHER: !isWithCompanion()
                         "We had a drink together ..."
                         Player:intoxication += Random(0,20)
                         Actor:intoxication += Random(0,20)
+                        If UrgeToPeeEnable > 0
+                            Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                        EndIf
                         
                     Elseif 4
                     

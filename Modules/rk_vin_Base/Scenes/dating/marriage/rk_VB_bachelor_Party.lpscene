@@ -9,6 +9,8 @@ OTHER: !isPlayerMarried()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         FacebookFriend = rk_VB_FacebookFriend.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
     
         Engaged = true
         NPCisEngaged = rk_VB_isEngaged.getGlobal()
@@ -178,6 +180,9 @@ OTHER: !isPlayerMarried()
                                 passTime(0.1, 0.2)
                                 Player.animate()
                                 Actor.animate()
+                                If UrgeToPeeEnable > 0
+                                    Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                                EndIf
                             
                             Elseif 4
                                 Kissed = true

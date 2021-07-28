@@ -9,6 +9,8 @@ OTHER: !isWithCompanion() && Random(0, 500) < attractiveness + interpersonal
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
     
         Random
             Actor = getPerson()
@@ -68,6 +70,9 @@ OTHER: !isWithCompanion() && Random(0, 500) < attractiveness + interpersonal
                     If Actor.isInterestedIn(Player)
                         Actor:attractiontoplayer += Random(0, 1)
                     Endif
+                    If UrgeToPeeEnable > 0
+                        Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                    EndIf
                     
                 Elseif 2
                 
@@ -181,6 +186,9 @@ OTHER: !isWithCompanion() && Random(0, 500) < attractiveness + interpersonal
                                 Actor:intoxication += Random(0, 15)
                                 Actor:attractiontoplayer += Random(0, 2)
                                 Actor:rapportwithplayer += Random(0, 1)
+                                If UrgeToPeeEnable > 0
+                                    Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                                EndIf
                                 
                             Endif
                             

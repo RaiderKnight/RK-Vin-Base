@@ -9,6 +9,9 @@ OTHER: isAtHome() && intelligence > Random(0, 100)
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        
         Actor.dress()
         Actor.show(2)
         
@@ -84,6 +87,9 @@ OTHER: isAtHome() && intelligence > Random(0, 100)
                                 "We had a drink together ..."
                                 Player:intoxication += Random(0,10)
                                 Actor:intoxication += Random(0,10)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
                                 
                             Elseif 4
                             

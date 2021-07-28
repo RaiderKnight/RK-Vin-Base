@@ -8,6 +8,8 @@ OTHER: isAtDatingHome()
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Dating.dress()
         Dating.show(2)
         Dating(Happy):: "Baby, my friend <Actor.name> is coming over tonight to watch a movie. Do you want to join us?"
@@ -113,18 +115,19 @@ OTHER: isAtDatingHome()
                                 passTime(1, 2)
                                 
                             Elseif 3
-                            
-                                "We had a drink together ..."
                                 
                                 Player.animate(drinkglass)
                                 Actor.animate(drinkglass)
-                                "We had a drink alcohol together ..."
+                                "We had a drink of alcohol together ..."
                                 Player:intoxication += Random(0,10)
                                 Actor:intoxication += Random(0,10)
                                 stock_alcohol -= 2
                                 passTime(0.1, 0.2)
                                 Player.animate()
                                 Actor.animate()
+                                If UrgeToPeeEnable > 0
+                                    Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                                EndIf
                                 
                             Elseif 4
                                 Kissed = true

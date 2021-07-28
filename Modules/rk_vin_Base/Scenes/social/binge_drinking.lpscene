@@ -6,6 +6,8 @@ OTHER: intoxication < 90 && Random(0, 500) < intoxication
 
     SceneStart()
     
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Actor = generatePerson()
         Actor.dress()
         Actor.show(2)
@@ -21,6 +23,9 @@ OTHER: intoxication < 90 && Random(0, 500) < intoxication
                 "I downed mine"
                 Actor:intoxication += Random(0, 15)
                 Player:intoxication += Random(0, 15)
+                If UrgeToPeeEnable > 0
+                    Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                EndIf
                 
                 If Actor:intoxication >= 100
                     "<Actor.name> seemed out of it now. I won the duel!"

@@ -10,6 +10,8 @@ OTHER: !IsWithCompanion() && Random(0, 1) < interpersonal/500
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         FacebookFriend = rk_VB_FacebookFriend.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         
         "My phone rang! It's <Host.name>. I wonder what <Host.he_or_she> is calling me for?"
         secondScreen(Host)
@@ -131,6 +133,9 @@ OTHER: !IsWithCompanion() && Random(0, 1) < interpersonal/500
                 
                     intoxication += Random(0, 15)
                     "I poured myself a drink and enjoyed it thoroughly."
+                    If UrgeToPeeEnable > 0
+                        Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                    EndIf
                     
                 Elseif 7
                 
@@ -205,6 +210,9 @@ OTHER: !IsWithCompanion() && Random(0, 1) < interpersonal/500
                     If 0
                         intoxication += Random(0, 15)
                         SitWith:intoxication += Random(0, 15)
+                        If UrgeToPeeEnable > 0
+                            Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                        EndIf
                     Endif
                     
                     If SitWith.IsInterestedIn(Player) && Player.IsInterestedIn(SitWith) && [SitWith:attractiontoplayer > 50 || intoxication > 70]

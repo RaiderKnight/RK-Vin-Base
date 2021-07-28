@@ -8,6 +8,9 @@ OTHER: 5 < Random(1, 10) || money < 10 || energy < 10
     Hunger = Player.getActorVar(rk_VB_Hunger)
     DieHungerEnable = rk_VB_DieHungerEnable.getGlobal()
     HungerEnable = rk_VB_EnableHunger.getGlobal()
+    UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+    UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+    UrgeToPeeCons = rk_VB_UrgeToPeeCons.getGlobal()
         
     If HungerEnable > 0 
         
@@ -22,5 +25,20 @@ OTHER: 5 < Random(1, 10) || money < 10 || energy < 10
                 
         EndIf
              
+    EndIf
+    
+    If NeedToPeeEnable > 0 
+        
+        If UrgeToPee >= 90
+            
+            rk_VB_UrgeToPeeCons.setGlobal(1)
+            followUp(rk_VB_Spot_Checks_Result)
+                
+        Else
+                
+            Player.modifyActorVar(rk_VB_UrgeToPee, +0.05)
+                
+        EndIf
+
     EndIf
     

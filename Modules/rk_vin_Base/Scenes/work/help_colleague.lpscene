@@ -8,6 +8,8 @@ OTHER: Random(0, 100) < 0.02*(intelligence*ActionDuration)
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         setbackground(Work)
         Colleague.dress()
         Colleague.show(2)
@@ -52,6 +54,11 @@ OTHER: Random(0, 100) < 0.02*(intelligence*ActionDuration)
                 Colleague(Excited):: "Excellent idea. We really need to celebrate. I know a bar nearby. And for all your help today, drinks are on me!"
                 setBackground(bar)
                 "We had a few drinks at the bar and a nice conversation but it is getting quite late now ..."
+                intoxication += 30
+                Colleague:intoxication += 30
+                If UrgeToPeeEnable > 0
+                    Player.modifyActorVar(rk_VB_UrgeToPee, 20)
+                EndIf
                 Colleague:attractiontoplayer += Random(0, 2)           
                 If Random(75, 150) > Colleague:attractiontoplayer + Colleague:perversion
                     "We said goodbye and parted ways."

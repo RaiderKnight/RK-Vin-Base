@@ -9,6 +9,8 @@ OTHER: none
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         "My <Player.fraternity_or_sorority> is throwing another party tonight. The <Player.girls_or_guys> from the <Player.sorority_or_fraternity> down the road are invited. Should I join my <Player.brothers_or_sisters>?"
         0:: "Of course"
         1:: "Chicken out"
@@ -125,6 +127,9 @@ OTHER: none
                 If 0
                     intoxication += Random(0, 25)
                     "I poured myself a drink and enjoyed it thoroughly."
+                    If UrgeToPeeEnable > 0
+                        Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                    EndIf
                 Else
                     If 1
                         SitWith = Guest1
@@ -191,6 +196,9 @@ OTHER: none
                     If 0
                         intoxication += Random(0, 30)
                         SitWith:intoxication += Random(0, 30)
+                        If UrgeToPeeEnable > 0
+                            Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                        EndIf
                     Endif
                     
                     If SitWith.IsInterestedIn(Player) && Player.IsInterestedIn(SitWith) && [SitWith:attractiontoplayer > 50 || intoxication > 70]

@@ -6,6 +6,8 @@ OTHER: none
 
     SceneStart()
     
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         "Being part of a <Player.fraternity_or_sorority>, I can't remember the last time I managed to remain sober for a whole day ... It's just constant partying and binge drinking every single day of the week."
         "I can feel that my body is feeling the pressure of the massive amount of alcohol I've been consuming."
         0:: "Drink strategically"
@@ -15,9 +17,13 @@ OTHER: none
             "I can't really turn down all the offers from my <Player.brothers_or_sisters> to drink, but I've learned to how to appear to be downing a lot of booze without actually drinking much. That way, I can save my poor body without being anti-social."
             masochist += Random(0, 0.25)
         Else
-            "That's the life of a <Player.fraternity_or_sorority> <Player.boy_or_girl>! I'm sure I'm more than capable of handling my alcohol."
+            "That's the life of a <Player.fraternity_or_sorority> <Player.boy_or_girl>! I'm sure I'm more than capable of handling more alcohol."
             fitness -= Random(0, 1)
             masochist -= Random(0, 1)
+            intoxication += 30
+            If UrgeToPeeEnable > 0
+                Player.modifyActorVar(rk_VB_UrgeToPee, 30)
+            EndIf
         Endif
     
     SceneEnd() // Improved by Raddeck

@@ -8,6 +8,8 @@ OTHER: none
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
     
         IBuyICDessert = Player.getActorVar(rk_VB_IBuyICDessert)
         
@@ -45,6 +47,9 @@ OTHER: none
                 Player(Happy)::"Hmmm, yummy!"
                 passTime(0.15, 0.25)
                 
+                If UrgeToPeeEnable > 0
+                    Player.modifyActorVar(rk_VB_UrgeToPee, 0.25)
+                EndIf
             Elseif 1
                 mood += 3
                 energy += 2
@@ -69,6 +74,10 @@ OTHER: none
                 
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, 0.25)
+                EndIf
+                
+                If UrgeToPeeEnable > 0
+                    Player.modifyActorVar(rk_VB_UrgeToPee, 0.5)
                 EndIf
                 
             Elseif 3

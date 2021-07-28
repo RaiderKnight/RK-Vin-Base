@@ -8,6 +8,7 @@ OTHER: none
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         
         If !isModEnabled(nn_HomeExpander)
             
@@ -22,20 +23,48 @@ OTHER: none
         EndIf
         
         0::"-- Setting for Vin_Base --"
-        1::"Enable hunger"
-        2::"Disnable hunger"
+        1::"Hunger"
+        2::"Urge to pee"
         90::"Stuff in hand to store"
         99::"Go back!"
         
         If 1
             
-            "Hunger is now enabled!"
-            rk_VB_EnableHunger.setGlobal(1)
+            "What should I do?"
+            1::"Enable hunger"
+            2::"Disable hunger"
+            99::"Go back!"
+
+            If 1
+            
+                "Hunger is now enabled!"
+                rk_VB_EnableHunger.setGlobal(1)
+                
+            ElseIf 2
+            
+                "Hunger is now disabled!"
+                rk_VB_EnableHunger.setGlobal(0)
+                
+            EndIf
             
         ElseIf 2
             
-            "Hunger is now disabled!"
-            rk_VB_EnableHunger.setGlobal(0)
+            "What should I do?"
+            1::"Enable the urge to pee"
+            2::"Disable the urge to pee"
+            99::"Go back!"
+        
+            If 1
+            
+                "The urge to pee is now enabled!"
+                rk_VB_UrgeToPeeEnable.setGlobal(1)
+            
+            ElseIf 2
+            
+                "The urge to pee is now disabled!"
+                rk_VB_UrgeToPeeEnable.setGlobal(0)
+            
+            EndIf
         
         ElseIf 90
         

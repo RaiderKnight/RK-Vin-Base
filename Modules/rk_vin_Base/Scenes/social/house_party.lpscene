@@ -9,6 +9,8 @@ OTHER: none
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         FacebookFriend = rk_VB_FacebookFriend.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         PartyWillStart = 0
         
         If stock_alcohol < 24
@@ -218,6 +220,9 @@ OTHER: none
                     intoxication += Random(0, 15)
                     "I poured myself a drink and enjoyed it thoroughly."
                     stock_alcohol -= 0.5
+                    If UrgeToPeeEnable > 0
+                        Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                    EndIf
                     
                 Elseif 7
                 
@@ -298,6 +303,9 @@ OTHER: none
                         intoxication += Random(0, 15)
                         SitWith:intoxication += Random(0, 15)
                         stock_alcohol -= 1
+                        If UrgeToPeeEnable > 0
+                            Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                        EndIf
                         
                     Endif
                     

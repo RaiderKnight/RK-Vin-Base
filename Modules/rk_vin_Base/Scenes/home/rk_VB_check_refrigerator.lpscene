@@ -7,6 +7,8 @@ OTHER: none
 SceneStart()
 
         // Get current items inside inventory
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         stock_HealthyCookie = Player.getActorVar(stock_HealthyCookie)
         stock_LentilStew = Player.getActorVar(stock_LentilStew)
         stock_CauliAlfredo = Player.getActorVar(stock_CauliAlfredo)
@@ -97,6 +99,9 @@ SceneStart()
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, 1)
                 EndIf
+                If UrgeToPeeEnable > 0
+                    Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                EndIf
                 passTime(0.15, 0.5)
             
             ElseIf 40 || 2
@@ -109,6 +114,9 @@ SceneStart()
                 energy += 1
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, 1)
+                EndIf
+                If UrgeToPeeEnable > 0
+                    Player.modifyActorVar(rk_VB_UrgeToPee, 1)
                 EndIf
                 passTime(0.15, 0.5)
             

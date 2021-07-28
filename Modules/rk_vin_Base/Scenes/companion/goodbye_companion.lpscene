@@ -8,6 +8,8 @@ OTHER: none
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Home = CurrentCompanion.getBuilding(home)
         CurrentCompanion.setCurrentLocation(Home)
         Until = HoursElapsed + Random(1, 3)
@@ -240,6 +242,9 @@ OTHER: none
                             passTime(0.1, 0.2)
                             Player.animate()
                             Actor.animate()
+                            If UrgeToPeeEnable > 0
+                                Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                            EndIf
                             
                         Elseif 4
                         

@@ -8,6 +8,8 @@ OTHER: !IsWithCompanion() && Random(0, 500) < interpersonal*actionDuration
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         setBackground(work)
         Colleague1.dress()
         Colleague1.Show(2)
@@ -89,6 +91,9 @@ OTHER: !IsWithCompanion() && Random(0, 500) < interpersonal*actionDuration
                     intoxication += Random(0, 15)
                     money -= Random(3, 10)
                     "I got myself a drink from the bar and enjoyed it thoroughly."
+                    If UrgeToPeeEnable > 0
+                        Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                    EndIf
                 Elseif 6
                     Player(Happy):: "Sorry guys, I think it's about time that I go now. Don't want to have a hangover tomorrow morning!"
                     Colleague1(Happy):: "Alright, have a safe journey home. Thanks for coming out with us!"
@@ -159,6 +164,9 @@ OTHER: !IsWithCompanion() && Random(0, 500) < interpersonal*actionDuration
                     If 0
                         intoxication += Random(0, 15)
                         SitWith:intoxication += Random(0, 15)
+                        If UrgeToPeeEnable > 0
+                            Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                        EndIf
                     Endif
                     
                     If SitWith.IsInterestedIn(Player) && Player.IsInterestedIn(SitWith) && [SitWith:attractiontoplayer > 70 || intoxication > 90]

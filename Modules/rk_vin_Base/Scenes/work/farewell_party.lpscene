@@ -8,6 +8,8 @@ OTHER: Random(0, 100) < 5
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         setBackground(work)
         
         Quit = true
@@ -75,6 +77,10 @@ OTHER: Random(0, 100) < 5
                             Else
                                 Colleague(Sad):: "I'm sorry but I only see you as a colleague and a friend."
                                 "I was heartbroken but what could I do? I spent the rest of night drinking down my sorrows."
+                                intoxication += 30
+                                If UrgeToPeeEnable > 0
+                                    Player.modifyActorVar(rk_VB_UrgeToPee, 30)
+                                EndIf
                             Endif
                         Else
                             "I'd better not play out some drama in front of all my colleagues."

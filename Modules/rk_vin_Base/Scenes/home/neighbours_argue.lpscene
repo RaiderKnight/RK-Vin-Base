@@ -8,6 +8,8 @@ OTHER: isAtHome()
     
     Hunger = Player.getActorVar(rk_VB_Hunger)
     HungerEnable = rk_VB_EnableHunger.getGlobal()
+    UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+    UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
     
     If !Dating.isValid()
         Dating = generatePersonTemporary()
@@ -92,6 +94,9 @@ OTHER: isAtHome()
                     stock_alcohol -= 2
                     Player:intoxication += Random(0,10)
                     Actor:intoxication += Random(0,10)
+                    If UrgeToPeeEnable > 0
+                        Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                    EndIf
                     
                 Elseif 4
                     Kissed = true

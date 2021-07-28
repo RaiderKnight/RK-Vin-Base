@@ -8,6 +8,8 @@ OTHER: none
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         "All this work is driving me crazy. Let's take a little coffee break ..."
         Player.animate(drinktea)
         Actor.dress()
@@ -16,6 +18,9 @@ OTHER: none
         "Looks like my colleague <Actor.name> has the same idea and and is going for a coffee as well."
         Actor.animate(drinktea)
         "Since we're both there, we started chatting while having our coffee."
+        If UrgeToPeeEnable > 0
+            Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+        EndIf
         If Random(10, 50) < Actor:attractiontoplayer && Random(40, 70) < Actor:perversion
             Actor:: "Oh my god! I'm so sorry!"
             "Oh no, my clumsy colleague spilled coffee on me. It wasn't too hot to burn me fortunately, but it's a mess nevertheless"

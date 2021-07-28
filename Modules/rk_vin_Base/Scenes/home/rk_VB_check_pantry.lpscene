@@ -9,6 +9,8 @@ SceneStart()
         // Get current items inside pantry inventory
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         stock_PlainPopcorn = Player.getActorVar(stock_PlainPopcorn)
         stock_ButterPopcorn = Player.getActorVar(stock_ButterPopcorn)
         stock_PopcornMix = Player.getActorVar(stock_PopcornMix)
@@ -162,6 +164,9 @@ SceneStart()
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, 0.5)
                         EndIf
+                        If UrgeToPeeEnable > 0
+                            Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                        EndIf
                         passTime(0.15, 0.5)
                 
                     ElseIf 11
@@ -174,6 +179,9 @@ SceneStart()
                         intoxication += 15
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, 0.5)
+                        EndIf
+                        If UrgeToPeeEnable > 0
+                            Player.modifyActorVar(rk_VB_UrgeToPee, 1)
                         EndIf
                         passTime(0.15, 0.5)
                         
@@ -189,6 +197,9 @@ SceneStart()
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, 5)
                     EndIf
+                    If UrgeToPeeEnable > 0
+                        Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                    EndIf
                     passTime(0.15, 0.5)
                     
                 ElseIf 83
@@ -202,6 +213,9 @@ SceneStart()
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, 0.5)
                     EndIf
+                    If UrgeToPeeEnable > 0
+                        Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                    EndIf
                     passTime(0.15, 0.5)
                     
                 ElseIf 84
@@ -213,6 +227,9 @@ SceneStart()
                     energy += 3
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, 3)
+                    EndIf
+                    If UrgeToPeeEnable > 0
+                        Player.modifyActorVar(rk_VB_UrgeToPee, 1)
                     EndIf
                     passTime(0.15, 0.5)
                 

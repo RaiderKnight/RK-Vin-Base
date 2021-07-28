@@ -8,6 +8,8 @@ OTHER: none
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         
         If Actor.isDating() || Actor.isRelative() || [Random(30, 100) < interpersonal && [Actor:rapportwithplayer > 30 || Actor:attractiontoplayer > 30]] 
             Actor(Happy):: "Of course, let's go back to your place and chill."
@@ -90,6 +92,9 @@ OTHER: none
                         passTime(0.1, 0.2)
                         Player.animate()
                         Actor.animate()
+                        If UrgeToPeeEnable > 0
+                            Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                        EndIf
                         
                     Elseif 4
                         Kissed = true

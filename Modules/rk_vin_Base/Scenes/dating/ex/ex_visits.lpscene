@@ -8,6 +8,8 @@ OTHER: isAtHome()
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         "I heard a knock on my door. I wonder who it might be."
         Actor.dress()
         Actor.show(2)
@@ -100,6 +102,9 @@ OTHER: isAtHome()
                         passTime(0.1, 0.2)
                         Player.animate()
                         Actor.animate()
+                        If UrgeToPeeEnable > 0
+                            Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                        EndIf
                         
                     Elseif 4
                         Kissed = true

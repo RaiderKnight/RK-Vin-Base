@@ -8,6 +8,8 @@ OTHER: none
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         
         "The best thing about being a business owner is that some of the more attractive employees tend to be a lot more flirtatous to me than the case if I wasn't their boss."
         "One employee in particular, <Actor.name>, has been flirting intensely with me recently. <Actor.He_or_She> almost a have a brown nose, if you know what I mean..."
@@ -106,6 +108,9 @@ OTHER: none
                                 passTime(0.1, 0.2)
                                 Player.animate()
                                 Actor.animate()
+                                If UrgeToPeeEnable > 0
+                                    Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                                EndIf
                                 
                             Elseif 4
                             
