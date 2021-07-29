@@ -1,0 +1,1563 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER: none
+
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        FacebookFriend = rk_VB_FacebookFriend.getGlobal()
+
+        // Get number of sessions
+        Architecture_Major_Ses = rk_VB_Architecture_Major_Ses.getGlobal()
+        Chemical_Engineering_Major_Ses = rk_VB_Chemical_Engineering_Major_Ses.getGlobal()
+        Classics_Major_Ses = rk_VB_Classics_Major_Ses.getGlobal()
+        Computer_Science_Major_Ses = rk_VB_Computer_Science_Major_Ses.getGlobal()
+        Economics_Major_Ses = rk_VB_Economics_Major_Ses.getGlobal()
+        Education_Major_Ses = rk_VB_Education_Major_Ses.getGlobal()
+        English_Major_Ses = rk_VB_English_Major_Ses.getGlobal()
+        Geography_Major_Ses = rk_VB_Geography_Major_Ses.getGlobal()
+        History_Major_Ses = rk_VB_History_Major_Ses.getGlobal()
+        Law_Major_Ses = rk_VB_Law_Major_Ses.getGlobal()
+        Mathematics_Major_Ses = rk_VB_Mathematics_Major_Ses.getGlobal()
+        Medicine_Major_Ses = rk_VB_Medicine_Major_Ses.getGlobal()
+        Music_Major_Ses = rk_VB_Music_Major_Ses.getGlobal()
+        Philosophy_Major_Ses = rk_VB_Philosophy_Major_Ses.getGlobal()
+        Psychology_Major_Ses = rk_VB_Psychology_Major_Ses.getGlobal()
+        Political_Sciences_Major_Ses = rk_VB_Political_Sciences_Major_Ses.getGlobal()
+        
+        // Get if sessions is ended or not 1 = yes
+        Architecture_Major_Ses_Done = rk_VB_Architecture_Major_Ses_Done.getGlobal()
+        Chemical_Engineering_Major_Ses_Done = rk_VB_Chemical_Engineering_Major_Ses_Done.getGlobal()
+        Classics_Major_Ses_Done = rk_VB_Classics_Major_Ses_Done.getGlobal()
+        Computer_Science_Major_Ses_Done = rk_VB_Computer_Science_Major_Ses_Done.getGlobal()
+        Economics_Major_Ses_Done = rk_VB_Economics_Major_Ses_Done.getGlobal()
+        Education_Major_Ses_Done = rk_VB_Education_Major_Ses_Done.getGlobal()
+        English_Major_Ses_Done = rk_VB_English_Major_Ses_Done.getGlobal()
+        Geography_Major_Ses_Done = rk_VB_Geography_Major_Ses_Done.getGlobal()
+        History_Major_Ses_Done = rk_VB_History_Major_Ses_Done.getGlobal()
+        Law_Major_Ses_Done = rk_VB_Law_Major_Ses_Done.getGlobal()
+        Mathematics_Major_Ses_Done = rk_VB_Mathematics_Major_Ses_Done.getGlobal()
+        Medicine_Major_Ses_Done = rk_VB_Medicine_Major_Ses_Done.getGlobal()
+        Music_Major_Ses_Done = rk_VB_Music_Major_Ses_Done.getGlobal()
+        Philosophy_Major_Ses_Done = rk_VB_Philosophy_Major_Ses_Done.getGlobal()
+        Psychology_Major_Ses_Done = rk_VB_Psychology_Major_Ses_Done.getGlobal()
+        Political_Sciences_Major_Ses_Done = rk_VB_Political_Sciences_Major_Ses_Done.getGlobal()
+        
+        // Get number of credits/units to pass to the next degree
+        Architecture_Major_Units = Player.getActorVar(rk_VB_Architecture_Major_Units)
+        Chemical_Engineering_Major_Units = Player.getActorVar(rk_VB_Chemical_Engineering_Major_Units)
+        Classics_Major_Units = Player.getActorVar(rk_VB_Classics_Major_Units)
+        Computer_Science_Major_Units = Player.getActorVar(rk_VB_Computer_Science_Major_Units)
+        Economics_Major_Units = Player.getActorVar(rk_VB_Economics_Major_Units)
+        Education_Major_Units = Player.getActorVar(rk_VB_Education_Major_Units)
+        English_Major_Units = Player.getActorVar(rk_VB_English_Major_Units)
+        Geography_Major_Units = Player.getActorVar(rk_VB_Geography_Major_Units)
+        History_Major_Units = Player.getActorVar(rk_VB_History_Major_Units)
+        Law_Major_Units = Player.getActorVar(rk_VB_Law_Major_Units)
+        Mathematics_Major_Units = Player.getActorVar(rk_VB_Mathematics_Major_Units)
+        Medicine_Major_Units = Player.getActorVar(rk_VB_Medicine_Major_Units)
+        Music_Major_Units = Player.getActorVar(rk_VB_Music_Major_Units)
+        Philosophy_Major_Units = Player.getActorVar(rk_VB_Philosophy_Major_Units)
+        Psychology_Major_Units = Player.getActorVar(rk_VB_Psychology_Major_Units)
+        Political_Sciences_Major_Units = Player.getActorVar(rk_VB_Political_Sciences_Major_Units)
+        
+        // level for each session, reset at the end of the session
+        Architecture_Major_Level = Player.getActorVar(rk_VB_Architecture_Major_Level)
+        Chemical_Engineering_Major_Level = Player.getActorVar(rk_VB_Chemical_Engineering_Major_Level)
+        Classics_Major_Level = Player.getActorVar(rk_VB_Classics_Major_Level)
+        Computer_Science_Major_Level = Player.getActorVar(rk_VB_Computer_Science_Major_Level)
+        Economics_Major_Level = Player.getActorVar(rk_VB_Economics_Major_Level)
+        Education_Major_Level = Player.getActorVar(rk_VB_Education_Major_Level)
+        English_Major_Level = Player.getActorVar(rk_VB_English_Major_Level)
+        Geography_Major_Level = Player.getActorVar(rk_VB_Geography_Major_Level)
+        History_Major_Level = Player.getActorVar(rk_VB_History_Major_Level)
+        Law_Major_Level = Player.getActorVar(rk_VB_Law_Major_Level)
+        Mathematics_Major_Level = Player.getActorVar(rk_VB_Mathematics_Major_Level)
+        Medicine_Major_Level = Player.getActorVar(rk_VB_Medicine_Major_Level)
+        Music_Major_Level = Player.getActorVar(rk_VB_Music_Major_Level)
+        Philosophy_Major_Level = Player.getActorVar(rk_VB_Philosophy_Major_Level)
+        Psychology_Major_Level = Player.getActorVar(rk_VB_Psychology_Major_Level)
+        Political_Sciences_Major_Level = Player.getActorVar(rk_VB_Political_Sciences_Major_Level)
+        
+        // Get Actor major
+        Architecture_Major_Actor = Actor.getActorVar(rk_VB_Architecture_Major_Actor)
+        Chemical_Engineering_Major_Actor = Actor.getActorVar(rk_VB_Chemical_Engineering_Major_Actor)
+        Classics_Major_Actor = Actor.getActorVar(rk_VB_Classics_Major_Actor)
+        Computer_Science_Major_Actor = Actor.getActorVar(rk_VB_Computer_Science_Major_Actor)
+        Economics_Major_Actor = Actor.getActorVar(rk_VB_Economics_Major_Actor)
+        Education_Major_Actor = Actor.getActorVar(rk_VB_Education_Major_Actor)
+        English_Major_Actor = Actor.getActorVar(rk_VB_English_Major_Actor)
+        Geography_Major_Actor = Actor.getActorVar(rk_VB_Geography_Major_Actor)
+        History_Major_Actor = Actor.getActorVar(rk_VB_History_Major_Actor)
+        Law_Major_Actor = Actor.getActorVar(rk_VB_Law_Major_Actor)
+        Mathematics_Major_Actor = Actor.getActorVar(rk_VB_Mathematics_Major_Actor)
+        Medicine_Major_Actor = Actor.getActorVar(rk_VB_Medicine_Major_Actor)
+        Music_Major_Actor = Actor.getActorVar(rk_VB_Music_Major_Actor)
+        Philosophy_Major_Actor = Actor.getActorVar(rk_VB_Philosophy_Major_Actor)
+        Psychology_Major_Actor = Actor.getActorVar(rk_VB_Psychology_Major_Actor)
+        Political_Sciences_Major_Actor = Actor.getActorVar(rk_VB_Political_Sciences_Major_Actor)
+        
+        // Get Teacher major
+        Major_Teach = rk_VB_Major_Teacher.getGlobal()
+        
+        setBackground(university)
+        
+        rk_VB_tag_TAR = Actor.getActorVar(rk_VB_tag_TAR)
+        rk_VB_tag_TCE = Actor.getActorVar(rk_VB_tag_TCE)
+        rk_VB_tag_TCL = Actor.getActorVar(rk_VB_tag_TCL)
+        rk_VB_tag_TCS = Actor.getActorVar(rk_VB_tag_TCS)
+        rk_VB_tag_TEC = Actor.getActorVar(rk_VB_tag_TEC)
+        rk_VB_tag_TED = Actor.getActorVar(rk_VB_tag_TED)
+        rk_VB_tag_TEN = Actor.getActorVar(rk_VB_tag_TEN)
+        rk_VB_tag_TGE = Actor.getActorVar(rk_VB_tag_TGE)
+        rk_VB_tag_THI = Actor.getActorVar(rk_VB_tag_THI)
+        rk_VB_tag_TLA = Actor.getActorVar(rk_VB_tag_TLA)
+        rk_VB_tag_TMA = Actor.getActorVar(rk_VB_tag_TMA)
+        rk_VB_tag_TME = Actor.getActorVar(rk_VB_tag_TME)
+        rk_VB_tag_TMU = Actor.getActorVar(rk_VB_tag_TMU)
+        rk_VB_tag_TPH = Actor.getActorVar(rk_VB_tag_TPH)
+        rk_VB_tag_TPS = Actor.getActorVar(rk_VB_tag_TPS)
+        rk_VB_tag_TPOL = Actor.getActorVar(rk_VB_tag_TPOL)
+        
+        // Session is it started 1 = yes
+        Session_TAR = Player.getActorVar(rk_VB_Session_TAR)
+        Session_TCE = Player.getActorVar(rk_VB_Session_TCE)
+        Session_TCL = Player.getActorVar(rk_VB_Session_TCL)
+        Session_TCS = Player.getActorVar(rk_VB_Session_TCS)
+        Session_TEC = Player.getActorVar(rk_VB_Session_TEC)
+        Session_TED = Player.getActorVar(rk_VB_Session_TED)
+        Session_TEN = Player.getActorVar(rk_VB_Session_TEN)
+        Session_TGE = Player.getActorVar(rk_VB_Session_TGE)
+        Session_THI = Player.getActorVar(rk_VB_Session_THI)
+        Session_TLA = Player.getActorVar(rk_VB_Session_TLA)
+        Session_TMA = Player.getActorVar(rk_VB_Session_TMA)
+        Session_TME = Player.getActorVar(rk_VB_Session_TME)
+        Session_TMU = Player.getActorVar(rk_VB_Session_TMU)
+        Session_TPH = Player.getActorVar(rk_VB_Session_TPH)
+        Session_TPS = Player.getActorVar(rk_VB_Session_TPS)
+        Session_TPOL = Player.getActorVar(rk_VB_Session_TPOL)
+        
+        "If you do not pass your exams you will have to restart your session, make sure you have studied enough before taking an exam!"
+
+        "Now, which exams I should try to pass?"
+        0:: Architecture_Major_Level > 40 && rk_VB_Session_TAR > 0 ::"Architecture exams"
+        1:: Chemical_Engineering_Major_Level > 50 && rk_VB_Session_TCE > 0 ::"Chemical Engineering exams"
+        2:: Classics_Major_Level > 30 && rk_VB_Session_TCL > 0 ::"Classics exams"
+        3:: Computer_Science_Major_Level > 40 && rk_VB_Session_TCS > 0 ::"Computer Science exams"
+        4:: Economics_Major_Level > 30 && rk_VB_Session_TEC > 0 ::"Economics exams"
+        5:: Education_Major_Level > 30 && rk_VB_Session_TED > 0 ::"Education exams"
+        6:: English_Major_Level > 10 && rk_VB_Session_TEN > 0 ::"English exams"
+        7:: Geography_Major_Level > 10 && rk_VB_Session_TGE > 0 ::"Geography exams"
+        8:: History_Major_Level > 10 && rk_VB_Session_THI > 0 ::"History exams"
+        9:: Law_Major_Level > 30 && rk_VB_Session_TLA > 0 ::"Law exams"
+        10:: Mathematics_Major_Level > 30 && rk_VB_Session_TMA > 0 ::"Mathematics exams"
+        11:: Medicine_Major_Level > 50 && rk_VB_Session_TME > 0 ::"Medicine exams"
+        12:: Music_Major_Level > 30 && rk_VB_Session_TMU > 0 ::"Music exams"
+        13:: Philosophy_Major_Level > 10 && rk_VB_Session_TPH > 0 ::"Philosophy exams"
+        14:: Psychology_Major_Level > 50 && rk_VB_Session_TPS > 0 ::"Psychology exams"
+        15:: Political_Sciences_Major_Level > 30 && rk_VB_Session_TPOL > 0 ::"Political Sciences exams"
+        99::"I'm not ready yet!"
+        
+        If 0
+        
+            TARExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+
+                "You passed the exams without any problems!"
+                TARExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TARExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TARExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TARExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TARExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                mood -= 10
+
+            Endif
+            
+            Player.setActorVar(rk_VB_Session_TAR, 0) // reset session
+            Player.setActorVar(rk_VB_Architecture_Major_Level, 0) // reset credits
+            If TARExamPassed
+            
+                Player.modifyActorVar(rk_VB_Architecture_Major_Units, 40)
+                "40 credits have been added to your report card!"
+                
+                If Architecture_Major_Ses == 0
+                    rk_VB_Architecture_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your first session! We are expecting you for the next session ..." 
+                Elseif Architecture_Major_Ses == 1
+                    rk_VB_Architecture_Major_Ses.setGlobal(2)
+                    "Congratulations, you have completed your second session! We are expecting you for the next session ..."  
+                Elseif Architecture_Major_Ses == 2
+                    rk_VB_Architecture_Major_Ses.setGlobal(3)
+                    "Congratulations, you have completed your third session! We are expecting you for the next session ..."  
+                Elseif Architecture_Major_Ses == 3
+                    rk_VB_Architecture_Major_Ses.setGlobal(4)
+                    "Congratulations, you have completed your course!" 
+                    rk_VB_Architecture_Major_Ses_Done.setGlobal(1)
+                    
+                Endif
+            
+            Endif
+        
+        Elseif 1 
+        
+            TCEExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                TCEExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TCEExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TCEExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TCEExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TCEExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                mood -= 10
+
+            Endif
+            Player.setActorVar(rk_VB_Session_TCE, 0)
+            Player.setActorVar(rk_VB_Chemical_Engineering_Major_Level, 0)
+            
+            If TCEExamPassed
+            
+                Player.modifyActorVar(rk_VB_Chemical_Engineering_Major_Units, 50)
+                
+                If Chemical_Engineering_Major_Ses == 0
+                    rk_VB_Chemical_Engineering_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your first session! We are expecting you for the next session ..." 
+                Elseif Chemical_Engineering_Major_Ses == 1
+                    rk_VB_Chemical_Engineering_Major_Ses.setGlobal(2)
+                    "Congratulations, you have completed your second session! We are expecting you for the next session ..."  
+                Elseif Chemical_Engineering_Major_Ses == 2
+                    rk_VB_Chemical_Engineering_Major_Ses.setGlobal(3)
+                    "Congratulations, you have completed your third session! We are expecting you for the next session ..."   
+                Elseif Chemical_Engineering_Major_Ses == 3
+                    rk_VB_Chemical_Engineering_Major_Ses.setGlobal(4)
+                    "Congratulations, you have completed your fourth session! We are expecting you for the next session ..."  
+                Elseif Chemical_Engineering_Major_Ses == 4
+                    rk_VB_Chemical_Engineering_Major_Ses.setGlobal(5)
+                    "Congratulations, you have completed your course!" 
+                    rk_VB_Chemical_Engineering_Major_Ses_Done.setGlobal(1)
+                Endif
+                
+            Endif
+            
+        Elseif 2
+        
+            TCLExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                TCLExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TCLExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TCLExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TCLExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TCLExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                mood -= 10
+
+            Endif
+            
+            Player.setActorVar(rk_VB_Session_TCL, 0)
+            Player.setActorVar(rk_VB_Classics_Major_Level, 0)
+            
+            If TCLExamPassed
+            
+                Player.modifyActorVar(rk_VB_Classics_Major_Units, 30)
+                
+                If Classics_Major_Ses == 0
+                    rk_VB_Classics_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your first session! We are expecting you for the next session ..." 
+                Elseif Classics_Major_Ses == 1
+                    rk_VB_Classics_Major_Ses.setGlobal(2)
+                    "Congratulations, you have completed your second session! We are expecting you for the next session ..."  
+                Elseif Classics_Major_Ses == 2
+                    rk_VB_Classics_Major_Ses.setGlobal(3)
+                    "Congratulations, you have completed your course!"
+                    rk_VB_Classics_Major_Ses_Done.setGlobal(1)        
+                Endif
+                
+            Endif
+            
+        Elseif 3
+        
+            TCSExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                TCSExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TCSExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TCSExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TCSExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TCSExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                    mood -= 10
+
+            Endif
+            
+            Player.setActorVar(rk_VB_Session_TCS, 0)
+            Player.setActorVar(rk_VB_Computer_Science_Major_Level, 0)
+            
+            If TCSExamPassed
+            
+                Player.modifyActorVar(rk_VB_Computer_Science_Major_Units, 40)
+                
+                If Computer_Science_Major_Ses == 0
+                    rk_VB_Computer_Science_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your first session! We are expecting you for the next session ..." 
+                Elseif Computer_Science_Major_Ses == 1
+                    rk_VB_Computer_Science_Major_Ses.setGlobal(2)
+                    "Congratulations, you have completed your second session! We are expecting you for the next session ..."  
+                Elseif Computer_Science_Major_Ses == 2
+                    rk_VB_Computer_Science_Major_Ses.setGlobal(3)
+                    "Congratulations, you have completed your third session! We are expecting you for the next session ..."
+                Elseif Computer_Science_Major_Ses == 3
+                    rk_VB_Computer_Science_Major_Ses.setGlobal(4)
+                    "Congratulations, you have completed your course!"
+                    rk_VB_Computer_Science_Major_Ses_Done.setGlobal(1)        
+                Endif
+                
+            Endif
+            
+        Elseif 4
+        
+            TECExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                TECExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TECExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TECExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TECExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TECExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                mood -= 10
+
+            Endif
+
+            Player.setActorVar(rk_VB_Session_TEC, 0)
+            Player.setActorVar(rk_VB_Economics_Major_Level, 0)
+            
+            If TECExamPassed
+            
+                Player.modifyActorVar(rk_VB_Economics_Major_Units, 30)
+                
+                If Economics_Major_Ses == 0
+                    rk_VB_Economics_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your first session! We are expecting you for the next session ..." 
+                Elseif Economics_Major_Ses == 1
+                    rk_VB_Economics_Major_Ses.setGlobal(2)
+                    "Congratulations, you have completed your second session! We are expecting you for the next session ..."  
+                Elseif Economics_Major_Ses == 2
+                    rk_VB_Economics_Major_Ses.setGlobal(3)
+                    "Congratulations, you have completed your course!"
+                    rk_VB_Economics_Major_Ses_Done.setGlobal(1)        
+                Endif
+                
+            Endif
+            
+        Elseif 5
+        
+            TEDExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                TEDExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TEDExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TEDExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TEDExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TEDExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                mood -= 10
+
+            Endif
+            
+            Player.setActorVar(rk_VB_Session_TED, 0)
+            Player.setActorVar(rk_VB_Education_Major_Level, 0)
+            
+            If TEDExamPassed
+            
+                Player.modifyActorVar(rk_VB_Education_Major_Units, 30)
+                
+                If Education_Major_Ses == 0
+                    rk_VB_Education_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your first session! We are expecting you for the next session ..." 
+                Elseif Education_Major_Ses == 1
+                    rk_VB_Education_Major_Ses.setGlobal(2)
+                    "Congratulations, you have completed your second session! We are expecting you for the next session ..."  
+                Elseif Education_Major_Ses == 2
+                    rk_VB_Education_Major_Ses.setGlobal(3)
+                    "Congratulations, you have completed your course!"
+                    rk_VB_Education_Major_Ses_Done.setGlobal(1)        
+                Endif
+                
+            Endif
+            
+        Elseif 6
+        
+            TENExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                TENExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TENExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TENExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TENExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TENExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                mood -= 10
+
+            Endif
+            
+            Player.setActorVar(rk_VB_Session_TEN, 0)
+            Player.setActorVar(rk_VB_English_Major_Level, 0)
+            
+            If TENExamPassed
+            
+                Player.modifyActorVar(rk_VB_English_Major_Units, 10)
+                
+                If English_Major_Ses == 0
+                    rk_VB_English_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your course!"
+                    rk_VB_English_Major_Ses_Done.setGlobal(1)        
+                Endif
+                
+            Endif
+            
+        Elseif 7
+        
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                TGEExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TGEExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TGEExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TGEExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TGEExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                mood -= 10
+
+            Endif
+            
+            Player.setActorVar(rk_VB_Session_TGE, 0)
+            Player.setActorVar(rk_VB_Geography_Major_Level, 0)
+            
+            If TGEExamPassed
+            
+                Player.modifyActorVar(rk_VB_Geography_Major_Units, 10)
+                
+                If Geography_Major_Ses == 0
+                    rk_VB_Geography_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your course!"
+                    rk_VB_Geography_Major_Ses_Done.setGlobal(1)        
+                Endif
+                
+            Endif
+            
+        Elseif 8
+        
+            THIExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                THIExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    THIExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    Player.setActorVar(rk_VB_Session_THI, 0)
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    THIExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    Player.setActorVar(rk_VB_Session_THI, 0)
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    THIExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    Player.setActorVar(rk_VB_Session_THI, 0)
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    THIExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    Player.setActorVar(rk_VB_Session_THI, 0)
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                Player.setActorVar(rk_VB_Session_THI, 0)
+                mood -= 10
+
+            Endif
+            
+            Player.setActorVar(rk_VB_Session_THI, 0)
+            Player.setActorVar(rk_VB_History_Major_Level, 0)
+            
+            If TGEExamPassed
+            
+                Player.modifyActorVar(rk_VB_History_Major_Units, 10)
+                
+                If History_Major_Ses == 0
+                    rk_VB_History_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your course!"
+                    rk_VB_History_Major_Ses_Done.setGlobal(1)        
+                Endif
+                
+            Endif
+            
+        Elseif 9
+        
+            TLAExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                TLAExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TLAExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TLAExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TLAExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TLAExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                mood -= 10
+
+            Endif
+            
+            Player.setActorVar(rk_VB_Session_TLA, 0)
+            Player.setActorVar(rk_VB_Law_Major_Level, 0)
+            
+            If TLAExamPassed
+            
+                Player.modifyActorVar(rk_VB_Law_Major_Units, 30)
+                
+                If Law_Major_Ses == 0
+                    rk_VB_Law_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your first session! We are expecting you for the next session ..." 
+                Elseif Law_Major_Ses == 1
+                    rk_VB_Law_Major_Ses.setGlobal(2)
+                    "Congratulations, you have completed your second session! We are expecting you for the next session ..."  
+                Elseif Law_Major_Ses == 2
+                    rk_VB_Law_Major_Ses.setGlobal(3)
+                    "Congratulations, you have completed your course!"
+                    rk_VB_Law_Major_Ses_Done.setGlobal(1)        
+                Endif
+                
+            Endif
+            
+        Elseif 10
+        
+            TMAExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                TMAExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TMAExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TMAExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TMAExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TMAExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                mood -= 10
+
+            Endif
+            
+            Player.setActorVar(rk_VB_Session_TMA, 0)
+            Player.setActorVar(rk_VB_Mathematics_Major_Level, 0)
+            
+            If TMAExamPassed
+            
+                Player.modifyActorVar(rk_VB_Mathematics_Major_Units, 30)
+                
+                If Mathematics_Major_Ses == 0
+                    rk_VB_Mathematics_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your first session! We are expecting you for the next session ..." 
+                Elseif Mathematics_Major_Ses == 1
+                    rk_VB_Mathematics_Major_Ses.setGlobal(2)
+                    "Congratulations, you have completed your second session! We are expecting you for the next session ..."  
+                Elseif Mathematics_Major_Ses == 2
+                    rk_VB_Mathematics_Major_Ses.setGlobal(3)
+                    "Congratulations, you have completed your course!"
+                    rk_VB_Mathematics_Major_Ses_Done.setGlobal(1)        
+                Endif
+                
+            Endif
+
+        Elseif 11
+        
+            TMEExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                TMEExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TMEExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TMEExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TMEExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TMEExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                mood -= 10
+
+            Endif
+            
+            Player.setActorVar(rk_VB_Session_TME, 0)
+            Player.setActorVar(rk_VB_Medicine_Major_Level, 0)
+            
+            If TMEExamPassed
+            
+                Player.modifyActorVar(rk_VB_Medicine_Major_Units, 50)
+                
+                If Medicine_Major_Ses == 0
+                    rk_VB_Medicine_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your first session! We are expecting you for the next session ..." 
+                Elseif Medicine_Major_Ses == 1
+                    rk_VB_Medicine_Major_Ses.setGlobal(2)
+                    "Congratulations, you have completed your second session! We are expecting you for the next session ..."  
+                Elseif Medicine_Major_Ses == 2
+                    rk_VB_Medicine_Major_Ses.setGlobal(3)
+                    "Congratulations, you have completed your third session! We are expecting you for the next session ..."   
+                Elseif Medicine_Major_Ses == 3
+                    rk_VB_Medicine_Major_Ses.setGlobal(4)
+                    "Congratulations, you have completed your fourth session! We are expecting you for the next session ..."  
+                Elseif Medicine_Major_Ses == 4
+                    rk_VB_Medicine_Major_Ses.setGlobal(5)
+                    "Congratulations, you have completed your course!" 
+                    rk_VB_Medicine_Major_Ses_Done.setGlobal(1)
+                Endif
+                
+            Endif
+            
+        Elseif 12
+        
+            TMUExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                TMUExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TMUExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TMUExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TMUExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TMUExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                mood -= 10
+
+            Endif
+            
+            Player.setActorVar(rk_VB_Session_TMU, 0)
+            Player.setActorVar(rk_VB_Music_Major_Level, 0)
+            
+            If TMUExamPassed
+            
+                Player.modifyActorVar(rk_VB_Music_Major_Units, 30)
+                
+                If Music_Major_Ses == 0
+                    rk_VB_Music_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your first session! We are expecting you for the next session ..." 
+                Elseif Music_Major_Ses == 1
+                    rk_VB_Music_Major_Ses.setGlobal(2)
+                    "Congratulations, you have completed your second session! We are expecting you for the next session ..."  
+                Elseif Music_Major_Ses == 2
+                    rk_VB_Music_Major_Ses.setGlobal(3)
+                    "Congratulations, you have completed your course!"
+                    rk_VB_Music_Major_Ses_Done.setGlobal(1)        
+                Endif
+                
+            Endif
+            
+        Elseif 13
+        
+            TPHExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                TPHExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TPHExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TPHExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TPHExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TPHExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                    mood -= 10
+
+            Endif
+            
+            Player.setActorVar(rk_VB_Session_TPH, 0)
+            Player.setActorVar(rk_VB_Philosophy_Major_Level, 0)
+            
+            If TPHExamPassed
+            
+                Player.modifyActorVar(rk_VB_Philosophy_Major_Units, 10)
+                
+                If Philosophy_Major_Ses == 0
+                    rk_VB_Philosophy_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your course!"
+                    rk_VB_Philosophy_Major_Ses_Done.setGlobal(1)        
+                Endif
+                
+            Endif
+            
+        Elseif 14
+        
+            TPSExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                TPSExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TPSExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TPSExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TPSExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TPSExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                    mood -= 10
+
+            Endif
+            
+            Player.setActorVar(rk_VB_Session_TPS, 0)
+            Player.setActorVar(rk_VB_Psychology_Major_Level, 0)
+            
+            If TPSExamPassed
+            
+                Player.modifyActorVar(rk_VB_Psychology_Major_Units, 50)
+                
+                If Psychology_Major_Ses == 0
+                    rk_VB_Psychology_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your first session! We are expecting you for the next session ..." 
+                Elseif Psychology_Major_Ses == 1
+                    rk_VB_Psychology_Major_Ses.setGlobal(2)
+                    "Congratulations, you have completed your second session! We are expecting you for the next session ..."  
+                Elseif Psychology_Major_Ses == 2
+                    rk_VB_Psychology_Major_Ses.setGlobal(3)
+                    "Congratulations, you have completed your third session! We are expecting you for the next session ..."   
+                Elseif Psychology_Major_Ses == 3
+                    rk_VB_Psychology_Major_Ses.setGlobal(4)
+                    "Congratulations, you have completed your fourth session! We are expecting you for the next session ..."  
+                Elseif Psychology_Major_Ses == 4
+                    rk_VB_Psychology_Major_Ses.setGlobal(5)
+                    "Congratulations, you have completed your course!" 
+                    rk_VB_Psychology_Major_Ses_Done.setGlobal(1)
+                Endif
+                
+            Endif
+            
+        Elseif 15
+        
+            TPOLExamPassed = false
+            ChanceToPass = Random(1, 100)
+            ChanceToPass = ChanceToPass.round()
+            If Player:intelligence >= 95
+            
+                "You passed the exams without any problems!"
+                TPOLExamPassed = true
+                mood += 10
+
+            Elseif Player:intelligence > 80 && Player:intelligence < 94.9 
+
+                If ChanceToPass <= 80 
+                    "You passed the exams without any problems!"
+                    TPOLExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif 
+
+            Elseif Player:intelligence > 75 && Player:intelligence < 79.9
+            
+                If ChanceToPass <= 70 
+                    "You passed the exams without any problems!"
+                    TPOLExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 70 && Player:intelligence < 74.9
+            
+                If ChanceToPass <= 60
+                    "You passed the exams with a lot of lucks!"
+                    TPOLExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 50 && Player:intelligence < 69.9
+            
+                If ChanceToPass <= 50
+                    "You passed the exams with a lot of lucks!"
+                    TPOLExamPassed = true
+                    mood += 10
+                    
+                Else
+                    "You didn't passed the exams!"
+                    mood -= 10
+                Endif
+
+            Elseif Player:intelligence > 0 && Player:intelligence < 49.9
+            
+                "You didn't passed the exams!"
+                mood -= 10
+
+            Endif
+
+            Player.setActorVar(rk_VB_Session_TPOL, 0)
+            Player.setActorVar(rk_VB_Political_Sciences_Major_Level, 0)
+            
+            If TPOLExamPassed
+            
+                Player.modifyActorVar(rk_VB_Political_Sciences_Major_Units, 30)
+                
+                If Political_Sciences_Major_Ses == 0
+                    rk_VB_Political_Sciences_Major_Ses.setGlobal(1)
+                    "Congratulations, you have completed your first session! We are expecting you for the next session ..." 
+                Elseif Political_Sciences_Major_Ses == 1
+                    rk_VB_Political_Sciences_Major_Ses.setGlobal(2)
+                    "Congratulations, you have completed your second session! We are expecting you for the next session ..."  
+                Elseif Political_Sciences_Major_Ses == 2
+                    rk_VB_Political_Sciences_Major_Ses.setGlobal(3)
+                    "Congratulations, you have completed your course!"
+                    rk_VB_Political_Sciences_Major_Ses_Done.setGlobal(1)        
+                Endif
+                
+            Endif
+            
+        Endif //end 15
+        passTime(1, 4)
+        
+    SceneEnd() // Improved by Raddeck

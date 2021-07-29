@@ -1,10 +1,12 @@
 WHAT: all
 WHERE: university:school, university:work
 WHEN: 0-24
-WHO: Actor = getSpecific(Lecturer); Actor2 = getSpecific(Coursemate); If !Actor.isDating() && !Actor2.isDating() && Actor2.isInterestedIn(Actor) && Actor2:rapportwithplayer < 50
+WHO: Actor = getSpecific(Major_Teach); Actor2 = getSpecific(Coursemate); If !Actor.isDating() && !Actor2.isDating() && Actor2.isInterestedIn(Actor) && Actor2:rapportwithplayer < 50
 OTHER: none
 
     SceneStart()
+        
+        Major_Teach = rk_VB_Major_Teacher.getGlobal()
         Actor2.dress()
         Actor2.show(3)
         dressFormal()

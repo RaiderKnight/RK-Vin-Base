@@ -9,6 +9,7 @@ OTHER: none
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        TuitionPriceEqualEnable = rk_VB_TuitionPriceEqualEnable.getGlobal()
         
         If !isModEnabled(nn_HomeExpander)
             
@@ -25,6 +26,7 @@ OTHER: none
         0::"-- Setting for Vin_Base --"
         1::"Hunger"
         2::"Urge to pee"
+        3::"Same tuition price for all courses"
         90::"Stuff in hand to store"
         99::"Go back!"
         
@@ -63,6 +65,25 @@ OTHER: none
             
                 "The urge to pee is now disabled!"
                 rk_VB_UrgeToPeeEnable.setGlobal(0)
+            
+            EndIf
+            
+        ElseIf 3
+            
+            "What should I do?"
+            1::"Enable same tuition price for all courses"
+            2::"Disable same tuition price for all courses"
+            99::"Go back!"
+        
+            If 1
+            
+                "Same tuition price for all courses is now enabled!"
+                rk_VB_TuitionPriceEqualEnable.setGlobal(1)
+            
+            ElseIf 2
+            
+                "Same tuition price for all courses is now disabled!"
+                rk_VB_TuitionPriceEqualEnable.setGlobal(0)
             
             EndIf
         

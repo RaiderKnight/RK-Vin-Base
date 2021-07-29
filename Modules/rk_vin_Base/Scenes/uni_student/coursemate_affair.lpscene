@@ -1,11 +1,12 @@
 WHAT: all
 WHERE: university:school, university:work
 WHEN: 0-24
-WHO: Actor = getSpecific(Lecturer); Actor2 = getSpecific(Coursemate); If !Actor.isDating() && !Actor2.isDating() && Actor2.isInterestedIn(Actor) && Actor.isInterestedIn(Actor2) && Actor:perversion + Actor2:perversion > Random(75, 150)
+WHO: Actor = getSpecific(Major_Teach); Actor2 = getSpecific(Coursemate); If !Actor.isDating() && !Actor2.isDating() && Actor2.isInterestedIn(Actor) && Actor.isInterestedIn(Actor2) && Actor:perversion + Actor2:perversion > Random(75, 150)
 OTHER: none
 
     SceneStart()
 
+        Major_Teach = rk_VB_Major_Teacher.getGlobal()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         Actor2.dress()
