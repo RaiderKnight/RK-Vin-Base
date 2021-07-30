@@ -7,7 +7,12 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
     DebugLog = false
     
     SceneStart()
-    
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        
         Player.dress()
         Player.show(0)
         CurrentCompanion.dress()
@@ -15,6 +20,12 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
         
         If Player.isPregnant()
             Player():: "I'm already pregnant!"
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, 1.5)
+            EndIf
+            If UrgeToPeeEnable > 0
+                Player.modifyActorVar(rk_VB_UrgeToPee, 1.5)
+            EndIf
             BreedingPartyYES = false
         Elseif Player.isMale()
             Player():: "I can't get pregnant!"
@@ -158,9 +169,6 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
                     CurrentCompanion.dress()
                     CurrentCompanion.show(4)
                     Guest1 = generatePersonTemporary()
-                    If isModEnabled(sb_PimpYourGirl)
-                        Guest1.blendPreset(sb_PYG_pornstar_M_african_daz)
-                    Endif
                     Guest1.randomizeFace()
                     Guest1.randomizeHairs()
                     Guest1.show(2)
@@ -171,9 +179,6 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
 
                 If !Guest2.isValid()
                     Guest2 = generatePersonTemporary()
-                    If isModEnabled(sb_PimpYourGirl)
-                        Guest2.blendPreset(sb_PYG_pornstar_M_african_daz)
-                    Endif
                     Guest2.randomizeFace()
                     Guest2.randomizeHairs()
                     Guest2.show(2)
@@ -184,9 +189,6 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
 
                 If !Guest3.isValid()
                     Guest3 = generatePersonTemporary()
-                    If isModEnabled(sb_PimpYourGirl)
-                        Guest3.blendPreset(sb_PYG_pornstar_M_african_daz)
-                    Endif
                     Guest3.randomizeFace()
                     Guest3.randomizeHairs()
                     Guest3.show(2)
@@ -197,9 +199,6 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
 
                 If !Guest4.isValid()
                     Guest4 = generatePersonTemporary()
-                    If isModEnabled(sb_PimpYourGirl)
-                        Guest4.blendPreset(sb_PYG_pornstar_M_african_daz)
-                    Endif
                     Guest4.randomizeFace()
                     Guest4.randomizeHairs()
                     Guest4.show(2)
@@ -210,9 +209,6 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
 
                 If !Guest5.isValid()
                     Guest5 = generatePersonTemporary()
-                    If isModEnabled(sb_PimpYourGirl)
-                        Guest5.blendPreset(sb_PYG_pornstar_M_african_daz)
-                    Endif
                     Guest5.randomizeFace()
                     Guest5.randomizeHairs()
                     Guest5.show(2)
@@ -223,9 +219,6 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
 
                 If !Guest6.isValid()
                     Guest6 = generatePersonTemporary()
-                    If isModEnabled(sb_PimpYourGirl)
-                        Guest6.blendPreset(sb_PYG_pornstar_M_african_daz)
-                    Endif
                     Guest6.randomizeFace()
                     Guest6.randomizeHairs()
                     Guest6.show(2)
@@ -240,9 +233,6 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
                 Player:: "That's a great idea! I'll do it right now! Let's see ..."
                 If !Guest1.isValid()
                     Guest1 = generatePersonTemporary()
-                    If isModEnabled(sb_PimpYourGirl)
-                        Guest1.blendPreset(sb_PYG_pornstar_M_african_daz)
-                    Endif
                     Guest1.randomizeFace()
                     Guest1.randomizeHairs()
                     Guest1.dress()
@@ -253,9 +243,6 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
 
                 If !Guest2.isValid()
                     Guest2 = generatePersonTemporary()
-                    If isModEnabled(sb_PimpYourGirl)
-                        Guest2.blendPreset(sb_PYG_pornstar_M_african_daz)
-                    Endif
                     Guest2.randomizeFace()
                     Guest2.randomizeHairs()
                     Guest2.dress()
@@ -266,9 +253,6 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
 
                 If !Guest3.isValid()
                     Guest3 = generatePersonTemporary()
-                    If isModEnabled(sb_PimpYourGirl)
-                        Guest3.blendPreset(sb_PYG_pornstar_M_african_daz)
-                    Endif
                     Guest3.randomizeFace()
                     Guest3.randomizeHairs()
                     Guest3.dress()
@@ -279,9 +263,6 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
 
                 If !Guest4.isValid()
                     Guest4 = generatePersonTemporary()
-                    If isModEnabled(sb_PimpYourGirl)
-                        Guest4.blendPreset(sb_PYG_pornstar_M_african_daz)
-                    Endif
                     Guest4.randomizeFace()
                     Guest4.randomizeHairs()
                     Guest4.dress()
@@ -292,9 +273,6 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
 
                 If !Guest5.isValid()
                     Guest5 = generatePersonTemporary()
-                    If isModEnabled(sb_PimpYourGirl)
-                        Guest5.blendPreset(sb_PYG_pornstar_M_african_daz)
-                    Endif
                     Guest5.randomizeFace()
                     Guest5.randomizeHairs()
                     Guest5.dress()
@@ -305,9 +283,6 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
 
                 If !Guest6.isValid()
                     Guest6 = generatePersonTemporary()
-                    If isModEnabled(sb_PimpYourGirl)
-                        Guest6.blendPreset(sb_PYG_pornstar_M_african_daz)
-                    Endif
                     Guest6.randomizeFace()
                     Guest6.randomizeHairs()
                     Guest6.dress()
@@ -342,6 +317,11 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
                         Player.show(4)
                         CurrentCompanion(Flirty):: "That was great!"
                         pornfame += Random(0, 15)
+                        
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, 1)
+                        EndIf
+
                     Elseif perversion > 50
                         Player(Flirty):: "Let's go with some full body shots!"
                         Player(Flirty):: "Be sure to take some nice shots of me."
@@ -534,6 +514,10 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
             
             Filter(Vaginal)
             Sex(Breeder1, Player)
+                        
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, 1)
+            EndIf
             Breeder1.hide()
             
             If Player.isPregnant() && NotPregnantBefore
@@ -545,6 +529,10 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
             
             Filter(Vaginal)
             Sex(Breeder2, Player)
+                        
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, 1)
+            EndIf
             Breeder2.hide()
             
             If Player.isPregnant() && NotPregnantBefore
@@ -556,6 +544,10 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
             
             Filter(Vaginal)
             Sex(Breeder3, Player)
+                        
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, 1)
+            EndIf
             Breeder3.hide()
             
             If Player.isPregnant() && NotPregnantBefore
@@ -567,6 +559,10 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
             
             Filter(Vaginal)
             Sex(Breeder4, Player)
+                        
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, 1)
+            EndIf
             Breeder4.hide()
             
             If Player.isPregnant() && NotPregnantBefore
@@ -578,6 +574,10 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
             
             Filter(Vaginal)
             Sex(Breeder5, Player)
+                        
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, 1)
+            EndIf
             Breeder5.hide()
             
             If Player.isPregnant() && NotPregnantBefore
@@ -589,6 +589,10 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
             
             Filter(Vaginal)
             Sex(Breeder6, Player)
+                        
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, 1)
+            EndIf
             Breeder6.hide()
             
             If Player.isPregnant() && NotPregnantBefore
@@ -606,8 +610,8 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
             "The only one who didn't get any satisfaction in all this was me."
             
             If Player.isPregnant()
-                CurrentCompanion():: "I have a funny feeling that a baby was conceived tonight!"
+                CurrentCompanion(Happy):: "I have a funny feeling that a baby was conceived tonight!"
             Endif
         Endif
         
-    SceneEnd()
+    SceneEnd() // Improved by Raddeck

@@ -654,6 +654,172 @@ OTHER: none
                 Endif
                 
             Endif
+            
+        Else
+        
+            CActor = getSpecific(Coursemate)
+            CActor2 = getSpecific(Coursemate)
+            
+            If CActor:rapportwithplayer > 0 && CActor2:rapportwithplayer > 0
+            
+                Actor.dress()
+                Actor.show(2)
+                Actor2.dress()
+                Actor2.show(3)
+                "We were just handed an assignment by the lecturer, to be done in pairs. Two of my classmates <CActor.name> and <CActor2.name>, are both asking me to work with them ..."
+                0:: "Work with <CActor.name>"
+                1:: "Work with <CActor2.name>"
+        
+                If 0
+                   CActor:rapportwithplayer += Random(0, 2)
+                   CActor2:rapportwithplayer -= Random(0, 2)
+                Else
+                    CActor2:rapportwithplayer += Random(0, 2)
+                    CActor:rapportwithplayer -= Random(0, 2)    
+                Endif
+                
+                If choiceCourseMajor == 1
+                
+                    Player.modifyActorVar(rk_VB_Architecture_Major_Level, 1)
+                
+                Elseif choiceCourseMajor == 2
+                
+                    Player.modifyActorVar(rk_VB_Chemical_Engineering_Major_Level, 1)
+                    
+                Elseif choiceCourseMajor == 3
+                
+                    Player.modifyActorVar(rk_VB_Classics_Major_Level, 1)
+                    
+                Elseif choiceCourseMajor == 4
+                
+                    Player.modifyActorVar(rk_VB_Computer_Science_Major_Level, 1)
+                    
+                Elseif choiceCourseMajor == 5
+                
+                    Player.modifyActorVar(rk_VB_Economics_Major_Level, 1)
+                    
+                Elseif choiceCourseMajor == 6
+                
+                    Player.modifyActorVar(rk_VB_Education_Major_Level, 1)
+                    
+                Elseif choiceCourseMajor == 7
+                
+                    Player.modifyActorVar(rk_VB_English_Major_Level, 1)
+                    
+                Elseif choiceCourseMajor == 8
+                
+                    Player.modifyActorVar(rk_VB_Geography_Major_Level, 1)
+                    
+                Elseif choiceCourseMajor == 9
+                
+                    Player.modifyActorVar(rk_VB_History_Major_Level, 1)
+                    
+                Elseif choiceCourseMajor == 10
+                
+                    Player.modifyActorVar(rk_VB_Law_Major_Level, 1)
+                    
+                Elseif choiceCourseMajor == 11
+                
+                    Player.modifyActorVar(rk_VB_Mathematics_Major_Level, 1)
+                    
+                Elseif choiceCourseMajor == 12
+                
+                    Player.modifyActorVar(rk_VB_Medicine_Major_Level, 1)
+                    
+                Elseif choiceCourseMajor == 13
+                
+                    Player.modifyActorVar(rk_VB_Music_Major_Level, 1)
+                    
+                Elseif choiceCourseMajor == 14
+                
+                    Player.modifyActorVar(rk_VB_Philosophy_Major_Level, 1)
+                    
+                Elseif choiceCourseMajor == 15
+                
+                    Player.modifyActorVar(rk_VB_Psychology_Major_Level, 1)
+                    
+                Elseif choiceCourseMajor == 16
+                
+                    Player.modifyActorVar(rk_VB_Political_Sciences_Major_Level, 1)
+                    
+                Endif
+            
+            Else
+                "A lecturer decided to give us a few book chapters and countless papers to read before the next lecture. There's no way I can read them all!"
+                0:: "Try my best"
+                1:: "Just give up"
+            
+                If 0
+                    intelligence += Random(0, 0.25)
+                    
+                    If choiceCourseMajor == 1
+                    
+                        Player.modifyActorVar(rk_VB_Architecture_Major_Level, 1)
+                    
+                    Elseif choiceCourseMajor == 2
+                    
+                        Player.modifyActorVar(rk_VB_Chemical_Engineering_Major_Level, 1)
+                        
+                    Elseif choiceCourseMajor == 3
+                    
+                        Player.modifyActorVar(rk_VB_Classics_Major_Level, 1)
+                        
+                    Elseif choiceCourseMajor == 4
+                    
+                        Player.modifyActorVar(rk_VB_Computer_Science_Major_Level, 1)
+                        
+                    Elseif choiceCourseMajor == 5
+                    
+                        Player.modifyActorVar(rk_VB_Economics_Major_Level, 1)
+                        
+                    Elseif choiceCourseMajor == 6
+                    
+                        Player.modifyActorVar(rk_VB_Education_Major_Level, 1)
+                        
+                    Elseif choiceCourseMajor == 7
+                    
+                        Player.modifyActorVar(rk_VB_English_Major_Level, 1)
+                        
+                    Elseif choiceCourseMajor == 8
+                    
+                        Player.modifyActorVar(rk_VB_Geography_Major_Level, 1)
+                        
+                    Elseif choiceCourseMajor == 9
+                    
+                        Player.modifyActorVar(rk_VB_History_Major_Level, 1)
+                        
+                    Elseif choiceCourseMajor == 10
+                    
+                        Player.modifyActorVar(rk_VB_Law_Major_Level, 1)
+                        
+                    Elseif choiceCourseMajor == 11
+                    
+                        Player.modifyActorVar(rk_VB_Mathematics_Major_Level, 1)
+                        
+                    Elseif choiceCourseMajor == 12
+                    
+                        Player.modifyActorVar(rk_VB_Medicine_Major_Level, 1)
+                        
+                    Elseif choiceCourseMajor == 13
+                    
+                        Player.modifyActorVar(rk_VB_Music_Major_Level, 1)
+                        
+                    Elseif choiceCourseMajor == 14
+                    
+                        Player.modifyActorVar(rk_VB_Philosophy_Major_Level, 1)
+                        
+                    Elseif choiceCourseMajor == 15
+                    
+                        Player.modifyActorVar(rk_VB_Psychology_Major_Level, 1)
+                        
+                    Elseif choiceCourseMajor == 16
+                    
+                        Player.modifyActorVar(rk_VB_Political_Sciences_Major_Level, 1)
+                        
+                    Endif
+                Endif
+                
+            Endif
         
         Endif
         
