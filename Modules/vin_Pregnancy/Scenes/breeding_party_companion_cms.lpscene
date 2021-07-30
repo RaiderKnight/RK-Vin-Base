@@ -7,6 +7,11 @@ OTHER: Player.isDating() && isModEnabled(vin_NTR)
     DebugLog = false
     
     SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
     
         Player.dress()
         Player.show(0)
@@ -538,7 +543,9 @@ OTHER: Player.isDating() && isModEnabled(vin_NTR)
                     Breeder5 = Guest5
                     Breeder6 = Guest1
                 Endif
-                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 1)
+                EndIf
                 Player.show()
                 CurrentCompanion.strip()
                 

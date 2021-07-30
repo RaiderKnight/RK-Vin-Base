@@ -1,0 +1,946 @@
+WHAT: Cop_Street_work
+WHERE: all
+WHEN: 0 - 24
+WHO: none
+OTHER: Random(0, 50) < intelligence
+
+    sceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger) // Edit by Raddeck
+        HungerEnable = rk_VB_EnableHunger.getGlobal()// Edit by Raddeck
+        setBackground(street)
+        Cop1 = getPerson(tag_Police)
+        If !Cop1.isValid()
+            Cop1 = generatePerson()
+            Cop1:age => Random(18, 50)
+            Cop1.randomizeHairs()
+            Cop1.randomizeFace()
+            Cop1.SetJob(Police)
+            Cop1.setActorVar(tag_Police, 1)
+            Cop1.dressUniform(police)
+            Cop1.show(1)
+            "An officer approached me."
+            Cop1():: "I'm officer <Cop1.name_last>. Nice to meet you."
+            
+        Else
+            "Looks like officer <Cop1.name_last> is here."
+            Cop1.dressUniform(police)
+            Cop1.show(1)
+        Endif
+        
+        Victim = generatePerson()
+        Victim:age += Random(15, 25)
+        
+        Spouse = generatePersonTemporary()
+        While !Victim.isInterestedIn(Spouse) || Spouse:age > [Victim:age + 15] || Victim:age > [Spouse:age + 15]
+            Spouse = generatePersonTemporary()
+        Endwhile
+        Spouse.makePermanent()
+        Spouse.matchLastName(Victim)
+        
+        If !Victim.isMale()
+            Kid = Victim.generateRelativeMatchRace()
+        Elseif !Spouse.isMale()
+            Kid = Spouse.generateRelativeMatchRace()
+        Else
+            Kid = generatePerson()
+        Endif
+        
+        While !Kid.isValid() || Victim:age < Kid:age || Spouse:age < Kid:age
+            Kid.DeletePerson()
+            If !Victim.isMale()
+                Kid = Victim.generateRelativeMatchRace()
+            Elseif !Spouse.isMale()
+                Kid = Spouse.generateRelativeMatchRace()
+            Else
+                Kid = generatePerson()
+            Endif
+        Endwhile
+        Kid.matchLastName(Victim)
+        
+        Sib = Victim.generateRelativeMatchRace()
+        Sib.makePermanent()
+        If Victim.isMale()
+            Sib.matchLastName(Victim)
+        Endif
+        
+        Friend = generatePerson()
+        Colleague = generatePerson()
+        Help = generatePerson()
+        
+        Colleague.dressUniform(work)
+        Spouse.dress()
+        Kid.dress()
+        Sib.dress()
+        Friend.dress()
+        Help.dress()
+        
+        M = Random(0, 6)
+        If M < 1
+            Spouse.setActorVar(tag_Murderer, 1)
+            Murderer = Spouse
+        Elseif M < 2
+            Kid.setActorVar(tag_Murderer, 1)
+            Murderer = Kid
+        Elseif M < 3
+            Sib.setActorVar(tag_Murderer, 1)
+            Murderer = Sib
+        Elseif M < 4
+            Friend.setActorVar(tag_Murderer, 1)
+            Murderer = Friend
+        Elseif M < 5
+            Colleague.setActorVar(tag_Murderer, 1)
+            Murderer = Colleague
+        Else
+            Help.setActorVar(tag_Murderer, 1)
+            Murderer = Help
+        Endif
+        
+        R = Random(0, 6)
+        W = Random(0, 5)
+        MO = false
+        RA = false
+        LU = false
+        WO = false
+        JU = false
+        MI = false
+        A = false
+        ST = false
+        B = false
+        RO = false
+        P = false
+        SH = false
+        Solved = false
+        If R < 1 //Money
+            MO = true
+            If Murderer.isMale() && Murderer:intelligence > 75 && W < 1
+                A = true//Accident
+            Elseif [Murderer.isMale() || !Victim.isMale()] && Murderer:Fitness > Victim:Fitness && W < 2
+                B = true//Blunt force
+            Elseif Murderer:martial > Victim:martial || W < 3
+                ST = true//Stabbed 
+            Elseif !Murderer.isMale() || W < 4
+                P = true//Poison
+            Else
+                SH = true//Shot
+            Endif
+        
+        Elseif R < 2 && Murderer:masochist < -30  //Rage
+            RA = true
+            If [Murderer.isMale() || !Victim.isMale()] && Murderer:Fitness > Victim:Fitness && W < 1.25
+                B = true//Blunt force
+            Elseif [Murderer.isMale() || !Victim.isMale()] && Murderer:martial > Victim:martial && W < 2.5
+                RO = true//Stangled
+            Elseif Murderer:martial > Victim:martial || W < 3.75
+                ST = true//Stabbed   
+            Else
+                SH = true//Shot
+            Endif
+        
+        Elseif R < 3 && [Murderer:perversion > 50 || Victim:perversion > 50] //Lust 
+            LU = true
+            If [Murderer.isMale() || !Victim.isMale()] && Murderer:martial > Victim:martial && W < 1.25
+                RO = true//Stangled
+            Elseif Murderer:martial > Victim:martial || W < 2.5
+                ST = true//Stabbed   
+            Elseif !Murderer.isMale() || W < 3.75
+                P = true//Poison
+            Else
+                SH = true//Shot
+            Endif
+        
+        Elseif R < 4 //Work
+            WO = true
+            If Murderer.isMale() && Murderer:intelligence > 75 && W < 1.67
+                A = true//Accident
+            Elseif [Murderer.isMale() || !Victim.isMale()] && Murderer:Fitness > Victim:Fitness && W < 3.3
+                B = true//Blunt force
+            Else
+                P = true//Poison
+            Endif
+        
+        Elseif R < 5 && Victim:masochist < -30 && Murderer:masochist > 0//Justice
+            JU = true
+            If Murderer.isMale() && Murderer:intelligence > 75 && W < 1.67
+                A = true//Accident
+            Elseif [Murderer.isMale() || !Victim.isMale()] && Murderer:martial > Victim:martial && W < 3.3
+                RO = true//Stangled
+            Else
+                P = true//Poison
+            Endif
+        
+        Else //Mistake
+            MI = true
+            If Murderer.isMale() && Murderer:intelligence > 75 && W < 1.67
+                A = true//Accident
+            Elseif !Murderer.isMale() || W < 3.3
+                P = true//Poison
+            Else
+                SH = true//Shot
+            Endif
+        
+        Endif
+        
+        Chance = Random(0, 99)
+        If [M < 3 && Chance < 66] || Chance > 66
+            Loc = findNearbyBuilding(home)
+            moveTo(Loc)
+            setBackground(home)
+            Cop1():: "We have a victim, <Victim.name> who was murdered in their home."
+        Elseif [M >= 3 && Chance < 66] || Chance > 66
+            Loc = findNearbyBuilding(work)
+            moveTo(Loc)
+            setBackground(work)
+            Cop1():: "We have a victim, <Victim.name> who was murdered while they were at work."
+        Elseif M >= 4 || M >= 2 && M < 3
+            Loc = findNearbyBuilding(hotel)
+            moveTo(Loc)
+            setBackground(hotel)
+            Cop1():: "We have a victim, <Victim.name> who was murdered in this hotel."
+        Elseif [M >= 2 && M < 3] || M >= 5 || [M < 1 && RA] && Victim:perversion > 50
+            Loc = findNearbyBuilding(brothel)
+            moveTo(Loc)
+            setBackground(brothel)
+            Cop1():: "We have a victim, <Victim.name> who was murdered while they were... 'Enjoying' a good time"
+        Elseif [M < 2 || M >= 3 && M < 4] && [Victim:fitness > 50 || Victim:martial > 50]
+            Loc = findNearbyBuilding(sports_centre)
+            moveTo(Loc)
+            setBackground(sports_centre)
+            Cop1():: "We have a victim, <Victim.name> who was murdered while they were"
+            If Victim:fitness > Victim:martial
+                "working out."
+            Else
+                "hitting the punching bag."
+            Endif
+        Elseif [M < 2 || M >= 3 && M < 4] && Victim:intelligence > 50
+            Loc = findNearbyBuilding(library)
+            moveTo(Loc)
+            setBackground(library)
+            Cop1():: "We have a victim, <Victim.name> who was murdered while they were doing some light reading."
+        Else  
+            setBackground(street)
+            Cop1():: "We have a victim, <Victim.name> who was discovered out on the streets."
+        Endif
+        
+        Player():: "Who do we got to question?"
+        Cop1():: "Victim's <Spouse.Husband_or_Wife> <Spouse.name>"
+        Spouse.show(1)
+        Cop1():: "Victim's <Kid.Son_or_Daugter> <Kid.name>"
+        Kid.show(2)
+        Cop1():: "Victim's <Sib.Brother_or_Sister> <Sib.name>"
+        Sib.show(3)
+        Cop1():: "Victim's best friend <Friend.name>"
+        Friend.show(4)
+        Cop1():: "Victim's work colleague <Colleague.name>"
+        Colleague.show(5)
+        Cop1():: "And the person who discovered the body <Help.name>"
+        Help.show(6)
+        
+        G1 = true
+        G2 = true
+        G3 = true
+        G4 = true
+        G5 = true
+        G6 = true
+        C = true
+        Exit = false
+        While !Exit
+            passTime(0.1)
+            G1 = true
+            G2 = true
+            G3 = true
+            G4 = true
+            G5 = true
+            G6 = true
+            C = true
+            "What should I do now?"
+            1:: G1:: "Chat with <Spouse.name>"
+            2:: G2:: "Chat with <Kid.name>"
+            3:: G3:: "Chat with <Sib.name>"
+            4:: G4:: "Chat with <Friend.name>"
+            5:: G5:: "Chat with <Colleague.name>"
+            6:: G6:: "Chat with <Help.name>"
+            7:: C:: "Chat with Officer <Cop1.name_last>"
+            8:: "Leave investigation."
+            
+            If 8
+                Exit = true
+        
+            Else
+                If 1
+                    SitWith = Spouse
+                    G1 = false
+                Elseif 2
+                    SitWith = Kid
+                    G2 = false
+                Elseif 3
+                    SitWith = Sib
+                    G3 = false
+                Elseif 4
+                    SitWith = Friend
+                    G4 = false
+                Elseif 5
+                    SitWith = Colleague
+                    G5 = false
+                Elseif 6
+                    SitWith = Help
+                    G6 = false          
+                Elseif 7
+                    SitWith = Cop1
+                    C = false           
+                Endif
+                
+                Spouse.hide()
+                Kid.hide()
+                Sib.hide()
+                Friend.hide()
+                Colleague.hide()
+                Help.hide()
+                If C
+                    SitWith.show(2)
+                Endif   
+                If C
+                    "I investigate <SitWith.name>"
+                    Miss = SitWith.getActorVar(tag_Murderer)
+                    Player():: "How is your relationship with the victim?"
+                    If Miss > 0 && Victim:interpersonal > 50
+                        "We did not know each other very well."
+                    Elseif Miss > 0 && Victim:interpersonal < 50
+                        "We hang out alot."
+                    Elseif Victim:interpersonal > 50 && SitWith:interpersonal > 50
+                        "We hang out alot."
+                    Elseif Victim:interpersonal > 50 && SitWith:interpersonal < 50
+                        "<Victim.name> was alway more social than me."
+                    Elseif Victim:interpersonal < 50 && SitWith:interpersonal > 50
+                        "I was alway more social than <Victim.name>."
+                    Else
+                        "We did not know each other very well."
+                    Endif
+                    Player():: "Who do you think could have done this?"
+                    If Miss > 0
+                        If !G1
+                            Random
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Elseif !G2
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Elseif !G3
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Elseif !G4
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Elseif !G5
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Elseif !G6
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                            Endrandom
+                        Else
+                            "Error something went wrong."
+                        Endif
+                        
+                    Elseif SitWith:intelligence > 66
+                        If !G1
+                            Random
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                            Endrandom
+                            Random
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                            Random
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                            Endrandom
+                        Elseif !G2
+                            Random
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                            Random
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                            Endrandom
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                            Endrandom
+                        Elseif !G3
+                            Random
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                            Endrandom
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                            Endrandom
+                            Random
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Elseif !G4
+                            Random
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                            Endrandom
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                            Endrandom
+                        Elseif !G5
+                            Random
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                            Endrandom
+                            Random
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Elseif !G6
+                            Random
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                            Endrandom
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Else
+                            "Error something went wrong."
+                        Endif
+                        
+                    Elseif SitWith:intelligence > 33
+                        If !G1
+                            Random
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                            Endrandom
+                        Elseif !G2
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Elseif !G3
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                            Endrandom
+                        Elseif !G4
+                            Random
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Elseif !G5
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                            Endrandom
+                        Elseif !G6
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                                SitWith():: "I think <Murderer.name> did it."
+                            Endrandom
+                        Else
+                            "Error something went wrong."
+                        Endif
+                            
+                    Else
+                        If !G1
+                            Random
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Elseif !G2
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Elseif !G3
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Elseif !G4
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Elseif !G5
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Help.name> did it."
+                            Endrandom
+                        Elseif !G6
+                            Random
+                                SitWith():: "I think <Spouse.name> did it."
+                                SitWith():: "I think <Kid.name> did it."
+                                SitWith():: "I think <Sib.name> did it."
+                                SitWith():: "I think <Friend.name> did it."
+                                SitWith():: "I think <Colleague.name> did it."
+                            Endrandom
+                        Else
+                            "Error something went wrong."
+                        Endif        
+                    Endif
+                    
+                    Player():: "What were you doing?"
+                    If SitWith:interpersonal > 50
+                        SitWith():: "Hung out with some friends."
+                    Endif
+                    If SitWith:intelligence > 75
+                        SitWith():: "I was reading a murder mystery book."
+                    Elseif SitWith:intelligence > 50
+                        SitWith():: "I was reading a book."
+                    Else    
+                        SitWith():: "I took a nap."
+                    Endif
+                    If SitWith:fitness > Victim:Fitness
+                        SitWith():: "I worked out at the gym."
+                    else
+                        SitWith():: "I watched a movie."
+                    Endif
+                    If SitWith:martial > Victim:martial
+                        SitWith():: "I did some yoga."
+                    else
+                        SitWith():: "I played video games."
+                    Endif           
+                    
+                    Player():: "Why do you think this happened?"
+                    If Miss > 0 && SitWith:intelligence > 50
+                        If RA
+                            SitWith():: "I think it was for the work they did."
+                            SitWith():: "Or it was for money."
+                        Elseif LU
+                            SitWith():: "I think <Victim.name> might have desevered it."
+                            SitWith():: "Or it was out of rage"
+                        Elseif WO
+                            SitWith():: "I think it was by accident."
+                            SitWith():: "Or it was out of passion"
+                        Elseif JU
+                            SitWith():: "I think it was for money."
+                            SitWith():: "Or for the work they did."
+                        Elseif MI
+                            SitWith():: "I think it was out of rage"
+                            SitWith():: "Or <Victim.name> might have desevered it."
+                        Elseif MO
+                            SitWith():: "I think it was out of passion"
+                            SitWith():: "Or it was by accident."
+                        Endif
+                    Elseif SitWith:intelligence > 66
+                        If MO
+                            SitWith():: "I think it was for money."
+                            SitWith():: "Or for the work they did."
+                        Elseif RA
+                            SitWith():: "I think it was out of rage"
+                            SitWith():: "Or <Victim.name> might have desevered it."
+                        Elseif LU
+                            SitWith():: "I think it was out of passion"
+                            SitWith():: "Or it was by accident."
+                        Elseif WO
+                            SitWith():: "I think it was for the work they did."
+                            SitWith():: "Or it was for money."
+                        Elseif JU
+                            SitWith():: "I think <Victim.name> might have desevered it."
+                            SitWith():: "Or it was out of rage"
+                        Elseif MI
+                            SitWith():: "I think it was by accident."
+                            SitWith():: "Or it was out of passion"
+                        Endif
+        
+                    Elseif SitWith:intelligence > 33
+                        If MO
+                            SitWith():: "I think it was for the work they did."
+                            SitWith():: "Or it was for money."
+                        Elseif RA
+                            SitWith():: "I think <Victim.name> might have desevered it."
+                            SitWith():: "Or it was out of rage"
+                        Elseif LU
+                            SitWith():: "I think it was by accident."
+                            SitWith():: "Or it was out of passion"
+                        Elseif WO
+                            SitWith():: "I think it was for money."
+                            SitWith():: "Or for the work they did."
+                        Elseif JU
+                            SitWith():: "I think it was out of rage"
+                            SitWith():: "Or <Victim.name> might have desevered it."
+                        Elseif MI
+                            SitWith():: "I think it was out of passion"
+                            SitWith():: "Or it was by accident."
+                        Endif
+                    Else
+                        SitWith():: "I have no idea."
+                    Endif
+        
+        
+                Else// Cop advise
+                    Player():: "Any advice Officer <Cop1.name_last>?"
+                    Cop1():: "Based on loction."
+                    If WHERE == home
+                        Cop1():: "I would look more at family members, but could still be the other 3"
+                    Elseif WHERE == work
+                        Cop1():: "I would look more at the other 3, but could still be family members"
+                    Elseif WHERE == hotel
+                        Cop1():: "I would look at Sibling, Colleague, or Person who discovered the body"
+                    Elseif WHERE == brothel
+                        Cop1():: "I would look at 'Angry' Spouse, Sibling, or Person who discovered the body."
+                    Elseif WHERE == sports_centre || WHERE == library
+                        Cop1():: "I would look at Spouse, Child, or Friend."            
+                    Else
+                        Cop1():: "I have little to no advise"
+                    Endif
+                    
+                    Cop1():: "Victim's cause of death..."
+                    If A
+                        "almost look like an Accident. I would look for someone who is male & intelligent."
+                    Elseif ST
+                        "Stabbed. I would look for someone who knows how to fight better than victim."
+                        Num = 0
+                        If Victim:martial < Spouse:martial
+                            Num += 1
+                        Endif
+                        If Victim:martial < Kid:martial
+                            Num += 1
+                        Endif
+                        If Victim:martial < Sib:martial
+                            Num += 1
+                        Endif
+                        If Victim:martial < Friend:martial
+                            Num += 1
+                        Endif
+                        If Victim:martial < Colleague:martial
+                            Num += 1
+                        Endif
+                        If Victim:martial < Help:martial
+                            Num += 1
+                        Endif
+                        "<Num> people fit that category."
+                        
+                    Elseif B
+                        "Blunt force trauma. I would look for someone who is stronger than the victim"
+                        Num = 0
+                        If Victim:fitness < Spouse:fitness
+                            Num += 1
+                        Endif
+                        If Victim:fitness < Kid:fitness
+                            Num += 1
+                        Endif
+                        If Victim:fitness < Sib:fitness
+                            Num += 1
+                        Endif
+                        If Victim:fitness < Friend:fitness
+                            Num += 1
+                        Endif
+                        If Victim:fitness < Colleague:fitness
+                            Num += 1
+                        Endif
+                        If Victim:fitness < Help:fitness
+                            Num += 1
+                        Endif
+                        "<Num> people fit that category."
+                        
+                    Elseif RO
+                        If Victim.ismale()
+                            "Stangled. I would look for someone who is male & who knows how to fight better than victim."
+                        Else
+                            "Stangled. I would look for someone who knows how to fight better than victim."
+                        Endif
+                        Num = 0
+                        If Victim:martial < Spouse:martial
+                            Num += 1
+                        Endif
+                        If Victim:martial < Kid:martial
+                            Num += 1
+                        Endif
+                        If Victim:martial < Sib:martial
+                            Num += 1
+                        Endif
+                        If Victim:martial < Friend:martial
+                            Num += 1
+                        Endif
+                        If Victim:martial < Colleague:martial
+                            Num += 1
+                        Endif
+                        If Victim:martial < Help:martial
+                            Num += 1
+                        Endif
+                        "<Num> people fit that category."
+                    Elseif P
+                        "Poison. The Murderer will most likely be a female. Some not fit nor skilled enough to kill."
+                    Elseif SH
+                        "Was Shot. Some not fit nor skilled enough to kill."
+                    Endif
+                    
+                    Cop1():: "A person killing for Money would; Make it an Accident, Stab, Beat, Poison, or Shoot victim."
+                    Cop1():: "A person killing out of rage would; Stab, Beat, Stangle, or Shoot victim."
+                    Cop1():: "A person killing out of passion would; Stab, Poison, Stangle, or Shoot victim."
+                    Cop1():: "A person killing for the work they did would; Make it an Accident, Beat or Poison victim."
+                    Cop1():: "A person killing for justice would; Make it an Accident, Poison, or Stangle victim."
+                    Cop1():: "A person killing by mistake would; Make it an Accident, Poison, or Shoot victim."
+                    
+                    If Victim:interpersonal > 50
+                        Victim():: "Was very sociable."
+                    Else
+                        Victim():: "Was not very sociable."
+                    Endif
+                    
+                    Cop1():: "One last thing, Murderer is most likely to lie about stuff in order to hide."
+                Endif
+            Endif   
+            SitWith.hide()
+            Cop1.show()
+            G1 = true
+            G2 = true
+            G3 = true
+            G4 = true
+            G5 = true
+            G6 = true   
+            Cop1():: "Do you have an idea of who killed <Victim.name>?"
+            0:: "Yes"
+            1:: "No"
+            
+            If 0
+                Cop1():: "Who?"
+                1:: "The <Spouse.Husband_or_Wife> <Spouse.name>"
+                2:: "The <Kid.Son_or_Daugter> <Kid.name>"
+                3:: "The <Sib.Brother_or_Sister> <Sib.name>"
+                4:: "The best friend <Friend.name>"
+                5:: "The work colleague <Colleague.name>"
+                6:: "The person who discovered the body <Help.name>"
+                
+                If 1
+                    G1 = false
+                Elseif 2
+                    G2 = false
+                Elseif 3
+                    G3 = false
+                Elseif 4
+                    G4 = false
+                Elseif 5
+                    G5 = false
+                Else
+                    G6 = false
+                Endif
+                
+                Cop1():: "Are you sure?"
+                1:: "Yes"
+                2:: "No"
+                
+                If 1
+                    Exit = true
+                    If !G1
+                        MUR = Spouse.getActorVar(tag_Murderer)
+                    Elseif !G2
+                        MUR = Kid.getActorVar(tag_Murderer)
+                    Elseif !G3
+                        MUR = Sib.getActorVar(tag_Murderer)
+                    Elseif !G4
+                        MUR = Friend.getActorVar(tag_Murderer)
+                    Elseif !G5
+                        MUR = Colleague.getActorVar(tag_Murderer)
+                    Elseif !G6
+                        MUR = Help.getActorVar(tag_Murderer)
+                    Else
+                        "Error something went wrong."
+                        Exit = false
+                    Endif
+                    
+                    If MUR > 0
+                        Solved = true
+                    Endif
+                Endif
+            Endif
+        endWhile  
+        
+        // Start edited by Raddeck
+        If HungerEnable > 0
+            Player.modifyActorVar(rk_VB_Hunger, -5)
+        EndIf
+        // End edited by Raddeck
+            
+        "<Murderer.name> was the Murderer."
+        If A
+            "<Victim.name> death almost look like an Accident. But they were killed..."
+        Elseif ST
+            "They stabbed <Victim.name> to death."
+        Elseif B
+            "They beat <Victim.name> to death."
+        Elseif RO
+            "They stangled <Victim.name> until they were dead."
+        Elseif P
+            "They fed <Victim.name> a deadly poison."
+        Elseif SH
+            "They shot <Victim.name> dead."
+        Endif
+        
+        If MO
+            "For money."
+        Elseif RA
+            "Out of rage"
+        Elseif LU
+            "Out of Passion"
+        Elseif WO
+            "For the work they did."
+        Elseif JU
+            "For a sence of justice."
+        Elseif MI
+            "By mistake."
+        Endif
+        
+        If Solved
+            //Win
+            jobperformance += Random(5, 20)
+            jobexperience += 5
+            intelligence += 10
+            If Cop1.isInterestedIn(Player)
+                Cop1:attractiontoplayer += Random(5, 20)
+            Endif   
+            Cop1:rapportwithplayer += Random(5, 20)
+        Else
+            //You failed
+            jobperformance -= Random(5, 20)
+            jobexperience -= 5
+            If !Cop1.isInterestedIn(Player)
+                Cop1:attractiontoplayer -= Random(5, 20)
+            Endif   
+            Cop1:rapportwithplayer -= Random(5, 20)
+        Endif
+        Victim.DeletePerson()
+        Colleague.DeletePerson()
+        Spouse.DeletePerson()
+        Kid.DeletePerson()
+        Sib.DeletePerson()
+        Friend.DeletePerson()
+        Help.DeletePerson()
+    SceneEnd()
+    timeout(600, Ravenger_VB_Clue)

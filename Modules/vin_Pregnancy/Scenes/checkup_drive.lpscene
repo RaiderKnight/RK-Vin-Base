@@ -5,47 +5,56 @@ WHO: Actor = getSpecific(Dating); If Actor.isPregnant()
 OTHER:
 
     SceneStart()
-    Actor.dress()
-    Actor.show()
-    "Now that <Actor.name> is pregnant, she must have a checkup with a doctor periodically, for the sake and her and the baby's health."
-    "Today she's asking me to drive her there."
-    0:: "Yes"
-    1:: "No"
-    
-    If 1
-        "I don't have time for this today. She's not so heavily pregnant that she can't go anywhere by herself, surely?"
-    Else
-        "Okay, it's the least I could do for my pregnant <Actor.boyfriend_or_girlfriend>."
-        Dest = findNearbyBuilding(hospital)
-        moveTo(Dest)
-        setBackground(hospital)
-        Actor2 = generatePersonTemporary()
-        While !Actor2.isSameGender(Actor)
-            Actor2 = generatePersonTemporary()
-        Endwhile
-        Actor2.makeInterested(Player)
-        DressFormal()
-        Actor2.dress()
-        Actor2.show()
-        Actor.hide()
-        "While <Actor.name> is inside having her scans and tests done with the doctor, I have no choice but wait patiently in the hospital's waiting room."
-        "I couldn't help but notice that one of the receptionists was eyeing me up quite flirtatously though."
-        "Is this what these hospital staff do? Trying to sleep with all their pregnant patients' spouses?"
-        0:: "Do nothing"
-        1:: "Fuck the receptionist while <Actor.name> is having her scans"
-        2:: "Ask for her number discreetly"
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor.dress()
+        Actor.show()
+        "Now that <Actor.name> is pregnant, she must have a checkup with a doctor periodically, for the sake and her and the baby's health."
+        "Today she's asking me to drive her there."
+        0:: "Yes"
+        1:: "No"
         
-        If 1   
-            "It's probably another long while before <Actor.name> finishes all her scans and tests, enough time for a quickie with the receptionist."
-            "Soon, we end up in the hospital's supplies room and got down to business."
-            Sex(Player, Actor2)
-        Elseif 2
-            "I discreetly got her number, for a future rendezvous when my pregnant <Actor.boyfriend_or_girlfriend> is not around."
-            Actor2.makePermanent()
-            Actor2:attractiontoplayer => 40
-            Actor2:perversion => 80
-            exchangeContact(Actor2)
+        If 1
+            "I don't have time for this today. She's not so heavily pregnant that she can't go anywhere by herself, surely?"
+        Else
+            "Okay, it's the least I could do for my pregnant <Actor.boyfriend_or_girlfriend>."
+            Dest = findNearbyBuilding(hospital)
+            moveTo(Dest)
+            setBackground(hospital)
+            Actor2 = generatePersonTemporary()
+            While !Actor2.isSameGender(Actor)
+                Actor2 = generatePersonTemporary()
+            Endwhile
+            Actor2.makeInterested(Player)
+            DressFormal()
+            Actor2.dress()
+            Actor2.show()
+            Actor.hide()
+            "While <Actor.name> is inside having her scans and tests done with the doctor, I have no choice but wait patiently in the hospital's waiting room."
+            "I couldn't help but notice that one of the receptionists was eyeing me up quite flirtatously though."
+            "Is this what these hospital staff do? Trying to sleep with all their pregnant patients' spouses?"
+            0:: "Do nothing"
+            1:: "Fuck the receptionist while <Actor.name> is having her scans"
+            2:: "Ask for her number discreetly"
+            
+            If 1   
+                "It's probably another long while before <Actor.name> finishes all her scans and tests, enough time for a quickie with the receptionist."
+                "Soon, we end up in the hospital's supplies room and got down to business."
+                Sex(Player, Actor2)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 1)
+                EndIf
+
+            Elseif 2
+                "I discreetly got her number, for a future rendezvous when my pregnant <Actor.boyfriend_or_girlfriend> is not around."
+                Actor2.makePermanent()
+                Actor2:attractiontoplayer => 40
+                Actor2:perversion => 80
+                exchangeContact(Actor2)
+            Endif
         Endif
-    Endif
     SceneEnd()
-    timeout(700, checkup_drive)
+    timeout(700, checkup_drive) // Improved by Raddeck

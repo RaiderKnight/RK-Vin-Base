@@ -5,31 +5,40 @@ WHO: none
 OTHER:
 
     SceneStart()
-    If Player.isPregnant()
-        "I'm currently pregnant. It's pointless to check my fertility level since I cannot get pregnant again."
-    Else
-        fer = fertility*1
-        ferDan = fer*10
-        If Actor.isMale()
-            "My fertility level is <fer>%"
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        
+        If Player.isPregnant()
+            "I'm currently pregnant. It's pointless to check my fertility level since I cannot get pregnant again."
         Else
-            "My fertility level is <fer>% on normal days and <ferDan>% on dangerous days"
-        Endif
-        Actor = generatePersonTemporary()
-        While Actor.isSameGender(Player)
+            fer = fertility*1
+            ferDan = fer*10
+            If Actor.isMale()
+                "My fertility level is <fer>%"
+            Else
+                "My fertility level is <fer>% on normal days and <ferDan>% on dangerous days"
+            Endif
             Actor = generatePersonTemporary()
-        Endwhile
-        Actor.dress()
-        Actor.show()
-        "The nurse who did the test was <Actor.name>."
-        If Actor:perversion > 60
-            Actor:: "You know, since you're so concerned about your fertility level, why don't we do a more 'practical' test? Numbers can be misleading, you know! Real results are what matter."
-            0:: "Fuck the nurse to test how fertile I am"
-            1:: "No"
-            
-            If 0
-                Sex(Actor, Player)
+            While Actor.isSameGender(Player)
+                Actor = generatePersonTemporary()
+            Endwhile
+            Actor.dress()
+            Actor.show()
+            "The nurse who did the test was <Actor.name>."
+            If Actor:perversion > 60
+                Actor:: "You know, since you're so concerned about your fertility level, why don't we do a more 'practical' test? Numbers can be misleading, you know! Real results are what matter."
+                0:: "Fuck the nurse to test how fertile I am"
+                1:: "No"
+                
+                If 0
+                    Sex(Actor, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, 1)
+                    EndIf
+                Endif
             Endif
         Endif
-    Endif
-    SceneEnd()
+    SceneEnd() // Improved by Raddeck
