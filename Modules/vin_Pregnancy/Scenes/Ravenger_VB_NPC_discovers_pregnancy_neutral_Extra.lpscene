@@ -4,8 +4,11 @@ WHEN: 0 - 24
 WHO: Actor = getSpecific(Impregnated)
 OTHER: none
 
-    Daddy = getSpecific(CurrentBabyDaddy)
-    If !Actor.isMale() && !Actor.isDating()
+    Daddy = Actor.getSpecific(CurrentBabyDaddy)
+    Days = Actor.countPregnancyDays()
+
+    Know = Actor.getActorVar(tag_Pregnant)
+    If Days > 10 && Know < 1 && Player != Daddy && !Actor.isMale() && !Actor.isDating()
         SceneStart()
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
@@ -24,9 +27,9 @@ OTHER: none
         If 1
             perversion += Random(0,0.5)
         Endif
-        SceneEnd() // Improved by Raddeck - Ravenger6660
-        // Start edit Ravenger6660
-    Else !Actor.isMale() && Actor.isDating()
+        SceneEnd()
+        timeoutActor(1600, NPC_discovers_pregnany_Extra, Actor)
+    Elseif Days > 10 && Know < 1 && Player != Daddy && !Actor.isMale() && Actor.isDating()
         SceneStart()
         setBackground(home)
         Actor.dress()
@@ -54,7 +57,7 @@ OTHER: none
                 Actor2 = Daddy.getRelatedPerson(Spouses, Dating)
                 "<Daddy.name> will pay for what they did to <Actor.name>."
                 0:: "Kill <Daddy.name>."
-                1:: "Send <Daddy.name> to jail."
+                1:: "Send them to jail."
                 3:: [Actor2.isValid() && !Actor2.isMale()] :: "Fuck their <Actor2.boyfriend_or_girlfriend>"
                     
                 If 0
@@ -122,7 +125,7 @@ OTHER: none
         Else
             "Of course <Actor.name> confessed that <Daddy.name> is the <Daddy.father_or_donor>."
             0:: "Forgive <Actor.name> & accept the baby all the same."
-            1:: "Kill <Daddy.name>."
+            1:: "Kill them all."
             2:: "Walk away"
                     
             If 0
@@ -156,5 +159,7 @@ OTHER: none
             Endif  
         Endif
         SceneEnd() // scene improved by Raddeck
-        // End edit Ravenger6660
-    Endif 
+        timeoutActor(1600, Ravenger_VB_NPC_discovers_pregnany_Extra, Actor)
+    Else
+        Actor.setActorVar(tag_Pregnant, -1)
+    Endif

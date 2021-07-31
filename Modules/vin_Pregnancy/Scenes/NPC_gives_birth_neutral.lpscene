@@ -4,17 +4,167 @@ WHEN: 0 - 24
 WHO: Actor = getSpecific(Impregnated)
 OTHER: none
 
-    If !Actor.isMale()
+    Claim = Actor.getActorVar(tag_Mine) // Start edit Ravenger6660
+    If !Actor.isMale() && Claim == 0
         SceneStart()
-        secondScreen(Actor)
-        Actor.endPregnancy()
-        Actor.dress()
-        Actor.show(2)
-        Actor.setActorVar(tag_Pregnant, 0)
-        Actor2 = Actor.generatePersonMatchRace()
-        Actor2:age => 0
-        addNpcRelationship(ParentChild, Actor, Actor2)
-        Actor2.matchLastName(Actor)
-        "<Actor.name> has recently given birth to a cute baby, whom she named <Actor2.name>. Her baby photos are all over Facebook."
+        Actor:pornfame => 0
+        Actor:perversion /= 2  
+        If Actor.isRelative(Parent, StepParent) && Actor.livesWithPlayer() 
+            secondScreen(Actor)
+            Actor.endPregnancy()
+            Actor.dress()
+            Actor.show(2)
+            Actor.setActorVar(tag_Pregnant, 0)
+            Actor2 = Actor.generateRelativeMatchRace()
+            Actor2.setRelativeType(Sibling)
+            Actor2:age => 0
+            addNpcRelationship(ParentChild, Actor, Actor2)
+            Actor2.matchLastName(Actor)
+            "<Actor.name> has recently given birth to my new baby <Actor2.brother_or_sister>, whom she named <Actor2.name>."
+
+        Elseif Actor.isRelative(GrandParent) && Actor.livesWithPlayer() 
+            secondScreen(Actor)
+            Actor.endPregnancy()
+            Actor.dress()
+            Actor.show(2)
+            Actor.setActorVar(tag_Pregnant, 0)
+            Actor2 = Actor.generateRelativeMatchRace()
+            Actor2.setRelativeType(ParentSibling)
+            Actor2:age => 0
+            addNpcRelationship(ParentChild, Actor, Actor2)
+            Actor2.matchLastName(Actor)
+            "<Actor.name> has recently given birth to my new <Actor2.uncle_or_aunt>, whom she named <Actor2.name>."
+            "Surprised that they some how managed it."
+    
+        Elseif Actor.isRelative(ParentSibling) && Actor.livesWithPlayer() 
+            secondScreen(Actor)
+            Actor.endPregnancy()
+            Actor.dress()
+            Actor.show(2)
+            Actor.setActorVar(tag_Pregnant, 0)
+            Actor2 = Actor.generateRelativeMatchRace()
+            Actor2.setRelativeType(Cousin)
+            Actor2:age => 0
+            addNpcRelationship(ParentChild, Actor, Actor2)
+            Actor2.matchLastName(Actor)
+            "<Actor.name> has recently given birth to my new cousin, whom she named <Actor2.name>."
+    
+        Elseif Actor.isRelative(Sibling) && Actor.livesWithPlayer() 
+            secondScreen(Actor)
+            Actor.endPregnancy()
+            Actor.dress()
+            Actor.show(2)
+            Actor.setActorVar(tag_Pregnant, 0)
+            Actor2 = Actor.generateRelativeMatchRace()
+            Actor2.setRelativeType(SiblingChild)
+            Actor2:age => 0
+            addNpcRelationship(ParentChild, Actor, Actor2)
+            Actor2.matchLastName(Actor)
+            "<Actor.name> has recently given birth to my new baby <Actor2.brother_or_sister>, whom she named <Actor2.name>."
+
+        Else
+            // End edit Ravenger6660
+            //Start edit Vin
+            secondScreen(Actor)
+            Actor.endPregnancy()
+            Actor.dress()
+            Actor.show(2)
+            Actor.setActorVar(tag_Pregnant, 0)
+            Actor2 = Actor.generatePersonMatchRace()
+            Actor2:age => 0
+            addNpcRelationship(ParentChild, Actor, Actor2)
+            Actor2.matchLastName(Actor)
+            "<Actor.name> has recently given birth to a cute baby, whom she named <Actor2.name>. Her baby photos are all over Facebook."
+            //End edit Vin
+            // Start edit Ravenger6660
+        Endif
         SceneEnd()
-    Endif
+
+    Elseif !Actor.isMale() && Claim == 1
+        SceneStart()
+        Actor.setActorVar(tag_Mine, -1)
+        Actor:pornfame => 0
+        Actor:perversion /= 2       
+            setBackground(home)
+            Actor.dress()
+            Actor.show(2)
+            Actor.setActorVar(tag_Pregnant, -1)
+            "<Actor.name> is going into labour. I need to take her to the hospital ..."
+            0:: "Take <Actor.name> to a hospital"
+            1:: [[!Actor.isDating() || !Actor.isExRelative() || !Actor.isRelative()] && !Actor.livesWithPlayer()]:: "Can't show up"
+            2:: "I want nothing to do with this baby!"
+            
+            If Actor.isValid()
+                If 0
+                    Loc = findNearbyBuilding(hospital)
+                    moveTo(Loc)        
+                    Actor.strip()
+                    Actor.endPregnancy()
+                    Daddy = getSpecific(CurrentBabyDaddy)
+                    "Those were among the tensest hours in my life, but thankfully, everything went smoothly in the end. Both <Actor.name> and our child were in good condition. Nothing beats the feeling of being a new father."
+                    Surrogate = Actor.getActorVar(tag_Surrogate)
+                    Actor2 = Actor.generateRelativeMatchRace()
+                    Actor2.setRelativeType(Child)
+                    AddNpcRelationship(ParentChild, Actor, Actor2)
+                    "It's a <Actor2.boy_or_girl>! What should I name my <Actor2.son_or_daughter>?"
+                    Actor2.enterFirstName()
+                    Actor2:age => 0
+                    children += 1
+                    Twin = 0
+                    Twin += Daddy:fertility_npc 
+                    Twin += Actor:fertility_npc
+
+                    If Random(75, 200) < Twin
+                        "She's having twins!"
+                        Actor3 = Player.generateRelativeMatchRace()
+                        Actor3.setRelativeType(Child)
+                        addNpcRelationship(ParentChild, Actor, Actor3)
+                        "It's a <Actor3.boy_or_girl>! What should I name my <Actor3.son_or_daughter>?"
+                        Actor3.enterFirstName()
+                        Actor3:age => 0
+                        children += 1
+                        If Random(110, 300) < Twin
+                            "She's having triplets!"
+                            Actor4 = Player.generateRelativeMatchRace()
+                            Actor4.setRelativeType(Child)
+                            addNpcRelationship(ParentChild, Actor, Actor4)
+                            "It's a <Actor4.boy_or_girl>! What should I name my <Actor3.son_or_daughter>?"
+                            Actor4.enterFirstName()
+                            Actor4:age => 0
+                            children += 1
+                        Endif        
+                    Endif  
+
+                    mood += 100
+                    
+                Elseif 1 
+                    Actor.endPregnancy()
+                    Actor.dress()
+                    Actor.show(2)
+                    Actor.setActorVar(tag_Pregnant, -1)
+                    Actor2 = Actor.generatePersonMatchRace()
+                    Actor2:age => 0
+                    addNpcRelationship(ParentChild, Actor, Actor2)
+                    Actor2.matchLastName(Actor)
+                    children += 1
+                    "I was not there for the <Actor2.boy_or_girl>'s birth."
+                    karma -= 25
+                
+                Else
+                    Actor.endPregnancy()
+                    "I didn't bother to take <Actor.name> to the hospital, nor even acknowledge this baby as mine. As far as I'm concerned, it's her business to raise the child. If she cannot, she can just put him up for adoption."
+                    "Obviously, my denial of any responsibility regarding the child greatly upset <Actor.name> and her family. Thankfully, they stopped short of suing me for child support. I got away with it basically."
+                    Actor:attractiontoplayer -= 50
+                    Actor:rapportwithplayer -= 50
+                    If Actor.isDating()
+                        loseDating()
+                        "Needless to say though, <Actor.name> promptly broke up with me ..."
+                    Endif
+                Endif
+            Endif
+        Endif
+        
+        SceneEnd() // Improved by Ravenger6660
+    Else
+        Actor.setActorVar(tag_Pregnant, -1)
+    Endif // End edit Ravenger6660

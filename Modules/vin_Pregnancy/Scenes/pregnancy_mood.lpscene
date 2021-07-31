@@ -5,20 +5,31 @@ WHO: Actor = getPerson(tag_DaddyKnows)
 OTHER: Player.isPregnant() && !Player.isMale()
 
     SceneStart()
-    "Being pregnant is hard. I've been having some crazy mood swings recently."
-    mood -= 10
-    If Actor.isValid()
-        "Being my <Actor.boyfriend_or_girlfriend>, <Actor.name> has become the prime victim of my bad mood swings of late."
-        0:: "Try my best to not unload on <Actor.name>"
-        1:: "I feel better after ranting to <Actor.name>"
-        
-        If 0
-            "Even though trying to keep my bad mood to myself makes me feel worse, it's better than giving my <Actor.boyfriend_or_girlfriend> bad mood too."
-            mood -= 10
-        Else
-            "<Actor.He_or_She> can take this! The stress would be a lot worse if I try to keep it to myself. It's good to unload once in a while."
-            Actor:attractiontoplayer -= 1            
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        "Being pregnant is hard. I've been having some crazy mood swings recently."
+        mood -= 10
+        If Actor.isValid()
+            "Being my <Actor.boyfriend_or_girlfriend>, <Actor.name> has become the prime victim of my bad mood swings of late."
+            0:: "Try my best to not unload on <Actor.name>"
+            1:: "I feel better after ranting to <Actor.name>"
+            
+            If 0
+                "Even though trying to keep my bad mood to myself makes me feel worse, it's better than giving my <Actor.boyfriend_or_girlfriend> bad mood too."
+                mood -= 10
+            Else
+                "<Actor.He_or_She> can take this! The stress would be a lot worse if I try to keep it to myself. It's good to unload once in a while."
+                Actor:attractiontoplayer -= 1            
+            Endif
         Endif
-    Endif
-    SceneEnd()
+        If HungerEnable > 0
+            Player.modifyActorVar(rk_VB_Hunger, -1)
+        EndIf
+        If UrgeToPeeEnable > 0
+            Player.modifyActorVar(rk_VB_UrgeToPee, -1)
+        EndIf
+    SceneEnd() // Scene improved by Raddeck
     timeout(500, pregnancy_arousal, pregnancy_energy, pregnancy_mood)
