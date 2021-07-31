@@ -5,25 +5,33 @@ WHO: none
 OTHER: Player.isTrans() && Player:fertility > 0 && !Player.isPregnant() && Player.isOnPeriod()
 
     SceneStart()
-    "I own a squirting dildo..., I have a dick..., And I have a vigina..."
-    0:: "Jack off into the dildo's fake cum container and try to make myself pregnant!"
-    1:: "No way, I don't want to make myself pregnant! This is not Predestination!"
-    
-    If 0
-        Filter(Solo)
-        Sex(Player)
-        "That should do nicely."
-        Filter(Solo)
-        "Well here goes nothing"
-        Sex(Player)
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        "I own a squirting dildo..., I have a dick..., And I have a vigina..."
+        0:: "Jack off into the dildo's fake cum container and try to make myself pregnant!"
+        1:: "No way, I don't want to make myself pregnant! This is not Predestination!"
+        
+        If 0
+            Filter(Solo)
+            Sex(Player)
+            "That should do nicely."
+            Filter(Solo)
+            "Well here goes nothing"
+            Sex(Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -2)
+            EndIf
             If fertility + Random(-10, 10) < fertility + Random(-10, 10)
                 Player.impregnate(Player)
                 "I'm half expecting to announce a pregnancy soon ..."
             Else
                 "Although I used the dildo, it's unlikely that the cum would work."
             Endif
-			
-    Else
-        timeout(50000, Ravenger_VB_dildo_impregnate_Futa)   
-    Endif
-    SceneEnd()
+    			
+        Else
+            timeout(50000, Ravenger_VB_dildo_impregnate_Futa)   
+        Endif
+    SceneEnd() // Improved by Raddeck

@@ -5,441 +5,446 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    // setBackground(doctor)
-    setBackground(hospital)
-    Nurse = generatePersonTemporary()
-    While Nurse.isMale() || !Nurse.isInterestedIn(Player) || Nurse:age > 35
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        // setBackground(doctor)
+        setBackground(hospital)
         Nurse = generatePersonTemporary()
-    endWhile
-    Nurse.randomizeHairs()
-    Nurse.randomizeSexy()
-    Nurse.randomizeFace()
-    Nurse.setJob(Nurse)
-    Nurse.dressUniform(Nurse)
-    Nurse.strip(hat, head, Headwear, Eyewear)
-    
-    //Start edit Raddeck
-    If Player.isFemale()
-    
-        "I don't have the tools to produce sperm ..."
+        While Nurse.isMale() || !Nurse.isInterestedIn(Player) || Nurse:age > 35
+            Nurse = generatePersonTemporary()
+        endWhile
+        Nurse.randomizeHairs()
+        Nurse.randomizeSexy()
+        Nurse.randomizeFace()
+        Nurse.setJob(Nurse)
+        Nurse.dressUniform(Nurse)
+        Nurse.strip(hat, head, Headwear, Eyewear)
         
-    Elseif fertility == 0
-    
-        "I'm not fertile at all so my sperm is useless ..."
+        //Start edit Raddeck
+        If Player.isFemale()
         
-    Elseif isTimingOut(Ravenger_VB_Donate_sperm)
-    
-        "It's too soon since the last time I donated sperm. It takes at least 24 hours for the sperm count to reach the required level."
-        
-    Else
-    
-        Nurse.show(2)
-        Nurse(Curious):: "Hi <Player.Mr_or_Ms>, your name please?"  
-        Player():: "My name is <Player.name> <Player.name_last>..."
-        Nurse(Happy):: "Okay, first we need to do a fertility check ..."
-        //End edit Raddeck
-        Nurse(Serene):: "<Player.Mr_or_Ms> <Player.name_last>, please use the cabin to the left and then bring this cup back to me."
-        Nurse(Happy):: "Don't worry, take your time. You'll find a selection of helpful motivation material in the shelves."
-        
-        Player(Shy):: "Thanks, ..." // Edit by Raddeck
-        "What should I do?" // Edit by Raddeck
-        0:: "Ask her for help"
-        1:: "Ask for her number"
-        2:: "Go alone"
-        3:: "Donate fo cash" // Edit by Raddeck
-        
-        If 0
-            Nurse():: "..."
-            Nurse():: "Why does everyone think ..."
-            Nurse():: "<Player.Mr_or_Ms> <Player.name_last>, this institute is a respectful one and we do not allow such unpleasant inquiries."
-            Player():: "..."
-            Nurse():: "..."
-            If Nurse.IsInterestedIn(Player) && [Player:attractiveness > 50 || Player:interpersonal > 95 || Random(0,1000) < 10] && Nurse:perversion > 25
-                Nurse():: "All right, but this time only."
-                setBackground(hospital)
-                Filter(Handjob)
-                Player.strip()
-                SexNoAffair(Player, Nurse)
-                If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, 1)
-                EndIf
-                setBackground(hospital)
-                If Nurse:perversion > 50 || Nurse:attractiontoplayer > 75
-                    Nurse(Flirty):: "It is So Hard! Mind if I play with it some more?"
-                    0:: "Okay ..."
-                    1:: "No"
-                       
-                    If 0
-                        Player(Flirty):: "Okay ... I guess."
-                        Sex(Nurse, Player)
-                        If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, 2)
-                        EndIf
-                        Nurse.setActorVar(tag_Breeder, 1)
-                    Else
-                        Player():: "Sorry not today"
-                    Endif
-                Endif
-                Player.dress()
-                Player.show(0)
-                Nurse.show(2)
-                Nurse():: "Thank you <Player.Mr_or_Ms> <Player.name_last>, I'll take this. The analysis will take a while."
-                If Nurse.IsInterestedIn(Player) && Nurse:attractiontoplayer > Random(0, 30)
-                    Nurse(Flirty):: "Oh ... mmmh ... do you want my number? Just in case you need more help ..."
-                    0:: "Yes, why not ..."
-                    1:: "No, thanks ..."
-                    
-                    If 0
-                        Nurse.makePermanent()
-                        exchangeContact(Nurse)
-                    Endif
-                Endif
-                Nurse.hide()
-                Player.hide()
-            Endif
-        Elseif 1
-            Player(Happy):: "Sorry if I'm being a weirdo but I find you quite cute. Perhaps we could exchange numbers and hang out another day?"
-            If Nurse.IsInterestedIn(Player) && Nurse:attractiontoplayer > Random(0, 30)
-                Nurse(Surprised):: "Oh ... mmmh ... yeah, why not ... let's exchange contacts."
-                Nurse.makePermanent()
-                exchangeContact(Nurse)
-                
-            Else
-                Nurse(Irritated):: "I'm sorry, I don't normally exchange numbers with random people I met during work."
-                "Then <Nures.he_or_she> went off ..."
-            Endif
-            Nurse.hide()
-            // Start edit by Raddeck
-        Elseif 3
+            "I don't have the tools to produce sperm ..."
             
-            Price = 0.2*[fitness + attractiveness + intelligence]*CostOfLiving
-            PriceC = Price.convertToLocalCurrency(false)
-            "Based on my level of fitness, attractiveness and intelligence, the current rate I would be paid for each sperm donation is <PriceC>."
-            0:: "Donate sperm"
-            1:: "Not today"
+        Elseif fertility == 0
+        
+            "I'm not fertile at all so my sperm is useless ..."
+            
+        Elseif isTimingOut(Ravenger_VB_Donate_sperm)
+        
+            "It's too soon since the last time I donated sperm. It takes at least 24 hours for the sperm count to reach the required level."
+            
+        Else
+        
+            Nurse.show(2)
+            Nurse(Curious):: "Hi <Player.Mr_or_Ms>, your name please?"  
+            Player():: "My name is <Player.name> <Player.name_last>..."
+            Nurse(Happy):: "Okay, first we need to do a fertility check ..."
+            //End edit Raddeck
+            Nurse(Serene):: "<Player.Mr_or_Ms> <Player.name_last>, please use the cabin to the left and then bring this cup back to me."
+            Nurse(Happy):: "Don't worry, take your time. You'll find a selection of helpful motivation material in the shelves."
+            
+            Player(Shy):: "Thanks, ..." // Edit by Raddeck
+            "What should I do?" // Edit by Raddeck
+            0:: "Ask her for help"
+            1:: "Ask for her number"
+            2:: "Go alone"
+            3:: "Donate fo cash" // Edit by Raddeck
             
             If 0
-                timeoutPrecise(24, Ravenger_VB_Donate_sperm)
-                Actor = generatePersonTemporary()
-                If Random(30, 100) < Actor:perversion && Actor.isInterestedIn(Player)
-                    Actor.dress()
-                    Actor.show()
-                    "The nurse in charge of collecting my sperm today is <Actor.name> ... who is offering to literally give me a hand so that the samples can be collected quicker."
-                    0:: "Receive a handjob"
-                    1:: "I'll do it myself"
+                Nurse():: "..."
+                Nurse():: "Why does everyone think ..."
+                Nurse():: "<Player.Mr_or_Ms> <Player.name_last>, this institute is a respectful one and we do not allow such unpleasant inquiries."
+                Player():: "..."
+                Nurse():: "..."
+                If Nurse.IsInterestedIn(Player) && [Player:attractiveness > 50 || Player:interpersonal > 95 || Random(0,1000) < 10] && Nurse:perversion > 25
+                    Nurse():: "All right, but this time only."
+                    setBackground(hospital)
+                    Filter(Handjob)
+                    Player.strip()
+                    SexNoAffair(Player, Nurse)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    setBackground(hospital)
+                    If Nurse:perversion > 50 || Nurse:attractiontoplayer > 75
+                        Nurse(Flirty):: "It is So Hard! Mind if I play with it some more?"
+                        0:: "Okay ..."
+                        1:: "No"
+                           
+                        If 0
+                            Player(Flirty):: "Okay ... I guess."
+                            Sex(Nurse, Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Nurse.setActorVar(tag_Breeder, 1)
+                        Else
+                            Player():: "Sorry not today"
+                        Endif
+                    Endif
+                    Player.dress()
+                    Player.show(0)
+                    Nurse.show(2)
+                    Nurse():: "Thank you <Player.Mr_or_Ms> <Player.name_last>, I'll take this. The analysis will take a while."
+                    If Nurse.IsInterestedIn(Player) && Nurse:attractiontoplayer > Random(0, 30)
+                        Nurse(Flirty):: "Oh ... mmmh ... do you want my number? Just in case you need more help ..."
+                        0:: "Yes, why not ..."
+                        1:: "No, thanks ..."
+                        
+                        If 0
+                            Nurse.makePermanent()
+                            exchangeContact(Nurse)
+                        Endif
+                    Endif
+                    Nurse.hide()
+                    Player.hide()
+                Endif
+            Elseif 1
+                Player(Happy):: "Sorry if I'm being a weirdo but I find you quite cute. Perhaps we could exchange numbers and hang out another day?"
+                If Nurse.IsInterestedIn(Player) && Nurse:attractiontoplayer > Random(0, 30)
+                    Nurse(Surprised):: "Oh ... mmmh ... yeah, why not ... let's exchange contacts."
+                    Nurse.makePermanent()
+                    exchangeContact(Nurse)
                     
-                    If 0
-                        Masturbate = false
-                        Filter(Handjob)
-                        Sex(Player, Actor)
-                        If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, 2)
-                        EndIf
-                        perversion += 0.5
+                Else
+                    Nurse(Irritated):: "I'm sorry, I don't normally exchange numbers with random people I met during work."
+                    "Then <Nures.he_or_she> went off ..."
+                Endif
+                Nurse.hide()
+                // Start edit by Raddeck
+            Elseif 3
+                
+                Price = 0.2*[fitness + attractiveness + intelligence]*CostOfLiving
+                PriceC = Price.convertToLocalCurrency(false)
+                "Based on my level of fitness, attractiveness and intelligence, the current rate I would be paid for each sperm donation is <PriceC>."
+                0:: "Donate sperm"
+                1:: "Not today"
+                
+                If 0
+                    timeoutPrecise(24, Ravenger_VB_Donate_sperm)
+                    Actor = generatePersonTemporary()
+                    If Random(30, 100) < Actor:perversion && Actor.isInterestedIn(Player)
+                        Actor.dress()
+                        Actor.show()
+                        "The nurse in charge of collecting my sperm today is <Actor.name> ... who is offering to literally give me a hand so that the samples can be collected quicker."
+                        0:: "Receive a handjob"
+                        1:: "I'll do it myself"
+                        
+                        If 0
+                            Masturbate = false
+                            Filter(Handjob)
+                            Sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            perversion += 0.5
+                        Else
+                            Masturbate = true
+                        Endif
                     Else
                         Masturbate = true
                     Endif
-                Else
-                    Masturbate = true
-                Endif
-                If Masturbate
-                    "Okay, let's get on with it. Jerking off to cum into a vial while a nurse watches is harder than you think ..."
-                    Filter(Solo)
-                    Sex(Player)
-                    If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, 1)
-                    EndIf
-                Endif
-                money => money + Price
-                If Random(100, 600) < fitness + attractiveness + intelligence
-                    If Random(100, 600) < fitness + attractiveness + intelligence && !isTimingOut(invited_impreg_party)
-                        followUp(invited_impreg_party)
-                    Else
-                        Actor2 = generatePersonTemporary()
-                        While Actor2.isMale()
-                            Actor2 = generatePersonTemporary()
-                        Endwhile
-                        Actor2.dress()
-                        Actor2.show()
-                        "As soon as I left the sperm bank clinic, I was approached by a strange woman who also just left the clinic. She said the artificial insemination procedure scares her and would prefer to get pregnant the traditional way."
-                        "And since I already donated my sperm to the sperm bank, it was possible that my sperm would be used to impregnate her anyway ... so why not follow her to a hotel now and do a much simpler procedure there for five times the money I've just received from the clinic?"
-                        0:: "Okay"
-                        1:: "No"
-                        
-                        If 0
-                            Actor2.makePermanent()
-                            Actor2.setWantsBabies()
-                            setBackground(hotel)
-                            "Soon enough I was back in a hotel with her ..."
-                            Sex(Player, Actor2)
-                            If HungerEnable > 0
-                                Player.modifyActorVar(rk_VB_Hunger, 2)
-                            EndIf
-                            Actor2.impregnate(Player)
-                            money => money + Price*5
-                        Endif
+                    If Masturbate
+                        "Okay, let's get on with it. Jerking off to cum into a vial while a nurse watches is harder than you think ..."
+                        Filter(Solo)
+                        Sex(Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
                     Endif
-                Endif
-                
-                SceneEnd()
-                
-            Endif
-            // End edit by Raddeck
-            
-        Else
-            Nurse.hide()
-            Player.hide()
-            "After a while, you're finally done."
-        Endif
-    Endif
-    Relative = getRelative()
-    
-    If isModEnabled(vin_Incest) && Random(0, 50) < 1 && !Relative.WantsBabies() && !Relative.isDating() && !Player.isFemale() && !Relative.isMale() && Relative:age < 35 && !Relative.isPregnant()
-        Player.show(0)
-        Relative.dress()
-        Relative.show(2)
-        "Wait! Is that my <Relative.relationship>!"
-        "I know they were talking about kids a while ago..."
-        "Are they trying to get pregnant?"
-        0:: "Hope they don't end up with 'my sample'."
-        1:: "Stop them!"
-        2:: "Talk with them."
-        
-        If 0
-            "What are the odds of doctors using my sperm to impregnate my <Relative.relationship>."
-            If Player:fertility > 30 && Random(0, 150) < 10
-                Relative.impregnate(Player)
-                "The odds were drunk that day."
-                "My <Relative.relationship> ended up pregnant from my seed."
-            Elseif Random(0, 250) < 5
-                Donor2 = generatePersonTemporary()
-                Relative.impregnate(Donor2)
-                "My <Relative.relationship> ended up pregnant from another persons seed."
-            Else
-                "I did not seem to have workout for my <Relative.relationship>."
-                Relative.setWantsBabies(true)
-            Endif
-        Elseif 2
-            Player():: "<Relative.name>, what are you doing here?"
-            If Relative:rapportwithplayer > 20
-                Relative():: "Oh! Hi <Player.relationship>. What are you doing here."
-                If perversion > 50
-                    Player():: "Donating sperm."
-                    Relative:perversion += 2
-                Endif
-                Player():: "What are you doing here?"
-                Relative():: "I decided that I wanted to have a child. So that is why I am here."
-                Relative.setWantsBabies(true)
-                Relative:likes_vaginal += 100
-                Nurse.show(2)
-                "Without warnning the nurse finally got back to me."
-                fert = Player:fertility
-                Nurse():: "<Player.Mr_or_Ms> <Player.name_last>, your current fertility level is <fert>%."
-                Nurse.hide()
-                If Player:fertility > 20
-                    Relative():: "Seems you have very potent sperm."
-                    Player():: "Thanks."
-                    Love = 0
-                    Love += Relative:attractiontoplayer
-                    Love += Relative:incest
-                    Love += Relative:perversion  
-                    If Random(100, 200) < Love
-                        Relative():: "How about this."
-                        Player:: "Yes, what is it?"
-                        Relative:: "You know I've always wanted to become a mother ..."
-                        Relative:: "But I've found stable relationships so hard to come by and since you have very potent sperm..."
-                        Relative:: "Would you like the honour of giving me a child?"
-                        0:: "Yes"
-                        1:: "No"
-    
-                        If 0
-                            Player:: "Of course, I'd love to help."
-                            setBackground(home)
-                            "Soon enough, we were begining our first 'natural insemination' session ..."
-                            Sex(Player, Relative)
+                    money => money + Price
+                    If Random(100, 600) < fitness + attractiveness + intelligence
+                        If Random(100, 600) < fitness + attractiveness + intelligence && !isTimingOut(invited_impreg_party)
+                            followUp(invited_impreg_party)
                         Else
-                            Player:: "Sorry, but it would too weird ..."
+                            Actor2 = generatePersonTemporary()
+                            While Actor2.isMale()
+                                Actor2 = generatePersonTemporary()
+                            Endwhile
+                            Actor2.dress()
+                            Actor2.show()
+                            "As soon as I left the sperm bank clinic, I was approached by a strange woman who also just left the clinic. She said the artificial insemination procedure scares her and would prefer to get pregnant the traditional way."
+                            "And since I already donated my sperm to the sperm bank, it was possible that my sperm would be used to impregnate her anyway ... so why not follow her to a hotel now and do a much simpler procedure there for five times the money I've just received from the clinic?"
+                            0:: "Okay"
+                            1:: "No"
+                            
+                            If 0
+                                Actor2.makePermanent()
+                                Actor2.setWantsBabies()
+                                setBackground(hotel)
+                                "Soon enough I was back in a hotel with her ..."
+                                Sex(Player, Actor2)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                Actor2.impregnate(Player)
+                                money => money + Price*5
+                            Endif
+                        Endif
+                    Endif
+                    
+                    SceneEnd()
+                    
+                Endif
+                // End edit by Raddeck
+                
+            Else
+                Nurse.hide()
+                Player.hide()
+                "After a while, you're finally done."
+            Endif
+        Endif
+        Relative = getRelative()
+        
+        If isModEnabled(vin_Incest) && Random(0, 50) < 1 && !Relative.WantsBabies() && !Relative.isDating() && !Player.isFemale() && !Relative.isMale() && Relative:age < 35 && !Relative.isPregnant()
+            Player.show(0)
+            Relative.dress()
+            Relative.show(2)
+            "Wait! Is that my <Relative.relationship>!"
+            "I know they were talking about kids a while ago..."
+            "Are they trying to get pregnant?"
+            0:: "Hope they don't end up with 'my sample'."
+            1:: "Stop them!"
+            2:: "Talk with them."
+            
+            If 0
+                "What are the odds of doctors using my sperm to impregnate my <Relative.relationship>."
+                If Player:fertility > 30 && Random(0, 150) < 10
+                    Relative.impregnate(Player)
+                    "The odds were drunk that day."
+                    "My <Relative.relationship> ended up pregnant from my seed."
+                Elseif Random(0, 250) < 5
+                    Donor2 = generatePersonTemporary()
+                    Relative.impregnate(Donor2)
+                    "My <Relative.relationship> ended up pregnant from another persons seed."
+                Else
+                    "I did not seem to have workout for my <Relative.relationship>."
+                    Relative.setWantsBabies(true)
+                Endif
+            Elseif 2
+                Player():: "<Relative.name>, what are you doing here?"
+                If Relative:rapportwithplayer > 20
+                    Relative():: "Oh! Hi <Player.relationship>. What are you doing here."
+                    If perversion > 50
+                        Player():: "Donating sperm."
+                        Relative:perversion += 2
+                    Endif
+                    Player():: "What are you doing here?"
+                    Relative():: "I decided that I wanted to have a child. So that is why I am here."
+                    Relative.setWantsBabies(true)
+                    Relative:likes_vaginal += 100
+                    Nurse.show(2)
+                    "Without warnning the nurse finally got back to me."
+                    fert = Player:fertility
+                    Nurse():: "<Player.Mr_or_Ms> <Player.name_last>, your current fertility level is <fert>%."
+                    Nurse.hide()
+                    If Player:fertility > 20
+                        Relative():: "Seems you have very potent sperm."
+                        Player():: "Thanks."
+                        Love = 0
+                        Love += Relative:attractiontoplayer
+                        Love += Relative:incest
+                        Love += Relative:perversion  
+                        If Random(100, 200) < Love
+                            Relative():: "How about this."
+                            Player:: "Yes, what is it?"
+                            Relative:: "You know I've always wanted to become a mother ..."
+                            Relative:: "But I've found stable relationships so hard to come by and since you have very potent sperm..."
+                            Relative:: "Would you like the honour of giving me a child?"
+                            0:: "Yes"
+                            1:: "No"
+        
+                            If 0
+                                Player:: "Of course, I'd love to help."
+                                setBackground(home)
+                                "Soon enough, we were begining our first 'natural insemination' session ..."
+                                Sex(Player, Relative)
+                            Else
+                                Player:: "Sorry, but it would too weird ..."
+                            Endif
+                        Else
+                            "Not wanting any accidents I warn my <Relative.relationship> of my contributions to this center."
+                            "But her desire for a child still remains."
                         Endif
                     Else
-                        "Not wanting any accidents I warn my <Relative.relationship> of my contributions to this center."
-                        "But her desire for a child still remains."
+                        Relative():: "Seems your luck is as bad as mine."
+                        "Despite my best attempts I could not convince <Relative.name> to leave."
+                        If Random(0, 350) < 5
+                            Donor2 = generatePersonTemporary()
+                            Relative.impregnate(Donor2)
+                            "My <Relative.relationship> ended up pregnant from another persons seed."
+                        Else
+                            "I did not seem to have workout for my <Relative.relationship> either."
+                        Endif
                     Endif
                 Else
-                    Relative():: "Seems your luck is as bad as mine."
-                    "Despite my best attempts I could not convince <Relative.name> to leave."
-                    If Random(0, 350) < 5
-                        Donor2 = generatePersonTemporary()
-                        Relative.impregnate(Donor2)
-                        "My <Relative.relationship> ended up pregnant from another persons seed."
-                    Else
-                        "I did not seem to have workout for my <Relative.relationship> either."
-                    Endif
+                    "I scared <Relative.name> off."
                 Endif
             Else
-                "I scared <Relative.name> off."
+                "Not wanting any accidents I warn my <Relative.relationship> of my contributions to this center."
+                "Hopefully my <Relative.relationship> reconsiders having kids."
             Endif
+        
         Else
-            "Not wanting any accidents I warn my <Relative.relationship> of my contributions to this center."
-            "Hopefully my <Relative.relationship> reconsiders having kids."
-        Endif
-    
-    Else
-        Patient = generatePersonTemporary()
-        While Patient.isMale() || !Patient.isInterestedIn(Player) || Patient:age > 35
             Patient = generatePersonTemporary()
-        endWhile
-        Patient.randomizeHairs()
-        Patient.randomizeSexy()
-        Patient.randomizeFace()
-        Patient.dress()
-        Patient.show(1)
+            While Patient.isMale() || !Patient.isInterestedIn(Player) || Patient:age > 35
+                Patient = generatePersonTemporary()
+            endWhile
+            Patient.randomizeHairs()
+            Patient.randomizeSexy()
+            Patient.randomizeFace()
+            Patient.dress()
+            Patient.show(1)
+        
+            0:: "Wait for the result"
+            1:: !Player.isFemale():: "Chat with Patient."
+        
+            "After more than two hours the result came."
+        
+            Player.show(0)
+            Nurse.show(2)
+        
+            Patient.setWantsBabies(true)
+            Patient:likes_vaginal += 100
+            fert = Player:fertility
+            Nurse():: "<Player.Mr_or_Ms> <Player.name_last>, your current fertility level is <fert>%."
+        
+            If !Player.isFemale()
+                If 0 
+                    "Good to know."
+                    Chance = 0
+                    Chance += fertility
+                    Chance += Actor:fertility_npc
+                    If Random(100, 400) < Chance
+                        Patient.impregnate(Player)
+                        "My donation was good."
+                    Endif
     
-        0:: "Wait for the result"
-        1:: !Player.isFemale():: "Chat with Patient."
-    
-        "After more than two hours the result came."
-    
-        Player.show(0)
-        Nurse.show(2)
-    
-        Patient.setWantsBabies(true)
-        Patient:likes_vaginal += 100
-        fert = Player:fertility
-        Nurse():: "<Player.Mr_or_Ms> <Player.name_last>, your current fertility level is <fert>%."
-    
-        If !Player.isFemale()
-            If 0 
-                "Good to know."
-                Chance = 0
-                Chance += fertility
-                Chance += Actor:fertility_npc
-                If Random(100, 400) < Chance
-                    Patient.impregnate(Player)
-                    "My donation was good."
-                Endif
-
-            Else
-                If Player:fertility > 20
-                    Patient():: "You have very potent sperm."
-                    Player():: "Thanks."
-                    Patient():: "I have a proposition for you."
-                    Player():: "Oh!"
-                    If Patient:perversion > 75 && Patient:interpersonal > 50 //party
-                        Patient(Flirty):: "I know a number of girl desperate to have children."
-                        Patient(Flirty):: "I can arrange parties to meet these girls if you want."
-                        0:: "Yes, why not..."
-                        1:: "No, thanks..."
-         
-                        If 0
-                            "Yes, why not..."
-                            Patient.makePermanent()
-                            exchangeContact(Patient)
-                            Patient.setActorVar(tag_Breeder, 1)
-                            Player.setBreeder(true)
-                        Endif
-            
-                    Elseif Patient:perversion > 50 //rabbits
-                        Patient():: "I want you to fuck me till I'm pregnant."
-                        Player(flirty):: "Let get started then."
-                        Patient.Strip()
-                        Player.Strip()
-                        Filter(vaginal)
-                        SexNoAffair(Player, Patient)
-                        Patient:perversion += 15
-                        Patient:attractiontoplayer += 10
-                        Player(flirty):: "Wow, that was fun."
-                        If !Patient.isPregnant()
-                            Patient():: "We are not done yet..."
-                            Patient:fertility_npc += 5
-                            energy -= 15
+                Else
+                    If Player:fertility > 20
+                        Patient():: "You have very potent sperm."
+                        Player():: "Thanks."
+                        Patient():: "I have a proposition for you."
+                        Player():: "Oh!"
+                        If Patient:perversion > 75 && Patient:interpersonal > 50 //party
+                            Patient(Flirty):: "I know a number of girl desperate to have children."
+                            Patient(Flirty):: "I can arrange parties to meet these girls if you want."
+                            0:: "Yes, why not..."
+                            1:: "No, thanks..."
+             
+                            If 0
+                                "Yes, why not..."
+                                Patient.makePermanent()
+                                exchangeContact(Patient)
+                                Patient.setActorVar(tag_Breeder, 1)
+                                Player.setBreeder(true)
+                            Endif
+                
+                        Elseif Patient:perversion > 50 //rabbits
+                            Patient():: "I want you to fuck me till I'm pregnant."
+                            Player(flirty):: "Let get started then."
+                            Patient.Strip()
+                            Player.Strip()
                             Filter(vaginal)
                             SexNoAffair(Player, Patient)
                             Patient:perversion += 15
                             Patient:attractiontoplayer += 10
-                            Player(tired):: "Done?"
+                            Player(flirty):: "Wow, that was fun."
                             If !Patient.isPregnant()
-                                Patient():: "No keep on cuming"
-                                Patient:fertility_npc += 10
+                                Patient():: "We are not done yet..."
+                                Patient:fertility_npc += 5
                                 energy -= 15
                                 Filter(vaginal)
                                 SexNoAffair(Player, Patient)
+                                Patient:perversion += 15
                                 Patient:attractiontoplayer += 10
-                                Patient:attractiontoplayer += Random(0, 30)
-                                Player(tired):: "Good lord... I'm empty..."
+                                Player(tired):: "Done?"
+                                If !Patient.isPregnant()
+                                    Patient():: "No keep on cuming"
+                                    Patient:fertility_npc += 10
+                                    energy -= 15
+                                    Filter(vaginal)
+                                    SexNoAffair(Player, Patient)
+                                    Patient:attractiontoplayer += 10
+                                    Patient:attractiontoplayer += Random(0, 30)
+                                    Player(tired):: "Good lord... I'm empty..."
+                                Endif
+                            Endif                   
+    
+                            If !Patient.isPregnant()        
+                                If Patient.IsInterestedIn(Player) && Patient:attractiontoplayer > Random(0, 30)
+                                    Patient(Flirty):: "Oh ... mmmh ... do you want my number? Just in case I need more help..."
+                                    0:: "Yes, why not ..."
+                                    1:: "No, thanks ..."
+                        
+                                    If 0
+                                        Patient.makePermanent()
+                                        Patient.setActorVar(tag_Breeder, 1)
+                                        exchangeContact(Patient)
+                                    Endif
+                                Endif
+                            Else
+                                Patient(Happy):: "Thanks for the baby."
                             Endif
-                        Endif                   
-
-                        If !Patient.isPregnant()        
+                
+                        Elseif Patient:perversion > 25 //source
+                            Player(flirty):: "You want a direct deposit? Don't you?"
+                            Patient():: "Well... yes"
+                            Player(flirty):: "Let get started then."
+                            Filter(vaginal)
+                            Patient.setActorVar(tag_Breeder, 1)
+                            SexNoAffair(Player, Patient)
+          
                             If Patient.IsInterestedIn(Player) && Patient:attractiontoplayer > Random(0, 30)
-                                Patient(Flirty):: "Oh ... mmmh ... do you want my number? Just in case I need more help..."
+                                Patient(Flirty):: "Oh ... mmmh ... do you want my number? Just in case I need more help ..."
                                 0:: "Yes, why not ..."
                                 1:: "No, thanks ..."
-                    
+                        
                                 If 0
                                     Patient.makePermanent()
-                                    Patient.setActorVar(tag_Breeder, 1)
                                     exchangeContact(Patient)
                                 Endif
                             Endif
-                        Else
-                            Patient(Happy):: "Thanks for the baby."
-                        Endif
-            
-                    Elseif Patient:perversion > 25 //source
-                        Player(flirty):: "You want a direct deposit? Don't you?"
-                        Patient():: "Well... yes"
-                        Player(flirty):: "Let get started then."
-                        Filter(vaginal)
-                        Patient.setActorVar(tag_Breeder, 1)
-                        SexNoAffair(Player, Patient)
-      
-                        If Patient.IsInterestedIn(Player) && Patient:attractiontoplayer > Random(0, 30)
-                            Patient(Flirty):: "Oh ... mmmh ... do you want my number? Just in case I need more help ..."
-                            0:: "Yes, why not ..."
-                            1:: "No, thanks ..."
-                    
-                            If 0
-                                Patient.makePermanent()
-                                exchangeContact(Patient)
-                            Endif
-                        Endif
-
-                    Else //cup
-                        Patient():: "Could you please deposit a sample into this cup."
-                        Player(sad):: "..... okay fine."
-                        Filter(Solo)
-                        Sex(Player)
-                        Patient.hide()
-                        "That should do nicely."
-                        "<Patient.name> quicking readied herself..."
-                        Player.hide()
-                        Patient.show()
-                        "I should spy on <Patient.name> and see how it goes."
-                        "Oh, she is using a dildo"
-                        Filter(Solo)
-                        Sex(Patient)
-                        Chance = 0
-                        Chance += fertility
-                        Chance += Actor:fertility_npc
-                        If Random(100, 350) < Chance
-                            Patient.impregnate(Player)
-                            "Although my cum has been weaken, I feel rather confident that it's still fertile."
-                            "I'm half expecting her to announce a pregnancy soon ..."
-                        Else
-                            "Although she used the dildo, it's unlikely that the cum would work. Should have went with the source."
-                        Endif
-
-                    Endif
-            
-                Elseif Random(0, 200) < 5
-                    Patient.impregnate(Player)
-                    "My donation was good."
-                Endif                
     
-            Endif
-            energy -= 15
-        Endif   
-    Endif
-    SceneEnd()
+                        Else //cup
+                            Patient():: "Could you please deposit a sample into this cup."
+                            Player(sad):: "..... okay fine."
+                            Filter(Solo)
+                            Sex(Player)
+                            Patient.hide()
+                            "That should do nicely."
+                            "<Patient.name> quicking readied herself..."
+                            Player.hide()
+                            Patient.show()
+                            "I should spy on <Patient.name> and see how it goes."
+                            "Oh, she is using a dildo"
+                            Filter(Solo)
+                            Sex(Patient)
+                            Chance = 0
+                            Chance += fertility
+                            Chance += Actor:fertility_npc
+                            If Random(100, 350) < Chance
+                                Patient.impregnate(Player)
+                                "Although my cum has been weaken, I feel rather confident that it's still fertile."
+                                "I'm half expecting her to announce a pregnancy soon ..."
+                            Else
+                                "Although she used the dildo, it's unlikely that the cum would work. Should have went with the source."
+                            Endif
+    
+                        Endif
+                
+                    Elseif Random(0, 200) < 5
+                        Patient.impregnate(Player)
+                        "My donation was good."
+                    Endif                
+        
+                Endif
+                energy -= 15
+            Endif   
+        Endif
+    SceneEnd // Improved by Raddeck()
     
     passTime(2,3)

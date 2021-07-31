@@ -4,405 +4,465 @@ WHEN: 12 - 4
 WHO: Breeder = getPerson(tag_Breeder);
 OTHER: !IsWithCompanion() && !Player.isFemale() 
 
-If !Breeder.isValid()
-    Breeder = generatePersonTemporary()
-    While Breeder.isMale() || !Breeder.isInterestedIn(Player) || Breeder:age > 35
+    If !Breeder.isValid()
         Breeder = generatePersonTemporary()
-    endWhile
-    Breeder.setWantsBabies()
-    Breeder:likes_vaginal += 100
-    Breeder.setActorVar(tag_Breeder, 1)
-Endif
-
-sceneStart()
-    Breeder.dress()
-    Player.show()
-    Breeder.show(2)
-    Breeder(Happy):: "Hi, <Player.name>. How are you?"
-    Breeder(Flirty):: "I know you like impregnant girls. I have some friends who would like you to impregnant them."
-    "Will you cum to a party to meet some girls to impregnant?"
-    0:: "No way, I will never do that!"
-    1:: "Sure."
-    2:: "I have other plans for today. Maybe another time"
-
-    If 0
-        Breeder(Sad):: "Shame, but I understand."
-        Readyexhibition.setGlobal(1)
-        Player.setBreeder(false)
-        sceneEnd()
-    Elseif 1
-        Breeder(Happy):: "Great. See you soon then."
-        Breeder.hide()
-        passTime(0.2, 0.4)
-        setBackground(home)
-        Breeder.show(1)
-        Breeder(Excited):: "Hello, how are you? My friends can't wait to see you."
-        Actor = generatePersonTemporary()
-        While Actor.isMale() || !Actor.isInterestedIn(Player) || Actor:age > 35
-            Actor = GeneratePersonTemporary()
-        EndWhile
-        Actor2 = generatePersonTemporary()
-        While Actor2.isMale() || !Actor2.isInterestedIn(Player) || Actor2:age > 35
-            Actor2 = GeneratePersonTemporary()
-        EndWhile
-        Actor3 = generatePersonTemporary()
-        While Actor3.isMale() || !Actor3.isInterestedIn(Player) || Actor3:age > 35
-            Actor3 = GeneratePersonTemporary()
-        EndWhile
-        Actor.dress()
-        Actor2.dress()
-        Actor3.dress()
-        Actor.setWantsBabies(true)
-        Actor:likes_vaginal += 100
-        Actor2.setWantsBabies(true)
-        Actor2:likes_vaginal += 100
-        Actor3.setWantsBabies(true)
-        Actor3:likes_vaginal += 100
-        Actor:perversion += 45
-        Actor:attractiontoplayer += 10
-        Actor2:perversion += 45
-        Actor2:attractiontoplayer += 10
-        Actor3:perversion += 45
-        Actor3:attractiontoplayer += 10
-        Breeder:perversion += 45
-        Breeder:attractiontoplayer += 10
-        If [!Player.isVisible(Bottom) && !Player.isVisible(Bottom_Under)]
-            Actor:arousal += Random(10, 50)
-            Actor2:arousal += Random(10, 50)
-            Actor3:arousal += Random(10, 50)
-            Breeder:arousal += Random(10, 50)
-        Endif
-
-            Actor.show(3)
-            Actor(Happy):: "Hi there, I'm <Actor.name>. Nice to meet you!"
-            Player(Happy):: "Nice to meet you, <Actor.name>. I'm <Player.name>."
-            0:: "Offer to add <Actor.him_or_her> on Facebook"
-            1:: "Just chat"
-            
-            If 0
-                "I made sure to befriend <Actor.name> on Facebook for easy contact in the future."
-                Actor.makePermanent()
-                exchangeContact(Actor)
-                Actor.setActorVar(tag_Breeder, 1)
+        While Breeder.isMale() || !Breeder.isInterestedIn(Player) || Breeder:age > 35
+            Breeder = generatePersonTemporary()
+        endWhile
+        Breeder.setWantsBabies()
+        Breeder:likes_vaginal += 100
+        Breeder.setActorVar(tag_Breeder, 1)
+    Endif
+    
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger) // Edited by Raddeck
+        HungerEnable = rk_VB_EnableHunger.getGlobal() // Edited by Raddeck
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal() // Edited by Raddeck
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee) // Edited by Raddeck
+        FacebookFriend = rk_VB_FacebookFriend.getGlobal() // Edited by Raddeck
+        Breeder.dress()
+        Player.show()
+        Breeder.show(2)
+        Breeder(Happy):: "Hi, <Player.name>. How are you?"
+        Breeder(Flirty):: "I know you like impregnant girls. I have some friends who would like you to impregnant them."
+        "Will you cum to a party to meet some girls to impregnant?"
+        0:: "No way, I will never do that!"
+        1:: "Sure."
+        2:: "I have other plans for today. Maybe another time"
+    
+        If 0
+            Breeder(Sad):: "Shame, but I understand."
+            Readyexhibition.setGlobal(1)
+            Player.setBreeder(false)
+            sceneEnd()
+        Elseif 1
+            Breeder(Happy):: "Great. See you soon then."
+            Breeder.hide()
+            passTime(0.2, 0.4)
+            setBackground(home)
+            Breeder.show(1)
+            Breeder(Excited):: "Hello, how are you? My friends can't wait to see you."
+            Actor = generatePersonTemporary()
+            While Actor.isMale() || !Actor.isInterestedIn(Player) || Actor:age > 35
+                Actor = GeneratePersonTemporary()
+            EndWhile
+            Actor2 = generatePersonTemporary()
+            While Actor2.isMale() || !Actor2.isInterestedIn(Player) || Actor2:age > 35
+                Actor2 = GeneratePersonTemporary()
+            EndWhile
+            Actor3 = generatePersonTemporary()
+            While Actor3.isMale() || !Actor3.isInterestedIn(Player) || Actor3:age > 35
+                Actor3 = GeneratePersonTemporary()
+            EndWhile
+            Actor.dress()
+            Actor2.dress()
+            Actor3.dress()
+            Actor.setWantsBabies(true)
+            Actor:likes_vaginal += 100
+            Actor2.setWantsBabies(true)
+            Actor2:likes_vaginal += 100
+            Actor3.setWantsBabies(true)
+            Actor3:likes_vaginal += 100
+            Actor:perversion += 45
+            Actor:attractiontoplayer += 10
+            Actor2:perversion += 45
+            Actor2:attractiontoplayer += 10
+            Actor3:perversion += 45
+            Actor3:attractiontoplayer += 10
+            Breeder:perversion += 45
+            Breeder:attractiontoplayer += 10
+            If [!Player.isVisible(Bottom) && !Player.isVisible(Bottom_Under)]
+                Actor:arousal += Random(10, 50)
+                Actor2:arousal += Random(10, 50)
+                Actor3:arousal += Random(10, 50)
+                Breeder:arousal += Random(10, 50)
             Endif
-
-            Actor2.show(4)
-            Actor2(Happy):: "Hi there, I'm <Actor2.name>. Nice to meet you!"
-            Player(Happy):: "Nice to meet you, <Actor2.name>. I'm <Player.name>."
-            0:: "Offer to add <Actor.him_or_her> on Facebook"
-            1:: "Just chat"
-            
-            If 0
-                "I made sure to befriend <Actor.name> on Facebook for easy contact in the future."
-                Actor2.makePermanent()
-                exchangeContact(Actor2)
-                Actor2.setActorVar(tag_Breeder, 1)
-            Endif
-
-            Actor3.show(5)
-            Actor3(Happy):: "Hi there, I'm <Actor3.name>. Nice to meet you!"
-            Player(Happy):: "Nice to meet you, <Actor3.name>. I'm <Player.name>."
-            0:: "Offer to add <Actor.him_or_her> on Facebook"
-            1:: "Just chat"
-            
-            If 0
-                "I made sure to befriend <Actor.name> on Facebook for easy contact in the future."
-                Actor3.makePermanent()
-                exchangeContact(Actor3)
-                Actor3.setActorVar(tag_Breeder, 1)
-            Endif
-
-            If attractiveness > Random (45, 60)
-                Actor(Excited):: "Wow <Player.name>, what a hot body!"
-                Actor2(Excited):: "Yeah!"
-            Endif
-
-            If Actor.isOnPeriod()
-                Actor(Flirty):: "I just so happen to be ovulating right now."
-                0:: "Let's make a baby!"
-                1:: "Sorry, not yet."
-
+    
+                Actor.show(3)
+                Actor(Happy):: "Hi there, I'm <Actor.name>. Nice to meet you!"
+                Player(Happy):: "Nice to meet you, <Actor.name>. I'm <Player.name>."
+                0:: "Offer to add <Actor.him_or_her> on Facebook"
+                1:: "Just chat"
+                
                 If 0
-                    money += 200
-                    Actor.strip()
-                    Actor(Excited):: "Come to me, baby!"
-                    Filter(vaginal)
-                    SexNoAffair(Player, Actor)
-                    Player.show()
-                    Breeder.show(2)
-                    Actor.show(3)
-                    Actor2.show(4)
-                    Actor3.show(5)
-                    Actor(Excited):: ""
-                    Actor2(Excited):: "Nice one!"
-                    Actor3(Excited):: "What a show from you two!"
-                    Actor2:arousal += 15
-                    Actor3:arousal += 15
-                    Breeder:arousal += 15
-                Else 1
-                    Actor(Sad):: "Then why are you here!"
-                    Actor:attractiontoplayer -= 15
-                    If Actor:masochist < -20 && isModEnabled(vin_NonConsensual) && Actor.WantsBabies(true)
-                        "My <Actor.relationship> wasn't one to take no for an answer ..."
-                        Filter(AggressiveFM)
-                        player.strip()
-                        Sex(Actor, Player)
-                        If !Actor.isPregnant()
-                            Actor():: "We are not done yet..."
-                            Actor:fertility_npc += 5
-                            energy -= 15
-                            Filter(vaginal)
-                            SexNoAffair(Player, Actor)
-                            Player(tired):: "Done?"
+                    "I made sure to befriend <Actor.name> on Facebook for easy contact in the future."
+                    Actor.makePermanent()
+                    exchangeContact(Actor)
+                    FBID = Actor.getID() // Edited by Raddeck
+                    rk_VB_FacebookFriend.setGlobal(FBID) // Edited by Raddeck
+                    Actor.setActorVar(tag_Breeder, 1)
+                Endif
+    
+                Actor2.show(4)
+                Actor2(Happy):: "Hi there, I'm <Actor2.name>. Nice to meet you!"
+                Player(Happy):: "Nice to meet you, <Actor2.name>. I'm <Player.name>."
+                0:: "Offer to add <Actor.him_or_her> on Facebook"
+                1:: "Just chat"
+                
+                If 0
+                    "I made sure to befriend <Actor.name> on Facebook for easy contact in the future."
+                    Actor2.makePermanent()
+                    exchangeContact(Actor2)
+                    FBID = Actor.getID() // Edited by Raddeck
+                    rk_VB_FacebookFriend.setGlobal(FBID) // Edited by Raddeck
+                    Actor2.setActorVar(tag_Breeder, 1)
+                Endif
+    
+                Actor3.show(5)
+                Actor3(Happy):: "Hi there, I'm <Actor3.name>. Nice to meet you!"
+                Player(Happy):: "Nice to meet you, <Actor3.name>. I'm <Player.name>."
+                0:: "Offer to add <Actor.him_or_her> on Facebook"
+                1:: "Just chat"
+                
+                If 0
+                    "I made sure to befriend <Actor.name> on Facebook for easy contact in the future."
+                    Actor3.makePermanent()
+                    exchangeContact(Actor3)
+                    FBID = Actor.getID() // Edited by Raddeck
+                    rk_VB_FacebookFriend.setGlobal(FBID) // Edited by Raddeck
+                    Actor3.setActorVar(tag_Breeder, 1)
+                Endif
+    
+                If attractiveness > Random (45, 60)
+                    Actor(Excited):: "Wow <Player.name>, what a hot body!"
+                    Actor2(Excited):: "Yeah!"
+                Endif
+    
+                If Actor.isOnPeriod()
+                    Actor(Flirty):: "I just so happen to be ovulating right now."
+                    0:: "Let's make a baby!"
+                    1:: "Sorry, not yet."
+    
+                    If 0
+                        money += 200
+                        Actor.strip()
+                        Actor(Excited):: "Come to me, baby!"
+                        Filter(vaginal)
+                        SexNoAffair(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Player.show()
+                        Breeder.show(2)
+                        Actor.show(3)
+                        Actor2.show(4)
+                        Actor3.show(5)
+                        Actor(Excited):: ""
+                        Actor2(Excited):: "Nice one!"
+                        Actor3(Excited):: "What a show from you two!"
+                        Actor2:arousal += 15
+                        Actor3:arousal += 15
+                        Breeder:arousal += 15
+                    Else 1
+                        Actor(Sad):: "Then why are you here!"
+                        Actor:attractiontoplayer -= 15
+                        If Actor:masochist < -20 && isModEnabled(vin_NonConsensual) && Actor.WantsBabies(true)
+                            "My <Actor.relationship> wasn't one to take no for an answer ..."
+                            Filter(AggressiveFM)
+                            player.strip()
+                            Sex(Actor, Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
                             If !Actor.isPregnant()
-                                Actor():: "No keep on cuming"
-                                Actor:fertility_npc += 10
+                                Actor():: "We are not done yet..."
+                                Actor:fertility_npc += 5
                                 energy -= 15
                                 Filter(vaginal)
                                 SexNoAffair(Player, Actor)
-                                Actor:attractiontoplayer += Random(0, 30)
-                                Player(tired):: "Good lord... I'm empty..."
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                Player(tired):: "Done?"
+                                If !Actor.isPregnant()
+                                    Actor():: "No keep on cuming"
+                                    Actor:fertility_npc += 10
+                                    energy -= 15
+                                    Filter(vaginal)
+                                    SexNoAffair(Player, Actor)
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    EndIf
+                                    Actor:attractiontoplayer += Random(0, 30)
+                                    Player(tired):: "Good lord... I'm empty..."
+                                Endif
                             Endif
                         Endif
                     Endif
+                Elseif Actor:arousal > 75
+                    Actor(Flirty):: "<Player.name>, I want you, right now!"
+                    0:: "Let's do it!"
+                    1:: "Sorry, not yet."
+    
+                    If 0
+                        money += 200
+                        Actor.strip()
+                        Actor(Excited):: "Come to me, baby!"
+                        Filter(vaginal)
+                        SexNoAffair(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Player.show()
+                        Breeder.show(2)
+                        Actor.show(3)
+                        Actor2.show(4)
+                        Actor3.show(5)
+                        Actor(Excited):: ""
+                        Actor2(Excited):: "Nice one!"
+                        Actor3(Excited):: "What a show from you two!"
+                        Actor2:arousal += 15
+                        Actor3:arousal += 15
+                        Breeder:arousal += 15
+                    Elseif 1
+                        Actor(Sad):: "Then why are you here!"
+                        Actor:attractiontoplayer -= 15
+                    Endif
                 Endif
-            Elseif Actor:arousal > 75
-                Actor(Flirty):: "<Player.name>, I want you, right now!"
-                0:: "Let's do it!"
-                1:: "Sorry, not yet."
-
-                If 0
-                    money += 200
-                    Actor.strip()
-                    Actor(Excited):: "Come to me, baby!"
-                    Filter(vaginal)
-                    SexNoAffair(Player, Actor)
-                    Player.show()
-                    Breeder.show(2)
-                    Actor.show(3)
-                    Actor2.show(4)
-                    Actor3.show(5)
-                    Actor(Excited):: ""
-                    Actor2(Excited):: "Nice one!"
-                    Actor3(Excited):: "What a show from you two!"
-                    Actor2:arousal += 15
-                    Actor3:arousal += 15
-                    Breeder:arousal += 15
-                Elseif 1
-                    Actor(Sad):: "Then why are you here!"
-                    Actor:attractiontoplayer -= 15
-                Endif
-            Endif
-            
-            
-            If Actor2.isOnPeriod()
-                Actor2(Flirty):: "I just so happen to be ovulating right now."
-                0:: "Let's make a baby!"
-                1:: "Sorry, not yet."
-
-                If 0
-                    money += 200
-                    Actor2.strip()
-                    Actor2(Excited):: "Come to me, baby!"
-                    Filter(vaginal)
-                    SexNoAffair(Player, Actor2)
-                    Player.show()
-                    Breeder.show(2)
-                    Actor.show(3)
-                    Actor2.show(4)
-                    Actor3.show(5)
-                    Actor(Excited):: "Nice one!"
-                    Actor2(Excited):: ""
-                    Actor3(Excited):: "What a show from you two!"
-                    Actor3:arousal += 15
-                    Breeder:arousal += 15
-                Elseif 1
-                    Actor2(Sad):: "Then why are you here!"
-                    Actor2:attractiontoplayer -= 15
-                    If Actor2:masochist < -20 && isModEnabled(vin_NonConsensual) && Actor2.WantsBabies(true)
-                        "My <Actor.relationship> wasn't one to take no for an answer ..."
-                        Filter(AggressiveFM)
-                        player.strip()
-                        Sex(Actor2, Player)
-                        If !Actor2.isPregnant()
-                            Actor2():: "We are not done yet..."
-                            Actor2:fertility_npc += 5
-                            energy -= 15
-                            Filter(vaginal)
-                            SexNoAffair(Player, Actor2)
-                            Player(tired):: "Done?"
+                
+                
+                If Actor2.isOnPeriod()
+                    Actor2(Flirty):: "I just so happen to be ovulating right now."
+                    0:: "Let's make a baby!"
+                    1:: "Sorry, not yet."
+    
+                    If 0
+                        money += 200
+                        Actor2.strip()
+                        Actor2(Excited):: "Come to me, baby!"
+                        Filter(vaginal)
+                        SexNoAffair(Player, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Player.show()
+                        Breeder.show(2)
+                        Actor.show(3)
+                        Actor2.show(4)
+                        Actor3.show(5)
+                        Actor(Excited):: "Nice one!"
+                        Actor2(Excited):: ""
+                        Actor3(Excited):: "What a show from you two!"
+                        Actor3:arousal += 15
+                        Breeder:arousal += 15
+                    Elseif 1
+                        Actor2(Sad):: "Then why are you here!"
+                        Actor2:attractiontoplayer -= 15
+                        If Actor2:masochist < -20 && isModEnabled(vin_NonConsensual) && Actor2.WantsBabies(true)
+                            "My <Actor.relationship> wasn't one to take no for an answer ..."
+                            Filter(AggressiveFM)
+                            player.strip()
+                            Sex(Actor2, Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
                             If !Actor2.isPregnant()
-                                Actor2():: "No keep on cuming"
-                                Actor2:fertility_npc += 10
+                                Actor2():: "We are not done yet..."
+                                Actor2:fertility_npc += 5
                                 energy -= 15
                                 Filter(vaginal)
                                 SexNoAffair(Player, Actor2)
-                                Actor2:attractiontoplayer += Random(0, 30)
-                                Player(tired):: "Good lord... I'm empty..."
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                Player(tired):: "Done?"
+                                If !Actor2.isPregnant()
+                                    Actor2():: "No keep on cuming"
+                                    Actor2:fertility_npc += 10
+                                    energy -= 15
+                                    Filter(vaginal)
+                                    SexNoAffair(Player, Actor2)
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    EndIf
+                                    Actor2:attractiontoplayer += Random(0, 30)
+                                    Player(tired):: "Good lord... I'm empty..."
+                                Endif
                             Endif
                         Endif
                     Endif
+                Elseif Actor2:arousal > 75
+                    Actor2(Flirty):: "<Player.name>, I want you, right now!"
+                    0:: "Let's do it!"
+                    1:: "Sorry, not yet."
+    
+                    If 0
+                        money += 200
+                        Actor2.strip()
+                        Actor2(Excited):: "Come to me, baby!"
+                        Filter(vaginal)
+                        SexNoAffair(Player, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Player.show()
+                        Breeder.show(2)
+                        Actor.show(3)
+                        Actor2.show(4)
+                        Actor3.show(5)
+                        Actor(Excited):: "Nice one!"
+                        Actor2(Excited):: ""
+                        Actor3(Excited):: "What a show from you two!"
+                        Actor3:arousal += 15
+                        Breeder:arousal += 15
+                    Elseif 1
+                        Actor2(Sad):: "Then why are you here!"
+                        Actor2:attractiontoplayer -= 15
+                    Endif
                 Endif
-            Elseif Actor2:arousal > 75
-                Actor2(Flirty):: "<Player.name>, I want you, right now!"
-                0:: "Let's do it!"
-                1:: "Sorry, not yet."
-
-                If 0
-                    money += 200
-                    Actor2.strip()
-                    Actor2(Excited):: "Come to me, baby!"
-                    Filter(vaginal)
-                    SexNoAffair(Player, Actor2)
-                    Player.show()
-                    Breeder.show(2)
-                    Actor.show(3)
-                    Actor2.show(4)
-                    Actor3.show(5)
-                    Actor(Excited):: "Nice one!"
-                    Actor2(Excited):: ""
-                    Actor3(Excited):: "What a show from you two!"
-                    Actor3:arousal += 15
-                    Breeder:arousal += 15
-                Elseif 1
-                    Actor2(Sad):: "Then why are you here!"
-                    Actor2:attractiontoplayer -= 15
-                Endif
-            Endif
-            
-            
-            If Actor3.isOnPeriod()
-                Actor3(Flirty):: "I just so happen to be ovulating right now."
-                0:: "Let's make a baby!"
-                1:: "Sorry, not yet."
-
-                If 0
-                    money += 200
-                    Actor3.strip()
-                    Actor3(Excited):: "Come to me, baby!"
-                    Filter(vaginal)
-                    SexNoAffair(Player, Actor3)
-                    Player.show()
-                    Breeder.show(2)
-                    Actor.show(3)
-                    Actor2.show(4)
-                    Actor3.show(5)
-                    Actor(Excited):: "What a show from you two!"
-                    Actor2(Excited):: "Nice one!"
-                    Actor3(Excited):: ""
-                    Breeder:arousal += 15
-                Elseif 1
-                    Actor3(Sad):: "Then why are you here!"
-                    Actor3:attractiontoplayer -= 15
-                    If Actor3:masochist < -20 && isModEnabled(vin_NonConsensual) && Actor3.WantsBabies(true)
-                        "My <Actor.relationship> wasn't one to take no for an answer ..."
-                        Filter(AggressiveFM)
-                        player.strip()
-                        Sex(Actor3, Player)
-                        If !Actor3.isPregnant()
-                            Actor3():: "We are not done yet..."
-                            Actor3:fertility_npc += 5
-                            energy -= 15
-                            Filter(vaginal)
-                            SexNoAffair(Player, Actor3)
-                            Player(tired):: "Done?"
+                
+                
+                If Actor3.isOnPeriod()
+                    Actor3(Flirty):: "I just so happen to be ovulating right now."
+                    0:: "Let's make a baby!"
+                    1:: "Sorry, not yet."
+    
+                    If 0
+                        money += 200
+                        Actor3.strip()
+                        Actor3(Excited):: "Come to me, baby!"
+                        Filter(vaginal)
+                        SexNoAffair(Player, Actor3)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Player.show()
+                        Breeder.show(2)
+                        Actor.show(3)
+                        Actor2.show(4)
+                        Actor3.show(5)
+                        Actor(Excited):: "What a show from you two!"
+                        Actor2(Excited):: "Nice one!"
+                        Actor3(Excited):: ""
+                        Breeder:arousal += 15
+                    Elseif 1
+                        Actor3(Sad):: "Then why are you here!"
+                        Actor3:attractiontoplayer -= 15
+                        If Actor3:masochist < -20 && isModEnabled(vin_NonConsensual) && Actor3.WantsBabies(true)
+                            "My <Actor.relationship> wasn't one to take no for an answer ..."
+                            Filter(AggressiveFM)
+                            player.strip()
+                            Sex(Actor3, Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
                             If !Actor3.isPregnant()
-                                Actor3():: "No keep on cuming"
-                                Actor3:fertility_npc += 10
+                                Actor3():: "We are not done yet..."
+                                Actor3:fertility_npc += 5
                                 energy -= 15
                                 Filter(vaginal)
                                 SexNoAffair(Player, Actor3)
-                                Actor3:attractiontoplayer += Random(0, 30)
-                                Player(tired):: "Good lord... I'm empty..."
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                Player(tired):: "Done?"
+                                If !Actor3.isPregnant()
+                                    Actor3():: "No keep on cuming"
+                                    Actor3:fertility_npc += 10
+                                    energy -= 15
+                                    Filter(vaginal)
+                                    SexNoAffair(Player, Actor3)
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    EndIf
+                                    Actor3:attractiontoplayer += Random(0, 30)
+                                    Player(tired):: "Good lord... I'm empty..."
+                                Endif
                             Endif
                         Endif
                     Endif
+                Elseif Actor3:arousal > 75
+                    Actor3(Flirty):: "<Player.name>, I want you, right now!"
+                    0:: "Let's do it!"
+                    1:: "Sorry, not yet."
+    
+                    If 0
+                        money += 200
+                        Actor3.strip()
+                        Actor3(Excited):: "Come to me, baby!"
+                        Filter(vaginal)
+                        SexNoAffair(Player, Actor3)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Player.show()
+                        Breeder.show(2)
+                        Actor.show(3)
+                        Actor2.show(4)
+                        Actor3.show(5)
+                        Actor(Excited):: "What a show from you two!"
+                        Actor2(Excited):: "Nice one!"
+                        Actor3(Excited):: ""
+                        Breeder:arousal += 15
+                    Elseif 1
+                        Actor3(Sad):: "Then why are you here!"
+                        Actor3:attractiontoplayer -= 15
+                    Endif
                 Endif
-            Elseif Actor3:arousal > 75
-                Actor3(Flirty):: "<Player.name>, I want you, right now!"
-                0:: "Let's do it!"
-                1:: "Sorry, not yet."
-
-                If 0
-                    money += 200
-                    Actor3.strip()
-                    Actor3(Excited):: "Come to me, baby!"
-                    Filter(vaginal)
-                    SexNoAffair(Player, Actor3)
-                    Player.show()
-                    Breeder.show(2)
-                    Actor.show(3)
-                    Actor2.show(4)
-                    Actor3.show(5)
-                    Actor(Excited):: "What a show from you two!"
-                    Actor2(Excited):: "Nice one!"
-                    Actor3(Excited):: ""
-                    Breeder:arousal += 15
-                Elseif 1
-                    Actor3(Sad):: "Then why are you here!"
-                    Actor3:attractiontoplayer -= 15
+                
+                If Breeder:arousal > 75
+                    Breeder(Flirty):: "<Player.name>, I want you, right now!"
+                    0:: "Let's do it!"
+                    1:: "Sorry, not yet."
+    
+                    If 0
+                        money += 200
+                        Breeder.strip()
+                        Breeder(Excited):: "Come to me, baby!"
+                        Filter(vaginal)
+                        SexNoAffair(Player, Breeder)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Player.show()
+                        Breeder.show(2)
+                        Actor.show(3)
+                        Actor2.show(4)
+                        Actor3.show(5)
+                        Actor(Excited):: "What a show from you two!"
+                        Actor2(Excited):: "Nice one!"
+                        Actor3(Excited):: ""
+                    Elseif 1
+                        Breeder(Sad):: "Then why are you here!"
+                        Breeder:attractiontoplayer -= 15
+                    Endif
                 Endif
+                
+                Player(Happy):: "Time to go. Bye everyone!"
+                Breeder(Happy):: "Bye!"
+                Actor(Happy):: "Bye!"
+                Actor2(Happy):: "Bye!"
+                Actor3(Happy):: "Bye!"
+                Breeder:rapportwithplayer += Random(0, 3)
+                mood += Random(6, 27)
+                passTime(1.5, 2)
+    
             Endif
-            
-            If Breeder:arousal > 75
-                Breeder(Flirty):: "<Player.name>, I want you, right now!"
-                0:: "Let's do it!"
-                1:: "Sorry, not yet."
-
-                If 0
-                    money += 200
-                    Breeder.strip()
-                    Breeder(Excited):: "Come to me, baby!"
-                    Filter(vaginal)
-                    SexNoAffair(Player, Breeder)
-                    Player.show()
-                    Breeder.show(2)
-                    Actor.show(3)
-                    Actor2.show(4)
-                    Actor3.show(5)
-                    Actor(Excited):: "What a show from you two!"
-                    Actor2(Excited):: "Nice one!"
-                    Actor3(Excited):: ""
-                Elseif 1
-                    Breeder(Sad):: "Then why are you here!"
-                    Breeder:attractiontoplayer -= 15
-                Endif
-            Endif
-            
-            Player(Happy):: "Time to go. Bye everyone!"
-            Breeder(Happy):: "Bye!"
-            Actor(Happy):: "Bye!"
-            Actor2(Happy):: "Bye!"
-            Actor3(Happy):: "Bye!"
-            Breeder:rapportwithplayer += Random(0, 3)
-            mood += Random(6, 27)
-            passTime(1.5, 2)
-
+    
+        Else
+            Breeder(Sad):: "Shame, see you later, then."
         Endif
-
-    Else
-        Breeder(Sad):: "Shame, see you later, then."
+        
+    If Actor.isPregnant()
+        Actor.setActorVar(tag_Breeder, -1)
+        "<Actor.name> got Pregnant."
     Endif
     
-If Actor.isPregnant()
-    Actor.setActorVar(tag_Breeder, -1)
-    "<Actor.name> got Pregnant."
-Endif
-
-If Actor2.isPregnant()
-    Actor2.setActorVar(tag_Breeder, -1)
-    "<Actor2.name> got Pregnant."
-Endif
-
-If Actor3.isPregnant()
-    Actor3.setActorVar(tag_Breeder, -1)
-    "<Actor3.name> got Pregnant."
-Endif
-
-If Breeder.isPregnant()
-    Breeder.setActorVar(tag_Breeder, -1)
-    "<Breeder.name> got Pregnant."
-Endif
-
-sceneEnd()
-timeoutPrecise(200, Ravenger_VB_Breeding_party_2)
+    If Actor2.isPregnant()
+        Actor2.setActorVar(tag_Breeder, -1)
+        "<Actor2.name> got Pregnant."
+    Endif
+    
+    If Actor3.isPregnant()
+        Actor3.setActorVar(tag_Breeder, -1)
+        "<Actor3.name> got Pregnant."
+    Endif
+    
+    If Breeder.isPregnant()
+        Breeder.setActorVar(tag_Breeder, -1)
+        "<Breeder.name> got Pregnant."
+    Endif
+    
+    SceneEnd() // Improved by Raddeck
+    timeoutPrecise(200, Ravenger_VB_Breeding_party_2)
