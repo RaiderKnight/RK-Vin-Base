@@ -6,6 +6,12 @@ OTHER: none
 
     If Actor.isValid() && !Actor.isMale()
         SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        
         setBackground(home)
         Actor.dress()
         Actor.show(2)
@@ -34,9 +40,15 @@ OTHER: none
         Actor2.enterFirstName()
         Actor2:age => 0
         Player:children += 1
-        
+        If HungerEnable > 0
+            Player.modifyActorVar(rk_VB_Hunger, 3)
+        EndIf
+        If UrgeToPeeEnable > 0
+            Player.modifyActorVar(rk_VB_UrgeToPee, 3)
+        EndIf
         mood += 100
-        SceneEnd()
+        SceneEnd() // Improved by Raddeck
     Else
         "Please ask a pregnant woman out first before using this console command again."
     Endif
+    
