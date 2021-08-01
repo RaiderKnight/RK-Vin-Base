@@ -5,24 +5,35 @@ WHO: Actor = getRelative(); If Actor.livesWithPlayer() && Actor:masochist < -50 
 OTHER: isAtHome() && masochist > Random(30, 70) && isModEnabled(vin_NonConsensual) && karma < 50
 
     SceneStart()
-    "I was using the bathroom when my <Actor.relationship> just walked in to use it anyway, butt naked."
-    Actor.show()
-    Actor:: "It's not like that you will say or do anything anyway, submissive bitch."
-    Actor:incest += 5
-    If Actor:incest > 45
-        Actor:: "I'll fuck you now"
-        Filter(Aggressive)
-        Sex(Actor, Player)
-        masochist += 10
-    Elseif Actor:incest > 30
-        Actor:: "Now lick me dry ..."
-        Filter(Oral)
-        Sex(Actor, Player)
-        masochist += 5
-    Elseif Actor:incest > 15
-        Actor:: "Now let me touch you a bit ..."
-        masochist += 2
-    Endif
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        "I was using the bathroom when my <Actor.relationship> just walked in to use it anyway, butt naked."
+        Actor.show()
+        Actor:: "It's not like that you will say or do anything anyway, submissive bitch."
+        Actor:incest += 5
+        If Actor:incest > 45
+            Actor:: "I'll fuck you now"
+            Filter(Aggressive)
+            Sex(Actor, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -2)
+            EndIf
+            masochist += 10
+        Elseif Actor:incest > 30
+            Actor:: "Now lick me dry ..."
+            Filter(Oral)
+            Sex(Actor, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -2)
+            EndIf
+            masochist += 5
+        Elseif Actor:incest > 15
+            Actor:: "Now let me touch you a bit ..."
+            masochist += 2
+        Endif
     SceneEnd()
     timeoutActor(600, cms_ica_sep07, Actor)
-    timeout(300, cms_ica_sep07) // Improved by Ravenger6660
+    timeout(300, cms_ica_sep07) // Improved by Raddeck - Ravenger6660

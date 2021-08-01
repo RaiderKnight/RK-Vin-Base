@@ -8,7 +8,21 @@
 <br>
 <p><strong>Rework In Progress (WIP)</strong></p>
 <br>
+<br>
 <p><strong>What else does this project bring more?</strong></p>
+<br>
+<p>- Universities have a purpose.</p>
+<p>- Menu netter organized.</p>
+<p>- Contain more scenes and 75% more content.</p>
+<p>- More items to buy/eat/sale or trade.</p>
+<p>- Most items have a purpose.</p>
+<p>- New stats (hunger, urge to pee, christanity,...).</p>
+<p>- More actions, choices, consequence, possibilities</p>
+<p>- More activities online.</p>
+<p>- You can join the Police.</p>
+<p>- And a lot more...</p>
+<p>- Updated every week.</p>
+<br>
 <p>In my eyes, 75% of the scenes are not complete enough or lack choice of actions or consequences ...</p>
 <br>
 <p>I made the decision to create a project better suited to my mods and to expand the LifePlay world, containing more completed/fixed scenes, more texts, more possible actions and consequences, less popup scenes, menu user with fewer elements (group actions / scenes into a single element), ...</p>
@@ -86,7 +100,7 @@
 <a href="https://raiderknight-mods.fandom.com/wiki/List_of_contributors_for_Remake_of_LifePlay" title="List of contributions">List of contributions made by contributors.</a>
 <br>
 <ul>
-<li>Ravenger6660 - Modder</li>
+<li>Ravenger6660 - Modder and Writer</li>
 </ul>
 <br>
 <hr>
