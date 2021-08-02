@@ -21,23 +21,24 @@ OTHER: none
             If 0
                 If Random(0, 30) < fitness
                 
+                    setBackground(street)
                     "I managed to lose the cops. Phew, that was close."
                     sneak += 1
                     mood += 2
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -10)
                     EndIf
+                    moveTo(home)
                     
                 Else
-                
-                    "Sure enough, the cops promptly arrived at the scene."
-                    "'Hands in the air, now!'"
+
                     PoliceMan = generatePersonTemporary()
                     PoliceMan.dressGuard()
                     PoliceMan.show(2)
                     Actor1 = generatePersonTemporary()
                     Actor1.dressGuard()
                     Actor1.show(4)
+                    PoliceMan(Furious)::"'Hands in the air, now!'"
                     
                     Player(Angry):: "You're not taking me alive."
                     0:: "Run"
@@ -47,15 +48,17 @@ OTHER: none
                     
                         If Random(0, 100) < fitness
                         
+                            setBackground(street)
                             "I managed to lose the cops. Phew, that was close."
                             sneak += 1
                             mood += 2
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -10)
                             EndIf
-                            
+                            moveTo(home)
                         Else
                         
+                            setBackground(street)
                             Player(Angry):: "You're not taking me alive."
                             copfired = 0
                             While copfired < 5
@@ -99,6 +102,7 @@ OTHER: none
                         
                     Else
                     
+                        setBackground(street)
                         Player.animate(fightlost)
                         Player(Scared):: "Please, don't shoot!"
                         "I put my hands up and surrendered to the overwhelming number of cops."

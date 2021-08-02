@@ -23,12 +23,14 @@ OTHER: none
             If 0
                 If Random(0, 30) < fitness
                 
+                    setBackground(street)
                     "We managed to lose the cops. Phew, that was close."
                     sneak += 1
                     mood += 2
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -10)
                     EndIf
+                    moveTo(home)
                     
                 Else
                 
@@ -48,15 +50,18 @@ OTHER: none
                     
                         If Random(0, 100) < fitness
                         
+                            setBackground(street)
                             "We managed to lose the cops. Phew, that was close."
                             sneak += 1
                             mood += 2
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -10)
                             EndIf
+                            moveTo(home)
                             
                         Else
                         
+                            setBackground(street)
                             Player(Angry):: "You will not taking us alive."
                             copfired = 0
                             While copfired < 5
@@ -113,6 +118,7 @@ OTHER: none
                 
             Else
             
+                setBackground(street)
                 Player.animate(fightlost)
                 Player(Scared):: "Please, don't shoot!"
                 Actor(Scared):: "Please, don't shoot!"

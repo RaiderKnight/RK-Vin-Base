@@ -28,13 +28,33 @@ SceneStart()
         stock_ChickenKebabs = Player.getActorVar(stock_ChickenKebabs)
         stock_ChineseBeef = Player.getActorVar(stock_ChineseBeef)
         stock_SurfNTurf = Player.getActorVar(stock_SurfNTurf)
-    
         stock_meatprod = stock_Jerkey + stock_Cheesesteak + stock_Chicken + stock_SaltNPepper + stock_WrappedPork + stock_ChickenKebabs + stock_ChineseBeef + stock_SurfNTurf
         
         refrigerator_inventory = stock_veganmeal + stock_meatprod + stock_juice + stock_meal
-    
+        setBackgroundCustom(kitchen)
+        
     If refrigerator_inventory < 1 
-        Player(Anxious)::"My refrigerator is totally empty!"
+        Player(Anxious)::"My refrigerator is totally empty! But I always have water..."
+        "Do I want to drink water?"
+        0::"Yes"
+        1::"No"
+        
+        If 0
+            
+            Player.animate(drinkglass)
+            "I decided to drink water..."
+            mood += 0.5
+            fitness += 0.01
+            energy += 1
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, 1)
+            EndIf
+            If UrgeToPeeEnable > 0
+                Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+            EndIf
+        
+        EndIf
+        
     Else
 
         stayInMenu = true

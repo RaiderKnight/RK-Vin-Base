@@ -11,14 +11,15 @@
 <br>
 <p><strong>What else does this project bring more?</strong></p>
 <br>
+<p>- More than 1500 files have been edited.</p>
+<p>- Menu better organized.</p>
+<p>- Contain 75% more content and 40% more items.</p>
 <p>- Universities have a purpose.</p>
-<p>- Menu netter organized.</p>
-<p>- Contain more scenes and 75% more content.</p>
 <p>- More items to buy/eat/sale or trade.</p>
-<p>- Most items have a purpose.</p>
+<p>- Most items you buyed have a purpose.</p>
 <p>- New stats (hunger, urge to pee, christanity,...).</p>
-<p>- More actions, choices, consequence, possibilities</p>
-<p>- More activities online.</p>
+<p>- More actions, choices, consequence and possibilities</p>
+<p>- More online activities.</p>
 <p>- You can join the Police.</p>
 <p>- And a lot more...</p>
 <p>- Updated every week.</p>
