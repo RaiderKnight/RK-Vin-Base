@@ -6,15 +6,15 @@ OTHER:
 
     SceneStart()
 
-        Hunger = Player.getActorVar(rk_VB_Hunger)
-        HungerEnable = rk_VB_EnableHunger.getGlobal()
-        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
-        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Hunger = Player.getActorVar(rk_VB_Hunger) // Edit by Raddeck
+        HungerEnable = rk_VB_EnableHunger.getGlobal() // Edit by Raddeck
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal() // Edit by Raddeck
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee) // Edit by Raddeck
         setBackgroundCustom(livingroom)
         Actor.dress()
         Actor.show()
         "I came home only to find my <Actor.relationship> already in the living room seemingly expecting me."
-        Actor:: "Look, I just went and bought this award-winning DVD, let's watch it together. I got this expensive bottle of wine too. Only the best for my <Actor.callplayer>!"
+        Actor(Happy):: "Look, I just went and bought this award-winning DVD, let's watch it together. I got this expensive bottle of wine too. Only the best for my <Actor.callplayer>!"
         "<Actor.He_or_She> has always acted a bit creepily around me though ... so this might not be the best idea"
         0:: "Sit down and watch the movie with <Actor.him_or_her>"
         1:: "Find an excuse not to"
@@ -23,17 +23,22 @@ OTHER:
             "... An hour later ..."
             "Okay, I'm not entirely sure what awards this weird movie that my <Actor.relationship> bought actually won, but wouldn't surprise me in the least if it's for 'Most Nudity' or 'Almost Porn'."
             "To make it worse, my creepy <Actor.relationship> is at it again, touching me inappropriately all over and making one perverted comment after another."
+            mood -= 5 // Edit by Raddeck
             "Grrrr ... why didn't I just come up with some excuse to not have to welcome <Actor.him_or_her> here? I knew what my <Actor.relationship> is like ..."
             0:: "Bluntly refuse <Actor.his_or_her> advances and storm off back to my room."
             1:: "Tolerate <Actor.his_or_her> behavior"
             
             If 0
-                Player:: "Sorry, but you're acting like a pervert as always. I'll head back to my room now! I have better things to do."
+                
+                perversion -= 1 // Edit by Raddeck
+                Player(Sad):: "Sorry, but you're acting like a pervert as always. I'll head back to my room now! I have better things to do."
                 Actor:rapportwithplayer -= 5
                 If Random(-100, -30) > Actor:masochist && isModEnabled(vin_NonConsensual)
                     "Before I could storm off though, I suddenly feel light-headed and before I know it, I fell on the floor."
                     Player.animate(fightlost)
                     "What's happening to me? I only had one glass of wine for God's sake. My head is already shaking and I'm feeling ... aroused?"
+                    Player:intoxication += 50 // Edit by Raddeck
+                    Player:arousal += 70 // Edit by Raddeck
                     "Wait ... glass of wine ... damn it, from <Actor.his_or_her> expensive bottle ... Oh no, that alcohol was spiked."
                     "I'm losing control of my body - and, where is my <Actor.relationship> leading me to? We're leaving the living room ..."
                     setBackground(home)
@@ -62,6 +67,7 @@ OTHER:
                 
                 If 0
                     Actor:incest += 50
+                    perversion += 1 // Edit by Raddeck
                     "Am I going mad? Why am I following my <Actor.relationship>'s lead back to my bedroom. Am I really going to sleep with my creepy <Actor.relationship>?"
                     setBackground(home)
                     Sex(Actor, Player)
@@ -69,8 +75,11 @@ OTHER:
                         Player.modifyActorVar(rk_VB_Hunger, -2)
                     EndIf
                 Else
-                    Player:: "Sorry, but this is going too far ..."
-                    Actor:: "You're such a tease, I can't guarantee I'll be patient forever you know ..."
+                    Player(Sad):: "Sorry, but this is going too far ..."
+                    Actor(Grin):: "You're such a tease, I can't guarantee I'll be patient forever you know ..."
+                    perversion -= 1 // Edit by Raddeck
+                    arousal -= 10 // Edit by Raddeck
+                    
                 Endif
             Endif
         Endif

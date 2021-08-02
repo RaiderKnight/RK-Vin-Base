@@ -1,38 +1,182 @@
-WHAT: watch_a_movie_in, watch_sport_in, watch_tv
+WHAT: rk_VB_Watch_TV_relative
 WHERE: home
 WHEN: 8 - 22
 WHO: Actor = getRelative(Parent); Actor2 = getRelative(Parent); If !Actor.isMale() && Actor2.isMale() && Actor:incest > 30 && Actor:perversion > 70
 OTHER: isModEnabled(vin_Netori) && [Player.isMale() || Player.isTrans()]
 
     SceneStart()
-    setBackgroundCustom(livingroom)
-    Actor.dress()
-    Actor.show()
-    Actor2.dress()
-    Actor2.show()
-    "I'm gathering to watch TV with my Mom and Dad."
-    Player:: "I need to go get something in the kitchen."
-    setBackgroundCustom(kitchen)
-    Actor.hide()
-    Actor2.hide()
-    "Suddenly my Mom shows up, having followed me to the kitchen"
-    Actor.show()
-    "She tries to seduce me and asks me if I want to show how grown-up I am now and fancy cuckolding my own dad by fucking my mom behind his back."
-    "I've messed around with my mom before, it might actually be safer to just go along with the idea, turning her down now and making a rockus may actually lead to us being found out."
-    0:: "Yes"
-    1:: "No"
-    
-    If 0
-        Player(Sad):: "Okay Mom ... Let's be quiet though, or Did will find out about us."
-        Sex(Player, Actor)
-        Actor:incest += 50
-    Elseif Random(50, 1000) < Actor2:intelligence
-        "My Dad heard the argument and stormed into the kitchen, catching us red-handed."
-        "Disgusted, he divorced my Mom and refused to continue having any contact with the family."
-        Actor2.deletePerson()
-    Else
-        "I turned down my Mom. Thankfully, my Dad didn't hear any of our argument, the old man probably fell asleep on the couch."
-        Actor:incest -= 3
-    Endif
-    SceneEnd()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        incestlegalized = rk_VB_incestlegalized.getGlobal()
+        setBackgroundCustom(livingroom)
+        Actor.dress()
+        Actor.show()
+        Actor2.dress()
+        Actor2.show()
+        "I'm gathering to watch TV with my Mom and Dad."
+        Player(Serene):: "Start the movie, I just need to go get something to eat in the kitchen."
+        "My father has already fallen asleep on the couch ..." //Edit by Raddeck
+        setBackgroundCustom(kitchen)
+        Actor.hide()
+        Actor2.hide()
+        "Suddenly my Mom shows up, having followed me to the kitchen"
+        Actor.show()
+        "She tries to seduce me and asks me if I want to show how grown-up I am now and fancy cuckolding my own dad by fucking my mom behind his back."
+        // "I've messed around with my mom before, it might actually be safer to just go along with the idea, turning her down now and making a rockus may actually lead to us being found out."
+        0:: "Yes"
+        1:: "No"
+        
+        If 0
+        
+            perversion += 1
+            Player(Happy):: "Okay Mom ... Let's be quiet though, or Dad will find out about us."
+            Player.strip()
+            Actor.strip()
+            Sex(Player, Actor)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -2)
+            EndIf
+            Actor:incest += 50
+            
+            // Start edit Raddeck
+            If Random(50, 1000) < Actor2:intelligence
+        
+                arousal -= 10
+                mood -= 5
+                Player.strip()
+                "My Dad heard the action and stormed into the kitchen, catching us red-handed."
+                Actor.strip()
+                "Disgusted by what he saw, he divorced my Mom and refused to continue having any contact with the family."
+                Actor2.deletePerson()
+            
+                "To make it worst, my Dad call the cop and tell them everything."
+                If incestlegalized <= 0
+        
+                    "Sure enough, the cops promptly arrived at the scene."
+                    "'Hands in the air, now! You're under arrest of incest indecency'"
+                    0:: "Run"
+                    1:: "Surrender"
+                
+                    If 0
+                        If Random(0, 30) < fitness
+                        
+                            "We managed to lose the cops. Phew, that was close."
+                            sneak += 1
+                            mood += 2
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -10)
+                            EndIf
+                            
+                        Else
+                        
+                            PoliceMan = generatePersonTemporary()
+                            PoliceMan.dressGuard()
+                            PoliceMan.show(2)
+                            Actor1 = generatePersonTemporary()
+                            Actor1.dressGuard()
+                            Actor1.show(4)
+                            PoliceMan(Furious)::"'Hands in the air, now!'"
+                            
+                            Player(Angry):: "You will not taking us alive."
+                            0:: "Run"
+                            1:: "Surrender"
+                        
+                            If 0
+                            
+                                If Random(0, 100) < fitness
+                                
+                                    "We managed to lose the cops. Phew, that was close."
+                                    sneak += 1
+                                    mood += 2
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -10)
+                                    EndIf
+                                    
+                                Else
+                                
+                                    Player(Angry):: "You will not taking us alive."
+                                    copfired = 0
+                                    While copfired < 5
+                                
+                                        If copfired > 0
+                                
+                                            PoliceMan(Angry)::"HEY YOU BOTH I ASKED YOU TO STOP!"
+                                
+                                        EndIf
+                                        "Pow!"
+                                        Player.hide()
+                            
+                                        "A cop fired his gun..."
+                                        If Random(0, 30) < fitness
+                        
+                                            "We managed to dodge the shot. Phew, that was close."
+                                            sneak += 1
+                                            mood += 1
+                                            copfired += 1
+                                
+                                        ElseIf copfired >= 5
+                                    
+                                            "We managed to lose the cops. Phew, that was close."
+                                            sneak += 3
+                                            mood += 2
+                                            copfired = 6
+                                            If HungerEnable > 0
+                                                Player.modifyActorVar(rk_VB_Hunger, -10)
+                                            EndIf
+                                    
+                                        Else
+                            
+                                            "The cop fired his gun. It was a perfect shot ..."
+                                            followUp(death)
+                                
+                                        EndIf
+                            
+                                    EndWhile
+                                    
+                                Endif
+                                
+                            Else
+                            
+                                Player.animate(fightlost)
+                                Player(Scared):: "Please, don't shoot!"
+                                Actor(Scared):: "Please, don't shoot!"
+                                "We put our hands up and surrendered to the overwhelming number of cops."
+                                sentence += Random(1000, 2000)
+                                followUp(imprisoned)
+                                
+                            Endif 
+        
+                        Endif
+                        
+                    Else
+                    
+                        Player.animate(fightlost)
+                        Player(Scared):: "Please, don't shoot!"
+                        Actor(Scared):: "Please, don't shoot!"
+                        "We put our hands up and surrendered to the overwhelming number of cops."
+                        sneak -= 5
+                        mood -= 5
+                        sentence += Random(300, 1000)
+                        followUp(imprisoned)
+                        
+                    Endif
+                Else
+                    "Seems like the Police doesn't care or didn't believe his story! Cool..."
+                    mood += 3
+                Endif
+                
+            Endif
+            // End edit Raddeck
+            
+        Else
+        
+            "I turned down my Mom. Thankfully, my Dad didn't hear any of our argument, the old man probably still asleep on the couch."
+            Actor:incest -= 3
+            
+        Endif
+        
+    SceneEnd() // Improved by Raddeck 
     timeout(200, cms_cuck_dad_passive)
