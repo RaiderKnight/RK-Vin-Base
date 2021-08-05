@@ -9,6 +9,9 @@ OTHER: none
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         DieHungerEnable = rk_VB_DieHungerEnable.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        UrgeToPeeCons = rk_VB_UrgeToPeeCons.getGlobal()
         
         If HungerEnable > 0 && Hunger <= 0
             
@@ -27,6 +30,60 @@ OTHER: none
                 
             Endif
             rk_VB_DieHungerEnable.setGlobal(0)
+            
+        Endif
+        
+        If UrgeToPeeEnable > 0 && UrgeToPee > 100
+        
+            "I decided to pee right here! I have no time to go to the bathroom..."
+            Player.setActorVar(rk_VB_UrgeToPee, 0)
+            "Ah, what a relief!"
+            masochist -= 1
+            mood += 3
+            
+            If Actor:masochist <= 0 || Actor:likes_bondage > 50 || Actor:rk_VB_likes_watersports > 50
+            
+                Actor.show()
+                Player:rk_VB_likes_watersports += 1
+                Actor:rk_VB_likes_watersports += 1
+                "Do you want me to wipe your <Player.penis_or_pussy> with my mouth?"
+                0::"Yeah, sure!"
+                1::"No thanks!"
+                
+                If 0
+                
+                    perversion += 1
+                    masochist -= 1
+                    Filter(Blowjob)
+                    sex(Actor, Player)
+                
+                EndIf
+                
+            Else
+        
+                Actor.show()
+                Actor(Angry):: "What the fuck! That's so inappropriate! Why did you pee here, idiot!"
+                Actor:attractiontoplayer -= 1
+                Actor:rapportwithplayer -= 1
+            
+                If WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != stripclub && WHERE != prison
+               
+                   followUp(public_indecency)
+            
+                Endif
+            
+            EndIf
+        
+        Elseif UrgeToPeeEnable > 0 && UrgeToPee > 80
+            "I should go pee somewhere! (<UrgeToPee>/100)"
+            0::"Go to bathroom"
+            1::"It can wait!"
+            
+            If 0
+            
+                followUp(rk_VB_Personal_Care_in)
+            
+            Endif
             
         EndIf
         

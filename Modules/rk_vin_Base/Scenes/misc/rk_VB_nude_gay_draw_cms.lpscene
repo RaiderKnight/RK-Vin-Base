@@ -23,7 +23,8 @@ OTHER: isModEnabled(vin_NonConsensual) && Player.isMale()
             
             Actor.dress()
             Actor.show()
-            Actor(Happy):: "Thank you for coming, <Player.name>. My name is <Actor.na,e> and I am the teacher for this class."
+            Actor.moveToPersonStand(Player, 50)
+            Actor(Happy):: "Thank you for coming, <Player.name>. My name is <Actor.name> and I am the teacher for this class."
             Actor(Serene):: "Your job is very simple: You only have to remove all your clothes and make some poses, standing still while the students stares at you and draw. What you think?"
             0:: "Yes sure"
             1:: "No"
@@ -33,7 +34,8 @@ OTHER: isModEnabled(vin_NonConsensual) && Player.isMale()
                 GetFucked = false
                 Actor(Serene):: "Great, let’s begin then…"
                 Player.strip()
-                "The class begins and all the students stares at me, seeing my entire body naked while they draw. The teacher is starring at me in a creep way and is touching me, saying he needs to adjust my pose, but right now, he adjusts the position of my cock, so...…"
+                "The class begins and all the students stares at me, seeing my entire body naked while they draw."
+                "The teacher is starring at me in a creep way and is touching me, saying he needs to adjust my pose, but right now, he adjusts the position of my cock, so...…"
                 "Do I tell him to put his hands somewhere other than my genitals?"
                 0::"No"
                 1::"Yes"
@@ -107,10 +109,18 @@ OTHER: isModEnabled(vin_NonConsensual) && Player.isMale()
                     Player.modifyActorVar(rk_VB_Hunger, -1)
                 EndIf
                 
+                CashPGives = Random(100, 500)
+                CashPGives_loc = CashPGives.convertToLocalCurrency()
                 Actor(Happy):: "Ok…That is all, class. I hope you don’t missed any pose. Don’t forget the homework for tomorrow… Thanks again, big guy."
+                Actor(Happy):: "So <Player.name>, here's <CashPGives_loc> for your good performance today."
+                money += CashPGives
                 
                 If GetFucked
                 
+                    CashPEGives = Random(150, 250)
+                    CashPEGives_loc = CashPEGives.convertToLocalCurrency()
+                    Actor(Grin):: "Also, before I forget, I'll give you this extra <CashPEGives_loc> for letting me fuck you. "
+                    
                     "Do I swindle the professor because he fucked me without my consent?"
                     0::"Yes"
                     1::"No"

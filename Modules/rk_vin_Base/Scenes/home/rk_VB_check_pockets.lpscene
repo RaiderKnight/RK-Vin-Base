@@ -17,7 +17,7 @@ OTHER: none
         stock_Samsung = Player.getActorVar(stock_Samsung)
         stock_OnePlus = Player.getActorVar(stock_OnePlus)
         stock_LPGPower = Player.getActorVar(stock_LPGPower)
-        Stock_phones = Pockstock_IPhone + Pockstock_Samsung + Pockstock_OnePlus + Pockstock_LPGPower
+        TotalStock_phones = Pockstock_IPhone + Pockstock_Samsung + Pockstock_OnePlus + Pockstock_LPGPower
 
         Pockstock_IPhone = Player.getActorVar(Pockstock_IPhone)
         Pockstock_Samsung = Player.getActorVar(Pockstock_Samsung)
@@ -67,9 +67,9 @@ OTHER: none
         TotalPCP = stock_haircare + stock_makeup + stock_supplement + stock_skincare
         TotalUII = stock_bagproduct + stock_binocular + stock_book_P + stock_gift + stock_xxxmag + stock_travelmap
         TotalSmoking = emptycigarStck + vapProdStck + weedstck + stock_tobacco
-        pockets_inventory = TotalSmoking + stock_confectioneryprod + Stock_phones + stock_musicalinstrument_P + stock_flower + TotalPCP + stock_movie + stock_petfood + stock_toyproduct + TotalUII + stock_Formula_Milk + stock_morning_afterPill
+        pockets_inventory = TotalSmoking + stock_confectioneryprod + TotalStock_phones + stock_musicalinstrument_P + stock_flower + TotalPCP + stock_movie + stock_petfood + stock_toyproduct + TotalUII + stock_Formula_Milk + stock_morning_afterPill
     
-    If pockets_inventory < 1 
+    If pockets_inventory <= 0 
         Player(Anxious)::"I got nothing inside my pockets !"
     Else
 
@@ -101,7 +101,7 @@ OTHER: none
                 8:: TotalPCP > 0 ::"Check personal care products inventory (<TotalPCP>)"
                 7:: TotalSmoking > 0 ::"Check smoking products inventory (<TotalSmoking>)"
                 9:: stock_confectioneryprod > 0 ::"Check candies inventory (<stock_confectioneryprod>)"
-                40:: Stock_phones > 0 ::"Check mobile phone inventory (<Stock_phones>)"
+                40:: TotalStock_phones > 0 ::"Check mobile phone inventory (<TotalStock_phones>)"
                 99::"Nevermind, I will check later !"
                 
                 If 6
@@ -124,7 +124,7 @@ OTHER: none
                     99:: "Go back !"
                     
                     If 10
-                        If emptycigarStck  < 1
+                        If emptycigarStck < 1
                             Player(Anxious)::"Ok, I don't have any cigars! I have to go shopping to the tobacco store !"
                         Else
                             0:: "<stock_Davidoff> Davidoff Yamasá"
@@ -137,7 +137,7 @@ OTHER: none
                         Endif
                 
                     Elseif 20
-                        If vapProdStck  < 1
+                        If vapProdStck < 1
                             Player(Anxious)::"Ok, I don't have any vape juices! I have to go shopping to get more vape juice !"
                         Else
         
@@ -151,7 +151,7 @@ OTHER: none
                         Endif
                     
                     Elseif 30
-                        If weedstck  < 1
+                        If weedstck < 1
                             Player(Anxious)::"Ok, I don't have any weed! Damn! I have to go shopping to the tobacco store to rebatch!"
                         Else
                     
@@ -180,7 +180,7 @@ OTHER: none
                     99:: "Go back !"
                 
                 ElseIf 9
-                    If  stock_confectioneryprod  < 1
+                    If  stock_confectioneryprod < 1
                         Player(Anxious)::"Ok, I don't have any candies! I have to go shopping or stopping eating too much candies !"
                     Else
                         0:: "<stock_PopRocks> box(es) of Pop Rocks"
@@ -199,7 +199,7 @@ OTHER: none
                 
                 
                 ElseIf 40
-                    If Stock_phones  < 1
+                    If TotalStock_phones < 1
                         Player(Anxious)::"Ok, I don't have any phone! Damn! I have to go shopping for a phone if I want to call someone!"
                     Else
                 
@@ -248,12 +248,12 @@ OTHER: none
             
                     followUp(rk_VB_smoke_weed)
                     stayInMenu = false
-                
-                ElseIf 99
-            
-                    stayInMenu = false
             
                 Endif
+                
+            ElseIf 99
+            
+                stayInMenu = false
             
             Endif
             

@@ -1,0 +1,105 @@
+WHAT: all, -sleep, -sleep_hotel
+WHERE: all, -work, -prison
+WHEN: 9-24
+WHO: BicycleDealer = getSpecific(BicycleDealer_ID); If BicycleDealer:arousal > 10 || [BicycleDealer.IsDominantSex(Player) && BicycleDealer:attractiontoplayer > Random(0, 10)]
+OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Random(0, 200) < 75
+
+    SceneStart()
+
+        BicycleDealer_ID = rk_VB_BicycleDealer_ID.getGlobal()
+        stock_BTwin = Player.getActorVar(stock_BTwin)
+        stock_Rocky = Player.getActorVar(stock_Rocky)
+        stock_Defy = Player.getActorVar(stock_Defy)
+        stock_SystemSix = Player.getActorVar(stock_SystemSix)
+        stock_Look = Player.getActorVar(stock_Look)
+        stock_Specialized = Player.getActorVar(stock_Specialized)
+        stock_Litespeed = Player.getActorVar(stock_Litespeed)
+        stock_Trek = Player.getActorVar(stock_Trek)
+
+        // Bicycle Dealer
+        // BicycleDealer = getSpecific(BicycleDealer_ID)
+        BicycleSelectedIs = rk_VB_BicycleSelectedIs.getGlobal()
+        BicycleSexLoanValue = Player.getActorVar(rk_VB_BicycleSexLoanValue)
+        PayBicycleWithSex = rk_VB_PayBicycleWithSex.getGlobal()
+        BicycleDealer.dress()
+        BicycleDealer.hide()
+    
+        If BicycleSexLoanValue <= 0 && BicycleSelectedIs > 0
+            "My phone rang ... It's <BicycleDealer.name> calling."
+            BicycleDealer.hide()
+            If BicycleSelectedIs == 1
+                Player.modifyActorVar(stock_BTwin, 1)
+            ElseIf BicycleSelectedIs == 2
+                Player.modifyActorVar(stock_Rocky, 1)
+            ElseIf BicycleSelectedIs == 3
+                Player.modifyActorVar(stock_Defy, 1)
+            ElseIf BicycleSelectedIs == 4
+                Player.modifyActorVar(stock_SystemSix, 1)
+            ElseIf BicycleSelectedIs == 5
+                Player.modifyActorVar(stock_Look, 1)
+            ElseIf BicycleSelectedIs == 6
+                Player.modifyActorVar(stock_Specialized, 1)
+            ElseIf BicycleSelectedIs == 7
+                Player.modifyActorVar(stock_Litespeed, 1)
+            ElseIf BicycleSelectedIs == 8
+                Player.modifyActorVar(stock_Trek, 1)
+            EndIf
+            If PayBicycleWithSex > 0
+                rk_VB_PayBicycleWithSex.setGlobal(0)
+            EndIf
+            BicycleDealer(Happy):: "Hey <Player.name>, it's <BicycleDealer.name> your birthday. I mean, your bicycle have been stored in your garage!"
+            BicycleDealer(Happy):: "We had good time together! Have fun with your new bicycle, Bye!"
+            Player(Happy)::"Ok, bye..."
+            "Nice..."
+            mood += 5
+            rk_VB_BicycleSelectedIs.setGlobal(0)
+            Player.setActorVar(rk_VB_BicycleSexLoanValue, 0)
+            rk_VB_BicycleDealer_ID.setGlobal()
+            BicycleDealer.DeletePerson()
+            
+        ElseIf BicycleSexLoanValue > 0.5 && BicycleSelectedIs > 0
+            
+            "My phone rang ... It's <BicycleDealer.name> calling."
+            BicycleDealer.hide()
+            BicycleDealer(Curious):: "Hey <Player.name>, it's <BicycleDealer.name>. Listen, do you want to fuck today?"
+            
+            "Do I accept <BicycleDealer.his_or_her> offer?"
+            0:: "Yes"
+            1:: "No"
+    
+            If 0
+                Player(Happy):: "Of course. I'll see you in a bit!"
+                mood += 1
+                BicycleDealer(Happy):: "See you soon!"
+                passTime(0.25, 1)
+                
+                "After a while..."
+                setBackground(hotel)
+                "I arrive at <BicycleDealer.his_or_her> hotel, open the door to <BicycleDealer.his_or_her> room, he awaits me completely naked ..."
+                BicycleDealer.strip()
+                BicycleDealer.show()
+                "I immediately understood that I had to undress too! At least if I want my bicycle, I have to sacrifice myself ..."
+                Player.strip()
+                sex(BicycleDealer, Player)
+                
+                If BicycleSelectedIs == 1
+                    Player.modifyActorVar(rk_VB_BicycleSexLoanValue, -1)
+                    BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue> fuck(s)."
+                Else
+                    Player.modifyActorVar(rk_VB_BicycleSexLoanValue, -250)
+                    BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue>"
+                Endif
+                
+            Else
+            
+                Player(Sad):: "Sorry, I'm busy today. Maybe next time ..."
+                BicycleDealer(Sad):: "Oh? That's a shame. I'll see you around then."
+    
+                timeout(12, rk_VB_BicycleSalerForSexLoan_call)
+                
+            Endif
+            
+        Endif   
+        timeout(250, rk_VB_BicycleSalerForSexLoan_call)
+
+    SceneEnd() // Scene created by: Raddeck

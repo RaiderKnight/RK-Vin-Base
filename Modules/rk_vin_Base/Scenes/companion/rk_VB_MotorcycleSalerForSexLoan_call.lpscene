@@ -1,0 +1,105 @@
+WHAT: all, -sleep, -sleep_hotel
+WHERE: all, -work, -prison
+WHEN: 12-24
+WHO: MotorcycleDealer = getSpecific(MotorcycleDealer_ID); If MotorcycleDealer:arousal > 10 || [MotorcycleDealer.IsDominantSex(Player) && MotorcycleDealer:attractiontoplayer > Random(0, 10)]
+OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Random(0, 200) < 75
+
+    SceneStart()
+    
+        MotorcycleDealer_ID = rk_VB_MotorcycleDealer_ID.getGlobal()
+        stock_VULCAN = Player.getActorVar(stock_VULCAN)
+        stock_Ruckus = Player.getActorVar(stock_Ruckus)
+        stock_VStar = Player.getActorVar(stock_VStar)
+        stock_NC750X = Player.getActorVar(stock_NC750X)
+        stock_Husqvarna = Player.getActorVar(stock_Husqvarna)
+        stock_Ducati = Player.getActorVar(stock_Ducati)
+        stock_INDIAN = Player.getActorVar(stock_INDIAN)
+        stock_Ninja = Player.getActorVar(stock_Ninja)
+        
+        // Motorcycle Dealer
+        // MotorcycleDealer = getSpecific(MotorcycleDealer_ID)
+        MotorcycleSelectedIs = rk_VB_MotorcycleSelectedIs.getGlobal()
+        MotorcycleSexLoanValue = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
+        PayMotorcycleWithSex = rk_VB_PayMotorcycleWithSex.getGlobal()
+        MotorcycleDealer.dress()
+        MotorcycleDealer.hide()
+    
+        If MotorcycleSexLoanValue <= 0 && MotorcycleSelectedIs > 0
+            "My phone rang ... It's <MotorcycleDealer.name> calling."
+            MotorcycleDealer.hide()
+            If MotorcycleSelectedIs == 1
+                Player.modifyActorVar(stock_VULCAN, 1)
+            ElseIf MotorcycleSelectedIs == 2
+                Player.modifyActorVar(stock_Ruckus, 1)
+            ElseIf MotorcycleSelectedIs == 3
+                Player.modifyActorVar(stock_VStar, 1)
+            ElseIf MotorcycleSelectedIs == 4
+                Player.modifyActorVar(stock_NC750X, 1)
+            ElseIf MotorcycleSelectedIs == 5
+                Player.modifyActorVar(stock_Husqvarna, 1)
+            ElseIf MotorcycleSelectedIs == 6
+                Player.modifyActorVar(stock_Ducati, 1)
+            ElseIf MotorcycleSelectedIs == 7
+                Player.modifyActorVar(stock_INDIAN, 1)
+            ElseIf MotorcycleSelectedIs == 8
+                Player.modifyActorVar(stock_Ninja, 1)
+            EndIf
+            If PayMotorcycleWithSex > 0
+                rk_VB_PayMotorcycleWithSex.setGlobal(0)
+            EndIf
+            MotorcycleDealer(Happy):: "Hey <Player.name>, it's <MotorcycleDealer.name> your birthday. I mean, your motorcycle have been stored in your garage!"
+            MotorcycleDealer(Happy):: "We had good time together! Have fun with your new motorcycle, Bye!"
+            Player(Happy)::"Ok, bye..."
+            "Nice..."
+            mood += 5
+            rk_VB_MotorcycleSelectedIs.setGlobal(0)
+            Player.setActorVar(rk_VB_MotorcycleSexLoanValue, 0)
+            rk_VB_MotorcycleDealer_ID.setGlobal()
+            MotorcycleDealer.DeletePerson()
+            
+        ElseIf MotorcycleSexLoanValue > 0.5 && MotorcycleSelectedIs > 0
+            
+            "My phone rang ... It's <MotorcycleDealer.name> calling."
+            MotorcycleDealer.hide()
+            MotorcycleDealer(Curious):: "Hey <Player.name>, it's <MotorcycleDealer.name>. Listen, do you want to fuck today?"
+            
+            "Do I accept <MotorcycleDealer.his_or_her> offer?"
+            0:: "Yes"
+            1:: "No"
+    
+            If 0
+                Player(Happy):: "Of course. I'll see you in a bit!"
+                mood += 1
+                MotorcycleDealer(Happy):: "See you soon!"
+                passTime(0.25, 1)
+                
+                "After a while..."
+                setBackground(hotel)
+                "I arrive at <MotorcycleDealer.his_or_her> hotel, open the door to <MotorcycleDealer.his_or_her> room, he awaits me completely naked ..."
+                MotorcycleDealer.strip()
+                MotorcycleDealer.show()
+                "I immediately understood that I had to undress too! At least if I want my motorcycle, I have to sacrifice myself ..."
+                Player.strip()
+                sex(MotorcycleDealer, Player)
+                
+                If MotorcycleSelectedIs == 1
+                    Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -1)
+                    MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue> fuck(s)."
+                Else
+                    Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -250)
+                    MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue>"
+                Endif
+                
+            Else
+            
+                Player(Sad):: "Sorry, I'm busy today. Maybe next time ..."
+                MotorcycleDealer(Sad):: "Oh? That's a shame. I'll see you around then."
+    
+                timeout(12, rk_VB_MotorcycleSalerForSexLoan_call)
+                
+            Endif
+            
+        Endif   
+        timeout(250, rk_VB_MotorcycleSalerForSexLoan_call)
+
+    SceneEnd() // Scene created by: Raddeck

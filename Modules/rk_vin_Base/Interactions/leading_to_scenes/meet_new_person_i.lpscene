@@ -5,7 +5,7 @@ WHO: none
 OTHER: none
 
 
-    sceneStart()
+    SceneStart()
         New_Person.makePermanent()
         InterestedInPC = New_Person.isInterestedIn(Player)
         DominantToPC = New_Person.isDominantSex(Player)
@@ -20,9 +20,18 @@ OTHER: none
         Elseif WHERE == university:work || WHERE == university:school
             New_Person.setDifferentMajor()
         Endif
-    
+        // Start edit Raddeck
+        Random
+            SorryTXT = "I was wondering if..."
+            SorryTXT = "Such a beautiful weather today..."
+            SorryTXT = "Sorry to bother you but,..."
+        EndRandom
+        Player(Happy)::"Hi my name is <Player.name>, nice to see you! <SorryTXT>"
+        Player.moveToPersonStand(New_Person, 50)
+        // End edit Raddeck
         If InterestedInPC && [DominantToPC || Random(0,1) < 0.2] && Random(0, 20) < [New_Person:attractiontoplayer + New_Person:interpersonal]
-            "I found myself engaged in a small conversation with someone I just met - <New_Person.name>. Before leaving <New_Person.he_or_she> asked for my number. Should I accept <New_Person.his_or_her> request?"
+            "I found myself engaged in a small conversation with someone interesting - <New_Person.He_or_She> says <New_Person.his_or_her> name is <New_Person.name>."
+            "Before leaving <New_Person.he_or_she> asked for my number. Should I accept <New_Person.his_or_her> request?"
             0:: "Yes"
             1:: "No"
             
@@ -33,18 +42,20 @@ OTHER: none
                     CurrentCompanion(Happy):: "<New_Person.name> is a great person. You made the right choice giving <New_Person.him_or_her> your number."
                     CurrentCompanion:rapportwithplayer += Random(0,1)
                 Endif
+                interpersonal += 1
             Else
                 "I found an excuse not to give <New_Person.him_or_her> my number. Disappointed, <New_Person.he_or_she> left."
                 If CompanionIntroduced
                     CurrentCompanion(Angry):: "You shouldn't have been so rude to my friend! Next time I won't introduce you to anyone else!"
                     CurrentCompanion:rapportwithplayer -= Random(0,2)
                 Endif
+                interpersonal -= 1
     
             endIf            
         Else
             Random
                 "I came across someone interesting, who introduced <New_Person.himself_or_herself> as <New_Person.name>. Should I exchange contacts with <New_Person.him_or_her>?"
-                "Just by chance, I met <New_Person.name>, who seemed okay. Perhaps I should ask for <New_Person.his_or_her> number?"
+                "Just by chance, I met <New_Person.name>, who seemed okay. Perhaps I should ask for <New_Person.his_or_her> phone number?"
             endRandom
             
                 0:: interpersonal > 5:: "Yes"
@@ -94,6 +105,7 @@ OTHER: none
                                             Random
                                                 New_Person(Scared):: "Well ... I .... I'm sorry if I came across as arrogant or something. Let's exchange numbers!"
                                                 New_Person(Scared):: "Sorry. I didn't mean any offence ... On second thought, here, you can have my number."
+                                                New_Person(Embarassed):: "Sorry. I had a bad day ... On second thought, here, you can have my number." // Edit Raddeck
                                             endRandom
                                             
                                             exchangeContact(New_Person)
@@ -104,12 +116,15 @@ OTHER: none
                                 endIf
                             Endif
                     Else
+                        "<New_Person.name> happily accepted. We exchanged numbers and went our separate ways." // Edit Raddeck
                         exchangeContact(New_Person)
                         "We exchanged numbers and parted ways."
+                        New_Person:rapportwithplayer += Random(0,1) // Edit Raddeck
                     endIf
                     
                 Else
                     "I decided not to give <New_Person.him_or_her> my number."
+                    interpersonal -= 1
                 endIf        
         endIf
-    sceneEnd() // Improved by Raddeck
+    SceneEnd() // Improved by Raddeck

@@ -1,0 +1,102 @@
+WHAT: all, -sleep, -sleep_hotel
+WHERE: all, -work, -prison
+WHEN: 12-24
+WHO: CarDealer = getSpecific(CarDealer_ID); If CarDealer:arousal > 10 || [CarDealer.IsDominantSex(Player) && CarDealer:attractiontoplayer > Random(0, 10)]
+OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Random(0, 200) < 75
+
+    SceneStart()
+
+        CarDealer_ID = rk_VB_CarDealer_ID.getGlobal()
+        stock_Tesla = Player.getActorVar(stock_Tesla)
+        stock_Ferrari = Player.getActorVar(stock_Ferrari)
+        stock_Lambo = Player.getActorVar(stock_Lambo)
+        stock_Mercedez = Player.getActorVar(stock_Mercedez)
+        stock_Mazda = Player.getActorVar(stock_Mazda)
+        stock_BMW = Player.getActorVar(stock_BMW)
+        stock_Lada = Player.getActorVar(stock_Lada)
+    
+        // Car Dealer
+        // CarDealer = getSpecific(CarDealer_ID)
+        CarSelectedIs = rk_VB_CarSelectedIs.getGlobal()
+        CarSexLoanValue = Player.getActorVar(rk_VB_CarSexLoanValue)
+        PayCarWithSex = rk_VB_PayCarWithSex.getGlobal()
+        CarDealer.dress()
+        CarDealer.hide()
+    
+        If CarSexLoanValue <= 0 && CarSelectedIs > 0
+            "My phone rang ... It's <CarDealer.name> calling."
+            CarDealer.hide()
+            If CarSelectedIs == 1
+                Player.modifyActorVar(stock_Lada, 1)
+            ElseIf CarSelectedIs == 2
+                Player.modifyActorVar(stock_Mazda, 1)
+            ElseIf CarSelectedIs == 3
+                Player.modifyActorVar(stock_BMW, 1)
+            ElseIf CarSelectedIs == 4
+                Player.modifyActorVar(stock_Mercedez, 1)
+            ElseIf CarSelectedIs == 5
+                Player.modifyActorVar(stock_Tesla, 1)
+            ElseIf CarSelectedIs == 6
+                Player.modifyActorVar(stock_Ferrari, 1)
+            ElseIf CarSelectedIs == 7
+                Player.modifyActorVar(stock_Lambo, 1)
+            EndIf
+            If PayCarWithSex > 0
+                rk_VB_PayCarWithSex.setGlobal(0)
+            EndIf
+            CarDealer(Happy):: "Hey <Player.name>, it's <CarDealer.name> your birthday. I mean, your car have been stored in your garage!"
+            CarDealer(Happy):: "We had good time together! Have fun with your new car, Bye!"
+            Player(Happy)::"Ok, bye..."
+            "Nice..."
+            mood += 5
+            rk_VB_CarSelectedIs.setGlobal(0)
+            Player.setActorVar(rk_VB_CarSexLoanValue, 0)
+            rk_VB_CarDealer_ID.setGlobal()
+            CarDealer.DeletePerson()
+            
+        ElseIf CarSexLoanValue > 0.5 && CarSelectedIs > 0
+            
+            "My phone rang ... It's <CarDealer.name> calling."
+            CarDealer.hide()
+            CarDealer(Curious):: "Hey <Player.name>, it's <CarDealer.name>. Listen, do you want to fuck today?"
+            
+            "Do I accept <CarDealer.his_or_her> offer?"
+            0:: "Yes"
+            1:: "No"
+    
+            If 0
+                Player(Happy):: "Of course. I'll see you in a bit!"
+                mood += 1
+                CarDealer(Happy):: "See you soon!"
+                passTime(0.25, 1)
+                
+                "After a while..."
+                setBackground(hotel)
+                "I arrive at <CarDealer.his_or_her> hotel, open the door to <CarDealer.his_or_her> room, he awaits me completely naked ..."
+                CarDealer.strip()
+                CarDealer.show()
+                "I immediately understood that I had to undress too! At least if I want my car, I have to sacrifice myself ..."
+                Player.strip()
+                sex(CarDealer, Player)
+                
+                If CarSelectedIs == 1
+                    Player.modifyActorVar(rk_VB_CarSexLoanValue, -1)
+                    CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue> fuck(s)."
+                Else
+                    Player.modifyActorVar(rk_VB_CarSexLoanValue, -250)
+                    CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue>"
+                Endif
+                
+            Else
+            
+                Player(Sad):: "Sorry, I'm busy today. Maybe next time ..."
+                CarDealer(Sad):: "Oh? That's a shame. I'll see you around then."
+    
+                timeout(12, rk_VB_CarSalerForSexLoan_call)
+                
+            Endif
+            
+        Endif   
+        timeout(250, rk_VB_CarSalerForSexLoan_call)
+
+    SceneEnd() // Scene created by: Raddeck
