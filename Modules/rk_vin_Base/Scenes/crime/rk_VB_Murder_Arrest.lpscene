@@ -7,8 +7,8 @@ OTHER: none
     SceneStart()
     
         KillCountG2 = rk_VB_KillCountG2.getGlobal()
-        KillCount = Player.getActorVar(rk_VB_KillCount)
-        "I thought it wasn't that risky doing this, guess I was wrong .... Fucking neighbors... I hope there weren't any cops around"
+        KillCount = Player.getActorVar(rk_VB_KillCount) // for serial killer
+        "I thought it wasn't that risky doing this here, guess I was wrong .... Fucking neighbors... I hope there weren't any cops around"
         
         If Random(0, 50) > sneak
         
@@ -19,7 +19,7 @@ OTHER: none
             PoliceMan2.show(4)
             PoliceMan2.moveToPersonStand(Player, 110)
             "Sure enough, the cops promptly arrived at the scene."
-            "'Hands in the air, now! You're under arrest of first degree murder'"
+            PoliceMan(Furious)::"'Hands in the air, now! You're under arrest of first degree murder'"
             0:: "Run"
             1:: "Surrender"
         
@@ -29,6 +29,10 @@ OTHER: none
                     "I managed to lose the cops. Phew, that was close."
                     sneak += 1
                     mood += 2
+                    energy -= 10
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -10)
+                    EndIf
                     
                 Else
                 
@@ -58,6 +62,10 @@ OTHER: none
                             "I managed to lose the cops. Phew, that was close."
                             sneak += 3
                             mood += 2
+                            energy -= 10
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -10)
+                            EndIf
                             copfired = 5
                             
                         Else

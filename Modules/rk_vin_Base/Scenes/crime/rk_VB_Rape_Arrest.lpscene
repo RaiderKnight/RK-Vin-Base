@@ -8,19 +8,15 @@ OTHER: none
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
-        Actor = getRelative(Parent)
-        incestlegalized = rk_VB_incestlegalized.getGlobal()
         PoliceMan = generatePersonTemporary()
         Actor1 = generatePersonTemporary()
-        IncestCount = Player.getActorVar(rk_VB_IncestCount)
+        RapeCount = Player.getActorVar(rk_VB_RapeCount)
         
-        Player.modifyActorVar(rk_VB_IncestCount, 1)
-        "That was rather risky doing that in front of the people. I hope no one call the cops..."       
-
+        Player.modifyActorVar(rk_VB_RapeCount, 1)
         If Random(0, 50) > sneak
         
             "Sure enough, the cops promptly arrived at the scene."
-            PoliceMan(Furious)::"'Hands in the air, now! You're under arrest of incest indecency'"
+            PoliceMan(Furious)::"'Hands in the air, now! You're under arrest for rape'"
             0:: "Run"
             1:: "Surrender"
         
@@ -28,7 +24,7 @@ OTHER: none
                 If Random(0, 30) < fitness
                 
                     setBackground(street)
-                    "We managed to lose the cops. Phew, that was close."
+                    "I managed to lose the cops. Phew, that was close."
                     sneak += 1
                     mood += 2
                     If HungerEnable > 0
@@ -44,7 +40,7 @@ OTHER: none
                     Actor1.show(4)
                     PoliceMan(Furious)::"'Hands in the air, now!'"
                     
-                    Player(Angry):: "You will not taking us alive."
+                    Player(Angry):: "You will not taking me alive."
                     0:: "Run"
                     1:: "Surrender"
                 
@@ -53,7 +49,7 @@ OTHER: none
                         If Random(0, 100) < fitness
                         
                             setBackground(street)
-                            "We managed to lose the cops. Phew, that was close."
+                            "I managed to lose the cops. Phew, that was close."
                             sneak += 1
                             mood += 2
                             If HungerEnable > 0
@@ -64,13 +60,13 @@ OTHER: none
                         Else
                         
                             setBackground(street)
-                            Player(Angry):: "You will not taking us alive."
+                            Player(Angry):: "You will not taking me alive."
                             copfired = 0
                             While copfired < 5
                         
                                 If copfired > 0
                         
-                                    PoliceMan(Angry)::"HEY YOU BOTH I ASKED YOU TO STOP!"
+                                    PoliceMan(Angry)::"HEY YOU THERE, I ASKED YOU TO STOP!"
                         
                                 EndIf
                                 "Pow!"
@@ -79,14 +75,14 @@ OTHER: none
                                 "A cop fired his gun..."
                                 If Random(0, 30) < fitness
                 
-                                    "We managed to dodge the shot. Phew, that was close."
+                                    "I managed to dodge the shot. Phew, that was close."
                                     sneak += 1
                                     mood += 1
                                     copfired += 1
                         
                                 ElseIf copfired >= 5
                             
-                                    "We managed to lose the cops. Phew, that was close."
+                                    "I managed to lose the cops. Phew, that was close."
                                     sneak += 3
                                     mood += 2
                                     copfired = 6
@@ -109,9 +105,8 @@ OTHER: none
                     
                         Player.animate(fightlost)
                         Player(Scared):: "Please, don't shoot!"
-                        Actor(Scared):: "Please, don't shoot!"
-                        "We put our hands up and surrendered to the overwhelming number of cops."
-                        sentence += Random(1000, 2000)
+                        "I put my hands up and surrendered to the overwhelming number of cops."
+                        sentence += Random(1825, 2000)
                         followUp(imprisoned)
                         
                     Endif 
@@ -123,8 +118,7 @@ OTHER: none
                 setBackground(street)
                 Player.animate(fightlost)
                 Player(Scared):: "Please, don't shoot!"
-                Actor(Scared):: "Please, don't shoot!"
-                "We put our hands up and surrendered to the overwhelming number of cops."
+                "I put my hands up and surrendered to the overwhelming number of cops."
                 sneak -= 5
                 mood -= 5
                 sentence += Random(300, 1000)

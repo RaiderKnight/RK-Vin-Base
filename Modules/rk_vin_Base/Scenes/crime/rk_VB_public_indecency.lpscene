@@ -9,6 +9,11 @@ OTHER: none
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         houseviewing = rk_VB_houseviewing.getGlobal()
+        PoliceMan = generatePersonTemporary()
+        Actor1 = generatePersonTemporary()
+        PublicIndCount = Player.getActorVar(rk_VB_PublicIndCount)
+        
+        Player.modifyActorVar(rk_VB_PublicIndCount, 1)
     
         If houseviewing == 1
         
@@ -19,7 +24,7 @@ OTHER: none
         If Random(0, 50) > sneak
         
             "Sure enough, the cops promptly arrived at the scene."
-            "'Hands in the air, now! You're under arrest of public indecency'"
+            PoliceMan(Furious)::"'Hands in the air, now! You're under arrest of public indecency'"
             0:: "Run"
             1:: "Surrender"
         
@@ -37,10 +42,8 @@ OTHER: none
                     
                 Else
                 
-                    PoliceMan = generatePersonTemporary()
                     PoliceMan.dressGuard()
                     PoliceMan.show(2)
-                    Actor1 = generatePersonTemporary()
                     Actor1.dressGuard()
                     Actor1.show(4)
                     PoliceMan(Furious)::"'Hands in the air, now!'"

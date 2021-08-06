@@ -19,6 +19,7 @@ OTHER: intelligence < Random(10, 75) && karma < Random(0, 50) && !isQuestComplet
         Player(Surprised):: "What happened? Why are you calling me names?"
         Actor(Evil):: "We received reports from neighbours about a potential incest situation going on between you and your <Actor2.relationship>! You were sleeping with your own <Actor2.relationship>!"
         Actor(Evil):: "I know because I was assigned to monitor you for the past month and I saw everything with my own eyes."
+        sneak -= 5 // Edit Raddeck
         "Oh no! We got caught ... There's no point making up any excuses..."
         Actor(Evil):: "Lucky for you ... I can be convinced to stay quiet about it and not report back to my superiors."
         Actor(Evil):: "You know ... incest is very much illegal still in this country. You would be put away for a long time."
@@ -29,11 +30,15 @@ OTHER: intelligence < Random(10, 75) && karma < Random(0, 50) && !isQuestComplet
         If 0
             "This incesturous affair cannot be reported back to the cops ... or it'll send me to jail."
             Player(Angry):: "Fine, is money what you want? Is this enough?"
+            mood -= 10 // Edit Raddeck
             Actor(Evil):: "Pleasure doing business with you ..."
             money -= Random(500, 3000)
         Elseif 1
             "This incesturous affair cannot be reported back to the cops ... or it'll send me to jail."
             Player(Crying):: "I don't have enough money to meet your demands ... I can offer my body."
+            mood -= 5 // Edit Raddeck
+            arousal -= 3 // Edit Raddeck
+            perversion += 1 // Edit Raddeck
             Actor(Evil):: "Well, then that's an alternative that I can live with. Get on with it then!"
             Sex(Actor, Player)
             If HungerEnable > 0
@@ -43,9 +48,10 @@ OTHER: intelligence < Random(10, 75) && karma < Random(0, 50) && !isQuestComplet
             Player(Angry):: "No deal! You can't blackmail me ..."
             Actor(Evil):: "Then be prepared for prison, dear!"
             "<Actor.name> kept <Actor.his_or_her> promise, immediately reporting back to <Actor.his_or_her> superiors at the police department. They soon got an arrest warrant ..."
+            mood -= 10 // Edit Raddeck
             interpersonal -= Random(0, 20)
             jobexperience -= Random(0, 20)
-            sentence => Random(90, 365)
+            sentence += Random(90, 365)
             followUp(imprisoned)
         Endif
     SceneEnd()
