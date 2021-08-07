@@ -1,7 +1,7 @@
 WHAT: all, -sleep, -sleep_hotel
 WHERE: all, -work, -prison
 WHEN: 9-24
-WHO: BicycleDealer = getSpecific(BicycleDealer_ID); If BicycleDealer:arousal > 10 || [BicycleDealer.IsDominantSex(Player) && BicycleDealer:attractiontoplayer > Random(0, 10)]
+WHO: BicycleDealer = getSpecific(BicycleDealer_ID); If BicycleDealer:arousal > 10 || BicycleDealer.IsDominantSex(Player)
 OTHER: !IsWithCompanion() && !isWithCompanionCreature()
 
     SceneStart()
@@ -100,6 +100,6 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
             Endif
             
         Endif   
-        timeout(48, rk_VB_BicycleSalerForSexLoan_call)
+        timeout(36, rk_VB_BicycleSalerForSexLoan_call)
 
     SceneEnd() // Scene created by: Raddeck
