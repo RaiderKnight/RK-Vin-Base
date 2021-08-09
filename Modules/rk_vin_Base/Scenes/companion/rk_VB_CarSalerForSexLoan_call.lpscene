@@ -1,7 +1,7 @@
 WHAT: all, -sleep, -sleep_hotel
 WHERE: all, -work, -prison
 WHEN: 9-24
-WHO: CarDealer = getSpecific(CarDealer_ID); If CarDealer:arousal > 10 || CarDealer.IsDominantSex(Player)
+WHO: none
 OTHER: !IsWithCompanion() && !isWithCompanionCreature()
 
     SceneStart()
@@ -16,7 +16,7 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
         stock_Lada = Player.getActorVar(stock_Lada)
     
         // Car Dealer
-        // CarDealer = getSpecific(CarDealer_ID)
+        CarDealer = getSpecific(CarDealer_ID)
         CarSelectedIs = rk_VB_CarSelectedIs.getGlobal()
         CarSexLoanValue = Player.getActorVar(rk_VB_CarSexLoanValue)
         PayCarWithSex = rk_VB_PayCarWithSex.getGlobal()
@@ -81,10 +81,12 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
                 
                 If CarSelectedIs == 1
                     Player.modifyActorVar(rk_VB_CarSexLoanValue, -1)
-                    CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue> fuck(s)."
+                    CarSexLoanValue1 = Player.getActorVar(rk_VB_CarSexLoanValue)
+                    CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1> fuck(s)."
                 Else
                     Player.modifyActorVar(rk_VB_CarSexLoanValue, -250)
-                    CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue>"
+                    CarSexLoanValue1 = Player.getActorVar(rk_VB_CarSexLoanValue)
+                    CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1>"
                 Endif
                 
             Else

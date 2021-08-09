@@ -2,7 +2,7 @@ WHAT: all
 WHERE: all
 WHEN: 8 - 20
 WHO: none
-OTHER: isModEnabled(vin_NonConsensual) && Player.isMale()
+OTHER: isModEnabled(vin_NonConsensual) && [[Player.isMale() && Player.isGay()] || [Player.isMale() && !Player.isGay() && 80 > Random(0, 100)]]
 
     SceneStart()
     
@@ -151,7 +151,7 @@ OTHER: isModEnabled(vin_NonConsensual) && Player.isMale()
                 
                 If Actor.isInterestedIn(Player) && Actor:arousal > 25 && Actor:perversion > 50
                     Actor(Happy):: "Great, class. Knowing how to draw a gorgeous man body, the next subject is gay reproduction. All great artists need to learn that."
-                    Player(Surprised):: "Wait, what do you means by gay reproduction…"
+                    Player(Surprised):: "Wait, what do you mean by gay reproduction…"
                     
                     If Player.isInterestedInMen() && Player:masochist < Actor:masochist
 
@@ -211,6 +211,7 @@ OTHER: isModEnabled(vin_NonConsensual) && Player.isMale()
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -5)
                 EndIf
+                energy -= 5
                 
                 CashPGives = Random(100, 500)
                 CashPGives_loc = CashPGives.convertToLocalCurrency()

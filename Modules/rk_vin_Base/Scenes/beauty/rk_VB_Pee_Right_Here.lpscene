@@ -9,6 +9,9 @@ OTHER: none
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         UrgeToPeeCons = rk_VB_UrgeToPeeCons.getGlobal()
+        likes_watersports = Player.getActorVar(rk_VB_likes_watersports)
+        Alikes_watersports = Actor.getActorVar(rk_VB_likes_watersports)
+        
         Actor = generatePerson()
         Actor = hide()
         
@@ -20,11 +23,11 @@ OTHER: none
             masochist -= 1
             mood += 3
             
-            If Actor:masochist <= 0 || Actor:likes_bondage > 50 || Actor:rk_VB_likes_watersports > 50
+            If Actor:masochist <= 0 || Actor:likes_bondage > 50 || Actor:Alikes_watersports > 50
             
                 Actor.show()
-                Player:rk_VB_likes_watersports += 1
-                Actor:rk_VB_likes_watersports += 1
+                Player.modifyActorVar(rk_VB_likes_watersports, 1)
+                Actor.modifyActorVar(rk_VB_likes_watersports, 1)
                 "Do you want me to wipe your <Player.penis_or_pussy> with my mouth?"
                 0::"Yeah, sure!"
                 1::"No thanks!"
@@ -35,6 +38,9 @@ OTHER: none
                     masochist -= 1
                     Filter(Blowjob)
                     sex(Actor, Player)
+                    Player.modifyActorVar(rk_VB_likes_watersports, 1)
+                    Actor.modifyActorVar(rk_VB_likes_watersports, 1)
+                    "That was amazing!"
                 
                 EndIf
                 

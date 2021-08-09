@@ -105,25 +105,28 @@ OTHER: none
         
         TotalSexLoan = CarSexLoanValue + MotorcycleSexLoanValue + BicycleSexLoanValue
         TotalVSelected = CarSelectedIs + MotorcycleSelectedIs + BicycleSelectedIs
+        CarSexLoanValue_loc = CarSexLoanValue.convertToLocalCurrency()
+        MotorcycleSexLoanValue_loc = MotorcycleSexLoanValue.convertToLocalCurrency()
+        BicycleSexLoanValue_loc = BicycleSexLoanValue.convertToLocalCurrency()
 
         If TotalSexLoan > 0.5 && TotalVSelected > 0
         
             If CarSelectedIs == 1
                 "You still owe <CarSexLoanValue> fuck(s) to the car dealer."
             Elseif CarSelectedIs >= 2
-                "You still owe <CarSexLoanValue> to the car dealer."
+                "You still owe <CarSexLoanValue_loc> to the car dealer."
             Endif
             
             If MotorcycleSelectedIs == 1
                 "You still owe <MotorcycleSexLoanValue> fuck(s) to the motorcycle dealer."
             Elseif MotorcycleSelectedIs >= 2
-                "You still owe <MotorcycleSexLoanValue> to the motorcycle dealer."
+                "You still owe <MotorcycleSexLoanValue_loc> to the motorcycle dealer."
             Endif
         
             If BicycleSelectedIs == 1
                 "You still owe <BicycleSexLoanValue> fuck(s) to the bicycle dealer."
             Elseif BicycleSelectedIs >= 2
-                "You still owe <BicycleSexLoanValue> to the bicycle dealer."
+                "You still owe <BicycleSexLoanValue_loc> to the bicycle dealer."
             Endif
             
             "Who I want to call?"

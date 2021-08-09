@@ -1,7 +1,7 @@
 WHAT: all, -sleep, -sleep_hotel
 WHERE: all, -work, -prison
 WHEN: 9-24
-WHO: BicycleDealer = getSpecific(BicycleDealer_ID); If BicycleDealer:arousal > 10 || BicycleDealer.IsDominantSex(Player)
+WHO: none
 OTHER: !IsWithCompanion() && !isWithCompanionCreature()
 
     SceneStart()
@@ -17,7 +17,7 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
         stock_Trek = Player.getActorVar(stock_Trek)
 
         // Bicycle Dealer
-        // BicycleDealer = getSpecific(BicycleDealer_ID)
+        BicycleDealer = getSpecific(BicycleDealer_ID)
         BicycleSelectedIs = rk_VB_BicycleSelectedIs.getGlobal()
         BicycleSexLoanValue = Player.getActorVar(rk_VB_BicycleSexLoanValue)
         PayBicycleWithSex = rk_VB_PayBicycleWithSex.getGlobal()
@@ -83,11 +83,17 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
                 sex(BicycleDealer, Player)
                 
                 If BicycleSelectedIs == 1
+                
                     Player.modifyActorVar(rk_VB_BicycleSexLoanValue, -1)
-                    BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue> fuck(s)."
+                    BicycleSexLoanValue1 = Player.getActorVar(rk_VB_BicycleSexLoanValue)
+                    
+                    BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1> fuck(s)."
+
                 Else
                     Player.modifyActorVar(rk_VB_BicycleSexLoanValue, -250)
-                    BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue>"
+                    BicycleSexLoanValue1 = Player.getActorVar(rk_VB_BicycleSexLoanValue)
+                    
+                    BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1>"
                 Endif
                 
             Else

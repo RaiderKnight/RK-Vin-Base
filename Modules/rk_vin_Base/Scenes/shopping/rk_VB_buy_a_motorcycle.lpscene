@@ -8,10 +8,18 @@ SceneStart()
     
     // Motorcycle Dealer
     setBackground(motorcycle)
+    
+    If !Actor.isValid()
+        MotorcycleDealer = generatePerson()
+        MotorcycleDealer_ID = MotorcycleDealer.getID()
+        rk_VB_MotorcycleDealer_ID.setGlobal(MotorcycleDealer_ID)
+    Else
+        MotorcycleDealer = Actor.getTarget()
+        MotorcycleDealer_ID = MotorcycleDealer.getID()
+        rk_VB_MotorcycleDealer_ID.setGlobal(MotorcycleDealer_ID)
+    Endif
+    
     PayMotorcycleWithSex = rk_VB_PayMotorcycleWithSex.getGlobal()
-    MotorcycleDealer = generatePerson()
-    MotorcycleDealer_ID = MotorcycleDealer.getID()
-    rk_VB_MotorcycleDealer_ID.setGlobal(MotorcycleDealer_ID)
     MotorcycleDealer:arousal += Random(0, 100)
     MotorcycleDealer:perversion += Random(0, 100)
     MotorcycleSelectedIs = rk_VB_MotorcycleSelectedIs.getGlobal()
@@ -321,11 +329,13 @@ SceneStart()
     
         If MotorcycleSexLoanValue > 0.5
             MotorcycleDealer.show()
-            .moveToPersonStand(Player, 50)
+            MotorcycleDealer.dress()
+            MotorcycleDealer.moveToPersonStand(Player, 50)
             MotorcycleDealer(Sad)::"Sorry, but according to our books, you already owe us a debt, pay your debt, and then you can make another arrangement."
         Else
             MotorcycleDealer.show()
-            .moveToPersonStand(Player, 50)
+            MotorcycleDealer.dress()
+            MotorcycleDealer.moveToPersonStand(Player, 50)
             Player(Shy)::"Hi, humm, is it possible to buy a motorcycle in nature, if you know what I mean?"
             If MotorcycleDealer:perversion > 50 && MotorcycleDealer:arousal > 25 && MotorcycleDealer.isInterestedIn(Player)
                 
@@ -353,21 +363,21 @@ SceneStart()
                 Price7 = Random(50000, 75000)
                 Price7C = Price7.convertToLocalCurrency()
                 
-                Price0 = Random(700, 2400) * (attractiveness/2)/100
+                Price0 = Random(700, 2400) * ((attractiveness/2)/100)
                 Price0C = Price0.convertToLocalCurrency()
-                Price1 = Random(2500, 3500) * (attractiveness/2)/100
+                Price1 = Random(2500, 3500) * ((attractiveness/2)/100)
                 Price1C = Price1.convertToLocalCurrency()
-                Price2 = Random(4000, 5000) * (attractiveness/2)/100
+                Price2 = Random(4000, 5000) * ((attractiveness/2)/100)
                 Price2C = Price2.convertToLocalCurrency()
-                Price3 = Random(5500, 8000) * (attractiveness/2)/100
+                Price3 = Random(5500, 8000) * ((attractiveness/2)/100)
                 Price3C = Price3.convertToLocalCurrency()
-                Price4 = Random(9000, 11000) * (attractiveness/2)/100
+                Price4 = Random(9000, 11000) * ((attractiveness/2)/100)
                 Price4C = Price4.convertToLocalCurrency()
-                Price5 = Random(15000, 20000) * (attractiveness/2)/100
+                Price5 = Random(15000, 20000) * ((attractiveness/2)/100)
                 Price5C = Price5.convertToLocalCurrency()
-                Price6 = Random(28000, 35000) * (attractiveness/2)/100
+                Price6 = Random(28000, 35000) * ((attractiveness/2)/100)
                 Price6C = Price6.convertToLocalCurrency()
-                Price7 = Random(50000, 75000) * (attractiveness/2)/100
+                Price7 = Random(50000, 75000) * ((attractiveness/2)/100)
                 Price7C = Price7.convertToLocalCurrency()
                 
                 // Apply rebate - Result Price
@@ -399,18 +409,28 @@ SceneStart()
                 
                 If 0
                     rk_VB_MotorcycleSelectedIs.setGlobal(1)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price0AR)
                 ElseIf 1
                     rk_VB_MotorcycleSelectedIs.setGlobal(2)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price1AR)
                 ElseIf 2
                     rk_VB_MotorcycleSelectedIs.setGlobal(3)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price2AR)
                 ElseIf 3
                     rk_VB_MotorcycleSelectedIs.setGlobal(4)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price3AR)
                 ElseIf 4
                     rk_VB_MotorcycleSelectedIs.setGlobal(5)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price4AR)
                 ElseIf 5
                     rk_VB_MotorcycleSelectedIs.setGlobal(6)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price5AR)
                 ElseIf 6
                     rk_VB_MotorcycleSelectedIs.setGlobal(7)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price6AR)
+                ElseIf 7
+                    rk_VB_MotorcycleSelectedIs.setGlobal(8)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price7AR)
                 EndIf
                 
                 MotorcycleDealer(Grin)::"Ok, so now, how many times can I play with your body before I give you a motorcycle for free?"
@@ -418,14 +438,15 @@ SceneStart()
                 SaleManRefuse = false
                 SaleManRefuse2 = false
                 "What do I offer?"
-                0::"5 fucks"
-                1::"10 fucks"
+                0::"5 fucks in exchange"
+                1::"10 fucks in exchange"
                 2::"Offer free sex until the motorcycle is paid"
                 99::"I changed my mind"
                 
                 If 0
                     
                     SaleManRefuse = true
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, 0)
                     
                 ElseIf 1
                 
@@ -485,6 +506,7 @@ SceneStart()
                             
                         Else
                         
+                            Player.setActorVar(rk_VB_MotorcycleSexLoanValue, 0)
                             SaleManRefuse2 = true
                             
                         EndIf
@@ -493,25 +515,6 @@ SceneStart()
                 Elseif 2
                     
                     // MyBodyValueIs = 250
-                    
-                    If MotorcycleSelectedIs == 1
-                        Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price0AR)
-                    ElseIf MotorcycleSelectedIs == 2
-                        Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price1AR)
-                    ElseIf MotorcycleSelectedIs == 3
-                        Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price2AR)
-                    ElseIf MotorcycleSelectedIs == 4
-                        Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price3AR)
-                    ElseIf MotorcycleSelectedIs == 5
-                        Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price4AR)
-                    ElseIf MotorcycleSelectedIs == 6
-                        Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price5AR)
-                    ElseIf MotorcycleSelectedIs == 7
-                        Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price6AR)
-                    ElseIf MotorcycleSelectedIs == 8
-                        Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price7AR)
-                    EndIf
-                    
                     If !MotorcycleDealer.isContactExchanged()
                         exchangeContact(MotorcycleDealer)
                     EndIf
@@ -542,7 +545,8 @@ SceneStart()
                         Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -250)
                     EndIf
                     MotorcycleSexLoanValue1 = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
-                    MotorcycleDealer(Flirty)::"That was amazing! Just a reminder, now you owe me <MotorcycleSexLoanValue1>! See ya!"
+                    MotorcycleSexLoanValue1_loc = MotorcycleSexLoanValue1.convertToLocalCurrency()
+                    MotorcycleDealer(Flirty)::"That was amazing! Just a reminder, now you owe me <MotorcycleSexLoanValue1_loc>! See ya!"
                     MotorcycleDealer.hide()
                     
                 Else
@@ -550,7 +554,7 @@ SceneStart()
                     "I decided to think a little bit more about it!"
                     rk_VB_MotorcycleSelectedIs.setGlobal(0)
                     rk_VB_MotorcycleDealer_ID.setGlobal(0)
-                    
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, 0)
                     
                 EndIf
                 
@@ -560,14 +564,14 @@ SceneStart()
                     MotorcycleDealer(Grin)::"You're losing my time, have a nice day!"
                     rk_VB_MotorcycleSelectedIs.setGlobal(0)
                     rk_VB_MotorcycleDealer_ID.setGlobal(0)
-                    
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, 0)
                     
                 ElseIf SaleManRefuse2
                 
                     MotorcycleDealer(Grin)::"Get out, you're losing my time, have a nice day!"
                     rk_VB_MotorcycleSelectedIs.setGlobal(0)
                     rk_VB_MotorcycleDealer_ID.setGlobal(0)
-                    
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, 0)
                     
                 EndIf
             

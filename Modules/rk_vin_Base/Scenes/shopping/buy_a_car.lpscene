@@ -7,9 +7,16 @@ OTHER: none
 SceneStart()
     
     setBackground(car)
-    CarDealer = generatePerson()
-    CarDealer_ID = CarDealer.getID()
-    rk_VB_CarDealer_ID.setGlobal(CarDealer_ID)
+    
+    If !Actor.isValid()
+        CarDealer = generatePerson()
+        CarDealer_ID = CarDealer.getID()
+        rk_VB_CarDealer_ID.setGlobal(CarDealer_ID)
+    Else
+        CarDealer = Actor.getTarget()
+        CarDealer_ID = CarDealer.getID()
+        rk_VB_CarDealer_ID.setGlobal(CarDealer_ID)
+    Endif
     CarDealer:arousal += Random(0, 100)
     CarDealer:perversion += Random(0, 100)
     CarSelectedIs = rk_VB_CarSelectedIs.getGlobal()
@@ -321,10 +328,12 @@ SceneStart()
     
         If CarSexLoanValue > 0.5
             CarDealer.show()
+            CarDealer.dress()
             CarDealer.moveToPersonStand(Player, 50)
             CarDealer(Sad)::"Sorry, but according to our books, you already owe us a debt, pay your debt, and then you can make another arrangement."
         Else
             CarDealer.show()
+            CarDealer.dress()
             CarDealer.moveToPersonStand(Player, 50)
             Player(Shy)::"Hi, humm, is it possible to buy a car in nature, if you know what I mean?"
             If CarDealer:perversion > 50 && CarDealer:arousal > 25 && CarDealer.isInterestedIn(Player)
@@ -352,19 +361,19 @@ SceneStart()
                 Price6 = Random(400000, 850000)
                 Price6C = Price6.convertToLocalCurrency()
                 
-                Price0R = Random(7000, 18000) * (attractiveness/2)/100
+                Price0R = Random(7000, 18000) * ((attractiveness/2)/100)
                 Price0CR = Price0R.convertToLocalCurrency()
-                Price1R = Random(15000, 35000) * (attractiveness/2)/100
+                Price1R = Random(15000, 35000) * ((attractiveness/2)/100)
                 Price1CR = Price1R.convertToLocalCurrency()
-                Price2R = Random(30000, 55000) * (attractiveness/2)/100
+                Price2R = Random(30000, 55000) * ((attractiveness/2)/100)
                 Price2CR = Price2R.convertToLocalCurrency()
-                Price3R = Random(60000, 80000) * (attractiveness/2)/100
+                Price3R = Random(60000, 80000) * ((attractiveness/2)/100)
                 Price3CR = Price3R.convertToLocalCurrency()
-                Price4R = Random(80000, 250000) * (attractiveness/2)/100
+                Price4R = Random(80000, 250000) * ((attractiveness/2)/100)
                 Price4CR = Price4R.convertToLocalCurrency()
-                Price5R = Random(300000, 650000) * (attractiveness/2)/100
+                Price5R = Random(300000, 650000) * ((attractiveness/2)/100)
                 Price5CR = Price5R.convertToLocalCurrency()
-                Price6R = Random(400000, 850000) * (attractiveness/2)/100
+                Price6R = Random(400000, 850000) * ((attractiveness/2)/100)
                 Price6CR = Price6R.convertToLocalCurrency()
 
                 // Apply rebate - Result Price
@@ -393,18 +402,25 @@ SceneStart()
                 
                 If 0
                     rk_VB_CarSelectedIs.setGlobal(1)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, Price0AR)
                 ElseIf 1
                     rk_VB_CarSelectedIs.setGlobal(2)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, Price1AR)
                 ElseIf 2
                     rk_VB_CarSelectedIs.setGlobal(3)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, Price2AR)
                 ElseIf 3
                     rk_VB_CarSelectedIs.setGlobal(4)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, Price3AR)
                 ElseIf 4
                     rk_VB_CarSelectedIs.setGlobal(5)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, Price4AR)
                 ElseIf 5
                     rk_VB_CarSelectedIs.setGlobal(6)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, Price5AR)
                 ElseIf 6
                     rk_VB_CarSelectedIs.setGlobal(7)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, Price6AR)
                 EndIf
                 
                 CarDealer(Grin)::"Ok, so now, how many times can I play with your body before I give you a car for free?"
@@ -412,14 +428,15 @@ SceneStart()
                 SaleManRefuse = false
                 SaleManRefuse2 = false
                 "What do I offer?"
-                0::"20 fucks"
-                1::"50 fucks"
+                0::"20 fucks in exchange"
+                1::"50 fucks in exchange"
                 2::"Offer free sex until the car is paid"
                 99::"I changed my mind"
                 
                 If 0
                     
                     SaleManRefuse = true
+                    Player.setActorVar(rk_VB_CarSexLoanValue, 0)
                     
                 ElseIf 1
                 
@@ -479,6 +496,7 @@ SceneStart()
                             
                         Else
                         
+                            Player.setActorVar(rk_VB_CarSexLoanValue, 0)
                             SaleManRefuse2 = true
                             
                         EndIf
@@ -487,23 +505,6 @@ SceneStart()
                 Elseif 2
                     
                     // MyBodyValueIs = 250
-                    
-                    If CarSelectedIs == 1
-                        Player.setActorVar(rk_VB_CarSexLoanValue, Price0AR)
-                    ElseIf CarSelectedIs == 2
-                        Player.setActorVar(rk_VB_CarSexLoanValue, Price1AR)
-                    ElseIf CarSelectedIs == 3
-                        Player.setActorVar(rk_VB_CarSexLoanValue, Price2AR)
-                    ElseIf CarSelectedIs == 4
-                        Player.setActorVar(rk_VB_CarSexLoanValue, Price3AR)
-                    ElseIf CarSelectedIs == 5
-                        Player.setActorVar(rk_VB_CarSexLoanValue, Price4AR)
-                    ElseIf CarSelectedIs == 6
-                        Player.setActorVar(rk_VB_CarSexLoanValue, Price5AR)
-                    ElseIf CarSelectedIs == 7
-                        Player.setActorVar(rk_VB_CarSexLoanValue, Price6AR)
-                    EndIf
-                    
                     If !CarDealer.isContactExchanged()
                         exchangeContact(CarDealer)
                     EndIf
@@ -532,7 +533,8 @@ SceneStart()
                         Player.modifyActorVar(rk_VB_CarSexLoanValue, -250)
                     EndIf
                     CarSexLoanValue1 = Player.getActorVar(rk_VB_CarSexLoanValue)
-                    CarDealer(Flirty)::"That was amazing! Just a reminder, now you owe me <CarSexLoanValue1>! See ya!"
+                    CarSexLoanValue1_loc = CarSexLoanValue1.convertToLocalCurrency()
+                    CarDealer(Flirty)::"That was amazing! Just a reminder, now you owe me <CarSexLoanValue1_loc>! See ya!"
                     CarDealer.hide()
                     
                 Else
@@ -540,6 +542,7 @@ SceneStart()
                     "I decided to think a little bit more about it!"
                     rk_VB_CarSelectedIs.setGlobal(0)
                     rk_VB_CarDealer_ID.setGlobal(0)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, 0)
                     
                 EndIf
                 
@@ -549,12 +552,14 @@ SceneStart()
                     CarDealer(Grin)::"You're losing my time, have a nice day!"
                     rk_VB_CarSelectedIs.setGlobal(0)
                     rk_VB_CarDealer_ID.setGlobal(0)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, 0)
                     
                 ElseIf SaleManRefuse2
                 
                     CarDealer(Grin)::"Get out, you're losing my time, have a nice day!"
                     rk_VB_CarSelectedIs.setGlobal(0)
                     rk_VB_CarDealer_ID.setGlobal(0)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, 0)
                     
                 EndIf
             

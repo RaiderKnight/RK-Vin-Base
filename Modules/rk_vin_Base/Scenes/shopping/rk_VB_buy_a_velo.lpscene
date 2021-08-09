@@ -9,9 +9,16 @@ SceneStart()
     // Bicycle Dealer
     PayBicycleWithSex = rk_VB_PayBicycleWithSex.getGlobal()
     setBackground(bicycle)
-    BicycleDealer = generatePerson()
-    BicycleDealer_ID = BicycleDealer.getID()
-    rk_VB_BicycleDealer_ID.setGlobal(BicycleDealer_ID)
+    
+    If !Actor.isValid()
+        BicycleDealer = generatePerson()
+        BicycleDealer_ID = BicycleDealer.getID()
+        rk_VB_BicycleDealer_ID.setGlobal(BicycleDealer_ID)
+    Else
+        BicycleDealer = Actor.getTarget()
+        BicycleDealer_ID = BicycleDealer.getID()
+        rk_VB_BicycleDealer_ID.setGlobal(BicycleDealer_ID)
+    Endif
     BicycleDealer:arousal += Random(0, 100)
     BicycleDealer:perversion += Random(0, 100)
     BicycleSelectedIs = rk_VB_BicycleSelectedIs.getGlobal()
@@ -318,10 +325,12 @@ SceneStart()
     
         If BicycleSexLoanValue > 0.5
             BicycleDealer.show()
+            BicycleDealer.dress()
             BicycleDealer.moveToPersonStand(Player, 50)
             BicycleDealer(Sad)::"Sorry, but according to our books, you already owe us a debt, pay your debt, and then you can make another arrangement."
         Else
             BicycleDealer.show()
+            BicycleDealer.dress()
             BicycleDealer.moveToPersonStand(Player, 50)
             Player(Shy)::"Hi, humm, is it possible to buy a bicycle in nature, if you know what I mean?"
             If BicycleDealer:perversion > 50 && BicycleDealer:arousal > 25 && BicycleDealer.isInterestedIn(Player)
@@ -353,21 +362,21 @@ SceneStart()
                 Price7C = Price7.convertToLocalCurrency()
                 
                 // Rebate
-                Price0R = Random(500, 1000) * (attractiveness/2)/100
+                Price0R = Random(500, 1000) * ((attractiveness/2)/100)
                 Price0CR = Price0R.convertToLocalCurrency()
-                Price1R = Random(1500, 3500) * (attractiveness/2)/100
+                Price1R = Random(1500, 3500) * ((attractiveness/2)/100)
                 Price1CR = Price1R.convertToLocalCurrency()
-                Price2R = Random(4000, 5000) * (attractiveness/2)/100
+                Price2R = Random(4000, 5000) * ((attractiveness/2)/100)
                 Price2CR = Price2R.convertToLocalCurrency()
-                Price3R = Random(5500, 8000) * (attractiveness/2)/100
+                Price3R = Random(5500, 8000) * ((attractiveness/2)/100)
                 Price3CR = Price3R.convertToLocalCurrency()
-                Price4R = Random(9000, 14000) * (attractiveness/2)/100
+                Price4R = Random(9000, 14000) * ((attractiveness/2)/100)
                 Price4CR = Price4R.convertToLocalCurrency()
-                Price5R = Random(15000, 20000) * (attractiveness/2)/100
+                Price5R = Random(15000, 20000) * ((attractiveness/2)/100)
                 Price5CR = Price5R.convertToLocalCurrency()
-                Price6R = Random(28000, 45000) * (attractiveness/2)/100
+                Price6R = Random(28000, 45000) * ((attractiveness/2)/100)
                 Price6CR = Price6R.convertToLocalCurrency()
-                Price7R = Random(50000, 75000) * (attractiveness/2)/100
+                Price7R = Random(50000, 75000) * ((attractiveness/2)/100)
                 Price7CR = Price7R.convertToLocalCurrency()
                 
                 // Apply rebate - Result Price
@@ -400,35 +409,44 @@ SceneStart()
                 
                 If 0
                     rk_VB_BicycleSelectedIs.setGlobal(1)
+                    Player.setActorVar(rk_VB_BicycleSexLoanValue, Price0AR)
                 ElseIf 1
                     rk_VB_BicycleSelectedIs.setGlobal(2)
+                    Player.setActorVar(rk_VB_BicycleSexLoanValue, Price1AR)
                 ElseIf 2
                     rk_VB_BicycleSelectedIs.setGlobal(3)
+                    Player.setActorVar(rk_VB_BicycleSexLoanValue, Price2AR)
                 ElseIf 3
                     rk_VB_BicycleSelectedIs.setGlobal(4)
+                    Player.setActorVar(rk_VB_BicycleSexLoanValue, Price3AR)
                 ElseIf 4
                     rk_VB_BicycleSelectedIs.setGlobal(5)
+                    Player.setActorVar(rk_VB_BicycleSexLoanValue, Price4AR)
                 ElseIf 5
                     rk_VB_BicycleSelectedIs.setGlobal(6)
+                    Player.setActorVar(rk_VB_BicycleSexLoanValue, Price5AR)
                 ElseIf 6
                     rk_VB_BicycleSelectedIs.setGlobal(7)
+                    Player.setActorVar(rk_VB_BicycleSexLoanValue, Price6AR)
                 ElseIf 7
                     rk_VB_BicycleSelectedIs.setGlobal(8)
+                    Player.setActorVar(rk_VB_BicycleSexLoanValue, Price7AR)
                 EndIf
-                
+
                 BicycleDealer(Grin)::"Ok, so now, how many times can I play with your body before I give you a bicycle for free?"
                 BicycleDealer:masochist -= Random(2, 5)
                 SaleManRefuse = false
                 SaleManRefuse2 = false
                 "What do I offer?"
-                0::"2 fucks"
-                1::"3 fucks"
+                0::"2 fucks in exchange"
+                1::"3 fucks in exchange"
                 2::"Offer free sex until the bicycle is paid"
                 99::"I changed my mind"
                 
                 If 0
                     
                     SaleManRefuse = true
+                    Player.setActorVar(rk_VB_BicycleSexLoanValue, 0)
                     
                 ElseIf 1
                 
@@ -488,6 +506,7 @@ SceneStart()
                             
                         Else
                         
+                            Player.setActorVar(rk_VB_BicycleSexLoanValue, 0)
                             SaleManRefuse2 = true
                             
                         EndIf
@@ -496,25 +515,6 @@ SceneStart()
                 Elseif 2
                     
                     // MyBodyValueIs = 250
-                    
-                    If BicycleSelectedIs == 1
-                        Player.setActorVar(rk_VB_BicycleSexLoanValue, Price0AR)
-                    ElseIf BicycleSelectedIs == 2
-                        Player.setActorVar(rk_VB_BicycleSexLoanValue, Price1AR)
-                    ElseIf BicycleSelectedIs == 3
-                        Player.setActorVar(rk_VB_BicycleSexLoanValue, Price2AR)
-                    ElseIf BicycleSelectedIs == 4
-                        Player.setActorVar(rk_VB_BicycleSexLoanValue, Price3AR)
-                    ElseIf BicycleSelectedIs == 5
-                        Player.setActorVar(rk_VB_BicycleSexLoanValue, Price4AR)
-                    ElseIf BicycleSelectedIs == 6
-                        Player.setActorVar(rk_VB_BicycleSexLoanValue, Price5AR)
-                    ElseIf BicycleSelectedIs == 7
-                        Player.setActorVar(rk_VB_BicycleSexLoanValue, Price6AR)
-                    ElseIf BicycleSelectedIs == 8
-                        Player.setActorVar(rk_VB_BicycleSexLoanValue, Price7AR)
-                    EndIf
-                    
                     If !BicycleDealer.isContactExchanged()
                         exchangeContact(BicycleDealer)
                     EndIf
@@ -545,7 +545,8 @@ SceneStart()
                         Player.modifyActorVar(rk_VB_BicycleSexLoanValue, -250)
                     EndIf
                     BicycleSexLoanValue1 = Player.getActorVar(rk_VB_BicycleSexLoanValue)
-                    BicycleDealer(Flirty)::"That was amazing! Just a reminder, now you owe me <BicycleSexLoanValue1>! See ya!"
+                    BicycleSexLoanValue1_loc = BicycleSexLoanValue1.convertToLocalCurrency()
+                    BicycleDealer(Flirty)::"That was amazing! Just a reminder, now you owe me <BicycleSexLoanValue1_loc>! See ya!"
                     BicycleDealer.hide()
                     
                 Else
@@ -553,6 +554,7 @@ SceneStart()
                     "I decided to think a little bit more about it!"
                     rk_VB_BicycleSelectedIs.setGlobal(0)
                     rk_VB_BicycleDealer_ID.setGlobal(0)
+                    Player.setActorVar(rk_VB_BicycleSexLoanValue, 0)
                     
                 EndIf
                 
@@ -562,12 +564,14 @@ SceneStart()
                     BicycleDealer(Grin)::"You're losing my time, have a nice day!"
                     rk_VB_BicycleSelectedIs.setGlobal(0)
                     rk_VB_BicycleDealer_ID.setGlobal(0)
+                    Player.setActorVar(rk_VB_BicycleSexLoanValue, 0)
                     
                 ElseIf SaleManRefuse2
                 
                     BicycleDealer(Grin)::"Get out, you're losing my time, have a nice day!"
                     rk_VB_BicycleSelectedIs.setGlobal(0)
                     rk_VB_BicycleDealer_ID.setGlobal(0)
+                    Player.setActorVar(rk_VB_BicycleSexLoanValue, 0)
                     
                 EndIf
             

@@ -1,0 +1,1242 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        likes_watersports = Player.getActorVar(rk_VB_likes_watersports)
+        Alikes_watersports = Actor.getActorVar(rk_VB_likes_watersports)
+        
+        If Alikes_watersports <= 0
+            SetRandomWSStat = Random(0, 100)
+            Actor.setActorVar(rk_VB_likes_watersports, SetRandomWSStat)
+        Endif
+
+        Question01 = false
+        Question02 = false
+        Question03 = false
+        Question04 = false
+
+        askingQuestions = true
+        While askingQuestions
+            "What should I do?"
+            0::"Ask about <Actor.his_or_her> sex orientation"
+            1::"Compliment"
+            10::"Awkward question"
+            20::"Awkward Compliment" 
+            99::"I changed my mind!"
+            
+            If 0
+                
+                "What should I ask?"
+                0:: !Question01 ::"Are you gay?"
+                1:: !Question02 ::"Are you bi?"
+                2:: !Question03 ::"Are you trans?"
+                3:: !Question04 ::"Do you like trans?"
+                99::"Go back!"
+                
+                If 0
+                    Player(Curious)::"I know it's a bit private but, are you gay?"
+                    If Actor.isGay()
+                        Actor(Curious)::"Yes why?"
+                    Else
+                        Actor(Curious)::"Nope, why?"
+                    Endif
+                    If Player.isGay() && Actor.isGay()
+                        Player(Happy)::"Because I am and it's pretty cool to meet someone with the same sex orientation..."
+                        Actor:attractiontoplayer += random(0, 1)
+                        Actor:rapportwithplayer += random(0, 1)
+                    Else
+                        Player(Grin)::"Just asking!"
+                    Endif
+                    interpersonal += 1
+                    Question01 = true
+                    
+                Elseif 1
+                    Player(Curious)::"I know it's a bit private but, are you bi?"
+                    If Actor.isInterestedInWomen() && Actor.isInterestedInMen()
+                        Actor(Curious)::"Yes why?"
+                    Else
+                        Actor(Curious)::"Nope, why?"
+                    Endif
+                    If [Player.isInterestedInWomen() && Player.isInterestedInMen()] && [Actor.isInterestedInWomen() && Actor.isInterestedInMen()]
+                        Player(Happy)::"Because I am and it's pretty cool to meet someone with the same sex orientation..."
+                        Actor:attractiontoplayer += random(0, 1)
+                        Actor:rapportwithplayer += random(0, 1)
+                    Else
+                        Player(Grin)::"Just asking!"
+                    Endif
+                    interpersonal += 1
+                    Question02 = true
+                    
+                Elseif 2
+                    Player(Curious)::"I know it's a bit weird to ask you that but, are you a trans?"
+                    If Actor.isTrans()
+                        Actor(Curious)::"Yes why?"
+                    Else
+                        Actor(Curious)::"Nope, why?"
+                    Endif
+                    If Player.isTrans() && Actor.isTrans()
+                        Player(Happy)::"Because I am and it's pretty cool to meet someone with the same sex orientation..."
+                        Actor:attractiontoplayer += random(0, 1)
+                        Actor:rapportwithplayer += random(0, 1)
+                    Else
+                        Player(Grin)::"Just asking!"
+                    Endif
+                    interpersonal += 1
+                    Question03 = true
+                    
+                Elseif 3
+                    Player(Curious)::"Do you like trans?"
+                    If Actor.isInterestedInTrans()
+                        Actor(Curious)::"Yes why?"
+                    Else
+                        Actor(Curious)::"Nope, why?"
+                    Endif
+                    If Player.isInterestedInTrans() && Actor.isInterestedInTrans()
+                        Player(Happy)::"Because I am and it's pretty cool to meet someone with the same taste..."
+                        Actor:rapportwithplayer += random(0, 1)
+                    Else
+                        Player(Grin)::"Just asking!"
+                    Endif
+                    interpersonal += 1
+                    Question04 = true
+                    
+                Endif
+                
+            Elseif 1
+            
+                "What should I say?"
+                0::"You look nice?"
+                1::"Where did you get that....?"
+                99::"Go back!"
+                
+                If 0
+                
+                    If Actor.isInterestedIn(Player)
+                        Actor(Happy)::"Thanks"
+                        Actor:rapportwithplayer += random(0, 1)
+                        Actor:attractiontoplayer += random(0, 1)
+                    Else
+                        Actor(Annoyed)::"Uh, ok!"
+                    Endif
+                    interpersonal += 1
+                    
+                Elseif 1
+                
+                    If Actor.isMale()
+                        Random
+                            TXTItemWow = "haircut, I like it!"
+                            TXTItemWow = "clothes, they are so nice..."
+                        EndRandom
+                    Elseif Actor.isFemale()
+                        Random
+                            TXTItemWow = "haircut, I love it!"
+                            TXTItemWow = "clothes, they are so nice..."
+                        EndRandom
+                    
+                    Endif
+                    
+                    If Actor.isInterestedIn(Player)
+                        Player(Curious)::"Hey, hi, I'm curious where did you get that <TXTItemWow>?"
+                        Actor(Happy)::"At a shop nearby,.. I'm happy that you like!"
+                        Actor:rapportwithplayer += random(0, 1)
+                        Actor:attractiontoplayer += random(0, 1)
+                        
+                    Else
+                        Actor(Annoyed)::"Sorry but I have no time to share where I buy my stuff!"
+                    Endif
+                
+                Endif
+                
+            Elseif 10
+                
+                Question1080 = false
+                Question1088 = false
+                Question10810 = false
+                Jokes = false
+                
+                "What should I ask?"
+                0:: !Question1080::"Do yout think I'm pretty?"
+                5:: !Jokes:: "Tell a joke" 
+                7::"Which sex position you like the most?"
+                8:: !Question1088::"Are you top or bottom?"
+                10:: !Question10810::"Are you into animals?"
+                99::"Go back!"
+                
+                If 0
+                
+                    If Actor.isInterestedIn(Player)
+                        Actor(Flirty)::"Yes, you are very beautiful to my eyes!"
+                        Actor:rapportwithplayer += random(0, 1)
+                        Actor:attractiontoplayer += random(0, 1)
+                        mood += 3
+                    Else
+                        Actor(Annoyed)::"Uh, it's a pretty nice day today, don't you think?!"
+                    Endif
+                    interpersonal += 1
+                    Question1080 = true
+                    
+                Elseif 5
+                
+                    // Start edit by Raddeck
+                    "I decided to tell <Actor.him_or_her> a joke... So I started with..."
+                    Player.animate(socialize)
+                    Random
+                        Player(Grin)::"What did the toaster say to the slice of bread? I want you inside me."
+                        Player(Grin)::"What do you call a cheap circumcision? A rip-off!"
+                        Player(Grin)::"What's the difference between a tire and 365 used condoms? One's a Goodyear. The other's a great year."
+                        Player(Grin)::"What do a penis and a Rubik's Cube have in common? The more you play with it, the harder it gets."
+                        Player(Grin)::"What did one butt cheek say to the other? Together, we can stop this crap."
+                    EndRandom
+            
+                    If Actor:rapportwithplayer > 65
+            
+                        "<Actor.He_or_She> enjoyed the joke, and said ..."
+                        Actor.animate(socialize)
+                        Actor(Happy)::"My turn now..."
+                        Random
+                            Actor(Grin)::"Who's the most popular guy at the nudist colony? The one who can carry a cup of coffee in each hand and a dozen doughnuts."
+                            Actor(Grin)::"How do you make a pool table laugh? Tickle its balls."
+                            Actor(Grin)::"What do you do when your cat's dead? Play with the neighbor's pussy instead."
+                            Actor(Grin)::"What's long, green, and smells like bacon? Kermit The Frog's fingers!"
+                            Actor(Grin)::"What do you call a person who doesn’t masturbate? A liar."
+                        EndRandom
+                
+                        mood += 3
+                
+                        CountJokes = 0
+                        JokeTelled = 0
+                        JokeTelledA = 0
+                
+                        While CountJokes < 4
+                    
+                            0::"One more"
+                            1::"Stop joking"
+                    
+                            If 0
+
+                                If JokeTelled == 0
+                                    Player(Grin)::"What’s the best part about gardening? Getting down and dirty with your hoes."
+                                    JokeTelled += 1
+                                Elseif JokeTelled == 1
+                                    Player(Grin)::"What’s the difference between your wife and your job? After five years, your job will still suck."
+                                    JokeTelled += 1
+                                Elseif JokeTelled == 2
+                                    Player(Grin)::"Why did God give men penises? So they’d have at least one way to shut a woman up."
+                                    JokeTelled += 1
+                                Elseif JokeTelled == 3
+                                    Player(Grin)::"What did the leper say to the sex worker? Keep the tip."
+                                    JokeTelled += 1
+                                Elseif JokeTelled == 4
+                                    Player(Grin)::"Why does a mermaid wear seashells? Because she outgrew her B-shells!"
+                                    JokeTelled = 1
+                                Endif
+                            
+                                Actor(Happy)::"My turn now..."
+                                
+                                If JokeTelledA == 0
+                                    Actor(Grin)::"A naked man broke into a church. The police chased him around and finally caught him by the organ."
+                                    JokeTelledA += 1
+                                Elseif JokeTelledA == 1
+                                    Actor(Grin)::"What do boobs and toys have in common? They were both originally made for kids, but daddies end up playing with them."
+                                    JokeTelledA += 1
+                                Elseif JokeTelledA == 2
+                                    Actor(Grin)::"What’s the difference between a hooker and a drug dealer? A hooker can wash her crack and resell it."
+                                    JokeTelledA += 1
+                                Elseif JokeTelledA == 3
+                                    Actor(Grin)::"What do you call the lesbian version of a cock block? A beaver dam!"
+                                    JokeTelledA += 1
+                                Elseif JokeTelledA == 4
+                                    Actor(Grin)::"What is Moby Dick's dad's name? Papa Boner."
+                                    JokeTelledA += 1
+                                Endif
+                                CountJokes += 1
+        
+                            Else
+                            
+                                CountJokes = 5
+                                Jokes = true
+                            
+                            Endif
+                            Actor:rapportwithplayer += 0.5
+                            
+                        EndWhile
+                    
+                        If karma > 49
+                            Actor:attractiontoplayer += 5
+                        Else
+                            Actor:attractiontoplayer += 4
+                        Endif
+                        Player.animate()
+                        Actor.animate()
+                        
+                    Elseif Actor:rapportwithplayer > 32
+                    
+                        If karma > 49
+                            Actor:attractiontoplayer += 3
+                        Else
+                            Actor:attractiontoplayer += 2
+                        Endif
+                        "<Actor.He_or_She> enjoyed the joke..."
+                            
+                    Else
+                        If karma > 49
+                            Actor:attractiontoplayer += 1
+                        Else
+                            Actor:attractiontoplayer -= 3
+                        Endif
+                        "<Actor.He_or_She> looks annoyed by my joke..."
+                        Jokes = true
+                            
+                    Endif
+                        
+                    // End edit by Raddeck 
+                    
+                Elseif 7
+
+                    Qlikes_anal = false
+                    Qlikes_bondage = false
+                    Qlikes_boobjob = false
+                    Qlikes_cowgirl = false
+                    Qlikes_doggy = false
+                    Qlikes_handjob = false
+                    Qlikes_missionary = false
+                    Qlikes_oral = false
+                    Qlikes_public = false
+                    Qlikes_rcowgirl = false
+                    Qlikes_rough = false
+                    Qlikes_sidefuck = false
+                    Qlikes_toys = false
+                    Qlikes_tribadism = false
+                    Qlikes_vaginal = false
+                    Qrk_VB_likes_watersports = false
+                    
+                    perversion += 0.25
+                    Player(Flirty)::"I was wondering what's your favorite sex positions?"
+                    If Actor.isInterestedIn(Player)
+                        TalkingSexP = true
+                        While TalkingSexP
+                            "What is my question?"
+                            0:: !Qlikes_anal ::"Do you like anal positions?"
+                            1:: !Qlikes_bondage ::"Do you like bondage?"
+                            2:: !Qlikes_boobjob ::"Do you like boobjob?"
+                            3:: !Qlikes_cowgirl ::"Do you like cowgirl positions?"
+                            4:: !Qlikes_doggy ::"Do you like doggy positions?"
+                            5:: !Qlikes_handjob ::"Do you like handjob?"
+                            6:: !Qlikes_missionary ::"Do you like missionary positions?"
+                            7:: !Qlikes_oral ::"Do you like oral?"
+                            8:: !Qlikes_public ::"Do you like doing sex in public?"
+                            9:: !Qlikes_rcowgirl ::"Do you like reversed cowgirl positions?"
+                            10:: !Qlikes_rough ::"Do you like rough positions?"
+                            11:: !Qlikes_sidefuck ::"Do you like sidefuck positions?"
+                            12:: !Qlikes_toys ::"Do you like doing sex with toys?"
+                            13:: !Qlikes_tribadism ::"Do you like tribadism positions?"
+                            14:: !Qlikes_vaginal ::"Do you like vaginal positions?"
+                            15:: !Qrk_VB_likes_watersports ::"Do you like watersport positions?"
+                            99::"Let's talk about something else!"
+                            
+                            If 0
+                                
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not! Show me your skills?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(Anal)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(Anal)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_anal += Random(0, 1)
+                                    Player:likes_anal += Random(0, 1)
+                                        
+                                Elseif Actor:likes_anal > 20 && Actor:likes_anal < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_anal = true
+                                
+                            Elseif 1
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        // Filter(Bondage)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        // Filter(Bondage)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_bondage += Random(0, 1)
+                                    Player:likes_bondage += Random(0, 1)
+                                
+                                Elseif Actor:likes_bondage > 20 && Actor:likes_bondage < 50 
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_bondage = true
+                                
+                                Endif
+                            Elseif 2
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(boobjob)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(boobjob)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_boobjob += Random(0, 1)
+                                    Player:likes_boobjob += Random(0, 1)
+                                
+                                Elseif Actor:likes_boobjob > 20 && Actor:likes_boobjob < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_boobjob = true
+                                
+                                Endif
+                            Elseif 3
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(Cowgirl)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(Cowgirl)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_cowgirl += Random(0, 1)
+                                    Player:likes_cowgirl += Random(0, 1)
+                                
+                                Elseif Actor:likes_cowgirl > 20 && Actor:likes_cowgirl < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_cowgirl = true
+                                
+                                Endif
+                            Elseif 4
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(doggy)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(doggy)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_doggy += Random(0, 1)
+                                    Player:likes_doggy += Random(0, 1)
+                                
+                                Elseif Actor:likes_doggy > 20 && Actor:likes_doggy < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_doggy = true
+                                
+                                Endif
+                            Elseif 5
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(Handjob)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(Handjob)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_handjob += Random(0, 1)
+                                    Player:likes_handjob += Random(0, 1)
+                                
+                                Elseif Actor:likes_handjob > 20 && Actor:likes_handjob < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_handjob = true
+                                
+                                Endif
+                            Elseif 6
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(missionary)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(missionary)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_missionary += Random(0, 1)
+                                    Player:likes_missionary += Random(0, 1)
+                                
+                                Elseif Actor:likes_missionary > 20 && Actor:likes_missionary < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_missionary = true
+                                
+                                Endif
+                            Elseif 7
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(oral)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(oral)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_oral += Random(0, 1)
+                                    Player:likes_oral += Random(0, 1)
+                                
+                                Elseif Actor:likes_oral > 20 && Actor:likes_oral < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_oral = true
+                                
+                                Endif
+                            Elseif 8
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    "We decided to fuck right here without any shame..."
+                                    Actor:perversion += 1
+                                    Player:perversion += 1
+                                    Actor.strip()
+                                    Player.strip()
+                                    Filter(oral)
+                                    sex(Actor, Player)
+                                    Actor(Happy)::"That was awesome!"
+
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_public += Random(0, 1)
+                                    Player:likes_public += Random(0, 1)
+                                    
+                                    If WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != stripclub && WHERE != prison
+                                       
+                                        ChanceCopArrest = Random(1, 10)
+                                        ChanceCopArrest = ChanceCopArrest.round()
+                                        If ChanceCopArrest > 6
+                                            followUp(public_indecency)
+                                        Endif
+            
+                                    Endif
+                                
+                                Elseif Actor:likes_public > 20 && Actor:likes_public < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_public = true
+                                
+                                Endif
+                            Elseif 9
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(ReverseCowgirl)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(ReverseCowgirl)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_rcowgirl += Random(0, 1)
+                                    Player:likes_rcowgirl += Random(0, 1)
+                                
+                                Elseif Actor:likes_rcowgirl > 20 && Actor:likes_rcowgirl < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_rcowgirl = true
+                                
+                                Endif
+                            Elseif 10
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        // Filter(rough)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        // Filter(rough)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_rough += Random(0, 1)
+                                    Player:likes_rough += Random(0, 1)
+                                
+                                Elseif Actor:likes_rough > 20 && Actor:likes_rough < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_rough = true
+                                
+                                Endif
+                            Elseif 11
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        // Filter(sidefuck)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        // Filter(sidefuck)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_sidefuck += Random(0, 1)
+                                    Player:likes_sidefuck += Random(0, 1)
+                                
+                                Elseif Actor:likes_sidefuck > 20 && Actor:likes_sidefuck < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_sidefuck = true
+                                
+                                Endif
+                            Elseif 12
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        If Player.isMale() || Actor.isMale()
+                                            Filter(Fleshlight)
+                                        Elseif Player.isFemale() || Actor.isFemale()
+                                            Filter(vibrator)
+                                        Else
+                                            Random
+                                                Filter(Fleshlight)
+                                                Filter(vibrator)
+                                            EndRandom
+                                        Endif
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        If Player.isMale() || Actor.isMale()
+                                            Filter(Fleshlight)
+                                        Elseif Player.isFemale() || Actor.isFemale()
+                                            Filter(vibrator)
+                                        Else
+                                            Random
+                                                Filter(Fleshlight)
+                                                Filter(vibrator)
+                                            EndRandom
+                                        Endif
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_toys += Random(0, 1)
+                                    Player:likes_toys += Random(0, 1)
+                                
+                                Elseif Actor:likes_toys > 20 && Actor:likes_toys < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_toys = true
+                                
+                                Endif
+                            Elseif 13
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        // Filter(tribadism)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        // Filter(tribadism)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_tribadism += Random(0, 1)
+                                    Player:likes_tribadism += Random(0, 1)
+                                
+                                Elseif Actor:likes_tribadism > 20 && Actor:likes_tribadism < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_tribadism = true
+                                
+                                Endif
+                            Elseif 14
+                                If Actor:perversion > 50 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(vaginal)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to share our skills"
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(vaginal)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    Actor:likes_vaginal += Random(0, 1)
+                                    Player:likes_vaginal += Random(0, 1)
+                                
+                                Elseif Actor:likes_vaginal > 20 && Actor:likes_vaginal < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qlikes_vaginal = true
+                                
+                                Endif
+                            Elseif 15
+                                If Actor:perversion > 70 && Actor:arousal > 15
+                                    Actor(Flirty)::"Is it an invitation?"
+                                    Player(Flirty)::"Why not?"
+                                    Actor(Flirty)::"Let's go then...?"
+                                    Actor:arousal += 1
+                                    
+                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                        "We decided to go in the dark alley to play watersports ..."
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(Watersports)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                        
+                                    Else
+                                        "We decided to go at my place to play watersports ..."
+                                        Actor:perversion += 1
+                                        Player:perversion += 1
+                                        Actor.strip()
+                                        Player.strip()
+                                        Filter(Watersports)
+                                        sex(Actor, Player)
+                                        Actor(Happy)::"That was awesome!"
+                                    
+                                    Endif
+                                    Actor.dress()
+                                    Player.dress()
+                                    LikeItRandom = Random(0, 1)
+                                    Player.modifyActorVar(rk_VB_likes_watersports, LikeItRandom)
+                                    Actor.modifyActorVar(rk_VB_likes_watersports, LikeItRandom)
+                                
+                                Elseif Actor:Alikes_watersports > 20 && Actor:Alikes_watersports < 50
+                                    Actor(Grin)::"Yeah! I like it sometime!"
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
+                                Else
+                                    Actor(Grin)::"Not really my kind!"
+                                Endif
+                                interpersonal += 1
+                                Qrk_VB_likes_watersports = true
+                                
+                                Endif
+                                
+                            Else
+                                TalkingSexP = false
+                            Endif
+                            
+                        EndWhile
+                        
+                    Else
+                        Actor(Angry)::"WTF? It's not your business what I'm doing inside my bedroom! What's that question?"
+                        Actor:rapportwithplayer -= random(0, 1)
+                        Actor:attractiontoplayer -= random(0, 2)
+                    Endif
+
+                Elseif 8
+                    
+                    If Actor.isInterestedIn(Player) && Actor:arousal > 15
+                        If Actor.isMale() && !Actor.isGay && Actor.isInterestedIn(Player)
+                            Actor(Happy)::"You're funny! I'm top ...!"
+                        Else
+                        
+                            Random
+                                Actor(Happy)::"You're funny! I'm top ...!"
+                                Actor(Happy)::"You're funny! I'm bottom ...!"
+                                Actor(Happy)::"You're funny! I'm more side type ...!"
+                            EndRandom
+                        
+                        Endif
+                    Elseif Actor.isInterestedIn(Player)
+                        Actor(Happy)::"You're funny! But I don't answer that!"
+                        Actor:rapportwithplayer += random(0, 1)
+                        Actor:attractiontoplayer += random(0, 1)
+                    Else
+                        Actor(Annoyed)::"WTF? It's none of your business what I'm doing inside my bedroom! What's that question?"
+                        Actor:attractiontoplayer -= random(0, 1)
+                    Endif
+                    Question1088 = true
+                    
+                Elseif 10
+                    
+                    Question10810 = true
+                    perversion += 0.25
+                    Player(Flirty)::"Are you into animals?"
+                    Actor(Happy)::"Sure, I like animals, why?"
+                    Player(Flirty)::"I mean doing sex with animals?"
+                    If Actor.isInterestedIn(Player) && Actor:arousal > 15 && Actor:perversion > 15
+                        Actor(Happy)::"Yeah, a lot!"
+                        Actor:rapportwithplayer += random(0, 5)
+                        Actor:attractiontoplayer += random(0, 5)
+                        
+                    Elseif Actor.isInterestedIn(Player)
+                        Actor:(Happy):"No, I wish it's not your type either ..."
+                        Actor:attractiontoplayer -= random(0, 1)
+                    Else
+                        Actor(Angry)::"WTF? You're a damn creep or your joking! What's that question? No!"
+                        Actor:rapportwithplayer -= random(0, 1)
+                        Actor:attractiontoplayer -= random(0, 5)
+                    Endif
+                Endif
+            
+            Elseif 20
+            
+                Question200 = false
+                Question201 = false
+                Question202 = false
+                Playerage = Player:age 
+                TPlayerage = Playerage + 10
+                "What should I say?"
+                0:: !Question200::"Nice ass?"
+                1:: !Question201::"Nice <Actor.bulge_or_boobs>?"
+                2:: !Question202 && Actor:age < TPlayerage ::"Do you need a <Player.daddy_or_mommy> for the day?" // not sugardaddy, just expression
+                99::"Go back!"
+                
+                If 0
+                    If Actor.isInterestedIn(Player) && Actor:arousal > 15
+                        Actor(Happy)::"Thanks! Do you want to touch?"
+                        Actor:rapportwithplayer += random(0, 1)
+                        Actor:attractiontoplayer += random(0, 1)
+                        Player(Happy)::"What a question, yeah sure!"
+                        arousal += 1
+                        Actor:arousal += 1
+                        perversion += 1
+                        Actor:perversion += 1
+                        "It was soft and tender!"
+                        
+                    Elseif Actor.isInterestedIn(Player)
+                        Actor(Happy)::"Thanks! You look nice too!"
+                        Actor:rapportwithplayer += random(0, 1)
+                        Actor:attractiontoplayer += random(0, 1)
+                    Else
+                        Actor(Annoyed)::"Uh, please keep that for yourself!"
+                        Actor:attractiontoplayer -= random(0, 1)
+                    Endif
+                    interpersonal += 1
+                    Question200 = true
+                    
+                Elseif 1
+                    
+                    If Actor.isInterestedIn(Player) && Actor:arousal > 15
+                        Actor(Happy)::"Thanks! Do you want to touch?"
+                        Actor:rapportwithplayer += random(0, 1)
+                        Actor:attractiontoplayer += random(0, 1)
+                        Player(Happy)::"What a question, yeah sure!"
+                        arousal += 1
+                        Actor:arousal += 1
+                        perversion += 1
+                        Actor:perversion += 1
+                        "It was soft and tender!"
+                        
+                    Elseif Actor.isInterestedIn(Player)
+                        Actor(Happy)::"Thanks!"
+                        Actor:rapportwithplayer += random(0, 1)
+                        Actor:attractiontoplayer += random(0, 1)
+                    Else
+                        Actor(Annoyed)::"Uh, please keep that for yourself!"
+                        Actor:attractiontoplayer -= random(0, 1)
+                    Endif
+                    interpersonal += 1
+                    Question201 = true
+                    
+                Elseif 2
+                    
+                    If Actor.isInterestedIn(Player) && Actor:arousal > 15
+                        Actor(Happy)::"Thanks! yeah it will be cool , I guess!"
+                        Actor:rapportwithplayer += random(0, 1)
+                        Actor:attractiontoplayer += random(0, 1)
+                        Player(Flirty)::"So come to <Player.daddy_or_mommy>'s house we gonna play doctor!"
+                        arousal += 1
+                        Actor:arousal += 1
+                        Actor(Happy)::"Yeah, let's go <Player.daddy_or_mommy>!"
+                        perversion += 1
+                        Actor:perversion += 1
+                        setBackground(home)
+                        "We arrived at my place and we stripped right away! Fuck off playing doctor...."
+                        Player.strip()
+                        Actor.strip()
+                        sex(Player, Actor)
+                        Player.dress()
+                        Actor.dress()
+                        "We came where we are before but we takes separated ways."
+                        
+                    Elseif Actor.isInterestedIn(Player)
+                        Actor(Happy)::"You're funny! But I'm not interested!"
+                        Actor:rapportwithplayer += random(0, 1)
+                        Actor:attractiontoplayer += random(0, 1)
+                    Else
+                        Actor(Annoyed)::"Uh, please keep that for yourself!"
+                        Actor:attractiontoplayer -= random(0, 1)
+                    Endif
+                    interpersonal += 1
+                    Question202 = true
+                    
+                Endif
+            
+            Else
+            
+                askingQuestions = false
+                
+            Endif
+            
+        EndWhile
+
+    SceneEnd()
