@@ -10,12 +10,12 @@ SceneStart()
     PayBicycleWithSex = rk_VB_PayBicycleWithSex.getGlobal()
     setBackground(bicycle)
     
-    If !Actor.isValid()
-        BicycleDealer = generatePerson()
+    BicycleDealer = generatePerson()
+    If Actor.isValid()
+        BicycleDealer = Actor.getTarget()
         BicycleDealer_ID = BicycleDealer.getID()
         rk_VB_BicycleDealer_ID.setGlobal(BicycleDealer_ID)
     Else
-        BicycleDealer = Actor.getTarget()
         BicycleDealer_ID = BicycleDealer.getID()
         rk_VB_BicycleDealer_ID.setGlobal(BicycleDealer_ID)
     Endif
@@ -24,7 +24,7 @@ SceneStart()
     BicycleSelectedIs = rk_VB_BicycleSelectedIs.getGlobal()
     BicycleSexLoanValue = Player.getActorVar(rk_VB_BicycleSexLoanValue)
     BicycleDealer.dress()
-    BicycleDealer.hide()
+    BicycleDealer.show()
         
     stock_BTwin = Player.getActorVar(stock_BTwin)
     stock_Rocky = Player.getActorVar(stock_Rocky)
@@ -332,7 +332,10 @@ SceneStart()
             BicycleDealer.show()
             BicycleDealer.dress()
             BicycleDealer.moveToPersonStand(Player, 50)
-            Player(Shy)::"Hi, humm, is it possible to buy a bicycle in nature, if you know what I mean?"
+            Random
+                Player(Shy)::"Hi, humm, is it possible to buy a bicycle in nature, if you know what I mean?"
+                Player(Curious)::"Hi, humm, do you think I'm pretty enough to buy a bicycle with sex?"
+            EndRandom
             If BicycleDealer:perversion > 50 && BicycleDealer:arousal > 25 && BicycleDealer.isInterestedIn(Player)
                 
                 BicycleDealer:perversion += Random(1, 2)
@@ -341,7 +344,9 @@ SceneStart()
                 Player(Surprised)::"Uh! I thought you got it! With sex!"
                 BicycleDealer(Flirty)::"I know that, but it's not with a fuck that you're going to be able to leave with a bicycle for free, honey."
                 BicycleDealer(Grin)::"I meant, how many times can I play with your body before I give you a bicycle for free?"
+                BicycleDealer.animate()
                 BicycleDealer(Grin)::"But first, which bicycle do you want?"
+                BicycleDealer.animate(socialize)
                 
                  // Price
                 Price0 = Random(500, 1000)

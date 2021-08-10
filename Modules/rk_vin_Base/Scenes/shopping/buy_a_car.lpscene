@@ -8,15 +8,17 @@ SceneStart()
     
     setBackground(car)
     
-    If !Actor.isValid()
-        CarDealer = generatePerson()
-        CarDealer_ID = CarDealer.getID()
-        rk_VB_CarDealer_ID.setGlobal(CarDealer_ID)
-    Else
+    CarDealer = generatePerson()
+    If Actor.isValid()
         CarDealer = Actor.getTarget()
         CarDealer_ID = CarDealer.getID()
         rk_VB_CarDealer_ID.setGlobal(CarDealer_ID)
+    Else
+        CarDealer_ID = CarDealer.getID()
+        rk_VB_CarDealer_ID.setGlobal(CarDealer_ID)
     Endif
+    CarDealer.show()
+    CarDealer.dress()
     CarDealer:arousal += Random(0, 100)
     CarDealer:perversion += Random(0, 100)
     CarSelectedIs = rk_VB_CarSelectedIs.getGlobal()
@@ -344,7 +346,9 @@ SceneStart()
                 Player(Surprised)::"Uh! I thought you got it! With sex!"
                 CarDealer(Flirty)::"I know that, but it's not with a fuck that you're going to be able to leave with a car for free, honey."
                 CarDealer(Grin)::"I meant, how many times can I play with your body before I give you a car for free?"
+                CarDealer.animate()
                 CarDealer(Grin)::"But first, which car do you want?"
+                CarDealer.animate(socialize)
                 
                 Price0 = Random(7000, 18000)
                 Price0C = Price0.convertToLocalCurrency()
