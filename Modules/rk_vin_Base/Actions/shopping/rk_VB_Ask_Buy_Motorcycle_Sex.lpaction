@@ -1,6 +1,6 @@
 ACTION_UNIQUEID: rk_VB_Ask_Buy_Motorcycle_Sex
 ACTION_NAME: Ask to buy motorcycle with sex
-WHERE: car, motorcycle, interaction
+WHERE: interaction
 WHEN: 0 - 24
 MINUTES: 1 - 1
 TIMEOUT_MINUTES: 0
@@ -10,4 +10,4 @@ CONDITIONS:
 MOVE_FIRST: true
 SCENE_ALWAYS: rk_VB_buy_a_motorcycle
 ANIMATION:
-WHO: Actor = getTarget(); If !Actor.isCreature()
+WHO: Actor = getTarget(); If [WHERE == car || WHERE == motorcycle] && !Actor.isCreature()
