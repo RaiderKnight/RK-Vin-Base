@@ -1,6 +1,6 @@
 WHAT: all, -sleep, -sleep_hotel
 WHERE: all, -work, -prison
-WHEN: 9-24
+WHEN: 12-24
 WHO: none
 OTHER: !IsWithCompanion() && !isWithCompanionCreature()
 
@@ -14,9 +14,24 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
         stock_Mazda = Player.getActorVar(stock_Mazda)
         stock_BMW = Player.getActorVar(stock_BMW)
         stock_Lada = Player.getActorVar(stock_Lada)
+        
+        Price0 = Random(7000, 18000)
+        Price0C = Price0.convertToLocalCurrency()
+        Price1 = Random(15000, 35000)
+        Price1C = Price1.convertToLocalCurrency()
+        Price2 = Random(30000, 55000)
+        Price2C = Price2.convertToLocalCurrency()
+        Price3 = Random(60000, 80000)
+        Price3C = Price3.convertToLocalCurrency()
+        Price4 = Random(80000, 250000)
+        Price4C = Price4.convertToLocalCurrency()
+        Price5 = Random(300000, 650000)
+        Price5C = Price5.convertToLocalCurrency()
+        Price6 = Random(400000, 850000)
+        Price6C = Price6.convertToLocalCurrency()
     
         // Car Dealer
-        CarDealer = getSpecific(CarDealer_ID)
+        CarDealer = getPerson(true)
         CarSelectedIs = rk_VB_CarSelectedIs.getGlobal()
         CarSexLoanValue = Player.getActorVar(rk_VB_CarSexLoanValue)
         PayCarWithSex = rk_VB_PayCarWithSex.getGlobal()
@@ -28,18 +43,25 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
             CarDealer.hide()
             If CarSelectedIs == 1
                 Player.modifyActorVar(stock_Lada, 1)
+                car_value += Price0
             ElseIf CarSelectedIs == 2
                 Player.modifyActorVar(stock_Mazda, 1)
+                car_value += Price1
             ElseIf CarSelectedIs == 3
                 Player.modifyActorVar(stock_BMW, 1)
+                car_value += Price2
             ElseIf CarSelectedIs == 4
                 Player.modifyActorVar(stock_Mercedez, 1)
+                car_value += Price3
             ElseIf CarSelectedIs == 5
                 Player.modifyActorVar(stock_Tesla, 1)
+                car_value += Price4
             ElseIf CarSelectedIs == 6
                 Player.modifyActorVar(stock_Ferrari, 1)
+                car_value += Price5
             ElseIf CarSelectedIs == 7
                 Player.modifyActorVar(stock_Lambo, 1)
+                car_value += Price6
             EndIf
             If PayCarWithSex > 0
                 rk_VB_PayCarWithSex.setGlobal(0)
@@ -72,7 +94,7 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
                 
                 "After a while..."
                 setBackground(hotel)
-                "I arrive at <CarDealer.his_or_her> hotel, open the door to <CarDealer.his_or_her> room, he awaits me completely naked ..."
+                "I arrive at <CarDealer.his_or_her> hotel, open the door to <CarDealer.his_or_her> room, <CarDealer.he_or_she> awaits me completely naked ..."
                 CarDealer.strip()
                 CarDealer.show()
                 "I immediately understood that I had to undress too! At least if I want my car, I have to sacrifice myself ..."
@@ -86,7 +108,8 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
                 Else
                     Player.modifyActorVar(rk_VB_CarSexLoanValue, -250)
                     CarSexLoanValue1 = Player.getActorVar(rk_VB_CarSexLoanValue)
-                    CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1>"
+                    CarSexLoanValue1_loc = CarSexLoanValue1.convertToLocalCurrency()
+                    CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1_loc>"
                 Endif
                 
             Else

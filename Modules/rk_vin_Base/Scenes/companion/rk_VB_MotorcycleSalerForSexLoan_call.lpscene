@@ -17,7 +17,7 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
         stock_Ninja = Player.getActorVar(stock_Ninja)
         
         // Motorcycle Dealer
-        MotorcycleDealer = getSpecific(MotorcycleDealer_ID)
+        MotorcycleDealer = getPerson(true)
         MotorcycleSelectedIs = rk_VB_MotorcycleSelectedIs.getGlobal()
         MotorcycleSexLoanValue = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
         PayMotorcycleWithSex = rk_VB_PayMotorcycleWithSex.getGlobal()
@@ -75,7 +75,7 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
                 
                 "After a while..."
                 setBackground(hotel)
-                "I arrive at <MotorcycleDealer.his_or_her> hotel, open the door to <MotorcycleDealer.his_or_her> room, he awaits me completely naked ..."
+                "I arrive at <MotorcycleDealer.his_or_her> hotel, open the door to <MotorcycleDealer.his_or_her> room, <MotorcycleDealer.he_or_she> awaits me completely naked ..."
                 MotorcycleDealer.strip()
                 MotorcycleDealer.show()
                 "I immediately understood that I had to undress too! At least if I want my motorcycle, I have to sacrifice myself ..."
@@ -89,7 +89,8 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
                 Else
                     Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -250)
                     MotorcycleSexLoanValue1 = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
-                    MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue1>"
+                    MotorcycleSexLoanValue1_loc = MotorcycleSexLoanValue1.convertToLocalCurrency()
+                    MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue1_loc>"
                 Endif
                 
             Else

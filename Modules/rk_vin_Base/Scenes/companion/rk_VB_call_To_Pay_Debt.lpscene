@@ -4,11 +4,8 @@ WHEN: 0-24
 WHO: none
 OTHER: none
 
-    SceneStart() // rk_VB_call_To_Pay_Debt
-        
-        PayBicycleWithSex = rk_VB_PayBicycleWithSex.getGlobal()
-        PayMotorcycleWithSex = rk_VB_PayMotorcycleWithSex.getGlobal()
-        PayCarWithSex = rk_VB_PayCarWithSex.getGlobal()
+    SceneStart() // call_To_Pay_Debt
+    
         stock_Tesla = Player.getActorVar(stock_Tesla)
         stock_Ferrari = Player.getActorVar(stock_Ferrari)
         stock_Lambo = Player.getActorVar(stock_Lambo)
@@ -37,7 +34,7 @@ OTHER: none
     
         // Car Dealer
         CarDealer_ID = rk_VB_CarDealer_ID.getGlobal()
-        CarDealer = getSpecific(CarDealer_ID)
+        CarDealer = getPerson(true)
         CarSelectedIs = rk_VB_CarSelectedIs.getGlobal()
         CarSexLoanValue = Player.getActorVar(rk_VB_CarSexLoanValue)
         PayCarWithSex = rk_VB_PayCarWithSex.getGlobal()
@@ -46,7 +43,7 @@ OTHER: none
         
         // Motorcycle Dealer
         MotorcycleDealer_ID = rk_VB_MotorcycleDealer_ID.getGlobal()
-        MotorcycleDealer = getSpecific(MotorcycleDealer_ID)
+        MotorcycleDealer = getPerson(true)
         MotorcycleSelectedIs = rk_VB_MotorcycleSelectedIs.getGlobal()
         MotorcycleSexLoanValue = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
         PayMotorcycleWithSex = rk_VB_PayMotorcycleWithSex.getGlobal()
@@ -55,7 +52,7 @@ OTHER: none
         
         // Bicycle Dealer
         BicycleDealer_ID = rk_VB_BicycleDealer_ID.getGlobal()
-        BicycleDealer = getSpecific(BicycleDealer_ID)
+        BicycleDealer = getPerson(true)
         BicycleSelectedIs = rk_VB_BicycleSelectedIs.getGlobal()
         BicycleSexLoanValue = Player.getActorVar(rk_VB_BicycleSexLoanValue)
         PayBicycleWithSex = rk_VB_PayBicycleWithSex.getGlobal()
@@ -112,12 +109,8 @@ OTHER: none
         MotorcycleSexLoanValue_loc = MotorcycleSexLoanValue.convertToLocalCurrency()
         BicycleSexLoanValue_loc = BicycleSexLoanValue.convertToLocalCurrency()
 
-        PayBicycleWithSex = rk_VB_PayBicycleWithSex.getGlobal()
-        PayMotorcycleWithSex = rk_VB_PayMotorcycleWithSex.getGlobal()
-        PayCarWithSex = rk_VB_PayCarWithSex.getGlobal()
-
         If TotalSexLoan > 0.5 && TotalVSelected > 0
-
+        
             If BicycleSelectedIs == 1
                 If PayBicycleWithSex == 1
                     "You still owe <BicycleSexLoanValue> fuck(s) to the bicycle dealer."
@@ -167,7 +160,7 @@ OTHER: none
                     "You still owe <BicycleSexLoanValue_loc> to the bicycle dealer."
                 Endif
             Endif
-         
+            
             If CarSelectedIs == 1 
                 If PayCarWithSex == 1
                     "You still owe <CarSexLoanValue> fuck(s) to the car dealer."
@@ -262,7 +255,7 @@ OTHER: none
                     "You still owe <MotorcycleSexLoanValue_loc> to the motorcycle dealer."
                 Endif
             Endif
-        
+            
             "Who I want to call?"
             0::"Bicycle dealer"
             1::"Car dealer"
@@ -342,6 +335,7 @@ OTHER: none
                         Endif
 
                     Elseif 1
+
                         Player(Curious):: "Hey <BicycleDealer.name>, it's <Player.name>. Listen, do you want to fuck today? It's a good time for reducing my debt, I guess..."
                         
                         If BicycleDealer:arousal > 15
@@ -391,6 +385,8 @@ OTHER: none
                                     F4CarDealer.strip()
                                     NBRTXT = "some friends"
                                 Endif
+                                BicycleDealer.strip()
+                                BicycleDealer.show()
                                 "I arrive at <BicycleDealer.his_or_her> hotel, open the door to <BicycleDealer.his_or_her> room, <BicycleDealer.he_or_she> awaits me completely naked with <FriendWhoCum> person, naked too ..."
                                 "As soon as I enter the room, the door locked automatically behind me. I'm fucked!!"
                                 Player(Anxious)::"Uh, what's it's all about?"
@@ -408,7 +404,8 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_BicycleSexLoanValue, -500)
                                         BicycleSexLoanValue1 = Player.getActorVar(rk_VB_BicycleSexLoanValue)
-                                        BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1>"
+                                        BicycleSexLoanValue1_loc = BicycleSexLoanValue1.convertToLocalCurrency()
+                                        BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1_loc>"
                                     Endif
                                     
                                 Elseif FriendWhoCum == 2
@@ -420,7 +417,8 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_BicycleSexLoanValue, -750)
                                         BicycleSexLoanValue1 = Player.getActorVar(rk_VB_BicycleSexLoanValue)
-                                        BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1>"
+                                        BicycleSexLoanValue1_loc = BicycleSexLoanValue1.convertToLocalCurrency()
+                                        BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1_loc>"
                                     Endif
                                     
                                 Elseif FriendWhoCum == 3
@@ -432,7 +430,8 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_BicycleSexLoanValue, -1000)
                                         BicycleSexLoanValue1 = Player.getActorVar(rk_VB_BicycleSexLoanValue)
-                                        BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1>"
+                                        BicycleSexLoanValue1_loc = BicycleSexLoanValue1.convertToLocalCurrency()
+                                        BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1_loc>"
                                     Endif
                                     
                                 Elseif FriendWhoCum == 4
@@ -444,7 +443,8 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_BicycleSexLoanValue, -500)
                                         BicycleSexLoanValue1 = Player.getActorVar(rk_VB_BicycleSexLoanValue)
-                                        BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1>"
+                                        BicycleSexLoanValue1_loc = BicycleSexLoanValue1.convertToLocalCurrency()
+                                        BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1_loc>"
                                     Endif
                                     
                                     sex(F2CarDealer, Player, F3CarDealer, F4CarDealer)
@@ -455,12 +455,13 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_BicycleSexLoanValue, -750)
                                         BicycleSexLoanValue1 = Player.getActorVar(rk_VB_BicycleSexLoanValue)
-                                        BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1>"
+                                        BicycleSexLoanValue1_loc = BicycleSexLoanValue1.convertToLocalCurrency()
+                                        BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1_loc>"
                                     Endif
                                 Endif
                             
                             Else
-                
+
                                 "I arrive at <BicycleDealer.his_or_her> hotel, open the door to <BicycleDealer.his_or_her> room, <BicycleDealer.he_or_she> awaits me completely naked ..."
                                 BicycleDealer.strip()
                                 BicycleDealer.show()
@@ -475,7 +476,8 @@ OTHER: none
                                 Else
                                     Player.modifyActorVar(rk_VB_BicycleSexLoanValue, -250)
                                     BicycleSexLoanValue1 = Player.getActorVar(rk_VB_BicycleSexLoanValue)
-                                    BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1>"
+                                    BicycleSexLoanValue1_loc = BicycleSexLoanValue1.convertToLocalCurrency()
+                                    BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1_loc>"
                                 Endif
                                 
                             Endif
@@ -484,6 +486,7 @@ OTHER: none
                             
                             BicycleDealer(Sad):: "Sorry, I'm busy today. Maybe next time ..."
                             Player(Sad):: "Oh? That's a shame. I'll see you around then."
+                            timeout(12, call_BicycleSalerForSexLoan)
                 
                         Endif
                     Endif
@@ -631,6 +634,7 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_CarSexLoanValue, -500)
                                         CarSexLoanValue1 = Player.getActorVar(rk_VB_CarSexLoanValue)
+                                        CarSexLoanValue1_loc = CarSexLoanValue1.convertToLocalCurrency()
                                         CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1>"
                                     Endif
                                     
@@ -643,7 +647,8 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_CarSexLoanValue, -750)
                                         CarSexLoanValue1 = Player.getActorVar(rk_VB_CarSexLoanValue)
-                                        CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1>"
+                                        CarSexLoanValue1_loc = CarSexLoanValue1.convertToLocalCurrency()
+                                        CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1_loc>"
                                     Endif
                                     
                                 Elseif FriendWhoCum == 3
@@ -655,7 +660,8 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_CarSexLoanValue, -1000)
                                         CarSexLoanValue1 = Player.getActorVar(rk_VB_CarSexLoanValue)
-                                        CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1>"
+                                        CarSexLoanValue1_loc = CarSexLoanValue1.convertToLocalCurrency()
+                                        CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1_loc>"
                                     Endif
                                     
                                 Elseif FriendWhoCum == 4
@@ -667,7 +673,8 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_CarSexLoanValue, -500)
                                         CarSexLoanValue1 = Player.getActorVar(rk_VB_CarSexLoanValue)
-                                        CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1>"
+                                        CarSexLoanValue1_loc = CarSexLoanValue1.convertToLocalCurrency()
+                                        CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1_loc>"
                                     Endif
                                     
                                     sex(F2CarDealer, Player, F3CarDealer, F4CarDealer)
@@ -678,7 +685,8 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_CarSexLoanValue, -750)
                                         CarSexLoanValue1 = Player.getActorVar(rk_VB_CarSexLoanValue)
-                                        CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1>"
+                                        CarSexLoanValue1_loc = CarSexLoanValue1.convertToLocalCurrency()
+                                        CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1_loc>"
                                     Endif
                                 Endif
                             
@@ -698,7 +706,8 @@ OTHER: none
                                 Else
                                     Player.modifyActorVar(rk_VB_CarSexLoanValue, -250)
                                     CarSexLoanValue1 = Player.getActorVar(rk_VB_CarSexLoanValue)
-                                    CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1>"
+                                    CarSexLoanValue1_loc = CarSexLoanValue1.convertToLocalCurrency()
+                                    CarDealer(Grin)::"That was good! Just a reminder, now you owe me <CarSexLoanValue1_loc>"
                                 Endif
                                 
                             Endif
@@ -707,6 +716,7 @@ OTHER: none
                             
                             CarDealer(Sad):: "Sorry, I'm busy today. Maybe next time ..."
                             Player(Sad):: "Oh? That's a shame. I'll see you around then."
+                            timeout(12, call_CarSalerForSexLoan)
                 
                         Endif
                     Endif
@@ -851,7 +861,8 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -500)
                                         MotorcycleSexLoanValue1 = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
-                                        MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue1>"
+                                        MotorcycleSexLoanValue1_loc = MotorcycleSexLoanValue1.convertToLocalCurrency()
+                                        MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue1_loc>"
                                     Endif
                                     
                                 Elseif FriendWhoCum == 2
@@ -863,7 +874,8 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -750)
                                         MotorcycleSexLoanValue1 = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
-                                        MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue1>"
+                                        MotorcycleSexLoanValue1_loc = MotorcycleSexLoanValue1.convertToLocalCurrency()
+                                        MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue1_loc>"
                                     Endif
                                     
                                 Elseif FriendWhoCum == 3
@@ -875,7 +887,8 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -1000)
                                         MotorcycleSexLoanValue1 = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
-                                        MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue1>"
+                                        MotorcycleSexLoanValue1_loc = MotorcycleSexLoanValue1.convertToLocalCurrency()
+                                        MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue1_loc>"
                                     Endif
                                     
                                 Elseif FriendWhoCum == 4
@@ -887,7 +900,8 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -500)
                                         MotorcycleSexLoanValue1 = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
-                                        MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue1>"
+                                        MotorcycleSexLoanValue1_loc = MotorcycleSexLoanValue1.convertToLocalCurrency()
+                                        MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue1_loc>"
                                     Endif
                                     
                                     sex(F2CarDealer, Player, F3CarDealer, F4CarDealer)
@@ -898,7 +912,8 @@ OTHER: none
                                     Else
                                         Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -750)
                                         MotorcycleSexLoanValue1 = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
-                                        MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue1>"
+                                        MotorcycleSexLoanValue1_loc = MotorcycleSexLoanValue1.convertToLocalCurrency()
+                                        MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue1_loc>"
                                     Endif
                                 Endif
                             
@@ -918,7 +933,8 @@ OTHER: none
                                 Else
                                     Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -250)
                                     MotorcycleSexLoanValue1 = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
-                                    MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue1>"
+                                        MotorcycleSexLoanValue1_loc = MotorcycleSexLoanValue1.convertToLocalCurrency()
+                                        MotorcycleDealer(Grin)::"That was good! Just a reminder, now you owe me <MotorcycleSexLoanValue1_loc>"
                                 Endif
                                 
                             Endif

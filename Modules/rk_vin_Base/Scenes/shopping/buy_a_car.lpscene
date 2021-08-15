@@ -7,13 +7,14 @@ OTHER: none
 SceneStart()
     
     setBackground(car)
-    
-    CarDealer = generatePerson()
-    If Actor.isValid()
-        CarDealer = Actor.getTarget()
-        CarDealer_ID = CarDealer.getID()
+    CarDealer_ID = rk_VB_CarDealer_ID.getGlobal()
+    If CarDealer.isValid()
+        CarDealerID = CarDealer.getID()
+        CarDealer_ID = CarDealerID + Random(1000, 3000)
+        CarDealer_ID = CarDealer_ID.round()
         rk_VB_CarDealer_ID.setGlobal(CarDealer_ID)
     Else
+        CarDealer = generatePerson()
         CarDealer_ID = CarDealer.getID()
         rk_VB_CarDealer_ID.setGlobal(CarDealer_ID)
     Endif

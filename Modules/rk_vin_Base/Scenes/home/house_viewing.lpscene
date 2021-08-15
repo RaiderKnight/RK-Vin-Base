@@ -182,7 +182,7 @@ OTHER: none
                             RentConverted = Rent.convertToLocalCurrency(true)
                             Landlord(Flirty):: "Well, now that we've got to know each other on a more ... personal level, you can have the apartment for just <RentConverted>. Trust me, I never gave anyone such a good offer in all my years."
                             If HungerEnable > 0
-                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
                         
                         Endif
@@ -212,7 +212,7 @@ OTHER: none
                                 RentConverted = Rent.convertToLocalCurrency(true)
                                 Landlord(Flirty):: "Well, now that we've got to know each other on a more ... personal level, you can have the apartment for just <RentConverted>. Trust me, I never gave anyone such a good offer in all my years."
                                 If HungerEnable > 0
-                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
                             
                             Else
@@ -285,6 +285,9 @@ OTHER: none
                         Landlord(Flirty)::"So I'm I... Let's play!"
                         "We stripped right away and start caressing each other"
                         sex(Player, Landlord)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
                         Player.animate()
                         
                     Elseif Landlord.IsInterestedIn(Player)
@@ -319,6 +322,9 @@ OTHER: none
                             perversion += 1
                             "We stripped right away and start caressing each other"
                             sex(Player, Landlord)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
                             Player.animate()
                             
                         Endif

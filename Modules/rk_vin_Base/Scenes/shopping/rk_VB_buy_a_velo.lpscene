@@ -8,17 +8,20 @@ SceneStart()
     
     // Bicycle Dealer
     PayBicycleWithSex = rk_VB_PayBicycleWithSex.getGlobal()
+    BicycleDealer_ID = rk_VB_BicycleDealer_ID.getGlobal()
     setBackground(bicycle)
     
-    BicycleDealer = generatePerson()
-    If Actor.isValid()
-        BicycleDealer = Actor.getTarget()
-        BicycleDealer_ID = BicycleDealer.getID()
+    If BicycleDealer.isValid()
+        BicycleDealerID = BicycleDealer.getID()
+        BicycleDealer_ID = BicycleDealerID + Random(1000, 3000)
+        BicycleDealer_ID = BicycleDealer_ID.round()
         rk_VB_BicycleDealer_ID.setGlobal(BicycleDealer_ID)
     Else
+        BicycleDealer = generatePerson()
         BicycleDealer_ID = BicycleDealer.getID()
         rk_VB_BicycleDealer_ID.setGlobal(BicycleDealer_ID)
     Endif
+    BicycleDealer.makePermanent()
     BicycleDealer:arousal += Random(0, 100)
     BicycleDealer:perversion += Random(0, 100)
     BicycleSelectedIs = rk_VB_BicycleSelectedIs.getGlobal()
@@ -331,10 +334,11 @@ SceneStart()
         Else
             BicycleDealer.show()
             BicycleDealer.dress()
-            BicycleDealer.moveToPersonStand(Player, 50)
+            Player.moveToPersonStand(BicycleDealer, 50)
+            
             Random
-                Player(Shy)::"Hi, humm, is it possible to buy a bicycle in nature, if you know what I mean?"
-                Player(Curious)::"Hi, humm, do you think I'm pretty enough to buy a bicycle with sex?"
+                Player(Shy)::"Hi, is it possible to buy a bicycle in nature, if you know what I mean?"
+                Player(Curious)::"Hi, do you think I'm pretty enough to buy a bicycle with sex?"
             EndRandom
             If BicycleDealer:perversion > 50 && BicycleDealer:arousal > 25 && BicycleDealer.isInterestedIn(Player)
                 
@@ -471,7 +475,6 @@ SceneStart()
                             exchangeContact(BicycleDealer)
                         EndIf
                         BicycleSexLoanValue1 = Player.getActorVar(rk_VB_BicycleSexLoanValue)
-                        BicycleDealer.makePermanent()
                         BicycleDealer(Flirty)::"That was amazing! Just a reminder, now you owe me <BicycleSexLoanValue1> fuck(s)! See ya!"
                         BicycleDealer.hide()
                         
@@ -504,7 +507,6 @@ SceneStart()
                                 exchangeContact(BicycleDealer)
                             EndIf
                             BicycleSexLoanValue1 = Player.getActorVar(rk_VB_BicycleSexLoanValue)
-                            BicycleDealer.makePermanent()
                             rk_VB_BicycleSelectedIs.setGlobal(1)
                             BicycleDealer(Flirty)::"That was amazing! Just a reminder, now you owe me <BicycleSexLoanValue1> fuck(s)! See ya!"
                             BicycleDealer.hide()
@@ -530,7 +532,6 @@ SceneStart()
                     Player.strip()
                     BicycleDealer.strip()
                     sex(BicycleDealer, Player)
-                    BicycleDealer.makePermanent()
                     
                     If BicycleSelectedIs == 1
                         Player.modifyActorVar(rk_VB_BicycleSexLoanValue, -250)

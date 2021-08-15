@@ -6,7 +6,6 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
 
     SceneStart()
 
-        BicycleDealer_ID = rk_VB_BicycleDealer_ID.getGlobal()
         stock_BTwin = Player.getActorVar(stock_BTwin)
         stock_Rocky = Player.getActorVar(stock_Rocky)
         stock_Defy = Player.getActorVar(stock_Defy)
@@ -17,7 +16,8 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
         stock_Trek = Player.getActorVar(stock_Trek)
 
         // Bicycle Dealer
-        BicycleDealer = getSpecific(BicycleDealer_ID)
+        BicycleDealer_ID = rk_VB_BicycleDealer_ID.getGlobal()
+        BicycleDealer = getPerson(true)
         BicycleSelectedIs = rk_VB_BicycleSelectedIs.getGlobal()
         BicycleSexLoanValue = Player.getActorVar(rk_VB_BicycleSexLoanValue)
         PayBicycleWithSex = rk_VB_PayBicycleWithSex.getGlobal()
@@ -26,7 +26,6 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
     
         If BicycleSexLoanValue <= 0 && BicycleSelectedIs > 0
             "My phone rang ... It's <BicycleDealer.name> calling."
-            BicycleDealer.hide()
             If BicycleSelectedIs == 1
                 Player.modifyActorVar(stock_BTwin, 1)
             ElseIf BicycleSelectedIs == 2
@@ -75,7 +74,7 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
                 
                 "After a while..."
                 setBackground(hotel)
-                "I arrive at <BicycleDealer.his_or_her> hotel, open the door to <BicycleDealer.his_or_her> room, he awaits me completely naked ..."
+                "I arrive at <BicycleDealer.his_or_her> hotel, open the door to <BicycleDealer.his_or_her> room, <BicycleDealer.he_or_she> awaits me completely naked ..."
                 BicycleDealer.strip()
                 BicycleDealer.show()
                 "I immediately understood that I had to undress too! At least if I want my bicycle, I have to sacrifice myself ..."
@@ -86,14 +85,13 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
                 
                     Player.modifyActorVar(rk_VB_BicycleSexLoanValue, -1)
                     BicycleSexLoanValue1 = Player.getActorVar(rk_VB_BicycleSexLoanValue)
-                    
                     BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1> fuck(s)."
 
                 Else
                     Player.modifyActorVar(rk_VB_BicycleSexLoanValue, -250)
                     BicycleSexLoanValue1 = Player.getActorVar(rk_VB_BicycleSexLoanValue)
-                    
-                    BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1>"
+                    BicycleSexLoanValue1_loc = BicycleSexLoanValue1.convertToLocalCurrency()
+                    BicycleDealer(Grin)::"That was good! Just a reminder, now you owe me <BicycleSexLoanValue1_loc>"
                 Endif
                 
             Else

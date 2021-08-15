@@ -8,17 +8,17 @@ SceneStart()
     
     // Motorcycle Dealer
     setBackground(motorcycle)
-    
-    MotorcycleDealer = generatePerson()
-    If Actor.isValid()
-        MotorcycleDealer = Actor.getTarget()
-        MotorcycleDealer_ID = MotorcycleDealer.getID()
+    MotorcycleDealer_ID = rk_VB_MotorcycleDealer_ID.getGlobal()
+    If MotorcycleDealer.isValid()
+        MotorcycleDealerID = MotorcycleDealer.getID()
+        MotorcycleDealer_ID = MotorcycleDealerID + Random(1000, 3000)
+        MotorcycleDealer_ID = MotorcycleDealer_ID.round()
         rk_VB_MotorcycleDealer_ID.setGlobal(MotorcycleDealer_ID)
     Else
+        MotorcycleDealer = generatePerson()
         MotorcycleDealer_ID = MotorcycleDealer.getID()
         rk_VB_MotorcycleDealer_ID.setGlobal(MotorcycleDealer_ID)
     Endif
-    
     PayMotorcycleWithSex = rk_VB_PayMotorcycleWithSex.getGlobal()
     MotorcycleDealer:arousal += Random(0, 100)
     MotorcycleDealer:perversion += Random(0, 100)
