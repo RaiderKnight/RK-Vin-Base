@@ -82,6 +82,8 @@ OTHER: none
                     Rent.setRent()
                     If TfGame() && Player.isMale()
                         followUp(tf_afterlandlord)
+                    Elseif TfGame() && Player.isFemale()
+                        followUp(rk_VB_tff_afterlandlord)
                     Endif
                     Player.animate()
                     Landlord.animate()
@@ -128,6 +130,8 @@ OTHER: none
                         mood += Random(0, 100)
                         If TfGame() && Player.isMale()
                             followUp(tf_afterlandlord)
+                        Elseif TfGame() && Player.isFemale()
+                            followUp(rk_VB_tff_afterlandlord)
                         Endif
                         
                     Else
@@ -199,7 +203,11 @@ OTHER: none
                             If TfGame() && Landlord.isMale()
                             
                                 "When I was a man I used to hold the moral high ground and somewhat looked down on women who use their bodies to get advantages in life. Here I am, offering my body in exchange of rent discount. I'm such a hypocrite after all."
-                           
+                            
+                            Elseif TfGame() && Landlord.isFemale()
+                            
+                                "When I was a female I used to hold the moral high ground and somewhat looked down on men who use their looks to get advantages in life. Here I am, offering my body in exchange of rent discount. I'm such a hypocrite after all."
+                            
                             Endif
                             
                             If Landlord:perversion > Random(20, 100)
