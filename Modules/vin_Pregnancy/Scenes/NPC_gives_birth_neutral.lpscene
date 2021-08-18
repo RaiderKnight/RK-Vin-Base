@@ -7,6 +7,7 @@ OTHER: none
     Claim = Actor.getActorVar(tag_Mine) // Start edit Ravenger6660
     If !Actor.isMale() && Claim == 0
         SceneStart()
+        
         Actor:pornfame => 0
         Actor:perversion /= 2  
         If Actor.isRelative(Parent, StepParent) && Actor.livesWithPlayer() 
@@ -18,6 +19,9 @@ OTHER: none
             Actor2 = Actor.generateRelativeMatchRace()
             Actor2.setRelativeType(Sibling)
             Actor2:age => 0
+            Actor2.randomizeFace()
+            Actor2.randomizeHairs()
+
             addNpcRelationship(ParentChild, Actor, Actor2)
             Actor2.matchLastName(Actor)
             "<Actor.name> has recently given birth to my new baby <Actor2.brother_or_sister>, whom she named <Actor2.name>."
@@ -31,6 +35,9 @@ OTHER: none
             Actor2 = Actor.generateRelativeMatchRace()
             Actor2.setRelativeType(ParentSibling)
             Actor2:age => 0
+            Actor2.randomizeFace()
+            Actor2.randomizeHairs()
+
             addNpcRelationship(ParentChild, Actor, Actor2)
             Actor2.matchLastName(Actor)
             "<Actor.name> has recently given birth to my new <Actor2.uncle_or_aunt>, whom she named <Actor2.name>."
@@ -45,6 +52,9 @@ OTHER: none
             Actor2 = Actor.generateRelativeMatchRace()
             Actor2.setRelativeType(Cousin)
             Actor2:age => 0
+            Actor2.randomizeFace()
+            Actor2.randomizeHairs()
+
             addNpcRelationship(ParentChild, Actor, Actor2)
             Actor2.matchLastName(Actor)
             "<Actor.name> has recently given birth to my new cousin, whom she named <Actor2.name>."
@@ -58,6 +68,9 @@ OTHER: none
             Actor2 = Actor.generateRelativeMatchRace()
             Actor2.setRelativeType(SiblingChild)
             Actor2:age => 0
+            Actor2.randomizeFace()
+            Actor2.randomizeHairs()
+
             addNpcRelationship(ParentChild, Actor, Actor2)
             Actor2.matchLastName(Actor)
             "<Actor.name> has recently given birth to my new baby <Actor2.brother_or_sister>, whom she named <Actor2.name>."
@@ -66,12 +79,18 @@ OTHER: none
             // End edit Ravenger6660
             //Start edit Vin
             secondScreen(Actor)
+            BioDaddy = Actor.getBabyDaddy()
             Actor.endPregnancy()
             Actor.dress()
             Actor.show(2)
             Actor.setActorVar(tag_Pregnant, 0)
             Actor2 = Actor.generatePersonMatchRace()
             Actor2:age => 0
+            Actor2.randomizeFace()
+            Actor2.randomizeHairs()
+            If BioDaddy.isValid() && !BioDaddy.isCreature()
+                Actor2.blendAppearanceFrom(BioDaddy, Actor)
+            Endif
             addNpcRelationship(ParentChild, Actor, Actor2)
             Actor2.matchLastName(Actor)
             "<Actor.name> has recently given birth to a cute baby, whom she named <Actor2.name>. Her baby photos are all over Facebook."
@@ -105,6 +124,9 @@ OTHER: none
                     Surrogate = Actor.getActorVar(tag_Surrogate)
                     Actor2 = Actor.generateRelativeMatchRace()
                     Actor2.setRelativeType(Child)
+                    Actor2.randomizeFace()
+                    Actor2.randomizeHairs()
+
                     AddNpcRelationship(ParentChild, Actor, Actor2)
                     "It's a <Actor2.boy_or_girl>! What should I name my <Actor2.son_or_daughter>?"
                     Actor2.enterFirstName()
@@ -138,12 +160,14 @@ OTHER: none
                     mood += 100
                     
                 Elseif 1 
+
                     Actor.endPregnancy()
                     Actor.dress()
                     Actor.show(2)
                     Actor.setActorVar(tag_Pregnant, -1)
                     Actor2 = Actor.generatePersonMatchRace()
                     Actor2:age => 0
+                    
                     addNpcRelationship(ParentChild, Actor, Actor2)
                     Actor2.matchLastName(Actor)
                     children += 1

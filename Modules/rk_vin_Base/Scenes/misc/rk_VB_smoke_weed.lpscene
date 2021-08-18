@@ -20,7 +20,7 @@ OTHER: none
         weedstck = stock_AK47weed + stock_SSweed + stock_WWweed + stock_PEweed + stock_OGKweed + stock_GSCweed + stock_BBweed + stock_GGweed
         IBuyWeed = Player.getActorVar(rk_VB_IBuyWeed)
         
-        SmokeWeed = 0
+        SmokeWeed = false
         If  weedstck < 0.4 
             Player(Anxious)::"After searching everywhere... I don't have enough weed to roll a joint ! Oh well !"
         Else
@@ -44,7 +44,7 @@ OTHER: none
                 fitness -= 0.3
                 intelligence -= 0.3
                 interpersonal += 0.5
-                intoxication += 0.5
+                intoxication += 0.5 (BUFF:60)
                 Player.show()
                 Player.animate(smoke)
                 Player(Excited)::"Humm, I like the uplifting effects and the unique aromatic smell of that strain !"
@@ -53,7 +53,7 @@ OTHER: none
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -0.25)
                 EndIf
-                SmokeWeed += 1
+                SmokeWeed = true
                 
             Elseif 1
                 
@@ -63,7 +63,7 @@ OTHER: none
                 fitness -= 0.4
                 intelligence += 1
                 interpersonal -= 0.5
-                intoxication += 1
+                intoxication += 1 (BUFF:60)
                 Player.show()
                 Player.animate(smoke)
                 Player(Lazy)::"When you look for a strong and potent high which lasts for hours !"
@@ -72,7 +72,7 @@ OTHER: none
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -0.5)
                 EndIf
-                SmokeWeed += 1
+                SmokeWeed = true
             
             Elseif 2
                 
@@ -82,7 +82,7 @@ OTHER: none
                 fitness -= 1
                 intelligence -= 0.5
                 interpersonal -= 1
-                intoxication += 1.5
+                intoxication += 1.5 (BUFF:60)
                 Player.show()
                 Player.animate(smoke)
                 Player(Lazy)::"Ha! The best hybrid for relaxing, having fun and its uplifting effect."
@@ -91,7 +91,7 @@ OTHER: none
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -0.25)
                 EndIf
-                SmokeWeed += 1
+                SmokeWeed = true
             
             Elseif 3
                 
@@ -101,7 +101,7 @@ OTHER: none
                 fitness += 0.6
                 intelligence -= 0.6
                 interpersonal += 1
-                intoxication += 2
+                intoxication += 2 (BUFF:60)
                 Player.show()
                 Player.animate(smoke)
                 Player(Peaceful)::"Humm, I like its pineapple and woody taste. I have to watch myself not to smoke it all!"
@@ -110,7 +110,7 @@ OTHER: none
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -0.5)
                 EndIf
-                SmokeWeed += 1
+                SmokeWeed = true
             
             Elseif 4
                 
@@ -120,7 +120,7 @@ OTHER: none
                 fitness -= 0.7
                 intelligence += 1.5
                 interpersonal += 1.5
-                intoxication += 2.5
+                intoxication += 2.5 (BUFF:60)
                 Player.show()
                 Player.animate(smoke)
                 Player(Peaceful)::"Humm, a spicy and hashy taste. I always forget its strong smell when smoked ! Best weed to attract people !"
@@ -129,7 +129,7 @@ OTHER: none
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -0.25)
                 EndIf
-                SmokeWeed += 1
+                SmokeWeed = true
             
             Elseif 5
                 
@@ -139,7 +139,7 @@ OTHER: none
                 fitness -= 1
                 intelligence += 0.8
                 interpersonal -= 1
-                intoxication += 3
+                intoxication += 3 (BUFF:60)
                 Player.show()
                 Player.animate(smoke)
                 Player(Excited)::"Humm, I like the spicy and sweet taste of that one ! Where's my Munchies !"
@@ -148,7 +148,7 @@ OTHER: none
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -1.5)
                 EndIf
-                SmokeWeed += 1
+                SmokeWeed = true
             
             Elseif 6
                 
@@ -158,7 +158,7 @@ OTHER: none
                 fitness -= 1.5
                 intelligence += 1.5
                 interpersonal -= 1
-                intoxication += 3.5
+                intoxication += 3.5 (BUFF:60)
                 Player.show()
                 Player.animate(smoke)
                 Player(Drained)::"I love its strong lemon-lime and diesel flavors. Damn, I'm stoned like a rock !"
@@ -167,7 +167,7 @@ OTHER: none
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -0.5)
                 EndIf
-                SmokeWeed += 1
+                SmokeWeed = true
             
             Elseif 7
                 
@@ -177,7 +177,7 @@ OTHER: none
                 fitness -= 2
                 intelligence += 1.5
                 interpersonal -= 1
-                intoxication += 4
+                intoxication += 4 (BUFF:60)
                 Player.show()
                 Player.animate(smoke)
                 Player(Drained)::"Humm, I like the earthy, piney and sour taste and the couch-locking effect of that one !"
@@ -186,7 +186,7 @@ OTHER: none
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -0.5)
                 EndIf
-                SmokeWeed += 1
+                SmokeWeed = true
             
             Endif
             

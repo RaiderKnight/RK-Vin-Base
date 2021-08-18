@@ -10,7 +10,7 @@ OTHER: none
     
     setBackground(hospital)
     Player.strip()
-    Player.endPregnancy()
+    
     If TfGame()
         "Pain like I’ve never experienced, followed by exhaustion so deep it feels like my bones have melted; the end result of hours of labor. But when they lay the child back into my arms, it’s all swept away by exhilaration and an odd feeling of triumph. I did this. I made this little person. I’m a mom now. And I’m going to do everything I can to make sure this little person gets the best life I can possibly give them. I made a miracle happen; I feel like a God right now."
         "No. A Goddess!"
@@ -20,6 +20,8 @@ OTHER: none
     Actor2 = getPerson(tag_DaddyKnows)
     DaddyKnows = Actor2.getActorVar(tag_DaddyKnows)
     Actor2.setActorVar(tag_DaddyKnows, 0)
+    BioDaddy = Player.getBabyDaddy()
+    Player.endPregnancy()
     energy -= 100
     mood += 100
     Surrogated = Surrogate.getGlobal()
@@ -36,6 +38,9 @@ OTHER: none
             KeepBaby = false
             Actor = Player.generatePersonMatchRace()
             Actor:age => 0
+            Actor.randomizeFace()
+            Actor.randomizeHairs()
+            Actor.blendAppearanceFrom(Actor2, Player)
             money => money + Surrogated
             addNpcRelationship(ParentChild, Actor2, Actor)
             Actor.matchLastName(Actor2)
@@ -52,6 +57,11 @@ OTHER: none
     Endif
     If KeepBaby
         Actor = Player.generateRelativeMatchRace()
+        Actor.randomizeFace()
+        Actor.randomizeHairs()
+        If BioDaddy.isValid() && !BioDaddy.isCreature()
+            Actor.blendAppearanceFrom(BioDaddy, Player)
+        Endif
         Actor.setRelativeType(Child)
         If Actor2.isValid()
             addNpcRelationship(ParentChild, Actor2, Actor)
@@ -64,6 +74,11 @@ OTHER: none
         If Random(0, 200) < fertility
             "I'm having twins!"
             Actor3 = Player.generateRelativeMatchRace()
+            Actor3.randomizeFace()
+            Actor3.randomizeHairs()
+            If BioDaddy.isValid() && !BioDaddy.isCreature()
+                Actor3.blendAppearanceFrom(BioDaddy, Player)
+            Endif
             Actor3.setRelativeType(Child)
             If Actor2.isValid()
                 addNpcRelationship(ParentChild, Actor2, Actor3)
@@ -75,6 +90,11 @@ OTHER: none
             If Random(0, 200) < fertility
                 "I'm having triplets!"
                 Actor4 = Player.generateRelativeMatchRace()
+                Actor4.randomizeFace()
+                Actor4.randomizeHairs()
+                If BioDaddy.isValid() && !BioDaddy.isCreature()
+                    Actor4.blendAppearanceFrom(BioDaddy, Player)
+                Endif
                 Actor4.setRelativeType(Child)
                 If Actor2.isValid()
                     addNpcRelationship(ParentChild, Actor2, Actor4)

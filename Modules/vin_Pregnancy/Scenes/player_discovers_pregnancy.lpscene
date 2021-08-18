@@ -315,6 +315,33 @@ OTHER: none
                 exchangeContact(Told)
             Endif
         Endif
+        
+        If !Player.isDating()
+            "The fact that I got pregnant while not being in any sort of committed relationships causes some of my more conservative family members and colleagues to act rather judgmental towards the news."
+            ConRel = Player
+            While ConRel.isValid()
+                ConRel = getRelative()
+                If ConRel.isValid() && ConRel:perversion < 15
+                    secondScreen(ConRel)
+                    ConRel.show()
+                    "My <ConRel.relationship> <ConRel.name> reacted badly to the news of my pregnancy."
+                    ConRel:rapportwithplayer -= 20
+                    ConRel.hide()
+                Endif
+            Endwhile
+            
+            ConRel = Player
+            While ConRel.isValid()
+                ConRel = getSpecific(Colleague)
+                If ConRel.isValid() && ConRel:perversion < 15
+                    secondScreen(ConRel)
+                    ConRel.show()
+                    "My colleague <ConRel.name> has acted rather judgmental towards me since learning about my pregnancy."
+                    ConRel:rapportwithplayer -= 10
+                    ConRel.hide()
+                Endif
+            Endwhile
+        Endif
  
     SceneEnd() // scene improved by Raddeck
     

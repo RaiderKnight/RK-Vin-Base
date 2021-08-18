@@ -21,12 +21,20 @@ OTHER: none
         
         If Actor3.isValid() && !Actor.isDating()
             secondScreen(Actor)
+            BioDaddy = Actor.getBabyDaddy()
             Actor.endPregnancy()
             Actor.dress()
             Actor.show(2)
             Actor.setActorVar(tag_Pregnant, 0)
             Actor2 = Actor.generatePersonMatchRace()
             Actor2:age => 0
+            Actor2.randomizeFace()
+            Actor2.randomizeHairs()
+            
+            If BioDaddy.isValid() && !BioDaddy.isCreature()
+                Actor2.blendAppearanceFrom(BioDaddy, Actor)
+            Endif
+            
             addNpcRelationship(ParentChild, Actor, Actor2)
             addNpcRelationship(ParentChild, Actor3, Actor2)
             Actor2.matchLastName(Actor3)
@@ -53,6 +61,7 @@ OTHER: none
                     moveTo(Loc)        
                     exchangeContact(Actor) // Edit by Ravenger6660
                     Actor.strip()
+                    BioDaddy = Actor.getBabyDaddy()
                     Actor.endPregnancy()
                     "Those were among the tensest hours in my life, but thankfully, everything went smoothly in the end. Both <Actor.name> and our child were in good condition. Nothing beats the feeling of being a new father."
                     
@@ -72,22 +81,63 @@ OTHER: none
                     
                     children += 1
                     Actor2 = Actor.generateRelativeMatchRace()
+                    Actor2:age => 0
+                    Actor2.randomizeFace()
+                    Actor2.randomizeHairs()
+                    
+                    If BioDaddy.isValid() && !BioDaddy.isCreature()
+                        Actor2.blendAppearanceFrom(BioDaddy, Actor)
+                    Endif
+                    
                     Actor2.setRelativeType(Child)
                     AddNpcRelationship(ParentChild, Actor, Actor2)
+                    
                     "It's a <Actor2.boy_or_girl>! What should I name my <Actor2.son_or_daughter>?"
                     Actor2.enterFirstName()
-                    Actor2:age => 0
-                    Player:children += 1
                     mood += 100
                     
-                     // Start edit by Ravenger6660
+                    // Start edit by Ravenger6660
                     Twin = 0
                     Twin += fertility 
                     Twin += Actor:fertility_npc
+                    //End edit by Ravenger6660
 
-                    If Random(75, 200) < Twin
+                    If Random(0, 200) < Actor:fertility
+                        Actor5 = Actor.generateRelativeMatchRace()
+                        Actor5:age => 0
+                        Actor5.randomizeFace()
+                        Actor5.randomizeHairs()
+
+                        If BioDaddy.isValid() && !BioDaddy.isCreature()
+                            Actor5.blendAppearanceFrom(BioDaddy, Actor)
+                        Endif
+                        Actor5.setRelativeType(Child)
+                        AddNpcRelationship(ParentChild, Actor, Actor5)
+                        "It's a <Actor5.boy_or_girl>! What should I name my <Actor5.son_or_daughter>?"
+                        Actor5.enterFirstName()
+                        children += 1
+                        If Random(0, 200) < Actor:fertility
+                            Actor6 = Actor.generateRelativeMatchRace()
+                            Actor6:age => 0
+                            Actor6.randomizeFace()
+                            Actor6.randomizeHairs()
+
+                            If BioDaddy.isValid() && !BioDaddy.isCreature()
+                                Actor6.blendAppearanceFrom(BioDaddy, Actor)
+                            Endif
+                            Actor6.setRelativeType(Child)
+                            AddNpcRelationship(ParentChild, Actor, Actor6)
+                            "It's a <Actor6.boy_or_girl>! What should I name my <Actor6.son_or_daughter>?"
+                            Actor6.enterFirstName()
+                            children += 1
+                        Endif        
+                        // Start edit by Ravenger6660
+                    Elseif Random(75, 200) < Twin
                         "She's having twins!"
                         Actor3 = Player.generateRelativeMatchRace()
+                        If BioDaddy.isValid() && !BioDaddy.isCreature() //Edit by Raddeck
+                            Actor3.blendAppearanceFrom(BioDaddy, Actor)
+                        Endif
                         Actor3.setRelativeType(Child)
                         addNpcRelationship(ParentChild, Actor, Actor3)
                         "It's a <Actor3.boy_or_girl>! What should I name my <Actor3.son_or_daughter>?"
@@ -97,6 +147,9 @@ OTHER: none
                         If Random(110, 300) < Twin
                             "She's having triplets!"
                             Actor4 = Player.generateRelativeMatchRace()
+                            If BioDaddy.isValid() && !BioDaddy.isCreature() //Edit by Raddeck
+                                Actor4.blendAppearanceFrom(BioDaddy, Actor)
+                            Endif
                             Actor4.setRelativeType(Child)
                             addNpcRelationship(ParentChild, Actor, Actor4)
                             "It's a <Actor4.boy_or_girl>! What should I name my <Actor3.son_or_daughter>?"
@@ -110,17 +163,22 @@ OTHER: none
                 Elseif 1 
                 
                     Actor.endPregnancy()
+                    BioDaddy = Actor.getBabyDaddy()
                     Actor.dress()
                     Actor.show(2)
                     Actor.setActorVar(tag_Pregnant, -1)
                     Actor2 = Actor.generatePersonMatchRace()
                     Actor2:age => 0
+                    If BioDaddy.isValid() && !BioDaddy.isCreature() //Edit by Raddeck
+                        Actor2.blendAppearanceFrom(BioDaddy, Actor)
+                    Endif
+                    Actor2.setRelativeType(Child) //Edit by Raddeck
                     addNpcRelationship(ParentChild, Actor, Actor2)
                     Actor2.matchLastName(Actor)
                     children += 1
                     "I was not there for the <Actor2.boy_or_girl>'s birth."
                     karma -= 25
-                     //End edit by Ravenger6660
+                    //End edit by Ravenger6660
                 
                 Else
                 
