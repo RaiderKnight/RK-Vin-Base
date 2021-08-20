@@ -5,16 +5,21 @@ WHO: Actor = getRelative(); If Actor.livesWithPlayer() && Actor.isInterestedIn(P
 OTHER: isAtHome()
 
     SceneStart()
-    "Hmm, I swear that I had another pair of <Player.boxers_or_panties> in this drawer ..."
-    0:: "Lost in the laundry"
-    1:: "Somebody stole them"
-    
-    If 0
-        "I must have forgotten them in the washing machine last time I did the laundry ... I keep doing this - it's so annoying."
-    Else
-        "Somebody must have stolen them. Who would have known that I have a pervert living with me? Who could it be?"
-        "I remember now: my <Actor.relationship> cleaned the apartment yesterday. Could it be <Actor.him_or_her>?"
-        Actor:incest += Random(0, 2)
-    Endif
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        "Hmm, I swear that I had another pair of <Player.boxers_or_panties> in this drawer ..."
+        0:: "Lost in the laundry"
+        1:: "Somebody stole them"
+        
+        If 0
+            "I must have forgotten them in the washing machine last time I did the laundry ... I keep doing this - it's so annoying."
+        Else
+            "Somebody must have stolen them. Who would have known that I have a pervert living with me? Who could it be?"
+            "I remember now: my <Actor.relationship> cleaned the apartment yesterday. Could it be <Actor.him_or_her>?"
+            Actor:incest += Random(0, 2)
+        Endif
     SceneEnd()
-    timeout(600, family_steals_underwear) // Improved by Ravenger6660
+    timeout(600, family_steals_underwear) // Improved by Ravenger6660 - Raddeck

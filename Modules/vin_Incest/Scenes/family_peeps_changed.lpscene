@@ -5,23 +5,24 @@ WHO: Peeping = getRelative(); If Peeping.isInterestedIn(Player) && Peeping.lives
 OTHER: isAtHome()
 
     SceneStart()
-    Player.strip()    
-    setBackground(home)
-    Player(Happy):: "Hmm, what should I wear today?"
-    Player(Embarassed):: "What? Who's there?"
-    "I was getting changed when suddenly I heard a noise. Someone must be peeping on me!"
-    0:: "Get dressed quickly"
-    1:: "Take my time"
-    
-    If 0 
-        Player.dress()
-        "I quickly put some clothes on and went looking around but couldn't find anyone. Whoever the peeping Tom was must have quick feet."
-    Else
-        perversion += 1
-        Peeping:perversion += 2     
-        "I won't lie: The thought of someone watching me getting changed turned me on ... I might as well take my time and give my peeping Tom a show to remember"
-        Peeping:incest += 5
-    Endif
-    timeoutActor(200, family_peeps_changed, Peeping)
-    timeout(48, family_peeps_changed) // Improved by Ravenger6660
+        Player.strip()    
+        setBackground(home)
+        Player(Happy):: "Hmm, what should I wear today?"
+        Player(Embarassed):: "What? Who's there?"
+        "I was getting changed when suddenly I heard a noise. Someone must be peeping on me!"
+        0:: "Get dressed quickly"
+        1:: "Take my time"
+        
+        If 0 
+            Player.dress()
+            "I quickly put some clothes on and went looking around but couldn't find anyone. Whoever the peeping Tom was must have quick feet."
+        Else
+            perversion += 1
+            Peeping:perversion += 2     
+            "I won't lie: The thought of someone watching me getting changed turned me on ... I might as well take my time and give my peeping Tom a show to remember"
+            Peeping:incest += 5
+            arousal += 1
+        Endif
+        timeoutActor(200, family_peeps_changed, Peeping)
+        timeout(48, family_peeps_changed) // Improved by Ravenger6660 - Raddeck
     SceneEnd()
