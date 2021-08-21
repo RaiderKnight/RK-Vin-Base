@@ -5,17 +5,25 @@ WHO: Actor = getRelative(); If Player.isInterestedIn(Actor) && Random(50, 200) <
 OTHER: Random(0, 300) < perversion
 
     SceneStart()
-    Actor.dress()
-    Actor.show(2)
-    "I know it's wrong but I have a pretty big crush on my own <Actor.relationship> ... Unfortunately for me, we're family so nothing will ever happen. It never hurts to fantasize a bit though ..."
-    0:: "Fantasize about sex with my <Actor.relationship>"
-    1:: "Resist the urge"
-    
-    If 0
-        SexNoAffair(Player, Actor)
-        perversion += Random(0, 0.25)
-        arousal += 50
-        Actor:incest += Random(0, 2)
-    Endif
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor.dress()
+        Actor.show(2)
+        "I know it's wrong but I have a pretty big crush on my own <Actor.relationship> ... Unfortunately for me, we're family so nothing will ever happen. It never hurts to fantasize a bit though ..."
+        0:: "Fantasize about sex with my <Actor.relationship>"
+        1:: "Resist the urge"
+        
+        If 0
+            SexNoAffair(Player, Actor)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -2)
+            EndIf
+            perversion += Random(0, 0.25)
+            arousal += 50
+            Actor:incest += Random(0, 2)
+        Endif
     SceneEnd()
     timeout(150, fantasize_family)

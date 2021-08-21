@@ -5,10 +5,15 @@ WHO: Actor = getSpecific(PassedOn)
 OTHER: none
 
     SceneStart()
-    Love = 0
-    Love += Actor:attractiontoplayer
-    Love += Actor:incest
-    Love += Actor:perversion
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Love = 0
+        Love += Actor:attractiontoplayer
+        Love += Actor:incest
+        Love += Actor:perversion
         SneakGame()
         Stealth = 0
         Stealth += Actor:perversion
@@ -43,6 +48,9 @@ OTHER: none
                 
                     If Random(200, 350) < Love
                         Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
                         Actor:perversion += Random(0, 5)
                         Actor:attractiontoplayer += Random(0, 5)
 
@@ -65,6 +73,9 @@ OTHER: none
                         If Random(200, 350) < Love && Actor.isInterestedIn(Player) && isModEnabled(vin_NonConsensual)
                             Actor(Flirty):: "You know what. I think I'm going to have some fun with you."
                             Sex(Actor, player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
                             Actor:attractiontoplayer += Random(0, 50)
                         Else
                             Actor(Angry):: "I better not catch you again!"
@@ -82,6 +93,9 @@ OTHER: none
                 
                 If 0
                     Sex(Actor, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
                     Actor:incest += Random(0, 5)
                 Else
                     "Better leave"
@@ -96,6 +110,9 @@ OTHER: none
                         If Random(200, 350) < Love && Actor.isInterestedIn(Player) && isModEnabled(vin_NonConsensual)
                             Actor(Flirty):: "You know what. I think I'm going to have some fun with you."
                             Sex(Actor, player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
                             Actor:incest += Random(0, 50)
                         Else
                             Actor(Angry):: "I better not catch you again!"
@@ -117,6 +134,9 @@ OTHER: none
                     If Random(200, 350) < Love && Actor.isInterestedIn(Player) && isModEnabled(vin_NonConsensual)
                         Actor(Flirty):: "You know what. I think I'm going to have some fun with you."
                         Sex(Actor, Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
                         Actor:incest += Random(0, 50)
                     Else
                         Actor(Angry):: "I better not catch you again!"

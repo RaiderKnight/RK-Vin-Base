@@ -4,67 +4,77 @@ WHEN: 0 - 24
 WHO: Family = getRelative(); if Family:pornfame > 5
 OTHER:
 
-SceneStart()
-setBackground(street)
-Actor2 = generatePersonTemporary()
-While !Family.isInterestedIn(Actor2)
-    Actor2 = generatePersonTemporary()
-Endwhile
-Actor3 = generatePersonTemporary()
-While !Family.isInterestedIn(Actor3)
-    Actor3 = generatePersonTemporary()
-Endwhile
-Actor2.dress()
-Actor2.show()
-Actor3.dress()
-Actor3.show()
-"I was on my way home when I see a few bystanders."
-Player()::"What are they watching?"
-Player()::"What The Hell!"
-Actor = generatePersonTemporary()
-While !Family.isInterestedIn(Actor)
-    Actor = generatePersonTemporary()
-Endwhile
-Sex(Family, Actor)    
-Family.show
-Actor.hide()
-Family:perversion += 2
-Love = 0
-Love += Family:attractiontoplayer
-Love += Family:incest
-"My <Family.relationship> <Family.name> is fucking in public!"
-"The bystanders look very excited about their performance, and some of them seem keen to join in the fun..."
-"What should I do?"
-0:: Love > 100:: "Fuck my <Family.relationship> too."
-1:: "Watch <Family.relationship> fuck someone else."
-2:: "Stop <Family.relationship>."
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        setBackground(street)
+        Actor2 = generatePersonTemporary()
+        While !Family.isInterestedIn(Actor2)
+            Actor2 = generatePersonTemporary()
+        Endwhile
+        Actor3 = generatePersonTemporary()
+        While !Family.isInterestedIn(Actor3)
+            Actor3 = generatePersonTemporary()
+        Endwhile
+        Actor2.dress()
+        Actor2.show()
+        Actor3.dress()
+        Actor3.show()
+        "I was on my way home when I see a few bystanders."
+        Player(Curious)::"What are they watching?"
+        Player(Shocked)::"What The Hell!"
+        Actor = generatePersonTemporary()
+        While !Family.isInterestedIn(Actor)
+            Actor = generatePersonTemporary()
+        Endwhile
+        Sex(Family, Actor)    
+        Family.show
+        Actor.hide()
+        Family:perversion += 2
+        Love = 0
+        Love += Family:attractiontoplayer
+        Love += Family:incest
+        "My <Family.relationship> <Family.name> is fucking in public!"
+        "The bystanders look very excited about their performance, and some of them seem keen to join in the fun..."
+        "What should I do?"
+        0:: Love > 100:: "Fuck my <Family.relationship> too."
+        1:: "Watch <Family.relationship> fuck someone else."
+        2:: "Stop <Family.relationship>."
+                
+        If 0
+            "I don't want to be left out of this public performance."
+            Sex(Player, Family)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -2)
+            EndIf
+            Family:pornfame += 2
+            Family:attractiontoplayer += 5
+            Family:incest += 5
+            Family:perversion += 5
+            perversion += 5
+            If pornfame > 0
+                pornfame += 2
+                Family:pornfame += 2
+            Endif
+            
+        Elseif 1
+            "Best leave it to everyone else."
+            Sex(Family, Actor2, Actor3)
+            arousal -= 1 // Edit by Raddeck
+            perversion -= 1 // Edit by Raddeck
+        Else
+            "<Family.name>! What are you doing! Have you no Shame!"
+            Family:rapportwithplayer -= Random(2,5)
+            Family:pornfame -= Random(2,5)
+            Family:attractiontoplayer -= Random(2,5)
+            Family:incest -= Random(2,5)
+            Family:perversion -= Random(2,5)
+            perversion -= Random(2,5)
+        Endif
         
-If 0
-    "I don't want to be left out of this public performance."
-    Sex(Player, Family)
-    Family:pornfame += 2
-    Family:attractiontoplayer += 5
-    Family:incest += 5
-    Family:perversion += 5
-    perversion += 5
-    If pornfame > 0
-        pornfame += 2
-        Family:pornfame += 2
-    Endif
-    
-Elseif 1
-    "Best leave it to everyone else."
-    Sex(Family, Actor2, Actor3)
-Else
-    "<Family.name>! What are you doing! Have you no Shame!"
-    Family:rapportwithplayer -= Random(2,5)
-    Family:pornfame -= Random(2,5)
-    Family:attractiontoplayer -= Random(2,5)
-    Family:incest -= Random(2,5)
-    Family:perversion -= Random(2,5)
-    perversion -= Random(2,5)
-Endif
-    
-SceneEnd()
-timeoutActor(600, Ravenger_VB_Family_porn_shoot_public, Family)
-timeout(300, Ravenger_VB_Family_porn_shoot_public)
+    SceneEnd() // Improved by Raddeck
+    timeoutActor(600, Ravenger_VB_Family_porn_shoot_public, Family)
+    timeout(300, Ravenger_VB_Family_porn_shoot_public)

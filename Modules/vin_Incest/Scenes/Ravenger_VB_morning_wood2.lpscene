@@ -5,117 +5,137 @@ WHO: Actor = getRelative(); If Actor.livesWithPlayer() && !Actor.isMale()
 OTHER: isAtHome() && !Player.isfemale() &&  70 < arousal
 
     SceneStart()
-    Player.strip()
-    Love = 0
-    Love += Actor:attractiontoplayer
-    Love += Actor:incest
-    Love += Actor:perversion
-    "It's late, yet I still haven't gotten out of bed yet. I'm deep into some very dirty dream."
-    0:: "Stay Asleep"
-    1:: "Get up"
-    
-    If 0
-        Actor.show(2)
-        Actor.dress()
-        Actor(Anxious):: "Wake up, <Player.Relationship>! Aren't you late for work?"
-        Actor:sneak += 5
-        Do = Random(0, 10)
-        If Actor:sneak > 50 && Love > Random(150, 250) && Do > 7 && isModEnabled(vin_NonConsensual)
-            "My <Actor.relationship> falls quiet..."
-            "My <Actor.relationship> couldn't help but notice that I had a massive Hard-On and it has fallen out of my pants."
-            Actor(Whisper):: "No wonder he slept so soundly, he was probably having some wet dreams."
-            "My <Actor.relationship> sneak closer."
-            Actor.moveToPersonStand(Player, 100)
-            Actor.strip()
-            Actor(Whisper):: "I bet he won't mind if I play with it."
-            filter(Sleeping)
-            perversion += 15
-            Player.closeEyes(true)
-            Sex(Actor, Player)
-            Player.closeEyes(true)
 
-        Elseif Actor:sneak > 50 && Love > Random(100, 150) && Do > 7 && isModEnabled(vin_NonConsensual)
-            "My <Actor.relationship> falls quiet..."
-            "My <Actor.relationship> couldn't help but notice that I had a massive Hard-On and it has fallen out of my pants."
-            Actor(Whisper):: "No wonder he slept so soundly, he was probably having some wet dreams."
-            "My <Actor.relationship> sneak closer."
-            Actor.moveToPersonStand(Player, 100)
-            Actor(Whisper):: "I bet he won't mind if I play with it." 
-            filter(Foreplay)
-            perversion += 2
-            Player.closeEyes(true)
-            Sex(Actor, Player)
-            Player.closeEyes(true)  
-            
-        Else
-            Player(Scared):: "Oh shit! I completely overslept. What time is it now?"
-            Actor:incest += Random(0, 1)
-            Actor:attractiontoplayer += Random(0, 1)
-            "My <Actor.relationship> couldn't help but notice that I had a massive Hard-On and it has fallen out of my pants."
-            Actor(Whisper):: "No wonder he slept so soundly, he was probably having some wet dreams."
-            0:: "Cover yourself"
-            1:: "Say nothing"
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Player.strip()
+        Love = 0
+        Love += Actor:attractiontoplayer
+        Love += Actor:incest
+        Love += Actor:perversion
+        "It's late, yet I still haven't gotten out of bed yet. I'm deep into some very dirty dream."
+        0:: "Stay Asleep"
+        1:: "Get up"
         
-            If 1
-                Actor:incest += Random(0, 1)
-                If Love > 125
-                    Actor(Flirty):: "Want me to help you with that?"
-                    0:: "Yeah ..."
-                    1:: "no?"
-                
-                    If 0
-                        Player(Flirty):: "Maybe just a little bit ..."
-                        Actor:incest += Random(0, 2)
-                        If Love > Random(150, 250)
-                            Player.closeEyes(false)
-                            filter(Foreplay, vaginal)
-                            Sex(Player, Actor)
-                            Actor:incest += 10
-                            Actor:attractiontoplayer += 10
-                            Actor:perversion += 10
-                        Else
-                            Filter(Handjob, Blowjob, Boobjob)
-                            Sex(Player, Actor)
-                            Actor:incest += 10
-                            Actor:attractiontoplayer += 10
-                            Actor:perversion += 2
-                            Actor:arousal += Random(10, 75)
-                            Lust = 0
-                            Lust += Actor:attractiontoplayer
-                            Lust += Actor:incest
-                            Lust += Actor:perversion
-                            Lust += Actor:arousal
-                            If Lust > Random(250, 350)
-                                Actor(Flirty):: "It is So Hard! Mind if I play with it some more?"
-                                0:: "Okay ..."
-                                1:: "No?"
-                        
-                                If 0
-                                    Player(Flirty):: "Okay ... I guess."
-                                    Sex(Actor, Player)
-                                    Actor:incest += 10
-                                    Actor:attractiontoplayer += 10
-                                    Actor:perversion += 10
-                                Else
-                                    Player(Angry):: "Ew, what the fuck <Actor.relationship>? I'm your <Actor.callplayer>!"
-                                Endif
-                            Endif
-                        Endif                       
-                    Else
-                        Player(Angry):: "Ew, what the fuck <Actor.relationship>? I'm your <Actor.callplayer>!"
-                    Endif
-                Endif   
-            Else
-                Player(Embarassed):: "Sorry. God, this is embarassing ... this sometimes happens in the morning ..."
-                Actor(Embarassed):: "It's okay. It happens."                
-            
-            Endif
-                
-        Endif       
-    Else
-        "Maybe, I should get I got stuff to do today."
-    Endif
+        If 0
+            Actor.show(2)
+            Actor.dress()
+            Actor(Anxious):: "Wake up, <Player.Relationship>! Aren't you late for work?"
+            Actor:sneak += 5
+            Do = Random(0, 10)
+            If Actor:sneak > 50 && Love > Random(150, 250) && Do > 7 && isModEnabled(vin_NonConsensual)
+                "My <Actor.relationship> falls quiet..."
+                "My <Actor.relationship> couldn't help but notice that I had a massive Hard-On and it has fallen out of my pants."
+                Actor(Whisper):: "No wonder he slept so soundly, he was probably having some wet dreams."
+                "My <Actor.relationship> sneak closer."
+                Actor.moveToPersonStand(Player, 100)
+                Actor.strip()
+                Actor(Whisper):: "I bet he won't mind if I play with it."
+                filter(Sleeping)
+                perversion += 15
+                Player.closeEyes(true)
+                Sex(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                Player.closeEyes(true)
     
-    SceneEnd()
+            Elseif Actor:sneak > 50 && Love > Random(100, 150) && Do > 7 && isModEnabled(vin_NonConsensual)
+                "My <Actor.relationship> falls quiet..."
+                "My <Actor.relationship> couldn't help but notice that I had a massive Hard-On and it has fallen out of my pants."
+                Actor(Whisper):: "No wonder he slept so soundly, he was probably having some wet dreams."
+                "My <Actor.relationship> sneak closer."
+                Actor.moveToPersonStand(Player, 100)
+                Actor(Whisper):: "I bet he won't mind if I play with it." 
+                filter(Foreplay)
+                perversion += 2
+                Player.closeEyes(true)
+                Sex(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                Player.closeEyes(true)  
+                
+            Else
+                Player(Scared):: "Oh shit! I completely overslept. What time is it now?"
+                Actor:incest += Random(0, 1)
+                Actor:attractiontoplayer += Random(0, 1)
+                "My <Actor.relationship> couldn't help but notice that I had a massive Hard-On and it has fallen out of my pants."
+                Actor(Whisper):: "No wonder he slept so soundly, he was probably having some wet dreams."
+                0:: "Cover yourself"
+                1:: "Say nothing"
+            
+                If 1
+                    Actor:incest += Random(0, 1)
+                    If Love > 125
+                        Actor(Flirty):: "Want me to help you with that?"
+                        0:: "Yeah ..."
+                        1:: "no?"
+                    
+                        If 0
+                            Player(Flirty):: "Maybe just a little bit ..."
+                            Actor:incest += Random(0, 2)
+                            If Love > Random(150, 250)
+                                Player.closeEyes(false)
+                                filter(Foreplay, vaginal)
+                                Sex(Player, Actor)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                Actor:incest += 10
+                                Actor:attractiontoplayer += 10
+                                Actor:perversion += 10
+                            Else
+                                Filter(Handjob, Blowjob, Boobjob)
+                                Sex(Player, Actor)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                Actor:incest += 10
+                                Actor:attractiontoplayer += 10
+                                Actor:perversion += 2
+                                Actor:arousal += Random(10, 75)
+                                Lust = 0
+                                Lust += Actor:attractiontoplayer
+                                Lust += Actor:incest
+                                Lust += Actor:perversion
+                                Lust += Actor:arousal
+                                If Lust > Random(250, 350)
+                                    Actor(Flirty):: "It is So Hard! Mind if I play with it some more?"
+                                    0:: "Okay ..."
+                                    1:: "No?"
+                            
+                                    If 0
+                                        Player(Flirty):: "Okay ... I guess."
+                                        Sex(Actor, Player)
+                                        If HungerEnable > 0
+                                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                                        EndIf
+                                        Actor:incest += 10
+                                        Actor:attractiontoplayer += 10
+                                        Actor:perversion += 10
+                                    Else
+                                        Player(Angry):: "Ew, what the fuck <Actor.relationship>? I'm your <Actor.callplayer>!"
+                                    Endif
+                                Endif
+                            Endif                       
+                        Else
+                            Player(Angry):: "Ew, what the fuck <Actor.relationship>? I'm your <Actor.callplayer>!"
+                        Endif
+                    Endif   
+                Else
+                    Player(Embarassed):: "Sorry. God, this is embarassing ... this sometimes happens in the morning ..."
+                    Actor(Embarassed):: "It's okay. It happens."                
+                
+                Endif
+                    
+            Endif       
+        Else
+            "Maybe, I should get I got stuff to do today."
+        Endif
+    
+    SceneEnd() // Improved by Raddeck
     timeoutActor(200, Ravenger_VB_morning_wood2, Actor)
     timeout(48, Ravenger_VB_morning_wood2)

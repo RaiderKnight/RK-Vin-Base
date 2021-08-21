@@ -5,116 +5,130 @@ WHO: Actor = getRelative(); If Actor.livesWithPlayer() && Actor:rapportwithplaye
 OTHER: none
 
     SceneStart()
-    Actor.dressExcept(Outerwear, Top, Bottom, Foot, Headwear)
-    Actor.show(2)
-    Actor:rapportwithplayer += Random(0, 2)
-    "I was sleeping when my <Actor.relationship> desides to enter room."
-    If Player.isNaked()
-        Actor:arousal += 5
-        "My <Actor.relationship> see me naked in bed."
-    Endif
-    Actor(Sad):: "Opps wrong room. I was heading to bed I should get going, its gets too late."
-    0:: "Ask <Actor.him_or_her> to stay the night"
-    1:: "Goodbye"
-    
-    If 0
-        Player(Happy):: "We can share a bed for the night."
-        Love = 0
-        Love += Actor:attractiontoplayer
-        Love += Actor:incest
-        If Love > 50
-            Actor.animate(na_sleep)
-            If Actor:perversion > 85 || Actor:arousal > 85
-                Actor.strip()
-                Actor.setNoRedress()
-                "My <Actor.relationship> strips naked in enters our bed."
-                If perversion > 85
-                    "I strip naked too."
-                    Player.strip()
-                Endif
-            Elseif Player.isNaked() || perversion > 85 && !Actor.isnaked()
-                "I warn you. I do sleep in the nude."
-                Player.strip()
-                0:: interpersonal > 50:: "I would like you to sleep naked too."
-                1:: "So... no funny business."
-                
-                If 0 && Love > 75
-                    "Alright, I'll sleep naked too."
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor.dressExcept(Outerwear, Top, Bottom, Foot, Headwear)
+        Actor.show(2)
+        Actor:rapportwithplayer += Random(0, 2)
+        "I was sleeping when my <Actor.relationship> desides to enter room."
+        If Player.isNaked()
+            Actor:arousal += 5
+            "My <Actor.relationship> see me naked in bed."
+        Endif
+        Actor(Sad):: "Opps wrong room. I was heading to bed I should get going, its gets too late."
+        0:: "Ask <Actor.him_or_her> to stay the night"
+        1:: "Goodbye"
+        
+        If 0
+            Player(Happy):: "We can share a bed for the night."
+            Love = 0
+            Love += Actor:attractiontoplayer
+            Love += Actor:incest
+            If Love > 50
+                Actor.animate(na_sleep)
+                If Actor:perversion > 85 || Actor:arousal > 85
                     Actor.strip()
                     Actor.setNoRedress()
                     "My <Actor.relationship> strips naked in enters our bed."
-                Else
-                    "No funny business, got it."
-                Endif
-            Else
-                "My <Actor.relationship> gets into bed."
-            Endif
-            Actor(Happy):: "Alright then, I'll stay. Let's go down memory lane together."
-            "Later that night ..."
-            Actor:incest += Random(0, 1)
-            Actor.closeEyes(true)
-            Player(Happy):: "Damn, <Actor.his_or_her> leg is touching my private parts ... I'm so aroused. When did my <Actor.relationship> grow up to become such a <Actor.handsome_or_beautiful> <Actor.man_or_woman>."
-            If Player.isNaked() && Actor.isNaked() && [Actor.isInterestedIn(Player) || Actor.hadsex()]
-                "I thank god we're already naked."
-                "Makes... making love real easy."
-                Sex(Player, Actor)
-                Actor:incest += 5
-                Actor:attractiontoplayer += 5
-            Else
-                0:: "Feel <Actor.him_or_her> up"
-                1:: "Maybe not"
-               
-                If 0
-                    "I cannot take it anymore. I suppose a few touches won't hurt ..."
-                    Actor:incest += Random(0, 1)
-                    Actor:arousal += Random(0, 20)
-                    Love += Actor:perversion
-                    Love += Actor:arousal
-                    If Love > Random(200, 350)
-                        Actor.closeEyes(false)
-                        Actor(Flirty):: "I see you're getting handsy ... Couldn't resist your own <Actor.relationship>, could you, bad <Player.boy_or_girl>? Is this the real reason why you were so keen for me to stay the night?"
-                        AnimatePair(Player, Actor, Kissing)
-                        Actor(Kiss):: "..."
-                        Player(Kiss):: "..."
-                        "Is this real life or a dream? I'm kissing my own <Actor.relationship> and I like it ..."
-                        0:: "Give in to forbidden desires"
-                        1:: "Stop it there"
-                        
-                        If 0
-                            Sex(Player, Actor)
-                            Actor:incest += 10
-                        Else
-                            "This is going too far. I needed to stop it."
-                            "Eventually, we went back to sleep, neither of us trying anything funny for the rest of the night."
-                        Endif
+                    If perversion > 85
+                        "I strip naked too."
+                        Player.strip()
+                    Endif
+                Elseif Player.isNaked() || perversion > 85 && !Actor.isnaked()
+                    "I warn you. I do sleep in the nude."
+                    Player.strip()
+                    0:: interpersonal > 50:: "I would like you to sleep naked too."
+                    1:: "So... no funny business."
+                    
+                    If 0 && Love > 75
+                        "Alright, I'll sleep naked too."
+                        Actor.strip()
+                        Actor.setNoRedress()
+                        "My <Actor.relationship> strips naked in enters our bed."
                     Else
-                        "Despite my groping, my <Actor.relationship> did not care for it."
+                        "No funny business, got it."
                     Endif
-                                
                 Else
-                    "I'd better not get too handsy. <Actor.He_or_She> is my <Actor.relationship> after all."
-                    Love += Actor:perversion
-                    Love += Actor:arousal
-                    Love -= Actor:masochist
-                    If Actor.isInterestedIn(Player) && Love > Random(250, 450) && isModEnabled(vin_NonConsensual)
-                        "While I'm sleeping my <Actor.relationship> starts fucking me."
-                        Actor:attractiontoplayer += Random(1, 10)
-                        Actor:perversion += Random(5, 20)
-                        Actor:incest += 5
-                        Sex(Actor, Player)
-                        perversion += 2
-                        mood += 30
-                    Endif
+                    "My <Actor.relationship> gets into bed."
                 Endif
-            Endif   
+                Actor(Happy):: "Alright then, I'll stay. Let's go down memory lane together."
+                "Later that night ..."
+                Actor:incest += Random(0, 1)
+                Actor.closeEyes(true)
+                Player(Happy):: "Damn, <Actor.his_or_her> leg is touching my private parts ... I'm so aroused. When did my <Actor.relationship> grow up to become such a <Actor.handsome_or_beautiful> <Actor.man_or_woman>."
+                If Player.isNaked() && Actor.isNaked() && [Actor.isInterestedIn(Player) || Actor.hadsex()]
+                    "I thank god we're already naked."
+                    "Makes... making love real easy."
+                    Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    Actor:incest += 5
+                    Actor:attractiontoplayer += 5
+                Else
+                    0:: "Feel <Actor.him_or_her> up"
+                    1:: "Maybe not"
+                   
+                    If 0
+                        "I cannot take it anymore. I suppose a few touches won't hurt ..."
+                        Actor:incest += Random(0, 1)
+                        Actor:arousal += Random(0, 20)
+                        Love += Actor:perversion
+                        Love += Actor:arousal
+                        If Love > Random(200, 350)
+                            Actor.closeEyes(false)
+                            Actor(Flirty):: "I see you're getting handsy ... Couldn't resist your own <Actor.relationship>, could you, bad <Player.boy_or_girl>? Is this the real reason why you were so keen for me to stay the night?"
+                            AnimatePair(Player, Actor, Kissing)
+                            Actor(Kiss):: "..."
+                            Player(Kiss):: "..."
+                            "Is this real life or a dream? I'm kissing my own <Actor.relationship> and I like it ..."
+                            0:: "Give in to forbidden desires"
+                            1:: "Stop it there"
+                            
+                            If 0
+                                Sex(Player, Actor)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                Actor:incest += 10
+                            Else
+                                "This is going too far. I needed to stop it."
+                                "Eventually, we went back to sleep, neither of us trying anything funny for the rest of the night."
+                            Endif
+                        Else
+                            "Despite my groping, my <Actor.relationship> did not care for it."
+                        Endif
+                                    
+                    Else
+                        "I'd better not get too handsy. <Actor.He_or_She> is my <Actor.relationship> after all."
+                        Love += Actor:perversion
+                        Love += Actor:arousal
+                        Love -= Actor:masochist
+                        If Actor.isInterestedIn(Player) && Love > Random(250, 450) && isModEnabled(vin_NonConsensual)
+                            "While I'm sleeping my <Actor.relationship> starts fucking me."
+                            Actor:attractiontoplayer += Random(1, 10)
+                            Actor:perversion += Random(5, 20)
+                            Actor:incest += 5
+                            Sex(Actor, Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            perversion += 2
+                            mood += 30
+                        Endif
+                    Endif
+                Endif   
+            Else
+                Actor(Sad):: "Yeah but we're adults now ... that would be too weird."
+                Player(Sad):: "Yeah, you're right. Alright, visit again soon, <Actor.Relationship>."
+    
+            Endif
         Else
-            Actor(Sad):: "Yeah but we're adults now ... that would be too weird."
-            Player(Sad):: "Yeah, you're right. Alright, visit again soon, <Actor.Relationship>."
-
+            Player(Happy):: "Good night <Actor.Relationship>."
         Endif
-    Else
-        Player(Happy):: "Good night <Actor.Relationship>."
-    Endif
     
     SceneEnd()
     timeout(350, Ravenger_VB_family_bedshare2)

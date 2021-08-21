@@ -7,6 +7,11 @@ OTHER: none
     SugarParent = SugarParent.getGlobal()    
     If SugarParent > 0
         SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Sugar = getSpecific(SugarParent)
         Sugar.dress()
         Sugar.show(2)
@@ -42,7 +47,13 @@ OTHER: none
                 "The lure of money is too great. After all, money is why I have a <Sugar.sugardaddy_or_sugarmomma> in the first place ..."
                 "It took some more convincing to get my <Actor.relationship> to accept, but eventually, the promotion was too great a prize."
                 Sex(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
                 Sex(Actor, Player, Sugar)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
                 Actor:incest += Random(0, 50)
                 money += Random(1000, 5000)
             Else
@@ -52,6 +63,9 @@ OTHER: none
                 Sugar(Evil):: "Or I'll end our little arrangement and fire your <Actor.relationship>!"
                 "We had no other choice ..."
                 Sex(Sugar, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
                 Actor:incest += Random(0, 20)           
             Endif
         Else
@@ -62,3 +76,4 @@ OTHER: none
     Else
         Actor.delete()
     Endif
+    

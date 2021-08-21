@@ -29,10 +29,11 @@ OTHER: none
             
             ElseIf Actor:incest > 30 && Actor:arousal > 25 && Actor:perversion > 50
             
+                "We strip righ away and started having sex right here!"
                 If incestlegalized == 0 && ChanceToGetCaughW < 6 && [WHERE != home || WHERE != prison || WHERE != fraternity]
                     PeopleSaw = true
                 EndIf
-                "We strip righ away and started having sex right here!"
+                
                 Actor.strip()
                 Actor.show()
                 Player.strip()
@@ -67,7 +68,7 @@ OTHER: none
             
             EndIf
             
-            If PeopleSaw
+            If PeopleSaw && ChanceToGetCaughW < 6
                 followUp(rk_VB_incest_indecency)
             EndIf
         

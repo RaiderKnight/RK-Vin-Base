@@ -5,6 +5,11 @@ WHO: Actor = getSpecific(PassedOn)
 OTHER: none
 
     SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         perversion += Random(0, 0.5)
         Actor:incest += Random(0, 1)
         "My curiosity got the better of me and I just had to see this ..."
@@ -31,6 +36,9 @@ OTHER: none
                 If Random(150, 250) < Love
                     Actor(Flirty):: "I didn't realize how much of a pervert my <Actor.callplayer> is ... Come on and join us then, what are you waiting for?"
                     Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
                     Actor:incest += Random(0, 50)
                     Actor:attractiontoplayer += Random(0, 50)
                 Else
@@ -51,6 +59,9 @@ OTHER: none
                     If Random(200, 350) < Love && Actor.isInterestedIn(Player) && isModEnabled(vin_NonConsensual)
                         Actor(Flirty):: "You know what. I think I'm going to have some fun with you."
                         Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
                         Actor:incest += Random(0, 50)
                         Actor:attractiontoplayer += Random(0, 50)
                     Else

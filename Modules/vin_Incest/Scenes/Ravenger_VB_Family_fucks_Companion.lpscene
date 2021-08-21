@@ -4,73 +4,81 @@ WHEN: 0 - 24
 WHO: Friend = getCompanion(); Family = getRelative(); If Family:pornfame > 75 && Friend.isInterestedIn(Family) && Family.isInterestedIn(Friend) && Friend:perversion > 50 && Friend:rapportwithplayer > Random(0, 20) && !Friend.isDating() && !Family.isDating() && !Friend.hasRelationship(Spouses, Dating) && !Family.hasRelationship(Spouses, Dating)
 OTHER: IsWithCompanion() && !isWithCompanionCreature()
 
-sceneStart()
-Family.dress()
-Family.show()
-"Oh look my <Family.relationship> <Family.name>."
-Family:: "Hey <Family.callplayer>."
-Family(Flirty):: "And friend..."
-Friend(Flirty):: "OMg are you <Family.name>. From 'The Family Pie' & 'Cum3DK'."
-Family(Flirty):: "Yes, um how many of my videos have you seen."
-Friend(Flirty):: "All of them.........................................'red flags run you fool!'"
-Player:: "So."
-0:: "Hang out with <Family.relationship>"
-1:: "Part ways with <Family.relationship>"
+    sceneStart()
 
-If 0
-    Player:: "<Family.name> are you heading? Can we join you?"
-    Family:: "Sure"
-    setBackground(home)
-    "Once we are home my friend <Friend.name> ask a bold question."
-    Friend:: "Excuse me <Family.name> can I ask you a favor?"
-    Family:: "Alright."
-    Friend:: "Can I see you in all your naked glory."
-    Player(Surprised):: "What the fuck!"
-    Family(Flirty):: "Sure"
-    Family.strip()
-    "..."
-    Player:: "Well <Friend.name> are you happy?"
-    Friend.strip()
-    Friend:: "Now, I want you to fuck me!"
-    arousal += Random(0, 30)
-    AnimatePair(Family, Friend, Kissing)
-    Family.strip()
-    Friend.strip()
-    "OMg my <Friend.name> is going to fucking my <Family.relationship> right in front of me!"
-    Sex(Family, Friend)
-    "What should I do?"
-    0:: "Offer to join them"
-    1:: "Enough"
-                
-    If 0
-        Player(Flirty):: "Looks like you guys are having some fun there? Mind if I join you?"
-        Love = 0
-        Love += Family:attractiontoplayer
-        Love += Family:incest
-        Love += Family:perversion
-                
-        If Random(100, 200) < Love
-            Family(Flirty):: "I didn't realize how much of a pervert my <Family.callplayer> is ..."
-            Friend(Flirty):: "Come on and join us then, what are you waiting for?"
-            Sex(Family, Player, Friend)
-            Family:incest += Random(15, 50)
-            Family:attractiontoplayer += Random(15, 50)
-            Friend:attractiontoplayer += Random(15, 50)
-
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Family.dress()
+        Family.show()
+        "Oh look my <Family.relationship> <Family.name>."
+        Family:: "Hey <Family.callplayer>."
+        Family(Flirty):: "And friend..."
+        Friend(Flirty):: "OMg are you <Family.name>. From 'The Family Pie' & 'Cum3DK'."
+        Family(Flirty):: "Yes, um how many of my videos have you seen."
+        Friend(Flirty):: "All of them.........................................'red flags run you fool!'"
+        Player:: "So."
+        0:: "Hang out with <Family.relationship>"
+        1:: "Part ways with <Family.relationship>"
+        
+        If 0
+            Player:: "<Family.name> are you heading? Can we join you?"
+            Family:: "Sure"
+            setBackground(home)
+            "Once we are home my friend <Friend.name> ask a bold question."
+            Friend:: "Excuse me <Family.name> can I ask you a favor?"
+            Family:: "Alright."
+            Friend:: "Can I see you in all your naked glory."
+            Player(Surprised):: "What the fuck!"
+            Family(Flirty):: "Sure"
+            Family.strip()
+            "..."
+            Player:: "Well <Friend.name> are you happy?"
+            Friend.strip()
+            Friend:: "Now, I want you to fuck me!"
+            arousal += Random(0, 30)
+            AnimatePair(Family, Friend, Kissing)
+            Family.strip()
+            Friend.strip()
+            "OMg my <Friend.name> is going to fucking my <Family.relationship> right in front of me!"
+            Sex(Family, Friend)
+            "What should I do?"
+            0:: "Offer to join them"
+            1:: "Enough"
+                        
+            If 0
+                Player(Flirty):: "Looks like you guys are having some fun there? Mind if I join you?"
+                Love = 0
+                Love += Family:attractiontoplayer
+                Love += Family:incest
+                Love += Family:perversion
+                        
+                If Random(100, 200) < Love
+                    Family(Flirty):: "I didn't realize how much of a pervert my <Family.callplayer> is ..."
+                    Friend(Flirty):: "Come on and join us then, what are you waiting for?"
+                    Sex(Family, Player, Friend)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                    EndIf
+                    Family:incest += Random(15, 50)
+                    Family:attractiontoplayer += Random(15, 50)
+                    Friend:attractiontoplayer += Random(15, 50)
+        
+                Else
+                    Family(Angry):: "What's up with that perverted proposal? You're my <Family.callplayer>, for God's sake!"
+                    Family:rapportwithplayer -= Random(0, 3)
+                Endif
+            Else
+                "I leave the room & leave my friend fucking my <Family.relationship>."
+            Endif       
+            endDate()
         Else
-            Family(Angry):: "What's up with that perverted proposal? You're my <Family.callplayer>, for God's sake!"
-            Family:rapportwithplayer -= Random(0, 3)
+            Player:: "I was nice seeing you <Family.name> but we have to keep going."
+            Family:: "Oh? That's a shame. I'll see you around then."
+            Family.hide()
+            Friend:: "You never told me your <Family.relationship> is a famous Pornstar."
+        
         Endif
-    Else
-        "I leave the room & leave my friend fucking my <Family.relationship>."
-    Endif       
-    endDate()
-Else
-    Player:: "I was nice seeing you <Family.name> but we have to keep going."
-    Family:: "Oh? That's a shame. I'll see you around then."
-    Family.hide()
-    Friend:: "You never told me your <Family.relationship> is a famous Pornstar."
-
-Endif
-timeout(100, Ravenger_VB_Family_fucks_Companion)
-sceneEnd()
+        timeout(100, Ravenger_VB_Family_fucks_Companion)
+    sceneEnd()

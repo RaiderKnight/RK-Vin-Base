@@ -7,6 +7,11 @@ OTHER: none
     SugarParent = SugarBabe.getGlobal()
     If SugarParent > 0
         SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Sugar = getSpecific(SugarParent)
         Sugar.dress()
         Sugar.show(2)
@@ -41,8 +46,14 @@ OTHER: none
             If 0
                 Player(Sad):: "This is so wrong ... but if you give me an ultimatum like that ..."
                 Sex(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
                 Actor:incest += Random(0, 50)
                 Sex(Actor, Player, Sugar)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
             Else
                 Player(Angry):: "Are you for real right now? You're my <Actor.relationship> for God's sake! I can't sleep with you. Who cares about your besties rivalry?"
                 Actor:rapportwithplayer -= Random(0, 50)
@@ -55,3 +66,4 @@ OTHER: none
     Else
         Actor.delete()
     Endif
+    

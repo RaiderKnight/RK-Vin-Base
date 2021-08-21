@@ -4,115 +4,123 @@ WHEN: 0 - 24
 WHO: Friend = getPerson(true); Family = getRelative(); If Family.livesWithPlayer() && Family:perversion > 50 && !Family.isSameGender(Player) && Friend.isInterestedIn(Family) && Family.isInterestedIn(Friend) && Friend:perversion > 50 && Friend:rapportwithplayer > Random(0, 20) && !Friend.isDating() && !Family.isDating() && !Friend.hasRelationship(Spouses, Dating) && !Family.hasRelationship(Spouses, Dating)
 OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Random(0, 200) < interpersonal
 
-sceneStart()
-Friend.dress()
-"My phone rang ... It's <Friend.name> calling."
-SecondScreen(Friend)
-Friend.show(2)
-Friend:: "Hey <Player.name>, it's <Friend.name>. Can I come over today?"
-"Invite friend over... 'FfF'"
-0:: "Yes"
-1:: "No"
+    sceneStart()
 
-If 0
-    "Sure come on over."
-    SecondScreen()
-    Friend.show(2)
-    "My friend comes over."
-    Do = Random(0, 9)
-    If Do < 2
-        "And we watch a movie."
-        setBackground(livingroom)
-    Elseif Do < 4   
-        "And we play video games."
-        setBackground(home)
-    Elseif Do < 6       
-        "And we have lunch."
-        setBackground(kitchen)
-    Elseif Do < 8
-        "And we talk about work."
-        setBackground(livingroom)
-    Else    
-        "From modder: Does anyone even read the text I write down?"
-        setBackground(home)
-    Endif
-    Friend:rapportwithplayer += Random(5, 15)
-    Family.dress()
-    Family.show()
-    "Look like my <Family.relationship> just got home."
-    Family:: "Hey <Family.callplayer>."
-    Family(Flirty):: "Oh, hey <Friend.name>."
-    If Friend:masochist > Family:masochist
-        Friend(Flirty):: "Hi <Family.name>"
-        Friend(Flirty):: "Did you have a nice day?"
-        Family(Flirty):: "It could be better..."
-        Player:: "Stop flirting with my <Family.relationship>."
-    Else
-        Friend(Angry):: "What are you looking at?"
-        Family(Flirty):: "Oh, come on I know you want me."
-        Friend(Angry):: "Gross, as if."
-    Endif
-    Family:: "Alright, I'm heading to my room. See you later..."
-    Family.hide()
-    Family.strip()
-    "a little while later."
-    Friend:: "Excuse me I need to do something quick."
-    Player:: "Alright."
-    Friend.hide()
-    Friend.strip()
-    "..."
-    Player:: "But what's that sound coming out of the bedroom?"
-    setBackground(home)
-    Player(Surprised):: "What the fuck!"
-    Sex(Family, Friend)
-    arousal += Random(0, 30)
-    Family.show(2)
-    Friend.show(3)
-    Player.show(0)
-    AnimatePair(Family, Friend, Kissing)
-    Family.strip()
-    Friend.strip()
-    "OMg my <Family.relationship> is fucking my friend!"
-    "It looks like they're already ready for another round ..."
-    0:: "Offer to join them"
-    1:: "Enough"
-                
-    If 0
-        Player(Flirty):: "Looks like you guys are having some fun there? Mind if I join you?"
-        Love = 0
-        Love += Family:attractiontoplayer
-        Love += Family:incest
-        Love += Family:perversion
-                
-        If Random(100, 200) < Love
-            Family(Flirty):: "I didn't realize how much of a pervert my <Family.callplayer> is ..."
-            Friend(Flirty):: "Come on and join us then, what are you waiting for?"
-            Sex(Family, Player, Friend)
-            Family:incest += Random(15, 50)
-            Family:attractiontoplayer += Random(15, 50)
-            Friend:attractiontoplayer += Random(15, 50)
-            If isModEnabled(vin_Polyamorous)
-                addNpcRelationship(Poly, Family, Friend)
-            Else
-                addNpcRelationship(Dating, Family, Friend)          
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Friend.dress()
+        "My phone rang ... It's <Friend.name> calling."
+        SecondScreen(Friend)
+        Friend.show(2)
+        Friend:: "Hey <Player.name>, it's <Friend.name>. Can I come over today?"
+        "Invite friend over... 'FfF'"
+        0:: "Yes"
+        1:: "No"
+        
+        If 0
+            "Sure come on over."
+            SecondScreen()
+            Friend.show(2)
+            "My friend comes over."
+            Do = Random(0, 9)
+            If Do < 2
+                "And we watch a movie."
+                setBackground(livingroom)
+            Elseif Do < 4   
+                "And we play video games."
+                setBackground(home)
+            Elseif Do < 6       
+                "And we have lunch."
+                setBackground(kitchen)
+            Elseif Do < 8
+                "And we talk about work."
+                setBackground(livingroom)
+            Else    
+                "From modder: Does anyone even read the text I write down?"
+                setBackground(home)
             Endif
+            Friend:rapportwithplayer += Random(5, 15)
+            Family.dress()
+            Family.show()
+            "Look like my <Family.relationship> just got home."
+            Family:: "Hey <Family.callplayer>."
+            Family(Flirty):: "Oh, hey <Friend.name>."
+            If Friend:masochist > Family:masochist
+                Friend(Flirty):: "Hi <Family.name>"
+                Friend(Flirty):: "Did you have a nice day?"
+                Family(Flirty):: "It could be better..."
+                Player:: "Stop flirting with my <Family.relationship>."
+            Else
+                Friend(Angry):: "What are you looking at?"
+                Family(Flirty):: "Oh, come on I know you want me."
+                Friend(Angry):: "Gross, as if."
+            Endif
+            Family:: "Alright, I'm heading to my room. See you later..."
+            Family.hide()
+            Family.strip()
+            "a little while later."
+            Friend:: "Excuse me I need to do something quick."
+            Player:: "Alright."
+            Friend.hide()
+            Friend.strip()
+            "..."
+            Player:: "But what's that sound coming out of the bedroom?"
+            setBackground(home)
+            Player(Surprised):: "What the fuck!"
+            Sex(Family, Friend)
+            arousal += Random(0, 30)
+            Family.show(2)
+            Friend.show(3)
+            Player.show(0)
+            AnimatePair(Family, Friend, Kissing)
+            Family.strip()
+            Friend.strip()
+            "OMg my <Family.relationship> is fucking my friend!"
+            "It looks like they're already ready for another round ..."
+            0:: "Offer to join them"
+            1:: "Enough"
+                        
+            If 0
+                Player(Flirty):: "Looks like you guys are having some fun there? Mind if I join you?"
+                Love = 0
+                Love += Family:attractiontoplayer
+                Love += Family:incest
+                Love += Family:perversion
+                        
+                If Random(100, 200) < Love
+                    Family(Flirty):: "I didn't realize how much of a pervert my <Family.callplayer> is ..."
+                    Friend(Flirty):: "Come on and join us then, what are you waiting for?"
+                    Sex(Family, Player, Friend)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                    EndIf
+                    Family:incest += Random(15, 50)
+                    Family:attractiontoplayer += Random(15, 50)
+                    Friend:attractiontoplayer += Random(15, 50)
+                    If isModEnabled(vin_Polyamorous)
+                        addNpcRelationship(Poly, Family, Friend)
+                    Else
+                        addNpcRelationship(Dating, Family, Friend)          
+                    Endif
+                Else
+                    Family(Angry):: "What are you doing here, peeping Tom? And what's up with that perverted proposal? You're my <Family.callplayer>, for God's sake!"
+                    Family:rapportwithplayer -= Random(0, 3)
+                    addNpcRelationship(Dating, Family, Friend)
+                Endif
+            Else
+                Player(Angry):: "What are you doing that's my friend! Gross!"
+                Family:rapportwithplayer -= Random(0, 3)
+                Friend:rapportwithplayer -= Random(0, 3)
+                addNpcRelationship(Dating, Family, Friend)
+            Endif       
+            
         Else
-            Family(Angry):: "What are you doing here, peeping Tom? And what's up with that perverted proposal? You're my <Family.callplayer>, for God's sake!"
-            Family:rapportwithplayer -= Random(0, 3)
-            addNpcRelationship(Dating, Family, Friend)
+            Player:: "Sorry, I'm busy today. Maybe next time ..."
+            Friend:: "Oh? That's a shame. I'll see you around then."
+        
+        
         Endif
-    Else
-        Player(Angry):: "What are you doing that's my friend! Gross!"
-        Family:rapportwithplayer -= Random(0, 3)
-        Friend:rapportwithplayer -= Random(0, 3)
-        addNpcRelationship(Dating, Family, Friend)
-    Endif       
-    
-Else
-    Player:: "Sorry, I'm busy today. Maybe next time ..."
-    Friend:: "Oh? That's a shame. I'll see you around then."
-
-
-Endif
-timeout(100, Ravenger_VB_Family_fucks_Friend)
-sceneEnd()
+        timeout(100, Ravenger_VB_Family_fucks_Friend)
+    sceneEnd()

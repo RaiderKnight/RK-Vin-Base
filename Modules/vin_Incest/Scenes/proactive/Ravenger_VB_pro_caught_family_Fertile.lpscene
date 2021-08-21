@@ -5,6 +5,12 @@ WHO: Actor = getSpecific(PassedOn)
 OTHER: none
 
     SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+    
         perversion += Random(0, 0.5)
         Actor:incest += Random(0, 1)
         "My curiosity got the better of me and I just had to see this ..."
@@ -36,6 +42,10 @@ OTHER: none
                     Player.Strip()
                     Filter(vaginal)
                     Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    
                     Player(flirty):: "Wow, that was fun."
                     If !Actor.isPregnant()
                         Actor():: "We are not done yet..."
@@ -45,6 +55,9 @@ OTHER: none
                         energy -= 15
                         Filter(vaginal)
                         SexNoAffair(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
                         Player(tired):: "Done?"
                         If !Actor.isPregnant()
                             Actor():: "No keep on cumming"
@@ -54,6 +67,10 @@ OTHER: none
                             energy -= 15
                             Filter(vaginal)
                             SexNoAffair(Player, Actor)
+                            
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
                             Player(tired):: "Good lord... I'm empty..."
                         Endif
                     Endif        
@@ -70,11 +87,18 @@ OTHER: none
                     If Random(200, 350) < Love && isModEnabled(vin_NonConsensual)
                         Actor(Flirty):: "You know what. I think I'm going to have some fun with you."
                         Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
                         Actor:incest += 10
                         Actor.Strip()
                         Player.Strip()
                         Filter(vaginal, AggressiveFM)
                         Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        
                         Player(flirty):: "Wow, that was fun."
                         If !Actor.isPregnant()
                             Actor():: "We are not done yet..."
@@ -84,6 +108,9 @@ OTHER: none
                             energy -= 15
                             Filter(vaginal, AggressiveFM)
                             SexNoAffair(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
                             Player(tired):: "Done?"
                             If !Actor.isPregnant()
                                 Actor():: "No keep on cumming"
@@ -93,6 +120,9 @@ OTHER: none
                                 energy -= 15
                                 Filter(vaginal, AggressiveFM)
                                 SexNoAffair(Player, Actor)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
                                 Player(tired):: "Good lord... I'm empty..."
                             Endif
                         Endif   

@@ -13,13 +13,21 @@ OTHER: none
         PoliceMan = generatePersonTemporary()
         Actor1 = generatePersonTemporary()
         IncestCount = Player.getActorVar(rk_VB_IncestCount)
+        incestowned = Player.getActorVar(rk_VB_II_incest_owned)
         
-        Player.modifyActorVar(rk_VB_IncestCount, 1)
-        "That was rather risky doing that in front of the people. I hope no one call the cops..."       
-
+        If incestowned > 0
+            "Me and my son decided to hide in the city until the cops searching for us!"
+        Else
+            Player.modifyActorVar(rk_VB_IncestCount, 1)
+            "That was rather risky doing that in front of the people. I hope no one call the cops..."       
+        EndIf
+        
         If Random(0, 50) > sneak
-        
-            "Sure enough, the cops promptly arrived at the scene."
+            If incestowned
+                "Sure enough, the cops find us very quickly..."
+            Else
+                "Sure enough, the cops promptly arrived at the scene..."
+            EndIf
             PoliceMan(Furious)::"'Hands in the air, now! You're under arrest of incest indecency'"
             0:: "Run"
             1:: "Surrender"
@@ -134,4 +142,4 @@ OTHER: none
             
         Endif
         
-    SceneEnd() // Scene improved by Raddeck
+    SceneEnd() // Scene created by Raddeck
