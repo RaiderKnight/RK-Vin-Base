@@ -5,14 +5,22 @@ WHO: Actor = getCreature(); Actor2 = getCreature(); If Actor.isCreatureType(Dog)
 OTHER: !Player.isMale()
 
     SceneStart()
-    Actor.show()
-    Actor2.show()
-    "I have already tasted the forbidden pleasure with dogs. Since I have more than one male dog, should I try to get them to spit roast me?"
-    0:: "Yes"
-    1:: "No"
-    
-    If 0
-        Sex(Actor, Actor2, Player)
-    Endif
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor.show()
+        Actor2.show()
+        "I have already tasted the forbidden pleasure with dogs. Since I have more than one male dog, should I try to get them to spit roast me?"
+        0:: "Yes"
+        1:: "No"
+        
+        If 0
+            Sex(Actor, Actor2, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -3)
+            EndIf
+        Endif
     SceneEnd()
     timeout(300, dog_spitroast_cms)
