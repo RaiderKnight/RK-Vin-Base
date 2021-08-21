@@ -5,6 +5,11 @@ WHO: none
 OTHER: !Player.isAsexual() && Random(2, 50) > karma
 
     SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
     
         Player.animate(na_sleep)
         Actor = generatePersonTemporary()
@@ -40,6 +45,9 @@ OTHER: !Player.isAsexual() && Random(2, 50) > karma
             Endif
             TalkNonConsensual()
             Sex(Actor, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -2)
+            EndIf
         Endif
         
     SceneEnd()

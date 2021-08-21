@@ -5,47 +5,61 @@ WHO: none
 OTHER: !isWithCompanion() && Random(2, 50) > karma && masochist > 50
 
     SceneStart()
-    Actor = generatePersonTempoary()
-    Actor.dress()
-    Actor.show()
-    "I was at the gym's locker room alone and this random <Actor.guy_or_girl> comes in having finished a workout, looks at me and declares:"
-    Actor:: "You look nice as a post workout snack!" 
-    Actor:: "I'm going to fuck you!"
-    Actor:: "Your only choices are 'yes' or 'screaming'. I love the screamers!"
-    0:: "Yes"
-    1:: "Scream"
-    2:: "Fight them"
-    
-    If 0
-        Sex(Player, Actor)
-    Elseif 1
-        "I screamed out for help!"
-        If Random(0, 100) < 80
-            "Unfortunately no-one came to help ..."
-            If Actor.isFemale() && Player.isMale()
-                Filter(AggressiveFM)
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor = generatePersonTempoary()
+        Actor.dress()
+        Actor.show()
+        "I was at the gym's locker room alone and this random <Actor.guy_or_girl> comes in having finished a workout, looks at me and declares:"
+        Actor:: "You look nice as a post workout snack!" 
+        Actor:: "I'm going to fuck you!"
+        Actor:: "Your only choices are 'yes' or 'screaming'. I love the screamers!"
+        0:: "Yes"
+        1:: "Scream"
+        2:: "Fight them"
+        
+        If 0
+            Sex(Player, Actor)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -2)
+            EndIf
+        Elseif 1
+            "I screamed out for help!"
+            If Random(0, 100) < 80
+                "Unfortunately no-one came to help ..."
+                If Actor.isFemale() && Player.isMale()
+                    Filter(AggressiveFM)
+                Else
+                    Filter(Aggressive)
+                Endif
+                TalkNonConcensual()
+                SexNoAffair(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
             Else
-                Filter(Aggressive)
+                "Thankfully, the gym staff came in and saved the day."
             Endif
-            TalkNonConcensual()
-            SexNoAffair(Actor, Player)
         Else
-            "Thankfully, the gym staff came in and saved the day."
-        Endif
-    Else
-        "I tried to fight my way out!"
-        If Random(0, 100) > martial
-            "Unfortunately <Actor.he_or_she> was too strong for me ..."
-            If Actor.isFemale() && Player.isMale()
-                Filter(AggressiveFM)
+            "I tried to fight my way out!"
+            If Random(0, 100) > martial
+                "Unfortunately <Actor.he_or_she> was too strong for me ..."
+                If Actor.isFemale() && Player.isMale()
+                    Filter(AggressiveFM)
+                Else
+                    Filter(Aggressive)
+                Endif
+                TalkNonConcensual()
+                SexNoAffair(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
             Else
-                Filter(Aggressive)
-            Endif
-            TalkNonConcensual()
-            SexNoAffair(Actor, Player)
-        Else
-            "Thankfully, I managed to fight <Actor.him_or_her> off."
-        Endif        
-    Endif 
+                "Thankfully, I managed to fight <Actor.him_or_her> off."
+            Endif        
+        Endif 
     SceneEnd()
     timeout(500, cms_ica_sep04) // Improved by Ravenger6660
