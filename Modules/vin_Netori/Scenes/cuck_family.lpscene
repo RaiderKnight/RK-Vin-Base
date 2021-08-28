@@ -35,6 +35,7 @@ OTHER: Random(0, 100) < 1 && Random(0, 100) < sneak
                     Actor2.show()
                     Actor2:: "<Actor.name> ... <Player.name> ..."
                     "Oh no, we were too busy fucking to notice that my <Actor2.relatonship> has returned to the apartment and caught us red-handed."
+                    Cuck = Actor2.getActorVar(tag_NTRCuck)
                     If Actor2:peversion > 70
                         Actor2:: "You just couldn't wait for me, could you? You started without me, with my own <Actor2.callplayer> no less!"
                         "To my surprise, <Actor2.name> seems totally cool with this. Maybe they're in an open relationship or into swinging and cuckolding?"
@@ -53,11 +54,13 @@ OTHER: Random(0, 100) < 1 && Random(0, 100) < sneak
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
                         Endif
+                        Actor2.setActorVar(tag_NTRCuck, 1)
                     Elseif Actor2:masochist > 30
                         Actor:: "Don't be upset, <Actor2.name>. You just haven't been satisfying me properly recently and <Player.name> here was just kind enough to do <Player.his_or_her> <Actor2.relationship> a favour by preventing this lack of sex from straining our relationship."
                         Player:: "That's right, my <Actor2.relationship>. It's not cheating, it's just helping out family."
                         Actor2:: "Oh well, in that case, thank you for being such a loving and considerate <Actor2.callplayer>."
                         Actor2:rapportwithplayer += 10
+                        Actor2.setActorVar(tag_NTRCuck, 1)
                     Else
                         Actor2:: "Fuck you both! How could you do this to me? My own <Actor2.callplayer> sleeping with own <Actor.boyfriend_or_girlfriend>?"
                         Actor2:rapportwithplayer -= 50
