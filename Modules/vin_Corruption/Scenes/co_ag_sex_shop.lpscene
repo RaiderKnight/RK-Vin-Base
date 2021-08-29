@@ -1,15 +1,17 @@
-WHAT: all
-WHERE: all
+WHAT: none
+WHERE: none
 WHEN: 8-24
-WHO: Actor = getCompanion(); If !Actor.isRelative() && Player.isInterestedIn(Actor) && perversion - Actor:perversion > 40 && Actor:attractiontoplayer > 10
+WHO: none
 OTHER: none
 
-    SceneStart()
     
-        Hunger = Player.getActorVar(rk_VB_Hunger)
-        HungerEnable = rk_VB_EnableHunger.getGlobal()
-        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
-        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+    Hunger = Player.getActorVar(rk_VB_Hunger)
+    HungerEnable = rk_VB_EnableHunger.getGlobal()
+    UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+    UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+    
+    SceneStart()
+        Actor = getCompanion()
         If !Actor.isValid() || ForcedTrigger()
             Actor = getCompanion()
         Endif
@@ -21,7 +23,7 @@ OTHER: none
         "I reckon a little visit to my favorite sex shop could help <Actor.him_or_her> open up a bit ..."
         0:: "Take <Actor.him_or_her> to a sex shop"
         1:: "Not a good idea"
-    
+        
         If 0
             "A while later ..."
             Actor(Surprised):: "<Player.name>, where are you taking me to? Wait, is this a ... sex shop?"
@@ -33,7 +35,7 @@ OTHER: none
                 "Now that we're inside, should I just let <Actor.name> look around a bit or should I push a bit more and handpick a sex toy for <Actor.him_or_her> to try?"
                 0:: "Convince <Actor.name> to try out a <Actor.Fleshlight_or_dildo>"
                 1:: "Just let <Actor.him_or_her> explore on <Actor.his_or_her> own"
-    
+        
                 If 0
                     "Hmm, let me see ..."
                     "Yup, this one should do."
@@ -49,7 +51,7 @@ OTHER: none
                         "<Actor.name> is clearly nearing orgasm now ... should I try to get lucky or just leave <Actor.him_or_her> to finish alone?"
                         0:: "Touch <Actor.him_or_her>"
                         1:: "Let <Actor.him_or_her> enjoy <Actor.himself_or_herself>"
-    
+        
                         If 0
                             AnimatePair(Player, Actor, Kissing)
                             "I came closer and started to caress <Actor.name>'s sensitive spot. I made it clear that I wanted a grand finale for this little sexy show I somehow convinced <Actor.him_or_her> to put on."
@@ -79,6 +81,5 @@ OTHER: none
         Else
             "Let's take this slow ... No way <Actor.he_or_she> would agree to go in such a place."
         Endif
-
-    SceneEnd()
-    timeout(200, co_ag_sex_shop)
+            
+    SceneEnd()  // Improved by Raddeck

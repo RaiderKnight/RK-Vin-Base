@@ -1,16 +1,18 @@
-WHAT: all
-WHERE: home
+WHAT: none
+WHERE: none
 WHEN: 0 - 24
-WHO: Actor5 = getCompanion(); Actor6 = getCreature(Dog); If Player.isInterestedIn(Actor5) && Actor5.isFemale() && Actor6.isMale()
+WHO: none
 OTHER: none
 
     SceneStart()
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Actor5 = getCompanion()
+        Actor6 = getCreature(Dog)
         "You are feeling horny and you think that <Actor5.name> is too. Do you want to try and take things further and put on a porn movie in that hope that it will spice things up?"
-        0:: "NO"
-        1:: "YES"
+        0:: "No"
+        1:: "Yes"
         
         If 1
         
@@ -18,14 +20,14 @@ OTHER: none
             Player.hide()
             Actor5.hide()
             Actor = generatePersonTemporary()
-            While !Actor.isFemale()
+            While Actor.isMale()
                 Actor = generatePersonTemporary()
             Endwhile
             "What type?"
-            0:: "STRAIGHT"
-            1:: "LESBIAN"
-            2:: isModEnabled(vin_Bestiality):: "ANIMAL"
-            3:: isModEnabled(vin_NonConsensual):: "NC"
+            0:: "Straight"
+            1:: "Lesbian"
+            2:: isModEnabled(vin_Bestiality):: "animal"
+            3:: isModEnabled(vin_NonConsensual):: "Non Consensual"
             
             If 0
             
@@ -132,14 +134,14 @@ OTHER: none
                 If Best
                 
                     "You begin to think about the movie you just watched. You remember how turned on you were at seeing those dogs fucking those women. You want to try and see it in real life. Do you ..."
-                    0:: "DECIDE TO LEAVE IT AS A FANTASY"
-                    1:: "SUGGEST GETTING YOUR OWN DOG INVOLVED"
+                    0:: "Decide to leave it as a fantasy"
+                    1:: "Suggest getting your own dog involved"
                     
                     If 1
                     
                         Actor6.show()
-                        "You'll probably say no... but how about I bring <Actor6.name> in and you and me try doing what we just watched in that film?"
-                        Actor5:: "Oh my God... Jesus... I'm so horny... yes! LET'S DO IT!"
+                        Player(Curious)::"You'll probably say no... but how about I bring <Actor6.name> in and you and me try doing what we just watched in that film?"
+                        Actor5(Happy):: "Oh my God... Jesus... I'm so horny... yes! LET'S DO IT!"
                         Sex(Actor6, Player)
                         Sex(Actor6, Actor5)
                         Sex(Actor6, Player, Actor5)
@@ -164,4 +166,3 @@ OTHER: none
         Endif
     
     SceneEnd() // Improved by Raddeck
-    // timeout(500, show_npc_porn_cms)

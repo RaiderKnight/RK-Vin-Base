@@ -18,6 +18,7 @@ OTHER: none
             Actor.setActorVar(rk_VB_likes_watersports, SetRandomWSStat)
         Endif
 
+        Actor.show()
         Question01 = false
         Question02 = false
         Question03 = false
@@ -141,7 +142,7 @@ OTHER: none
                             TXTItemWow = "these clothes, they are so nice..."
                             TXTItemWow = "these pants, they are awesome..."
                         EndRandom
-                    Elseif Actor.isFemale()
+                    Elseif !Actor.isMale()
                         Random
                             TXTItemWow = "haircut, I love it!"
                             TXTItemWow = "these finger nails, I love them!"
@@ -191,14 +192,18 @@ OTHER: none
             Elseif 10
                 
                 Question1080 = false
+                Question1086 = false
+                Question1087 = false
                 Question1089 = false
                 Question10810 = false
                 NudeB = Actor.dressExcept(Outerwear, Bottom) 
                 NudeT = Actor.dressExcept(Outerwear, Top)
+                FullNaked = Actor.isNaked()
                 
                 "What should I ask?"
                 0:: !Question1080::"Do yout think I'm pretty?"
-                6:: !Question1086 && [NudeB || NudeT] ::"Are you flashind me?"
+                5:: "Do you want to fuck?"
+                6:: !Question1086 && [NudeB || NudeT || FullNaked] ::"Are you flashind me?"
                 7:: Actor.isNaked() && !Question1087 ::"Why are you naked?"
                 8:: "Which sex position you like the most?"
                 9:: !Question1089::"Are you top or bottom?"
@@ -217,6 +222,55 @@ OTHER: none
                     Endif
                     interpersonal += 1
                     Question1080 = true
+                    
+                Elseif 5
+                
+                    If Actor.isInterestedIn(Player) && arousal > 15
+                    
+                        Actor(Happy)::"Yeah sure, right away!"
+
+                        If WHERE != home && WHERE != fraternity && WHERE != prison
+                        
+                            Actor(Happy)::"Let's go somewhere more private"
+                            setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                            Actor:rapportwithplayer += random(0, 2)
+                            Actor:attractiontoplayer += random(0, 2)
+                            "We decided to go in the dark alley to get more privacy..."
+                            Player.strip()
+                            Actor.strip()
+                            sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            
+                        Else
+                                
+                            Actor:rapportwithplayer += random(0, 2)
+                            Actor:attractiontoplayer += random(0, 2)
+                            setBackground(home)
+                            "We decided to fuck right here..."
+                            Player.strip()
+                            Actor.strip()
+                            sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            
+                        Endif
+                    
+                    Elseif Actor.isInterestedIn(Player)
+                    
+                        Actor(Sad)::"Not now!"
+                        Actor:rapportwithplayer += random(0, 1)
+                        Actor:attractiontoplayer += random(0, 1)
+                    
+                    Else
+                    
+                        Actor(Sad)::"Not really! You're not my style ...!"
+                        Actor:rapportwithplayer -= random(0, 1)
+                        Actor:attractiontoplayer -= random(0, 1)
+                        
+                    Endif
                 
                 Elseif 6
                 
@@ -242,7 +296,7 @@ OTHER: none
                                 If 0
                                 
                                     Actor(Flirty)::"Sure, serve yourself!"
-                                    If [Player.isMale() && Actor.isFemale()] || [Player.isFemale() && Actor.isFemale()]
+                                    If [Player.isMale() && !Actor.isMale()] || [Player.isFemale() && !Actor.isMale()]
                                         Player(Kiss)::"..."
                                         animatePair(Player, Actor, LickPussy)
                                         Actor(Kiss)::"..."
@@ -264,7 +318,7 @@ OTHER: none
                                 Elseif 1
                                 
                                     Actor(Flirty)::"Sure, you play with!"
-                                    If [Player.isMale() && Actor.isFemale()] || [Player.isFemale() && Actor.isFemale()]
+                                    If [Player.isMale() && !Actor.isMale()] || [Player.isFemale() && !Actor.isMale()]
                                         Filter(Fingering)
                                         sex(Player, Actor)
                                     Elseif [Player.isMale() && Actor.isMale()] || [Player.isFemale() && Actor.isMale()]
@@ -349,7 +403,7 @@ OTHER: none
                         
                         If 0
                             
-                            If WHERE != home || WHERE != fraternity || WHERE != prison
+                            If WHERE != home && WHERE != fraternity && WHERE != prison
                                 setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                 Actor:rapportwithplayer += random(0, 1)
                                 Actor:attractiontoplayer += random(0, 1)
@@ -385,7 +439,7 @@ OTHER: none
 
                             If Actor.isInterestedIn(Player) && 50 > Random(0, 100)
                                 Actor(Happy)::"Sure, let's go...."
-                                If WHERE != home || WHERE != fraternity || WHERE != prison
+                                If WHERE != home && WHERE != fraternity && WHERE != prison
                                     setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                     Actor:rapportwithplayer += random(0, 1)
                                     Actor:attractiontoplayer += random(0, 1)
@@ -408,16 +462,16 @@ OTHER: none
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
-                            
+
                             Else
                         
                                 Actor(Grin)::"Sorry, but you're not my style ...!"
-                                Question1087 = true
                                 
                             Endif
-
+                            
                         Endif
-
+                        Question1087 = true
+                        
                     Else
                         Actor(Grin)::"So what? I can do whatever I wanted ...!"
                         Question1087 = true
@@ -476,7 +530,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to share our skills"
                                         Actor:perversion += 1
@@ -527,7 +581,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to share our skills"
                                         Actor:perversion += 1
@@ -579,7 +633,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to share our skills"
                                         Actor:perversion += 1
@@ -631,7 +685,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to share our skills"
                                         Actor:perversion += 1
@@ -683,7 +737,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to share our skills"
                                         Actor:perversion += 1
@@ -735,7 +789,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to share our skills"
                                         Actor:perversion += 1
@@ -787,7 +841,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to share our skills"
                                         Actor:perversion += 1
@@ -839,7 +893,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to share our skills"
                                         Actor:perversion += 1
@@ -935,7 +989,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to share our skills"
                                         Actor:perversion += 1
@@ -987,7 +1041,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to share our skills"
                                         Actor:perversion += 1
@@ -1039,7 +1093,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to share our skills"
                                         Actor:perversion += 1
@@ -1091,7 +1145,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to share our skills"
                                         Actor:perversion += 1
@@ -1100,7 +1154,7 @@ OTHER: none
                                         Player.strip()
                                         If Player.isMale() || Actor.isMale()
                                             Filter(Fleshlight)
-                                        Elseif Player.isFemale() || Actor.isFemale()
+                                        Elseif Player.isFemale() || !Actor.isMale()
                                             Filter(vibrator)
                                         Else
                                             Random
@@ -1123,7 +1177,7 @@ OTHER: none
                                         Player.strip()
                                         If Player.isMale() || Actor.isMale()
                                             Filter(Fleshlight)
-                                        Elseif Player.isFemale() || Actor.isFemale()
+                                        Elseif Player.isFemale() || !Actor.isMale()
                                             Filter(vibrator)
                                         Else
                                             Random
@@ -1161,7 +1215,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to share our skills"
                                         Actor:perversion += 1
@@ -1213,7 +1267,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to share our skills"
                                         Actor:perversion += 1
@@ -1265,7 +1319,7 @@ OTHER: none
                                     Actor(Flirty)::"Let's go then...?"
                                     Actor:arousal += 1
                                     
-                                    If WHERE != home || WHERE != fraternity || WHERE != prison
+                                    If WHERE != home && WHERE != fraternity && WHERE != prison
                                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                         "We decided to go in the dark alley to play watersports ..."
                                         Actor:perversion += 1

@@ -1,14 +1,16 @@
-WHAT: all, -go_to_the_bathroom
-WHERE: all, -toilets, -PC, -office
+WHAT: none
+WHERE: none
 WHEN: 0-24
-WHO: Companion = getCompanion(); If CurrentCompanion.isDating() && CurrentCompanion:attractiontoplayer > 10
-OTHER: !OpenRelationship() && Random(0, 100) < perversion
+WHO: none
+OTHER: none
 
     SceneStart()
     
+        Companion = getCompanion()
         CurrentCompanion.show(2)
-    
-        "Being quite open-minded, I sometimes feel a traditional relationship is too restricted. The commitment and the possessiveness just don't feel right. Should I propose to my <CurrentCompanion.boyfriend_or_girlfriend> that we open up our relationship? So that I can sleep with whoever I want and <CurrentCompanion.name> can also sleep with whoever <CurrentCompanion.he_or_she> wants."
+        
+        "Being quite open-minded, I sometimes feel a traditional relationship is too restricted. The commitment and the possessiveness just don't feel right. Should I propose to my <CurrentCompanion.boyfriend_or_girlfriend> that we open up our relationship?"
+        "So that I can sleep with whoever I want and <CurrentCompanion.name> can also sleep with whoever <CurrentCompanion.he_or_she> wants."
         0:: "Yes"
         1:: "No"
     

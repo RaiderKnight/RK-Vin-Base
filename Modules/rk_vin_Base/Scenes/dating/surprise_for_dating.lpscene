@@ -1,11 +1,12 @@
-WHAT: all
-WHERE: all
+WHAT: none
+WHERE: none
 WHEN: 0 - 24
-WHO: Actor = getCompanion(); If Actor.isDating() && Actor.isMale() && Actor:attractiontoplayer > 0
-OTHER: !Player.isMale() && Random(0, 200) < perversion
+WHO: none
+OTHER: none
 
     SceneStart()
     
+        Actor = getCompanion()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         setBackground(home)
@@ -43,7 +44,7 @@ OTHER: !Player.isMale() && Random(0, 200) < perversion
                 SexNoAffair(Actor, Player, Actor2)
                 Actor:attractiontoplayer += Random(0, 5)
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
                 EndIf
                 perversion += Random(0, 0.5)
                 Actor2:attractiontoplayer += Random(0, 10)
@@ -62,7 +63,7 @@ OTHER: !Player.isMale() && Random(0, 200) < perversion
                     SexNoAffair(Actor, Player, Actor2, Actor3)
                     Actor:attractiontoplayer += Random(0, 7.5)
                     If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                        Player.modifyActorVar(rk_VB_Hunger, -4)
                     EndIf
                     perversion += Random(0, 0.5)
                     Actor2:attractiontoplayer += Random(0, 10)
@@ -79,7 +80,7 @@ OTHER: !Player.isMale() && Random(0, 200) < perversion
                     SexNoAffair(Actor, Player, Actor2, Actor3, Actor4)
                     Actor:attractiontoplayer += Random(0, 10)
                     If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                        Player.modifyActorVar(rk_VB_Hunger, -5)
                     EndIf
                     perversion += Random(0, 0.5)
                     Actor2:attractiontoplayer += Random(0, 10)
@@ -94,4 +95,4 @@ OTHER: !Player.isMale() && Random(0, 200) < perversion
             Endif        
         Endif
     SceneEnd() // Scene improved by Raddeck
-    timeout(500, surprise_for_dating)
+    //timeout(500, surprise_for_dating)

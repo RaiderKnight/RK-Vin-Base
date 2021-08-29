@@ -1,7 +1,7 @@
-WHAT: all
-WHERE: all, -stripclub
+WHAT: none
+WHERE: none
 WHEN: 20-3
-WHO: Actor = getCompanion(); If !Actor.isRelative() && Player.isInterestedIn(Actor) && [perversion - Actor:perversion > 40 || Actor.isVirgin()] && Actor:attractiontoplayer > 10
+WHO: none 
 OTHER: none
 
     SceneStart()
@@ -10,6 +10,7 @@ OTHER: none
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor = getCompanion()
         If !Actor.isValid() || ForcedTrigger()
             Actor = getCompanion()
         Endif
@@ -90,5 +91,4 @@ OTHER: none
             "Let's take this slow ... No way <Actor.he_or_she> would agree to go in such a place."
         Endif
     
-    SceneEnd()
-    timeout(200, co_ag_stripclub)
+    SceneEnd()  // Improved by Raddeck

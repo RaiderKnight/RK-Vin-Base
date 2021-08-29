@@ -33,7 +33,7 @@ OTHER: none
                 
             Elseif CurrentCompanion.IsDominantSex(Player)
             
-                If  !isAtHome() && [Dating || CurrentCompanion:interpersonal + CurrentCompanion:attractiontoplayer > Random(0, 100)]
+                If !isAtHome() && [Dating || CurrentCompanion:interpersonal + CurrentCompanion:attractiontoplayer > Random(0, 100)]
                 
                     CurrentCompanion::"I'll be glad to walk you home safe. It's only my duty."
                     0:: "Be walked home"
@@ -85,12 +85,12 @@ OTHER: none
                 "Should I offer to walk <CurrentCompanion.name> home?"
                 0:: "Yes"
                 1:: "No"
-            
-                If 0
                 
+                If 0
+                    
                     Player(Happy)::"Do you want me to walk you home? I just want to make sure you're safe."
                     If Dating || CurrentCompanion:attractiontoplayer > Random(0, 100) || CurrentCompanion:rapportwithplayer > Random(0, 100)
-                        
+                            
                         CurrentCompanion(Happy)::"Oh, thank you! That's very nice of you."
                         "I chivalrously walked with <CurrentCompanion.name> back to <CurrentCompanion.his_or_her> place."
                         Loc = CurrentCompanion.getBuilding(home)
@@ -98,23 +98,23 @@ OTHER: none
                         setBackground(street)
                         passTime(0.1, 0.5)
                         "A while later ..."
-                        Player:: "So here it is, we arrived. I guess I'll see you soon ..."
+                        Player(Happy):: "So here it is, we arrived. I guess I'll see you soon ..."
                         If Dating || CurrentCompanion:attractiontoplayer > Random(0, 100)
-                           
-                           If Dating
-                           
-                               CurrentCompanion(Flirty)::"Baby, don't leave just yet. Do you want to stay the night?"  
-                            
+                               
+                            If Dating
+                               
+                                CurrentCompanion(Flirty)::"Baby, don't leave just yet. Do you want to stay the night?"  
+                                
                             Else
-                            
+                                
                                 CurrentCompanion(Flirty)::"Wait, don't leave just yet. I feel guilty making you walk all the way here. Do you want to come in for tea or something?"                
-                            
+                                
                             Endif
-                            
+                                
                             "Come in?"
                             0:: "Yes"
                             1:: "No"
-                        
+                            
                             If 0
                                 If Dating
                                     Player(Happy):: "Of course, love."
@@ -128,7 +128,12 @@ OTHER: none
                                 Player(Happy):: "That's okay. I'd better get going. See you!"
                                 "We went our separate ways."
                             Endif
+                        Else
+                            
+                            sceneEnd()
+                            
                         Endif
+                            
                     Else
                         CurrentCompanion(Surprised)::"No, thank you. I wouldn't want to bother you. I'm happy to walk home myself."
                         "I couldn't really insist on it, so we waved goodbye and went our separate ways."
@@ -136,30 +141,32 @@ OTHER: none
                 Else
                     "I decided not to offer to walk <CurrentCompanion.him_or_her> back. We said goodbye and parted ways."
                 Endif
+
             Endif
 
             If WalkedHome
-                setBackground(home)
-                "We're now inside the apartment."
+                setBackground(Dating_home)
+                "We're now inside <CurrentCompanion.his_or_her> apartment."
                 choice = -1    
                 ate = false
                 hadSex = false    
                 Vanilla = IsModEnabled(vin_VanillaRealistic)
+                MyHome = true
                 
                 While choice < 5
                     Kissed = false
                     "What should I suggest to <CurrentCompanion.name> that we do?"
                     0:: "Chat"
-                    1:: !ate && stock_snack > 0.8:: "Eat something together"
-                    2:: stock_movie > 0.8 :: "Watch a movie"
-                    3:: stock_alcohol >= 1.8 :: "Drink alcohol"
+                    1:: !ate :: "Eat something together"
+                    2:: "Watch a movie"
+                    3:: "Drink alcohol"
                     4:: !hadSex:: "Kiss <CurrentCompanion.him_or_her>"
-                    5:: MyHome:: "Politely ask <CurrentCompanion.him_or_her> to leave"
-                    6:: !MyHome:: "Leave"
+                    5:: MyHome:: "Politely leave <CurrentCompanion.him_or_her>"
                     7:: Dating && !IsPlayerMarried():: "Break up!"
                     8:: Dating && IsPlayerMarried():: "Divorce!"
                 
-                    If 5 || 6
+                    If 5
+                    
                         "We said goodbye and went our ways."
                         If HungerEnable > 0
             
@@ -192,6 +199,7 @@ OTHER: none
                         choice = 7
                         
                     Else
+                    
                         If 0
                         
                             "We simply sat and chat for a while ..."
@@ -211,7 +219,6 @@ OTHER: none
                             Actor:attractiontoplayer += 1
                             Actor:rapportwithplayer += 1
                             mood += 1
-                            stock_snack -= 1
                             energy += 5
                             ate = true
                             passTime(0.2, 0.4)
@@ -219,7 +226,6 @@ OTHER: none
                         Elseif 2
                         
                             "We watched a movie together ..."
-                            stock_movie -= 1
                             mood += 1
                             Actor:attractiontoplayer += 1
                             Actor:rapportwithplayer += 1
@@ -238,7 +244,6 @@ OTHER: none
                             "We had a drink alcohol together ..."
                             Player:intoxication += Random(0,10)
                             Actor:intoxication += Random(0,10)
-                            stock_alcohol -= 2
                             passTime(0.1, 0.2)
                             Player.animate()
                             Actor.animate()
@@ -276,6 +281,9 @@ OTHER: none
                                     hadSex = true
                                     Player:perversion += Random(0, 1)
                                     Sex(Player, CurrentCompanion)
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    EndIf
                                     CurrentCompanion.show(2)
                                 
                                     Actor2 = getCreature()
@@ -292,6 +300,9 @@ OTHER: none
                                         If 0
                                         
                                             Sex(CurrentCompanion, Player)
+                                            If HungerEnable > 0
+                                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                                            EndIf
                                             
                                         Else 1
                                         
@@ -302,6 +313,9 @@ OTHER: none
                                         
                                             CurrentCompanion:: "Okay ... but only because you got me so horny from our fucking."
                                             Sex(Actor2, CurrentCompanion, Player)
+                                            If HungerEnable > 0
+                                                Player.modifyActorVar(rk_VB_Hunger, -3)
+                                            EndIf
                                             
                                         Else
                                         
@@ -321,12 +335,18 @@ OTHER: none
                                     
                                         If 0
                                             Sex(CurrentCompanion, Player)
+                                            If HungerEnable > 0
+                                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                                            EndIf
                                         Else 1
                                             CurrentCompanion:: "Okay ... but only because you got me so horny from our fucking."
                                             Sex(Actor2, CurrentCompanion)
                                         Elseif 2
                                             CurrentCompanion:: "Okay ... but only because you got me so horny from our fucking."
                                             Sex(Actor2, CurrentCompanion, Player)
+                                            If HungerEnable > 0
+                                                Player.modifyActorVar(rk_VB_Hunger, -3)
+                                            EndIf
                                         Endif                                    
                                     Else
                                         "The sex was amazing. We put our clothes back on afterwards and continued our date."

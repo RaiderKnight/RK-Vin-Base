@@ -1,0 +1,37 @@
+WHAT: none
+WHERE: none
+WHEN: 8-24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        Actor = getCompanion()
+        Actor5 = getCompanion()
+        Actor6 = getCreature(Dog)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        
+        "What I want to do with <Actor.him_or_her>?"
+        0:: !Actor.isRelative() && Player.isInterestedIn(Actor) && perversion - Actor:perversion > 40 && Actor:attractiontoplayer > 10 ::"A visit to my favorite sex shop."
+        1:: !Actor.isRelative() && Player.isInterestedIn(Actor) && perversion - Actor:perversion > 40 && Actor:attractiontoplayer > 10 ::"A visit to a secret alley where couples come to have public sex."
+        2:: !Actor.isRelative() && Player.isInterestedIn(Actor) && perversion - Actor:perversion > 40 && Actor:attractiontoplayer > 10 ::"A visit to my favorite X-rated cinema."
+        3:: !Actor.isRelative() && Player.isInterestedIn(Actor) && perversion - Actor:perversion > 40 && Actor:attractiontoplayer > 10 ::"A visit to my favorite stripclub."
+        4:: Player.isInterestedIn(Actor5) ::"Watch a porn movie in hope that it will spice things up"
+        99::"I changed my mind!"
+        
+        If 0
+            followUp(co_ag_sex_shop)
+        Elseif 1
+            followUp(co_ag_publicsex)
+        Elseif 2
+            followUp(co_ag_pornout)
+        Elseif 3
+            followUp(co_ag_stripclub)
+        Elseif 4
+            followUp(show_npc_porn_cms)
+        Endif
+
+    SceneEnd()

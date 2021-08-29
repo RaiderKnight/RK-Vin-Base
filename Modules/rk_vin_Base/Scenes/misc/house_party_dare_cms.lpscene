@@ -13,7 +13,7 @@ OTHER: !isWithCompanion()
         secondScreen(Actor)
         Actor.show()
         
-        "One of my friends <Actor.name> is inviting me to a house party tonight ... <Actor.He_or_She> is a bit of a free spirit so anything <Actor.he_or_she> hosts tends to turn rather debaucherous"
+        "My friends <Actor.name> is inviting me to a <Actor.his_or_her> house party tonight ... <Actor.He_or_She> is a bit of a free spirit so anything <Actor.he_or_she> hosts tends to turn rather debaucherous"
         0:: "Come to <Actor.name>'s house party"
         1:: "Decline"
         
@@ -21,47 +21,660 @@ OTHER: !isWithCompanion()
             secondScreen()
             setBackgroundCustom(livingroom)
             Actor2 = generatePersonTemporary()
-            While !Actor2.isMale()
-                Actor2 = generatePersonTemporary()
-            Endwhile
             Actor.dress()
             Actor2.dress()
             Actor.show()
             Actor2.show()
-            "The party is alright, but of course <Actor.name> wanted to spice things up with a silly game. If I lose though, I'll have to do some dare."
-            0:: "Play the party game"
-            1:: "Just have some drinks"
+            "The party is alright, but of course <Actor.name> wanted to spice things up with a silly game. If I lose though the turn, I'll have to do some dare."
+            playingDare = true
+            GameFinish = false
+            DareGameRound = 0
+            ActorLoseGame = 0
+            Actor2LoseGame = 0
+            PlayerLoseGame = 0
             
-            If 0
-                "And of course, with my rotten luck, it was no surprise that I lost ..."
-                "Now it's time to hear <Actor.name>'s dare ... I'm pretty sure <Actor.he_or_she>'s up to no good."
-                If Random(0, 100) < 33
-                    "<Actor.name> is daring me to twerk ..."
-                    Player:: "Alright ..."
-                    Player.animate(dance)
-                    Player:: "Happy?"
-                Elseif Random(0, 100) < 50
-                    "<Actor.name> is daring me to make some moaning sound ..."
-                    Player:: "Alright ..."
-                    Player(Crying):: "Ahhhhhhhh ....... Ahhhhhhhhh ....."
-                    Player(Crying):: "Yes ..... just like that ....... fuck me!"
-                Else
-                    "<Actor.name> is daring me to give <Actor.his_or_her> friend <Actor2.name> a blowjob ..."
-                    0:: "Alright"
-                    1:: "That's too far"
+            While playingDare
+            
+                If DareGameRound < 25
+                    0:: "Play the party game"
+                    1:: "Just have some drinks"
+                    2:: "Leave"
                     
                     If 0
-                        Filter(Blowjob)
-                        Sex(Actor2, Player)
-                        If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
-                        EndIf
+                        
+                        ChanceToLose = Random(1, 100)
+                        ChanceToLose - ChanceToLose.round()
+                        
+                        If ChanceToLose > 80
+                            "And of course, with my rotten luck, it was no surprise that I lost this turn ..."
+                            "Now it's time to hear <Actor.name>'s dare ... I'm pretty sure <Actor.he_or_she>'s up to no good."
+                            If Random(0, 100) < 19
+                                "<Actor.name> is daring me to twerk ..."
+                                Player(Flirty):: "Alright ..."
+                                Player.animate(dance)
+                                Player(Flirty):: "Happy?"
+                                Actor:rapportwithplayer += 3
+                            Elseif Random(0, 100) < 25
+                                "<Actor.name> is daring me to masturbate ..."
+                                Player(Flirty):: "Alright ..."
+                                Player.dressExcept(Bottom, Bottom_Under)
+                                Filter(solo)
+                                sex(Player)
+                                Actor:rapportwithplayer += 3
+                            Elseif Random(0, 100) < 29
+                                "<Actor.name> is daring me to make some moaning sound ..."
+                                Player(Flirty):: "Alright ..."
+                                Player(Crying):: "Ahhhhhhhh ....... Ahhhhhhhhh ....."
+                                Player(Crying):: "Yes ..... just like that ....... fuck me!"
+                                Actor:rapportwithplayer += 3
+                            Elseif Random(0, 100) < 39
+                                "<Actor.name> is daring me to give <Actor.his_or_her> friend <Actor2.name> a blowjob ..."
+                                0:: "Alright"
+                                1:: "That's too far"
+                            
+                                If 0
+                                    
+                                    If Actor2.isInterestedIn(Player) && Actor2.isMale()
+                                        Actor2.dressExcept(Bottom, Bottom_Under)
+                                        Filter(Blowjob)
+                                        Sex(Player, Actor2)
+                                        If HungerEnable > 0
+                                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                                        EndIf
+                                        Actor2:rapportwithplayer += 3
+                                        
+                                    Elseif Actor2.isInterestedIn(Player) && !Actor2.isMale()
+                                        Actor2.dressExcept(Bottom, Bottom_Under)
+                                        Filter(Licking)
+                                        Sex(Player, Actor2)
+                                        If HungerEnable > 0
+                                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                                        EndIf
+                                        Actor2:rapportwithplayer += 3
+                                    
+                                    Else
+                                        Actor2(Sad):: "Are you crazy? No way!"
+                                    Endif
+                                Else
+                                    Player(Sad):: "Are you crazy? No way!"
+                                    Actor:rapportwithplayer -= 3
+                                Endif
+                            Elseif Random(0, 100) < 49
+                                "<Actor.name> is daring me to give a kiss to <Actor.his_or_her> friend <Actor2.name> ..."
+                                0:: "Alright"
+                                1:: "That's too far"
+                            
+                                If 0
+                                    If Actor2.isInterestedIn(Player)
+                                        Player(Kiss)::"..."
+                                        animatePair(Actor2, Player, Kissing)
+                                        Actor2(Kiss)::"..."
+                                        If HungerEnable > 0
+                                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                                        EndIf
+                                        Actor:rapportwithplayer += 3
+                                    Else
+                                        Actor2(Sad):: "Are you crazy? No way!"
+                                    Endif
+                                Else
+                                    Player(Sad):: "Are you crazy? No way!"
+                                    Actor:rapportwithplayer -= 3
+                                Endif
+                            
+                            Elseif Random(0, 100) < 59
+                            
+                                "<Actor.name> is daring me to strip ..."
+                                0:: "Alright"
+                                1:: "That's too far"
+                            
+                                If 0
+                                
+                                    "So I undress myself ..."
+                                    Player.strip()
+                                    Player.setNoRedress(true)
+                                    Actor:rapportwithplayer += 3
+                                    Player(Flirty):: "Happy?"
+                                
+                                Else
+                                    Player(Sad):: "Are you crazy? No way!"
+                                    Actor:rapportwithplayer -= 3
+                                Endif
+                            
+                            Elseif Random(0, 100) < 100
+                            
+                                "<Actor.name> is daring me to strip and dance ..."
+                                0:: "Alright"
+                                1:: "That's too far"
+                            
+                                If 0
+                                
+                                    "So I undress myself ..."
+                                    Player.strip()
+                                    Player.setNoRedress(true)
+                                    "I began to dance ..."
+                                    Player.animate(dance)
+                                    Player(Flirty):: "Happy?"
+                                    Actor:rapportwithplayer += 3
+                                
+                                Else
+                                    Player(Sad):: "Are you crazy? No way!"
+                                    Actor:rapportwithplayer -= 3
+                                Endif
+                                
+                            Endif
+                            Actor:intoxication += 15
+                            Actor2:intoxication += 15
+                            Player.setNoRedress(false)
+                            PlayerLoseGame += 1
+                        Elseif ChanceToLose > 60
+                            
+                            "And of course, with my rotten luck, it was no surprise that I lost this turn ..."
+                            "Now it's time to hear <Actor2.name>'s dare ..."
+                            If Random(0, 100) < 19
+                                "<Actor2.name> is daring me to twerk ..."
+                                Player(Flirty):: "Alright ..."
+                                Player.animate(dance)
+                                Player(Flirty):: "Happy?"
+                                Actor2:rapportwithplayer += 3
+                            Elseif Random(0, 100) < 25
+                                "<Actor2.name> is daring me to masturbate ..."
+                                Player(Flirty):: "Alright ..."
+                                Player.dressExcept(Bottom, Bottom_Under)
+                                Filter(solo)
+                                sex(Player)
+                            Elseif Random(0, 100) < 29
+                                "<Actor2.name> is daring me to make some moaning sound ..."
+                                Player(Flirty):: "Alright ..."
+                                Player(Crying):: "Ahhhhhhhh ....... Ahhhhhhhhh ....."
+                                Player(Crying):: "Yes ..... just like that ....... fuck me!"
+                                Actor2:rapportwithplayer += 3
+                            Elseif Random(0, 100) < 39
+                                If Actor2.isInterestedIn(Player)
+                                    "<Actor2.name> is daring me to give <Actor2.him_or_her> a blowjob ..."
+                                    0:: "Alright"
+                                    1:: "That's too far"
+                            
+                                    If 0
+                                        
+                                        If Actor2.isMale()
+                                            Actor2.dressExcept(Bottom, Bottom_Under)
+                                            Filter(Blowjob)
+                                            Sex(Player, Actor2)
+                                            If HungerEnable > 0
+                                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                                            EndIf
+                                            Actor2:rapportwithplayer += 3
+                                        Else
+                                            Actor2.dressExcept(Bottom, Bottom_Under)
+                                            Filter(Licking)
+                                            Sex(Player, Actor2)
+                                            If HungerEnable > 0
+                                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                                            EndIf
+                                            Actor2:rapportwithplayer += 3
+                                        
+                                        Endif
+                                    Else
+                                        Player(Sad):: "Are you crazy? No way!"
+                                        Actor2:rapportwithplayer -= 3
+                                    Endif
+                                Else
+                                
+                                    "<Actor2.name> is daring me to masturbate ..."
+                                    0:: "Alright"
+                                    1:: "That's too far"
+                                    
+                                    If 0
+                                        
+                                        Player.dressExcept(Bottom, Bottom_Under)
+                                        Filter(solo)
+                                        sex(Player)
+                                        Actor2:arousal += 1
+                                        Actor2:perversion += 1
+                                        Actor2:rapportwithplayer += 3
+                                        Actor:arousal += 1
+                                        Actor:perversion += 1
+                                        Actor:rapportwithplayer += 3
+                                        
+                                    Endif
+                                    
+                                Endif
+                                
+                            Elseif Random(0, 100) < 49
+                                "<Actor2.name> is daring me to give <Actor2.him_or_her> a kiss ..."
+                                0:: "Alright"
+                                1:: "That's too far"
+                            
+                                If 0
+                                    Player(Kiss)::"..."
+                                    animatePair(Actor2, Player, Kissing)
+                                    Actor2(Kiss)::"..."
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    EndIf
+                                    Actor2:rapportwithplayer += 3
+                                Else
+                                    Player(Sad):: "Are you crazy? No way!"
+                                    Actor:rapportwithplayer -= 3
+                                Endif
+                            Elseif Random(0, 100) < 59
+                            
+                                "<Actor2.name> is daring me to strip ..."
+                                0:: "Alright"
+                                1:: "That's too far"
+                            
+                                If 0
+                                
+                                    Actor2:rapportwithplayer += 3
+                                    "So I undress myself ..."
+                                    Player.strip()
+                                    Player.setNoRedress(true)
+                                    Player(Flirty):: "Happy?"
+                                    
+                                Else
+                                    Player(Sad):: "Are you crazy? No way!"
+                                    Actor2:rapportwithplayer -= 3
+                                Endif
+                            
+                            Elseif Random(0, 100) < 100
+                            
+                                "<Actor2.name> is daring me to strip and dance ..."
+                                0:: "Alright"
+                                1:: "That's too far"
+                            
+                                If 0
+                                
+                                    "So I undress myself ..."
+                                    Player.strip()
+                                    Player.setNoRedress(true)
+                                    "I began to dance ..."
+                                    Player.animate(dance)
+                                    Player(Flirty):: "Happy?"
+                                    Actor2:rapportwithplayer += 3
+                                
+                                Else
+                                    Player(Sad):: "Are you crazy? No way!"
+                                    Actor2:rapportwithplayer -= 3
+                                Endif
+                                
+                            Endif
+                            Actor:intoxication += 15
+                            Actor2:intoxication += 15
+                            Player.setNoRedress(false)
+                            PlayerLoseGame += 1
+                        Elseif ChanceToLose <= 29
+                        
+                            "Now it's my turn to ask <Actor2.name> to dare ..."
+                            If Random(0, 100) < 19
+                                "I ask <Actor2.name> to twerk ..."
+                                Actor2(Flirty):: "Alright ..."
+                                Actor2.animate(dance)
+                                Actor2(Flirty):: "Happy?"
+                                Actor2:rapportwithplayer += 3
+                            
+                            Elseif Random(0, 100) < 25
+                                "I ask <Actor2.name> to masturbate ..."
+                                Actor2(Flirty):: "Alright ..."
+                                Actor2.dressExcept(Bottom, Bottom_Under)
+                                Filter(solo)
+                                sex(Actor2)
+                                
+                            Elseif Random(0, 100) < 29
+                                "I ask <Actor2.name> to make some moaning sound ..."
+                                Actor2(Flirty):: "Alright ..."
+                                Actor2(Crying):: "Ahhhhhhhh ....... Ahhhhhhhhh ....."
+                                Actor2(Crying):: "Yes ..... just like that ....... fuck me!"
+                                Actor2:rapportwithplayer += 3
+                                
+                            Elseif Random(0, 100) < 39
+                                "I ask <Actor2.name> to give me a blowjob ..."
+                            
+                                If Actor2.isInterestedIn(Player) && Player.isMale()
+                                    Actor2(Flirty)::"Alright"
+                                    Player.dressExcept(Bottom, Bottom_Under)
+                                    Filter(Blowjob)
+                                    Sex(Actor2, Player)
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    EndIf
+                                    Actor2:rapportwithplayer += 3
+                                Elseif Actor2.isInterestedIn(Player) && !Player.isMale()
+                                    Actor2(Flirty)::"Alright"
+                                    Player.dressExcept(Bottom, Bottom_Under)
+                                    Filter(Licking)
+                                    Sex(Actor2, Player)
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    EndIf
+                                    Actor2:rapportwithplayer += 3
+                                    
+                                Else
+                                    Actor2(Sad):: "Are you crazy? No way!"
+                                    Actor2:rapportwithplayer -= 3
+                                Endif
+                            Elseif Random(0, 100) < 49
+                                "I ask <Actor2.name> to give me a kiss ..."
+                            
+                                If Actor2.isInterestedIn(Player)
+                                    Player(Kiss)::"..."
+                                    animatePair(Actor2, Player, Kissing)
+                                    Actor2(Kiss)::"..."
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    EndIf
+                                    Actor2:rapportwithplayer += 3
+                                Else
+                                    Actor2(Sad):: "Are you crazy? No way!"
+                                    Actor2:rapportwithplayer -= 3
+                                Endif
+                            
+                            Elseif Random(0, 100) < 59
+                            
+                                "I ask <Actor2.name> to strip ..."
+                            
+                                If Actor2.isInterestedIn(Player)
+                                
+                                    "So <Actor2.name> undress <Actor2.him_or_her>self ..."
+                                    Actor2.strip()
+                                    Actor2.setNoRedress(true)
+                                    Actor2(Flirty):: "Happy?"
+                                    Actor2:rapportwithplayer += 3
+                                
+                                Else
+                                    Actor2(Sad):: "Are you crazy? No way!"
+                                    Actor2:rapportwithplayer -= 3
+                                Endif
+                            
+                            Elseif Random(0, 100) < 100
+                            
+                                "I ask <Actor2.name> to strip and dance ..."
+                            
+                                If Actor2.isInterestedIn(Player)
+                                
+                                    "So <Actor2.name> undress <Actor.him_or_her>self ..."
+                                    Actor2.strip()
+                                    Actor2.setNoRedress(true)
+                                    "<Actor2.name> began to dance ..."
+                                    Actor2.animate(dance)
+                                    Actor2(Flirty):: "Happy?"
+                                    Actor2:rapportwithplayer += 3
+                                
+                                Else
+                                    Actor2(Sad):: "Are you crazy? No way!"
+                                    Actor2:rapportwithplayer -= 3
+                                Endif
+                                
+                            Endif
+                            Actor:intoxication += 15
+                            Player:intoxication += 15
+                            Actor2.setNoRedress(false)
+                            Actor2LoseGame += 1
+                            
+                        Elseif ChanceToLose <= 49
+                        
+                            "Now it's my turn to ask <Actor.name> to dare ..."
+                            If Random(0, 100) < 19
+                                "I ask <Actor.name> to twerk ..."
+                                Actor(Flirty):: "Alright ..."
+                                Actor.animate(dance)
+                                Actor(Flirty):: "Happy?"
+                                Actor:rapportwithplayer += 3
+                            Elseif Random(0, 100) < 25
+                                "I ask <Actor.name> to masturbate ..."
+                                Actor(Flirty):: "Alright ..."
+                                Actor.dressExcept(Bottom, Bottom_Under)
+                                Filter(solo)
+                                sex(Actor)
+                            Elseif Random(0, 100) < 29
+                                "I ask <Actor.name> to make some moaning sound ..."
+                                Actor(Flirty):: "Alright ..."
+                                Actor(Crying):: "Ahhhhhhhh ....... Ahhhhhhhhh ....."
+                                Actor(Crying):: "Yes ..... just like that ....... fuck me!"
+                                Actor:rapportwithplayer += 3
+                            Elseif Random(0, 100) < 39
+                                "I ask <Actor.name> to give me a blowjob ..."
+                            
+                                If Actor.isInterestedIn(Player) && Player.isMale()
+                                    Actor(Flirty)::"Alright"
+                                    Player.dressExcept(Bottom, Bottom_Under)
+                                    Filter(Blowjob)
+                                    Sex(Actor, Player)
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    EndIf
+                                    Actor:rapportwithplayer += 3
+                                Elseif Actor.isInterestedIn(Player) && !Player.isMale()
+                                    Actor(Flirty)::"Alright"
+                                    Player.dressExcept(Bottom, Bottom_Under)
+                                    Filter(Licking)
+                                    Sex(Actor, Player)
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    EndIf
+                                    Actor:rapportwithplayer += 3
+                                Else
+                                    Actor(Sad):: "Are you crazy? No way!"
+                                    Actor:rapportwithplayer -= 3
+                                Endif
+                            Elseif Random(0, 100) < 49
+                                "I ask <Actor.name> to give me a kiss ..."
+                            
+                                If Actor.isInterestedIn(Player)
+                                    Player(Kiss)::"..."
+                                    animatePair(Actor, Player, Kissing)
+                                    Actor(Kiss)::"..."
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    EndIf
+                                    Actor:rapportwithplayer += 3
+                                Else
+                                    Player(Sad):: "Are you crazy? No way!"
+                                    Actor:rapportwithplayer -= 3
+                                Endif
+                                
+                            Elseif Random(0, 100) < 59
+                            
+                                "I ask <Actor.name> to strip ..."
+                            
+                                If Actor.isInterestedIn(Player)
+                                
+                                    "So <Actor.name> undress <Actor.him_or_her>self ..."
+                                    Actor.strip()
+                                    Actor.setNoRedress(true)
+                                    Actor(Flirty):: "Happy?"
+                                    Actor:rapportwithplayer += 3
+                                
+                                Else
+                                    Actor(Sad):: "Are you crazy? No way!"
+                                    Actor:rapportwithplayer -= 3
+                                Endif
+                            
+                            Elseif Random(0, 100) < 100
+                            
+                                "I ask <Actor.name> to strip and dance ..."
+                            
+                                If Actor.isInterestedIn(Player)
+                                
+                                    "So <Actor.name> undress <Actor.him_or_her>self ..."
+                                    Actor.strip()
+                                    Actor.setNoRedress(true)
+                                    "<Actor.name> began to dance ..."
+                                    Actor.animate(dance)
+                                    Actor(Flirty):: "Happy?"
+                                    Actor:rapportwithplayer += 3
+                                
+                                Else
+                                    Actor(Sad):: "Are you crazy? No way!"
+                                    Actor:rapportwithplayer -= 3
+                                Endif
+                                
+                            Endif
+                            Player:intoxication += 15
+                            Actor:intoxication += 15
+                            Actor.setNoRedress(false)
+                            ActorLoseGame += 1
+                        Elseif ChanceToLose <= 59
+                            If Random(0, 100) < 19
+                                "<Actor2.name> dare <Actor.name> to masturbate ..."
+                                Actor(Flirty):: "Alright ..."
+                                Actor.dressExcept(Bottom, Bottom_Under)
+                                Filter(solo)
+                                sex(Actor)
+                                ActorLoseGame += 1
+                            Elseif Random(0, 100) < 29
+                                "<Actor.name> dare <Actor2.name> to masturbate ..."
+                                Actor2(Flirty):: "Alright ..."
+                                Actor2.dressExcept(Bottom, Bottom_Under)
+                                Filter(solo)
+                                sex(Actor2)
+                                Actor2LoseGame += 1
+                            Elseif Random(0, 100) < 49
+                                "<Actor.name> dare <Actor2.name> to kiss <Actor.him_or_her> ..."
+                                Actor2(Flirty):: "Alright ..."
+                                Actor(Kiss)::"..."
+                                animatePair(Actor2, Actor, Kissing)
+                                Actor2(Kiss)::"..."
+                                Actor2LoseGame += 1
+                            Elseif Random(0, 100) < 69
+                                "<Actor2.name> dare <Actor.name> to kiss <Actor2.him_or_her> ..."
+                                Actor(Flirty):: "Alright ..."
+                                Actor(Kiss)::"..."
+                                animatePair(Actor2, Actor, Kissing)
+                                Actor2(Kiss)::"..."
+                                ActorLoseGame += 1
+                            Elseif Random(0, 100) < 89
+                                "<Actor2.name> dare <Actor.name> to give <Actor2.him_or_her> a blowjob ..."
+
+                                If Actor.isInterestedIn(Actor2) && Actor2.isMale()
+                                    Actor(Flirty)::"Alright"
+                                    Actor2.dressExcept(Bottom, Bottom_Under)
+                                    Filter(Blowjob)
+                                    Sex(Actor, Actor2)
+
+                                Elseif Actor.isInterestedIn(Actor2) && !Actor2.isMale()
+                                    Actor(Flirty)::"Alright"
+                                    Actor2.dressExcept(Bottom, Bottom_Under)
+                                    Filter(Licking)
+                                    Sex(Actor, Actor2)
+                                    
+                                Else
+                                    Actor(Sad):: "Are you crazy? No way!"
+                                    
+                                Endif
+                                ActorLoseGame += 1
+                            Elseif Random(0, 100) < 100
+                                "<Actor.name> dare <Actor2.name> to give <Actor.him_or_her> a blowjob ..."
+
+                                If Actor2.isInterestedIn(Actor) && Actor.isMale()
+                                    Actor2(Flirty)::"Alright"
+                                    Actor.dressExcept(Bottom, Bottom_Under)
+                                    Filter(Blowjob)
+                                    Sex(Actor2, Actor)
+
+                                Elseif Actor2.isInterestedIn(Actor) && !Actor.isMale()
+                                    Actor2(Flirty)::"Alright"
+                                    Actor.dressExcept(Bottom, Bottom_Under)
+                                    Filter(Licking)
+                                    Sex(Actor2, Actor)
+                                    
+                                Else
+                                    Actor(Sad):: "Are you crazy? No way!"
+                                    
+                                Endif
+                                Actor2LoseGame += 1
+                            Endif
+                            
+                        Endif
+                        playingDare = true
+                        DareGameRound += 1
+                        Actor.animate()
+                        Actor2.animate()
+                        Player.animate()
+                        
+                    Elseif 1
+                    
+                        "I decided to pass my turn, and drink some alcohol instead!"
+                        intoxication += 15
+                        playingDare = true
+                        DareGameRound += 1
+                        
                     Else
-                        Player:: "Are you crazy? No way!"
-                        Actor:rapportwithplayer -= 3
+                    
+                        "I decided to leave the party!"
+                        playingDare = false
+                        DareGameRound += 25
+                    
                     Endif
+                    
+                Else
+                    GameFinish = true
+                    playingDare = false
+                    DareGameRound += 25
                 Endif
+
+            EndWhile
+            
+            If GameFinish
+            
+                If Actor2LoseGame > ActorLoseGame && Actor2LoseGame > PlayerLoseGame && ActorLoseGame < PlayerLoseGame
+                    Actor(Flirty)::"Let's fuck before leaving!"
+                    Actor.strip()
+                    Actor2.strip()
+                    sex(Actor2, Actor)
+
+                Elseif ActorLoseGame > Actor2LoseGame && ActorLoseGame > PlayerLoseGame && Actor2LoseGame < PlayerLoseGame
+                    Actor2(Flirty)::"Let's fuck before leaving!"
+                    Actor.strip()
+                    Actor2.strip()
+                    sex(Actor, Actor2)
+                    
+                Elseif ActorLoseGame > Actor2LoseGame && ActorLoseGame > PlayerLoseGame && PlayerLoseGame < Actor2LoseGame
+                    Player(Flirty)::"Let's fuck before leaving!"
+                    Actor.strip()
+                    Player.strip()
+                    sex(Actor, Player)
+                    
+                Elseif Actor2LoseGame > ActorLoseGame && Actor2LoseGame > PlayerLoseGame && PlayerLoseGame < ActorLoseGame
+                    Player(Flirty)::"Let's fuck before leaving!"
+                    Actor2.strip()
+                    Player.strip()
+                    sex(Actor2, Player)
+                        
+                Elseif PlayerLoseGame > Actor2LoseGame && PlayerLoseGame > ActorLoseGame && ActorLoseGame < Actor2LoseGame
+                    Actor(Flirty)::"Let's fuck before leaving!"
+                    Actor.strip()
+                    Player.strip()
+                    sex(Player, Actor)
+                    
+                Elseif PlayerLoseGame > Actor2LoseGame && PlayerLoseGame > ActorLoseGame && Actor2LoseGame < ActorLoseGame
+                    Actor2(Flirty)::"Let's fuck before leaving!"
+                    Actor2.strip()
+                    Player.strip()
+                    sex(Player, Actor2)
+                    
+                Else
+                    
+                    Actor(Flirty)::"Let's do a threesome before leaving?"
+                    If Actor2.isInterestedIn(Player) || Actor2:intoxication > 70
+                        
+                        Actor2(Flirty)::"Yeah, let's do it!"
+                        Actor.strip()
+                        Actor2.strip()
+                        Player.strip()
+                        sex(Actor, Player, Actor2)
+                            
+                    Else
+                        
+                        Actor2(Sad)::"I'm not interested!"
+                        Actor(Sad)::"Ok, so maybe next time!"
+                            
+                    Endif
+                    
+                Endif
+                    
             Endif
+    
         Endif
+        
     SceneEnd() // Improved by Raddeck
     timeout(1500, house_party_dare_cms)

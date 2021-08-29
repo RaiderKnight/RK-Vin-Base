@@ -1,8 +1,8 @@
-WHAT: all
-WHERE: home
+WHAT: none
+WHERE: none
 WHEN: 0 - 24
 WHO: none
-OTHER: money > 2000
+OTHER: none
 
     SceneStart()
 
@@ -11,7 +11,7 @@ OTHER: money > 2000
         setBackground(home)
         Warning = false
         Actor = getPerson(tag_maid)
-        If !Actor.isValid()   // HIRE
+        If !Actor.isValid() && money > 2000  // Edit by Raddeck
             "I found a maid."
             Actor = generatePersonTemporary()
             While !Player.isInterestedIn(Actor) || Actor:age > 35
@@ -47,7 +47,7 @@ OTHER: money > 2000
             Actor.randomizeFace()
             Actor.dress()
             Actor.show()
-            Actor:: "Hello if you wish I can clean your home."
+            Actor(Happy):: "Hello if you wish I can clean your home."
             If Actor:attractiontoplayer > 50
                 "I couldn't help but notice that <Actor.name> seem to be flirting with me."
             Endif
