@@ -45,7 +45,7 @@ OTHER: none
                         Sex(Actor, Player)
                         
                         If HungerEnable > 0
-                           Player.modifyActorVar(rk_VB_Hunger, -1)
+                           Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         
                     Endif
@@ -60,10 +60,10 @@ OTHER: none
                     
                         Player.modifyActorVar(rk_VB_Boss_Sucker, 1)
                         If Actor.hadSex() || Actor:attractiontoplayer > 40 || [Actor:perversion > 70 && Actor.isInterestedIn(Player)]
-                            Actor:: "Fine ... since you're so persistent ..."
+                            Actor(Grin):: "Fine ... since you're so persistent ..."
                             Sex(Actor, Player)
                             If HungerEnable > 0
-                               Player.modifyActorVar(rk_VB_Hunger, -1)
+                               Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
                         
                             "I managed to 'convince' my boss to increase my salary."
@@ -74,7 +74,7 @@ OTHER: none
                         Else
                             
                             Player.modifyActorVar(rk_VB_Boss_Sucker, 1)
-                            Actor:: "How dare you suggest something like this? Get out of my office!"
+                            Actor(Angry):: "How dare you suggest something like this? Get out of my office!"
                             jobperformance -= Random(0, 10)
                             
                         Endif

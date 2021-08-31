@@ -6,9 +6,7 @@ OTHER: none
 
     SceneStart()
     
-        KillCountG2 = rk_VB_KillCountG2.getGlobal() // for mafia killer
-        KillCount = Player.getActorVar(rk_VB_KillCount) // for serial killer
-        "I thought it wasn't that risky doing this here, guess I was wrong .... Fucking neighbors... I hope there weren't any cops around"
+        RobberyCount = Player.getActorVar(rk_VB_RobberyCount)
         
         If Random(0, 50) > sneak
         
@@ -19,7 +17,7 @@ OTHER: none
             PoliceMan2.show(4)
             PoliceMan2.moveToPersonStand(Player, 110)
             "Sure enough, the cops promptly arrived at the scene."
-            PoliceMan(Furious)::"'Hands in the air, now! You're under arrest of first degree murder'"
+            PoliceMan(Furious)::"'Hands in the air, now! You're under arrest for robbery'"
             0:: "Run"
             1:: "Surrender"
         
@@ -86,11 +84,10 @@ OTHER: none
                 "I put my hands up and surrendered to the overwhelming number of cops."
                 sneak -= 5
                 mood -= 5
-                sentence += Random(1850, 3650)
+                sentence += Random(100, 336)
                 followUp(imprisoned)
                 
             Endif
-        
             
         Else
         
@@ -104,6 +101,6 @@ OTHER: none
             
         Endif
         
-        Player.modifyActorVar(rk_VB_KillCount, 1)
+        Player.modifyActorVar(rk_VB_RobberyCount, 1)
         
     SceneEnd() // Scene created by Raddeck

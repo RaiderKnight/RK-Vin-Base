@@ -8,7 +8,8 @@ OTHER: Random(0, 100) < 0.01*intelligence*ActionDuration
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
-        "My company has a procedure for claiming out-of-pocket expenses on business trips and client entertainments. It didn't take long for me to realize that there were plenty of holes to exploit in that procedure that I can take advantage of to make some quick cash. I suspect some of my colleagues are already doing it. Should I take this risk?"
+        "My company has a procedure for claiming out-of-pocket expenses on business trips and client entertainments. It didn't take long for me to realize that there were plenty of holes to exploit in that procedure that I can take advantage of to make some quick cash."
+        "I suspect some of my colleagues are already doing it. Should I take this risk?"
         0:: "Yes"
         1:: "No"
         
@@ -21,6 +22,7 @@ OTHER: Random(0, 100) < 0.01*intelligence*ActionDuration
                 "However, I didn't go overboard in order to avoid suspicions and got away with it."
                 sneak += Random(0, 2)
             Else
+                sneak -= 1
                 Boss = getSpecific(Boss)
                 Boss.dress()
                 Boss.show(2)
@@ -32,9 +34,16 @@ OTHER: Random(0, 100) < 0.01*intelligence*ActionDuration
                 "Not only did I lose my job, my reputation as a thief was passed from one HR team to another. It's harder to get a decent job now ..."
                 jobexperience -= Random(0, 20)
                 mood -= 100
+                BossReallyPissed = Random(0, 100)
+                
+                If BossReallyPissed > 50
+                    followUp(rk_VB_Steal_Arrest)
+                Endif
+                
             Endif
         Else
             "I think I like my job and my integrity too much to steal."
+            intelligence += 1
         Endif
         
         timeout(750, steal_from_work)

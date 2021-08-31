@@ -31,10 +31,10 @@ OTHER: Random(0, 100) < 0.1*jobperformance
                 
                 If 0
                     If Actor.hadSex() || Actor:attractiontoplayer > 40 || [Actor:perversion > 70 && Actor.isInterestedIn(Player)]
-                        Actor:: "Fine ... since you're so persistent ..."
+                        Actor(Grin):: "Fine ... since you're so persistent ..."
                         Sex(Actor, Player)
                         If HungerEnable > 0
-                           Player.modifyActorVar(rk_VB_Hunger, -1)
+                           Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         
                         Player.modifyActorVar(rk_VB_Boss_Sucker, 1)
@@ -44,7 +44,7 @@ OTHER: Random(0, 100) < 0.1*jobperformance
                         Salary.setSalary()
                         timeout(5000, underpaid)                    
                     Else
-                        Actor:: "How dare you suggest something like this? Get out of my office!"
+                        Actor(Angry):: "How dare you suggest something like this? Get out of my office!"
                         jobperformance -= Random(0, 10)
                     Endif
                 Else
