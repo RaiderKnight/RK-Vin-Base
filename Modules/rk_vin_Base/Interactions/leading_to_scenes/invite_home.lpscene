@@ -146,14 +146,25 @@ OTHER: none
                     Endif
 
                     If Kissed || [Actor.isInterestedIn(Player) && !hadSex && Actor:attractiontoplayer > Random(0, 200)]
-                        AnimatePair(Player, Actor, Kissing)
+                    
+                        "I decided to kiss <Actor.him_or_her> ..."
                         Player(Kiss):: "..."
+                        AnimatePair(Player, Actor, Kissing)
                         Actor(Kiss):: "..."
+                        
                         If Dating
+                        
                             "We kissed. It started slow but soon became more passionate. It was obvious what we both wanted ..."
+                            
                         Else
+                        
                             "We had a kiss, an awkward one at first, but soon moving towards a more passionate direction."
+                            Player(Kiss):: "..."
+                            AnimatePair(Player, Actor, Kissing)
+                            Actor(Kiss):: "..."
+                            
                         Endif
+                        
                         "Should I let this escalate further?"
                         0:: Vanilla:: "Make out"
                         1:: "Stop"

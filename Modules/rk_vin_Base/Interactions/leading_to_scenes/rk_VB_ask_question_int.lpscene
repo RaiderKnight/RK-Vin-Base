@@ -56,6 +56,43 @@ OTHER: none
                         Player(Happy)::"Because I am and it's pretty cool to meet someone with the same sex orientation..."
                         Actor:attractiontoplayer += random(0, 1)
                         Actor:rapportwithplayer += random(0, 1)
+                        If Actor.isInterestedIn(Player) && Actor:arousal > 25 && Actor:perversion > 50
+                            GoingFuck = false
+                            Actor(Flirty)::"With a body like yours, I will have a lot of fun. I will lick you all over if you want?"
+                            "What I should say?"
+                            0::"Yeah sure!"
+                            1::"Not interested!"
+                            
+                            If 0 
+                                GoingFuck = true
+                            Endif
+                            
+                            If GoingFuck && WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != stripclub && WHERE != prison
+                            
+                                Player(Flirty)::"Let's go to my place, it's more private ..."
+                                moveTo(home)
+                                "As soon as we arrived, we undressed and started fucking like rabbits ... "
+                                Player.strip()
+                                Actor.strip()
+                                sex(Actor, Player)
+                                Player.dress()
+                                Actor.dress()
+                                
+                            Elseif GoingFuck
+                            
+                                "We undressed and started fucking like rabbits ... "
+                                Player.strip()
+                                Actor.strip()
+                                sex(Actor, Player)
+                                Player.dress()
+                                Actor.dress()
+                                
+                            Endif
+                            
+                        Else
+                            Actor(Curious)::"Ok then?"
+                        Endif
+                        
                     Else
                         Player(Grin)::"Just asking!"
                     Endif
@@ -73,6 +110,100 @@ OTHER: none
                         Player(Happy)::"Because I am and it's pretty cool to meet someone with the same sex orientation..."
                         Actor:attractiontoplayer += random(0, 1)
                         Actor:rapportwithplayer += random(0, 1)
+                        
+                        If Actor.isInterestedIn(Player) && Actor:arousal > 25 && Actor:perversion > 50
+                            GoingFuck = false
+                            Actor(Flirty)::"With a body like yours, me and my friend will have a lot of fun with you. Do you want to meet my friend and have a threesome together?"
+                            "What I should say?"
+                            0::"Yeah sure!"
+                            1::"Not interested!"
+                            
+                            If 0 
+                                GoingFuck = true
+                            Else
+                                Player(Sad)::"Sorry, I'm not interested at the moment!"
+                                GoingFuck = false
+                            Endif
+                            
+                            If GoingFuck && WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != stripclub && WHERE != prison
+                            
+                                Actor(Flirty)::"Let's go to my place, it's more private ... and my friend <Actor2.he_or_she>'s already there ..."
+                                setBackground(bedroom)
+                                
+                                Actor2 = generatePersonTemporary()
+                                While Actor2.isInterestedIn(Player)
+                                    Actor2 = generatePersonTemporary()
+                                EndWhile
+                                
+                                ActorAge = Actor:age
+                                Actor2:age => ActorAge + random(-5, 5)
+                                
+                                If Actor2:age < 18
+                                    Actor2:age => 18
+                                Endif
+                                
+                                Actor2.show()
+                                Actor2.animate(browse)
+                                "As soon as we arrived at <Actor.his_or_her> place, <Actor.his_or_her> friend was already there, playing with <Actor2.his_or_her> phone ..."
+                                Actor.animate(socialize)
+                                "<Actor.name> introduced me to <Actor.his_or_her> friend and we chat a bit together."
+                                Player.animate(socialize)
+                                Actor2.animate(socialize)
+                                "After few minutes, we switch to sex talks to the real action ..."
+                                "We undressed and started fucking like rabbits ... "
+                                Player.animate()
+                                Actor.animate()
+                                Actor2.animate()
+                                Player.strip()
+                                Actor.strip()
+                                Actor2.strip()
+                                sex(Actor, Player, Actor2)
+                                Player.dress()
+                                Actor.dress()
+                                Actor2.dress()
+                                
+                            Elseif GoingFuck
+                                
+                                Actor(Flirty)::"Let's me call my friend ... <Actor2.he_or_she>'s horny like me so <Actor2.he_or_she> will come for sure ..."
+                                Actor.animate(call)
+                                Actor2 = generatePersonTemporary()
+                                While Actor2.isInterestedIn(Player)
+                                    Actor2 = generatePersonTemporary()
+                                EndWhile
+                                
+                                ActorAge = Actor:age
+                                Actor2:age => ActorAge + random(-5, 5)
+                                
+                                If Actor2:age < 18
+                                    Actor2:age => 18
+                                Endif
+                                
+                                Actor.animate()
+                                "After a while ..."
+                                Actor2.show()
+                                "<Actor2.He_or_She> finally arrived at <Actor.his_or_her> place, <Actor.his_or_her> friend was already there, playing with <Actor2.his_or_her> phone ..."
+                                Actor.animate(socialize)
+                                "<Actor.name> introduces me to <Actor.his_or_her> friend and we chat a bit."
+                                Player.animate(socialize)
+                                Actor2.animate(socialize)
+                                "We undressed and started fucking like rabbits ... "
+                                Player.animate()
+                                Actor.animate()
+                                Actor2.animate()
+                                Player.strip()
+                                Actor.strip()
+                                Actor2.strip()
+                                sex(Actor, Player, Actor2)
+                                Player.dress()
+                                Actor.dress()
+                                Actor2.dress()
+                            
+                            Endif
+                            
+                        Else
+                            Actor(Curious)::"Ok then?"
+                        Endif
+                        
                     Else
                         Player(Grin)::"Just asking!"
                     Endif
@@ -195,18 +326,15 @@ OTHER: none
                 Question1086 = false
                 Question1087 = false
                 Question1089 = false
-                Question10810 = false
-                NudeB = Actor.dressExcept(Outerwear, Bottom) 
-                NudeT = Actor.dressExcept(Outerwear, Top)
                 
                 "What should I ask?"
-                0:: !Question1080::"Do yout think I'm pretty?"
+                0:: !Question1080::"Do you think I'm pretty?"
                 5:: "Do you want to fuck?"
-                6:: !Question1086 || NudeB || NudeT ::"Are you flashind me?"
+                6:: !Question1086 && [Actor.dressExcept(Outerwear, Bottom) || Actor.dressExcept(Outerwear, Top)] ::"Are you flashind me?"
                 7:: Actor.isNaked() && !Question1087 ::"Why are you naked?"
                 8:: "Which sex position you like the most?"
                 9:: !Question1089::"Are you top or bottom?"
-                10:: !Question10810::"Are you into animals?"
+                10:: isModEnabled(vin_Bestiality) && WHERE != prison::"Are you into animals?"
                 99::"Go back!"
                 
                 If 0
@@ -1403,24 +1531,72 @@ OTHER: none
                     
                 Elseif 10
                     
-                    Question10810 = true
                     perversion += 0.25
                     Player(Flirty)::"Are you into animals?"
                     Actor(Happy)::"Sure, I like animals, why?"
                     Player(Flirty)::"I mean doing sex with animals?"
+                    
                     If Actor.isInterestedIn(Player) && Actor:arousal > 15 && Actor:perversion > 15
-                        Actor(Happy)::"Yeah, a lot!"
+                    
+                        GoingFuckA = false
+                        ADog = generateCreatureTemporary(Dog)
+                        ADog.hide()
+                        Actor(Flirty)::"Yeah, a lot! I have a dog at my place! Maybe you could come at my place to see my dog <ADog.cock_or_pussy> ..."
                         Actor:rapportwithplayer += random(0, 5)
                         Actor:attractiontoplayer += random(0, 5)
+                        "What I should say?"
+                        0::"Why not!"
+                        1::"Not interested!"
+                        
+                        If 0
+                        
+                            GoingFuckA = true
+                            
+                        Else
+                        
+                            Player(Sad)::"Sorry, I'm not interested at the moment!"
+                            GoingFuckA = false
+                            
+                        Endif
+                        
+                        If GoingFuckA
+                            
+                            Actor(Flirty)::"Let's go to my place, it's more private ... and my dog <ADog.he_or_she>'s already there ..."
+                            setBackground(bedroom)
+
+                            ADog.show()
+                            Actor.show()
+                            "As soon as we arrived at <Actor.his_or_her> place, <Actor.his_or_her> dog was already there ..."
+                            Actor.animate(socialize)
+                            "<Actor.name> introduced me to <Actor.his_or_her> dog and we play a bit together."
+                            Player.animate(socialize)
+                            ADog.animate(socialize)
+                            "After few minutes, we switch to sex talks to the real action ..."
+                            "We undressed and started fucking like rabbits ... "
+                            Player.animate()
+                            Actor.animate()
+                            ADog.animate()
+                            Player.strip()
+                            Actor.strip()
+                            sex(Actor, Player, ADog)
+                            Player.dress()
+                            Actor.dress()
+
+                        Endif
                         
                     Elseif Actor.isInterestedIn(Player)
-                        Actor:(Happy):"No, I wish it's not your type either ..."
+                    
+                        Actor(Happy)::"No, I wish it's not your type either ..."
                         Actor:attractiontoplayer -= random(0, 1)
+
                     Else
+                    
                         Actor(Angry)::"WTF? You're a damn creep or your joking! What's that question? No!"
                         Actor:rapportwithplayer -= random(0, 1)
                         Actor:attractiontoplayer -= random(0, 5)
+
                     Endif
+
                 Endif
             
             Elseif 20

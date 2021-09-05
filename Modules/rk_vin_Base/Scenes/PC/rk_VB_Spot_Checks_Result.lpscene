@@ -13,6 +13,24 @@ OTHER: none
         likes_watersports = Player.getActorVar(rk_VB_likes_watersports)
         Alikes_watersports = Actor.getActorVar(rk_VB_likes_watersports)
         
+        While Friend.isValid()
+            ActArrestTagF = Friend.getActorVar(rk_VB_ActArrestTagF)
+        EndWhile
+        Friend = getPerson(rk_VB_ActArrestTagF)
+        MeToF = Friend.getActorVar(rk_VB_MeToF)
+        FPrison = Friend.getActorVar(tag_FPrison)
+        Fsentence = Friend.getActorVar(rk_VB_ActSentence)
+        Friendsentence = Friend.getActorVar(rk_VB_Sentence)
+        
+        While Relative.isValid()
+            ActArrestTagR = Relative.getActorVar(rk_VB_ActArrestTagR)
+        EndWhile
+        Relative = getPerson(rk_VB_ActArrestTagR)
+        MeToR = Relative.getActorVar(rk_VB_MeToR)
+        RPrison = Relative.getActorVar(tag_RPrison)
+        Rsentence = Relative.getActorVar(rk_VB_ActSentence)
+        Relativesentence = Relative.getActorVar(rk_VB_Sentence)
+    
         If HungerEnable > 0 && Hunger <= 0
             SceneStart()
             "GAME OVER! You just die of starvation!"
@@ -90,3 +108,23 @@ OTHER: none
             
         EndIf
         
+        If Friendsentence <= 0.2
+            SceneStart()
+            "<Friend.name> have been released from prison ..."
+            Friend.setActorVar(rk_VB_ActArrestTagF, 0)
+            Friend.setActorVar(rk_VB_MeToF, 0)
+            Friend.setActorVar(rk_VB_ActSentence, 0)
+            Friend.setActorVar(rk_VB_Sentence, 0)
+            SceneEnd()
+        EndIf
+        
+        If Relativesentence <= 0.2
+            SceneStart()
+            "<Relative.name> have been released from prison ..."
+            Relative.setActorVar(rk_VB_ActArrestTagR, 0)
+            Relative.setActorVar(rk_VB_MeToR, 0)
+            Relative.setActorVar(rk_VB_ActSentence, 0)
+            Relative.setActorVar(rk_VB_Sentence, 0)
+            SceneEnd()
+        EndIf
+    

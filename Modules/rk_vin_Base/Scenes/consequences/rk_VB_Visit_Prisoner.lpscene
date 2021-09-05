@@ -78,22 +78,25 @@ OTHER: none
             Friend = getSelectedNPC()
             ActArrestTagF = Friend.getActorVar(rk_VB_ActArrestTagF)
             Fsentence = Friend.getActorVar(rk_VB_ActSentence)
-
+            Friendsentence = Friend.getActorVar(rk_VB_Sentence)
+            FPrison = Friend.getActorVar(tag_FPrison)
+            
             If Friend.isValid()
             
-                If ActArrestTagF <= 0
+                If Friendsentence <= 0
                 
                     PoliceMan(Sad)::"Sorry <Player.mister_or_miss>, but my computer show me that no one with that name has been imprisoned!"
                     PoliceMan(Sad)::"Is there anything else I can do for you?"
                     Player(Sad)::"No thanks!"
                     SceneEnd()
                 
-                Elseif Fsentence <= 0
+                Elseif FPrison <= 0
                 
                     PoliceMan(Sad)::"Sorry <Player.mister_or_miss>, but my computer show me <Friend.his_or_her> files and <Friend.he_or_she> has not been imprisoned again!"
                     PoliceMan(Sad)::"Is there anything else I can do for you?"
                     Player(Sad)::"No thanks!"
                     SceneEnd()
+                    
                 Else
                 
                     PoliceMan(Serene)::"Ok, you want to see prisoner <Friend.name>, cell <ActArrestTagF> - <Fsentence>, Follow us!"
@@ -239,17 +242,19 @@ OTHER: none
             Relative = getSelectedNPC()
             ActArrestTagR = Relative.getActorVar(rk_VB_ActArrestTagR)
             ActSentence = Relative.getActorVar(rk_VB_ActSentence)
+            Relativesentence = Relative.getActorVar(rk_VB_Sentence)
+            RPrison = Relative.getActorVar(tag_RPrison)
             
             If Relative.isValid()
             
-                If ActArrestTagR <= 0
+                If Relativesentence <= 0
                 
                     PoliceMan(Sad)::"Sorry <Player.mister_or_miss>, my computer show me that a certain <Relative.name> <Relative.name_last> has been released few days ago!"
                     PoliceMan(Sad)::"Is there anything else I can do for you?"
                     Player(Sad)::"No thanks!"
                     SceneEnd()
                 
-                Elseif ActSentence <= 0
+                Elseif RPrison <= 0
 
                     PoliceMan(Sad)::"Sorry <Player.mister_or_miss>, but my computer show me <Relative.his_or_her> files and <Relative.he_or_she> has not been imprisoned again!"
                     PoliceMan(Sad)::"Is there anything else I can do for you?"
