@@ -45,7 +45,7 @@ OTHER: isAtDatingHome()
                 mood -= 5
                 Sex(Player, Actor)
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
 
             Else
@@ -63,7 +63,7 @@ OTHER: isAtDatingHome()
                     Sex(Player, Actor)
                     mood -= 5
                     If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
                     EndIf
                 
                 Else
@@ -145,32 +145,32 @@ OTHER: isAtDatingHome()
             
                 If Dating:masochist + karma < -50
             
-                Dating.animate(gun)
-                Dating.moveToPerson(Player)
-                Dating(Furious):: "You betrayed me, you humilated me ... now you die!"
+                    Dating.animate(gun)
+                    Dating.moveToPerson(Player)
+                    Dating(Furious):: "You betrayed me, you humilated me ... now you die!"
                 
-                Bitchfired = 0
-                While Bitchfired < 3
+                    Bitchfired = 0
+                    While Bitchfired < 3
                         
-                    If Bitchfired > 0
+                        If Bitchfired > 0
                         
-                        Dating(Angry)::"YOU WILL DIE MOTHERFUCKER!"
+                            Dating(Angry)::"YOU WILL DIE MOTHERFUCKER!"
                         
-                    EndIf
-                    "Pow!"
-                    Player.hide()
-                    
-                    "<Dating.name> fired <Dating.his_or_her> gun..."
-                    If Random(0, 30) < fitness
-                
-                        "I managed to dodge the shot. Phew, that was close."
-                        Player(Shocked)::"Are you fucking crazy?"
-                        sneak += 1
-                        mood += 1
-                        Bitchfired += 1
-                        If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
                         EndIf
+                        "Pow!"
+                        Player.hide()
+                    
+                        "<Dating.name> fired <Dating.his_or_her> gun..."
+                        If Random(0, 30) < fitness
+                
+                            "I managed to dodge the shot. Phew, that was close."
+                            Player(Shocked)::"Are you fucking crazy?"
+                            sneak += 1
+                            mood += 1
+                            Bitchfired += 1
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
                         
                         ElseIf Bitchfired >= 3
                             
@@ -202,10 +202,18 @@ OTHER: isAtDatingHome()
                                 mood -= 50
                             
                             Endif
-                            blockContact(Dating)
+                            
+                            ActID = Dating.getID()
+                            Dating.setActorVar(rk_VB_ActArrestTagF, ActID)
+                            Dating.setActorVar(tag_FPrison, 1)
+                            Friendsentence = Random(925, 1825)
+                            Dating.setActorVar(rk_VB_Sentence, Friendsentence)
+                            Dating.setActorVar(rk_VB_MeToF, ActID)
+                            DayGetImprison = Dating:age
+                            Dating.setActorVar(rk_VB_ActSentence, DayGetImprison)
                         
                             If HungerEnable > 0
-                                Player.modifyActorVar(rk_VB_Hunger, -3)
+                                Player.modifyActorVar(rk_VB_Hunger, -10)
                             EndIf
 
                         Else
@@ -221,7 +229,7 @@ OTHER: isAtDatingHome()
                     
                     EndWhile
                 
-                Else isPlayerMarried()
+                Elseif isPlayerMarried()
                 
                     Dating(Sad):: "I'm afraid this marriage isn't working ..."
                     "And just like that, <Dating.name> divorced me ..."
@@ -302,7 +310,7 @@ OTHER: isAtDatingHome()
                                 Affair(Evil):: "Hah, what a placemat of a <Dating.boyfriend_or_girlfriend> you have! I would love to see <Dating.his_or_her> face if <Dating.he_or_she> knew that you went off to me right away after the loser forgave you ..."
                                 Sex(Affair, Player)
                                 If HungerEnable > 0
-                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
                                 Affair.hide()
                                 "I enjoyed that much more than usual. Maybe it was the blatant shamelessness of cheating on my <Dating.boyfriend_or_girlfriend> that added spices to the sex."
@@ -335,16 +343,13 @@ OTHER: isAtDatingHome()
                         Affair(Evil):: "Hah, what a loser of a <Dating.boyfriend_or_girlfriend> you had - good riddance! I would love to see <Dating.his_or_her> face if <Dating.he_or_she> knew that you went off to me right away after the <Dating.idiot_or_bitch> broke up with you ..."
                         Sex(Affair, Player)
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         Affair.hide()
                         "I enjoyed that much more than usual. Sweet revenge certainly added spices to the sex."
                         perversion += Random(0,1)
                         masochist -= Random(0,2)
                         mood += 3
-                        If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
-                        EndIf
                         
                     Else
                     
@@ -361,5 +366,3 @@ OTHER: isAtDatingHome()
         
     SceneEnd()  // Scene improved by Raddeck
     timeout(500, dating_friend_blackmails)
-    
-    

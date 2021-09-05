@@ -1,0 +1,200 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        While Relative.isValid()
+            ActArrestTagR = Relative.getActorVar(rk_VB_ActArrestTagR)
+        EndWhile
+        Relative = getPerson(rk_VB_ActArrestTagR)
+        MeToR = Relative.getActorVar(rk_VB_MeToR)
+        RPrison = Relative.getActorVar(tag_RPrison)
+        Rsentence = Relative.getActorVar(rk_VB_ActSentence)
+        
+        setBackground(prison)
+        Relative.show()
+        Relative.dressPrisoner()
+        "We arrived at <Relative.name>'s cell ..."
+        
+        If MeToR == ActArrestTagR
+
+            Relative(Happy)::"Cool, <Player.name> you come visiting me!"
+            
+            "When I enter <Relative.name>'s cell, I walk to <Relative.him_or_her> and give <Relative.him_or_her> a big hug. I make the extra effort of going to <Relative.him_or_her>, instead of waiting for <Relative.him_or_her> to come to me, because I want <Relative.him_or_her> to know that I am glad to see <Relative.him_or_her>."
+
+            choice = -1    
+            ate = false
+            hadSex = false
+            hadSex1 = false
+            LeavePrison = true
+            EventPrison = false
+            While choice < 5
+                Kissed = false
+                "What I want to do with <Relative.name>?"
+                0:: "Chat"
+                1:: !ate ::"Eat something together"
+                3:: !hadSex || !hadSex1 :: "Have sex"
+                4:: !hadSex || !hadSex1 :: "Kiss <Relative.him_or_her>"
+                5:: LeavePrison:: "Politely leave"
+                
+                If 5
+                
+                    "We said goodbye and went our ways."
+                    If HungerEnable > 0
+            
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                
+                    EndIf
+                    
+                Else
+                    
+                    If 0
+                    
+                        "We simply sat and chat for a while ..."
+                        mood += 1
+                        Relative:attractiontoplayer += 1
+                        Relative:rapportwithplayer += 1
+                        passTime(0.1, 0.2)
+                        
+                    Elseif 1
+                    
+                        "We made some quick snacks and enjoyed them together ..."
+                        ate = true
+                        If HungerEnable > 0
+            
+                            Player.modifyActorVar(rk_VB_Hunger, 5)
+                
+                        EndIf
+                        
+                        Friend:attractiontoplayer += 1
+                        Relative:rapportwithplayer += 1
+                        mood += 1
+                        stock_snack -= 1
+                        energy += 5
+                        passTime(0.2, 0.4)
+                        
+                    Elseif 3
+                    
+                        If Relative:arousal > 15
+                        
+                            hadSex1 = true
+                            
+                        Else
+                        
+                            "<Relative.name> is not interested!"
+                            hadSex1 = false
+                            mood -= 1
+                            
+                        Endif
+                        
+                    Elseif 4
+                    
+                        Kissed = true
+                        
+                    Endif
+                    
+                    If Kissed || [Relative.isInterestedIn(Player) && !hadSex && Relative:attractiontoplayer > Random(0, 200)]
+                        AnimatePair(Player, Relative, Kissing)
+                        Player(Kiss):: "..."
+                        Relative(Kiss):: "..."
+                        
+                        If Dating
+                        
+                            "We kissed. It started slow but soon became more passionate. It was obvious what we both wanted ..."
+                        
+                        Else
+                        
+                            "We had a kiss, an awkward one at first, but soon moving towards a more passionate direction."
+                        
+                        Endif
+                        
+                        "Should I let this escalate further?"
+                        0:: "Make out"
+                        1:: "Stop"
+                    
+                        If 0
+                            
+                            If Relative.isDating() || [Relative.isInterestedIn(Player) && [Relative.IsDominantSex(Player) || Relative:attractiontoplayer + Relative:perversion > Random(50, 200) || Relative:intoxication > 80]]
+                                
+                                "Our kiss got more and more steamy and soon we were making out, our hands all over each other."
+                                
+                                If TfGame() && Relative.isMale()
+                                    "I'm a man trapped inside a woman's body. I don't think I'm gay, but here I am, about to fuck with a male."
+                                Endif
+                                
+                                hadSex = true
+                                Player:perversion += Random(0, 1)
+                                Sex(Player, Relative)
+                                Relative.show(2)
+                                "The sex was amazing. We put our clothes back on afterwards and continued our date."
+                                If HungerEnable > 0
+            
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                
+                                EndIf
+                                passTime(0.2, 0.5)
+                                
+                            Else
+                            
+                                "Unfortunately for me, <Relative.name> didn't seem interested in letting things escalate any further and pulled away."
+                                
+                            Endif
+                            
+                        Else
+                        
+                            "I decided to stop it there and not go any further."
+                            
+                        Endif
+                        
+                    Elseif Random(0, 100) < 20
+                        EventPrison1 = Random(0, 100)
+                        
+                        If EventPrison1 > 50 && !EventPrison
+                        
+                            personal_pics = Player.getActorVar(rk_VB_personal_pics)
+                            "<Relative.name> purchased picture tickets in advance. <Relative.He_or_She> does this every time I visit. The photographer arrives with the Polaroid camera and takes 2 pictures: one for <Relative.name> and one for me."
+                            "I probably won’t put it up in my house because <Relative.he_or_she> is in <Relative.his_or_her> prison uniform, but I will put it in a special place where I can see it"
+                            Player.modifyActorVar(rk_VB_personal_pics, 1)
+                            EventPrison = true
+                            
+                        Else
+                        
+                            "Unfortunately for me, <Relative.name> tell me to leave ..."
+                            choice = 5
+                            
+                        Endif
+                    
+                    Endif
+                    
+                    If !hadSex && hadSex1
+                    
+                        "We stripped and started to fuck ..."
+                        sex(Relative, Player)
+                    
+                    Endif
+                    
+                Endif
+                
+            EndWhile
+            
+            Relative.animate(socialize)
+            Player.animate(socialize)
+            "After the first hour <Relative.he_or_she> gets down to business and tells me what <Relative.he_or_she> knows I don’t want to hear."
+            "<Relative.He_or_She> tells me how miserable and unhappy <Relative.he_or_she> is. <Relative.He_or_She> tells me that no matter how much <Relative.he_or_she> tries, <Relative.he_or_she> can never be right, that the guards yell at <Relative.his_or_her> no matter what <Relative.he_or_she> does, that the inmates yell all the time, that this place is intolerable."
+            "<Relative.He_or_She> says that <Relative.he_or_she> can’t take it any longer and doesn’t know how long <Relative.he_or_she> is going to last in here."
+            "I try to offer advice on how to make the best of it. I talk about finding his purpose in life no matter where he is. I know this doesn’t offer a lot of condolence to <Relative.his_or_her>, but it is the best I can do."
+            "Unfortunately for me, <Relative.name> tell me to leave ..."
+            Relative.animate()
+            Player.animate()
+            Relative.hide()
+            
+        Else
+        
+            "NOT IMPLEMENTED YET!"
+        
+        Endif
+        
+    SceneEnd()

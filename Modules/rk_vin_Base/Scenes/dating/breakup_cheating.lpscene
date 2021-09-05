@@ -148,7 +148,15 @@ OTHER: none
                             mood -= 50
                             
                         Endif
-                        blockContact(Dating)
+                        
+                        ActID = Dating.getID()
+                        Dating.setActorVar(rk_VB_ActArrestTagF, ActID)
+                        Dating.setActorVar(tag_FPrison, 1)
+                        Friendsentence = Random(925, 1825)
+                        Dating.setActorVar(rk_VB_Sentence, Friendsentence)
+                        Dating.setActorVar(rk_VB_MeToF, ActID)
+                        DayGetImprison = Dating:age
+                        Dating.setActorVar(rk_VB_ActSentence, DayGetImprison)
                         
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -3)

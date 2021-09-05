@@ -4,9 +4,10 @@ WHEN: 0-24
 WHO: Actor = getPerson(true); If !Actor.isPregnant() && !Actor.isDating() && [isModEnabled(vin_NTR) || !Actor.hadSex()] 
 OTHER: none
 
-    SceneStart()
-        "It's such beautiful weather today ..."
+    If isModEnabled(vin_Pregnancy)
         If Actor.hasRelationship(Spouses, Dating)
+            SceneStart()
+            "It's such beautiful weather today ..."
             Actor2 = Actor.getRelatedPerson(Spouses, Dating)
             If !Actor2.isPregnant()
                 If !Actor.isMale() && !Actor2.isFemale()
@@ -38,6 +39,8 @@ OTHER: none
                 Endif
             Endif
         Elseif !Actor.isMale() 
+            SceneStart()
+            "It's such beautiful weather today ..."
             // very small chance of impregnating them with a random existing m/t character's baby
             If Random(0, 1000) < Actor:perversion
                 Actor2 = getPerson(true)
@@ -53,5 +56,8 @@ OTHER: none
         
         "My mood improves a bit as a result"
         mood += 5
-    SceneEnd()
-    timeoutPrecise(72, random_pregnancy_cms)
+        SceneEnd()
+        timeoutPrecise(72, random_pregnancy_cms)
+        
+    Endif
+    

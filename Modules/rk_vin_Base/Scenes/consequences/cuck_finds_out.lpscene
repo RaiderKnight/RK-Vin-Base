@@ -6,11 +6,12 @@ OTHER: none
 
     SceneStart()
 
+        Cuck = Friend.getActorVar(tag_NTRCuck)
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        Cuck = Actor.getActorVar(tag_NTRCuck)
+        
         If IsModEnabled(vin_Netori) && [Cuck || Actor:masochist > 25]
             Actor.setActorVar(tag_NTRCuck, 1)
             Actor2.show()
@@ -66,7 +67,7 @@ OTHER: none
                         If Random(0, 30) < fitness
                             
                             "I managed to dodge the shot. Phew, that was close."
-                            Player(Shocked)::"Are you fucking crazy?"
+                            Player(Shocked)::"WTF, are you fucking crazy?"
                             sneak += 1
                             mood += 1
                             Bitchfired += 1
@@ -84,10 +85,18 @@ OTHER: none
                             sneak += 1
                             LoseDating()
                             Player.animate()
+                            ActID = Actor.getID()
+                            Actor.setActorVar(rk_VB_ActArrestTagF, ActID)
+                            Actor.setActorVar(tag_FPrison, 1)
+                            Friendsentence = Random(925, 1825)
+                            Actor.setActorVar(rk_VB_Sentence, Friendsentence)
+                            Actor.setActorVar(rk_VB_MeToF, ActID)
+                            DayGetImprison = Actor:age
+                            Actor.setActorVar(rk_VB_ActSentence, DayGetImprison)
                                     
                             "After that crazy event, I take time to block <Actor2.name>'s number ..."
                             mood -= 50
-                            blockContact(Actor2)
+                            
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -3)
                             EndIf
@@ -343,6 +352,9 @@ OTHER: none
                             Filter(Aggressive)
                             TalkNonConsensual()
                             SexNoAffair(Actor, Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
                             Actor:rapportwithplayer => -100
                             Actor:attractiontoplayer => -100
                             passTime(0.5, 1.50)
@@ -440,7 +452,9 @@ OTHER: none
                                 Actor.strip()
                                 Filter(Aggressive)
                                 SexNoAffair(Player, Actor)
-    
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
                                 passTime(0.50, 1.50)
     
                             EndIf
@@ -458,7 +472,7 @@ OTHER: none
                 Else
                 
                     Actor(Furious):: "You fucked my <Actor2.boyfriend_or_girlfriend>! I should just kill you, <Player.scum_or_bitch>!"
-                    Actor(Angry):: "But I won't lower myself to deal with the likes of you. You both adulterers could fuck off from my life!"
+                    Actor(Angry):: "But I won't lower myself to deal with someone like you. You both adulterers could fuck off from my life!"
                     mood -= 15
                     
                 Endif

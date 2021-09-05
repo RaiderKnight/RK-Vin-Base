@@ -45,12 +45,13 @@ OTHER: none
             
             "A couple of weeks later ..."        
             If Dice*Difficulty < 0.005*(intelligence+interpersonal)
+                Player.animate(call)
                 Player(Happy):: "Thank you for your call. I'm looking forward to the upcoming interview." 
                 "I received a call from the HR department, notifying me that my application was successful and inviting me for an interview. I must now prepare for the fateful day."
                 If LieOnCV
                     "I can't know for sure, but perhaps my subtle lies on the application did their magic. Not that they don't carry certain risks ..."
                 Endif
-                    
+                Player.animate()
                 setBackground(work)
 
                 "The day of the interview ..."
@@ -279,6 +280,7 @@ OTHER: none
                                         If HungerEnable > 0
                                            Player.modifyActorVar(rk_VB_Hunger, -2)
                                         EndIf
+                                        Player.dress()
                                     Endif
                                 Endif
                             Endif
@@ -309,6 +311,7 @@ OTHER: none
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
+                                Player.dress()
                                 
                             Else
                                 Boss(Angry):: "What are you doing? That's totally inappropriate. I think this interview has run its course. Goodbye!"
@@ -324,8 +327,8 @@ OTHER: none
                 Boss.hide()
                 setBackground(home)            
                 "A few days later ..."
-                Player.dress()
                 
+                Player.animate(call)
                 If Performance > Random(0, 5)*Difficulty*GameDifficulty
                     Player(Excited):: "Thank you so much for your call. I'm looking forward to starting my first day at your firm."
                     "The HR department called. I got the job! Subject to a reference check, the contract is on its way. I can't wait to start!"
@@ -350,14 +353,17 @@ OTHER: none
                     Endif
                     mood -= Random(0, 30)
                 Endif
+                Player.animate()
                 
             Else
+                Player.animate(call)
                 Player(Sad):: "Thank you for your time anyway. All the best with finding the right candidate."
                 "Oh no! The HR department just called. My application was unsuccessful. I didn't even manage to secure an interview. I must now look for alternative positions elsewhere."
                 If !LieOnCV
                     "In hindsight, maybe being so honest wasn't a good idea after all."
                 Endif
                 mood -= Random(0, 10)
+                Player.animate()
             Endif
             
         Else
