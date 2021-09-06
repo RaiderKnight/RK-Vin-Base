@@ -10,6 +10,15 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Random(0, 200) < 75
         
         If Friendsentence > 0
         
+            While Friend.isValid()
+                ActArrestTagF = Friend.getActorVar(rk_VB_ActArrestTagF)
+            EndWhile
+            Friend = getPerson(rk_VB_ActArrestTagF)
+            MeToF = Friend.getActorVar(rk_VB_MeToF)
+            FPrison = Friend.getActorVar(tag_FPrison)
+            Fsentence = Friend.getActorVar(rk_VB_ActSentence)
+            Friendsentence = Friend.getActorVar(rk_VB_Sentence)
+            
             Friend.dressPrisoner()
     
             "My phone rang ... It's <Friend.name> calling from prison."

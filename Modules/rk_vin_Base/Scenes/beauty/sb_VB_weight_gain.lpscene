@@ -1,0 +1,171 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER: none
+
+    // Settings
+    DebugLog = false
+    PlayerGainsWeight = true
+    CompanionGainsWeight = true
+    WeightGainFactor = 0.3
+    
+    If DebugLog
+        SceneStart()
+        CurrentCompanion.strip()
+        CurrentCompanion.show(1)
+        Player.strip()
+        Player.show(0)
+    Endif
+    
+    If isWithCompanion() && CompanionGainsWeight
+        CCBodyFat = CurrentCompanion.getActorVar(BodyFat)
+        If CCBodyFat == 0
+            If CurrentCompanion.isMale()
+                value = CurrentCompanion.getMorphValue(XY__FBMHeavy)
+            Else
+                value = CurrentCompanion.getMorphValue(Genesis8Female__FBMHeavy)
+            Endif
+            value = 100*value
+            CCBodyFat = 50+value
+            If DebugLog
+                "Companion weight adjusted, no var existed. It's now <CCBodyFat> kg, because the slider was <value>."
+            Endif
+        Elseif CCBodyFat < 46 && isModEnabled(sb_BeautyExpansion) && !CurrentCompanion.isMale() // isModEnabled(sb_BeautyExpansion)
+            CurrentCompanion.blendPreset(sb_BP_fat_removal_extreme_F)
+            CCBodyFat += 1*WeightGainFactor
+        Elseif CCBodyFat < 165
+            CCBodyFat += 1*WeightGainFactor
+        Endif
+        CurrentCompanion.setActorVar(BodyFat, CCBodyFat)
+        If CCBodyFat < 51
+            CurrentCompanion.blendPreset(sb_weight_00)
+        Elseif CCBodyFat < 56
+            CurrentCompanion.blendPreset(sb_weight_05)
+        Elseif CCBodyFat < 61
+            CurrentCompanion.blendPreset(sb_weight_10)
+        Elseif CCBodyFat < 66
+            CurrentCompanion.blendPreset(sb_weight_15)
+        Elseif CCBodyFat < 71
+            CurrentCompanion.blendPreset(sb_weight_20)
+        Elseif CCBodyFat < 76
+            CurrentCompanion.blendPreset(sb_weight_25)
+        Elseif CCBodyFat < 81
+            CurrentCompanion.blendPreset(sb_weight_30)
+        Elseif CCBodyFat < 86
+            CurrentCompanion.blendPreset(sb_weight_35)
+        Elseif CCBodyFat < 91
+            CurrentCompanion.blendPreset(sb_weight_40)
+        Elseif CCBodyFat < 96
+            CurrentCompanion.blendPreset(sb_weight_45)
+        Elseif CCBodyFat < 101
+            CurrentCompanion.blendPreset(sb_weight_50)
+        Elseif CCBodyFat < 106
+            CurrentCompanion.blendPreset(sb_weight_55)
+        Elseif CCBodyFat < 111
+            CurrentCompanion.blendPreset(sb_weight_60)
+        Elseif CCBodyFat < 116
+            CurrentCompanion.blendPreset(sb_weight_65)
+        Elseif CCBodyFat < 121
+            CurrentCompanion.blendPreset(sb_weight_70)
+        Elseif CCBodyFat < 126
+            CurrentCompanion.blendPreset(sb_weight_75)
+        Elseif CCBodyFat < 131
+            CurrentCompanion.blendPreset(sb_weight_80)
+        Elseif CCBodyFat < 136
+            CurrentCompanion.blendPreset(sb_weight_85)
+        Elseif CCBodyFat < 141
+            CurrentCompanion.blendPreset(sb_weight_90)
+        Elseif CCBodyFat < 146
+            CurrentCompanion.blendPreset(sb_weight_95)
+        Else
+            CurrentCompanion.blendPreset(sb_weight_100)
+        Endif
+    Endif
+    
+    If PlayerGainsWeight
+        XBodyFat = Player.getActorVar(BodyFat)
+        If XBodyFat == 0
+            If Player.isMale()
+                value = Player.getMorphValue(XY__FBMHeavy)
+            Else
+                value = Player.getMorphValue(Genesis8Female__FBMHeavy)
+            Endif
+            value = 100*value
+            XBodyFat = 50+value
+            If DebugLog
+                "Player weight adjusted, no var existed. It's now <XBodyFat> kg, because the slider was <value>."
+            Endif
+        Elseif XBodyFat < 46 && isModEnabled(sb_BeautyExpansion) && !Player.isMale() // isModEnabled(sb_BeautyExpansion)
+            Player.blendPreset(sb_BP_fat_removal_extreme_F)
+            XBodyFat += 1*WeightGainFactor
+        Elseif XBodyFat < 165
+            XBodyFat += 1*WeightGainFactor
+        Endif
+        Player.setActorVar(BodyFat, XBodyFat)
+        If XBodyFat < 51
+            Player.blendPreset(sb_weight_00)
+        Elseif XBodyFat < 56
+            Player.blendPreset(sb_weight_05)
+        Elseif XBodyFat < 61
+            Player.blendPreset(sb_weight_10)
+        Elseif XBodyFat < 66
+            Player.blendPreset(sb_weight_15)
+        Elseif XBodyFat < 71
+            Player.blendPreset(sb_weight_20)
+        Elseif XBodyFat < 76
+            Player.blendPreset(sb_weight_25)
+        Elseif XBodyFat < 81
+            Player.blendPreset(sb_weight_30)
+        Elseif XBodyFat < 86
+            Player.blendPreset(sb_weight_35)
+        Elseif XBodyFat < 91
+            Player.blendPreset(sb_weight_40)
+        Elseif XBodyFat < 96
+            Player.blendPreset(sb_weight_45)
+        Elseif XBodyFat < 101
+            Player.blendPreset(sb_weight_50)
+        Elseif XBodyFat < 106
+            Player.blendPreset(sb_weight_55)
+        Elseif XBodyFat < 111
+            Player.blendPreset(sb_weight_60)
+        Elseif XBodyFat < 116
+            Player.blendPreset(sb_weight_65)
+        Elseif XBodyFat < 121
+            Player.blendPreset(sb_weight_70)
+        Elseif XBodyFat < 126
+            Player.blendPreset(sb_weight_75)
+        Elseif XBodyFat < 131
+            Player.blendPreset(sb_weight_80)
+        Elseif XBodyFat < 136
+            Player.blendPreset(sb_weight_85)
+        Elseif XBodyFat < 141
+            Player.blendPreset(sb_weight_90)
+        Elseif XBodyFat < 146
+            Player.blendPreset(sb_weight_95)
+        Else
+            Player.blendPreset(sb_weight_100)
+        Endif
+    Endif
+    
+    If DebugLog
+        CCBodyFat = CurrentCompanion.getActorVar(BodyFat)
+        If CurrentCompanion.isMale()
+            ccvalue = CurrentCompanion.getMorphValue(XY__FBMHeavy)
+        Else
+            ccvalue = CurrentCompanion.getMorphValue(Genesis8Female__FBMHeavy)
+        Endif
+        ccoutput = (ccvalue*100)
+        XBodyFat = Player.getActorVar(BodyFat)
+        If Player.isMale()
+            xvalue = Player.getMorphValue(XY__FBMHeavy)
+        Else
+            xvalue = Player.getMorphValue(Genesis8Female__FBMHeavy)
+        Endif
+        xoutput = (xvalue*100)
+        Player(Happy):: "My weight is <XBodyFat> kg and the slider is on <xoutput>."
+        CurrentCompanion(Happy):: "My weight is <CCBodyFat> kg and the slider is on <ccoutput>."
+        Player(Happy):: "Let's eat some more!"
+        SceneEnd()
+    Endif
+    

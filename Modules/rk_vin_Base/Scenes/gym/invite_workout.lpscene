@@ -4,7 +4,11 @@ WHEN: 9-20
 WHO: Friend = getPerson(true); If Friend:rapportwithplayer > Random(0, 10) && Friend:fitness > 60
 OTHER: !IsWithCompanion() && Random(0, 100) < fitness
 
-    sceneStart()
+    
+    Friendsentence = Friend.getActorVar(rk_VB_Sentence)
+    If Friendsentence <= 0
+
+        sceneStart()
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
@@ -47,6 +51,8 @@ OTHER: !IsWithCompanion() && Random(0, 100) < fitness
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -10)
             EndIf
+        
+            followUp(sb_VB_weight_loss)
             
         Else
         
@@ -54,6 +60,8 @@ OTHER: !IsWithCompanion() && Random(0, 100) < fitness
             Friend(Sad):: "Oh? That's a shame. I'll see you around then."
             
         Endif
-    
-    sceneEnd() // Scene improved by Raddeck
+        sceneEnd() // Scene improved by Raddeck
+        
+    Endif
     timeout(400, invite_workout)
+    

@@ -155,16 +155,17 @@ OTHER: none
             1::"Take a bath"
             2::"Brush my teeth"
             3::"Groom"
-            4:: stock_haircare > 0::"Use haircare"
-            5:: stock_makeup > 0::"Put on makeup"
-            6:: stock_skincare > 0::"Use skincare"
-            7:: stock_supplement > 0::"Take supplements"
-            8::"Get a massage"
-            9:: !isWithCompanion()::"Get a sensual massage"
-            10::"Go for a health check-up"
-            11::"Masturbate"
-            12:: stock_chineseaphrodisiac > 0.8::"Take chinese aphrodisiac"
-            13:: stock_rapedrug > 0::"Take rape drug yourself"
+            4::"Check your weight"
+            5:: stock_haircare > 0::"Use haircare"
+            6:: stock_makeup > 0::"Put on makeup"
+            7:: stock_skincare > 0::"Use skincare"
+            8:: stock_supplement > 0::"Take supplements"
+            9::"Get a massage"
+            10:: !isWithCompanion()::"Get a sensual massage"
+            11::"Go for a health check-up"
+            12::"Masturbate"
+            13:: stock_chineseaphrodisiac > 0.8::"Take chinese aphrodisiac"
+            14:: stock_rapedrug > 0::"Take rape drug yourself"
             81:: UrgeToPeeEnable > 0 ::"Go take a pee!"
             99::"Go back"
     
@@ -214,6 +215,63 @@ OTHER: none
             
             ElseIf 4
             
+                XBodyFat = Player.getActorVar(BodyFat)
+                If XBodyFat == 0
+                    If Player.isMale()
+                        value = Player.getMorphValue(XY__FBMHeavy)
+                    Else
+                        value = Player.getMorphValue(Genesis8Female__FBMHeavy)
+                    Endif
+                    value = 100*value
+                    XBodyFat = 50+value
+                    Player.setActorVar(BodyFat, XBodyFat)
+                Endif
+                
+                "You get on the scales and check your weight ... "
+                "..."
+                
+                If XBodyFat < 46
+                    XBodyFat = 46
+                Endif
+                    
+                XBodyFat -= Random(0,1)
+                XBodyFat += Random(0,1)
+                
+                XLBS = XBodyFat*2.20462
+                "<XLBS> lbs / <XBodyFat> kg"
+                
+                If isWithCompanion()
+                    CCBodyFat = CurrentCompanion.getActorVar(BodyFat)
+                    If CCBodyFat == 0
+                        If CurrentCompanion.isMale()
+                            value = CurrentCompanion.getMorphValue(XY__FBMHeavy)
+                        Else
+                            value = CurrentCompanion.getMorphValue(Genesis8Female__FBMHeavy)
+                        Endif
+                        value = 100*value
+                        CCBodyFat = 50+value
+                        CurrentCompanion.setActorVar(BodyFat, CCBodyFat)
+                    Endif
+                    
+                    CurrentCompanion(Curious):: "Let me get on the scales too."
+                    CurrentCompanion():: "..."
+                    
+                    If CCBodyFat < 46
+                        CCBodyFat = 46
+                    Endif
+                
+                    CCBodyFat -= Random(0,1)
+                    CCBodyFat += Random(0,1)
+                    
+                    CCLBS = CCBodyFat*2.20462
+                    "<CCLBS> lbs / <CCBodyFat> kg"
+                Endif
+                
+                Player.dress()
+                passTime(0.5,1)
+                
+            ElseIf 5
+            
                 Player.animate(bathe)
                 "I decided to use haircare..."
                 stock_haircare -= 0.05
@@ -222,7 +280,7 @@ OTHER: none
                 energy -= 1
                 passTime(0.05, 0.15)
             
-            ElseIf 5
+            ElseIf 6
             
                 Player.animate(makeup)
                 "I decided to put some makeup..."
@@ -232,7 +290,7 @@ OTHER: none
                 energy -= 1
                 passTime(0.15, 0.5)
             
-            ElseIf 6
+            ElseIf 7
             
                 Player.animate(makeup)
                 "I decided to use skincare..."
@@ -242,7 +300,7 @@ OTHER: none
                 energy -= 1
                 passTime(0.05, 0.15)
             
-            ElseIf 7
+            ElseIf 8
             
                 Player.animate(drinkbottle)
                 "I decided to take supplements..."
@@ -252,23 +310,23 @@ OTHER: none
                 intelligence += 0.01
                 passTime(0.05, 0.15)
             
-            ElseIf 8
+            ElseIf 9
             
                 followUp(get_a_massage)
             
-            ElseIf 9
+            ElseIf 10
             
                 followUp(rk_VB_get_a_sensual_massage)
             
-            ElseIf 10
+            ElseIf 11
             
                 followUp(naked_with_doctor)
 
-            ElseIf 11
+            ElseIf 12
 
                 followUp(masturbate)
 
-            ElseIf 12
+            ElseIf 13
             
                 Player.animate(drinkbottle)
                 "I decided to take chinese aphrodisiac..."
@@ -277,7 +335,7 @@ OTHER: none
                 arousal +=100
                 passTime(0.05, 0.15)
 
-            ElseIf 13
+            ElseIf 14
 
                 If isModEnabled(sb_BetterPregnancy)
                     "ATTENTION - I suggest to disable Better Pregnancy, this mod has been abandoned!"
