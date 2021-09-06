@@ -6,108 +6,177 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Random(0, 200) < 75
 
     sceneStart()
 
-        Friend.dress()
-
-        "My phone rang ... It's <Friend.name> calling."
-        SecondScreen(Friend)
-        Friend.show(2)
-        Dating = Friend.IsDating()
+        Friendsentence = Friend.getActorVar(rk_VB_Sentence)
         
-        If Dating
+        If Friendsentence > 0
         
-            Friend:: "Baby, let's spend time together today!"
-            Date = "Go on a date"
-            
-        Else
-        
-            Friend:: "Hey <Player.name>, it's <Friend.name>. Listen, do you want to hang out today?"
-            Date = "Hang out"
-            
-        Endif
-        
-        "<Date> with <Friend.name>?"
-        0:: "Yes"
-        1:: "No"
-
-        If 0
-            Player:: "Of course. I'll see you in a bit!"
-            mood += 1
-            If Dating
-            
-                Friend:: "See you soon, darling!"
-                
-            Else
-            
-                Friend:: "See you soon!"
-                
-            Endif
-            passTime(0.25, 1)
-            // Start edit Ravenger6660
-            If [!Player.isVisible(Bottom) && !Player.isVisible(Bottom_Under)] || [!Player.isVisible(Top) && !Player.isVisible(Top_Under) && !Player.isMale()] 
-
-                If Friend.perversion < Random(60, 75)
-                    Friend(Surprised):: "Wow! You're a brave person, I like it!"
-                    Friend:rapportwithplayer += Random(0, 3)
-                    If Friend.isInterestedIn(Player)
-                        Friend:attractiontoplayer += Random(0, 3)
-                    Endif
-                Else
-                    Friend(Shocked):: "What is this?! Have you lost your mind?!"
-        
-                    "What should I do?"
-                    0:: "Apologize"
-                    1:: "Call <Friend.name> for being too prissy!"
-        
-                    If 0
-                        Player(Embarassed):: "Sorry, I've gone too far. I hope you're not angry at me"
-                        If interpersonal > Random(50, 65)
-                            Friend(Bored):: "OK, maybe I've overreacted a bit, sorry. It's OK."
-                        Else
-                            Friend(Irritated):: "Call me next time when you're ready to treat me seriously... or don't. Bye."
-                            Friend:attractiontoplayer -= Random(0, 1)
-                            Friend:rapportwithplayer -= Random(0, 3)
-                            sceneEnd()
-                        Endif
-                        
-                    Elseif 1
-                        Friend(Angry):: "I have enough of this! Bye!"
-                        Friend:attractiontoplayer -= Random(0, 10)
-                        Friend:rapportwithplayer -= Random(10, 30)
-                        Friend.hide()
-                        Player(Embarassed):: "Well"
-                        sceneEnd()
-                    Endif 
-                Endif
-            Endif  // End edit Ravenger6660
-            
-            Friend.StartDate()
-            timeout(12, call_invite)
-            
-        Else
-        
-            If Dating
-            
-                Player:: "Not today, love. Call me again soon though ..."
-                Friend:: "Okay, baby. I'll see you later then."
-                Friend:attractiontoplayer -= Random(0, 1)
-                
-            Else
-            
-                Player:: "Sorry, I'm busy today. Maybe next time ..."
-                Friend:: "Oh? That's a shame. I'll see you around then."
-                
-            Endif
+            Friend.dressPrisoner()
     
-            timeout(6, call_invite)
+            "My phone rang ... It's <Friend.name> calling from prison."
+
+            SecondScreen(Friend)
+            Friend.show(2)
+            Dating = Friend.IsDating()
             
-        Endif
-        Saved = getPerson(tag_Saved); 
-        If Saved:perversion > 15 && !Saved.isMarried()
-            Saved:perversion -= 1000
-            Saved:masochist =< 0
-            Saved:incest =< 0
-        Endif
+            If Dating
+            
+                Friend(Sad):: "Baby, I miss you, are you gonna come visiting me today?"
+                
+            Else
+            
+                Friend(Happy):: "Hey <Player.name>, I miss you, are you gonna come visiting me today?"
+                
+            Endif
+            
+            "What should I say?"
+            0:: "Yes"
+            1:: "No"
+    
+            If 0
+                Player(Happy):: "Of course. I'll see you in a bit!"
+                mood += 1
+                If Dating
+                
+                    Friend(Happy):: "See you soon, darling!"
+                    
+                Else
+                
+                    Friend(Happy):: "See you soon!"
+                    
+                Endif
+                
+                "What should I do?"
+                0::"Visit <Friend.him_or_her> right now!"
+                1::"<Friend.He_or_She> can wait!"
+                
+                If 0
+                
+                    moveTo(police)
+                    SceneEnd()
+
+                Endif
+                
+            Else
+            
+                If Dating
+                
+                    Player(Sad):: "Not today, love. Call me again soon though ..."
+                    Friend(Sad):: "Okay, baby. I'll see you later then."
+                    
+                Else
+                
+                    Player(Sad):: "Sorry, I'm busy today. Maybe next time ..."
+                    Friend(Sad):: "Oh? That's a shame. I'll see you around then."
+                    
+                Endif
         
+                timeout(48, call_invite)
+                
+            Endif
+            
+        Else
+            Friend.dress()
+    
+            "My phone rang ... It's <Friend.name> calling."
+            SecondScreen(Friend)
+            Friend.show(2)
+            Dating = Friend.IsDating()
+            
+            If Dating
+            
+                Friend(Flirty):: "Baby, let's spend time together today!"
+                Date = "Go on a date"
+                
+            Else
+            
+                Friend(Happy):: "Hey <Player.name>, it's <Friend.name>. Listen, do you want to hang out today?"
+                Date = "Hang out"
+                
+            Endif
+            
+            "<Date> with <Friend.name>?"
+            0:: "Yes"
+            1:: "No"
+    
+            If 0
+                Player(Happy):: "Of course. I'll see you in a bit!"
+                mood += 1
+                If Dating
+                
+                    Friend(Happy):: "See you soon, darling!"
+                    
+                Else
+                
+                    Friend(Happy):: "See you soon!"
+                    
+                Endif
+                passTime(0.25, 1)
+                // Start edit Ravenger6660
+                If [!Player.isVisible(Bottom) && !Player.isVisible(Bottom_Under)] || [!Player.isVisible(Top) && !Player.isVisible(Top_Under) && !Player.isMale()] 
+    
+                    If Friend.perversion < Random(60, 75)
+                        Friend(Surprised):: "Wow! You're a brave person, I like it!"
+                        Friend:rapportwithplayer += Random(0, 3)
+                        If Friend.isInterestedIn(Player)
+                            Friend:attractiontoplayer += Random(0, 3)
+                        Endif
+                    Else
+                        Friend(Shocked):: "What is this?! Have you lost your mind?!"
+            
+                        "What should I do?"
+                        0:: "Apologize"
+                        1:: "Call <Friend.name> for being too prissy!"
+            
+                        If 0
+                            Player(Embarassed):: "Sorry, I've gone too far. I hope you're not angry at me"
+                            If interpersonal > Random(50, 65)
+                                Friend(Bored):: "OK, maybe I've overreacted a bit, sorry. It's OK."
+                            Else
+                                Friend(Irritated):: "Call me next time when you're ready to treat me seriously... or don't. Bye."
+                                Friend:attractiontoplayer -= Random(0, 1)
+                                Friend:rapportwithplayer -= Random(0, 3)
+                                sceneEnd()
+                            Endif
+                            
+                        Elseif 1
+                            Friend(Angry):: "I have enough of this! Bye!"
+                            Friend:attractiontoplayer -= Random(0, 10)
+                            Friend:rapportwithplayer -= Random(10, 30)
+                            Friend.hide()
+                            Player(Embarassed):: "Well"
+                            sceneEnd()
+                        Endif 
+                    Endif
+                Endif  // End edit Ravenger6660
+                
+                Friend.StartDate()
+                timeout(12, call_invite)
+                
+            Else
+            
+                If Dating
+                
+                    Player(Sad):: "Not today, love. Call me again soon though ..."
+                    Friend(Sad):: "Okay, baby. I'll see you later then."
+                    Friend:attractiontoplayer -= Random(0, 1)
+                    
+                Else
+                
+                    Player(Sad):: "Sorry, I'm busy today. Maybe next time ..."
+                    Friend(Sad):: "Oh? That's a shame. I'll see you around then."
+                    
+                Endif
+        
+                timeout(6, call_invite)
+                
+            Endif
+            Saved = getPerson(tag_Saved); 
+            If Saved:perversion > 15 && !Saved.isMarried()
+                Saved:perversion -= 1000
+                Saved:masochist =< 0
+                Saved:incest =< 0
+            Endif
+        Endif
         //timeout(50, call_invite, call_invite_co, call_invite_f, family_invite_workout, invite_workout, call_invite_co_pregnant)
 
     sceneEnd() // Scene improved by: Raddeck - Edited by Ravenger6660
