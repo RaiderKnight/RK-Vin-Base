@@ -1,0 +1,109 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        ProstCount = Player.getActorVar(rk_VB_ProstCount)
+        
+        If Random(0, 50) > sneak
+        
+            PoliceMan = generatePersonTemporary()
+            PoliceMan.show(2)
+            PoliceMan.moveToPersonStand(Player, 100)
+            PoliceMan2 = generatePersonTemporary()
+            PoliceMan2.show(4)
+            PoliceMan2.moveToPersonStand(Player, 110)
+            Random
+                "Sure enough, the cops promptly arrived at the scene."
+                "As soon as I put my clothes back on, I realized the cops were there waiting for me ..."
+            EndRandom
+            PoliceMan(Furious)::"'Hands in the air, now! You're under arrest for solicitation of prostitution'"
+            0:: "Run"
+            1:: "Surrender"
+        
+            If 0
+                If Random(0, 30) < fitness
+                
+                    "I managed to lose the cops. Phew, that was close."
+                    sneak += 1
+                    mood += 2
+                    energy -= 10
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -10)
+                    EndIf
+                    
+                Else
+                
+                    Player(Angry):: "You're not taking me alive."
+                    
+                    copfired = 0
+                    While copfired < 5
+                        
+                        If copfired > 0
+                        
+                            PoliceMan(Angry)::"HEY YOU I ASKED YOU TO STOP!"
+                        
+                        EndIf
+                        "Pow!"
+                        Player.hide()
+                    
+                        "A cop fired his gun..."
+                        If Random(0, 30) < fitness
+                
+                            "I managed to dodge the shot. Phew, that was close."
+                            sneak += 1
+                            mood += 1
+                            copfired += 1
+                        
+                        ElseIf copfired >= 5
+                            
+                            "I managed to lose the cops. Phew, that was close."
+                            sneak += 3
+                            mood += 2
+                            energy -= 10
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -10)
+                            EndIf
+                            copfired = 5
+                            
+                        Else
+                    
+                           "The cop fired his gun. It was a perfect shot ..."
+                            followUp(death)
+                        
+                        EndIf
+                    
+                    EndWhile
+
+                Endif
+                
+            Else
+            
+                Player.animate(fightlost)
+                Player(Scared):: "Please, don't shoot!"
+                "I put my hands up and surrendered to the cops."
+                sneak -= 5
+                mood -= 5
+                sentence += Random(30, 60)
+                followUp(imprisoned)
+                
+            Endif
+            
+        Else
+        
+            "I managed to lose the cops. Phew, that was close."
+            sneak += 1
+            mood += 2
+            energy -= 10
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -10)
+            EndIf
+            
+        Endif
+        
+        Player.modifyActorVar(rk_VB_ProstCount, 1)
+        
+    SceneEnd() // Scene created by Raddeck

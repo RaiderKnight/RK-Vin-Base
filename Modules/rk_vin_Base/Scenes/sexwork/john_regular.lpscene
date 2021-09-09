@@ -8,6 +8,8 @@ OTHER:
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         secondScreen(Actor)
         Actor.show()
         "One of my past customers, <Actor.name> got in touch with me again and wanted to 'meet' tonight ..."
@@ -30,6 +32,24 @@ OTHER:
         
         If 0
             Player(Sad):: "Sorry, but I'm not in town today ..."
+            "Should I ignore <Actor.name> permanently from now on?"
+            0:: "Yes"
+            1:: "No, this is still a good regular client to keep around"
+            2:: "Tell all my regular customers that I'm retired from prostitution"
+            
+            If 0
+                Actor.setActorVar(tag_john, 0)
+                "This particular client annoys me, I don't want to see <Actor.him_or_her> ever again ..."
+            Elseif 2
+                "I no longer consider myself a prostitute so should go ahead and text all my regular customers to not contact me anymore." 
+                Actor.setActorVar(tag_john, 0)
+                While Actor.isValid()
+                    Actor = getPerson(tag_john)
+                    Actor.setActorVar(tag_john, 0)
+                Endwhile
+                
+                "I told all of them to leave me alone from now on. Let's move on from this stage of my life."
+            Endif
         Else
             Times += 1
             Actor.setActorVar(tag_john, Times)
@@ -42,7 +62,7 @@ OTHER:
             setBackground(home)
             Sex(Actor, Player)
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -1)
+                Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
             money => money + Dice/choice
             perversion += 0.25

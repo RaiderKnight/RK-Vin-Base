@@ -8,6 +8,8 @@ OTHER: Random(0, 75)*Random(0, 75) < attractiveness*attractiveness
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Actor = generatePersonTemporary()
         While !Player.isInterestedIn(Actor)
             Actor = generatePersonTemporary()
@@ -78,15 +80,46 @@ OTHER: Random(0, 75)*Random(0, 75) < attractiveness*attractiveness
             Endif
             Sex(Actor, Player)
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -1)
+                Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
             money => money + Dice/choice
-            If Random(5, 30) < Actor:attractiontoplayer
-                "Aside from our agreed fee, the John also gave me a big tip."
-                money += Dice/choice/2
-                "I can't help but notice how smitten this John has become with me after sex ... looks like <Actor.he_or_she> is going to become a regular customer ..."
-                Actor.makePermanent()
-                Actor.setActorVar(tag_john, 1)
+            If WHERE == brothel
+                BroMu = 10                
+            Else
+                BroMu = 1
+            Endif
+            If Random(0, 0.5)*Actor:fitness < fitness*BroMu           
+                money => money + Dice/choice
+                
+                If Random(5, 30) < Actor:attractiontoplayer
+                    "Aside from our agreed fee, the John also gave me a big tip."
+                    money += Dice/choice/2
+                    "I can't help but notice how smitten this John has become with me after sex ... looks like <Actor.he_or_she> is going to become a regular customer ..."
+                    Actor.makePermanent()
+                    Actor.setActorVar(tag_john, 1)
+                Endif
+                
+                If WHERE == brothel
+                    "I picked up this John directly from a brothel so I had to pay back a cut of the payment to the house."
+                    money => money - Dice/choice/4
+                Endif
+                
+                Illegal = Player.getActorVar(sexwork_illegal)
+                If Illegal > 0
+                    If Random(0, 50) < sneak*BroMu
+                        "Even though prostitution is now illegal in this country, I got away with this particular transaction without incident"
+                        sneak += 0.25 // Edit by Raddeck
+                    Elseif Random(0, 100) < 20
+                        "Unfortunately for me, prostitution is illegal in this country and I wasn't sneaky enough."
+                        sneak -= Random(1, 2) // Edit by Raddeck
+                        followUp(rk_VB_Prost_Arrest) // Edit by Raddeck
+                    Endif
+                Endif
+            Else
+                Actor.hide()
+                "Oh no, the John made a run for it and disappeared before paying me ..."
+                "Damn it! Can't keep working for free like this. Maybe I should improve my fitness in case I need to chase down Johns like this in the future"
+                mood -= 5
             Endif
         Else
             Actor(Angry):: "No way, that's too expensive! You have too high an opinion of yourself, honey. I'll find myself another whore elsewhere."
