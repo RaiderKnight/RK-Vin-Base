@@ -510,10 +510,18 @@ OTHER: none
                         Landlord:perversion += 1
                         perversion += 1
                         Landlord(Flirty)::"So I'm I... Let's play!"
-                        "We stripped right away and start caressing each other"
-                        sex(Player, Landlord)
-                        If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        "Do I want to play with <New_Person.him_or_her>?"
+                        0::"Yes"
+                        1::"No"
+                        
+                        If 0
+                            "We stripped right away and start caressing each other"
+                            sex(Player, New_Person)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                        Else
+                            Player(Sad)::"Sorry but I've got important things to do first! Maybe next time ..."
                         EndIf
                         Player.animate()
                         

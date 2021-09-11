@@ -8,7 +8,7 @@ OTHER: none
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
-        ProstCount = Player.getActorVar(rk_VB_ProstCount)
+        SellDrugCount = Player.getActorVar(rk_VB_SellDrugCount)
         
         If Random(0, 50) > sneak
         
@@ -18,11 +18,8 @@ OTHER: none
             PoliceMan2 = generatePersonTemporary()
             PoliceMan2.show(4)
             PoliceMan2.moveToPersonStand(Player, 110)
-            Random
-                "Sure enough, the cops promptly arrived at the scene."
-                "As soon as I put my clothes back on, I realized the cops were there waiting for me ..."
-            EndRandom
-            PoliceMan(Furious)::"'Hands in the air, now! You're under arrest for solicitation of prostitution'"
+            "From nowhere ..."
+            PoliceMan(Furious)::"'Hands in the air, now! You're under arrest for selling drugs'"
             0:: "Run"
             1:: "Surrender"
         
@@ -86,10 +83,10 @@ OTHER: none
             
                 Player.animate(fightlost)
                 Player(Scared):: "Please, don't shoot!"
-                "I put my hands up and surrendered to the cops."
+                "I put my hands up and surrendered to the overwhelming number of cops."
                 sneak -= 5
                 mood -= 5
-                sentence += Random(30, 60)
+                sentence += Random(4350, 8700)
                 followUp(imprisoned)
                 
             Endif
@@ -106,6 +103,6 @@ OTHER: none
             
         Endif
         
-        Player.modifyActorVar(rk_VB_ProstCount, 1)
+        Player.modifyActorVar(rk_VB_SellDrugCount, 1)
         
     SceneEnd() // Scene created by Raddeck

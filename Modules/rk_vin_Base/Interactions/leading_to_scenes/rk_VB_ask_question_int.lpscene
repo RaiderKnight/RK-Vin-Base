@@ -75,6 +75,9 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 sex(Actor, Player)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
                                 Player.dress()
                                 Actor.dress()
                                 
@@ -84,6 +87,9 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 sex(Actor, Player)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
                                 Player.dress()
                                 Actor.dress()
                                 
@@ -158,6 +164,9 @@ OTHER: none
                                 Actor.strip()
                                 Actor2.strip()
                                 sex(Actor, Player, Actor2)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                                EndIf
                                 Player.dress()
                                 Actor.dress()
                                 Actor2.dress()
@@ -194,6 +203,9 @@ OTHER: none
                                 Actor.strip()
                                 Actor2.strip()
                                 sex(Actor, Player, Actor2)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                                EndIf
                                 Player.dress()
                                 Actor.dress()
                                 Actor2.dress()
@@ -256,10 +268,21 @@ OTHER: none
                 
                 If 0
                 
-                    If Actor.isInterestedIn(Player)
+                    If isWithCompanion()
+                        Actor(Flirty)::"Thanks honey, you look good aswell!"
+                        Actor:rapportwithplayer += random(0, 2)
+                        Actor:attractiontoplayer += random(0, 2)
+                        
+                    ElseIf Actor:attractiontoplayer > 15
+                        Actor(Flirty)::"Thanks, you look good too!"
+                        Actor:rapportwithplayer += random(0, 2)
+                        Actor:attractiontoplayer += random(0, 2)
+                        
+                    ElseIf Actor.isInterestedIn(Player)
                         Actor(Happy)::"Thanks"
                         Actor:rapportwithplayer += random(0, 1)
                         Actor:attractiontoplayer += random(0, 1)
+                        
                     Else
                         Actor(Annoyed)::"Uh, ok!"
                     Endif
@@ -1579,6 +1602,9 @@ OTHER: none
                             Player.strip()
                             Actor.strip()
                             sex(Actor, Player, ADog)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -3)
+                            EndIf
                             Player.dress()
                             Actor.dress()
 

@@ -146,6 +146,106 @@ OTHER: Random(0, 300) < interpersonal || [ [WHAT == socialize || WHERE == nightc
                 "I decided not to give <New_Person.him_or_her> my number."
             Endif
             
+            // Start edit Raddeck
+            If Player.isNaked()
+
+                New_Person(Curious)::"Btw, can you tell me why you're naked?"
+                "What should I say?"
+                0::"I love playing with strangers!"
+                1::"I'm a naturist that's why!"
+                2::"Strike back!"
+                99::"Just leave!"
+                
+                If 0
+                
+                    If New_Person.IsInterestedIn(Player) && New_Person:arousal > 25
+                        
+                        New_Person:perversion += 1
+                        perversion += 1
+                        New_Person(Flirty)::"So I'm I... Let's play!"
+                        "Do I want to play with <New_Person.him_or_her>?"
+                        0::"Yes"
+                        1::"No"
+                        
+                        If 0
+                            "We stripped right away and start caressing each other"
+                            sex(Player, New_Person)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                        Else
+                            Player(Sad)::"Sorry but I've got important things to do first! Maybe next time ..."
+                        EndIf 
+                        Player.animate()
+                        
+                    Elseif New_Person.IsInterestedIn(Player)
+                    
+                        New_Person(Happy)::"You are cute but I should leave before someone see us together ...!"
+                        New_Person:attractiontoplayer += Random(0, 2)
+                        New_Person:rapportwithplayer += Random(0, 2)
+                        New_Person:arousal += 1
+                        New_Person.hide()
+                        Player.animate()
+                        
+                    Else
+                    
+                        New_Person(Annoyed)::"Fuck off ... pervert!"
+                        New_Person:attractiontoplayer -= Random(0, 5)
+                        New_Person:rapportwithplayer -= Random(0, 5)
+                        Player.animate()
+                        
+                    Endif
+
+                Elseif 1
+                    
+                    If New_Person.IsInterestedIn(Player) && New_Person:arousal > 25
+                    
+                        New_Person(Flirty)::"So ... if you're naked it's because you want to get fucked?"
+                        0::"I love playing with strangers!"
+                        1::"Ew! Not really!"
+                        
+                        If 0
+                        
+                            New_Person:perversion += 1
+                            perversion += 1
+                            "We stripped right away and start caressing each other"
+                            sex(Player, New_Person)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Player.animate()
+                            
+                        Endif
+                    
+                    Elseif New_Person.IsInterestedIn(Player)
+                    
+                        New_Person(Happy)::"Interesting..."
+                        New_Person:attractiontoplayer += Random(0, 2)
+                        New_Person:rapportwithplayer += Random(0, 2)
+                        New_Person:arousal += 1
+                        Player.animate()
+                        
+                    Else
+                    
+                        New_Person(Annoyed)::"Get out perv..."
+                        New_Person:attractiontoplayer -= Random(0, 5)
+                        New_Person:rapportwithplayer -= Random(0, 5)
+                        Player.animate()
+                        
+                    Endif
+                
+                Elseif 2 //CopsWantToFucked
+                
+                    Player(Angry)::"Go on call the cops, that's my body and I'm proud to expose it to people..."
+                    New_Person(Annoyed)::"Cool, if it's what you want..."
+                    
+                    followUp(rk_VB_public_indecency)
+                
+                Endif
+            
+            Endif
+            // End edit Raddeck
+            
         Endif
         
         passTime(0.1, 0.5)
