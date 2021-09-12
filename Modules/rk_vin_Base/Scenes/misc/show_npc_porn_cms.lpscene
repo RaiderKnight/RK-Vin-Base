@@ -5,164 +5,171 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    
-        Hunger = Player.getActorVar(rk_VB_Hunger)
-        HungerEnable = rk_VB_EnableHunger.getGlobal()
-        Actor5 = getCompanion()
-        Actor6 = getCreature(Dog)
-        "You are feeling horny and you think that <Actor5.name> is too. Do you want to try and take things further and put on a porn movie in that hope that it will spice things up?"
-        0:: "No"
-        1:: "Yes"
-        
-        If 1
-        
-            Best = false
-            Player.hide()
-            Actor5.hide()
-            Actor = generatePersonTemporary()
-            While Actor.isMale()
+
+        If stock_movie > 0
+            Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            Actor5 = getCompanion()
+            Actor6 = getCreature(Dog)
+            "You are feeling horny and you think that <Actor5.name> is too. Do you want to try and take things further and put on a porn movie in that hope that it will spice things up?"
+            0:: "No"
+            1:: "Yes"
+            
+            If 1
+            
+                stock_movie -= 1
+                Best = false
+                Player.hide()
+                Actor5.hide()
                 Actor = generatePersonTemporary()
-            Endwhile
-            "What type?"
-            0:: "Straight"
-            1:: "Lesbian"
-            2:: isModEnabled(vin_Bestiality):: "animal"
-            3:: isModEnabled(vin_NonConsensual):: "Non Consensual"
-            
-            If 0
-            
-                "What exactly?"
-                0:: "Couple"
-                1:: "MMF"
-                2:: "MFF"
-                3:: "Gangbang"
-                4:: "Reverse Gangbang"
-                
-                Actor2 = generatePersonTemporary()
-                While !Actor2.isMale()
-                    Actor2 = generatePersonTemporary()
+                While Actor.isMale()
+                    Actor = generatePersonTemporary()
                 Endwhile
+                "What type?"
+                0:: "Straight"
+                1:: "Lesbian"
+                2:: isModEnabled(vin_Bestiality):: "animal"
+                3:: isModEnabled(vin_NonConsensual):: "Non Consensual"
                 
                 If 0
                 
+                    "What exactly?"
+                    0:: "Couple"
+                    1:: "MMF"
+                    2:: "MFF"
+                    3:: "Gangbang"
+                    4:: "Reverse Gangbang"
+                    
+                    Actor2 = generatePersonTemporary()
+                    While !Actor2.isMale()
+                        Actor2 = generatePersonTemporary()
+                    Endwhile
+                    
+                    If 0
+                    
+                        Sex(Actor2, Actor)
+                        
+                    Elseif 1 || 3
+                    
+                        Actor3 = generatePersonTemporary()
+                        While !Actor3.isMale()
+                            Actor3 = generatePersonTemporary()
+                        Endwhile
+                        
+                        If 1
+                        
+                            Sex(Actor3, Actor2, Actor)
+                            
+                        Else
+                        
+                            Actor4 = generatePersonTemporary()
+                            While !Actor4.isMale()
+                                Actor4 = generatePersonTemporary()
+                            Endwhile
+                            Sex(Actor4, Actor3, Actor2, Actor)
+                            
+                        Endif
+                        
+                    Elseif 2 || 4
+                    
+                        Actor3 = generatePersonTemporary()
+                        While !Actor3.isFemale()
+                            Actor3 = generatePersonTemporary()
+                        Endwhile
+                        
+                        If 2
+                        
+                            Sex(Actor3, Actor2, Actor)
+                            
+                        Else
+                        
+                            Actor4 = generatePersonTemporary()
+                            While !Actor4.isFemale()
+                                Actor4 = generatePersonTemporary()
+                            Endwhile
+                            Sex(Actor4, Actor3, Actor2, Actor)
+                            
+                        Endif
+                        
+                    Endif
+                    
+                Elseif 1
+                
+                    Actor2 = generatePersonTemporary()
+                    While !Actor2.isFemale()
+                        Actor2 = generatePersonTemporary()
+                    Endwhile
+                    Sex(Actor, Actor2)
+                    
+                Elseif 2
+                
+                    Actor2 = generateCreatureTemporary()
                     Sex(Actor2, Actor)
+                    Best = true
                     
-                Elseif 1 || 3
+                Elseif 3
                 
-                    Actor3 = generatePersonTemporary()
-                    While !Actor3.isMale()
-                        Actor3 = generatePersonTemporary()
+                    Actor2 = generatePersonTemporary()
+                    While !Actor2.isMale()
+                        Actor2 = generatePersonTemporary()
                     Endwhile
-                    
-                    If 1
-                    
-                        Sex(Actor3, Actor2, Actor)
-                        
-                    Else
-                    
-                        Actor4 = generatePersonTemporary()
-                        While !Actor4.isMale()
-                            Actor4 = generatePersonTemporary()
-                        Endwhile
-                        Sex(Actor4, Actor3, Actor2, Actor)
-                        
-                    Endif
-                    
-                Elseif 2 || 4
-                
-                    Actor3 = generatePersonTemporary()
-                    While !Actor3.isFemale()
-                        Actor3 = generatePersonTemporary()
-                    Endwhile
-                    
-                    If 2
-                    
-                        Sex(Actor3, Actor2, Actor)
-                        
-                    Else
-                    
-                        Actor4 = generatePersonTemporary()
-                        While !Actor4.isFemale()
-                            Actor4 = generatePersonTemporary()
-                        Endwhile
-                        Sex(Actor4, Actor3, Actor2, Actor)
-                        
-                    Endif
-                    
+                    Filter(Aggressive)
+                    TalkNonConsensual()
+                    Sex(Actor2, Actor)   
                 Endif
                 
-            Elseif 1
-            
-                Actor2 = generatePersonTemporary()
-                While !Actor2.isFemale()
-                    Actor2 = generatePersonTemporary()
-                Endwhile
-                Sex(Actor, Actor2)
+                Actor.hide()
+                Actor2.hide()
+                Actor3.hide()
+                Actor4.hide()
                 
-            Elseif 2
-            
-                Actor2 = generateCreatureTemporary()
-                Sex(Actor2, Actor)
-                Best = true
+                Player.show()
+                Actor5.show()
+                "You decide to watch a porn movie with <Actor5.name>. The action on the screen turns you both on."
+                If Random(0, 100) < Actor5:perversion + Actor5:attractiontoplayer
                 
-            Elseif 3
-            
-                Actor2 = generatePersonTemporary()
-                While !Actor2.isMale()
-                    Actor2 = generatePersonTemporary()
-                Endwhile
-                Filter(Aggressive)
-                TalkNonConsensual()
-                Sex(Actor2, Actor)   
-            Endif
-            
-            Actor.hide()
-            Actor2.hide()
-            Actor3.hide()
-            Actor4.hide()
-            
-            Player.show()
-            Actor5.show()
-            "You decide to watch a porn movie with <Actor5.name>. The action on the screen turns you both on."
-            If Random(0, 100) < Actor5:perversion + Actor5:attractiontoplayer
-            
-                "After watching the film you both feel incredibly turned on. You look at <Actor5.name> and she looks at you. You make a move. She reciprocates. Before you know it, you are both overcome with passion."
-                Sex(Player, Actor5)
+                    "After watching the film you both feel incredibly turned on. You look at <Actor5.name> and she looks at you. You make a move. She reciprocates. Before you know it, you are both overcome with passion."
+                    Sex(Player, Actor5)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    If Best
+                    
+                        "You begin to think about the movie you just watched. You remember how turned on you were at seeing those dogs fucking those women. You want to try and see it in real life. Do you ..."
+                        0:: "Decide to leave it as a fantasy"
+                        1:: "Suggest getting your own dog involved"
+                        
+                        If 1
+                        
+                            Actor6.show()
+                            Player(Curious)::"You'll probably say no... but how about I bring <Actor6.name> in and you and me try doing what we just watched in that film?"
+                            Actor5(Happy):: "Oh my God... Jesus... I'm so horny... yes! LET'S DO IT!"
+                            Sex(Actor6, Player)
+                            Sex(Actor6, Actor5)
+                            Sex(Actor6, Player, Actor5)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            
+                        Endif
+                        
+                    Endif
+                    
+                Else
+                
+                    "You both enjoy the film but not quite enough for it to lead to anything else. You hope to have better luck next time."
+                    
+                Endif
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -1)
                 EndIf
-                If Best
-                
-                    "You begin to think about the movie you just watched. You remember how turned on you were at seeing those dogs fucking those women. You want to try and see it in real life. Do you ..."
-                    0:: "Decide to leave it as a fantasy"
-                    1:: "Suggest getting your own dog involved"
-                    
-                    If 1
-                    
-                        Actor6.show()
-                        Player(Curious)::"You'll probably say no... but how about I bring <Actor6.name> in and you and me try doing what we just watched in that film?"
-                        Actor5(Happy):: "Oh my God... Jesus... I'm so horny... yes! LET'S DO IT!"
-                        Sex(Actor6, Player)
-                        Sex(Actor6, Actor5)
-                        Sex(Actor6, Player, Actor5)
-                        If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -2)
-                        EndIf
-                        
-                    Endif
-                    
-                Endif
-                
-            Else
-            
-                "You both enjoy the film but not quite enough for it to lead to anything else. You hope to have better luck next time."
+                perversion += 2
                 
             Endif
-            If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -1)
-            EndIf
-            perversion += 2
-            
+        
+        Else
+        
+            "You don't have any movie in your inventory, go buy some ..."
+
         Endif
-    
     SceneEnd() // Improved by Raddeck

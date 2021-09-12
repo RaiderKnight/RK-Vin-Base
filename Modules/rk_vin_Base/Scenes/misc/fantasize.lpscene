@@ -8,6 +8,7 @@ OTHER: Random(0, 200) < perversion && arousal > 10
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Wetdream = false
         "Sometimes I cannot help but fantasize about having sex with ..."
         0:: "Someone"
         1:: "Think of something else"
@@ -32,6 +33,7 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
                     EndIf
+                    Wetdream = true
                     
                 Elseif 1
                     "Who else would be participating in my fantasy orgy?"
@@ -50,6 +52,7 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
                         EndIf
+                        Wetdream = true
                     Else
                         "Who else would be participating in my fantasy orgy?"
                         selectNPC()
@@ -67,6 +70,7 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -1)
                             EndIf
+                            Wetdream = true
                         
                         Else
                             "Who else would be participating in my fantasy orgy?"
@@ -80,6 +84,7 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -1)
                             EndIf
+                            Wetdream = true
                             
                         Endif  
                         
@@ -87,8 +92,54 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                     
                 Endif
                 
+                If Wetdream
+                    Bonus = Random(25, 50)
+                Endif
+                
+                If Player:arousal > 20
+                    
+                    If Bonus
+                        "Damn, this ultra erotic dream makes me want to masturbate ..."
+                        Player.strip()
+                        Filter(solo)
+                        sex(Player)
+                        arousal -= Random(5, 25)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                    Else
+
+                        If Random(0, 100) > 50
+                            If Player.isMale()
+                                "Damn, I came in my panty because of this ultra erotic dream ..."
+                                arousal -= Random(25, 50)
+                            Else
+                                "Damn, I wetted my panty because of this ultra erotic dream ..."
+                                arousal -= Random(25, 50)
+                            Endif
+                            "Should I take a shower?"
+                            0::"Yes"
+                            1::"No"
+                            
+                            If 0
+                            
+                                followUp(rk_VB_Personal_Care)
+                            
+                            Else
+                            
+                                If Player.isMale()
+                                    "I decided to go back to sleep with my panty full of cum ..."
+                                    perversion += 1
+                                Else
+                                    "I decided to go back to sleep with my panty all wet ..."
+                                    perversion += 1
+                                Endif
+                                
+                            Endif
+                        Endif
+                    Endif
+                Endif
             Endif
-            
         Endif
         
     SceneEnd() // Improved by Raddeck
