@@ -16,8 +16,36 @@ OTHER: Random(0, 200) < perversion && arousal > 10
         If 0
             blockPregnancy()
             "Who is my crush?"
-            selectNPC()
-            Actor = getSelectedNPC()
+            0::"One of my contact"
+            1::"Random person"
+            
+            If 0
+                selectNPC()
+                Actor = getSelectedNPC()
+            Else
+               
+               "Which gender?"
+                0::"Female"
+                1::"Male"
+                2::"Trans"
+                
+                If 0
+                    Actor = generatePersonTemporary()
+                    While Actor.isMale() && Actor.isInterestedIn(Player)
+                        Actor = generatePersonTemporary()
+                    EndWhile
+                Elseif 1
+                    Actor = generatePersonTemporary()
+                    While !Actor.isMale() && Actor.isInterestedIn(Player)
+                        Actor = generatePersonTemporary()
+                    EndWhile
+                Else
+                    Actor = generatePersonTemporary()
+                    While Actor.isTrans() && Actor.isInterestedIn(Player)
+                        Actor = generatePersonTemporary()
+                    EndWhile
+                EndIf
+            Endif
             If Actor.isValid()
                 Actor.dress()
                 Actor.show(2)
@@ -27,6 +55,8 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                 2:: "Resist the urge"
                 
                 If 0
+                    Player.strip()
+                    Actor.strip()
                     SexNoAffair(Player, Actor)
                     perversion += Random(0, 0.25)
                     arousal += 25
@@ -46,6 +76,9 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                     1:: "Actually, my fantasy has more people involved ..."
                     
                     If 0
+                        Player.strip()
+                        Actor.strip()
+                        Actor2.strip()
                         SexNoAffair(Player, Actor, Actor2)
                         perversion += Random(0, 0.35)
                         arousal += 25
@@ -64,6 +97,10 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                         1:: "Actually, my fantasy has even more people involved ..."
                         
                         If 0
+                            Player.strip()
+                            Actor.strip()
+                            Actor2.strip()
+                            Actor3.strip()
                             SexNoAffair(Player, Actor, Actor2, Actor3)
                             perversion += Random(0, 0.45)
                             arousal += 25
@@ -78,6 +115,11 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                             Actor4 = getSelectedNPC()
                             Actor4.dress()
                             Actor4.show(5)
+                            Player.strip()
+                            Actor.strip()
+                            Actor2.strip()
+                            Actor3.strip()
+                            Actor4.strip()
                             SexNoAffair(Player, Actor, Actor2, Actor3, Actor4)
                             perversion += Random(0, 0.5)
                             arousal += 25
