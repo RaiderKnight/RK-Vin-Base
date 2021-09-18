@@ -6,6 +6,10 @@ OTHER: Random(0, 100) < 1 && Random(0, 100) < sneak
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         PPReward = Random(50, 150)
         PPReward_loc = PPReward.convertToLocalCurrency()
         PPRewardTrue = Random(1, 2)
@@ -31,7 +35,9 @@ OTHER: Random(0, 100) < 1 && Random(0, 100) < sneak
             
                 Actor(Sad):: "Okay ... I guess I have no other choice. I don't want to go to prison."
                 Sex(Player, Actor)
-                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
             Else
             
                 Actor(Angry)::"Go fuck yourself !"
@@ -61,5 +67,5 @@ OTHER: Random(0, 100) < 1 && Random(0, 100) < sneak
             
         Endif
         
-        SceneEnd()
-        timeout(200, catches_pickpocket) // Scene improved by Raddeck
+    SceneEnd()
+    timeout(200, catches_pickpocket) // Scene improved by Raddeck

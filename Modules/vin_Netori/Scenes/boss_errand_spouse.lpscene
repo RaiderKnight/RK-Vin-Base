@@ -2,7 +2,7 @@ WHAT: all
 WHERE: work
 WHEN: 8 - 20 
 WHO: Actor = getSpecific(Boss); Actor1 = Actor.getRelatedPerson(Spouses, Dating)
-OTHER: Random(0, 100)*Random(0, 1) > jobexperience
+OTHER: 
 
     SceneStart()
     
@@ -11,7 +11,11 @@ OTHER: Random(0, 100)*Random(0, 1) > jobexperience
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Actor.hide()
-        "My boss sent me on an errand to deliver some documents to <Actor.his_or_her> private home. I couldn't really turn it down but to be honest, it's a pain in the ass ... I'm not paid to be someone's personal delivery <Player.boy_or_girl>."
+        If jobexperience < 50
+            "My boss sent me on an errand to deliver some documents to <Actor.his_or_her> private home. I couldn't really turn it down but to be honest, it's a pain in the ass ... I'm not paid to be someone's personal delivery <Player.boy_or_girl>."
+        Else
+            "My boss asked me to deliver some top confidential documents to <Actor.his_or_her> private home. Usually, this would be done by an intern or something, but these documents are highly sensitive and the boss only trusts me to get the job done."  
+        Endif
         setBackground(street)
         Actor1.dress()
         Actor1.show(2)
@@ -33,7 +37,10 @@ OTHER: Random(0, 100)*Random(0, 1) > jobexperience
                     1:: "No way"
                     
                     If 0
-                        "Sweet revenge ... I'm banging my boss's <Actor1.husband_or_wife>! Serves <Actor.him_or_her> right for sending me on pointless errands."
+                        "I'm banging my boss's <Actor1.husband_or_wife>!"
+                        If jobexperience < 50
+                            "Serves <Actor.him_or_her> right for sending me on pointless errands."
+                        Endif
                         Sex(Player, Actor1)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
@@ -58,5 +65,5 @@ OTHER: Random(0, 100)*Random(0, 1) > jobexperience
             Endif
         Endif
     
-    SceneEnd()
+    SceneEnd() // Improved by Raddeck
     timeout(200, boss_errand_spouse, boss_errand_child)

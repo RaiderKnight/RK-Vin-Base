@@ -8,8 +8,9 @@ OTHER: none
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Boss_Sucker = Player.getActorVar(rk_VB_Boss_Sucker)
-        
         Plaything = Plaything.getGlobal()
         If Plaything == 1
         
@@ -33,7 +34,7 @@ OTHER: none
                     If 0
                         Sex(Actor, Player)
                         If HungerEnable > 0
-                           Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         Player.modifyActorVar(rk_VB_Boss_Sucker, 1)
                         perversion += 0.5
@@ -55,13 +56,26 @@ OTHER: none
                     If 0
                         Sex(Actor2, Player)
                         If HungerEnable > 0
-                           Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         perversion += 0.5
                         If jobperformance < 50
                             jobperformance => 50
                         Endif
                         jobperformance += 5
+                        
+                        If Random(0, 100) < 33
+                            Actor.dress()
+                            Actor.show()
+                            Actor(Grin):: "<Actor2.name>, I see you're taking full advantage of the company's benefits package."
+                            Actor(Grin):: "And <Player.name>, I see you're excelling in your role as the office plaything ..."
+                            Actor(Grin):: "Since I'm paying you both, I hope you won't mind me joining me, would you?"
+                            Actor2(Happy):: "Of course not, boss ..."
+                            Sex(Actor, Actor2, Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                        Endif
                     Endif
                     
                 Endif
@@ -83,9 +97,10 @@ OTHER: none
             
             If 0
                 perversion += 3
-                Actor:: "Haha, it's good that you know your place and understand how best you can serve this company!"
-                Actor:: "Fine, let's schedule a team meeting soon where I will make an announcement about your new role."
-                "My boss stuck to <Actor.his_or_her> words, at the meeting, I was declared as the office plaything, always ready to be used by any of the other employees. While this announcement shocked some of my more conservative colleagues, it's clear that others immediately became very interested in the prospect of taking advantage of this new and more sensual method for bonus compensation from the company."
+                Actor(Happy):: "Haha, it's good that you know your place and understand how best you can serve this company!"
+                Actor(Serene):: "Fine, let's schedule a team meeting soon where I will make an announcement about your new role."
+                "My boss stuck to <Actor.his_or_her> words, at the meeting, I was declared as the office plaything, always ready to be used by any of the other employees."
+                "While this announcement shocked some of my more conservative colleagues, it's clear that others immediately became very interested in the prospect of taking advantage of this new and more sensual method for bonus compensation from the company."
                 Plaything.setGlobal(1)
             Elseif 2
                 timeout(2000, office_plaything)

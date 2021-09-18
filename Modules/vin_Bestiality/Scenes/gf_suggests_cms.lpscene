@@ -36,15 +36,15 @@ OTHER: Player.isFemale()
             Else
                 "You love your girlfriend so much and you decide to give it a try."
             Endif
-            Player: "Ok, lets see what we can arrange!"
+            Player(Serene):: "Ok, lets see what we can arrange!"
             If Actor2.isValid()
                 Actor2.show()
                 "<Actor2.name> is the clear choice ..."
                 Fuck = true
             Else
-                Player:: "The first thing we need to do it get a dog though. I've seen a hungry stray around here. It's a male and I'm sure I've seen it's balls so it's intact. Should we use that dog for your fantasy?"
+                Player:: "The first thing we need to do, it's to get a dog though. I've seen a hungry stray around here. It's a male and I'm sure I've seen it's balls so it's intact. Should we use that dog for your fantasy?"
                 If Random(50, 100) < Actor:perversion
-                    Actor:: "What a filthy, disgusting idea... I love it! The fact that it will have germs and diseases will make it even more exciting!" 
+                    Actor(Shocked):: "What a filthy, disgusting idea... I love it! The fact that it will have germs and diseases will make it even more exciting!" 
                     "You then take a steak from the fridge and coax the stray dog into your house."
                     Actor2 = generateCreatureTemporary(Dog)
                     Actor2.show()
@@ -92,5 +92,5 @@ OTHER: Player.isFemale()
                 EndIf
             Endif
         Endif
-    SceneEnd()
+    SceneEnd() // Improved by Raddeck
     timeout(500, gf_suggests_cms)
