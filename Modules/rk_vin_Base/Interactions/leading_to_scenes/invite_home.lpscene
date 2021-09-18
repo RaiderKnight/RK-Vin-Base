@@ -10,11 +10,18 @@ OTHER: none
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        
+        If Actor.isEmployee() || [Actor.isColleague() && jobexperience - Actor:jobexperience > 30]
+            Subor = true
+        Else
+            Subor = false
+        Endif
         Player(Flirty)::"Hi, I was wondering if you would like to visit my house?"
         interpersonal += 1
-        If Actor.isDating() || Actor.isRelative() || [Random(30, 100) < interpersonal && [Actor:rapportwithplayer > 30 || Actor:attractiontoplayer > 30]] 
+        If Actor.isDating() || Actor.isRelative() || [Random(30, 100) < interpersonal && [Actor:rapportwithplayer > 30 || Actor:attractiontoplayer > 30]]  || [Subor && [Actor:rapportwithplayer > 20 || Actor:attractiontoplayer > 20 || Actor:masochist > 20]]
             Actor(Happy):: "Of course, let's go back to your place and chill."
+            If Subor
+                "Of course, I can't tell if <Actor.he_or_she> actually wants to spend time with me so privately outside of work or just feels obliged to, fearing that rejecting me could affect <Actor.his_or_her> job. I guess I'll find out soon enough"
+            Endif
             moveTo(home)
             "We're now inside the apartment."
             choice = -1    
@@ -197,9 +204,7 @@ OTHER: none
                                 Actor.show(2)
                                 "The sex was amazing. We put our clothes back on afterwards and continued our date."
                                 If HungerEnable > 0
-            
-                                    Player.modifyActorVar(rk_VB_Hunger, -1)
-                
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
                                 passTime(0.2, 0.5)
                                 
@@ -242,7 +247,11 @@ OTHER: none
                 Endif
             Endwhile
         Else
-            Actor(Sad):: "Sorry, I don't feel like I know you enough to go home with you."
+            If Subor
+                Actor(Sad):: "Sorry, I don't feel like I should go home with you. It's rather unprofessional, you being my boss after all ...  People may gossip ..."        
+            Else
+                Actor(Sad):: "Sorry, I don't feel like I know you enough to go home with you."
+            Endif
             Actor:attractiontoplayer += Random(-1, 1)
         Endif    
     SceneEnd() // Scene improved by: Raddeck

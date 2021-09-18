@@ -5,10 +5,16 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    
+
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
-        
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        If Actor.isEmployee() || [Actor.isColleague() && jobexperience - Actor:jobexperience > 30]
+            Subor = true
+        Else
+            Subor = false
+        Endif
         If Actor.isDating()
         
             "The best thing about being in a steady relationship is that sex is much easier to come by"
@@ -25,11 +31,15 @@ OTHER: none
         
         If 0
         
-            If Random(0, 50) < Actor:attractiontoplayer + interpersonal + Actor:perversion + Actor:incest
-                Actor(Flirty):: "Fine ... I'm quite horny myself actually."
+            If Random(0, 50) < Actor:attractiontoplayer + interpersonal + Actor:perversion + Actor:incest || [Subor && Random(0, 33) < Actor:attractiontoplayer + interpersonal + Actor:perversion + Actor:masochist]
+                If Subor
+                    Actor(Flirty):: "Of course boss ... Anything to relieve you of some stress."
+                Else
+                    Actor(Flirty):: "Fine ... I'm quite horny myself actually."
+                Endif
                 Sex(Actor, Player)
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
                 perversion += Random(0, 0.05)
                 Actor2 = getCreature()
@@ -46,38 +56,33 @@ OTHER: none
                     
                         Sex(Actor, Player)
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         
                     Else 1
                     
-                        Actor:: "Okay ... but only because you got me so horny from our fucking."
+                        Actor(Flirty):: "Okay ... but only because you got me so horny from our fucking."
                         Sex(Actor2, Actor)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
                         EndIf
                         
                     Elseif 2
-                    
-                        Actor:: "Okay ... but only because you got me so horny from our fucking."
+                        Actor(Flirty):: "Okay ... but only because you got me so horny from our fucking."
                         Sex(Actor2, Actor, Player)
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -3)
                         EndIf
-                        
                     Else
-                    
                         Actor2:rapportwithplayer -= 2
-                        
                     Endif
-                    
                 Endif
-                
             Else
-            
-                Actor(Sad):: "Sorry, but I'm not in the mood right now ..."
-                
+                If Subor
+                    Actor(Sad):: "Sorry boss, but I don't think we should be doing it quite so often and publicly ..."            
+                Else
+                    Actor(Sad):: "Sorry, but I'm not in the mood right now ..."
+                Endif
             Endif
-            
         Endif
     SceneEnd() // Improved by Raddeck
