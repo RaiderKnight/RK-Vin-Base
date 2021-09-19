@@ -912,11 +912,17 @@ OTHER: none
                     
                     If 0
                     
-                        "Before we ended our conversation, I made sure to be friend with <Actor.name> on Facebook for easy contact in the future."
-                        exchangeContact(Actor)
-                        FBID = Actor.getID()
-                        rk_VB_FacebookFriend.setGlobal(FBID)
-                        
+                        "Before we ended our conversation, I asked <Actor.name> to add me as a friend on Facebook ..."
+                        If Actor.isInterestedIn(Player)
+                            "<Actor.name> accepted, I made sure to be friend with <Actor.name> on Facebook for easy contact in the future."
+                            exchangeContact(Actor)
+                            FBID = Actor.getID()
+                            rk_VB_FacebookFriend.setGlobal(FBID)
+                            mood += 0.5
+                        Else
+                            "<Actor.name> didn't accepted to be friend with me on Facebook. Oh well, I will try another time ..."
+                            mood -= 0.5
+                        Endif
                     Endif
                     
                     Actor.hide()
