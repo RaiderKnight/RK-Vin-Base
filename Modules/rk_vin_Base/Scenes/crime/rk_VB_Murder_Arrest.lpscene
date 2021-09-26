@@ -6,11 +6,14 @@ OTHER: none
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         KillCountG2 = rk_VB_KillCountG2.getGlobal() // for mafia killer
         KillCount = Player.getActorVar(rk_VB_KillCount) // for serial killer
+        TotalSentences = Player.getActorVar(rk_VB_TotalSentences)
         "I thought it wasn't that risky doing this here, guess I was wrong .... Fucking neighbors... I hope there weren't any cops around"
         
-        If Random(0, 50) > sneak
+        If sneak <= Random(50, 100)
         
             PoliceMan = generatePersonTemporary()
             PoliceMan.show(2)
@@ -87,8 +90,9 @@ OTHER: none
                 sneak -= 5
                 mood -= 5
                 sentence += Random(1850, 3650)
+                AddSent = Player:sentence
+                Player.modifyActorVar(rk_VB_TotalSentences, AddSent)
                 followUp(imprisoned)
-                
             Endif
         
             

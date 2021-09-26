@@ -14,15 +14,15 @@ OTHER: none
         Actor1 = generatePersonTemporary()
         IncestCount = Player.getActorVar(rk_VB_IncestCount)
         incestowned = Player.getActorVar(rk_VB_II_incest_owned)
-        
+        TotalSentences = Player.getActorVar(rk_VB_TotalSentences)
         If incestowned > 0
-            "Me and my son decided to hide in the city until the cops searching for us!"
+            "Me and my relative decided to hide in the city until the cops searching for us!"
         Else
             Player.modifyActorVar(rk_VB_IncestCount, 1)
             "That was rather risky doing that in front of the people. I hope no one call the cops..."       
         EndIf
         
-        If Random(0, 50) > sneak
+        If sneak <= Random(50, 100)
             If incestowned
                 "Sure enough, the cops find us very quickly..."
             Else
@@ -120,8 +120,9 @@ OTHER: none
                         Actor(Scared):: "Please, don't shoot!"
                         "We put our hands up and surrendered to the overwhelming number of cops."
                         sentence += Random(1000, 2000)
+                        AddSent = Player:sentence
+                        Player.modifyActorVar(rk_VB_TotalSentences, AddSent)
                         followUp(imprisoned)
-                        
                     Endif 
 
                 Endif
@@ -136,8 +137,9 @@ OTHER: none
                 sneak -= 5
                 mood -= 5
                 sentence += Random(300, 1000)
+                AddSent = Player:sentence
+                Player.modifyActorVar(rk_VB_TotalSentences, AddSent)
                 followUp(imprisoned)
-                
             Endif
             
         Endif

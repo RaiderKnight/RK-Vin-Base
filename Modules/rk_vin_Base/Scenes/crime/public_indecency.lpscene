@@ -11,12 +11,12 @@ OTHER: none
         PoliceMan = generatePersonTemporary()
         Actor1 = generatePersonTemporary()
         PublicIndCount = Player.getActorVar(rk_VB_PublicIndCount)
-        
+        TotalSentences = Player.getActorVar(rk_VB_TotalSentences)
         Player.modifyActorVar(rk_VB_PublicIndCount, 1)
     
         "That was rather risky doing that in public. I hope there weren't any cops around"
         
-        If Random(0, 50) > sneak
+        If sneak <= Random(50, 100)
         
             "Sure enough, the cops promptly arrived at the scene."
             PoliceMan(Furious)::"'Hands in the air, now! You're under arrest of public indecency'"
@@ -110,6 +110,8 @@ OTHER: none
                         Player(Scared):: "Please, don't shoot!"
                         "I put my hands up and surrendered to the overwhelming number of cops."
                         sentence += Random(150, 300)
+                        AddSent = Player:sentence
+                        Player.modifyActorVar(rk_VB_TotalSentences, AddSent)
                         If PoliceMan:arousal > 25 && PoliceMan:perversion > 75 && Actor1:arousal > 25 && Actor1:perversion > 75 && PoliceMan:masochist < 0 && Actor1:masochist < 0
                         
                             "As we drive towards the police station, the police tell me ..."
@@ -179,6 +181,8 @@ OTHER: none
                 sneak -= 5
                 mood -= 5
                 sentence += Random(10, 30)
+                AddSent = Player:sentence
+                Player.modifyActorVar(rk_VB_TotalSentences, AddSent)
                 If PoliceMan:arousal > 25 && PoliceMan:perversion > 75 && Actor1:arousal > 25 && Actor1:perversion > 75 && PoliceMan:masochist < 0 && Actor1:masochist < 0
                         
                     "As we drive towards the police station, the police tell me ..."

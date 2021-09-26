@@ -11,9 +11,9 @@ OTHER: none
         PoliceMan = generatePersonTemporary()
         Actor1 = generatePersonTemporary()
         BestiCount = Player.getActorVar(rk_VB_BestiCount)
-        
+        TotalSentences = Player.getActorVar(rk_VB_TotalSentences)
         Player.modifyActorVar(rk_VB_BestiCount, 1)
-        If Random(0, 50) > sneak
+        If sneak <= Random(50, 100)
         
             "Sure enough, the cops promptly arrived at the scene."
             PoliceMan(Furious)::"'Hands in the air, now! You're under arrest of bestiality indecency'"
@@ -107,6 +107,8 @@ OTHER: none
                         Player(Scared):: "Please, don't shoot!"
                         "I put my hands up and surrendered to the overwhelming number of cops."
                         sentence += Random(1000, 2000)
+                        AddSent = Player:sentence
+                        Player.modifyActorVar(rk_VB_TotalSentences, AddSent)
                         followUp(imprisoned)
                         
                     Endif 
@@ -122,6 +124,8 @@ OTHER: none
                 sneak -= 5
                 mood -= 5
                 sentence += Random(300, 1000)
+                AddSent = Player:sentence
+                Player.modifyActorVar(rk_VB_TotalSentences, AddSent)
                 followUp(imprisoned)
                 
             Endif

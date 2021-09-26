@@ -9,8 +9,8 @@ OTHER: none
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         RobberyCount = Player.getActorVar(rk_VB_RobberyCount)
-        
-        If Random(0, 50) > sneak
+        TotalSentences = Player.getActorVar(rk_VB_TotalSentences)
+        If sneak <= Random(50, 100)
         
             PoliceMan = generatePersonTemporary()
             PoliceMan.show(2)
@@ -87,6 +87,8 @@ OTHER: none
                 sneak -= 5
                 mood -= 5
                 sentence += Random(100, 336)
+                AddSent = Player:sentence
+                Player.modifyActorVar(rk_VB_TotalSentences, AddSent)
                 followUp(imprisoned)
                 
             Endif

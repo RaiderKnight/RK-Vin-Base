@@ -6,15 +6,16 @@ OTHER: Random(0, 100) < firearms
 
     SceneStart()
     
-        Hunger = Player.getActorVar(rk_VB_Hunger)
-        HungerEnable = rk_VB_EnableHunger.getGlobal()
-        "Alert we have a 10-90 -Bank robbery- in progress please respone."
-        "Sounds serious will I respone?"
+        Hunger = Player.getActorVar(rk_VB_Hunger) // Edit by Raddeck
+        HungerEnable = rk_VB_EnableHunger.getGlobal() // Edit by Raddeck
+        RobberyCount = Player.getActorVar(rk_VB_RobberyCount) // Edit by Raddeck
+        "Alert we have a 10-90 -Bank robbery- in progress please response."
+        "Sounds serious, what should I do?"
         0:: "Join them"
         1:: "Decline" 
         
         If 0 
-            "I proceed to the location of robery."
+            "I proceed to the location of robbery."
             setBackground(street)
             Cop1 = getPerson(tag_Police)
             If !Cop1.isValid()
@@ -27,7 +28,7 @@ OTHER: Random(0, 100) < firearms
                 Cop1.dressUniform(police)
                 Cop1.show(1)
                 "An officer approached me."
-                Cop1():: "I'm officer <Cop1.name_last>. Nice to meet you."
+                Cop1(Happy):: "Hi, I'm officer <Cop1.name_last>. Nice to meet you."
             Else
                 "Looks like officer <Cop1.name_last> is here."
                 Cop1.dressUniform(police)
@@ -44,7 +45,7 @@ OTHER: Random(0, 100) < firearms
                 Cop2.dressUniform(police)
                 Cop2.show(2)
                 "An officer approached me."
-                Cop2():: "I'm officer <Cop2.name_last>. Nice to meet you."
+                Cop2(Happy):: "Hi, I'm officer <Cop2.name_last>. Nice to meet you."
             Else
                 "Looks like officer <Cop2.name_last> is here."
                 Cop2.dressUniform(police)
@@ -61,7 +62,7 @@ OTHER: Random(0, 100) < firearms
                 Cop3.dressUniform(police)
                 Cop3.show(3)
                 "An officer approached me."
-                Cop3():: "I'm officer <Cop3.name_last>. Nice to meet you."
+                Cop3(Happy):: "Hi, I'm officer <Cop3.name_last>. Nice to meet you."
             Else
                 "Looks like officer <Cop3.name_last> is here."
                 Cop3.dressUniform(police)
@@ -78,17 +79,17 @@ OTHER: Random(0, 100) < firearms
                 Cop4.dressUniform(police)
                 Cop4.show(4)
                 "An officer approached me."
-                Cop4():: "I'm officer <Cop4.name_last>. Nice to meet you."
+                Cop4(Happy):: "Hi, I'm officer <Cop4.name_last>. Nice to meet you."
             Else
                 "Looks like officer <Cop4.name_last> is here."
                 Cop4.dressUniform(police)
                 Cop4.show(4)
             Endif
-            Player():: "What is the status of the robery?"
+            Player(Curious):: "What is the status of the robbery?"
             Bads = Random(2, 8)
         
             If Bads > 7
-                Cop1():: "We got eight robbers."
+                Cop1(Serene):: "We are dealing with eight robbers."
                 Rob1 = generatePersonTemporary()
                 Rob2 = generatePersonTemporary()
                 Rob3 = generatePersonTemporary()
@@ -107,7 +108,7 @@ OTHER: Random(0, 100) < firearms
                 R8 = true
         
             Elseif Bads > 6
-                Cop1():: "We got seven robbers."
+                Cop1(Serene):: "We are dealing with seven robbers."
                 Rob1 = generatePersonTemporary()
                 Rob2 = generatePersonTemporary()
                 Rob3 = generatePersonTemporary()
@@ -123,9 +124,8 @@ OTHER: Random(0, 100) < firearms
                 R6 = true
                 R7 = true
         
-        
             Elseif Bads > 5
-                Cop1():: "We got six robbers."
+                Cop1(Serene):: "We are dealing with six robbers."
                 Rob1 = generatePersonTemporary()
                 Rob2 = generatePersonTemporary()
                 Rob3 = generatePersonTemporary()
@@ -140,7 +140,7 @@ OTHER: Random(0, 100) < firearms
                 R6 = true
         
             Elseif Bads > 4
-                Cop1():: "We got five robbers."
+                Cop1(Serene):: "We are dealing with five robbers."
                 Rob1 = generatePersonTemporary()
                 Rob2 = generatePersonTemporary()
                 Rob3 = generatePersonTemporary()
@@ -151,10 +151,9 @@ OTHER: Random(0, 100) < firearms
                 R3 = true
                 R4 = true
                 R5 = true
-        
-                
+ 
             Elseif Bads > 3
-                Cop1():: "We got four robbers."
+                Cop1(Serene):: "We are dealing with four robbers."
                 Rob1 = generatePersonTemporary()
                 Rob2 = generatePersonTemporary()
                 Rob3 = generatePersonTemporary()
@@ -163,41 +162,38 @@ OTHER: Random(0, 100) < firearms
                 R2 = true
                 R3 = true
                 R4 = true
-        
-            
+
             Else
-                Cop1():: "We got three robbers."
+                Cop1(Serene):: "We are dealing with three robbers."
                 Rob1 = generatePersonTemporary()
                 Rob2 = generatePersonTemporary()
                 Rob3 = generatePersonTemporary()
                 R1 = true
                 R2 = true
                 R3 = true
-        
-        
+
             Endif
         
             Arms = Random(0, 3)
-        
             Bomb = false
             If Arms > 2
-                Cop1():: "Armed with small weapons."    
+                Cop1(Serene):: "Armed with small weapons."    
             Elseif Arms > 1
-                Cop1():: "Heavly Armed."    
+                Cop1(Serene):: "Heavly Armed."    
             Else
-                Cop1():: "They have a bomb."
+                Cop1(Serene):: "They have a bomb."
                 Bomb = true
             Endif
             
             HAlive = true
             Hostages = Random(2, 24)
             Lost = 0
-            Cop1():: "And they got <Hostages> hostages."
+            Cop1(Serene):: "And they got <Hostages> hostages."
             Time = Random(20, 60)
-            Cop1():: "And robbers say they will begin killing hostages in <Time> unless their demands are not met."
+            Cop1(Serene):: "And robbers say they'll start killing hostages in <Time> if their demands are not met."
             Fear = 0
             Escaped = false
-            Player():: "Let get started."
+            Player(Angry):: "Let's start by trying to save a few people while trying to stop these bastards ..." // Edit by Raddeck
             choice = -1
             BadD = true
             Save = 0
@@ -223,7 +219,7 @@ OTHER: Random(0, 100) < firearms
                         "All the hostages are dead."
                         HAlive = false
                     Else
-                        "Robbers are scared and killed a hostage was killed."
+                        "Robbers are scared, and because of this, a hostage was killed." // Edit by Raddeck
                         Hostages -= 1
                         Lost += 1
                     Endif   
@@ -236,11 +232,11 @@ OTHER: Random(0, 100) < firearms
                 If 6
                     "All the hostages are dead."
                     HAlive = false
-                    "And the robbers are making an escape!"
+                    "And the robbers are trying to escape!"
                     Escaped = true
                 
                 Else
-                    "What will I do. <Hostages> Hostages. <Fear> Fear. <Time> Time" 
+                    "What should I do? <Hostages> Hostages - <Fear> Fear - <Time> Time" 
                     1:: "Tactical Action"
                     2:: "Negotiate"
                     3:: "Sniper Action"
@@ -250,13 +246,13 @@ OTHER: Random(0, 100) < firearms
                     If 1
                         "What is the plan?" 
                         setBackground(bank)
-                        0:: "Take out robbers"
-                        1:: "Save Hostages"
+                        0:: "Try to knocked out a robber"
+                        1:: "Try to save hostages"
                         2:: Bomb ::"Try to disable bomb"
-                        3:: "never mind"
+                        3:: "Never mind"
                         
                         If 0
-                            Target?
+                            "Target is?"
                             1:: R1 :: "<Rob1.name>"
                             2:: R2 :: "<Rob2.name>"
                             3:: R3 :: "<Rob3.name>"
@@ -268,13 +264,13 @@ OTHER: Random(0, 100) < firearms
                             9:: "Exit"
         
                             If 1
-                                "I will take out <Rob1.name>."
+                                "I'm gonna try to knock out <Rob1.name>."
                                 Rob1.dressUniform()
                                 Rob1.show(1)
                                 SneakGame()
                                 If sneak > 80
                                     "Chop"
-                                    "<Rob1.name> was knocked out. Don't think anyone noticed."
+                                    "<Rob1.name> was knocked out. I don't think someone heard me."
                                     R1 = false
                                 Else
                                     If martial > Rob1:martial
@@ -283,7 +279,7 @@ OTHER: Random(0, 100) < firearms
                                         R1 = false
                                         Fear += 5
                                     Else
-                                        "Shit! got to get out of here."
+                                        "Shit! I've got to get out of here."
                                         Fear += 10
                                     Endif
                                 Endif
@@ -299,13 +295,13 @@ OTHER: Random(0, 100) < firearms
                                     Stolen = true
                                 Endif
                             Elseif 2
-                                "I will take out <Rob2.name>."
+                                "I'm gonna try to knock out <Rob2.name>."
                                 Rob2.dress()
                                 Rob2.show(1)
                                 SneakGame()
                                 If sneak > 80
                                     "Chop"
-                                    "<Rob2.name> was knocked out. Don't think anyone noticed."
+                                    "<Rob2.name> was knocked out. I don't think someone heard me."
                                     R2 = false
                                 Else
                                     If martial > Rob2:martial
@@ -314,7 +310,7 @@ OTHER: Random(0, 100) < firearms
                                         R2 = false
                                         Fear += 5
                                     Else
-                                        "Shit! got to get out of here."
+                                        "Shit! I've got to get out of here."
                                         Fear += 10
                                     Endif
                                 Endif
@@ -331,13 +327,13 @@ OTHER: Random(0, 100) < firearms
                                     Stolen = true
                                 Endif
                             Elseif 3
-                                "I will take out <Rob3.name>."
+                                "I'm gonna try to knock out <Rob3.name>."
                                 Rob3.dress()
                                 Rob3.show(1)
                                 SneakGame()
                                 If sneak > 80
                                     "Chop"
-                                    "<Rob3.name> was knocked out. Don't think anyone noticed."
+                                    "<Rob3.name> was knocked out. I don't think someone heard me."
                                     R3 = false
                                 Else
                                     If martial > Rob3:martial
@@ -346,7 +342,7 @@ OTHER: Random(0, 100) < firearms
                                         R3 = false
                                         Fear += 5
                                     Else
-                                        "Shit! got to get out of here."
+                                        "Shit! I've got to get out of here."
                                         Fear += 10
                                     Endif
                                 Endif
@@ -363,13 +359,13 @@ OTHER: Random(0, 100) < firearms
                                     Stolen = true
                                 Endif
                             Elseif 4
-                                "I will take out <Rob4.name>."
+                                "I'm gonna try to knock out <Rob4.name>."
                                 Rob4.dress()
                                 Rob4.show(1)
                                 SneakGame()
                                 If sneak > 80
                                     "Chop"
-                                    "<Rob4.name> was knocked out. Don't think anyone noticed."
+                                    "<Rob4.name> was knocked out. I don't think someone heard me."
                                     R4 = false
                                 Else
                                     If martial > Rob4:martial
@@ -378,7 +374,7 @@ OTHER: Random(0, 100) < firearms
                                         R4 = false
                                         Fear += 5
                                     Else
-                                        "Shit! got to get out of here."
+                                        "Shit! I've got to get out of here."
                                         Fear += 10
                                     Endif
                                 Endif
@@ -395,13 +391,13 @@ OTHER: Random(0, 100) < firearms
                                     Stolen = true
                                 Endif
                             Elseif 5
-                                "I will take out <Rob5.name>."
+                                "I'm gonna try to knock out <Rob5.name>."
                                 Rob5.dress()
                                 Rob5.show(1)
                                 SneakGame()
                                 If sneak > 80
                                     "Chop"
-                                    "<Rob5.name> was knocked out. Don't think anyone noticed."
+                                    "<Rob5.name> was knocked out. I don't think someone heard me."
                                     R1 = false
                                 Else
                                     If martial > Rob5:martial
@@ -410,7 +406,7 @@ OTHER: Random(0, 100) < firearms
                                         R5 = false
                                         Fear += 5
                                     Else
-                                        "Shit! got to get out of here."
+                                        "Shit! I've got to get out of here."
                                         Fear += 10
                                     Endif
                                 Endif
@@ -427,13 +423,13 @@ OTHER: Random(0, 100) < firearms
                                     Stolen = true
                                 Endif
                             Elseif 6
-                                "I will take out <Rob6.name>."
+                                "I'm gonna try to knock out <Rob6.name>."
                                 Rob6.dress()
                                 Rob6.show(1)
                                 SneakGame()
                                 If sneak > 80
                                     "Chop"
-                                    "<Rob6.name> was knocked out. Don't think anyone noticed."
+                                    "<Rob6.name> was knocked out. I don't think someone heard me."
                                     R6 = false
                                 Else
                                     If martial > Rob6:martial
@@ -442,7 +438,7 @@ OTHER: Random(0, 100) < firearms
                                         R6 = false
                                         Fear += 5
                                     Else
-                                        "Shit! got to get out of here."
+                                        "Shit! I've got to get out of here."
                                         Fear += 10
                                     Endif
                                 Endif
@@ -459,13 +455,13 @@ OTHER: Random(0, 100) < firearms
                                     Stolen = true
                                 Endif                       
                             Elseif 7
-                                "I will take out <Rob7.name>."
+                                "I'm gonna try to knock out <Rob7.name>."
                                 Rob7.dress()
                                 Rob7.show(1)
                                 SneakGame()
                                 If sneak > 80
                                     "Chop"
-                                    "<Rob7.name> was knocked out. Don't think anyone noticed."
+                                    "<Rob7.name> was knocked out. I don't think someone heard me."
                                     R7 = false
                                 Else
                                     If martial > Rob7:martial
@@ -474,7 +470,7 @@ OTHER: Random(0, 100) < firearms
                                         R7 = false
                                         Fear += 5
                                     Else
-                                        "Shit! got to get out of here."
+                                        "Shit! I've got to get out of here."
                                         Fear += 10
                                     Endif
                                 Endif
@@ -491,13 +487,13 @@ OTHER: Random(0, 100) < firearms
                                     Stolen = true
                                 Endif
                             Elseif 8
-                                "I will take out <Rob8.name>."
+                                "I'm gonna try to knock out <Rob8.name>."
                                 Rob8.dress()
                                 Rob8.show(1)
                                 SneakGame()
                                 If sneak > 80
                                     "Chop"
-                                    "<Rob8.name> was knocked out. Don't think anyone noticed."
+                                    "<Rob8.name> was knocked out. I don't think someone heard me."
                                     R1 = false
                                 Else
                                     If martial > Rob8:martial
@@ -506,7 +502,7 @@ OTHER: Random(0, 100) < firearms
                                         R8 = false
                                         Fear += 5
                                     Else
-                                        "Shit! got to get out of here."
+                                        "Shit! I've got to get out of here."
                                         Fear += 10
                                     Endif
                                 Endif
@@ -523,11 +519,11 @@ OTHER: Random(0, 100) < firearms
                                     Stolen = true
                                 Endif
                             Else
-                                "never mind"
+                                "Never mind"
                                 choice => 0
                             Endif
                         Elseif 1
-                            "Need to save hostages."
+                            "I need to save some hostages."
                             setBackground(bank)
                             NumberH => 0
                             If R1
@@ -569,11 +565,13 @@ OTHER: Random(0, 100) < firearms
                                 Time -= 10
                                 Fear += 5
                             Else
-                                "Could not reach the hostages"
+                                "Could not reach an hostage."
                                 Time -= 10
                                 Fear += 5
                             Endif
-                            "Look money! should I steal some?"
+                            CashK = 1000
+                            CashK_loc = CashK.convertToLocalCurrency()
+                            "Their <CashK_loc> on a desk! Should I steal the money?"
                             0:: "Yes"
                             1:: "No"
                                 
@@ -584,7 +582,7 @@ OTHER: Random(0, 100) < firearms
                             Endif
                             
                         Elseif 2
-                            "Need to disable bomb."
+                            "I need to find a way to reach and disable the bomb."
                             setBackground(bank)
                             NumberB => 0
                             If R1
@@ -641,7 +639,9 @@ OTHER: Random(0, 100) < firearms
                                 Time -= 10
                                 Fear += 10
                             Endif
-                            "Look money! should I steal some?"
+                            CashK = 1000
+                            CashK_loc = CashK.convertToLocalCurrency()
+                            "Their <CashK_loc> on a desk! Should I steal the money?"
                             0:: "Yes"
                             1:: "No"
                                 
@@ -651,20 +651,19 @@ OTHER: Random(0, 100) < firearms
                                 Stolen = true
                             Endif
                         Else
-                            "never mind"
+                            "Never mind"
                         Endif
-                        
-                        
+
                     Elseif 2
                         "What is the plan?" 
                         0:: "Make them surrender"
                         1:: "Save Hostages"
                         2:: "Time"
                         3:: "Bargin"
-                        4:: "never mind"
+                        4:: "Never mind"
                         
                         If 0
-                            Player():: "Come out with you hands up and surrender the hostages."
+                            Player(Angry):: "Come out with you hands up and surrender the hostages."
                             RI => 0
                             If R1
                                 RI += Rob1:intelligence                        
@@ -775,7 +774,7 @@ OTHER: Random(0, 100) < firearms
                     Elseif 3
                         "What is the plan?" 
                         0:: "single kill"
-                        1:: "never mind"        
+                        1:: "Never mind"        
         
                         If 0
                             Target?
@@ -1129,14 +1128,14 @@ OTHER: Random(0, 100) < firearms
                                 Time -= 5
                             Endif
                         Else
-                            "never mind"
+                            "Never mind"
                         Endif
                     Elseif 4
                         "We wait."
                         Time -= 2
                         Fear -= 7
                     Else
-                        "It is time to make our assalt."
+                        "It is time to make our assault."
                         setBackground(bank)
                         Player.animate(gun)
                         Cop1.animate(gun)
@@ -1237,7 +1236,7 @@ OTHER: Random(0, 100) < firearms
                                 If Hostages < 0
                                     "All the hostages are dead."
                                     HAlive = false
-                                    "And the robbers are making an escape!"
+                                    "And the robbers are trying to escape!"
                                     Escaped = true
                                     Hostages => 0
                                 Endif
@@ -1344,6 +1343,7 @@ OTHER: Random(0, 100) < firearms
                         "I was fired and arrested"
                         sentence += 3000 // Edit by Raddeck
                         CopLevel => 0
+                        Player.modifyActorVar(rk_VB_RobberyCount, 1) // Edit by Raddeck
                         followUp(imprisoned)
                     Endif
                 Endif   
