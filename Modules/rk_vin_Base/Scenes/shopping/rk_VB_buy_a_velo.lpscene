@@ -38,7 +38,7 @@ SceneStart()
     stock_Litespeed = Player.getActorVar(stock_Litespeed)
     stock_Trek = Player.getActorVar(stock_Trek)
     
-    velo_value = Player.getActorVar(stock_velos)
+    velo_value = Player.getActorVar(rk_VB_Velos_Value)
     stock_velos = stock_BTwin + stock_Rocky + stock_Defy + stock_SystemSix + stock_Look + stock_Specialized + stock_Litespeed + stock_Trek
 
     "What do I want to do?"
@@ -83,6 +83,7 @@ SceneStart()
             money -= Price0
             Player(Happy)::"1 more bicycle inside my garage!"
             mood += 3
+            Player.modifyActorVar(rk_VB_Velos_Value, Price0)
             
         Elseif 1
             
@@ -90,6 +91,7 @@ SceneStart()
             money -= Price1
             Player(Happy)::"1 more bicycle inside my garage!"
             mood += 3
+            Player.modifyActorVar(rk_VB_Velos_Value, Price1)
             
         Elseif 2
             
@@ -97,6 +99,7 @@ SceneStart()
             money -= Price2
             Player(Happy)::"1 more bicycle inside my garage!"
             mood += 3
+            Player.modifyActorVar(rk_VB_Velos_Value, Price2)
             
         Elseif 3
             
@@ -104,6 +107,7 @@ SceneStart()
             money -= Price3
             Player(Happy)::"1 more bicycle inside my garage!"
             mood += 3
+            Player.modifyActorVar(rk_VB_Velos_Value, Price3)
             
         Elseif 4
             
@@ -111,6 +115,7 @@ SceneStart()
             money -= Price4
             Player(Happy)::"1 more bicycle inside my garage!"
             mood += 3
+            Player.modifyActorVar(rk_VB_Velos_Value, Price4)
             
         Elseif 5
             
@@ -118,6 +123,7 @@ SceneStart()
             money -= Price5
             Player(Happy)::"1 more bicycle inside my garage!"
             mood += 3
+            Player.modifyActorVar(rk_VB_Velos_Value, Price5)
             
         Elseif 6
             
@@ -125,6 +131,7 @@ SceneStart()
             money -= Price6
             Player(Happy)::"1 more bicycle inside my garage!"
             mood += 3
+            Player.modifyActorVar(rk_VB_Velos_Value, Price6)
             
         Elseif 7
             
@@ -132,6 +139,7 @@ SceneStart()
             money -= Price7
             Player(Happy)::"1 more bicycle inside my garage!"
             mood += 3
+            Player.modifyActorVar(rk_VB_Velos_Value, Price7)
             
         Endif
         
@@ -171,6 +179,9 @@ SceneStart()
             money += Price0
             Player(Happy)::"<SPrice0C> inside my pockets and more spaces inside my garage!"
             mood += 3
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            NewPrice = velo_value - Price0
+            Player.setActorVar(rk_VB_Velos_Value, NewPrice)
             
         Elseif 1
             
@@ -178,49 +189,63 @@ SceneStart()
             money += Price1
             Player(Happy)::"<SPrice1C> inside my pockets and more spaces inside my garage!"
             mood += 3
-            
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            NewPrice = velo_value - Price1
+            Player.setActorVar(rk_VB_Velos_Value, NewPrice)
         Elseif 2
             
             Player.modifyActorVar(stock_Defy, -1)
             money += Price2
             Player(Happy)::"<SPrice2C> inside my pockets and more spaces inside my garage!"
             mood += 3
-            
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            NewPrice = velo_value - Price2
+            Player.setActorVar(rk_VB_Velos_Value, NewPrice)
         Elseif 3
             
             Player.modifyActorVar(stock_SystemSix, -1)
             money += Price3
             Player(Happy)::"<SPrice3C> inside my pockets and more spaces inside my garage!"
             mood += 3
-            
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            NewPrice = velo_value - Price3
+            Player.setActorVar(rk_VB_Velos_Value, NewPrice)
         Elseif 4
             
             Player.modifyActorVar(stock_Look, -1)
             money += Price4
             Player(Happy)::"<SPrice4C> inside my pockets and more spaces inside my garage!"
             mood += 3
-            
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            NewPrice = velo_value - Price4
+            Player.setActorVar(rk_VB_Velos_Value, NewPrice)
         Elseif 5
             
             Player.modifyActorVar(stock_Specialized, -1)
             money += Price5
             PPlayer(Happy)::"<SPrice5C> inside my pockets and more spaces inside my garage!"
             mood += 3
-            
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            NewPrice = velo_value - Price5
+            Player.setActorVar(rk_VB_Velos_Value, NewPrice)
         Elseif 6
             
             Player.modifyActorVar(stock_Litespeed, -1)
             money += Price6
             Player(Happy)::"<SPrice6C> inside my pockets and more spaces inside my garage!"
             mood += 3
-            
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            NewPrice = velo_value - Price6
+            Player.setActorVar(rk_VB_Velos_Value, NewPrice)
         Elseif 7
             
             Player.modifyActorVar(stock_Trek, -1)
             money += Price7
             Player(Happy)::"<SPrice7C> inside my pockets and more spaces inside my garage!"
             mood += 3
-            
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            NewPrice = velo_value - Price7
+            Player.setActorVar(rk_VB_Velos_Value, NewPrice)
         Elseif 99
             "I should look around first. That seems like a low-ball figure they're offering for that bicycle. It must be worth more than that!"
         Endif
@@ -273,52 +298,76 @@ SceneStart()
         99:: "Trade nothing"
         
         If 0
-            
-            money -= Price0 - SPrice0
+            TotalGain = Price0 - SPrice0
+            money -= TotalGain
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
             mood += 3
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            TradePrice = velo_value - TotalGain
+            Player.setActorVar(rk_VB_Velos_Value, TradePrice)
             
         Elseif 1
-            
-            money -= Price1 - SPrice1
+            TotalGain = Price1 - SPrice1
+            money -= TotalGain
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
             mood += 3
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            TradePrice = velo_value - TotalGain
+            Player.setActorVar(rk_VB_Velos_Value, TradePrice)
             
         Elseif 2
-        
-            money -= Price2 - SPrice2
+            TotalGain = Price2 - SPrice2
+            money -= TotalGain
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
             mood += 3
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            TradePrice = velo_value - TotalGain
+            Player.setActorVar(rk_VB_Velos_Value, TradePrice)
             
         Elseif 3
-            
-            money -= Price3 - SPrice3
+            TotalGain = Price3 - SPrice3
+            money -= TotalGain
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
             mood += 3
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            TradePrice = velo_value - TotalGain
+            Player.setActorVar(rk_VB_Velos_Value, TradePrice)
             
         Elseif 4
-
-            money -= Price4 - SPrice4
+            TotalGain = Price4 - SPrice4
+            money -= TotalGain
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
             mood += 3
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            TradePrice = velo_value - TotalGain
+            Player.setActorVar(rk_VB_Velos_Value, TradePrice)
             
         Elseif 5
-
-            money -= Price5 - SPrice5
+            TotalGain = Price5 - SPrice5
+            money -= TotalGain
             PPlayer(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
             mood += 3
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            TradePrice = velo_value - TotalGain
+            Player.setActorVar(rk_VB_Velos_Value, TradePrice)
             
         Elseif 6
-
-            money -= Price6 - SPrice6
+            TotalGain = Price6 - SPrice6
+            money -= TotalGain
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
             mood += 3
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            TradePrice = velo_value - TotalGain
+            Player.setActorVar(rk_VB_Velos_Value, TradePrice)
             
         Elseif 7
-
-            money -= Price7 - SPrice7
+            TotalGain = Price7 - SPrice7
+            money -= TotalGain
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
             mood += 3
+            velo_value = Player.getActorVar(rk_VB_Velos_Value)
+            TradePrice = velo_value - TotalGain
+            Player.setActorVar(rk_VB_Velos_Value, TradePrice)
             
         Elseif 99
             "I should look around first. That seems like a low-ball figure they're offering for that bicycle. It must be worth more than that!"

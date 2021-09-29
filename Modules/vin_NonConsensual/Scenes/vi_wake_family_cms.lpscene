@@ -1,8 +1,8 @@
 WHAT: sleep
 WHERE: home
 WHEN: 22 - 4
-WHO: Actor = getRelative(); If Actor.livesWithPlayer() && Actor.isInterestedIn(Player) && Actor:perversion > 70 && !Actor.hadSex() && Actor:masochist < -50 && Actor:incest < 30
-OTHER: isModEnabled(vin_Incest) && !Player.isAsexual() && Random(2, 50) > karma
+WHO: Actor = getRelative(); If Actor.livesWithPlayer() && Actor.isInterestedIn(Player) && Player.isInterestedIn(Actor) && Actor:perversion > 50 && Actor:masochist < -50
+OTHER: isModEnabled(vin_Incest) && masochist > 30
 
     SceneStart()
 
@@ -16,11 +16,12 @@ OTHER: isModEnabled(vin_Incest) && !Player.isAsexual() && Random(2, 50) > karma
         Actor.animate(na_sleep)
         "I was suddenly awakened to the sight of horror, my <Actor.relationship> <Actor.name> already naked in my bed trying to rape me ..."
         0:: "Resist"
-        1:: "I might enjoy this actually ..."
+        1:: "Surrender ..."
         
         If 0
             If martial < Actor:martial
                 "Unfortunately, my <Actor.relationship> was too strong for me ..."
+                mood -= 5
                 Rape = true
             Else
                 "I managed to push my <Actor.relationship> off me. Defeated, <Actor.he_or_she> promptly left ..."
@@ -43,5 +44,24 @@ OTHER: isModEnabled(vin_Incest) && !Player.isAsexual() && Random(2, 50) > karma
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
         Endif
+        "Now that this incident is over, what should I do about my <Actor.relationship>?"
+        0:: Rape:: "Confess that I enjoyed being raped by <Actor.him_or_her>"
+        1:: "Kick them out of my place"
+        2:: "Call the cops and have <Actor.him_or_her> put away for good"
+        
+        If 0
+            "I confessed to my <Actor.relationship> that I enjoyed every second of <Actor.him_or_her> roughly forcing <Actor.himself_or_herself> on me ..."
+            Actor(Grin):: "It's good that you've learned to accept your place ..."
+            Actor(Grin):: "I'll make sure to give some plenty of attention in the future."
+            Actor:incest => 100
+        Elseif 1
+            Actor.setLivingWithPlayer(false)
+            "I couldn't bring myself to put my <Actor.relationship> in jail which would make everyone know about the sexual assault and destroy my whole family."
+        Else
+            "I decided to report the sexual assault. It was the most clear-cut case and the jury was especially appalled that it was my own <Actor.relationship> that did it."
+            Actor.setLivingWithPlayer(false)
+            Actor.deletePerson()
+            "The jail sentence that was handed out was so long that I probably will never see my assaulter again ..."
+        Endif
     SceneEnd()
-    timeout(200, vi_wake_family_cms) // Improved by Ravenger6660
+    timeout(200, vi_wake_family_cms) // Improved by Ravenger6660 - Raddeck

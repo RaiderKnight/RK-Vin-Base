@@ -25,19 +25,19 @@ OTHER: isAtHome()
         Else
         
             "We've all been there ... getting a bit carried away while grocery shopping and ending up with more that you can carry."
-            Player:: "Hey <Actor.name>, looks like you need some help there!"
-            Actor:: "Oh, thank you so much, <Player.name>"
+            Player(Curious):: "Hey <Actor.name>, looks like you need some help there!"
+            Actor(Happy):: "Oh, thank you so much, <Player.name>"
             karma += 1
             Actor:rapportwithplayer += 1
             setBackgroundCustom(livingroom)
             "Eventually, we arrive at <Actor.name>'s apartment. I put the grocery bags I carried down on <Actor.his_or_her> kitchen countertop."
-            Player:: "Alright, see you later!"
-            Actor:: "Wait ... do you want to stay and chill for a while? I can cook you something from the ingredients I just bought as a thank you."
+            Player(Serene):: "Alright, see you later!"
+            Actor(Happy):: "Wait ... do you want to stay and chill for a while? I can cook you something from the ingredients I just bought as a thank you."
             0:: "Sure"
             1:: "I've got to go. Sorry"
             
             If 0
-                Player:: "Sure, I'd love to stay and hang out for a while."
+                Player(Happy):: "Sure, I'd love to stay and hang out for a while."
                 choice = -1
                 ate = false
                 hadSex = false
@@ -96,7 +96,7 @@ OTHER: isAtHome()
                                     Player:perversion += Random(0, 1)
                                     Sex(Player, Actor)
                                     If HungerEnable > 0
-                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
                                     EndIf
                                     
                                     Actor.show(2)
@@ -111,8 +111,8 @@ OTHER: isAtHome()
                     Endif
                 Endwhile
             Else
-                Player:: "Thank you for the offer. But maybe next time, I've got some errand to run right now."
-                Actor:: "Alright then, see you later!"
+                Player(Sad):: "Thank you for the offer. But maybe next time, I've got some errand to run right now."
+                Actor(Sad):: "Alright then, see you later!"
             Endif
         Endif
 

@@ -112,9 +112,12 @@ OTHER: none
                     "A couple of months later, I found out that <Actor.name> decided to abort the child after all ... Probably the thought of having to raise a baby alone was too much for <Actor.him_or_her>."                    
                 Endif                
                 
-            Elseif !Actor.isDating() && Actor2.isValid() && !Actor.hasRelationship(Poly)
+            Elseif !Actor.isDating() && Actor2.isValid()
                 "Of course, the fact that I knocked up <Actor.name>, who is already in a commited relationship with <Actor2.name>, is potentially complicated."
-                If Random(0, 100) < Actor:intelligence && !Actor2.isFemale()
+                Cuck = Actor2.getActorVar(tag_NTRCuck)
+                If Cuck > 0
+                    "<Actor2.name> is a willing cuck though, so of course <Actor2.he_or_she> doesn't mind."
+                Elseif Random(0, 100) < Actor:intelligence && !Actor2.isFemale()
                     "Thankfully, <Actor.name> was smart enough to convince <Actor.his_or_her> current <Actor2.boyfriend_or_girlfriend> <Actor2.name> that the baby was <Actor2.his_or_hers>."
                 Else
                     setBackground(home)
@@ -251,7 +254,7 @@ OTHER: none
                     SexNoAffair(Player, Actor2)
                     
                     If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
                     EndIf
                     Actor2.impregnate(Player)
                     karma -= 50

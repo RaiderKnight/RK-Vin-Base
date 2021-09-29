@@ -84,7 +84,7 @@ OTHER: none
             Ashley(Flirty):: "Either that or she finally found a real man after being near a beta sucker like you for so long."
             Ashley(Flirty):: "Trust me ... I would know!"
             Ashley(Flirty):: "Talking about real men ... I think it's time to introduce our bull for the night ..."
-            If Player.isMale() || Player.isShemale()
+            If Player.isMale() || Player.isTrans()
                 Bull = Player
             Else
                 Bull = generatePersonTemporary(mpwill_brian)
@@ -107,10 +107,10 @@ OTHER: none
             Iris(Flirty):: "Ashley! No fair! I want some of that too!"
             Iris(Sarcastic):: "Pay attention, brother! Maybe you'll learn something for once."
             
-            If Player.isMale() || Player.isShemale()
+            If Player.isMale() || Player.isTrans()
                 Sex(Player, Iris)
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
                 Dom = Ashley
             Else
@@ -192,7 +192,7 @@ OTHER: none
             "<Dating.name> and I followed the other couple's lead and started making out ..."
             Sex(Player, Dating)
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -1)
+                Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
             Player.show(0)
             Dating.show(5)       
@@ -213,7 +213,7 @@ OTHER: none
             "It was incredibly hot seeing <Dating.name> making love with another <FuckDating.man_or_woman>. But I have a lover to take care of myself ..."
             Sex(FuckPlayer, Player)
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -1)
+                Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
             Player.show(0)
             FuckPlayer.show(5)

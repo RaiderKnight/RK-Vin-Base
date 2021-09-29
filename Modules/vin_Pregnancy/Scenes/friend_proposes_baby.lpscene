@@ -28,11 +28,16 @@ OTHER: !Player.isFemale() && Player:fertility > 0
             Actor:likes_vaginal => 100
             setBackground(home)
             "Soon enough, we were back in a hotel for our first 'natural insemination' session ..."
+            Player.strip()
+            Actor.strip()
+            Actor(Flirty)::"Please go deep as you can ..."
             Sex(Player, Actor)
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
-    
+            Actor(Flirty)::"Thanks, that was amazing ..."
+            Player.dress()
+            Actor.dress()
         Else
             Player(Sad):: "Sorry, but it would make our friendships too weird ..."
         Endif

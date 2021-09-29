@@ -2,7 +2,7 @@ WHAT: sleep
 WHERE: home
 WHEN: 22 - 4 
 WHO: none
-OTHER: Random(50, 100) < masochist && Random(2, 50) > karma && [Player.isFemale() || Player.isShemale()]
+OTHER: Random(50, 100) < masochist && Random(0, 100) < 1 && [Player.isFemale() || Player.isTrans()]
 
     SceneStart()
 
@@ -51,10 +51,10 @@ OTHER: Random(50, 100) < masochist && Random(2, 50) > karma && [Player.isFemale(
                 Endif
                 SexNoAffair(Actor, Player)
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
                 EndIf
                 If Random(0, 100) < 15
-                    Actor:: "You're my breeding slave. I'd better get pregnant soon or I'll deem you useless and kill you!"
+                    Actor(Evil):: "You're my breeding slave. I'd better get pregnant soon or I'll deem you useless and kill you!"
                     Player.impregnate(Actor)
                 Endif
                 passTime(24, 24)
@@ -67,4 +67,4 @@ OTHER: Random(50, 100) < masochist && Random(2, 50) > karma && [Player.isFemale(
             "I'm finally saved, but not before enduring the horror under the hands of my kidnapper."
         Endif
     SceneEnd()
-    timeout(2000, pc_slave_cms) // Improved by Ravenger6660
+    timeout(2000, pc_slave_cms) // Improved by Ravenger6660 - Raddeck

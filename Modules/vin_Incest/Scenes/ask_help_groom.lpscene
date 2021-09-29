@@ -1,0 +1,128 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER:
+
+    // You can click on any relative and ask them to help you groom your private region, which could lead to things escalating fast
+
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        incestlegalized = rk_VB_incestlegalized.getGlobal()
+        
+        "Do I am really sure that I want to ask my own <Actor.relationship> to help me groom my private parts?"
+        0:: "Yes"
+        1:: "No"
+        
+        If 0
+            attractiveness += 0.25
+            fitness += 0.1
+            Actor:incest += 5
+            "My <Actor.relationship> agreed to help me ..."
+            setBackground(shower)
+            Player.strip()
+            "We went to the bathroom together, where I took off my clothes and got ready for my <Actor.relationship> to help me groom."
+            "As much as <Actor.relationship> tried to not touch me with anything but the razor, that was impossible and <Actor.his_or_her> fingers ended up touching many of many sensitive spots ..."
+            "I've become quite aroused ..."
+            0:: "Ask my <Actor.relationship> to touch me more"
+            1:: "Try and stay composed"
+            
+            If 0
+                perversion += 1
+                If Actor:incest > 10
+                    Ahead = true
+                    Actor(Flirty):: "Well ... if you insist ..."
+                Else
+                    Ahead = false
+                    Actor(Sad):: "Come on, what's your problem? I'm <Actor.relationship> for God's sake!"
+                Endif
+            Else
+                Ahead = false
+            Endif
+            
+            If !Ahead && Actor:incest > 30
+                Ahead = true
+                Actor(Flirty):: "I see you're getting <Player.hard_or_wet> ... Here, let me help you relax a bit."
+            Endif
+            
+            If Ahead
+                Actor:incest += 10
+                If Player.isMale()
+                    Filter(Handjob)
+                Else
+                    Filter(FingerPussy)
+                Endif
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                "Wow, that felt so good ... and my body is asking me for more"
+                0:: "Ask my <Actor.relationship> to use <Actor.his_or_her> mouth"
+                1:: "Try and regain composure"
+                
+                If 0
+                    perversion += 1
+                    If Actor:incest > 30
+                        Ahead = true
+                        Actor(Flirty):: "Well ... I suppose I might as well use more than my hand ..."
+                    Else
+                        Ahead = false
+                        Actor(Sad):: "Sorry, but we've done too much already!"
+                    Endif
+                Else
+                    Ahead = false
+                Endif
+                    
+                If !Ahead && Actor:incest > 50
+                    Ahead = true
+                    Actor:: "I see my hand wasn't enough to satisfy you ... Let me try use my mouth instead."
+                Endif
+                
+                If Ahead
+                    Actor:incest += 10
+                    If Player.isMale()
+                        Filter(Blowjob)
+                    Else
+                        Filter(LickPussy)
+                    Endif
+                    Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    "Things are escalating very quickly"
+                    0:: "Ask my <Actor.relationship> to fuck me"
+                    1:: "Try and regain composure"
+                    
+                    If 0
+                        If Actor:incest > 50
+                            Ahead = true
+                            Actor(Flirty):: "Well ... I guess we've already reached the point of no return ..."
+                        Else
+                            Ahead = false
+                            Actor(Sad):: "Sorry, but we've done too much already!"
+                        Endif
+                    Else
+                        Ahead = false
+                    Endif
+                        
+                    If !Ahead && Actor:incest > 70
+                        Ahead = true
+                        Actor(Flirty):: "I see that even my mouth wasn't enough to satisfy you ... I guess I have to give you everything I have to offer."
+                    Endif
+                    
+                    If Ahead
+                        Actor:incest += 20
+                        Actor.strip()
+                        Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                    Endif
+                Endif
+            Endif
+        Endif
+    SceneEnd() // Improved by Raddeck

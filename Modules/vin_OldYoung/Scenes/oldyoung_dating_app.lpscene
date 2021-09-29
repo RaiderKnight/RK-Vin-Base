@@ -28,35 +28,38 @@ OTHER: none
         10:: "About 50 years older than me"
     
         likes_older => choice*20 - 100
-    
-        "After some time swiping right on those I like, I finally got a match."
-        Actor = generatePersonTemporary()
-        While !Player.isInterestedIn(Actor)
+        If isModEnabled(vin_Incest) && Random(0, 100) < 33
+            followUp(incest_dating_app)
+        Else
+            "After some time swiping right on those I like, I finally got a match."
             Actor = generatePersonTemporary()
-        Endwhile
-        Actor.makeInterested(Player)
-        
-        Actor:age => age + likes_older*0.5
-        Actor:age += Random(-5, 5)
-        Actor.randomizeFace()
-        Actor.randomizeHairs()
-        Actor:likes_older => 2*[age - Actor:age]
-        Actor:attractiontoplayer += Random(25, 50)
-        
-        Actor.dress()
-        secondScreen(Actor)
-        Actor.show()
-        "I was matched with <Actor.name>, who is <Actor:age>."
-        0:: "Arrange a date with <Actor.name>"
-        1:: "Turn <Actor.him_or_her> down"
-        
-        If 0
-            Actor.makePermanent()
-            secondScreen()
-            "Soon enough, we meet up for our first date."
-            exchangeContact(Actor)
-            Actor.startDate()
+            While !Player.isInterestedIn(Actor)
+                Actor = generatePersonTemporary()
+            Endwhile
+            Actor.makeInterested(Player)
+            
+            Actor:age => age + likes_older*0.5
+            Actor:age += Random(-5, 5)
+            Actor.randomizeFace()
+            Actor.randomizeHairs()
+            Actor:likes_older => 2*[age - Actor:age]
+            Actor:attractiontoplayer += Random(25, 50)
+            
+            Actor.dress()
+            secondScreen(Actor)
             Actor.show()
-            "Hopefully it will be a good experience"
+            "I was matched with <Actor.name>, who is <Actor:age>."
+            0:: "Arrange a date with <Actor.name>"
+            1:: "Turn <Actor.him_or_her> down"
+            
+            If 0
+                Actor.makePermanent()
+                secondScreen()
+                "Soon enough, we meet up for our first date."
+                exchangeContact(Actor)
+                Actor.startDate()
+                Actor.show()
+                "Hopefully it will be a good experience"
+            Endif
         Endif
-    SceneEnd()
+    SceneEnd() // Improved By Raddeck

@@ -1,8 +1,8 @@
 WHAT: all
 WHERE: home
 WHEN: 0 - 24 
-WHO: Actor = getRelative(Parent, StepParent); If !Actor.isMale() && Actor.hadSex() && Actor:perversion > 75
-OTHER: !Player.isfemale() && perversion > 50
+WHO: Actor = getRelative(Parent); If !Actor.isMale() && Actor.hadSex()
+OTHER: Player.isMale()
 
     SceneStart()
 
@@ -21,7 +21,7 @@ OTHER: !Player.isfemale() && perversion > 50
             Actor:attractiontoplayer => 100
             "As the new man of the house, I own the family now basically and can now make a harem out of the rest of the female members of the family"
             0:: "Fuck them all"
-            1:: fertility > 0:: "Ask Mom to for fertility pills I want to impregnate everyone."
+            1:: fertility > 0:: "Ask Mom to take them all off birth control before impregnating them all"
             2:: "No"
             
             If 2

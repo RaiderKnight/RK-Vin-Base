@@ -28,60 +28,59 @@ OTHER:
             
             Actor2(Shocked):: "Oh my God, <Player.name>? What the fuck are you doing?" // Edit by Raddeck
             Player(Shocked):: "Oh no, I got caught, by someone I know no less ... I wonder how <Actor2.name> is going to react ..." // Edit by Raddeck
-            If Actor.isMale()
-                If Actor:perversion > 50 && Actor:attractiontoplayer > 50
-                    Actor:perversion += 1 // Edit by Raddeck
-                    "Thankfully, <Actor.name> simply continued enjoying the show."
-                Elseif Actor:perversion > 50 && Actor:attractiontoplayer <= 50
-                    Actor:perversion += 1 // Edit by Raddeck
-                    Actor:arousal += 1 // Edit by Raddeck
-                    "<Actor.name> continued enjoying the show, even calling other people to watch as well. None of them reported me though, thankfully"
-                Elseif Actor:perversion <= 50 && Actor:attractiontoplayer > 50
-                    Actor:perversion += 1 // Edit by Raddeck
-                    Actor:arousal += 1 // Edit by Raddeck
+            If Actor2.isMale()
+                If Actor2:perversion > 50 && Actor2:attractiontoplayer > 50
+                    Actor2:perversion += 1 // Edit by Raddeck
+                    "Thankfully, <Actor2.name> simply continued enjoying the show."
+                Elseif Actor2:perversion > 50 && Actor2:attractiontoplayer <= 50
+                    Actor2:perversion += 1 // Edit by Raddeck
+                    Actor2:arousal += 1 // Edit by Raddeck
+                    "<Actor2.name> continued enjoying the show, even calling other people to watch as well. None of them reported me though, thankfully"
+                Elseif Actor2:perversion <= 50 && Actor2:attractiontoplayer > 50
+                    Actor2:perversion += 1 // Edit by Raddeck
+                    Actor2:arousal += 1 // Edit by Raddeck
                     masochist += 1 // Edit by Raddeck
 
-                    "<Actor.name> demands that I fuck him to keep him quiet."
+                    "<Actor2.name> demands that I fuck him to keep him quiet."
                     "I have no choice ..."
                     Sex(Actor2, Player)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -2)
                     EndIf
                 Else
-                    "Unfortunately, <Actor.name> immediately called the cops ... who promptly arrested me."
+                    "Unfortunately, <Actor2.name> immediately called the cops ... who promptly arrested me."
                     Player.modifyActorVar(rk_VB_BestiCount, 1)
                     sentence += 92
                     followUp(imprisoned)
                 Endif
             Else
-                If Actor:perversion > 50 && Actor:attractiontoplayer > 50
-                    "Thankfully, <Actor.name> simply joined in."
+                If Actor2:perversion > 50 && Actor2:attractiontoplayer > 50
+                    "Thankfully, <Actor2.name> simply joined in."
                     Sex(Actor, Actor2, Player)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -3)
                     EndIf
-                Elseif Actor:perversion > 50 && Actor:attractiontoplayer <= 50
-                    "Thankfully, <Actor.name> demands to have a try in the next round."
+                Elseif Actor2:perversion > 50 && Actor2:attractiontoplayer <= 50
+                    "Thankfully, <Actor2.name> demands to have a try in the next round."
                     "I have no choice"
                     Sex(Actor, Actor2)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
                     EndIf
-                Elseif Actor:perversion <= 50 && Actor:attractiontoplayer > 50
-                    "<Actor.name> demands that I fuck her to keep her quiet."
+                Elseif Actor2:perversion <= 50 && Actor2:attractiontoplayer > 50
+                    "<Actor2.name> demands that I fuck her to keep her quiet."
                     "I have no choice ..."
                     Sex(Actor2, Player)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -2)
                     EndIf
                 Else
-                    "Unfortunately, <Actor.name> immediately called the cops ... who promptly arrested me."
+                    "Unfortunately, <Actor2.name> immediately called the cops ... who promptly arrested me."
                     Player.modifyActorVar(rk_VB_BestiCount, 1)
                     sentence += 92
                     followUp(imprisoned)
                 Endif
             Endif
         Endif
-    SceneEnd()
+    SceneEnd() // Improved by Raddeck
     timeout(500, caught_public_best_cms)
-    

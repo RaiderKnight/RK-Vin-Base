@@ -18,7 +18,7 @@ OTHER: Random(0, 150) < attractiveness + perversion
         dressFormal()
         Actor.dress()
         Actor.show()
-        Actor:: "That was very hot, why don't you join me in the VIP room for a private dance?"
+        Actor(Grin):: "That was very hot, why don't you join me in the VIP room for a private dance?"
         0:: "Okay"
         1:: "I don't do that ..."
         
@@ -31,17 +31,20 @@ OTHER: Random(0, 150) < attractiveness + perversion
                 "Off this goes ..."
             Endwhile
             money += 100
-            Actor:: "Oh ... you got me all horny, baby. Would you mind getting physical? We're in a private room after all so no such thing as 'No Touching' policy in here ..."
-            Actor:: "I'll be very generous if you do ..."
+            Actor(Flirty):: "Oh ... you got me all horny, baby. Would you mind getting physical? We're in a private room after all so no such thing as 'No Touching' policy in here ..."
+            Actor(Flirty):: "I'll be very generous if you do ..."
             0:: "Have sex with <Actor.name>"
             1:: "I don't do that ..."
             
             If 0
+                Actor.strip()
                 Sex(Actor, Player)
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
-                money += 300
+                money += Random(300, 500)
+                Actor.dress()
+                Player.dress()
             Endif
         Endif
     SceneEnd() // Improved by Raddeck

@@ -27,13 +27,9 @@ OTHER: none
             1:: "Women's"
         
             If 0
-            
                 gender = 0
-                
             Else
-            
                 gender = 1
-                
             Endif
             
             If Actor:perversion > 50
@@ -529,7 +525,7 @@ OTHER: none
                         Actor2:rapportwithplayer -= Random(0, 3)
                         Sex(Player, Actor2)
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         
                     Endif
@@ -575,7 +571,7 @@ OTHER: none
                         TalkNonConsensual()
                         Sex(Player, Actor2)
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         
                     Elseif 2
@@ -586,7 +582,7 @@ OTHER: none
                         Actor(Evil):: "Alright! Let's do it."
                         Sex(Player, Actor, Actor2)
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         
                     Else
@@ -595,7 +591,7 @@ OTHER: none
                         Actor3 = generateCreatureTemporary(Dog)
                         Sex(Actor3, Actor2)
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         
                     Endif
@@ -681,7 +677,7 @@ OTHER: none
                                 Sex(Actor2, Player)
                                 money += 1000
                                 If HungerEnable > 0
-                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
                                 
                             Endif
@@ -723,7 +719,7 @@ OTHER: none
                             Sex(Actor2, Player)
                             jobperformance += 20
                             If HungerEnable > 0
-                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
                             
                         Endif  
@@ -773,7 +769,7 @@ OTHER: none
                         Player(Sarcastic):: "Don't worry, I finished <Actor3.him_or_her> off for you"
                         Player(Evil):: "It's nice to get some release isn't it? well... for some of us anyway."
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         
                     Else
@@ -795,7 +791,7 @@ OTHER: none
                         Actor2(Happy):: "It feels so much better after this checkup."
                         Actor2(Happy):: "Thank you for not interrupting. You're the most understanding warden I know."
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         Player.modifyActorVar(rk_VB_Boss_Sucker, -0.25)
                         
@@ -850,7 +846,7 @@ OTHER: none
                                 Actor3(Annoyed):: "Alright, I've had to do this before with another warden. It's one of those unwritten rules I suppose. My <Actor2.boyfriend_or_girlfriend> is in prison and I don't have another choice."
                                 Sex(Player, Actor3)
                                 If HungerEnable > 0
-                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
                                 
                             Else
@@ -872,9 +868,34 @@ OTHER: none
                 
             Endif
             
-            jobperformance += Random(0, 2)
-            jobexperience += Random(0, 2)
- 
+        Else   /// INTERVIEW
+            "Should I apply for a job as a prison warden?"
+            0:: "Yes"
+            1:: "No"
+            
+            If 0
+                Actor2 = generatePerson()
+                Actor2.setActorVar(tag_wardenboss, 1)
+                Actor2.dressUniform(Police)
+                Actor2.show()
+                Actor2:: "I'm quite impressed with you today. When can you start?"
+                "The interview was pretty easy and I got the job, which pays per shift. After which I was introduced to my colleagues - fellow prison wardens."
+                jobperformance => 50
+                count = 0
+                While count < 5
+                    count += 1
+                    Actor = generatePerson()
+                    Actor.setActorVar(tag_warden, 1)
+                    Actor.dressUniform(Police)
+                    Actor.show()
+                    Actor.moveToPerson(Player)
+                    Actor:: "Hi, I'm Warden <Actor.name> <Actor.name_last>. Nice to you meet you."
+                    Player:: "Hi, I'm <Player.name> <Player.name_last>"
+                    Actor.SaveAndDelete()
+                Endwhile
+            Endif
         Endif
-        
+        jobperformance += Random(0, 2)
+        jobexperience += Random(0, 2)
+
     SceneEnd() // Scene improved by Raddeck

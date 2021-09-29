@@ -2,7 +2,7 @@ WHAT: all
 WHERE: sports_centre
 WHEN: 8 - 20
 WHO: none
-OTHER: !isWithCompanion() && Random(2, 50) > karma && masochist > 50
+OTHER: !isWithCompanion() && Random(0, 100) < 1 && masochist > 50
 
     SceneStart()
 
@@ -10,18 +10,19 @@ OTHER: !isWithCompanion() && Random(2, 50) > karma && masochist > 50
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        Actor = generatePersonTempoary()
+        Actor = generatePersonTemporary()
         Actor.dress()
         Actor.show()
         "I was at the gym's locker room alone and this random <Actor.guy_or_girl> comes in having finished a workout, looks at me and declares:"
-        Actor:: "You look nice as a post workout snack!" 
-        Actor:: "I'm going to fuck you!"
-        Actor:: "Your only choices are 'yes' or 'screaming'. I love the screamers!"
+        Actor(Evil):: "You look nice as a post workout snack!" 
+        Actor(Evil):: "I'm going to fuck you!"
+        Actor(Evil):: "Your only choices are 'yes' or 'screaming'. I love the screamers!"
         0:: "Yes"
         1:: "Scream"
-        2:: "Fight them"
+        2:: "Fight <Actor.him_or_her>"
         
         If 0
+            perversion += 1
             Sex(Player, Actor)
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
@@ -38,10 +39,13 @@ OTHER: !isWithCompanion() && Random(2, 50) > karma && masochist > 50
                 TalkNonConcensual()
                 SexNoAffair(Actor, Player)
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
                 EndIf
+                perversion -= 15
+                arousal -= 15
             Else
                 "Thankfully, the gym staff came in and saved the day."
+                mood += 5
             Endif
         Else
             "I tried to fight my way out!"
@@ -52,14 +56,17 @@ OTHER: !isWithCompanion() && Random(2, 50) > karma && masochist > 50
                 Else
                     Filter(Aggressive)
                 Endif
+                mood -= 25
                 TalkNonConcensual()
                 SexNoAffair(Actor, Player)
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
                 EndIf
             Else
                 "Thankfully, I managed to fight <Actor.him_or_her> off."
+                mood += 5
             Endif        
         Endif 
+        energy -= 15
     SceneEnd()
-    timeout(500, cms_ica_sep04) // Improved by Ravenger6660
+    timeout(500, cms_ica_sep04) // Improved by Ravenger6660 - Raddeck

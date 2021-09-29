@@ -37,7 +37,7 @@ SceneStart()
     stock_Ninja = Player.getActorVar(stock_Ninja)
     
     stock_motorcycle = stock_VULCAN + stock_Ruckus + stock_VStar + stock_NC750X + stock_Husqvarna + stock_Ducati + stock_INDIAN + stock_Ninja
-    motorcycle_value = Player.getActorVar(stock_motorcycle) 
+    motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value) 
     
     "What do I want to do?"
     0:: stock_motorcycle == 0:: "Buy a new motorcycle"
@@ -81,6 +81,7 @@ SceneStart()
             Player(Happy)::"1 more motorcycle inside my garage!"
             money -= Price0
             mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price0)
             
         Elseif 1
         
@@ -88,6 +89,7 @@ SceneStart()
             Player(Happy)::"1 more motorcycle inside my garage!"
             money -= Price1
             mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price1)
             
         Elseif 2
         
@@ -95,6 +97,7 @@ SceneStart()
             Player(Happy)::"1 more motorcycle inside my garage!"
             money -= Price2
             mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price2)
             
         Elseif 3
         
@@ -102,6 +105,7 @@ SceneStart()
             Player(Happy)::"1 more motorcycle inside my garage!"
             money -= Price3
             mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price3)
             
         Elseif 4
         
@@ -109,6 +113,7 @@ SceneStart()
             Player(Happy)::"1 more motorcycle inside my garage!"
             money -= Price4
             mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price4)
             
         Elseif 5
         
@@ -116,6 +121,7 @@ SceneStart()
             Player(Happy)::"1 more motorcycle inside my garage!"
             money -= Price5
             mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price5)
             
         Elseif 6
         
@@ -123,6 +129,7 @@ SceneStart()
             Player(Happy)::"1 more motorcycle inside my garage!"
             money -= Price6
             mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price7)
             
         Elseif 7
         
@@ -130,6 +137,7 @@ SceneStart()
             Player(Happy)::"1 more motorcycle inside my garage!"
             money -= Price7
             mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price7)
             
         Endif
         
@@ -170,6 +178,9 @@ SceneStart()
             Player(Happy)::"<Price0S_loc> inside my pockets and more spaces inside my garage!"
             money += Price0S
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price0S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
             
         Elseif 1
         
@@ -177,6 +188,9 @@ SceneStart()
             Player(Happy)::"<Price1S_loc> inside my pockets and more spaces inside my garage!"
             money += Price1S
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price1S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
             
         Elseif 2
         
@@ -184,6 +198,9 @@ SceneStart()
             Player(Happy)::"<Price2S_loc> inside my pockets and more spaces inside my garage!"
             money += Price2S
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price2S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
             
         Elseif 3
         
@@ -191,6 +208,9 @@ SceneStart()
             Player(Happy)::"<Price3S_loc> inside my pockets and more spaces inside my garage!"
             money += Price3S
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price3S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
             
         Elseif 4
         
@@ -198,6 +218,9 @@ SceneStart()
             Player(Happy)::"<Price4S_loc> inside my pockets and more spaces inside my garage!"
             money += Price4S
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price4S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
             
         Elseif 5
         
@@ -205,6 +228,9 @@ SceneStart()
             Player(Happy)::"<Price5S_loc> inside my pockets and more spaces inside my garage!"
             money += Price5S
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price5S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
             
         Elseif 6
         
@@ -212,6 +238,9 @@ SceneStart()
             Player(Happy)::"<Price6S_loc> inside my pockets and more spaces inside my garage!"
             money += Price6S
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price6S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
             
         Elseif 7
         
@@ -219,12 +248,14 @@ SceneStart()
             Player(Happy)::"<Price7S_loc> inside my pockets and more spaces inside my garage!"
             money += Price7S
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price7S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
             
         Elseif 99
             "I should look around first. That seems like a low-ball figure they're offering for that motorcycle. My bike worth more than that!"
         Endif
     
-        
     Elseif 2
     
         Price0S = Random(500, 2000)
@@ -262,7 +293,7 @@ SceneStart()
         Price7 = Random(50000, 75000)
         Price7C = Price7.convertToLocalCurrency()
         
-        Player::"Let's trade one of my old motorcycle for a new one!"
+        "Let's trade one of my old motorcycle for a new one!"
         0:: stock_VULCAN >= 1::"Trade 1 Kawasaki VULCAN | <stock_VULCAN> in garage"
         1:: stock_Ruckus >= 1::"Trade 1 Honda Ruckus | <stock_Ruckus> in garage"
         2:: stock_VStar >= 1::"Trade 1 Yamaha V-Star | <stock_VStar> in garage"
@@ -276,50 +307,82 @@ SceneStart()
         If 0
  
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
-            money -= Price0 - Price0S
+            TotalGain = Price0 - Price0S
+            money -= TotalGain
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
             
         Elseif 1
 
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
-            money -= Price1 - Price1S
+            TotalGain = Price1 - Price1S
+            money -= TotalGain
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
             
         Elseif 2
 
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
-            money -= Price2 - Price2S
+            TotalGain = Price2 - Price2S
+            money -= TotalGain
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
             
         Elseif 3
 
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
-            money -= Price3 - Price3S
+            TotalGain = Price3 - Price3S
+            money -= TotalGain
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
             
         Elseif 4
 
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
-            money -= Price4 - Price4S
+            TotalGain = Price4 - Price4S
+            money -= TotalGain
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
             
         Elseif 5
 
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
-            money -= Price5 - Price5S
+            TotalGain = Price5 - Price5S
+            money -= TotalGain
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
             
         Elseif 6
 
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
-            money -= Price6 - Price6S
+            TotalGain = Price6 - Price6S
+            money -= TotalGain
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
             
         Elseif 7
 
             Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
-            money -= Price7 - Price7S
+            TotalGain = Price7 - Price7S
+            money -= TotalGain
             mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
             
         Elseif 99
             "I should look around first. That seems like a low-ball figure they're offering for that motorcycle. My bike worth more than that!"
@@ -413,6 +476,7 @@ SceneStart()
                 If 0
                     rk_VB_MotorcycleSelectedIs.setGlobal(1)
                     Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price0AR)
+                    Motorcycle_value += Price0AR
                 ElseIf 1
                     rk_VB_MotorcycleSelectedIs.setGlobal(2)
                     Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price1AR)
