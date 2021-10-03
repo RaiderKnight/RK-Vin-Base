@@ -24,7 +24,7 @@ OTHER: none
             1:: "Surrender"
         
             If 0
-                If Random(0, 30) < fitness
+                If fitness > Random(0, 30)
                 
                     setBackground(street)
                     "I managed to lose the cops. Phew, that was close."
@@ -41,7 +41,7 @@ OTHER: none
                     PoliceMan.show(2)
                     Actor1.dressGuard()
                     Actor1.show(4)
-                    PoliceMan(Furious)::"'Hands in the air, now!'"
+                    PoliceMan(Furious)::"'Hands in the air, now! Hey you stop'"
                     
                     Player(Angry):: "You're not taking me alive."
                     0:: "Run"
@@ -49,7 +49,7 @@ OTHER: none
                 
                     If 0
                     
-                        If Random(0, 100) < fitness
+                        If fitness > Random(0, 30)
                         
                             setBackground(street)
                             "I managed to lose the cops. Phew, that was close."
@@ -75,7 +75,7 @@ OTHER: none
                                 Player.hide()
                     
                                 "A cop fired <PoliceMan.his_or_her> gun..."
-                                If Random(0, 30) < fitness
+                                If fitness > Random(0, 30)
                 
                                     "I managed to dodge the shot. Phew, that was close."
                                     sneak += 1

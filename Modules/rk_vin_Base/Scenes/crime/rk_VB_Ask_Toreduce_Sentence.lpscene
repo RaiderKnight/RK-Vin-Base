@@ -32,10 +32,12 @@ OTHER: none
         ActualSent = Player:sentence
         Player.setActorVar(rk_VB_TotalSentences, ActualSent)
         TotalSentences = Player.getActorVar(rk_VB_TotalSentences)
+        DateofSentences = Player.getActorVar(rk_VB_DateofSentences)
+        TotalDayPDS = PlayerAge - DateofSentences
         HalfDivActual = TotalSentences/2
         ThirdDivActual = TotalSentences/3
         QuatDivActual = TotalSentences/4
-        If TotalSentences > 12
+        If TotalSentences > 12 && DateofSentences > 1
             "Should I ask to see the prison warden for reducing my sentence?"
             0::"Yes"
             1::"No"
@@ -45,8 +47,8 @@ OTHER: none
                 DirectorP = generatePerson()
                 DirectorP.hide()
                 Guard2.hide()
-                Guard2.dressGuard()
-                "I ask the prison guard if I can speak to the prison warden ..."
+                Guard2.dressUniform(Police)
+                "I ask the prison guard if I can talk to the prison warden ..."
                 Guard2.show()
                 DHaveTime = Random(0,100)
                 Guard2(Serene)::"Let me check if you're available first ..."
@@ -78,10 +80,11 @@ OTHER: none
                     Guard2.hide()
                     "Ok, it's my turn! Once I enter <DirectorP.his_or_her> office, the door closed and locked automatically ..."
                     DirectorP.show()
+                    DirectorP.dressFormal()
                     DirectorP.animate(socialize)
                     DirectorP(Serene)::"Hi <Player.Mr_or_Miss> <Player.name>, what can I do for you today?"
                     Player(Curious)::"I would like you to reduce my sentence, if it's possible ..."
-                    If DirectorP.isInterestedIn(Player) && TotalDayP >= 92
+                    If [DirectorP.isInterestedIn(Player) && TotalDayP >= 92] || [DirectorP.isInterestedIn(Player) && DateofSentences >= 92]
                         Player.setActorVar(rk_VB_LastReduceSentence, PlayerAge)
                         DirectorP(Grin)::"3 month has passed since your last request! Let me look at your prisoner report!"
                         If TotalSentences < 15
@@ -134,7 +137,7 @@ OTHER: none
                                 Endif
                             Endif
                         Endif
-                    Elseif DirectorP.isInterestedIn(Player) && [TotalDayP >= 30 && TotalDayP <= 91.8]
+                    Elseif DirectorP.isInterestedIn(Player) && [TotalDayP >= 30 && TotalDayP <= 91.8] && DateofSentences >= 30
                         DirectorP(Grin)::"At least, 1 month has passed since your last request! Let me look at your prisoner report!"
                         If TotalSentences < 15
                             DirectorP(Grin)::"Your prisoner report does not mention anything wrong and also your sentence will end soon. Also it's too early to reduce your sentence even more ..."
@@ -169,7 +172,7 @@ OTHER: none
                     If 0
                         NormalSex = false
                         If DirectorP:perversion > 50
-                            DirectorP(Flirty)::"I like to try the things my prisoner likes to do, so according to your prisoner report I can see that you like ..."
+                            DirectorP(Flirty)::"I like to try the things my prisoner likes to do with their victim, so according to your prisoner report I can see that you like ..."
                             
                             "What would I like to do with <DirectorP.him_or_her>?"
                             0::BestiCount > 0 && isModEnabled(vin_Bestiality)::"Bestiality sex"
@@ -240,7 +243,7 @@ OTHER: none
                                 Endif
                             Elseif 2
                                 Guard3 = generatePersonTemporary()
-                                Guard3.dressGuard()
+                                Guard3.dressUniform(Police)
                                 Inmate1 = generatePersonTemporary()
                                 Inmate2 = generatePersonTemporary()
                                 Inmate3 = generatePersonTemporary()
@@ -303,12 +306,13 @@ OTHER: none
                                     Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
                                 energy -= 10
-                                Guard3(Curious)::"Sire, my prisoners would like to join ... To be honest, me too!"
+                                Guard3(Curious)::"<DirectorP.Sir_or_Madam>, my prisoners would like to join ... To be honest, me too!"
                                 "What should I say?"
                                 0::"It's ok for me"
                                 1::"No way"
                                 
                                 If 0
+                                    "All inmates started to undressed and the guard decided to be first to fuck with me ..."
                                     Guard3.strip()
                                     Inmate1.strip()
                                     Inmate2.strip()
@@ -324,6 +328,7 @@ OTHER: none
                                     If HungerEnable > 0
                                         Player.modifyActorVar(rk_VB_Hunger, -2)
                                     EndIf
+                                    "I will do a threesome with two inmates ..."
                                     Inmate1.animate()
                                     Inmate2.animate(masturbate)
                                     Inmate3.animate()
@@ -333,6 +338,7 @@ OTHER: none
                                     If HungerEnable > 0
                                         Player.modifyActorVar(rk_VB_Hunger, -3)
                                     EndIf
+                                    "I will do a foursome with three inmates ..."
                                     Inmate1.animate(masturbate)
                                     Inmate2.animate()
                                     Inmate3.animate(masturbate)
@@ -543,7 +549,11 @@ OTHER: none
                 followUp(released_from_prison)
             Endif
         Else
-            "I will be released in few days! So I don't need to talk to the prison warden ..."
+            If TotalSentences > 14.9
+                "It's too early to ask something to the prison warden ..."
+            Else
+                "I will be released in few days! So I don't need to talk to the prison warden ..."
+            Endif
         Endif
         If TotalSentences <= 0
             followUp(released_from_prison)
