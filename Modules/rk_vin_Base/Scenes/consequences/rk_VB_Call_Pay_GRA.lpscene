@@ -42,7 +42,7 @@ OTHER:
         0::TotalDebtVB > 0 ::"Bicycle bill"
         1::TotalDebtVC > 0 ::"Car bill"
         2::TotalDebtVM > 0 ::"Motorcycle bill"
-        3::money > TotalDebtAllV ::"All bills"
+        3::money > TotalDebtAllV && TotalDebtAllV > 0 ::"All bills"
         99::"I changed my mind!"
         
         If 0
@@ -68,7 +68,7 @@ OTHER:
             2::money > Price3 && TotalDebtVB > 1000 && PPP ::"<Price3_loc>"
             3::money > Price4 && TotalDebtVB > 10000 && PPP ::"<Price4_loc>"
             9::money > HalfDebtVB && PostponedVB > 12::"Minimum payment <HalfDebtVB_loc>"
-            10::money > TotalDebtVB ::"Pay all the bill"
+            10::money > TotalDebtVB && TotalDebtVB > 0 ::"Pay all the bill"
             
             If 0
                 Player.modifyActorVar(rk_VB_TotalDebtVB, -10)
@@ -128,7 +128,7 @@ OTHER:
             2::money > Price3 && TotalDebtVC > 1000 && PPP ::"<Price3_loc>"
             3::money > Price4 && TotalDebtVC > 10000 && PPP ::"<Price4_loc>"
             9::money > HalfDebtVC && PostponedVC > 12::"Minimum payment <HalfDebtVC_loc>"
-            10::money > TotalDebtVC ::"Pay all the bill"
+            10::money > TotalDebtVC && TotalDebtVC > 0::"Pay all the bill"
             
             If 0
                 Player.modifyActorVar(rk_VB_TotalDebtVC, -10)
@@ -188,7 +188,7 @@ OTHER:
             2::money > Price3 && TotalDebtVM > 1000 && PPP ::"<Price3_loc>"
             3::money > Price4 && TotalDebtVM > 10000 && PPP ::"<Price4_loc>"
             9::money > HalfDebtVM && PostponedVM > 12::"Minimum payment <HalfDebtVM_loc>"
-            10::money > TotalDebtVM ::"Pay all the bill"
+            10::money > TotalDebtVM && TotalDebtVM > 0 ::"Pay all the bill"
             
             If 0
                 Player.modifyActorVar(rk_VB_TotalDebtVM, -10)

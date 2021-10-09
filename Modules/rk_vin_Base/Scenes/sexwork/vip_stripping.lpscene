@@ -26,9 +26,11 @@ OTHER: Random(0, 150) < attractiveness + perversion
             setBackground(brothel)
             "As soon as we're in the private VIP room, I started a striptease."
             Player.animate(dance)
-            While !Player.isNaked()
+            count = 0
+            While !Player.isNaked() && count < 10
                 Player.stripOne()
                 "Off this goes ..."
+                count += 1
             Endwhile
             money += 100
             Actor(Flirty):: "Oh ... you got me all horny, baby. Would you mind getting physical? We're in a private room after all so no such thing as 'No Touching' policy in here ..."

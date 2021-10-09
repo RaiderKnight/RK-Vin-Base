@@ -27,6 +27,7 @@ OTHER: none
         ProstCount = Player.getActorVar(rk_VB_ProstCount)
         RapeCount = Player.getActorVar(rk_VB_RapeCount)
         RobberyCount = Player.getActorVar(rk_VB_RobberyCount)
+        SmallOffenceCount = Player.getActorVar(rk_VB_SmallOffenceCount)
         // Calcul for sentences
         TotalSentences = Player.getActorVar(rk_VB_TotalSentences)
         ActualSent = Player:sentence
@@ -170,6 +171,7 @@ OTHER: none
                     1::"Don't accept <DirectorP.his_or_her> offer"
                     
                     If 0
+                        SexNorm = true
                         NormalSex = false
                         If DirectorP:perversion > 50
                             DirectorP(Flirty)::"I like to try the things my prisoner likes to do with their victim, so according to your prisoner report I can see that you like ..."
@@ -182,7 +184,7 @@ OTHER: none
                             4::ProstCount > 0 ::"Sex for money"
                             5::RapeCount > 0 && isModEnabled(vin_NonConsensual)::"Getting raped by <DirectorP.him_or_her>"
                             6::RobberyCount > 0 ::"Be punished for stealing"
-                            7::"Just normal sex"
+                            99::SmallOffenceCount > 0 || SexNorm ::"Just normal sex"
                             
                             If 0
                                 doggyP = generateCreatureTemporary(Dog)
@@ -495,7 +497,7 @@ OTHER: none
                                         money += DGCash
                                     Endif
                                 Endif
-                            Elseif 7
+                            Elseif 99
                                 "We stripped and <DirectorP.he_or_she> started to caressing me ..."
                                 perversion += 1
                                 DirectorP.strip()

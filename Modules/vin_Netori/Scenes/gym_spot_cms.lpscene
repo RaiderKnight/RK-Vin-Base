@@ -10,8 +10,9 @@ OTHER: Random(50, 200) < fitness
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        "Two people approach me"
         Actor = generatePersonTemporary()
-        While !Player.isInterestedIn(Actor)
+        While !Player.isInterestedIn(Actor) && !Player.isAsexual()
             Actor = generatePersonTemporary()
         Endwhile
         Actor.makeInterested(Player)
