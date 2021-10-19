@@ -1,19 +1,19 @@
 WHAT: all
 WHERE: all, -home, -work, -university:school, -university:work
 WHEN: 0 - 24
-WHO: eElf = generatePersonTemporary(); If eElf.isRace(Elf) && eElf.isInterestedIn(Player) && eElf:masochist < -10
+WHO: eElf = getPerson(); If eElf.isRace(Elf) && eElf.isInterestedIn(Player) && eElf:masochist < -10
 OTHER: !isAtHome() && PercentageElves > 0 && isModEnabled(vin_NonConsensual)
 
     SceneStart()
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
-    
+        eElf = generatePersonTemporary()
         Player:: "Oh!... Oh!"
         eElf.dress()
         eElf.show()
         "I'm getting very hot right now & horny"
-        eElf:: "Ha, ha, ha."
+        eElf(Grin):: "Ha, ha, ha."
         "That Elf cursed me!"
         "Trying to force me to masturbate, furiously!."
         0:: "Give in"

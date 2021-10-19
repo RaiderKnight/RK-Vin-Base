@@ -19,7 +19,7 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
         CurrentCompanion.show(4)
         
         If Player.isPregnant()
-            Player():: "I'm already pregnant!"
+            Player(Happy):: "I'm already pregnant!"
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, 1.5)
             EndIf
@@ -28,7 +28,7 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
             EndIf
             BreedingPartyYES = false
         Elseif Player.isMale()
-            Player():: "I can't get pregnant!"
+            Player(Sad):: "I can't get pregnant!"
             BreedingPartyYES = false
         Elseif !ForcedTrigger()
             "Since <CurrentCompanion.name> has said that <CurrentCompanion.he_or_she> really wants a baby, should I suggest to <CurrentCompanion.him_or_her> that we arrange a breeding party for <CurrentCompanion.him_or_her>?"
@@ -62,7 +62,7 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
                 Guest1 = getSelectedNPC()
                 If !Guest1.isValid()
                     "I can't quite decide on who to invite."
-                Elseif !Guest1.isMale()
+                Elseif Guest1.isFemale()
                     "I should'nt invite woman."
                     Guest1.delete()
                 Elseif Guest1:perversion > 20 && Guest1:rapportwithplayer > 0 && Guest1.isMale()
@@ -80,7 +80,7 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
                 Guest2 = getSelectedNPC()
                 If !Guest2.isValid()
                     "I can't quite decide on who to invite."
-                Elseif !Guest2.isMale()
+                Elseif Guest2.isFemale()
                     "I should'nt invite woman."
                     Guest2.delete()
                 Elseif Guest2:perversion > 20 && Guest2:rapportwithplayer > 0 && Guest2.isMale()
@@ -98,7 +98,7 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
                 Guest3 = getSelectedNPC()
                 If !Guest3.isValid()
                     "I can't quite decide on who to invite."
-                Elseif !Guest3.isMale()
+                Elseif Guest3.isFemale()
                     "I should'nt invite woman."
                     Guest3.delete()
                 Elseif Guest3:perversion > 20 && Guest3:rapportwithplayer > 0 && Guest3.isMale()
@@ -116,7 +116,7 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
                 Guest4 = getSelectedNPC()
                 If !Guest4.isValid()
                     "I can't quite decide on who to invite."
-                Elseif !Guest4.isMale()
+                Elseif Guest4.isFemale()
                     "I should'nt invite woman."
                     Guest4.delete()
                 Elseif Guest4:perversion > 20 && Guest4:rapportwithplayer > 0 && Guest4.isMale()
@@ -134,7 +134,7 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
                 Guest5 = getSelectedNPC()
                 If !Guest5.isValid()
                     "I can't quite decide on who to invite."
-                Elseif !Guest5.isMale()
+                Elseif Guest5.isFemale()
                     "I should'nt invite woman."
                     Guest5.delete()
                 Elseif Guest5:perversion > 20 && Guest5:rapportwithplayer > 0 && Guest5.isMale()
@@ -152,7 +152,7 @@ OTHER: Player.isDating() && !Player.isPregnant() && !Player.isMale() && isModEna
                 Guest6 = getSelectedNPC()
                 If !Guest6.isValid()
                     "I can't quite decide on who to invite."
-                Elseif !Guest6.isMale()
+                Elseif Guest6.isFemale()
                     "I should'nt invite woman."
                     Guest6.delete()
                 Elseif Guest6:perversion > 20 && Guest6:rapportwithplayer > 0 && Guest6.isMale()
