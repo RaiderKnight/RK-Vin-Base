@@ -2,7 +2,7 @@ WHAT: all
 WHERE: all
 WHEN: 0 - 24
 WHO: Actor = getCompanion(); If !CurrentCompanion.isMale() && CurrentCompanion:masochist < -50 && CurrentCompanion:perversion > 70 && !CurrentCompanion.isDating()
-OTHER: Random(2, 50) > karma
+OTHER: none
 
     SceneStart()
 
@@ -17,7 +17,7 @@ OTHER: Random(2, 50) > karma
         If 0
             "I decided to be more careful around <Actor.name> so even if those dark desires are there, there are no oppotunities to act upon them."
         Else
-            If karma < Actor:attractiontoplayer
+            If Random(40, 200) < Actor:attractiontoplayer
                 "<Actor.name> decided to invite me into <Actor.his_or_her> apartment for drinks tonight. <Actor.He_or_She>'s been extremely generous with the alcohol and I'm feeling quite tipsy already."
                 Loc = Actor.getBuilding(home)
                 moveTo(Loc)

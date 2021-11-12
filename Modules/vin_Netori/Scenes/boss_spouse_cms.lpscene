@@ -1,7 +1,7 @@
 WHAT: all
 WHERE: work
 WHEN: 16 - 22
-WHO: Actor0 = getSpecific(Boss); Actor1 = Actor.getRelatedPerson(Spouses); If Random(20, 100) < Actor0:rapportwithplayer && Player.isInterestedIn(Actor1)
+WHO: Actor0 = getSpecific(Boss); Actor1 = Actor0.getRelatedPerson(Spouses); If Random(20, 100) < Actor0:rapportwithplayer && Player.isInterestedIn(Actor1)
 OTHER: masochist < 0 && !isWithCompanion()
 
     SceneStart()
@@ -39,9 +39,9 @@ OTHER: masochist < 0 && !isWithCompanion()
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
         Else
-            Player:: "Please don't blame <Actor0.him_or_her>. It's just busy period for the company at the moment."
-            Player:: "Thank you for the dessert. I think I should head off now."
+            Player(Sad):: "Please don't blame <Actor0.him_or_her>. It's just busy period for the company at the moment."
+            Player(Serene):: "Thank you for the dessert. I think I should head off now."
         Endif
     
     SceneEnd()
-    timeout(500, boss_spouse_cms)
+    timeout(500, boss_spouse_cms) // Scene improved by Raddeck

@@ -10,8 +10,8 @@ OTHER: none
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        Dating = getSpecific(Dating)
-        If Bull.isInterestedIn(Dating) && Bull:perversion - Bull:masochist > 50
+        Bull = getCompanion()
+        If Bull.isInterestedIn(Dating) && [Bull:perversion - Bull:masochist > 50 || Random(0, 100) < Bull:rapportwithplayer]
             Bull(Flirty):: "Well, I suppose I can teach a <Player.cuckold_or_cuckqueen> like you a thing or two about pleasing a <Dating.man_or_woman>."
             Dating.dress()
             Dating.show()
@@ -31,6 +31,7 @@ OTHER: none
                     Sex(Bull, Dating)
                     masochist += Random(0, 2)
                     perversion += Random(0, 1)
+                    Bull:rapportwithplayer += 10
                     "That was hot. But it looks like both <Bull.name> and <Dating.name> could go for another round ... and I'm becoming quite aroused."
                     0:: "Have a threesome"
                     1:: "Nope"
@@ -58,4 +59,4 @@ OTHER: none
         Else
             Bull(Angry):: "I'm not interested! Maybe you should put an ad on Craiglist or something!"
         Endif
-    SceneEnd() // Scene improved by Raddeck
+    SceneEnd()

@@ -1,8 +1,8 @@
 WHAT: all
 WHERE: all
 WHEN: 16-20
-WHO: Actor2 = getRelative(Child, StepChild); Actor = Actor2.getRelatedPerson(ParentChild); If Actor2.isVirgin() && !Actor.isMale() && !Actor2.isFemale() && !Actor.isPregnant()
-OTHER: !Player.isFemale()
+WHO: Actor2 = getRelative(Child, StepChild); Actor = Actor2.getRelatedPerson(ParentChild); If Actor2.isVirgin() && !Actor.isMale() && Actor2.isMale()
+OTHER: Player.isMale()
     
     SceneStart()
 
@@ -36,24 +36,21 @@ OTHER: !Player.isFemale()
                 Impregnating = false
                 Actor(Curious):: "Should I take myself off birth control?"
                 0:: "Yes"
-                1:: "No -safe-"
+                1:: "No"
                 
                 If 0
                     Impregnating = true
                     Actor.setWantsBabies(true)
-                Else    
-                    blockPregnancy()
                 Endif
-                Actor2(Curious):: "Should I wear a condom, <Player.Dad_or_Mom>?"
-                0:: "Yes -safe-"
+                Actor2(Curious):: "Should I wear a condom, Dad?"
+                0:: "Yes"
                 1:: "No"
                 
                 If 1             
                     Actor2.setWantsBabies(true)
                     If Impregnating
-                        If Actor.isOnPeriod()
-                            "Looks like <Actor.name> is ovulating. She must be highly fertile tonight."
-                        Endif
+                        Actor.impregnate(Actor2)
+                        "Looks like <Actor.name> is ovulating. She must be highly fertile tonight."
                         Actor.setActorVar(tag_incest_cherry_boy_cms_preg, 1)
                         Actor2.setActorVar(tag_incest_cherry_boy_cms_impreg, 1)
                     Endif
@@ -61,27 +58,23 @@ OTHER: !Player.isFemale()
                     Impregnating = false
                 Endif
                 Sex(Actor2, Actor)
-                If Impregnating && !Actor.isPregnant()
+                If Impregnating
                     Actor2(Curious):: "Can I try impregnate Mom again?"
                     0:: "Yes"
                     1:: "No"
                     
                     If 0
                         Sex(Actor2, Actor)
-                        If !Actor.isPregnant()
-                            "When she sends for me now."
-                            0:: "Join in"
-                            1:: "No"
+                        "When she is ovulating, she sends for me ..."
+                        0:: "Join in"
+                        1:: "No"
                         
-                            If 0
-                                Sex(Player, Actor2, Actor)
-                                If HungerEnable > 0
-                                    Player.modifyActorVar(rk_VB_Hunger, -3)
-                                EndIf
-                            Endif
+                        If 0
+                            Sex(Player, Actor2, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -3)
+                            EndIf
                         Endif
-                        
-                        
                     Endif
                 Endif
             Endif

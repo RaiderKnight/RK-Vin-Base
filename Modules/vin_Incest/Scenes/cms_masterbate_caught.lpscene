@@ -2,7 +2,7 @@ WHAT: masturbate
 WHERE: home
 WHEN: 0 - 24
 WHO: Actor = getRelative(); If Actor.livesWithPlayer() && Actor.isInterestedIn(Player) && Actor:perversion > 30 && Actor:incest > 10
-OTHER: isAtHome() && intelligence > Actor:sneak
+OTHER:
 
     SceneStart()
 
@@ -19,13 +19,14 @@ OTHER: isAtHome() && intelligence > Actor:sneak
             perversion += 2
             Actor:perversion += 2
             "I pretend not to notice"
+            // Edit start Ravenger6660
             Love = 0
             Love += Actor:attractiontoplayer
             Love += Actor:incest
             Love += Actor:perversion
             Love -= Actor:masochist
-                    
-            If Random(100, 350) < Love || Actor.hadsex()
+            // Edit end Ravenger6660   
+            If Random(100, 350) < Love || Actor.hadsex() // Edit Ravenger6660
                 "My <Actor.relationship> decided that I needed help."
                 Sex(Player, Actor)
                 If HungerEnable > 0
@@ -40,11 +41,13 @@ OTHER: isAtHome() && intelligence > Actor:sneak
             Actor:rapportwithplayer -= 5
         Else
             perversion += 2
+            // Edit start Ravenger6660
             Love = 0
             Love += Actor:attractiontoplayer
             Love += Actor:incest
             Love += Actor:perversion
-            If Actor.hadSex() || Random(150, 250) < Love 
+            // Edit end Ravenger6660
+            If Actor.hadSex() || Random(150, 250) < Love  // Edit Ravenger6660
                 "My <Actor.relationship> slowly comes into the room"
                 Sex(Player, Actor)
                 If HungerEnable > 0

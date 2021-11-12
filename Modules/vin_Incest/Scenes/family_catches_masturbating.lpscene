@@ -1,7 +1,7 @@
 WHAT: masturbate
 WHERE: home
 WHEN: 0 - 24
-WHO: Peeping = getRelative(); If Peeping.isInterestedIn(Player) && Peeping.livesWithPlayer()
+WHO: Peeping = getRelative(); If Peeping.isInterestedIn(Player) && Peeping.livesWithPlayer() && Random(40, 500) < Peeping:perversion
 OTHER: isAtHome()
 
 
@@ -30,17 +30,13 @@ OTHER: isAtHome()
             Player.dress()
             "I quickly put some clothes on and went looking around but couldn't find anyone. Whoever the peeping Tom was must have quick feet."
         Else
-            perversion += 2
-            Peeping:attractiontoplayer += 2
+            perversion += Random(0, 0.1)
+            Peeping:attractiontoplayer += Random(0, 0.5)
             
             "I won't lie: The thought of someone watching me turned me on even further ... I might as well give my peeping Tom a show to remember"
-            Peeping:incest += 1
-            Love = 0
-            Love += Peeping:attractiontoplayer
-            Love += Peeping:incest
-            Love += Peeping:perversion
+            Peeping:incest += Random(0, 1)
             
-            If Random(150, 250) < Love
+            If Peeping:incest > 75
                 "My bedroom door slowly crept open and behind it revealed my not-so-secret admirer. It was no other than my <Peeping.relationship>!"
                 Peeping.dress()
                 Peeping.show(2)
@@ -63,7 +59,7 @@ OTHER: isAtHome()
                     "I quickly grabbed the blanket to cover myself."
                     Player(Embarassed):: "Hey! Get out! What the fuck? You're my <Peeping.relationship>! Remember to knock next time, you perv!"
                     
-                    If Peeping:masochist < -50
+                    If isModenabled(vin_NonConsensual) && Peeping:masochist < -50
                         Peeping(Flirty):: "You know what. I think I'm going to have some fun with you."
                         If !Peeping.isMale()
                            Filter(AggressiveFM)
