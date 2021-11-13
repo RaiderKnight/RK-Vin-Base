@@ -6,7 +6,7 @@ OTHER: none
 
 
     SceneStart()
-    
+        CompanionIntroduced = isWithCompanion()
         New_Person.makePermanent()
         InterestedInPC = New_Person.isInterestedIn(Player)
         DominantToPC = New_Person.isDominantSex(Player)
@@ -43,14 +43,14 @@ OTHER: none
                     CurrentCompanion(Happy):: "<New_Person.name> is a great person. You made the right choice giving <New_Person.him_or_her> your number."
                     CurrentCompanion:rapportwithplayer += Random(0,1)
                 EndIf
-                interpersonal += 1
+                interpersonal += 1  // Edit Raddeck
             Else
                 "I found an excuse not to give <New_Person.him_or_her> my number. Disappointed, <New_Person.he_or_she> left."
                 If CompanionIntroduced
                     CurrentCompanion(Angry):: "You shouldn't have been so rude to my friend! Next time I won't introduce you to anyone else!"
                     CurrentCompanion:rapportwithplayer -= Random(0,2)
                 EndIf
-                interpersonal -= 1
+                interpersonal -= 1  // Edit Raddeck
     
             EndIf            
         Else
@@ -118,7 +118,7 @@ OTHER: none
                 EndIf
             Else
                 "I decided not to give <New_Person.him_or_her> my number."
-                interpersonal -= 1
+                interpersonal -= 1 // Edit Raddeck
             EndIf        
         EndIf
     SceneEnd() // Improved by Raddeck

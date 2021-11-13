@@ -5,6 +5,11 @@ WHO: Actor = getSpecific(Coursemate); If Player.isInterestedIn(Actor) && !Actor.
 OTHER: none
 
     SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Actor.dress()
         Actor.show(2)
         "One of my students <Actor.name> is insanely hot! <Actor.Him_or_Her> being in my class is so distracting ... I could barely keep my eyes off <Actor.him_or_her>."
@@ -14,7 +19,7 @@ OTHER: none
         If 0
             "I made sure that <Actor.name> knows my attraction, literally tearing <Actor.his_or_her> clothes off with my eyes for the whole lecture."
             Actor:attractiontoplayer += Random(0, 1)
-            If !isContactExchanged() && Actor:attractiontoplayer > 35
+            If !Actor.isContactExchanged() && Actor:attractiontoplayer > 35
                 "After class ..."
                 "I was packing my supplies up after class when <Actor.name> passed by and dropped a piece of paper on my table, winked at me and walked off."
                 "It's <Actor.his_or_her> number with the message 'Text me!'. It's my dream come true!"
@@ -23,5 +28,5 @@ OTHER: none
         Else
             "Come on, let's stay professional here ..."
         Endif
-    SceneEnd() // Improved by Raddeck
+    SceneEnd() // Scene improved by Raddeck
     timeout(100, crush_student)

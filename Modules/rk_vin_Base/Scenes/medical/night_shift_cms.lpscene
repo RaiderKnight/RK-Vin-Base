@@ -1,7 +1,7 @@
 WHAT: all
 WHERE: hospital:work
 WHEN: 18 - 4
-WHO: Actor = getSpecific(Doctor, Nurse); If Actor.isInterestedIn(Player) && Player.isInterested(Actor) && Actor:perversion > 70 && Actor:attractiontoplayer > 20
+WHO: Actor = getSpecific(Doctor, Nurse); If Actor.isInterestedIn(Player) && Player.isInterestedIn(Actor) && Actor:perversion > 70 && Actor:attractiontoplayer > 20
 OTHER:
 
     SceneStart()
@@ -21,9 +21,8 @@ OTHER:
             Sex(Player, Actor)
             passTime(1, 3)
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -1)
+                Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
-            
         Endif
     SceneEnd() // Improved by Raddeck
-    timeout(400, night_shift_cms)
+    timeout(200, night_shift_cms)

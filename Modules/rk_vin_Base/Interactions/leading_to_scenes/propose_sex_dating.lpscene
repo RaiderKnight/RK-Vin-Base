@@ -14,23 +14,18 @@ OTHER: none
             Subor = true
         Else
             Subor = false
-        Endif
+        EndIf
+        
         If Actor.isDating()
-        
             "The best thing about being in a steady relationship is that sex is much easier to come by"
-            
         Else
-        
             "I had sex with <Actor.name> before. Maybe it wouldn't take much convincing to get it on again?"
-            
-        Endif
-        
+        EndIf
         "Should I be direct and suggest hooking up with <Actor.name> now?"
         0:: "Yes"
         1:: "No"
         
         If 0
-        
             If Random(0, 50) < Actor:attractiontoplayer + interpersonal + Actor:perversion + Actor:incest || [Subor && Random(0, 33) < Actor:attractiontoplayer + interpersonal + Actor:perversion + Actor:masochist]
                 If Subor
                     Actor(Flirty):: "Of course boss ... Anything to relieve you of some stress."
@@ -53,14 +48,12 @@ OTHER: none
                     3:: "Do nothing"
                     
                     If 0
-                    
                         Sex(Actor, Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         
                     Else 1
-                    
                         Actor(Flirty):: "Okay ... but only because you got me so horny from our fucking."
                         Sex(Actor2, Actor)
                         If HungerEnable > 0
@@ -75,14 +68,14 @@ OTHER: none
                         EndIf
                     Else
                         Actor2:rapportwithplayer -= 2
-                    Endif
-                Endif
+                    EndIf
+                EndIf
             Else
                 If Subor
                     Actor(Sad):: "Sorry boss, but I don't think we should be doing it quite so often and publicly ..."            
                 Else
                     Actor(Sad):: "Sorry, but I'm not in the mood right now ..."
-                Endif
-            Endif
-        Endif
+                EndIf
+            EndIf
+        EndIf
     SceneEnd() // Improved by Raddeck

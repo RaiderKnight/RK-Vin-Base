@@ -15,14 +15,15 @@ OTHER: none
         Else
             Subor = false
         Endif
-        Player(Flirty)::"Hi, I was wondering if you would like to visit my house?"
-        interpersonal += 1
+        Player(Flirty)::"Hi, I was wondering if you would like to visit my house?" //Edit Raddeck
+        interpersonal += 1 //Edit Raddeck
         If Actor.isDating() || Actor.isRelative() || [Random(30, 100) < interpersonal && [Actor:rapportwithplayer > 30 || Actor:attractiontoplayer > 30]]  || [Subor && [Actor:rapportwithplayer > 20 || Actor:attractiontoplayer > 20 || Actor:masochist > 20]]
             Actor(Happy):: "Of course, let's go back to your place and chill."
             If Subor
                 "Of course, I can't tell if <Actor.he_or_she> actually wants to spend time with me so privately outside of work or just feels obliged to, fearing that rejecting me could affect <Actor.his_or_her> job. I guess I'll find out soon enough"
             Endif
             moveTo(home)
+            setBackgroundCustom(livingroom)
             "We're now inside the apartment."
             choice = -1    
             ate = false
@@ -36,8 +37,8 @@ OTHER: none
                 0:: "Chat"
                 1:: !ate && stock_snack > 0.8:: "Eat something together"
                 2:: stock_movie > 0.8 :: "Watch a movie"
-                21:: "Watch TV"
-                22:: stock_movie > 0.8 :: "Watch a porn movie"
+                21:: "Watch TV" //Edit Raddeck
+                22:: stock_movie > 0.8 :: "Watch a porn movie" //Edit Raddeck
                 3:: stock_alcohol >= 1.8 :: "Drink alcohol"
                 4:: !hadSex:: "Kiss <Actor.him_or_her>"
                 5:: MyHome:: "Politely ask <Actor.him_or_her> to leave"
@@ -165,39 +166,26 @@ OTHER: none
                     Endif
 
                     If Kissed || [Actor.isInterestedIn(Player) && !hadSex && Actor:attractiontoplayer > Random(0, 200)]
-                    
                         "I decided to kiss <Actor.him_or_her> ..."
-                        Player(Kiss):: "..."
                         AnimatePair(Player, Actor, Kissing)
+                        Player(Kiss):: "..."
                         Actor(Kiss):: "..."
                         
-                        If Dating
-                        
+                        If Actor.isDating()
                             "We kissed. It started slow but soon became more passionate. It was obvious what we both wanted ..."
-                            
                         Else
-                        
                             "We had a kiss, an awkward one at first, but soon moving towards a more passionate direction."
-                            Player(Kiss):: "..."
-                            AnimatePair(Player, Actor, Kissing)
-                            Actor(Kiss):: "..."
-                            
                         Endif
-                        
                         "Should I let this escalate further?"
                         0:: Vanilla:: "Make out"
                         1:: "Stop"
                     
                         If 0
-                            
                             If Actor.isDating() || [Actor.isInterestedIn(Player) && [Actor.IsDominantSex(Player) || Actor:attractiontoplayer + Actor:perversion > Random(50, 200) || Actor:intoxication > 80]]
-                                
                                 "Our kiss got more and more steamy and soon we were making out, our hands all over each other."
-                                
                                 If TfGame() && Actor.isMale()
                                     "I'm a man trapped inside a woman's body. I don't think I'm gay, but here I am, about to hook up with my male date."
                                 Endif
-                                
                                 hadSex = true
                                 Player:perversion += Random(0, 1)
                                 Sex(Player, Actor)
@@ -207,21 +195,15 @@ OTHER: none
                                     Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
                                 passTime(0.2, 0.5)
-                                
                             Else
-                            
                                 "Unfortunately for me, <Actor.name> didn't seem interested in letting things escalate any further and pulled away."
-                                
                             Endif
                             
                         Else
-                        
                             "I decided to stop it there and not go any further."
-                            
                         Endif
-                        
                     Elseif Random(0, 100) < 20
-                        If Dating
+                        If Actor.isDating()
                             "After a while, we were both exhausted and went to bed together for the night."
                             passTime(4, 8)
                             energy += Random(50, 100)

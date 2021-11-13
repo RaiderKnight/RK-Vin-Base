@@ -113,19 +113,16 @@ OTHER: none
                 
             Endif
             
+            If !isAtHome()
+                Player(Happy):: "Let's go back home..."
+                moveTo(home)
+            EndIf
+            setBackgroundCustom(livingroom)
             "My preparations are all done. It's time to welcome the guests!"
             Player(Happy):: "Come in, everyone! Don't be shy. Everything's ready."
             Player.animate()
             
         Endif
-        
-        If !isAtHome()
-        
-            Player(Happy):: "Let's go back home..."
-            moveTo(home)
-            setBackgroundCustom(livingroom)
-        
-        EndIf
         
         If PartyWillStart > 0
 
@@ -213,6 +210,7 @@ OTHER: none
                 3:: "Sit with <Guest3.name>"
                 4:: "Sit with <Guest4.name>"
                 5:: "Sit with <Guest5.name>"
+                6:: "Sit with the host"
                 7:: timePassed > 1:: "End the party"
                 
                 If 0
@@ -241,6 +239,8 @@ OTHER: none
                         SitWith = Guest4
                     Elseif 5
                         SitWith = Guest5
+                    Elseif 6
+                        SitWith = Host
                     Endif
                     
                     Player.moveToPerson(SitWith)
@@ -322,7 +322,7 @@ OTHER: none
                             If 0
                                 KissBack = true
                             Else
-                                "I pulled myself away from <SitWith.him_or_her>. <SitWith.He_or_She> was visibly embarassed."
+                                "I pulled myself away from <SitWith.him_or_her>. <SitWith.He_or_She> was visibly embarrassed."
                                 SitWith:attractiontoplayer -= Random(0, 1)
                             Endif
                         Else
@@ -339,7 +339,7 @@ OTHER: none
                                     "Wow, that's quite a pleasant surprise. <SitWith.name> was totally receptive to my advance. In fact, <SitWith.he_or_she> certainly showed that <SitWith.he_or_she> wanted something more ..."
                                     KissBack = true
                                 Else
-                                    "<SitWith.name> pulled away from my advances. Embarassed, I retreated, pretending for the rest of the party as if nothing happened ..."
+                                    "<SitWith.name> pulled away from my advances. Embarrassed, I retreated, pretending for the rest of the party as if nothing happened ..."
                                 Endif
                             Else
                                 "Perhaps not ... It would be extremely embarrassing to be rejected in front of everyone."
