@@ -67,11 +67,7 @@ OTHER: none
 
                             Actor.strip()
                             Actor2.strip()
-                            Sex(Actor, Actor2)
-                            If HungerEnable > 0
-                                Player.modifyActorVar(rk_VB_Hunger, -1)
-                            EndIf
-                            perversion += 0.25
+                            perversion += 0.5
                             Player.modifyActorVar(rk_VB_Boss_Sucker, -0.5)
                             
                         Elseif 1
@@ -83,7 +79,7 @@ OTHER: none
                             arousal += 1
                             Sex(Player, Actor, Actor2)
                             If HungerEnable > 0
-                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                                Player.modifyActorVar(rk_VB_Hunger, -3)
                             EndIf
                             Player.modifyActorVar(rk_VB_Boss_Sucker, -1)
                             
@@ -97,23 +93,17 @@ OTHER: none
                             "<Actor.name> isn't my favorite colleague. This is the perfect opportunity to get <Actor.him_or_her> fired."
 
                             If Random(0, 100) < Actor:interpersonal
-                            
                                 Fired = false
                                 "I didn't get <Actor.name> fired. Instead, <Actor.he_or_she> now knows I'm the whistleblower and basically declares me as an enemy."
                                 Actor:rapportwithplayer -= 50
                                 mood -= 3
                                 Player.modifyActorVar(rk_VB_Boss_Sucker, 1)
-                                
                             Else
-
                                 Player.modifyActorVar(rk_VB_Boss_Sucker, 1)
                                 Fired = true
                                 mood += 3
-                                
                             Endif
-                            
                         Endif
-                        
                     Endif
                     
                 Elseif Random(0, 100) < 10 && WHEN > 18 // Night out
@@ -121,31 +111,24 @@ OTHER: none
                     Colleague1 = Actor
                     Colleague1.dressUniform(Police)
                     Colleague1.Show(2)
-
                     Colleague1(Sarcastic):: "<Player.name>! What are you doing still in the prison office this late in the evening?"
                     Colleague1(Happy):: "Listen, a few of us are going to a bar nearby for a few drinks after work. Fancy coming? Work can wait till tomorrow - It's not like the boss is here to check on you."
                     0:: "Join them"
                     1:: "Decline"
 
                     If 0
-                
                         Player(Excited):: "Of course I'll join you. Sounds like fun. I'll just wrap up quickly and see you guys there."
                         mood += 1
-
                         Colleague1(Excited):: "Excellent. I'll see you there then!"    
                         Colleague1.hide()
-                        
                         Colleague2 = getPerson(tag_warden)
-                        Colleague2.dress()
-                        
+                        Colleague2.dressUniform(Police)
                         Colleague3 = getPerson(tag_warden)
-                        Colleague3.dress()
-                        
+                        Colleague3.dressUniform(Police)
                         Colleague4 = getPerson(tag_warden)
-                        Colleague4.dress()
-                        
+                        Colleague4.dressUniform(Police)
                         Colleague5 = getPerson(tag_warden)
-                        Colleague5.dress()
+                        Colleague5.dressUniform(Police)
                         
                         "A few minutes later ..."
                         setBackground(bar)
@@ -194,9 +177,7 @@ OTHER: none
                                 Colleague1(Happy):: "Alright, have a safe journey home. Thanks for coming out with us!"
                                 Colleague1:rapportwithplayer += Random(0, 2)
                                 PartyOngoing = false
-                                
                             Else
-                            
                                 If 1
                                     SitWith = Colleague1
                                 Elseif 2
@@ -211,19 +192,13 @@ OTHER: none
                                 
                                 Player.moveToPerson(SitWith)
                                 "I spent some time chatting with <SitWith.name>"
-                                
                                 If SitWith.IsInterestedIn(Player) && Random(0, 100) < attractiveness
-                                
                                     SitWith:attractiontoplayer += Random(-1, 2)
-                                    
                                 Else
-                                
                                     SitWith:rapportwithplayer += Random(-1, 2)
-                                    
                                 Endif
                                 
                                 If !SitWith.isContactExchanged()
-                                
                                     If [SitWith.IsDominantSex(Player) || !SitWith.IsInterestedIn(Player)] && [SitWith:attractiontoplayer > Random(20, 60) || SitWith:rapportwithplayer > Random(20, 60)]
                                         
                                         SitWith(Happy):: "Hey, I just realized I didn't have your personal number. Do you mind ..."
@@ -231,20 +206,17 @@ OTHER: none
                                         1:: "Sorry but no"
                                         
                                         If 0
-                                        
                                             Player(Excited):: "Of course! Let's exchange numbers!"
                                             exchangeContact(SitWith)
                                             SitWith:rapportwithplayer += Random(0, 5)
                                             
                                         Else
-                                        
                                             Player(Sad):: "I'm afraid I don't know you well enough yet for that. I tend to keep work and personal life separate."
                                             SitWith:rapportwithplayer -= Random(0, 3)
                                             
                                         Endif
                                         
                                     Else
-                                    
                                         "Should I ask <SitWith.name> for <SitWith.his_or_her> number?"
                                         0:: "Ask for <SitWith.his_or_her> number"
                                         1:: "Maybe not"
@@ -277,11 +249,8 @@ OTHER: none
                                 If Random(0, 100) < SitWith:perversion + SitWith:attractiontoplayer + SitWith:rapportwithplayer
                                 
                                     "<SitWith.name> offered me another drink. Shall I?"
-                                    
                                 Else
-                                
                                     "Should I offer <SitWith.name> a drink?"
-                                    
                                 Endif         
                                 "Have another drink?"
                                 0:: "Yes"
@@ -497,7 +466,7 @@ OTHER: none
                         Endwhile                    
                     Endif
                     
-                    Actor2.dress()
+                    Actor2.dressUniform(Prison)
                     Actor2.show()
                     Actor2(Curious):: "Please help me!"
                     Player(Curious):: "What's the matter?"
@@ -533,7 +502,6 @@ OTHER: none
                 Elseif Random(0, 100) < 10 && isModEnabled(vin_NonConsensual) && isModEnabled(vin_Bestiality) // Unruly Prisoner Scene
                 
                     setBackground(prison)
-                    
                     If gender == 0
                         Actor2 = generatePersonTemporary()
                         While !Actor2.isMale()
@@ -545,8 +513,7 @@ OTHER: none
                             Actor2 = generatePersonTemporary()
                         Endwhile                    
                     Endif
-                    
-                    Actor2.dress()
+                    Actor2.dressUniform(Prison)
                     Actor2.show()                 
                     "I was called to attend to a prisoner in <Actor.his_or_her> cell creating a scene, generally misbehaving, lotso of cursing, swearing and threats made to the other wardens and prisoners."
                     0:: "Talk <Actor2.him_or_her> down"
@@ -578,7 +545,7 @@ OTHER: none
                     
                         "Actually, this is the perfect opportunity to let the team blow off some steam."
                         Player(Evil):: "Let's shut <Actor2.him_or_her> up together!"
-                        Actor.dress()
+                        Actor.dressUniform(Police)
                         Actor(Evil):: "Alright! Let's do it."
                         Sex(Player, Actor, Actor2)
                         If HungerEnable > 0
@@ -612,7 +579,7 @@ OTHER: none
                         Endwhile                    
                     Endif
                     
-                    Actor2.dress()
+                    Actor2.dressUniform(Prison)
                     Actor2.show()
                     Actor2(Wink):: "Listen, I'll offer you a lot of money. Just sneak in my package for me!"
                     Player(Sarcastic):: "Let me guess, drugs?"
@@ -647,7 +614,7 @@ OTHER: none
                 Elseif Random(0, 100) < 1 // Performance Apprais
                 
                     Actor2 = getPerson(tag_wardenboss)
-                    Actor2.dress()
+                    Actor2.dressUniform(Police)
                     Actor2.show()
                     Actor2(Serene):: "<Player.name>, can we have a chat back in my office, please?"
                     "Damn, is this good news or bad news? Seems serious."
@@ -742,10 +709,10 @@ OTHER: none
                         Endwhile                    
                     Endif
                     
-                    Actor2.dress()
+                    Actor2.dressUniform(Prison)
                     Actor2.show()
                     Actor3 = generatePersonTemporary()
-                    Actor3.dress()
+                    Actor3.dressUniform(Nurse)
                     Actor3.show()
                     "I was asked to stand guard as a jail nurse visits a prisoner for a health checkup."
                     "It was quite clear that there's some sexual tension between the prioner and the nurse."
@@ -812,7 +779,7 @@ OTHER: none
                         Endwhile                    
                     Endif
                     
-                    Actor2.dress()
+                    Actor2.dressUniform(Prison)
                     Actor2.show()
                     Actor3 = generatePersonTemporary()
                     Actor3.dress()
@@ -858,6 +825,83 @@ OTHER: none
                             
                         Endif
                         
+                    Endif
+                Elseif Random(0, 100) < 20 // Bribery CMS
+                    If gender == 0
+                        Actor2 = generatePersonTemporary()
+                        While !Actor2.isMale()
+                            Actor2 = generatePersonTemporary()
+                        Endwhile
+                    Else
+                        Actor2 = generatePersonTemporary()
+                        While Actor2.isMale()
+                            Actor2 = generatePersonTemporary()
+                        Endwhile                    
+                    Endif
+                    
+                    Actor3 = generatePersonTemporary()
+                    While !Player.isInterestedIn(Actor3)
+                        Actor3 = generatePersonTemporary()
+                    Endwhile
+                    
+                    dressFormal()
+                    Actor3.dress()
+                    Actor3.show()
+                    
+                    "A lawyer comes to the prison office and walks across towards me, <Actor3.he_or_she> stops to read from <Actor3.his_or_her> charge papers."
+                    Actor3:: "I'm <Actor3.name> from the legal aid office, and I'm representing <Actor2.Mr_or_Ms> <Actor2.name> <Actor2.name_last>."
+                    "<Actor3.He_or_She> pauses and then looks up and at my name badge, and says <Player.Mr_or_Ms> <Player.name> <Player.name_last>."
+                    Player:: "Yes, You say, meeting <Actor3.his_or_her> gaze, what can I do for you?"
+                    Actor3:: "I need to speak to you about my client"
+                    "The lawyer says, with a serious tone ..." 
+                    Actor3:: "I'm a little concerned about some of the questioning of my client at the scene, and after you brought him back here."
+                    "I tell <Actor3.name> I think everything is in order and accompany <Actor3.him_or_her> to the wardens office, but once inside <Actor3.him_or_her> quickly shows <Actor3.his_or_her> true intentions."
+    
+                    "<Actor3.He_or_She> leans closer and whispers."
+                    Actor3:: "I know this case is crystal clear and my client has no chance of getting out the legal way. But <Actor2.name> has some powerful and wealthy friends outside."
+                    Actor3:: "Those friends would be quite generous, if you decided to help my client."
+                    Actor3:: "You just have to get rid of some evidence for us and then I'll roll up this case once again with shuffled new cards."
+                    Actor3:: "And if everything goes well, I would also show you my personal gratitude." 
+                    "<Actor3.name> grabs your hands and puts them on <Actor3.his_or_her> sexy ass, letting you give <Actor3.his_or_her> back a good squeeze."
+                    0:: "Take the money and help with the coup"
+                    1:: "Decline the offer!"
+                    2:: "Claim an arrest for bribery attempt"
+    
+                    If 0 
+                        "You take the deal and agree to steal some documents."
+                        SneakGame()
+                        If Random(0, 100) < sneak
+                            "I've done it. I am a ninja."
+                            "A few days later"
+                            karma -= 10
+                            money += 500
+                            "Lawyer meets you in your office again and you trade the evidence against the money."
+                            0:: "Sweeten the deal with some sexy time"
+                            1:: "Just take the money and leave"
+    
+                            If 0
+                                Sex(Player, Actor3)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                            Else
+                                Actor3:: "Always a pleasure making business with you. My clients will be very satisfied."
+                            Endif
+                        Else
+                            "Oh my god! I got busted." 
+                            "I got suspended from the job for my involvement in the scheme."
+                            timeout(840, prison_warden_cms)
+                        Endif
+                    Elseif 1
+                        "You decide to decline the offer, but if those friends of your prisoner are really that powerful, you should be careful." 
+                        "You look around and then reply loud and clear for everyone outside to hear."
+                        Player:: "Look, I dont think its appropriate for me to discuss court procedure with you like this. If you believe we havent acted correctly, you need to speak to the chief warden, not me."
+                        "The lawyer takes the hint and leaves."
+                        "Hopefully none of the other wardens or officers will take the deal."
+                    Else
+                        "You can't believe <Actor3.name> is trying to bribe you so shamelessly right here at the station. You call for your colleagues and arrest <Actor3.him_or_her> for attempted bribery."
+                        karma += 10
+                        Actor3:: "You will be sorry for your ill-considered decision!"
                     Endif
                     
                 Else

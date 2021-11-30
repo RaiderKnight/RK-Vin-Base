@@ -17,25 +17,49 @@ OTHER: Player.isFemale()
         Endwhile
         Actor.dressUniform(Police)
         Actor.show()
-        Actor:: "Excuse me, citizen, that shop owner over there accuses you of shoplifting. You'll have to follow me to the nearest police station for a strip search ..."
+        Actor(Curious):: "Excuse me, citizen, that shop owner over there accuses you of shoplifting. You'll have to follow me to the nearest police station for a strip search ..."
         "What!? This is ridiculous! I haven't even been inside that damn shop!"
         0:: "Agree to the strip search"
         1:: "Scare her off with my legal rights"
         
         If 0
             "I'm innocent but I don't want to risk being arrested for obstruction of justice ..."
+            Player(Sad)::"Oh well, ok then!"
+            mood -= 2
             setBackground(police)
-            "Back in the police station, the strip search began"
-            Filter(Stripsearch)
-            SexNoAffair(Actor, Player)
-            If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -2)
+            "Back in the police station, the police officer ask me to strip down..."
+            
+            Player.strip()
+            "The strip search began..."
+            Actor.moveToPersonStand(Player, 50)
+            "After a while..."
+            "The police officer seems to be having a little too much fun touching all my private parts."
+            "Should I say something?"
+            0::"Just let her do her job!"
+            1::"Tell her she's going a little too far..."
+            
+            If 0
+                Actor(Flirty)::"Now, I will search more deeper... hummm!"
+                Filter(Stripsearch)
+                sex(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+                "The police officer found nothing and I was free to go, but did the cop go too far there? The whole thing didn't seem entirely by the books."
+                "It was a little awkward but the fucking was fun and anyway, it's better than going to jail."
+            Else
+                Actor(Flirty)::"You will shut up, I'm not done with you! I'm going to look deeper... so shut up if you don't want to go straight to jail!"
+                Filter(Stripsearch)
+                SexNoAffair(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+                "The police officer found nothing and I was free to go, but the cop go a little too far there? The whole thing didn't seem entirely by the books."
             EndIf
-            "The search found nothing and I was free to go, but did the cop go too far there? The whole thing didn't seem entirely by the books and she seemed to enjoy herself a bit too much touching all my private parts."
         Else
             "I gave the cop an earful about my rights, clearly demonstrating that I wasn't any easy target to bully."
             "The cop eventually gave in and let me go."
         Endif
     
     SceneEnd() // Scene improved by Raddeck
-    timeout(200, strip_search_cms)
+    timeout(100, strip_search_cms)

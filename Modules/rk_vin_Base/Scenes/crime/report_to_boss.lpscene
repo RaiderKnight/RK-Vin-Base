@@ -28,7 +28,7 @@ OTHER: none
             Else
             
                 Boss(Evil):: "And I have something for you. I suggest you get to it immediately."
-                Actor.dress()
+                Actor.dressUniform(Crime)
                 Actor.show(3)
                 Boss(Evil):: "<Actor.name> will be your partner for this. Try not to get you both busted, will you?"
                 
@@ -40,6 +40,7 @@ OTHER: none
                     Job = 4 // Diamond
                     Job = 5 // Official Sex Tape
                     Job = 6 // Fuck
+                    Job = 7 // Watch
                 endRandom
                 
                 If Job == 0 // BANK ROBBERY
@@ -639,10 +640,123 @@ OTHER: none
                         Endif
                         Sex(Boss, Player)
                         Sex(Boss, Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -5)
+                        EndIf
                     Else
                         Boss(Furious):: "Then fuck off. If you can't even show your loyalty with such a simple service, you're not welcome here."
                         timeout(200, report_to_boss)
-                    Endif           
+                    Endif
+                Elseif Job == 7 // WATCH CMS
+                    Boss:: "An employee of our local snowflake factory has been...indisposed. You will be his substitute."
+                    Boss:: "<Actor.name> will bring you to our warehouse. You will have to keep a watch on the girls and ensure that the procedure runs nice and smoothly."
+                    Player:: "Ok boss, I'm already on my way" 
+                    Boss.hide()
+    
+    
+                    setBackground(alcohol)
+                    Actor.show()
+                    
+                    Actor2 = generatePersonTemporary()
+                    While Actor2.Male()
+                        Actor2 = generatePersonTemporary()
+                    Endwhile
+                    
+                    Actor3 = generatePersonTemporary()
+                    While Actor3.Male()
+                        Actor3 = generatePersonTemporary()
+                    Endwhile
+                    
+                    Actor2.show()
+                    Actor3.show()
+    
+                    Actor:: "That's the place. Have fun, but don't let yourself get distracted by the naked flesh. If just a tiny bit goes missing. It's you, who will be be taken to responsibility! Is that clear?"
+                    Player:: "Crystal clear."
+    
+                    Actor.hide()
+    
+                    "I start my watch and keep a close look at the girls how they package the product." 
+    
+                    If Random(0, 100) < 50
+                        "The shift goes rather uneventful. After a couple of hours all the snow is packed in little bags and I can finally go home..."
+                    Else
+                        "Near the end of my shift I notice one of the working girls moving her hand suspiciously under the table. Then she even starts fumbeling at her panties."
+                        "I decide to confront her about her suspicious behaviour."
+                        Player:: "What the heck do you think you are doing there?!"
+                        Actor2:: "Noth...nothing!"                   
+                        Player:: "Then you don't mind if I search you, do you?"
+                        Actor2:: "Oh...okay."
+                        Filter(Stripsearch)
+                        SexNoAffair(Player, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        "It seems like she has nothing hidden in her underwear. Could it be that she has hidden it inside of her?"
+                        0:: "Make a full body search"
+                        1:: "No this goes to far..."
+                        
+                        If 0
+                            Filter(RubPussy)
+                            SexNoAffair(Player, Actor2)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            "I search deep inside of the girl and you find a little bag of snow!"
+                            Player(angry):: "Look what we found here! I don't think this belongs anywhere near there... You know what the boss does to thieving bitches like you?!"
+                            Actor2:: "No please! Nooo!!! Please don't tell the boss. I'll do anything!"
+                            0:: "Take her to the boss"
+                            1:: "Demand Sex"
+                            2:: "Punish her yourself"
+                            3:: "Just let her go"
+                            
+                            
+                            If 0
+                                setBackground(restaurant)
+                                Boss.show()
+                                Boss:: "Thank you for bringing me that traitor bitch! You can go now, we will take care of this from now on..."
+                                "I turn around and don't even dare to look back on my way out. Better I don't even know what they will do to her."
+                                
+                            Elseif 1     
+                                Player:: "Anything...eh? Let's see about that..."
+                                Sex(Player, Actor2)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                
+                            Elseif 2     
+                                Player:: "Maybe I won't take you to the boss, but you gotta be punished bitch!"
+                                Filter(Aggressive)
+                                Sex(Player, Actor2)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                            
+                            Else     
+                                Player:: "Stop crying already! I won't let you go to hell for a couple grams of snow. But you better keep your mouth shut and never pull of such shit again. You hear me?!"
+                                Actor2(Happy):: "Yes! Yes! Of course... I thank you so much!"
+                                0:: "Demand her phone number"
+                                1:: "Just let her go already"
+                                
+                                If 0
+                                    Actor2.makePermanent()
+                                    exchangeContact(Actor2)
+                                    "The girl didn't have any other choice but give me her number."
+                                Endif
+                        Elseif 1
+                            "I don't think that girl would be so stupid to hide the stuff inside of her. And I may be a criminal, but atleast I got some decency"
+                            "I briefly warn the girl to stop messing around and then let her continue her work. The rest of the shift is rather uneventful and after a boring while you can finally call it a day and go home."
+                            
+                            If Random(0, 100) < 50
+                                Actor2.hide()
+                                Actor3.hide()
+                                setBackground(restaurant)
+                                Boss.show()
+                                "After a couple of days you hear that some of the product went missing. Even worse it must have been on your watch..."
+                                "The boss was mad and punished me severely."
+                                Player:: "Shit!"
+                            Endif
+                        Endif
+                    Endif
                 Endif
                 
                 If !isTimingOut(report_to_boss) && Job < 6
@@ -655,7 +769,7 @@ OTHER: none
                             Boss(Flirty):: "I guess my best right hand <Player.man_or_woman> deserves some more 'personal' compensation ..."
                             Sex(Boss, Player)
                             If HungerEnable > 0
-                                Player.modifyActorVar(rk_VB_Hunger, -3)
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
                         Else
                             Boss(Furious):: "Is this a joke? Who do you think you are to demand sex from me? Your recent little success has got to your head too much?"
@@ -716,7 +830,7 @@ OTHER: none
                     karma -= 5
                     Boss.hide()
                     exchangeContact(Boss)
-                    
+
                     Total = Random(3, 10)
                     count = 0
                     While count < Total
@@ -736,9 +850,7 @@ OTHER: none
                     Player(Scared):: "Can I ... think this over, <Boss.Sir_or_Madam>?"
                     Boss(Angry):: "Piss off then. If you're such an indecisive coward, you're probably not suited for our kind of business."
                 Endif
-                
             Endif
-            
         Endif
     
     SceneEnd()  // Scene improved by Raddeck
