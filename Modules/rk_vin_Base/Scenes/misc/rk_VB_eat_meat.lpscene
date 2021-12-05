@@ -14,8 +14,7 @@ OTHER: none
         If  money < -1 
             Player(Anxious)::"Ok, no money to eat! I need to find a job I guess... !"
         Else
-            
-            
+
             // Get current meat dishes prices for each types
             price_Jerkey = Random(4, 7)
             price_Jerkey_local = price_Jerkey.convertToLocalCurrency()
@@ -34,16 +33,15 @@ OTHER: none
             price_SurfNTurf = Random(31, 40)
             price_SurfNTurf_local = price_SurfNTurf.convertToLocalCurrency()
     
-            
-            Player::"Which type of meaty dish shall I buy?"
-            0:: money >= 0 ::"1 Beef Jerkey bag for <price_Jerkey_local>"
-            1:: money >= 0 ::"1 Philly Cheesesteak for <price_Cheesesteak_local>"
-            2:: money >= 0 ::"1 Chicken schnitzel for <price_Chicken_local>"
-            3:: money >= 0 ::"1 Salt-and-Pepper Steak for <price_SaltNPepper_local>"
-            4:: money >= 0 ::"1 Bacon-Wrapped Pork for <price_WrappedPork_local>"
-            5:: money >= 0 ::"1 Chicken Kebabs with rice for <price_ChickenKebabs_local>"
-            6:: money >= 0 ::"1 Chinese Beef & Broccoli for <price_ChineseBeef_local>"
-            7:: money >= 0 ::"1 Surf 'n Turf for <price_SurfNTurf_local>"
+            "Which type of meaty dish shall I buy?"
+            0:: money >= price_Jerkey ::"1 Beef Jerkey bag for <price_Jerkey_local>"
+            1:: money >= price_Cheesesteak ::"1 Philly Cheesesteak for <price_Cheesesteak_local>"
+            2:: money >= price_Chicken ::"1 Chicken schnitzel for <price_Chicken_local>"
+            3:: money >= price_SaltNPepper ::"1 Salt-and-Pepper Steak for <price_SaltNPepper_local>"
+            4:: money >= price_WrappedPork ::"1 Bacon-Wrapped Pork for <price_WrappedPork_local>"
+            5:: money >= price_ChickenKebabs ::"1 Chicken Kebabs with rice for <price_ChickenKebabs_local>"
+            6:: money >= price_ChineseBeef ::"1 Chinese Beef & Broccoli for <price_ChineseBeef_local>"
+            7:: money >= price_SurfNTurf ::"1 Surf 'n Turf for <price_SurfNTurf_local>"
             8:: "Bah! I'm not hungry !"
             
             If 0

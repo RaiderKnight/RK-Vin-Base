@@ -20,161 +20,134 @@ OTHER: none
         0:: "Say yes"
         1:: "Say no thanks!"
         
-    if 0    
-        Price0Mbs = 50
-        Price0mC = Price0Mbs.convertToLocalCurrency(true)
-        Price1Mbs = 75
-        Price1mC = Price1Mbs.convertToLocalCurrency(true)
-        Price2Mbs = 120
-        Price2mC = Price2Mbs.convertToLocalCurrency(true)
-        Price3Mbs = 250
-        Price3mC = Price3Mbs.convertToLocalCurrency(true)
-        Price4Mbs = 500
-        Price4mC = Price4Mbs.convertToLocalCurrency(true)
-        Price5Mbs = 1000
-        Price5mC = Price5Mbs.convertToLocalCurrency(true)
-        
-        Player::"Ok, let see what <Actor.he_or_she> offer me !"
-        0:: "I give you <Price0mC> for striptease"
-        1:: "I give you <Price1mC> for a handjob"
-        2:: "I give you <Price2mC> for a blowjob"
-        3:: "I give you <Price3mC> for licking you"
-        4:: "I give you <Price4mC> for a anal"
-        5:: "I give you <Price5mC> for a threesome"
-        6:: "Do nothing"
-        
-        If 0
-            Actor(Flirty)::"Follow me, let's go play in my basement room, it's more private!"
-            money += Price0Mbs
+        If 0    
+            Price0Mbs = 50
+            Price0mC = Price0Mbs.convertToLocalCurrency(true)
+            Price1Mbs = 75
+            Price1mC = Price1Mbs.convertToLocalCurrency(true)
+            Price2Mbs = 120
+            Price2mC = Price2Mbs.convertToLocalCurrency(true)
+            Price3Mbs = 250
+            Price3mC = Price3Mbs.convertToLocalCurrency(true)
+            Price4Mbs = 500
+            Price4mC = Price4Mbs.convertToLocalCurrency(true)
+            Price5Mbs = 1000
+            Price5mC = Price5Mbs.convertToLocalCurrency(true)
             
-            setBackground(Basement Room)
-            Actor2.hide()
-            Player.strip()
+            Player::"Ok, let see what <Actor.he_or_she> offer me !"
+            0:: "I give you <Price0mC> for striptease"
+            1:: "I give you <Price1mC> for a handjob"
+            2:: "I give you <Price2mC> for a blowjob"
+            3:: "I give you <Price3mC> for licking you"
+            4:: "I give you <Price4mC> for a anal"
+            5:: "I give you <Price5mC> for a threesome"
+            6:: "Do nothing"
             
-            Sex(Actor, Player)
-            
-            If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -2)
-            EndIf
-            Filter(Strip)
-            
-            pornfame += 1
-            perversion += Random(0, 0.25)
-            karma -= 0.025
-            arousal -= Random(0, 5)
-            
-        Elseif 1
-            Actor(Flirty)::"Follow me, let's go play in my basement room, it's more private!"
-            money += Price1Mbs
-            
-            setBackground(Basement Room)
-            Actor2.hide()
-            Player.strip()
-            Actor.strip()
-            
-            Sex(Actor, Player)
-            
-            If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -2)
-            EndIf
-            Filter(Handjob)
-            
-            pornfame += 1
-            perversion += Random(0, 0.25)
-            karma -= 0.025
-            arousal -= Random(0, 10)
-            
-        Elseif 2
-            Actor(Flirty)::"Follow me, let's go play in my basement room, it's more private!"
-            money += Price2Mbs
-            
-            setBackground(Basement Room)
-            Actor2.hide()
-            Player.strip()
-            Actor.strip()
-            
-            Sex(Actor, Player)
-            
-            If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -2)
-            EndIf
-            Filter(Blowjob)
-            
-            pornfame += 1
-            perversion += Random(0, 0.5)
-            karma -= 0.025
-            arousal -= Random(0, 15)
-            
-        Elseif 3
-            Actor(Flirty)::"Follow me, let's go play in my basement room, it's more private!"
-            money += Price3Mbs
-            
-            setBackground(Basement Room)
-            Actor2.hide()
-            Player.strip()
-            Actor.strip()
-            
-            Sex(Actor, Player)
-            
-            If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -2)
-            EndIf
-            Filter(LickPussy)
-            
-            pornfame += 1
-            perversion += Random(0, 0.5)
-            karma -= 0.025
-            arousal -= Random(0, 20)
-            
-        Elseif 4
-            Actor(Flirty)::"Follow me, let's go play in my basement room, it's more private!"
-            money += Price4Mbs
-            
-            setBackground(Basement Room)
-            Actor2.hide()
-            Player.strip()
-            Actor.strip()
-            
-            Sex(Actor, Player)
-            
-            If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -2)
-            EndIf
-            Filter(Anal)
-            
-            pornfame += 1
-            perversion += Random(0, 0.75)
-            karma -= 0.025
-            arousal -= Random(0, 25)
-            
-        Elseif 5
-            Actor(Flirty)::"Follow me, let's go play in my partner's room, <Actor.he_or_she> is downstairs working at this time but don't worry, <Actor.he_or_she> always willing to fuck!"
-            money += Price5Mbs
-            
-            setBackground(Basement Room)
-            Player.strip()
-            Actor.strip()
-            
-            Actor2(Flirty)::"Oh, Good! I guess it's break time!"
-            Actor2.strip()
-            Filter(Threesome)
-            Sex(Actor, Player, Actor2)
-            
-            If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -3)
-            EndIf
-            
-            pornfame += 1
-            perversion += Random(0, 1)
-            karma -= 0.025
-            arousal -= Random(0, 30)
-            
-        Elseif 6
-        
-            Player::"Finally, I'm not in the mood to have sex with stranger!"
-
+            If 0
+                Actor(Flirty)::"Follow me, let's go play in my basement room, it's more private!"
+                money += Price0Mbs
+                setBackground(Basement Room)
+                Actor2.hide()
+                Player.strip()
+                Filter(Strip)
+                Sex(Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                pornfame += 1
+                perversion += Random(0, 0.25)
+                karma -= 0.025
+                arousal -= Random(0, 5)
+                
+            Elseif 1
+                Actor(Flirty)::"Follow me, let's go play in my basement room, it's more private!"
+                money += Price1Mbs
+                setBackground(Basement Room)
+                Actor2.hide()
+                Player.strip()
+                Actor.strip()
+                Filter(Handjob)
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                pornfame += 1
+                perversion += Random(0, 0.25)
+                karma -= 0.025
+                arousal -= Random(0, 10)
+                
+            Elseif 2
+                Actor(Flirty)::"Follow me, let's go play in my basement room, it's more private!"
+                money += Price2Mbs
+                setBackground(Basement Room)
+                Actor2.hide()
+                Player.strip()
+                Actor.strip()
+                Filter(Blowjob)
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                pornfame += 1
+                perversion += Random(0, 0.5)
+                karma -= 0.025
+                arousal -= Random(0, 15)
+                
+            Elseif 3
+                Actor(Flirty)::"Follow me, let's go play in my basement room, it's more private!"
+                money += Price3Mbs
+                setBackground(Basement Room)
+                Actor2.hide()
+                Player.strip()
+                Actor.strip()
+                Filter(Licking)
+                Sex(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                pornfame += 1
+                perversion += Random(0, 0.5)
+                karma -= 0.025
+                arousal -= Random(0, 20)
+                
+            Elseif 4
+                Actor(Flirty)::"Follow me, let's go play in my basement room, it's more private!"
+                money += Price4Mbs
+                setBackground(Basement Room)
+                Actor2.hide()
+                Player.strip()
+                Actor.strip()
+                Filter(Anal)
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                pornfame += 1
+                perversion += Random(0, 0.75)
+                karma -= 0.025
+                arousal -= Random(0, 25)
+                
+            Elseif 5
+                Actor(Flirty)::"Follow me, let's go play in my partner's room, <Actor.he_or_she> is downstairs working at this time but don't worry, <Actor.he_or_she> always willing to fuck!"
+                money += Price5Mbs
+                setBackground(Basement Room)
+                Player.strip()
+                Actor.strip()
+                Actor2(Flirty)::"Oh, Good! I guess it's break time!"
+                Actor2.strip()
+                Filter(Threesome)
+                Sex(Actor, Player, Actor2)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+                pornfame += 1
+                perversion += Random(0, 1)
+                karma -= 0.025
+                arousal -= Random(0, 30)
+                
+            Elseif 6
+                Player(Sad)::"Finally, I'm not in the mood to have sex with stranger!"
+            Endif
         Endif
-
-    Endif
-SceneEnd()
-timeout(96, sex_refund)
+    SceneEnd()
+    timeout(96, sex_refund)

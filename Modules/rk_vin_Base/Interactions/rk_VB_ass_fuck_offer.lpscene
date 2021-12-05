@@ -1,0 +1,65 @@
+WHAT: all, -sleep, -nap, -go_to_the_bathroom
+WHERE: all, -home, -prison
+WHEN: 20 - 5 
+WHO: none
+OTHER: Random(0, 100) < attractiveness && !Player.isProstitute() && !isWithCompanion()
+
+    SceneStart()
+        Stranger1 = generatePersonTemporary()
+        Stranger1.dress()
+        Stranger1.show()
+        pimpoffer1 = random(150, 250)
+        pimpoffer1_loc = pimpoffer1.convertToLocalCurrency()
+    
+        "I was going about my business when suddenly a strange guy approach me ..."
+        Stranger1(Excited):: "I give you <pimpoffer1_loc> to fuck your nice little ass?"
+        Player(Curious)::"You must have mistaken me for a prostitute ..."
+        Stranger1(Excited):: "Who cares, I just want to pump your little ass?"
+        "What should I say?"
+        0:: "Not for sale"
+        1:: "Why not !"
+        2:: "I'll do it for free!"
+        3:: "Refuse"
+    
+        If 0
+            Player(Disgusted):: "Sorry, I'm not that type of <Player.guy_or_girl>."
+            perversion -= 1
+            
+        Elseif 1
+    
+            "I can't believe I agreed... but having sex with a stranger, it's clear I agree... I just hope <Stranger1.he_or_she> doesn't have an STDs... "
+            money += pimpoffer1
+            perversion += 1
+            Loc = findNearbyBuilding(hotel)
+            moveTo(Loc)
+            setBackground(home)
+            "Soon, we were back in <Stranger1.his_or_her> hotel room to conduct our little 'transaction'."
+            Player.strip()
+            Stranger1.strip()
+            Filter(Anal)
+            Sex(Stranger1, Player)
+            Player.dress()
+    
+        Elseif 2
+    
+            "I can't believe I agreed ... but having sex with strangers, it's clear I agree... I just wish <Stranger1.he_or_she> doesn't have any STDs... "
+            Loc = findNearbyBuilding(hotel)
+            moveTo(Loc)
+            setBackground(home)
+            "Soon, we were back in <Stranger1.his_or_her> hotel room to conduct our little 'transaction'."
+            Player.strip()
+            Stranger1.strip()
+            Filter(Anal)
+            Sex(Stranger1, Player)
+            Player.dress()
+    
+        Elseif 3
+    
+            Player(Angry):: "What the fuck! That's so inappropriate! Damn perv!"
+            Actor(Sad):: "Sorry, I was just..."
+            Player(Angry):: "Bye!"
+            Actor.hide()
+            
+        Endif
+    SceneEnd()
+    timeout(200, rk_VB_ass_fuck_offer)
