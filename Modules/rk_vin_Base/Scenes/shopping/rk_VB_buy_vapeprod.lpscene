@@ -26,37 +26,42 @@ OTHER: none
             
             Player::"Which vape juice I will buy?"
             Player::"There are many variety of vape juices here. Honestly, I will take my time to smell each of them !"
-            0:: money >= 0:: "1 bottle of blue raspberry for <price_Vapraspberry_local>"
-            1:: money >= 0:: "1 bottle of redcurrant, grape & cherry for <price_Vapgrape_local>"
-            2:: money >= 0:: "1 bottle of strawberry guava for <price_Vapstrawberry_local>"
-            3:: money >= 0:: "1 bottle of lemon berry pie for <price_Vaplemon_local>"
-            4:: money >= 0:: "1 bottle of Kanzi for <price_VapKanzi_local>"
+            0:: money >= price_Vapraspberry:: "1 bottle of blue raspberry for <price_Vapraspberry_local>"
+            1:: money >= price_Vapgrape:: "1 bottle of redcurrant, grape & cherry for <price_Vapgrape_local>"
+            2:: money >= price_Vapstrawberry:: "1 bottle of strawberry guava for <price_Vapstrawberry_local>"
+            3:: money >= price_Vaplemon:: "1 bottle of lemon berry pie for <price_Vaplemon_local>"
+            4:: money >= price_VapKanzi:: "1 bottle of Kanzi for <price_VapKanzi_local>"
             8:: "Buy nothing"
         
             If 0
                 Player.modifyActorVar(stock_Vapraspberry, 10)
                 money -= price_Vapraspberry
                 Player.modifyActorVar(rk_VB_IBuyVapeProd, 1)
+                "1 bottle added to my pockets"
                                 
             Elseif 1
                 Player.modifyActorVar(stock_Vapgrape, 10)
                 money -= price_Vapgrape
                 Player.modifyActorVar(rk_VB_IBuyVapeProd, 1)
+                "1 bottle added to my pockets"
                 
             Elseif 2
                 Player.modifyActorVar(stock_Vapstrawberry, 10)
                 money -= price_Vapstrawberry
                 Player.modifyActorVar(rk_VB_IBuyVapeProd, 1)
+                "1 bottle added to my pockets"
                 
             Elseif 3
                 Player.modifyActorVar(stock_Vaplemon, 10)
                 money -= price_Vaplemon
                 Player.modifyActorVar(rk_VB_IBuyVapeProd, 1)
+                "1 bottle added to my pockets"
                 
             Elseif 4
                 Player.modifyActorVar(stock_VapKanzi, 10)
                 money -= price_VapKanzi
                 Player.modifyActorVar(rk_VB_IBuyVapeProd, 1)
+                "1 bottle added to my pockets"
                 
             Endif
         Endif   

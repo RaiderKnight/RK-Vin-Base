@@ -1,0 +1,88 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER:
+
+
+    // If your SO or a past lover has very high submissiveness (which of course can be built up gradually by putting BDSM pieces on them during adult scenes) or attraction to you, you can click on them and become their master, which makes them wear a collar permanently and gives you the right to bang them or make them bang anyone anytime with no timeout. You can also tie them up and leave them in a dodgy part of town and let strangers have their ways with them.
+    
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Existing = Actor.getActorVar(tag_Slave)
+        If Existing > 0
+            Actor.dressBondage(Collar)
+            "<Actor.name> has already accepted <Actor.his_or_her> place as my slave. As <Actor.his_or_her> rightful <Player.master_or_mistress>, I can do whatever I want with <Actor.him_or_her>!"
+            "So, what do I require of my slave today?"
+            0:: "Fuck my slave"
+            1:: "Make my slave fuck someone I know"
+            2:: "Tie my slave up and let strangers fuck <Actor.him_or_her>"
+            3:: "Nothing"
+            
+            If 0
+                Actor:: "Yes, of course, I'm at your service, <Player.Master_or_Mistress>."
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            Elseif 1
+                "Who should I invite to fuck my slave?"
+                selectNpc()
+                Actor2 = getSelectedNpc()
+                
+                If Actor2.isInterestedIn(Actor) && [Actor2:perversion > 50 || Actor2.hadSex()]
+                    Actor2.dress()
+                    Actor2.show()
+                    Actor:: "Yes, of course, anything you want, <Player.Master_or_Mistress>. I'll pleasure <Actor2.Mr_or_Ms> <Actor2.name> as best as I can on your behalf."
+                    Sex(Actor2, Actor)                
+                Else
+                    "Unfortunately, <Actor2.name> didn't seem overly interested in my slave."
+                Endif
+            Elseif 2
+                setBackground(street)
+                "I tied my slave up and left <Actor.him_or_her> in a dodgy part of town ..."
+                Actor.dressBondage()
+                Actor.dressBondage(Handcuffs)
+                Actor.dressBondage(Shincuffs)
+                Actor.dressBondage(Thighcuffs)
+    
+                "I also left a sign next to <Actor.him_or_her> that simply said 'Enjoy!'"
+                count = 0
+                While count < 3
+                    Actor2 = generatePersonTemporary()
+                    While !Actor.isInterestedIn(Actor2)
+                        Actor2 = generatePersonTemporary()
+                    Endwhile
+                    Actor2.dress()
+                    Actor2.show()
+                    "A stranger passed by and took up the offer."
+                    Sex(Actor2, Actor)
+                    count += 1
+                Endwhile
+                Player:: "Well done, slave, you've worked hard for your <Player.Master_or_Mistress> today ..."
+            Endif
+        Else
+            "<Actor.name> has not submitted to me and accepted me as <Actor.his_or_her> rightful <Player.master_or_mistress> yet ..."
+            "Should I assert that authority now?"
+            0:: "Claim <Actor.name> as my personal slave"
+            1:: "Not now"
+            
+            If 0
+                If Actor:attractiontoplayer > 70 || Actor:masochist > 50
+                    "<Actor.name> agreed that <Actor.he_or_she> was worthless and should rightfully submit to me as <Actor.his_or_her> <Player.master_or_mistress>."
+                    "As a slave, <Actor.name> swore to obey my every commands. In fact, satisfying all my needs is all that she was born for."
+                    Actor.setActorVar(tag_Slave, 1)
+                    Actor.setWantsBabies()
+                    Actor.strip()
+                    Actor.dressBondage(Collar)
+                    "To show my newly recognized ownership of my new slave, I put a collar around <Actor.his_or_her> neck and forbid <Actor.him_or_her> from ever removing it."
+                    Actor:masochist => 100
+                Else
+                    "Unfortunately, <Actor.name> still showed some resistance and didn't quite submit to me just yet."
+                Endif
+            Endif
+        Endif
+    SceneEnd() // scene improved by Raddeck

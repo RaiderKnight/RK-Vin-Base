@@ -28,17 +28,22 @@ OTHER: PercentageElves > 0 && Player.isRace(Human)
         Actor.dress()
         Actor.show()
         "<Actor.He_or_She> is unmistakably an elf!"
-        Actor:: "Sorry to scare you but we have must been scouting you for a while now."
-        Player:: "Scouting me? What do you mean?"
-        Actor:: "We're looking for humans who might have had some elven ancestors without realizing it."
-        Actor:: "You have shown much higher perception than normal humans, being able to feel the presence of an elf sneaking on you is no easy feat. We believe you may be part elven yourself."
-        Player:: "Ah ... thanks, I guess ... Why are you looking for part-elven human anyway?"
-        Actor:: "The elven population is in crisis and dwindling over the last centuries. If it keeps going, we'll go extinct."
+        Actor(Serene):: "Sorry to scare you but we have must been scouting you for a while now."
+        Player(Curious):: "Scouting me? What do you mean?"
+        Actor(Serene):: "We're looking for humans who might have had some elven ancestors without realizing it."
+        Actor(Serene):: "You have shown much higher perception than normal humans, being able to feel the presence of an elf sneaking on you is no easy feat. We believe you may be part elven yourself."
+        Player(Curious):: "Ah ... thanks, I guess ... Why are you looking for part-elven human anyway?"
+        Actor(Serene):: "The elven population is in crisis and dwindling over the last centuries. If it keeps going, we'll go extinct."
         "I think I know where this is going ..."
-        0:: "Breed with <Actor.name>"
+        Player(Curious):: "Okay, so according to your crazy story, you want my DNA I guess?" // Edit by Raddeck
+        Actor(Serene):: "No, it's your sperm that I need!" // Edit by Raddeck
+        "What should I say?" // Edit by Raddeck
+        0:: "Accept <Actor.name> offer"
         1:: "Decline"
         
         If 0
+            perversion += 1 // Edit by Raddeck
+            arousal += 1 // Edit by Raddeck
             Player(Flirty):: "With an elf as cute as you, I'll be glad to help ..."
             Sex(Player, Actor)
             If HungerEnable > 0
@@ -48,5 +53,5 @@ OTHER: PercentageElves > 0 && Player.isRace(Human)
             Player(Sad):: "Sorry, not interested ..."
         Endif
 
-    SceneEnd()
-    timeout(150, elf_perception) // Improved by Raddeck
+    SceneEnd() // Improved by Raddeck
+    timeout(150, elf_perception)
