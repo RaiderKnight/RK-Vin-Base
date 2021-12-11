@@ -3,7 +3,7 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Version: 0.1.1</p>
+<p>Version: 1.1.7</p>
 <br>
 <br>
 <p><strong>Rework In Progress (WIP)</strong></p>
@@ -87,9 +87,9 @@
 <br>
 <h3>How to contribute</h3>
 <ul>
+<li>Visit the <a href="https://lifeplay.site">LifePlay community forums</a></li>
 <li>Supporting me on <a href="https://www.patreon.com/raiderknight">Patreon</a></li>
 <li>Sending your ideas or feedback: Here on Github or on <a href="https://discord.gg/d3U9E2wb4Y">Discord</a></li>
-<li>Sharing tutorials on the <a href="https://raiderknight-mods.fandom.com/wiki/RaiderKnight_Mods_Wiki">RaiderKnight Mods Wiki</a></li>
 <li>Adding more content to the module.</li>
 <li>Improving the module, texts,...</li>
 <li>Reporting bugs, errors and typos</li>

@@ -62,7 +62,7 @@ OTHER:
                     Sex(Actor2, Actor)
                     count += 1
                 Endwhile
-                Player:: "Well done, slave, you've worked hard for your <Player.Master_or_Mistress> today ..."
+                Player(Happy):: "Well done, slave, you've worked hard for your <Player.Master_or_Mistress> today ..."
             Endif
         Else
             "<Actor.name> has not submitted to me and accepted me as <Actor.his_or_her> rightful <Player.master_or_mistress> yet ..."
@@ -81,7 +81,68 @@ OTHER:
                     "To show my newly recognized ownership of my new slave, I put a collar around <Actor.his_or_her> neck and forbid <Actor.him_or_her> from ever removing it."
                     Actor:masochist => 100
                 Else
+                    Actor:masochist -= 5
                     "Unfortunately, <Actor.name> still showed some resistance and didn't quite submit to me just yet."
+                    "What should I do?"
+                    0::Player:arousal > 15::"Punish <Actor.him_or_her> gently"
+                    1::Player:perversion > 25::"Show <Actor.him_or_her> who's the master here..."
+                    2::Player:perversion > 50::"Pee on <Actor.him_or_her> and fuck <Actor.him_or_her>"
+                    99::"Do nothing!"
+                    
+                    If 0
+                        Player(Grin)::"Okay, you don't want to submit to your master, so I'm going to have to punish you my lovely slave."
+                        "I tied my slave up, stripped <Actor.him_or_her> and started to fuck <Actor.him_or_her> gently..."
+                        Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Actor:masochist += 5
+                        Actor:attractiontoplayer += random(0, 3)
+                    ElseIf 1
+                        Player(Grin)::"Okay, you don't want to submit to your master, so I'm going to have to punish you little scum."
+                        "I tied my slave up, stripped <Actor.him_or_her> and started to fuck <Actor.him_or_her> hard..."
+                        Filter(Aggressive)
+                        Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        
+                        Player(Grin)::"Now, clean my <Player.dick_or_pussy>!"
+                        Filter(Aggressive, Blowjob)
+                        Sex(Actor, Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        Actor:masochist += 8
+                        Actor:attractiontoplayer += random(-1, 3)
+                    ElseIf 2
+                        Player(Grin)::"Okay, you don't want to submit to your master, so I'm going to have to punish you little scum."
+                        "I tied my slave up, stripped <Actor.him_or_her> and started to pee on <Actor.him_or_her>..."
+                        Filter(Watersports)
+                        Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        
+                        "After, I started to fuck <Actor.him_or_her> hard..."
+                        Filter(Aggressive)
+                        Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        
+                        Player(Grin)::"Now, clean my <Player.dick_or_pussy>!"
+                        Filter(Aggressive, Blowjob)
+                        Sex(Actor, Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        Actor:masochist += 10
+                        Actor:attractiontoplayer += random(-2, 3)
+                    Else
+                        "I'll give <Actor.him_or_her> some time to get used to it..."
+                        Actor:attractiontoplayer += random(0, 2)
+                    Endif
                 Endif
             Endif
         Endif
