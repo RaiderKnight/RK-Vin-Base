@@ -5,7 +5,9 @@ WHO: none
 OTHER: none
 
     SceneStart()
-
+        
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         last = Actor.getActorVar(rk_VBase_LastJobTraining)
         daysSinceBirth = (Player:Age * 365) // get the current date 
         NotYetWait = daysSinceBirth - last
@@ -92,11 +94,14 @@ OTHER: none
                         Actor.strip()
                         "We stripped and I started caressing <Actor.him_or_her>..."
                         Sex(Actor, Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
                         mood += 2
                         passTime(0.5, 1)
                         Actor:attractiontoplayer += 2
                         Actor:rapportwithplayer += 2
-                        
+                        Actor.dress()
                     ElseIf Actor.isInterestedIn(Player)
                     
                         Actor(Happy)::"Sorry boss, I'm not interested..."

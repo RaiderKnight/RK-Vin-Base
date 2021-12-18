@@ -8,6 +8,8 @@ OTHER: none
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         TBstock_IPhone = Player.getActorVar(TBstock_IPhone)
         TBstock_Samsung = Player.getActorVar(TBstock_Samsung)
         TBstock_OnePlus = Player.getActorVar(TBstock_OnePlus)
@@ -195,9 +197,9 @@ OTHER: none
                         Actor.show()
                         Sex(Player, Actor)
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
-                
+                        Actor.dress()
                     Else
                        
                        perversion += 1
@@ -237,7 +239,7 @@ OTHER: none
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
                     EndIf
-                    
+                    Actor.dress()
                 Else
                 
                     If Actor.isInterestedIn(Player)

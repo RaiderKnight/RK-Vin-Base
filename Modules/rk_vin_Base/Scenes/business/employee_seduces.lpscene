@@ -157,11 +157,11 @@ OTHER: none
                                         "The sex was amazing. We put our clothes back on afterwards and continued our date."
                                         If HungerEnable > 0
             
-                                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                                            Player.modifyActorVar(rk_VB_Hunger, -2)
                 
                                         EndIf
                                         passTime(0.2, 0.5)
-                                        
+                                        Actor.dress()
                                     Else
                                     
                                         "Unfortunately for me, <Actor.name> didn't seem interested in letting things escalate any further and pulled away."
@@ -350,7 +350,10 @@ OTHER: none
                                 Actor.makeInterested(Player)
                                 Sex(Player, Actor)
                                 Player:arousal -= 10
-                            
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                Actor.dress()
                             Else
                             
                                "I decided to stop it there and not go any further."
