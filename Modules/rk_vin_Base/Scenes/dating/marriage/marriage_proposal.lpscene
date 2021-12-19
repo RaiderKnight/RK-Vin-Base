@@ -46,7 +46,7 @@ OTHER: !isPlayerMarried()
                         Engaged = true
                         rk_VB_isEngaged.setGlobal(1)
                         mood += 100                   
-                        "So we embraced and kissed, treasuring our first moment as an engaged couple."
+                        "So we undressed and kissed, treasuring our first moment as an engaged couple."
                         
                         Saved = CurrentCompanion.getActorVar(tag_Saved) // Edited by Ravenger6660
                         If Saved > 0 || CurrentCompanion.isVirgin()  // Edited by Ravenger6660
@@ -55,27 +55,21 @@ OTHER: !isPlayerMarried()
                         
                             Sex(Player, CurrentCompanion)
                             If HungerEnable > 0
-                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
                             
                         Endif // Edited by Ravenger6660
                     Else
                     
                         If CurrentCompanion.isExRelative() && !isQuestCompleted(legalized)
-                        
                             CurrentCompanion(Surprised):: "<Player.name> ... I love you too ... but I'm not sure a marriage will ever be possible. We're related after all ... and incest is illegal in this country."                    
-                        
                         Else
-                        
                             CurrentCompanion(Surprised):: "<Player.name> ... I love you too ... but I'm not quite ready for marriage yet. We're too young for that."
-                            
                         Endif
-                        
                         "And ... I've been rejected ... My heart is broken and I don't know how to feel about this ... We're still a couple, although this rejection has put some serious doubt on the strength of our relationship."
                         mood -= 100
                         CurrentCompanion:attractiontoplayer -= Random(1, 20)
                         CurrentCompanion:rapportwithplayer -= Random(1, 10)
-                        
                     Endif
                 Else
                     If CurrentCompanion.isExRelative()
@@ -88,11 +82,10 @@ OTHER: !isPlayerMarried()
                 "Nope, I don't see <CurrentCompanion.name> as <CurrentCompanion.husband_or_wife> material."
             Endif
         Endif
+        
         NPCisEngaged = rk_VB_isEngaged.getGlobal()
         If Engaged || NPCisEngaged > 0
-        
-            followUp(rk_VB_NPC_marriage_proposal)
-        
+            followUp(rk_VB_bachelor_Party)
         Endif
 
         endDate()

@@ -28,6 +28,13 @@ OTHER: none
             Question02 = false
             Question03 = false
             Question04 = false
+            Question1080 = false
+            Question1086 = false
+            Question1087 = false
+            Question1089 = false
+            Question200 = false
+            Question201 = false
+            Question202 = false
             Jokes = false
             Player.moveToPersonStand(Actor, 50)
             If Bondage < 10
@@ -37,6 +44,11 @@ OTHER: none
             Endif
             faceEachOther(Player, Actor)
             askingQuestions = true
+            looknice = false
+            Wheredidyouget = false
+            beautifuleyes = false
+            funkindperson = false
+                    
             While askingQuestions
                 "What should I do?"
                 0::"Ask about <Actor.his_or_her> sex orientation"
@@ -268,12 +280,12 @@ OTHER: none
                     Endif
                     
                 Elseif 1
-                
+
                     "What should I say?"
-                    0::"You look nice!"
-                    1::"Where did you get that....?"
-                    2::"You have very beautiful eyes!"
-                    3::"You seem to be a fun and kind person!"
+                    0:: !looknice::"You look nice!"
+                    1:: !Wheredidyouget::"Where did you get that....?"
+                    2:: !beautifuleyes::"You have very beautiful eyes!"
+                    3:: !funkindperson1:"You seem to be a fun and kind person!"
                     99::"Go back!"
                     
                     If 0
@@ -282,7 +294,7 @@ OTHER: none
                             Actor(Flirty)::"Thanks honey, you look good aswell!"
                             Actor:rapportwithplayer += random(0, 2)
                             Actor:attractiontoplayer += random(0, 2)
-                            
+                    
                         ElseIf Actor:attractiontoplayer > 15
                             Actor(Flirty)::"Thanks, you look good too!"
                             Actor:rapportwithplayer += random(0, 2)
@@ -295,9 +307,10 @@ OTHER: none
                             
                         Else
                             Actor(Annoyed)::"Uh, ok!"
+                            
                         Endif
                         interpersonal += 1
-                        
+                        looknice += 1
                     Elseif 1
                     
                         If Actor.isMale() //Need improvement
@@ -328,7 +341,7 @@ OTHER: none
                         Else
                             Actor(Annoyed)::"Sorry but I have no time to share where I buy my stuff!"
                         Endif
-                    
+                        Wheredidyouget += 1
                     Elseif 2
                     
                         If Actor.isInterestedIn(Player)
@@ -339,7 +352,7 @@ OTHER: none
                             Actor(Annoyed)::"Uh, ok!"
                         Endif
                         interpersonal += 1
-                        
+                        beautifuleyes += 1
                     Elseif 3
                     
                         If Actor.isInterestedIn(Player)
@@ -350,20 +363,15 @@ OTHER: none
                             Actor(Annoyed)::"Uh, ok!"
                         Endif
                         interpersonal += 1
-                        
+                        funkindperson += 1
                     Endif
                     
                 Elseif 10
-                    
-                    Question1080 = false
-                    Question1086 = false
-                    Question1087 = false
-                    Question1089 = false
-                    
+
                     "What should I ask?"
                     0:: !Question1080::"Do you think I'm pretty?"
                     5:: "Do you want to fuck?"
-                    6:: !Question1086 && [Actor.dressExcept(Outerwear, Bottom) || Actor.dressExcept(Outerwear, Top)] ::"Are you flashind me?"
+                    6:: !Question1086 && [Actor.dressExcept(Outerwear, Bottom, Bottom_Under) || Actor.dressExcept(Outerwear, Top, Top_Under)] ::"Are you flashind me?"
                     7:: Actor.isNaked() && !Question1087 ::"Why are you naked?"
                     8:: "Which sex position you like the most?"
                     9:: !Question1089::"Are you top or bottom?"
@@ -448,7 +456,7 @@ OTHER: none
                                 
                                 arousal += 1
                                 perversion += 1
-                                If Actor.dressExcept(Outerwear, Bottom)
+                                If Actor.dressExcept(Outerwear, Bottom, Bottom_Under)
                                     "What do I say?"
                                     0::"Can I taste it?"
                                     1::"Can I touch it?"
@@ -460,10 +468,14 @@ OTHER: none
                                             Player(Kiss)::"..."
                                             animatePair(Player, Actor, LickPussy)
                                             Actor(Kiss)::"..."
+                                            Filter(LickPussy)
+                                            sex(Player, Actor)
                                         Elseif [Player.isMale() && Actor.isMale()] || [Player.isFemale() && Actor.isMale()]
                                             Player(Kiss)::"..."
                                             animatePair(Player, Actor, Blowjob)
                                             Actor(Kiss)::"..."
+                                            Filter(Blowjob)
+                                            sex(Player, Actor)
                                         Else
                                             Filter(Blowjob)
                                             sex(Player, Actor)
@@ -477,7 +489,7 @@ OTHER: none
                                         
                                     Elseif 1
                                     
-                                        Actor(Flirty)::"Sure, you play with!"
+                                        Actor(Flirty)::"Sure, you can play with!"
                                         If [Player.isMale() && !Actor.isMale()] || [Player.isFemale() && !Actor.isMale()]
                                             Filter(Fingering)
                                             sex(Player, Actor)
@@ -497,7 +509,7 @@ OTHER: none
                                     
                                     Endif
                                 
-                                Elseif Actor.dressExcept(Outerwear, Top)
+                                Elseif Actor.dressExcept(Outerwear, Top, Top_Under)
                                     "What do I say?"
                                     0::"Can I lick your nipples?"
                                     1::"Can I touch them?"
@@ -508,7 +520,7 @@ OTHER: none
                                         Player(Kiss)::"..."
                                         animatePair(Actor, Player, Kissing)
                                         Actor(Kiss)::"..."
-                                    
+                                        
                                     Elseif 1
                                     
                                         Actor(Flirty)::"Sure, you can play with!"
@@ -622,6 +634,8 @@ OTHER: none
                                     If HungerEnable > 0
                                         Player.modifyActorVar(rk_VB_Hunger, -2)
                                     EndIf
+                                    Actor:rapportwithplayer += random(0, 1)
+                                    Actor:attractiontoplayer += random(0, 1)
     
                                 Else
                             
@@ -1637,9 +1651,6 @@ OTHER: none
                 
                 Elseif 20
                 
-                    Question200 = false
-                    Question201 = false
-                    Question202 = false
                     Playerage = Player:age 
                     TPlayerage = Playerage + 10
                     "What should I say?"
@@ -1649,11 +1660,12 @@ OTHER: none
                     99::"Go back!"
                     
                     If 0
-                        If Actor.isInterestedIn(Player) && Actor:arousal > 15
+                        If Actor.isInterestedIn(Player) && Actor:arousal > 15 && Actor:perversion > 50
                             Actor(Happy)::"Thanks! Do you want to touch?"
                             Actor:rapportwithplayer += random(0, 1)
                             Actor:attractiontoplayer += random(0, 1)
                             Player(Happy)::"What a question, yeah sure!"
+                            Player.moveToPersonStand(Actor, 50)
                             arousal += 1
                             Actor:arousal += 1
                             perversion += 1
@@ -1664,6 +1676,7 @@ OTHER: none
                             Actor(Happy)::"Thanks! You look nice too!"
                             Actor:rapportwithplayer += random(0, 1)
                             Actor:attractiontoplayer += random(0, 1)
+                            Actor:arousal += 1
                         Else
                             Actor(Annoyed)::"Uh, please keep that for yourself!"
                             Actor:attractiontoplayer -= random(0, 1)
@@ -1673,11 +1686,12 @@ OTHER: none
                         
                     Elseif 1
                         
-                        If Actor.isInterestedIn(Player) && Actor:arousal > 15
+                        If Actor.isInterestedIn(Player) && Actor:arousal > 15 && Actor:perversion > 50
                             Actor(Happy)::"Thanks! Do you want to touch?"
                             Actor:rapportwithplayer += random(0, 1)
                             Actor:attractiontoplayer += random(0, 1)
                             Player(Happy)::"What a question, yeah sure!"
+                            Player.moveToPersonStand(Actor, 50)
                             arousal += 1
                             Actor:arousal += 1
                             perversion += 1
@@ -1688,6 +1702,7 @@ OTHER: none
                             Actor(Happy)::"Thanks!"
                             Actor:rapportwithplayer += random(0, 1)
                             Actor:attractiontoplayer += random(0, 1)
+                            Actor:arousal += 1
                         Else
                             Actor(Annoyed)::"Uh, please keep that for yourself!"
                             Actor:attractiontoplayer -= random(0, 1)
@@ -1697,7 +1712,7 @@ OTHER: none
                         
                     Elseif 2
                         
-                        If Actor.isInterestedIn(Player) && Actor:arousal > 15
+                        If Actor.isInterestedIn(Player) && Actor:arousal > 15 && Actor:perversion > 50
                             Actor(Happy)::"Thanks! yeah it will be cool , I guess!"
                             Actor:rapportwithplayer += random(0, 1)
                             Actor:attractiontoplayer += random(0, 1)
@@ -1717,15 +1732,17 @@ OTHER: none
                             EndIf
                             Player.dress()
                             Actor.dress()
-                            "We came where we are before but we takes separated ways."
+                            "We talk a bit and then we came where we are before."
                             
                         Elseif Actor.isInterestedIn(Player)
                             Actor(Happy)::"You're funny! But I'm not interested!"
                             Actor:rapportwithplayer += random(0, 1)
                             Actor:attractiontoplayer += random(0, 1)
+                            Actor:arousal += 1
                         Else
                             Actor(Annoyed)::"Uh, please keep that for yourself!"
                             Actor:attractiontoplayer -= random(0, 1)
+                            Actor:arousal -= 1
                         Endif
                         interpersonal += 1
                         Question202 = true
@@ -1733,8 +1750,7 @@ OTHER: none
                     Endif
                     
                 Elseif 50
-                    
-                    // Start edit by Raddeck
+
                     "I decided to tell <Actor.him_or_her> a joke... So I started with..."
                     Player.animate(socialize)
                     Random
@@ -1834,8 +1850,6 @@ OTHER: none
                         Jokes = true
                                 
                     Endif
-                    // End edit by Raddeck 
-                
                 Else
                 
                     askingQuestions = false
