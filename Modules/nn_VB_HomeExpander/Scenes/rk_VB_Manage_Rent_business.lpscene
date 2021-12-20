@@ -1,0 +1,28 @@
+WHAT: none
+WHERE: home
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        If isModEnabled(nn_VB_HomeExpander)
+            "Which room should I check?"
+            0::"Build a new room"
+            1::"Collect rental fee"
+            2::"Manage rented rooms"
+            3::"Manage spy cams"
+            99::"I changed my mind!"
+            
+            If 0
+                followUp(nn_re_build_room)
+            ElseIf 1
+                followUp(nn_he_rent_collect)
+            ElseIf 2
+                followUp(nn_he_rent_room)
+            ElseIf 3
+                followUp(nn_he_manage_spycams)
+            EndIf
+        Else
+            "You need to enable the mod Home Expander..."
+        EndIf
+    SceneEnd()

@@ -18,13 +18,9 @@ OTHER: none
         "I was looking for a new place to live, I discovered a nice place that might just fit my budget. The rent per month being advertised, including utility bills, is around <RentConverted>. However, I reckon I can try to negotiate that down."
         
         If Rent > money 
-        
             "I'm not entirely sure it's a good idea considering my current financial situation." 
-            
         Else
-        
             "This rent seems reasonable and might just fit in my budget."
-            
         Endif
         
         "Should I arrange for a viewing?"
@@ -49,6 +45,7 @@ OTHER: none
             Vanilla = IsModEnabled(vin_VanillaRealistic)
             GonnaGetFucked = false
             CopsWantToFucked = false
+            IwannaFuck = false
             While choice > 1
                 
                 "What should I do?"
@@ -80,6 +77,9 @@ OTHER: none
                     Landlord(Happy)::"See you soon, otherwise I'll come see you the first of next month ..."
                     Landlord:rapportwithplayer += Random(0, 2)
                     
+                    If Player:mood > 50 && Player:arousal > 15 && Player:perversion > 50
+                        IwannaFuck = true
+                    Endif
                 Elseif 1
                 
                     "It was too expensive at this current rent so I had no choice but to look elsewhere. I thanked the landlord for <Landlord.his_or_her> time and left."
@@ -241,222 +241,240 @@ OTHER: none
                 
             endWhile
             
-            If Bought && !isWithCompanion()
+            Gotolandlord = false
+            If IwannaFuck && !isWithCompanion()
+                "Should I ask the Landlord if <Landlord.he_or_she> want to celebrate this?"
+                0::"Yes"
+                1::"No"
+                
+                If 0
+                    Player(Flirty)::"I'm so happy! Do you want to celebrate this together?"
+                    If Landlord:arousal > 15 && Landlord:perversion > 15
+                        Landlord(Flirty):: "Sure, I'm always open for sex actions ..."
+                        Landlord(Flirty):: "Come to my place, we will be more comfortable?"
+                        Gotolandlord = true
+                    Else
+                        Landlord(Sad):: "Sorry, but I have a lot of works to do ..."
+                    Endif
+                Endif
+            Endif // end IwannaFuck
             
+            If Bought && !isWithCompanion()
+                NoThanksActor = false
                 Landlord(Flirty):: "Do you want to celebrate the purchase of your new home together? You look like alone ..."
                 "What should I say?"
                 0::"Yes"
                 1::"No"
                 
                 If 0
-                
                     Player(Happy)::"Sure, ..."
                     Landlord(Flirty):: "Come to my place, we will be more comfortable?"
-                    setBackground3D(Modules/rk_vin_Base/World/Vim_RoofOfficeBedroom.lpworld)
-                    "I walk into <Landlord.his_or_her> house and we start talking about life ... while <Landlord.he_or_she> takes out alcohol, drinks and different drugs ..."
-
-                    choice = -1    
-                    ate = false
-                    hadSex = false
-                    Chatting = false
-                    Drink1 = false
-                    
-                    While choice < 5
-                        Kissed = false
-                        "What should I suggest to do?"
-                        0:: "Chat"
-                        1:: !ate :: "Eat something together"
-                        2:: "Drink alcohol"
-                        3:: "Smoke weed"
-                        4:: !hadSex:: "Kiss <Landlord.him_or_her>"
-                        5:: [Chatting && Drink1] || hadSex ::"Politely leave"
-                    
-                        If 5
-                        
-                            "We said goodbye and went our ways."
-                            If HungerEnable > 0
-                        
-                                Player.modifyActorVar(rk_VB_Hunger, -1)
-                            
-                            EndIf
-                            
-                        Else
-                        
-                            If 0
-                                
-                                Player.animate(socialize)
-                                Landlord.animate(socialize)
-                                "We simply sat and chat for a while ..."
-                                mood += 1
-                                Landlord:attractiontoplayer += 1
-                                Landlord:rapportwithplayer += 1
-                                passTime(0.1, 0.2)
-                                Chatting = true
-                                Player.animate()
-                                Landlord.animate()
-                                    
-                            Elseif 1
-                                
-                                "We made some quick snacks and enjoyed them together ..."
-                                ate = true
-                                If HungerEnable > 0
-                        
-                                    Player.modifyActorVar(rk_VB_Hunger, 5)
-                            
-                                EndIf
-                                Landlord:attractiontoplayer += 1
-                                Landlord:rapportwithplayer += 1
-                                mood += 1
-                                energy += 5
-                                passTime(0.2, 0.4)
-                                    
-                            Elseif 2
-
-                                Player.animate(drinkglass)
-                                Landlord.animate(drinkglass)
-                                "We had a drink alcohol together ..."
-                                Player:intoxication += Random(5,15)
-                                Landlord:intoxication += Random(5,15)
-                                passTime(0.1, 0.2)
-                                Player.animate()
-                                Landlord.animate()
-                                If UrgeToPeeEnable > 0
-                                    Player.modifyActorVar(rk_VB_UrgeToPee, 1)
-                                EndIf
-                                Drink1 = true
-                                    
-                            Elseif 3
-                                
-                                "We smoked weed together ..."
-                                Player.animate(smoke)
-                                Landlord.animate(smoke)
-                                Player:intoxication += Random(3,15)
-                                Landlord:intoxication += Random(3,15)
-                                Player:mood += Random(3,10)
-                                Landlord:mood += Random(3,10)
-                                Landlord:attractiontoplayer += 1
-                                Landlord:rapportwithplayer += 5
-                                If HungerEnable > 0
-                        
-                                    Player.modifyActorVar(rk_VB_Hunger, -1)
-                            
-                                EndIf
-                                energy -= 1
-                                passTime(1, 2)
-                                Player.animate()
-                                Landlord.animate()
-                                    
-                            Elseif 4
-                                Kissed = true
-                            Endif
-            
-                            If Kissed || [Landlord.isInterestedIn(Player) && !hadSex && Landlord:attractiontoplayer > Random(0, 200)]
-                                AnimatePair(Player, Landlord, Kissing)
-                                Player(Kiss):: "..."
-                                Landlord(Kiss):: "..."
-                                If Dating
-                                    "We kissed. It started slow but soon became more passionate. It was obvious what we both wanted ..."
-                                Else
-                                    "We had a kiss, an awkward one at first, but soon moving towards a more passionate direction."
-                                Endif
-                                "Should I let this escalate further?"
-                                0:: Vanilla:: "Make out"
-                                1:: "Stop"
-                                
-                                If 0
-                                        
-                                    If Landlord.isDating() || [Landlord.isInterestedIn(Player) && [Landlord.IsDominantSex(Player) || Landlord:attractiontoplayer + Landlord:perversion > Random(50, 200) || Landlord:intoxication > 80]]
-                                            
-                                        "Our kiss got more and more steamy and soon we were making out, our hands all over each other."
-                                            
-                                        If TfGame() && Landlord.isMale()
-                                            "I'm a man trapped inside a woman's body. I don't think I'm gay, but here I am, about to hook up with my male date."
-                                        Endif
-                                            
-                                        hadSex = true
-                                        Player:perversion += Random(0, 1)
-                                        Sex(Player, Landlord)
-                                        Landlord.show(2)
-                                        "The sex was amazing. We put our clothes back on afterwards and continued our date."
-                                        If HungerEnable > 0
-                        
-                                            Player.modifyActorVar(rk_VB_Hunger, -1)
-                            
-                                        EndIf
-                                        passTime(0.2, 0.5)
-                                            
-                                    Else
-                                        
-                                        "Unfortunately for me, <Landlord.name> didn't seem interested in letting things escalate any further and pulled away."
-                                            
-                                    Endif
-                                        
-                                Else
-                                    
-                                    "I decided to stop it there and not go any further."
-                                        
-                                Endif
-                                    
-                            Elseif Random(0, 100) < 20
-                            
-                                Player(Happy):: "I've gotta go now. Thank you for inviting me."
-                                Landlord(Happy):: "Alright. Thank you for staying. Goodbye!"
-                                    
-                                "Should I ask to exchange our numbers?"
-                                0::"Yes"
-                                1::"No"
-                    
-                                If 0
-                                    Player(Happy)::"Can I have your phone number, maybe we can hang out another day?"
-                                    If Landlord.isInterestedIn(Player)
-                                        Landlord(Happy)::"Yeah sure ..."
-                                        exchangeContact(Landlord)
-                                        "We exchanged numbers and parted ways."
-                                    Else
-                                        Random
-                                            Landlord(Happy):: "Sorry, but I don't feel like I know you well enough to share such personal information just yet."
-                                            Landlord(Happy):: "It's gonna be a no, I'm afraid. Another day perhaps."
-                                            Landlord(Irritated):: "Sorry, but I don't normally exchange numbers with someone I've just met."
-                                        EndRandom
-                                    Endif
-                                Endif 
-                                
-                                choice = 5            
-                            Endif  
-                                
-                        Endif
-                            
-                    Endwhile
-
+                    Gotolandlord = true
                 Else
-                
-                    Player(Sad)::"No thanks, I'm a bit tired today ..."
-                    "Should I ask to exchange our numbers?"
-                    0::"Yes"
-                    1::"No"
-                    
-                    If 0
-                        Player(Happy)::"But, can I have your phone number, maybe we can hang out another day?"
-                        If Landlord.isInterestedIn(Player)
-                            Landlord(Happy)::"Yeah sure ..."
-                            exchangeContact(Landlord)
-                            "We exchanged numbers and parted ways."
-                        Else
-                            Random
-                                Landlord(Happy):: "Sorry, but I don't feel like I know you well enough to share such personal information just yet."
-                                Landlord(Happy):: "It's gonna be a no, I'm afraid. Another day perhaps."
-                                Landlord(Irritated):: "Sorry, but I don't normally exchange numbers with someone I've just met."
-                            EndRandom
-                        Endif
-                    Endif
-                
+                    NoThanksActor = true
                 Endif
-                
-                Landlord.hide()
-                GonnaGetFucked = false
-                
-            Endif
+            Endif // end Bought
             
+            If Gotolandlord
+                setBackground3D(Modules/rk_vin_Base/World/Vim_RoofOfficeBedroom.lpworld)
+                "I walk into <Landlord.his_or_her> house and we start talking about life ... while <Landlord.he_or_she> takes out alcohol, drinks and different drugs ..."
+
+                choice = -1    
+                ate = false
+                hadSex = false
+                Chatting = false
+                Drink1 = false
+                    
+                While choice < 5
+                    Kissed = false
+                    "What should I suggest to do?"
+                    0:: "Chat"
+                    1:: !ate :: "Eat something together"
+                    2:: "Drink alcohol"
+                    3:: "Smoke weed"
+                    4:: !hadSex:: "Kiss <Landlord.him_or_her>"
+                    5:: [Chatting && Drink1] || hadSex ::"Politely leave"
+                    
+                    If 5
+                    
+                        "We said goodbye and went our ways."
+                        If HungerEnable > 0
+                    
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        
+                        EndIf
+                        
+                    Else
+                    
+                        If 0
+                            
+                            Player.animate(socialize)
+                            Landlord.animate(socialize)
+                            "We simply sat and chat for a while ..."
+                            mood += 1
+                            Landlord:attractiontoplayer += 1
+                            Landlord:rapportwithplayer += 1
+                            passTime(0.1, 0.2)
+                            Chatting = true
+                            Player.animate()
+                            Landlord.animate()
+                                
+                        Elseif 1
+                            
+                            "We made some quick snacks and enjoyed them together ..."
+                            ate = true
+                            If HungerEnable > 0
+                    
+                                Player.modifyActorVar(rk_VB_Hunger, 5)
+                        
+                            EndIf
+                            Landlord:attractiontoplayer += 1
+                            Landlord:rapportwithplayer += 1
+                            mood += 1
+                            energy += 5
+                            passTime(0.2, 0.4)
+                                
+                        Elseif 2
+
+                            Player.animate(drinkglass)
+                            Landlord.animate(drinkglass)
+                            "We had a drink alcohol together ..."
+                            Player:intoxication += Random(5,15)
+                            Landlord:intoxication += Random(5,15)
+                            passTime(0.1, 0.2)
+                            Player.animate()
+                            Landlord.animate()
+                            If UrgeToPeeEnable > 0
+                                Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                            EndIf
+                            Drink1 = true
+                                
+                        Elseif 3
+                            
+                            "We smoked weed together ..."
+                            Player.animate(smoke)
+                            Landlord.animate(smoke)
+                            Player:intoxication += Random(3,15)
+                            Landlord:intoxication += Random(3,15)
+                            Player:mood += Random(3,10)
+                            Landlord:mood += Random(3,10)
+                            Landlord:attractiontoplayer += 1
+                            Landlord:rapportwithplayer += 5
+                            If HungerEnable > 0
+                    
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                        
+                            EndIf
+                            energy -= 1
+                            passTime(1, 2)
+                            Player.animate()
+                            Landlord.animate()
+                                
+                        Elseif 4
+                            Kissed = true
+                        Endif
+        
+                        If Kissed || [Landlord.isInterestedIn(Player) && !hadSex && Landlord:attractiontoplayer > Random(0, 200)]
+                            AnimatePair(Player, Landlord, Kissing)
+                            Player(Kiss):: "..."
+                            Landlord(Kiss):: "..."
+                            If Dating
+                                "We kissed. It started slow but soon became more passionate. It was obvious what we both wanted ..."
+                            Else
+                                "We had a kiss, an awkward one at first, but soon moving towards a more passionate direction."
+                            Endif
+                            "Should I let this escalate further?"
+                            0:: Vanilla:: "Make out"
+                            1:: "Stop"
+                            
+                            If 0
+                                    
+                                If Landlord.isDating() || [Landlord.isInterestedIn(Player) && [Landlord.IsDominantSex(Player) || Landlord:attractiontoplayer + Landlord:perversion > Random(50, 200) || Landlord:intoxication > 80]]
+                                        
+                                    "Our kiss got more and more steamy and soon we were making out, our hands all over each other."
+                                        
+                                    If TfGame() && Landlord.isMale()
+                                        "I'm a man trapped inside a woman's body. I don't think I'm gay, but here I am, about to hook up with my male date."
+                                    Endif
+                                        
+                                    hadSex = true
+                                    Player:perversion += Random(0, 1)
+                                    Sex(Player, Landlord)
+                                    Landlord.show(2)
+                                    "The sex was amazing. We put our clothes back on afterwards and continued our date."
+                                    If HungerEnable > 0
+                    
+                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                        
+                                    EndIf
+                                    passTime(0.2, 0.5)
+                                        
+                                Else
+                                    
+                                    "Unfortunately for me, <Landlord.name> didn't seem interested in letting things escalate any further and pulled away."
+                                        
+                                Endif
+                                    
+                            Else
+                                
+                                "I decided to stop it there and not go any further."
+                                    
+                            Endif
+                                
+                        Elseif Random(0, 100) < 20
+                        
+                            Player(Happy):: "I've gotta go now. Thank you for inviting me."
+                            Landlord(Happy):: "Alright. Thank you for staying. Goodbye!"
+                                
+                            "Should I ask to exchange our numbers?"
+                            0::"Yes"
+                            1::"No"
+                
+                            If 0
+                                Player(Happy)::"Can I have your phone number, maybe we can hang out another day?"
+                                If Landlord.isInterestedIn(Player)
+                                    Landlord(Happy)::"Yeah sure ..."
+                                    exchangeContact(Landlord)
+                                    "We exchanged numbers and parted ways."
+                                Else
+                                    Random
+                                        Landlord(Happy):: "Sorry, but I don't feel like I know you well enough to share such personal information just yet."
+                                        Landlord(Happy):: "It's gonna be a no, I'm afraid. Another day perhaps."
+                                        Landlord(Irritated):: "Sorry, but I don't normally exchange numbers with someone I've just met."
+                                    EndRandom
+                                Endif
+                            Endif 
+                            choice = 5            
+                        Endif  
+
+                    Endif
+
+                Endwhile
+            Endif // end Gotolandlord
+                
+            If NoThanksActor
+                Player(Sad)::"No thanks, I'm a bit tired today ..."
+                "Should I ask to exchange our numbers?"
+                0::"Yes"
+                1::"No"
+                    
+                If 0
+                    Player(Happy)::"But, can I have your phone number, maybe we can hang out another day?"
+                    If Landlord.isInterestedIn(Player)
+                        Landlord(Happy)::"Yeah sure ..."
+                        exchangeContact(Landlord)
+                        "We exchanged numbers and parted ways."
+                    Else
+                        Random
+                            Landlord(Happy):: "Sorry, but I don't feel like I know you well enough to share such personal information just yet."
+                            Landlord(Happy):: "It's gonna be a no, I'm afraid. Another day perhaps."
+                            Landlord(Irritated):: "Sorry, but I don't normally exchange numbers with someone I've just met."
+                        EndRandom
+                    Endif
+                Endif
+            Endif // end NoThanksActor
+
+            GonnaGetFucked = false
             If GonnaGetFucked
             
                 WantToFucked = 0
@@ -577,13 +595,9 @@ OTHER: none
                     followUp(rk_VB_public_indecency)
                 
                 Endif
-                
             Endif
-            
         Else
-        
             "I decided not to arrange a viewing with the landlord. This isn't really suitable accommodation for me right now."
-            
         Endif
 
         passTime(0.5, 1.5)

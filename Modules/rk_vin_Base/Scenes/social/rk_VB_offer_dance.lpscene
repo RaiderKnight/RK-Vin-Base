@@ -1,58 +1,22 @@
-WHAT: all, -dance, -go_to_the_bathroom
-WHERE: nightclub
+WHAT: none
+WHERE: none
 WHEN: 0 - 24
 WHO: none
-OTHER: Random(0, 500) < attractiveness + interpersonal && [!isWithCompanion() || !CurrentCompanion.isRelative()]
+OTHER: none
 
     SceneStart()
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
-        Actor = getCompanion()
-        If !Actor.isValid()
-            Random
-                Actor = getPerson()
-                Actor = generatePerson()
-            EndRandom
-            Actor.dress()
-        Endif
-        If !Actor.isValid()
-            Actor = generatePerson()
-            Actor.dress()
-        Endif    
         Actor.show(2)
-        If Actor.isDominantSex(Player) && Random(0, 70) < Actor:interpersonal
-            "<Actor.name> invited me to the dance floor. Should I?"
-            0:: "Yes"
-            1:: "No"
-            
-            If 0
-                DanceAccepted = true
-            Else
-                DanceAccepted = false
-                "I decided to turn <Actor.name>'s offer down."
-            Endif
+        Player.moveToPersonStand(Actor, 50)
+        Player(Happy):: "Would you like to join me on the dance floor?"
+        If Actor:attractiontoplayer > Random(0, 20) || Actor:rapportwithplayer > Random(0, 20) || Random(0, 200) < interpersonal
+            Actor(Happy):: "Of course, I'd love to!"
+            DanceAccepted = true
         Else
-            If !isWithCompanion()
-                "I found <Actor.name> standing alone near the bar."
-            Endif
-            "Should I invite <Actor.name> to dance with me?"
-            0:: "Yes"
-            1:: "No"
-            
-            If 0
-                Player(Happy):: "Would you like to join me on the dance floor?"
-                If Actor:attractiontoplayer > Random(0, 20) || Actor:rapportwithplayer > Random(0, 20) || Random(0, 200) < interpersonal
-                    Actor(Happy):: "Of course, I'd love to!"
-                    DanceAccepted = true
-                Else
-                    Actor(Sad):: "Sorry, I'm not too keen on dancing ..."
-                    DanceAccepted = false
-                Endif
-            Else
-                "I decided not to ask <Actor.him_or_her> to dance."
-                DanceAccepted = false
-            Endif
+            Actor(Sad):: "Sorry, I'm not too keen on dancing ..."
+            DanceAccepted = false
         Endif
     
         If DanceAccepted
@@ -80,6 +44,7 @@ OTHER: Random(0, 500) < attractiveness + interpersonal && [!isWithCompanion() ||
                     Actor.animate(dance)
                     Player.animate(dance)
                 Endif
+                
             Else
                 Actor.animate(dance)
                 Player.animate(dance)
@@ -125,7 +90,7 @@ OTHER: Random(0, 500) < attractiveness + interpersonal && [!isWithCompanion() ||
                 Actor.animate()
                 Player.animate()
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -5)
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
                 EndIf
                 If !isWithCompanion()
                     "Should I continue hanging out with <Actor.name>?"
@@ -148,7 +113,6 @@ OTHER: Random(0, 500) < attractiveness + interpersonal && [!isWithCompanion() ||
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
                     EndIf
-                    
                 Endif
                 
                 Sex(Player, Actor)
@@ -185,15 +149,11 @@ OTHER: Random(0, 500) < attractiveness + interpersonal && [!isWithCompanion() ||
                         Actor:rapportwithplayer -= Random(0, 1)
                         
                     Endif
-                    
                 Endif
-                "After our session, we went back to where we are just before..."
             Endif
             
         Elseif isWithCompanion()
-        
             timeout(2, invite_to_dance)
-            
         Endif
         Actor.animate()
         Player.animate()

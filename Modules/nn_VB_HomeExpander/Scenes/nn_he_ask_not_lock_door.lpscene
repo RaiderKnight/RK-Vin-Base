@@ -1,0 +1,25 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    secTenantID = RE_second_Tenant.getGlobal()
+    thirdTenantID = RE_third_Tenant.getGlobal()
+    TenantA = getSpecific(secTenantID) 
+    TenantB = getSpecific(thirdTenantID) 
+    
+    goOn = false
+    If TenantA.isValid() && Actor.isSameAs(TenantA) 
+        goOn = true
+    ElseIf TenantB.isValid() && Actor.isSameAs(TenantB) 
+        goOn = true
+    EndIf
+    
+    If goOn
+        Actor.setActorVar(RE_dont_lock_doors, 1)
+    EndIf
+    
+    // TODO: Add scene UI
+    
+    //eof

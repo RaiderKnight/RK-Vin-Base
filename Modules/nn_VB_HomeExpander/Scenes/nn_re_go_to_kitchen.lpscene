@@ -1,0 +1,148 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    If !isAtHome() && PlayerHasHome()
+        moveTo(home)
+    EndIf
+    
+    If !PlayerHasHome()
+        SceneStart()
+        "You need to find a personal home first!"
+        SceneEnd()
+    Else
+        clearGetList()  // sometimes the getGlobal/getSpecific calls do not work without this call
+        hasRoom = RE_has_kitchen.getGlobal()
+        
+        // Move to the room
+        If hasRoom > 0
+            setBackground3D(Modules/nn_HomeExpander/Rooms/re_kitchen.lpworld)
+            
+            // If MC has animals show them randomly (usually they stick to the MC at home...)
+            Actor = getCreature()
+            If Actor.isValid() && Actor.isCreatureType(Dog)
+                chance = Random(0,6)
+                If chance>=3
+                    Actor.show()
+                Else
+                    Actor.hide()
+                EndIf
+            EndIf
+            
+            Player.show(7,40,0)  // At the door
+            
+            // Add tenants randomly
+            secTenantID = RE_second_Tenant.getGlobal()
+            thirdTenantID = RE_third_Tenant.getGlobal()
+            TenantA = getSpecific(secTenantID)
+            TenantB = getSpecific(thirdTenantID)
+            
+            // Get tenant kinks
+            TenantAClothingStyle = TenantA.getActorVar(RE_home_clothing)
+            TenantBClothingStyle = TenantB.getActorVar(RE_home_clothing)
+            
+            If TenantA.isValid() 
+                If Random(0,10) >= 7 && [[WHEN>=6 && WHEN<=10] || [WHEN>=16 && WHEN<=23]]
+                    If TenantAClothingStyle == 2
+                        TenantA.strip()
+                    ElseIf TenantAClothingStyle == 1
+                        If TenantA.isMale()
+                            TenantA.dressExcept(Outerwear, Top, Bottom, Foot, Headwear)
+                        Else
+                            // dressExcept produces ugly results for girls in version 3.17 at least
+                            Random
+                                TenantA.dress(Cool-Bra_1_F,Cool-Panties_1_F)
+                                TenantA.dress(Cool-Bra_1_F,Cool-Panties_2_F)
+                                TenantA.dress(Cool-Bra_1_F,Appealing-Panties_1_F)
+                                TenantA.dress(Cool-Bra_1_F,Appealing-Panties_2_F)
+                                TenantA.dress(Cool-Bra_1_F,Appealing-Panties_3_F)
+                                TenantA.dress(Cool-Bra_1_F,Appealing-Panties_4_F)
+                                TenantA.dress(Cool-Bra_2_F,Cool-Panties_1_F)
+                                TenantA.dress(Cool-Bra_2_F,Cool-Panties_2_F)
+                                TenantA.dress(Cool-Bra_2_F,Appealing-Panties_1_F)
+                                TenantA.dress(Cool-Bra_2_F,Appealing-Panties_1_F,Stockings_2_F)
+                                TenantA.dress(Cool-Bra_2_F,Appealing-Panties_2_F)
+                                TenantA.dress(Cool-Bra_2_F,Appealing-Panties_2_F,Stockings_2_F)
+                                TenantA.dress(Cool-Bra_2_F,Appealing-Panties_3_F)
+                                TenantA.dress(Cool-Bra_2_F,Appealing-Panties_3_F,Stockings_2_F)
+                                TenantA.dress(Cool-Bra_2_F,Appealing-Panties_4_F)
+                                TenantA.dress(Cool-Bra_2_F,Appealing-Panties_4_F,Stockings_2_F)
+                                TenantA.dress(Cool-Bra_3_F,Cool-Panties_1_F)
+                                TenantA.dress(Cool-Bra_3_F,Cool-Panties_2_F)
+                                TenantA.dress(Cool-Bra_3_F,Appealing-Panties_1_F)
+                                TenantA.dress(Cool-Bra_3_F,Appealing-Panties_2_F)
+                                TenantA.dress(Cool-Bra_3_F,Appealing-Panties_3_F)
+                                TenantA.dress(Cool-Bra_3_F,Appealing-Panties_4_F)
+                            EndRandom
+                        EndIf
+                    Else
+                        If TenantA.isNaked()
+                            TenantA.dress()
+                        EndIf
+                    EndIf
+                    TenantA.setNoRedress(true)
+                    TenantA.addToPeopleHere()
+                Else
+                    TenantA.hide()
+                    TenantA.saveAndDelete()
+                EndIf
+            EndIf
+            
+            If TenantB.isValid() 
+                If Random(0,10) >= 7 && [[WHEN>=6 && WHEN<=10] || [WHEN>=16 && WHEN<=23]]
+                    If TenantBClothingStyle == 2
+                        TenantB.strip()
+                    ElseIf TenantBClothingStyle == 1
+                        If TenantB.isMale()
+                            TenantB.dressExcept(Outerwear, Top, Bottom, Foot, Headwear)
+                        Else
+                            // dressExcept produces ugly results for girls in version 3.17 at least
+                            Random
+                                TenantB.dress(Cool-Bra_1_F,Cool-Panties_1_F)
+                                TenantB.dress(Cool-Bra_1_F,Cool-Panties_2_F)
+                                TenantB.dress(Cool-Bra_1_F,Appealing-Panties_1_F)
+                                TenantB.dress(Cool-Bra_1_F,Appealing-Panties_2_F)
+                                TenantB.dress(Cool-Bra_1_F,Appealing-Panties_3_F)
+                                TenantB.dress(Cool-Bra_1_F,Appealing-Panties_4_F)
+                                TenantB.dress(Cool-Bra_2_F,Cool-Panties_1_F)
+                                TenantB.dress(Cool-Bra_2_F,Cool-Panties_2_F)
+                                TenantB.dress(Cool-Bra_2_F,Appealing-Panties_1_F)
+                                TenantB.dress(Cool-Bra_2_F,Appealing-Panties_1_F,Stockings_2_F)
+                                TenantB.dress(Cool-Bra_2_F,Appealing-Panties_2_F)
+                                TenantB.dress(Cool-Bra_2_F,Appealing-Panties_2_F,Stockings_2_F)
+                                TenantB.dress(Cool-Bra_2_F,Appealing-Panties_3_F)
+                                TenantB.dress(Cool-Bra_2_F,Appealing-Panties_3_F,Stockings_2_F)
+                                TenantB.dress(Cool-Bra_2_F,Appealing-Panties_4_F)
+                                TenantB.dress(Cool-Bra_2_F,Appealing-Panties_4_F,Stockings_2_F)
+                                TenantB.dress(Cool-Bra_3_F,Cool-Panties_1_F)
+                                TenantB.dress(Cool-Bra_3_F,Cool-Panties_2_F)
+                                TenantB.dress(Cool-Bra_3_F,Appealing-Panties_1_F)
+                                TenantB.dress(Cool-Bra_3_F,Appealing-Panties_2_F)
+                                TenantB.dress(Cool-Bra_3_F,Appealing-Panties_3_F)
+                                TenantB.dress(Cool-Bra_3_F,Appealing-Panties_4_F)
+                            EndRandom
+                        EndIf
+                    Else
+                        If TenantB.isNaked()
+                            TenantB.dress()
+                        EndIf
+                    EndIf
+                    TenantB.setNoRedress(true)
+                    TenantB.addToPeopleHere()
+                Else
+                    TenantB.hide()
+                    TenantB.saveAndDelete()
+                EndIf
+            EndIf
+        Else
+            setBackground3D(Modules/nn_HomeExpander/Rooms/re_empty.lpworld)
+            Player.show(0,0,0)
+            Player.animate()
+            cameraFocus(Player)
+            
+            "This could be a nice kitchen..."
+        EndIf
+    EndIf
+    

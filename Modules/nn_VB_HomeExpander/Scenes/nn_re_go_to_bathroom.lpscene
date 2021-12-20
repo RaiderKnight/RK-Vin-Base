@@ -1,0 +1,71 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    If !isAtHome() && PlayerHasHome()
+        moveTo(home)
+    EndIf
+    
+    If !PlayerHasHome()
+        SceneStart()
+        "You need to find a personal home first!"
+        SceneEnd()
+    Else
+        clearGetList()  // sometimes the getGlobal/getSpecific calls do not work without this call
+        
+        secTenantID = RE_second_Tenant.getGlobal()
+        thirdTenantID = RE_third_Tenant.getGlobal()
+        TenantA = getSpecific(secTenantID)
+        TenantB = getSpecific(thirdTenantID)
+        
+        tc = 0
+        If TenantA.isValid()
+            tc+=1
+        EndIf
+        If TenantB.isValid()
+            tc+=1
+        EndIf
+        
+        // Remove the tenants from the scene
+        If TenantA.isValid()
+            TenantA.hide()
+            TenantA.saveAndDelete()
+        EndIf
+        If TenantB.isValid()
+            TenantB.hide()
+            TenantB.saveAndDelete()
+        EndIf           
+        
+        chance = Random(0,15)
+        If tc > 1
+            chance = Random(0,10)
+            // Chance is better if two ppl live with you
+        EndIf
+        If tc>0 && chance<=3 && [WHEN<=10 || WHEN>=16]
+            // Occupied!
+            SceneStart()        // TODO: Currently required (LP 3.17), remove as soon as not required anymore!
+            followUp(nn_he_random_bath_encounter)
+            SceneEnd()          // TODO: Currently required (LP 3.17), remove as soon as not required anymore!
+        Else
+            // Move to the room
+            setBackground3D(Modules/nn_HomeExpander/Rooms/re_bathroom.lpworld)
+            
+            Player.show(0,0,0)  // Sometimes the player starts in the wall...
+            cameraFocus(Player)
+            
+            // If MC has animals show them randomly (usually they stick to the MC at home...)
+            Actor = getCreature()
+            If Actor.isValid() && Actor.isCreatureType(Dog)
+                chance = Random(0,6)
+                If chance>=3
+                    Actor.show()
+                Else
+                    Actor.hide()
+                EndIf
+            EndIf
+        EndIf
+    EndIf
+    
+    

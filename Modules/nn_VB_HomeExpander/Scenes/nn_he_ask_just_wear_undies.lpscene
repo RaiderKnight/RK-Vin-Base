@@ -1,0 +1,56 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    secTenantID = RE_second_Tenant.getGlobal()
+    thirdTenantID = RE_third_Tenant.getGlobal()
+    TenantA = getSpecific(secTenantID) 
+    TenantB = getSpecific(thirdTenantID) 
+    
+    goOn = false
+    If TenantA.isValid() && Actor.isSameAs(TenantA) 
+        goOn = true
+    ElseIf TenantB.isValid() && Actor.isSameAs(TenantB) 
+        goOn = true
+    EndIf
+    
+    If goOn
+        Actor.setActorVar(RE_home_clothing, 1)
+        // Show up in underwear
+        If Actor.isMale()
+            Actor.dressExcept(Outerwear, Top, Bottom, Foot, Headwear)
+        Else
+            // dressExcept produces ugly results for girls in version 3.17 at least
+            Random
+                Actor.dress(Cool-Bra_1_F,Cool-Panties_1_F)
+                Actor.dress(Cool-Bra_1_F,Cool-Panties_2_F)
+                Actor.dress(Cool-Bra_1_F,Appealing-Panties_1_F)
+                Actor.dress(Cool-Bra_1_F,Appealing-Panties_2_F)
+                Actor.dress(Cool-Bra_1_F,Appealing-Panties_3_F)
+                Actor.dress(Cool-Bra_1_F,Appealing-Panties_4_F)
+                Actor.dress(Cool-Bra_2_F,Cool-Panties_1_F)
+                Actor.dress(Cool-Bra_2_F,Cool-Panties_2_F)
+                Actor.dress(Cool-Bra_2_F,Appealing-Panties_1_F)
+                Actor.dress(Cool-Bra_2_F,Appealing-Panties_1_F,Stockings_2_F)
+                Actor.dress(Cool-Bra_2_F,Appealing-Panties_2_F)
+                Actor.dress(Cool-Bra_2_F,Appealing-Panties_2_F,Stockings_2_F)
+                Actor.dress(Cool-Bra_2_F,Appealing-Panties_3_F)
+                Actor.dress(Cool-Bra_2_F,Appealing-Panties_3_F,Stockings_2_F)
+                Actor.dress(Cool-Bra_2_F,Appealing-Panties_4_F)
+                Actor.dress(Cool-Bra_2_F,Appealing-Panties_4_F,Stockings_2_F)
+                Actor.dress(Cool-Bra_3_F,Cool-Panties_1_F)
+                Actor.dress(Cool-Bra_3_F,Cool-Panties_2_F)
+                Actor.dress(Cool-Bra_3_F,Appealing-Panties_1_F)
+                Actor.dress(Cool-Bra_3_F,Appealing-Panties_2_F)
+                Actor.dress(Cool-Bra_3_F,Appealing-Panties_3_F)
+                Actor.dress(Cool-Bra_3_F,Appealing-Panties_4_F)
+            EndRandom
+        EndIf
+        Actor.setNoRedress(true)
+    EndIf
+    
+    // TODO: Add scene UI
+    
+    //eof

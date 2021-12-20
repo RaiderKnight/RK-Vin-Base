@@ -28,10 +28,12 @@ OTHER: none
         While CheckingSetting
         
             0::"-- Setting for Vin_Base --"
-            1::"Hunger"
-            2::"Urge to pee"
-            3::"Same tuition price for all courses"
-            90::"Stuff in hand to store"
+            1::"Enable/disable Hunger"
+            2::"Enable/disable Urge to pee"
+            3::"Enable Same tuition price for all courses"
+            30::"Set racial stereotypes"
+            89::"---------------------------------"
+            90::"Stuff in hand to store - Debugger"
             99::"Go back!"
             
             If 1
@@ -108,11 +110,10 @@ OTHER: none
                     rk_VB_TuitionPriceEqualEnable.setGlobal(0)
                 
                 EndIf
-            
+            ElseIf 30
+                followUp(set_stereotypes)
             ElseIf 90
-            
                 followUp(rk_VB_HandSwitchInv_VB)
-            
             Else
             
                 CheckingSetting = false

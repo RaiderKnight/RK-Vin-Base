@@ -1,0 +1,41 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Player(Flirty):: "Hey Babe! Would you like to give a massage to my to <Player.cock_or_pussy>?"
+        If [CurrentCompanion.isFemale() && CurrentCompanion.isDating() && CurrentCompanion:arousal > 10] || [CurrentCompanion.isFemale() && CurrentCompanion:perversion > 50] || [CurrentCompanion.isFemale() && CurrentCompanion:arousal > 15]
+            CurrentCompanion(Excited):: "Uh, of course I want, what's that question..."
+            Player.strip()
+            Filter(Fingering)
+            sex(CurrentCompanion, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+            Player.dress()
+            CurrentCompanion:attractiontoplayer += Random(0, 3)
+            CurrentCompanion:arousal += Random(0, 2)
+            
+        ElseIf [CurrentCompanion.isMale() && CurrentCompanion.isDating() && CurrentCompanion:arousal > 10] || [CurrentCompanion.isMale() && CurrentCompanion:perversion > 50] || [CurrentCompanion.isMale() && CurrentCompanion:arousal > 15]
+            CurrentCompanion(Excited):: "Uh, of course I want, what's that question..."
+            Player.strip()
+            Filter(Handjob)
+            sex(CurrentCompanion, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+            Player.dress()
+            CurrentCompanion:attractiontoplayer += Random(0, 3)
+            CurrentCompanion:arousal += Random(0, 2)
+            
+        Else
+            CurrentCompanion(Embarassed)::"Nah! Not now babe!"
+            CurrentCompanion:attractiontoplayer += Random(0, 1)
+        EndIf
+            
+    SceneEnd()

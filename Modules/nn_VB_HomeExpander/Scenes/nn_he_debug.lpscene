@@ -1,0 +1,73 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        "Welcome to the HomeExtensions debug menu!"
+        0::"Disable all rooms"
+        1::"Enable all rooms"
+        2::"Clear room tenants"
+        5::"Install all spy cams"
+        6::"Remove all spy cams"
+        10::"Trigger room inquiry"
+        11::"Trigger tenant moves out"
+        12::"Trigger bathroom encounter"
+        20::"Reset tenant's counters"
+        80::"Set quest to winning stage"
+        99::"Exit"
+        
+        If 0
+            RE_has_lvingroom.setGlobal(0)
+            RE_has_kitchen.setGlobal(0)
+            RE_has_officeroom.setGlobal(0)
+            RE_has_secondbedroom.setGlobal(0)
+            RE_has_thirdbedroom.setGlobal(0)
+        ElseIf 1
+            RE_has_lvingroom.setGlobal(1)
+            RE_has_kitchen.setGlobal(1)
+            RE_has_officeroom.setGlobal(1)
+            RE_has_secondbedroom.setGlobal(1)
+            RE_has_thirdbedroom.setGlobal(1)
+        ElseIf 2
+            RE_second_tenant.setGlobal(0)
+            RE_third_tenant.setGlobal(0)
+        ElseIf 5
+            // Add spy cams
+            RE_has_spy_cam_bathroom.setGlobal(1)
+            RE_has_spy_cam_bedroom.setGlobal(1)
+            RE_has_spy_cam_second_room.setGlobal(1)
+            RE_has_spy_cam_third_room.setGlobal(1)
+            RE_has_spy_cam_living_room.setGlobal(1)
+            RE_has_spy_cam_kitchen.setGlobal(1)
+            RE_has_spy_cam_office.setGlobal(1)
+        ElseIf 6
+            // Remove spy cams
+            RE_has_spy_cam_bathroom.setGlobal(0)
+            RE_has_spy_cam_bedroom.setGlobal(0)
+            RE_has_spy_cam_second_room.setGlobal(0)
+            RE_has_spy_cam_third_room.setGlobal(0)
+            RE_has_spy_cam_living_room.setGlobal(0)
+            RE_has_spy_cam_kitchen.setGlobal(0)
+            RE_has_spy_cam_office.setGlobal(0)
+        ElseIf 10 
+            followUp(nn_he_random_room_inquiry)
+        ElseIf 11 
+            followUp(nn_he_random_tenant_move_out)
+        ElseIf 11 
+            followUp(nn_he_random_bath_encounter)
+        ElseIf 20
+            secTenantID = RE_second_Tenant.getGlobal()
+            thirdTenantID = RE_third_Tenant.getGlobal()
+            TenantA = getSpecific(secTenantID)
+            TenantB = getSpecific(thirdTenantID)
+            
+            TenantA.setActorVar(RE_bathroom_encounters, 0)
+            TenantB.setActorVar(RE_bathroom_encounters, 0)
+        ElseIf 80
+            Player.setActorVar(RE_bathroom_encounters_quest, 100)
+        EndIf
+        "DONE."
+    SceneEnd()

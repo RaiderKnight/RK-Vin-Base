@@ -1,0 +1,187 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+    // Calculate the time in days
+    // We use the players age for that
+    // It is incremented by 1/365 every day
+    daysSinceBirth = (Player:Age * 365)
+    daysSinceBirth += 0.5
+    daysSinceBirth = daysSinceBirth.round()
+    daysSinceBirth -= 1
+    
+    // Hide tenants
+    secTenantID = RE_second_Tenant.getGlobal()
+    thirdTenantID = RE_third_Tenant.getGlobal()
+    TenantA = getSpecific(secTenantID)
+    TenantB = getSpecific(thirdTenantID)
+    
+    If TenantA.isValid()
+        TenantA.hide()
+    EndIf
+    If TenantB.isValid()
+        TenantB.hide()
+    EndIf
+    
+    If hasLivingroom>0 && hasKitchen>0 && hasOfficeroom>0 && hasSecBedroom>0 && hasThirdBedroom>0
+        "Well. This version of NickNo's Home Expander does not have more rooms. Please ask for more on F95 / discord. :)"
+    ElseIf !PlayerHasHome()
+        "You need to find a personal home first!"
+    ElseIf !isAtHome()
+        "You need to be at your personal home to build rooms."
+    Else
+        // Move to the room
+        setBackground3D(Modules/nn_HomeExpander/Rooms/re_empty.lpworld)
+        
+        Player.show(0,20,0)  // Sometimes the player starts in the wall...
+        cameraFocus(Player)
+        
+        hasLivingroom = RE_has_lvingroom.getGlobal()
+        hasKitchen = RE_has_kitchen.getGlobal()
+        hasOfficeroom = RE_has_officeroom.getGlobal()
+        hasSecBedroom = RE_has_secondbedroom.getGlobal()
+        hasThirdBedroom = RE_has_thirdbedroom.getGlobal()
+        
+        "You enter the empty room. What do you want to build here?"
+        0::hasLivingroom==0::"Living room"
+        2::hasKitchen==0::"Kitchen"
+        3::hasSecBedroom==0::"Second bedroom"
+        4::hasThirdBedroom==0::"Third bedroom"
+        5::hasOfficeroom==0::"Office room"
+        99::"Nothing"
+        
+        If choice != 99
+            roomToBuild = choice
+            
+            canBuildSelf = true
+            canHireWorker = true
+            
+            diyState = ""
+            diyCost = 2500
+            diyCostLocal = diyCost.convertToLocalCurrency()
+            If Player:money < diyCost
+                canBuildSelf = false
+                diyState = "money" 
+            EndIf
+            
+            If Player:intelligence < 20
+                If !canBuildSelf
+                    diyState = "intelligence, <diyState>" 
+                ElseIf
+                    diyState = "intelligence"
+                EndIf
+                canBuildSelf = false
+            EndIf
+            
+            If Player:fitness < 20
+                If !canBuildSelf
+                    diyState = "fitness, <diyState>" 
+                ElseIf
+                    diyState = "fitness"
+                EndIf
+                canBuildSelf = false
+            EndIf
+            
+            If Player:muscle < 20
+                If !canBuildSelf
+                    diyState = "muscle, <diyState>" 
+                ElseIf
+                    diyState = "muscle"
+                EndIf
+                canBuildSelf = false
+            EndIf
+            
+            If Player:energy < 50
+                If !canBuildSelf
+                    diyState = "energy, <diyState>" 
+                ElseIf
+                    diyState = "energy"
+                EndIf
+                canBuildSelf = false
+            EndIf
+            
+            If !canBuildSelf
+                diyState = "<diyState> too low, "
+            ElseIf
+                diyState = ""
+            EndIf
+            
+            workerCosts = 12000
+            workerCostsLocal = workerCosts.convertToLocalCurrency()
+            workerState = ""
+            If Player:money < workerCosts
+                canHireWorker = false
+                workerState = "money too low, "
+            EndIf
+            
+            "How do you want to build that room?"
+            0::canBuildSelf::"Do it yourself (<diyState><diyCostLocal>)"
+            1::canHireWorker::"Hire workers (<workerState><workerCostsLocal>)"
+            99::"Don't build the room"
+            
+            If choice != 99
+                If choice == 0
+                    money -= diyCost
+                    energy -= Random(30,50)
+                    fitness += Random(0,5)
+                    intelligence += Random(0,2)
+                    muscle += Random(0,2)
+                    
+                    Player.animate(sweep)
+                    
+                    "You start cleaning the room..."
+                    
+                    Player.animate(yoga)
+                    "You paint the walls and do the flooring."
+                    
+                    player.animate(martialart)
+                    "Now you have to build up the furniture... Damn these IKEA instructions!"
+                    
+                    player.animate()
+                    "That was some hard work. But the room is done. Go check it out!"
+                    
+                    passTime(8, 10)
+                Else
+                    money -= workerCosts
+                    
+                    player.animate(call)
+                    "You call the workers and tell them what do do..."
+                    "They arrive within a few minutes and start working..."
+                    
+                    passTime(4, 8)
+                    
+                    player.animate()
+                    "Some hours later: The workers completed their task. The new room is ready! Go visit it!"
+                EndIf
+            
+                If roomToBuild == 0
+                    RE_has_lvingroom.setGlobal(1)
+                    followUp(nn_re_go_to_livroom)
+                ElseIf roomToBuild == 1
+                    // Bath not used 
+                    // Always exists... somehow
+                ElseIf roomToBuild == 2
+                    RE_has_kitchen.setGlobal(1)
+                    followUp(nn_re_go_to_kitchen)
+                ElseIf roomToBuild == 3
+                    // 2nd bedroom
+                    RE_has_secondbedroom.setGlobal(1)
+                    followUp(nn_re_go_to_bedroom2)
+                ElseIf roomToBuild == 4
+                    // 3rd bedroom
+                    RE_has_thirdbedroom.setGlobal(1)
+                    followUp(nn_re_go_to_bedroom3)
+                ElseIf roomToBuild == 5
+                    // office
+                    RE_has_officeroom.setGlobal(1)
+                    followUp(nn_re_go_to_homeoffice)
+                EndIf
+            EndIf
+        EndIf
+    EndIf
+    
+    SceneEnd()

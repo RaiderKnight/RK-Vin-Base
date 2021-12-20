@@ -1,0 +1,45 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    // get some settings
+    debugModeEnabled = Player.getActorVar(re_DebugModeEnabled)
+    
+    If PlayerHasHome()
+        moveTo(home)
+        // TODO: Rewrite as soon as we get  setBackgroundCustom(bedroom)
+        
+        // If MC has animals show them randomly (usually they stick to the MC at home...)
+        Actor = getCreature()
+        If Actor.isValid() && Actor.isCreatureType(Dog)
+            chance = Random(0,6)
+            If chance>=3
+                Actor.show()
+            Else
+                Actor.hide()
+            EndIf
+        EndIf
+        
+        // Hide tenants
+        secTenantID = RE_second_Tenant.getGlobal()
+        thirdTenantID = RE_third_Tenant.getGlobal()
+        TenantA = getSpecific(secTenantID)
+        TenantB = getSpecific(thirdTenantID)
+        
+        If TenantA.isValid()
+            TenantA.hide()
+            TenantA.saveAndDelete()
+        EndIf
+        If TenantB.isValid()
+            TenantB.hide()
+            TenantB.saveAndDelete()
+        EndIf
+    Else
+        SceneStart()
+        "You need to find a personal home first!"
+        SceneEnd()
+    EndIf
+    
+    

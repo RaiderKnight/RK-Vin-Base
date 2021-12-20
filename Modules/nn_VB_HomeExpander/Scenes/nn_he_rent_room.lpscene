@@ -1,0 +1,424 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        If !PlayerHasHome()
+            SceneStart()
+            "You need to find a personal home first!"
+            SceneEnd()
+        Else
+            clearGetList()  // sometimes the getGlobal/getSpecific calls do not work without this call
+            
+            hasSecBedroom = RE_has_secondbedroom.getGlobal()
+            hasThirdBedroom = RE_has_thirdbedroom.getGlobal()
+            
+            // Calculate the current time in days
+            // We use the players age for that
+            // It is incremented by 1/365 every day
+            daysSinceBirth = (Player:Age * 365)
+            daysSinceBirth += 0.5
+            daysSinceBirth = daysSinceBirth.round()
+            daysSinceBirth -= 1
+            
+            stayInMenu = 1
+            While stayInMenu > 0
+                // Get Tenants (may change in the loop)
+                secTenantID = RE_second_Tenant.getGlobal()
+                thirdTenantID = RE_third_Tenant.getGlobal()
+                TenantA = getSpecific(secTenantID)
+                TenantB = getSpecific(thirdTenantID)
+                hasRentAdvertisements = RE_has_advertisements.getGlobal()
+                
+                // Hide tenants
+                If TenantA.isValid()
+                    TenantA.hide()
+                EndIf
+                If TenantB.isValid()
+                    TenantB.hide()
+                EndIf
+                clearGetList()
+                
+                txtAState = "free"
+                If TenantA.isValid()
+                    rent = RE_second_Tenant_rent.getGlobal()
+                    rentLocal = rent.convertToLocalCurrency()
+                    txtAState = "occupied by <TenantA.Name> <TenantA.Name_last>, <rentLocal> the week"
+                EndIf
+                
+                txtBState = "free"
+                If TenantB.isValid()
+                    rent = RE_third_Tenant_rent.getGlobal()
+                    rentLocal = rent.convertToLocalCurrency()
+                    txtBState = "occupied by <TenantB.Name> <TenantB.Name_last>, <rentLocal> the week"
+                EndIf
+                "Which room do you want to manage?"
+                2::hasSecBedroom>0::"Bedroom 2 (<txtAState>)"
+                3::hasThirdBedroom>0::"Bedroom 3 (<txtBState>)"
+                99::"Nothing"
+                
+                numRoom = choice
+                If numRoom < 99
+                    canRent = false
+                    Tenant = 0
+                    
+                    txtRoom = "bedroom two"
+                    If numRoom == 2
+                        If secTenantID == 0
+                            canRent = true
+                        Else
+                            Tenant = TenantA
+                            
+                            If !Tenant.isValid()
+                                canRent = true
+                                RE_second_Tenant.setGlobal(0)
+                                
+                                "ALTERT! Second room Tenant is invalid!!"
+                            EndIf
+                        EndIf
+                    ElseIf numRoom == 3
+                        txtRoom = "bedroom three"
+                        If thirdTenantID == 0
+                            canRent = true
+                        Else
+                            Tenant = TenantB
+                            
+                            If !Tenant.isValid()
+                                canRent = true
+                                RE_third_Tenant.setGlobal(0)
+                                
+                                "ALTERT! Third room Tenant is invalid!!"
+                            EndIf
+                        EndIf
+                    EndIf
+                    
+                    txtTenantInfo = ""
+                    If Tenant.isValid()
+                        txtTenantInfo = " (<Tenant.Name> <Tenant.Name_last>)"
+                    EndIf
+                    
+                    txtAdState = "Put up for rent in the advertisements"
+                    If hasRentAdvertisements > 0
+                        txtAdState = "Stop advertising the rooms"
+                    EndIf
+                    
+                    100::false::"*** Manage <txtRoom><txtTenantInfo> ***"
+                    0::canRent::"Ask a contact to rent the room"
+                    1::canRent::"<txtAdState>"
+                    2::false::"Negotiate on rent"
+                    3::false::"Talk about housework"
+                    10::!canRent::"Kick current tenant out."
+                    99::"Return"
+                    
+                    If 0
+                        selectNPC()
+                        Actor = getSelectedNPC()
+                        If Actor.isValid()
+                            willMoveIn = true
+                            actId = Actor.getId()
+                            If  actId == secTenantID || actId == thirdTenantID
+                                "This person is already living with you!"
+                                Actor = 0
+                            EndIf
+                            
+                            movedOutDate = Actor.getActorVar(HE_movedOutDate)
+                            movedOutReason = Actor.getActorVar(HE_movedOutReason)
+                            
+                            delta = daysSinceBirth - movedOutDate
+                            If movedOutReason == 1 // had to go
+                                "This person moved out <delta> days ago because <Actor.s> had to go to another city."
+                                Actor = 0
+                            ElseIf movedOutReason == 2 
+                                If delta < 30
+                                    delay = 30 - delta
+                                    "You kicked this person out <delta> days ago. You will have to wait <delay> days before asking to move in again."
+                                    Actor = 0
+                                    
+                                    // TODO: Could write some more text about this scenario
+                                EndIf
+                            EndIf
+                        EndIf
+                        
+                        If Actor.isValid()
+                            rentA = 200
+                            rentB = 150
+                            rentC = 100
+                            rentD = 75
+                            rentE = 50
+                            rentF = 25
+                            rentNull = 0
+                            
+                            rentALocal = rentA.convertToLocalCurrency()
+                            rentBLocal = rentB.convertToLocalCurrency()
+                            rentCLocal = rentC.convertToLocalCurrency()
+                            rentDLocal = rentD.convertToLocalCurrency()
+                            rentELocal = rentE.convertToLocalCurrency()
+                            rentFLocal = rentF.convertToLocalCurrency()
+                            rentNullLocal = rentNull.convertToLocalCurrency()
+                            
+                            "How much is the rental fee per week?"
+                            0::"It's free (<rentNullLocal>)"
+                            1::"Ask for <rentALocal>"
+                            2::"Ask for <rentBLocal>"
+                            3::"Ask for <rentCLocal>"
+                            4::"Ask for <rentDLocal>"
+                            5::"Ask for <rentELocal>"
+                            6::"Ask for <rentFLocal>"
+                            
+                            reqRent = 0
+                            If 1
+                                reqRent = rentA
+                            ElseIf 2
+                                reqRent = rentB
+                            ElseIf 3
+                                reqRent = rentC
+                            ElseIf 4
+                                reqRent = rentD
+                            ElseIf 5
+                                reqRent = rentE
+                            ElseIf 6
+                                reqRent = rentF
+                            EndIf
+                            
+                            rent = reqRent
+                            rentLocal = reqRent.convertToLocalCurrency()
+                            
+                            secondScreen(Actor)
+                            Actor.dress()
+                            Actor.show()
+                            
+                            Random
+                                Player(Serene)::"Hey <Actor.Name>, listen up! I have got a empty room in my home. Want to move in for <rentLocal> per week?"
+                                Player(Serene)::"Hi <Actor.Name>, I heard you are looking for a new home? I have got an empty room here that you could get for <rentLocal> per week."
+                                Player(Serene)::"Hey <Actor.Name>, are you still looking for a new home? I got a room for <rentLocal> per week. Interested?"
+                                Player(Serene)::"Hey this is <Player.Name> calling. Say, <Actor.Name>, are you still looking for room in my area? I have a spare room and would rent it to you for <rentLocal> per week. Interested?"
+                            EndRandom
+                            
+                            If willMoveIn && Actor.isMarried()
+                                Random
+                                    Actor(irritated)::"Erm, what? You know I live with my <Actor.man_or_wife>! Thanks for the offer."
+                                    Actor(Confused)::"You are a little confused today hm? I live with my <Actor.man_or_wife> in our own house! Thanks anyways!"
+                                    Actor(irritated)::"What did you smoke? I'm married and we have our own flat. Thanks <Player.Name>!"
+                                EndRandom
+                               
+                                willMoveIn = false
+                                Actor.hide()
+                                secondScreen()
+                                
+                                Player(Sad)::"Alright, maybe try someone who is not married..."
+                                Player(Evil)::"Or solve that problem otherwise?"
+                            EndIf
+                            
+                            If willMoveIn && Actor:rapportwithplayer < -10
+                                Random
+                                    Actor(Irritated)::"Erm, what? I can't even stand you! *beep* (hung up)"
+                                    Actor(Angry)::"Before I live with you hell will freeze over. Forget it!"
+                                    Actor(Tired)::"You are one of the few people I really do not want to spend more time than necessary with. So: No!"
+                                    Actor(Tired)::"Maybe you ask someone who likes you? I'm out!"
+                                EndRandom
+                               
+                                willMoveIn = false
+                                Actor.hide()
+                                secondScreen()
+                                
+                                Player(Sad)::"Alright, <Actor.Name> really does not like me."
+                                Player(Serene)::"Seems I neet to behave better..."
+                            EndIf
+                            
+                            // TODO: Maybe submissive ppl can live here?
+                            
+                            needText = 1        // if 1 the end scene will display some text
+                            chance = Random(0,10)
+                            
+                            // Lovers will move in easier
+                            chance = Random(0,10)
+                            If willMoveIn && Actor.isDating() 
+                                If reqRent > 0 && chance <= 5
+                                    // Date will get angry if they shall pay... what costs love?
+                                    willMoveIn=false
+                                    // TODO: Write some text for this case
+                                    // needText = 0
+                                ElseIf chance < 2
+                                    willMoveIn=false
+                                EndIf
+                            ElseIf willMoveIn && reqRent == 0 && chance < 2
+                                // TODO: Check intelligence of actor
+                                // the offer is too cheesy
+                                willMoveIn=false
+                                // TODO: Write some text for this case
+                                // needText = 0
+                            ElseIf willMoveIn && reqRent > 0 && chance <= 5
+                                Random
+                                    Actor(Sad)::"Oh <Player.Name> I'd love to, but this is way over my budget!"
+                                    Actor(Sad)::"Oh <Player.Name> I cannot afford this."
+                                    Actor(Sad)::"I am afraid I cannot pay that much <Player.Name>."
+                                EndRandom
+                                
+                                negotiate = 1
+                                While negotiate > 0
+                                    "<Actor.Name> cannot afford a rent that high. Offer a discount?"
+                                    0::"Ok, <Actor.Name> can stay with me for free (<rentNullLocal>)"
+                                    1::"Offer 10% discount"
+                                    2::"Offer 25% discount"
+                                    3::"Offer 35% discount"
+                                    4::"Offer 50% discount"
+                                    5::"Offer 75% discount"
+                                    99::"Bad luck! (do not rent to <Actor.Name>)"
+                                    
+                                    If 0
+                                        Random
+                                            Player(Wink)::"Alright <Actor.Name>, here comes the deal: You live with me for free and just take over some housework. OK?"
+                                            Player(Happy)::"Hm <Actor.Name>, OK. I see your situation is not easy at the moment. You can stay with me for free."
+                                        EndRandom
+                                        
+                                        chance = Random(0,10)
+                                        If chance <2 
+                                            // dumb ass...
+                                            willMoveIn = false
+                                            needText = 0
+                                            Random
+                                                Actor(confused)::"Eh? What a cheesy offer. No thanks <Player.Name>!"
+                                                Actor(irritated)::"Erm, thanks <Player.Name> but I just decided I don't want to live with you. Thanks anyway!"
+                                                Actor(Anxious)::"Oh thanks for your kindness <Player.Name>. But I think I have to decline that offer. Bye!"
+                                            EndRandom
+                                        EndIf
+                                        
+                                        negotiate = 0
+                                    ElseIf 1||2||3||4||5
+                                        discount = 0.9
+                                        If choice == 2
+                                            discount = 0.75
+                                        ElseIf choice == 3
+                                            discount = 0.65
+                                        ElseIf choice == 4
+                                            discount = 0.5
+                                        ElseIf choice == 5
+                                            discount = 0.25
+                                        EndIf
+                                        reqRent = rent * discount
+                                        rent = reqRent
+                                        rentLocal = reqRent.convertToLocalCurrency()
+                                        
+                                        Random
+                                            Player(Wink)::"Alright <Actor.Name>, here comes the deal: You live with me for just <rentLocal> and take over some housework. OK?"
+                                            Player(Happy)::"Hm <Actor.Name>, OK. I see your situation is not easy at the moment. You can stay with me for <rentLocal> per week. Deal?"
+                                        EndRandom
+                                        
+                                        chance = Random(0,10)
+                                        If chance >=2
+                                            // OK
+                                            Random
+                                                Actor(Happy)::"Alright this is a pretty good deal."
+                                                Actor(Happy)::"Ok, this fits my budget <Player.Name>!"
+                                                Actor(Happy)::"Oh <Player.Name> thanks for your kindness. I will help you with all the housework!"
+                                            EndRandom
+                                            needText = 0
+                                            negotiate = 0
+                                        Else
+                                            // dumb ass...
+                                            willMoveIn = false
+                                            negotiate = 0
+                                            needText = 0
+                                            Random
+                                                Actor(confused)::"Eh? What a cheesy offer. No thanks <Player.Name>!"
+                                                Actor(irritated)::"Erm, thanks <Player.Name> but I just decided I don't want to live with you. Thanks anyway!"
+                                                Actor(Anxious)::"Oh thanks for your kindness <Player.Name>. But I think I have to decline that offer. Bye!"
+                                            EndRandom
+                                        EndIf
+                                    ElseIf 99
+                                    
+                                        Random
+                                            Player(Sad)::"Sorry <Actor.Name>, I cannot go any lower. Seems we won't find a solution now."
+                                            Player(Sad)::"Sorry <Actor.Name>, that is as low as I can go. Sorry."
+                                        EndRandom
+                                        
+                                        willMoveIn = false
+                                        needText = 0
+                                        negotiate = 0
+                                    EndIf
+                                EndWhile
+                            ElseIf willMoveIn
+                                chance = Random(0,10)
+                                If chance <= 5
+                                    willMoveIn=false
+                                EndIf
+                            EndIf
+                            
+                            If willMoveIn 
+                                If needText == 1
+                                    Random
+                                        Actor(Serene)::"Oh <Player.Name>, thanks for the offer. I'm really looking for a flat near you. Why not."
+                                        Actor(Flirty)::"Hmm sweet. I always fantasized about living with you <Player.Name>!"
+                                        Actor(Attentive)::"Oh thanks <Player.Name>! My current rental contract runs out this month and as it was quite expensive your offer comes just right!"
+                                        Actor(Happy)::"Wow <Player.Name>, what a great offer! Alright I'll move in this week!"
+                                    EndRandom
+                                
+                                    Actor.hide()
+                                    secondScreen()
+                                EndIf   //needText
+                                
+                                actId = Actor.getId()
+                                Actor.setActorVar(HE_movedOutDate, 0)
+                                Actor.setActorVar(HE_movedOutReason, 0)
+                                
+                                If numRoom == 2
+                                    secTenantID = actId
+                                    RE_second_Tenant.setGlobal(actId)
+                                    RE_second_Tenant_rent_date.setGlobal(daysSinceBirth)
+                                    RE_second_Tenant_rent.setGlobal(rent)
+                                ElseIf numRoom == 3
+                                    thirdTenantID = actId
+                                    RE_third_Tenant.setGlobal(actId)
+                                    RE_third_Tenant_rent_date.setGlobal(daysSinceBirth)
+                                    RE_third_Tenant_rent.setGlobal(rent)
+                                EndIf
+                            ElseIf needText == 1
+                                Random
+                                    Actor(Offended)::"Oh <Player.Name>, thanks for the offer but I prefer living on my own."
+                                    Actor(Sarcastic)::"So what? Can't pay your rent on your own? Sorry I am out!"
+                                    Actor(Sad)::"Oh thanks for the offer, but my current rental contract still runs some monts."
+                                    Actor(Surprised)::"Oh, well. I just moved into my own flat. Sorry mate!"
+                                EndRandom
+                               
+                                willMoveIn = false
+                                Actor.hide()
+                                secondScreen()
+                            EndIf
+                            
+                            Actor.hide()
+                            secondScreen()
+                        EndIf
+                    ElseIf 1
+                        If hasRentAdvertisements>0
+                            RE_has_advertisements.setGlobal(0)
+                            "Your current advertisements were stopped."
+                        Else
+                            RE_has_advertisements.setGlobal(1)
+                            "You put up an ad in the local newspapers and online. Lets see what happens..."
+                            money -= 10
+                        EndIf
+                    ElseIf 10   // Kick
+                        If numRoom == 2
+                            RE_second_Tenant.setGlobal(0)
+                        ElseIf numRoom == 3
+                            RE_third_Tenant.setGlobal(0)
+                        EndIf
+                        
+                        If Tenant.isValid()
+                            // TODO: Ask Player for reason
+                            // TODO: Add some more random text
+                            Player(Sad)::"Listen <Tenant.Name>, I need your room for my own purposes. You will have to move out at the end of the month."
+                            Tenant(Sad)::"What? Damn! I really enjoyed living here with you!"
+                            
+                            Tenant.setActorVar(HE_movedOutDate, daysSinceBirth)
+                            Tenant.setActorVar(HE_movedOutReason, 2)
+                        EndIf
+                    EndIf
+                Else
+                    stayInMenu = 0
+                EndIf
+            EndWhile
+        EndIf //PlayerHasHome
+    SceneEnd()

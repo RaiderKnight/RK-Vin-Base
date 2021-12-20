@@ -1,0 +1,67 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+    
+        Player(Flirty):: "Hey Babe! Would you like to <Player.suck_or_lick> <Player.cock_or_pussy>?"
+        If [CurrentCompanion.isFemale() && CurrentCompanion.isDating()&& CurrentCompanion:arousal > 15] || [CurrentCompanion.isFemale() && CurrentCompanion:perversion > 50] || [CurrentCompanion.isFemale() && CurrentCompanion:arousal > 15]
+            CurrentCompanion(Excited):: "Uh, of course I want, what's that question..."
+            Player.strip()
+            Filter(LickPussy)
+            sex(CurrentCompanion, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+            Player.dress()
+            CurrentCompanion:attractiontoplayer += Random(0, 3)
+            CurrentCompanion:arousal += Random(0, 2)
+            
+        ElseIf [CurrentCompanion.isMale() && CurrentCompanion.isDating()&& CurrentCompanion:arousal > 15] || [CurrentCompanion.isMale() && CurrentCompanion:perversion > 50] || [CurrentCompanion.isMale() && CurrentCompanion:arousal > 15]
+        
+            CurrentCompanion(Excited):: "Uh, of course I want, what's that question..."
+            Player.strip()
+            Filter(Blowjob)
+            sex(CurrentCompanion, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+            Player.dress()
+            CurrentCompanion:attractiontoplayer += Random(0, 3)
+            CurrentCompanion:arousal += Random(0, 2)
+        
+        ElseIf [CurrentCompanion.isDating() && CurrentCompanion:arousal > 25 && CurrentCompanion:perversion > 50] || [CurrentCompanion:arousal > 25 && CurrentCompanion:attractiontoplayer > 50 && CurrentCompanion:perversion > 50]
+        
+            CurrentCompanion(Flirty):: "Babe, I'm too horny! Let's fuck instead?"
+            "What do I say?"
+            0::"Sure"
+            1::"Later"
+            
+            If 0
+            
+                "We strip right away and started having sex right here!"
+                CurrentCompanion.strip()
+                CurrentCompanion.show()
+                Player.strip()
+                CurrentCompanion.strip()
+                Player.show()
+                CurrentCompanion.show()
+                Sex(Player, CurrentCompanion)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                Player.dress()
+                CurrentCompanion.dress()
+            EndIf
+            
+        Else
+            CurrentCompanion(Embarassed)::"Nah! Not today babe!"
+            CurrentCompanion:attractiontoplayer += Random(0, 1)
+        EndIf
+            
+    SceneEnd()

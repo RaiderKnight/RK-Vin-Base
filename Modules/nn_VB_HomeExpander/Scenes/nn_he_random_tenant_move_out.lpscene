@@ -1,0 +1,96 @@
+WHAT: all, -sleep
+WHERE: all
+WHEN: 8 - 20
+WHO: none
+OTHER: none
+
+    secTenantID = RE_second_Tenant.getGlobal()
+    thirdTenantID = RE_third_Tenant.getGlobal()
+    TenantA = getSpecific(secTenantID)
+    TenantB = getSpecific(thirdTenantID)
+    
+    Tenant = 0
+    Random
+        Tenant = TenantA
+        Tenant = TenantB
+    EndRandom
+    
+    // TODO: Increase chance if player installed cams!
+    chance = Random(0, 30)
+    
+    If Tenant.isValid() && chance <= 2
+        
+        // Calculate the time in days since the last check
+        // We use the players age for that
+        // It is incremented by 1/365 every day
+        daysSinceBirth = (Player:Age * 365)
+        daysSinceBirth += 0.5
+        daysSinceBirth = daysSinceBirth.round()
+        daysSinceBirth -= 1
+        
+        SceneStart()
+        "Your phone is ringing..."
+        Player.animate(call)
+        
+        Tenant.dress()
+        secondScreen(Tenant)
+        Tenant.show()
+        
+        // TODO: Add angry lines if Tenant finds out about cams
+        Random
+            Tenant(Sad)::"Hey <Player.Name>! I'm sorry to tell you that I will be moving out of my room by the end of the week."
+            Tenant(Sad)::"Hello, <Player.Name> listen. I'm going to move to another city next week already."
+            Tenant(Sad)::"Hi <Player.Name>, got a minute? Sadly I will move out of my room soon."
+        EndRandom
+        
+        Random
+            Player(Sad)::"Oh <Tenant.Name> that are bad news. You are a really pleasant tenant!"
+            Player(Sad)::"Aw <Tenant.Name>, thats so sad! I enjoyed having you around me!"
+            Player(Sad)::"Really <Tenant.Name>? I enjoyed having you around me!"
+        EndRandom
+        
+        Random
+            Tenant(Serene)::"Yeah this came as a surprise for me as well. But we'll stay in touch!"
+            Tenant(Serene)::"Yeah. It was a pleasure being with you! I promise we will stay in touch though!"
+            Tenant(Sad)::"Yep. I really love to stay with you but I got a new job tat forces me to move. Sorry."
+        EndRandom
+        
+        Random
+            Tenant(Serene)::"I already took my stuff from the room."
+            Tenant(Serene)::"I'll clean my room this evening."
+            Tenant(Serene)::"I'll be collecting my stuff this evening."
+        EndRandom
+        
+        Random
+            Player(Serene)::"Alright <Tenant.Name> I wish you all the best!"
+            Player(Serene)::"Okay <Tenant.Name>, I wish you good luck. I'll keep you in good memory!"
+            Player(Serene)::"Promise to pay me a visit when you happen to be around in town again ok?"
+        EndRandom
+        
+        Random
+            Tenant(Serene)::"<Player.Name>, it was a pleasure to stay with you. Thanks a lot!"
+            Tenant(Serene)::"I'll let you know when I happen to be in town again. Thanks for everything!"
+            Tenant(Serene)::"I definitely will pay you a visit when I happen to be back in town some day!"
+        EndRandom
+        
+        Tenant.setActorVar(HE_movedOutDate, daysSinceBirth)
+        Tenant.setActorVar(HE_movedOutReason, 1)
+        
+        If Tenant.isSameAs(TenantA)
+            RE_second_Tenant.setGlobal(0)
+            RE_second_Tenant_rent_date.setGlobal(0)
+            RE_second_Tenant_rent.setGlobal(0)
+        Else
+            RE_third_Tenant.setGlobal(0)
+            RE_third_Tenant_rent_date.setGlobal(0)
+            RE_third_Tenant_rent.setGlobal(0)
+        EndIf
+        
+        Tenant.hide()
+        secondScreen()
+        Player.animate()
+        
+        SceneEnd()
+    EndIf
+    
+    timeout(48, nn_he_random_tenant_move_out) // cooldown on the scene appearing again
