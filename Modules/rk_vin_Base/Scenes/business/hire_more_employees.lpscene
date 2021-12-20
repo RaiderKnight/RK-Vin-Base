@@ -14,7 +14,7 @@ OTHER: none
             endDate()
         EndIf
         
-        dressFormal()
+        //dressFormal()
         Actor = generatePersonTemporary()
         someoneDidApply = Random(1, 2)
         someoneDidApply = someoneDidApply.round()
@@ -121,9 +121,10 @@ OTHER: none
                         "<Actor.name> accepted the offer and started immediately."
                         Actor.addEmployee(Salary)
                         exchangeContact(Actor)
-                        Else
-                            "To my surprise, <Actor.name> turned down my cheeky offer. Maybe I overestimated my company's appeal?"
-                        Endif
+                    Else
+                        Actor(Shocked):: "No way, that's too low! Sorry <Player.sir_or_miss>, but find someone else!"
+                        "To my surprise, <Actor.name> turned down my cheeky offer. Maybe I overestimated my company's appeal?"
+                        Actor.hide()
                     Endif
                 Endif
                 
@@ -159,6 +160,7 @@ OTHER: none
                             exchangeContact(Actor)
                         Else
                             "To my surprise, <Actor.name> turned down my cheeky offer. Maybe I overestimated my company's appeal?"
+                            Actor.hide()
                         Endif                                
                     Else
                         Actor(Sad):: "Thank you for the offer, but I'm not really interested in the position."
@@ -205,6 +207,7 @@ OTHER: none
                             exchangeContact(Actor)
                         Else
                             "To my surprise, <Actor.name> turned down my cheeky offer. Maybe I overestimated my company's appeal?"
+                            Actor.hide()
                         Endif                                
                     Else
                         Actor(Sad):: "Thank you for the offer, but I'm not really interested in the position."

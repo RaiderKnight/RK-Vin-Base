@@ -101,13 +101,14 @@ OTHER: none
             "You don't have enough energy...."
             
         Else
-        
+            Rent = getRent()
             "What should I do inside my house?"
             0::"Do housework"
             11::"Clean House"
             1:: "Do laundry"
             2::"Home-repair"
             3::"Move out"
+            4:: Rent > 0::"No more rent, I'm buying the house"
             99::"Go back!"
             
             If 0
@@ -176,8 +177,37 @@ OTHER: none
                 
             ElseIf 3
             
-               followUp(move_out)
+                If isAtHome()
+                    "Am I sure that I want to move out from my current home?"
+                    0:: "Yes"
+                    1:: "No"
+                    
+                    If 0
+                        Rent = getRent()
+                        If Rent > 0
+                            "This apartment just wasn't for me. I decided to terminate my lease contract with the landlord."
+                        Else
+                            Difficulty = Random(0.25, 2)
+                            Salary = getSalary()
+                            Rent = Random(800, 1500)*CostOfLiving+Difficulty*Salary*0.25
+                            Price = Rent*120
+                            PriceConverted = Price.convertToLocalCurrency(true)
+                            "I managed to sell the place for <PriceConverted>."
+                            money => money + Price
+                        Endif
+                        "Time to find a new place to live."
+                        loseHome()
+                    Else
+                        "On second thought, I don't hate this place that much."
+                    Endif
+                Else
+                    "I'm not renting this home! There's no lease contract to terminate."
+                Endif
             
+            ElseIf 4
+            
+                followUp(buy_home)
+                
             ElseIf 11
                 
                 Player.animate(sweep)
@@ -190,10 +220,7 @@ OTHER: none
                     Player.modifyActorVar(rk_VB_Hunger, -10)
                 EndIf
                 passTime(0.5, 1.5)
-                
+
             EndIf
-            
         EndIf
-
-
     SceneEnd()

@@ -41,9 +41,11 @@ OTHER: none
                 22:: stock_movie > 0.8 :: "Watch a porn movie" //Edit Raddeck
                 3:: stock_alcohol >= 1.8 :: "Drink alcohol"
                 4:: !hadSex:: "Kiss <Actor.him_or_her>"
-                5:: MyHome:: "Politely ask <Actor.him_or_her> to leave"
+                50::"Offer sex"
+                60::"Ask to stay"
+                99:: MyHome:: "Politely ask <Actor.him_or_her> to leave"
             
-                If 5
+                If 99
                     "We said goodbye and went our ways."
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
@@ -161,6 +163,107 @@ OTHER: none
                         
                     Elseif 4
                         Kissed = true
+                    
+                    Elseif 50
+                        "What should I ask?"
+                        51::"Ask for a blowjob"
+                        52::"Ask for a Handjob"
+                        53::"Ask if <Actor.he_or_she> want a blowjob"
+                        54::"Ask if <Actor.he_or_she> want a Handjob"
+                        60::"Ask if <Actor.he_or_she> wants to fuck"
+                        99::"Nevermind!"
+                        
+                        If 51
+                            If Actor.isInterestedIn(Player) && Actor:arousal > 15
+                                Actor(Happy)::"Sure, let's go..."
+                                Player:perversion += Random(0, 1)
+                                Player.strip()
+                                Filter(Blowjob)
+                                Sex(Actor, Player)
+                                Actor.show(2)
+                                "The blowjob was amazing. I put my clothes back on afterwards and we continued our date."
+                                Player.dress()
+                                Actor.dress()
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
+                                passTime(0.2, 1.5)
+                            Else
+                                "Unfortunately for me, <Actor.name> didn't seem interested to give me a blowjob."
+                            Endif
+                        Elseif 52
+                            If Actor.isInterestedIn(Player) && Actor:arousal > 15
+                                Actor(Happy)::"Sure, let's go..."
+                                Player:perversion += Random(0, 1)
+                                Player.strip()
+                                Filter(Handjob)
+                                Sex(Actor, Player)
+                                Actor.show(2)
+                                "The handjob was amazing. I put my clothes back on afterwards and we continued our date."
+                                Player.dress()
+                                Actor.dress()
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
+                                passTime(0.2, 1.5)
+                            Else
+                                "Unfortunately for me, <Actor.name> didn't seem interested to give me a handjob."
+                            Endif
+                        If 53
+                            If Actor.isInterestedIn(Player) && Actor:arousal > 15
+                                Actor(Happy)::"Sure, let's go..."
+                                Player:perversion += Random(0, 1)
+                                Actor.strip()
+                                Filter(Blowjob)
+                                Sex(Player, Actor)
+                                Actor.show(2)
+                                "<Actor.His_or_Her> <Actor.cock_or_vagina> was tasty and <Actor.slimy_or_juicy>, the must... <Actor.He_or_She> put <Actor.his_or_her> clothes back on afterwards and we continued our date."
+                                Player.dress()
+                                Actor.dress()
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
+                                passTime(0.2, 1.5)
+                            Else
+                                "Unfortunately for me, <Actor.name> didn't seem interested to give me a blowjob."
+                            Endif
+                        Elseif 54
+                            If Actor.isInterestedIn(Player) && Actor:arousal > 15
+                                Actor(Happy)::"Sure, let's go..."
+                                Player:perversion += Random(0, 1)
+                                Actor.strip()
+                                Filter(Handjob)
+                                Sex(Player, Actor)
+                                Actor.show(2)
+                                "<Actor.His_or_Her> <Actor.cock_or_vagina> was <Actor.hard_or_soft> and <Actor.slimy_or_juicy>. <Actor.He_or_She> put <Actor.his_or_her> clothes back on afterwards and we continued our date."
+                                Player.dress()
+                                Actor.dress()
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
+                                passTime(0.2, 1.5)
+                            Else
+                                "Unfortunately for me, <Actor.name> didn't seem interested to give me a handjob."
+                            Endif
+                        Elseif 60
+                            If Actor.isInterestedIn(Player) && Actor:arousal > 15
+                                Actor(Happy)::"Sure, let's go..."
+                                Player:perversion += Random(0, 1)
+                                Player.strip()
+                                Actor.strip()
+                                Sex(Player, Actor)
+                                Actor.show(2)
+                                "The sex was amazing. We put our clothes back on afterwards and continued our date."
+                                Player.dress()
+                                Actor.dress()
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                passTime(0.2, 1.5)
+                            Else
+                                "Unfortunately for me, <Actor.name> didn't seem interested to fuck."
+                            Endif
+                        Endif
                     Endif
 
                     If Kissed || [Actor.isInterestedIn(Player) && !hadSex && Actor:attractiontoplayer > Random(0, 200)]
