@@ -5,7 +5,7 @@ WHO: Companion = getCompanion(); If CurrentCompanion.isDating() && CurrentCompan
 OTHER: !isPlayerMarried()
 
     SceneStart()
-        Engaged = false
+        CEngaged = false
         NPCisEngaged = rk_VB_isEngaged.getGlobal()
         setBackground(restaurant)
         CurrentCompanion(Anxious):: "Baby, I have something really important to tell you ..."
@@ -23,7 +23,7 @@ OTHER: !isPlayerMarried()
             If 0
             
                 Player(Happy):: "Yes! Yes! Of course, I'll be your <Player.husband_or_wife>! I'd love nothing more than spending the rest of my life with you."
-                Engaged = true
+                CEngaged = true
                 rk_VB_isEngaged.setGlobal(1)
                 mood += 100
                 "So we embraced and kissed, treasuring our first moment as an engaged couple."
@@ -48,11 +48,9 @@ OTHER: !isPlayerMarried()
             CurrentCompanion(Scared):: "I ... I ... Actually, can you believe it? I completely forgot what I wanted to say. Nevermind me!"
             "And so <CurrentCompanion.name> went back to acting weird for the rest of the day ..."
         Endif
-        
-        If Engaged || NPCisEngaged > 0
-        
+        NPCisEngaged = rk_VB_isEngaged.getGlobal()
+        If CEngaged || NPCisEngaged > 0
             followUp(rk_VB_bachelor_Party)
-        
         Endif
 
     SceneEnd() // Scene edited by Ravenger6660

@@ -1,8 +1,8 @@
-WHAT: all, -go_to_the_bathroom
-WHERE: all, -toilets, -PC, -office
+WHAT: none
+WHERE: none
 WHEN: 0-24
-WHO: Companion = getCompanion(); If CurrentCompanion.isDating() && CurrentCompanion:attractiontoplayer > Random(65, 100)
-OTHER: !isPlayerMarried()
+WHO: none
+OTHER: none
 
     SceneStart()
         
@@ -10,9 +10,9 @@ OTHER: !isPlayerMarried()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         CurrentCompanion.show(2)
-        Engaged = false
-    
-        If ForcedTrigger() || [Player.IsDominantSex(CurrentCompanion) || [interpersonal > Random(90, 100) && masochist < -70]]
+        CEngaged = false
+        
+        If [!isPlayerMarried() && CurrentCompanion.isDating() && CurrentCompanion:attractiontoplayer > Random(65, 100)] || [Player.IsDominantSex(CurrentCompanion) || [interpersonal > Random(90, 100) && masochist < -70]]
             "I think I'm in love with <CurrentCompanion.name>, and I know <CurrentCompanion.name> feels the same. However, have I ever imagined <CurrentCompanion.him_or_her> as my <CurrentCompanion.husband_or_wife>?"
             0:: "Yes"
             1:: "No"
@@ -28,10 +28,14 @@ OTHER: !isPlayerMarried()
                 1:: "No"
                 
                 If 0
-                    setBackground(restaurant)
                     Player(Anxious):: "Baby, I have something really important to tell you ..."
                     CurrentCompanion(Curious):: "Of course, <Player.name>. What is it?"
-                    
+                    Player(Anxious):: "We'll go to the restaurant, here not far, I reserved the place, we'll be quiet... ..."
+                    CurrentCompanion(Curious):: "Ok let's go!... I find you strange, everything fine..."
+                    Player(Anxious):: "It's a surprised, you'll see..."
+                    CurrentCompanion.animate()
+                    setBackground(restaurant)
+                    "We have now arrived at the restaurant..."
                     If interpersonal < 50
                         "Alright, this is the moment. <Player.name>, you can do this! Be brave. Keep calm ... Keep calm ... Don't screw this up!"
                     Endif
@@ -43,22 +47,24 @@ OTHER: !isPlayerMarried()
                     
                     If CurrentCompanion:attractiontoplayer > Random(75, 100)
                         CurrentCompanion(Happy):: "Yes! Yes! Of course, I'll be your <CurrentCompanion.husband_or_wife>! I'd love nothing more than spending the rest of my life with you"
-                        Engaged = true
+                        CEngaged = true
                         rk_VB_isEngaged.setGlobal(1)
+                        NPCisEngaged = rk_VB_isEngaged.getGlobal()
+
                         mood += 100                   
                         "So we undressed and kissed, treasuring our first moment as an engaged couple."
-                        
                         Saved = CurrentCompanion.getActorVar(tag_Saved) // Edited by Ravenger6660
                         If Saved > 0 || CurrentCompanion.isVirgin()  // Edited by Ravenger6660
                             "<CurrentCompanion.name> wants to save themselves for the wedding night." // Edited by Ravenger6660
                         Else // Edited by Ravenger6660
-                        
                             Sex(Player, CurrentCompanion)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
-                            
+                            Player.dress()
+                            CurrentCompanion.dress()
                         Endif // Edited by Ravenger6660
+
                     Else
                     
                         If CurrentCompanion.isExRelative() && !isQuestCompleted(legalized)
@@ -81,13 +87,14 @@ OTHER: !isPlayerMarried()
             Else
                 "Nope, I don't see <CurrentCompanion.name> as <CurrentCompanion.husband_or_wife> material."
             Endif
+        Else
+            "I'm already married..."
         Endif
-        
         NPCisEngaged = rk_VB_isEngaged.getGlobal()
-        If Engaged || NPCisEngaged > 0
+        If CEngaged || [NPCisEngaged > 0]
             followUp(rk_VB_bachelor_Party)
         Endif
-
-        endDate()
+        timeout(1000, marriage_proposal)
+        //endDate()
     SceneEnd() // Scene improved by Raddeck - Edited by Ravenger6660
-    //timeout(1000, marriage_proposal)
+    

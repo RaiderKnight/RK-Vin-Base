@@ -7,7 +7,7 @@ TIMEOUT_MINUTES: 0
 ALSO_TIMEOUT: 
 EFFECTS:
 CONDITIONS:
-MOVE_FIRST: false
+MOVE_FIRST: 
 SCENE_ALWAYS: start_relationship
 ANIMATION: socialize
-WHO:Companion = getTarget(); If Companion.isSameAs(CurrentCompanion) && !CurrentCompanion.isDating() && !Player.isDating() || [isModEnabled(vin_Polyamorous) && OpenRelationship()]
+WHO: Companion = getTarget(); If Companion.isSameAs(CurrentCompanion) && !CurrentCompanion.isDating() && !CurrentCompanion.hasRelationship(Spouses, Dating) && [!Player.isDating() || [isModEnabled(vin_Polyamorous) && OpenRelationship()]] && !Companion.isCreature()

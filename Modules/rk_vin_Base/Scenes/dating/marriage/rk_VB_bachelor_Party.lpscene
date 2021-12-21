@@ -1,22 +1,22 @@
-WHAT: none
-WHERE: none
+WHAT: all
+WHERE: all
 WHEN: 0-24
-WHO: Companion = getCompanion(); If CurrentCompanion.isDating() && CurrentCompanion:attractiontoplayer > Random(65, 90) && CurrentCompanion:rapportwithplayer > Random(65, 90)
-OTHER: !isPlayerMarried()
+WHO: Companion = getCompanion(); If CurrentCompanion:attractiontoplayer > 10
+OTHER: none
 
     SceneStart()
 
-        Companion = getCompanion()
+        CurrentCompanion.show()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         FacebookFriend = rk_VB_FacebookFriend.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
     
-        Engaged = true
+        CEngaged = true
         NPCisEngaged = rk_VB_isEngaged.getGlobal()
     
-        If Engaged || NPCisEngaged > 0
+        If CEngaged || NPCisEngaged > 0
             Cheated = false
             CurrentCompanion.hide()
             setBackground(home)
@@ -275,26 +275,25 @@ OTHER: !isPlayerMarried()
                 LoseDating()
                 mood -= 100
                 blockContact(Dating)
-                
+                rk_VB_isEngaged.setGlobal(0)
             Else
             
-                setBackground(work)
+                Player.show(0)
+                CurrentCompanion.show(1)
+                Player.dressUniform(Wedding)
+                CurrentCompanion.dressUniform(Wedding)
+                "So we decided to go to the church to get officially married..."
                 Master = generatePersonTemporary()
                 While !Master.isMale()
                     Master = generatePersonTemporary()
                 Endwhile
-                Master.dress()
-                
-                // Start edit Ravenger6660
-                If !Player.isSameGender(CurrentCompanion) && !CurrentCompanion.isExRelative()
-                    setBackground(place_of_worship)
-                Else
-                    setBackground(restaurant)
-                Endif
-                // End edit Ravenger6660
-                
-                setBackground(biergarten)
+                setBackground(place_of_worship)
+                Player.dressUniform(Wedding)
+                CurrentCompanion.dressUniform(Wedding)
+                Master.dress(Priest-Robe_1)
                 "The most important day of my life is here ..."
+                "We are so happy to be getting married... I will tell you that I can't wait for my honeymoon."
+                
                 If CurrentCompanion.isExRelative()
                     If isQuestCompleted(legalized)
                         "Thanks to the recent legalization of incest, we had no problem registering the marriage with the government and have a proper public wedding. Incest being legal doesn't stop some close-minded people from talking shit about us of course, but we couldn't care less about that."
@@ -302,12 +301,9 @@ OTHER: !isPlayerMarried()
                         "Registering this marriage with the government is a no-goer - incest is illegal in this country so that would just send us straight to jail ... Still, we wanted to have a proper wedding, so we only only invited a few particularly open-minded family and friends, as well as guests who met us after we became a couple and had no idea we were related."
                     Endif
                 Endif
-                
-                Player.show(0)
-                CurrentCompanion.show(1)
+
                 Master.show(3)
-                Player.dressWedding()
-                CurrentCompanion.dressWedding()
+                Master(Happy):: "Hi, welcome to my two newlyweds... Get in place, we are going to start the ceremony..."
                 Master(Happy):: "Today, <Player.name> and <CurrentCompanion.name> honored you with their invitation to be present with them today for this ceremony."
                 Master(Happy):: "And so, this day, they declare before all of us that they shall live together in marriage."
                 Master(Happy):: "In the traditional way, they entered into their marriage with the joining of hands, the making of vows and promises, and the giving and receiving of rings, an outward symbol of their voluntary commitment to one another."
@@ -322,25 +318,38 @@ OTHER: !isPlayerMarried()
                 Player(Kiss):: "..."
                 AnimatePair(Player, CurrentCompanion, Kissing)
                 CurrentCompanion(Kiss):: "..."
-                Master.hide()
-                setBackground(home)
+                Player:arousal += 1
+                CurrentCompanion:arousal += 1
+
                 "And that's it - it's official, we're married! <CurrentCompanion.name> is now my dear <CurrentCompanion.husband_or_wife>."
                 "The rest of the wedding ceremony went without issues, although honestly, both of us couldn't wait for it to end and the guests to leave so that we can begin our intimate wedding night."
                 karma += 20
+                mood += 5
+                CurrentCompanion:rapportwithplayer += random(2, 5)
+                CurrentCompanion:attractiontoplayer += random(2, 5)
+                Master.hide()
+                setBackground(home)
                 
                 If CurrentCompanion.isDominantSex(Player)
                     Player.matchLastName(CurrentCompanion)
                 Else
                     CurrentCompanion.matchLastName(Player)
                 Endif
-                
                 CurrentCompanion.setActorVar(tag_Married, 1)
                 getMarried()
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -5)
+                EndIf
+                "Arriving at the house, it didn't take 5 minutes, that we had already started to undress to make love like sex starved."
+                Player.strip()
+                CurrentCompanion.strip()
                 Sex(Player, CurrentCompanion)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
-                
+                Player.dress()
+                CurrentCompanion.dress()
+                rk_VB_isEngaged.setGlobal(0)
                 mood += 10
                 If PlayerHasHome() && DatingHasHome()
                     CurrentCompanion.show(2)
@@ -352,35 +361,25 @@ OTHER: !isPlayerMarried()
                     2:: "Ask <CurrentCompanion.name> to move in instead"
     
                     If 0
-                    
                         "I accepted <CurrentCompanion.name>'s offer."
                         loseHome()
                         CurrentCompanion:attractiontoplayer += Random(2, 10)
                         mood += 10
                         CurrentCompanion:rapportwithplayer +=  Random(2, 5)
-                        
                     Elseif 1
-                    
                         "I turned down <CurrentCompanion.name>'s offer."
                         CurrentCompanion:attractiontoplayer -= Random(0, 2)
-                        
                     Else
-                    
                         "Actually, I think it's more appropriate that <CurrentCompanion.name> moves in with me instead. After a short discussion, <CurrentCompanion.he_or_she> accepted my offer."
                         loseHomeDating()
                         mood += 10
                         CurrentCompanion:attractiontoplayer += Random(2, 10)
                         CurrentCompanion:rapportwithplayer +=  Random(2, 5)
-                        
                     Endif
                     timeout(500, move_in_with_dating) 
-                    
                 Endif
-                
             Endif
             timeout(300, rk_VB_bachelor_Party)
-            
         Endif
-        
-    SceneEnd() // Scene edited by Raddeck - Ravenger6660
-    
+        endDate()
+    SceneEnd() // Scene edited by Raddeck
