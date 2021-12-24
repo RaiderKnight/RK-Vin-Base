@@ -1,0 +1,43 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        clearGetList()
+        IBuyaASys = rk_VB_IBuyaASys.getGlobal()
+        AlarmEnable = rk_VB_AlarmEnable.getGlobal()
+        If IBuyaASys > 0
+            KRisk = 0
+            If IBuyaASys == 1
+                KRisk = 50
+            Elseif IBuyaASys == 2
+                KRisk = 75
+            Elseif IBuyaASys == 3
+                KRisk = 90
+            Endif
+        Endif
+        If IBuyaASys == 0
+            "I don't have any alarm system. I have to go to the electronics store to get one..."
+        Else
+            If AlarmEnable > 0
+                "Your alarm system is enable and is protecting your house at <KRisk>%."
+            Else
+                "Your alarm system is disable and is not protecting your house."
+            Endif
+            
+            "What I would like to do?"
+            0::"Enable alarm system"
+            1::"Disable alarm system"
+            99::"Do nothing!"
+            
+            If 0
+                rk_VB_AlarmEnable.setGlobal(1)
+                "Your alarm system is now enable and is protecting your house at <KRisk>%."
+            Else
+                rk_VB_AlarmEnable.setGlobal(0)
+                "Your alarm system is now disable and is not protecting your house."
+            Endif
+        Endif
+    SceneEnd()

@@ -9,7 +9,7 @@ OTHER: none
     Rent = Random(800, 1500)*CostOfLiving+Difficulty*Salary*0.25
     RentConverted = Rent.convertToLocalCurrency(true)
     Price = Rent*120
-
+    PriceLoc = Price.convertToLocalCurrency(true)
     sceneStart()
 
         houseviewing = rk_VB_houseviewing.getGlobal()
@@ -36,6 +36,7 @@ OTHER: none
             faceEachOther(Player, Landlord)
             Landlord.animate(socialize)
             Landlord(Excited):: "So that's the apartment. It's available for just <RentConverted> a month, including bills. You won't get a better deal anywhere else! What do you think? Are you going to go for it? I can prepare the lease contract right away."
+            Landlord(Excited):: "This house is also for sale, so if you are interested in buying it, it offered at <PriceLoc>."
             choice = 2
             Knowledge = false
             Charm = false
@@ -46,6 +47,10 @@ OTHER: none
             GonnaGetFucked = false
             CopsWantToFucked = false
             IwannaFuck = false
+            If money < Price
+                "I don't have enough money to afford a house, so I'll have to rent an apartment... hopefully I'll find something decent, if this one doesn't suit me."
+            Endif
+            
             While choice > 1
                 
                 "What should I do?"
