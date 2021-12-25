@@ -47,6 +47,10 @@ OTHER: none
             GonnaGetFucked = false
             CopsWantToFucked = false
             IwannaFuck = false
+            ActorAskForIt1 = false
+            ActorAskForIt2 = false
+            ActorAskForIt3 = 0
+            ActorAskForIt4 = 0
             If money < Price
                 "I don't have enough money to afford a house, so I'll have to rent an apartment... hopefully I'll find something decent, if this one doesn't suit me."
             Endif
@@ -255,11 +259,12 @@ OTHER: none
                 If 0
                     Player(Flirty)::"I'm so happy! Do you want to celebrate this together?"
                     If Landlord:arousal > 15 && Landlord:perversion > 15
-                        Landlord(Flirty):: "Sure, I'm always open for sex actions ..."
+                        Landlord(Flirty):: "Sure, I'm always open for sex actions, if this is what you mean ..."
                         Landlord(Flirty):: "Come to my place, we will be more comfortable?"
                         Gotolandlord = true
                     Else
                         Landlord(Sad):: "Sorry, but I have a lot of works to do ..."
+                        Player(Flirty)::"Ok fine! See you later then!"
                     Endif
                 Endif
             Endif // end IwannaFuck
@@ -298,7 +303,8 @@ OTHER: none
                     2:: "Drink alcohol"
                     3:: "Smoke weed"
                     4:: !hadSex:: "Kiss <Landlord.him_or_her>"
-                    5:: [Chatting && Drink1] || hadSex ::"Politely leave"
+                    50::"Offer sex"
+                    5:: [!Chatting && !Drink1] || hadSex ::"Politely leave"
                     
                     If 5
                     
@@ -377,8 +383,237 @@ OTHER: none
                                 
                         Elseif 4
                             Kissed = true
+                    
+                        Elseif 50
+                            "What should I ask?"
+                            51::"Ask for a blowjob"
+                            52::"Ask for a Handjob"
+                            53::"Ask if <Landlord.he_or_she> want a blowjob"
+                            54::"Ask if <Landlord.he_or_she> want a Handjob"
+                            60::"Ask if <Landlord.he_or_she> wants to fuck"
+                            99::"Nevermind!"
+                            
+                            If 51
+                                If Landlord.isInterestedIn(Player) && Landlord:arousal > 15
+                                    Landlord(Happy)::"Sure, let's go..."
+                                    Player:perversion += Random(0, 1)
+                                    Player.strip()
+                                    Filter(Blowjob)
+                                    Sex(Landlord, Player)
+                                    Landlord.show(2)
+                                    "The blowjob was amazing. I put my clothes back on afterwards and we continued our date."
+                                    Player.dress()
+                                    Landlord.dress()
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    EndIf
+                                    passTime(0.2, 1.5)
+                                    Landlord:attractiontoplayer += Random(0, 1)
+                                    Landlord:rapportwithplayer += Random(0, 1)
+                                Else
+                                    "Unfortunately for me, <Landlord.name> didn't seem interested to give me a blowjob."
+                                Endif
+                            Elseif 52
+                                If Landlord.isInterestedIn(Player) && Landlord:arousal > 15
+                                    Landlord(Happy)::"Sure, let's go..."
+                                    Player:perversion += Random(0, 1)
+                                    Player.strip()
+                                    Filter(Handjob)
+                                    Sex(Landlord, Player)
+                                    Landlord.show(2)
+                                    "The handjob was amazing. I put my clothes back on afterwards and we continued our date."
+                                    Player.dress()
+                                    Landlord.dress()
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    EndIf
+                                    passTime(0.2, 1.5)
+                                    Landlord:attractiontoplayer += Random(0, 1)
+                                    Landlord:rapportwithplayer += Random(0, 1)
+                                Else
+                                    "Unfortunately for me, <Landlord.name> didn't seem interested to give me a handjob."
+                                Endif
+                            If 53
+                                If Landlord.isInterestedIn(Player) && Landlord:arousal > 15
+                                    Landlord(Happy)::"Sure, let's go..."
+                                    Player:perversion += Random(0, 1)
+                                    Landlord.strip()
+                                    Filter(Blowjob)
+                                    Sex(Player, Landlord)
+                                    Landlord.show(2)
+                                    "<Landlord.His_or_Her> <Landlord.cock_or_vagina> was tasty and <Landlord.slimy_or_juicy>, the must... <Landlord.He_or_She> put <Landlord.his_or_her> clothes back on afterwards and we continued our date."
+                                    Player.dress()
+                                    Landlord.dress()
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    EndIf
+                                    passTime(0.2, 1.5)
+                                    Landlord:attractiontoplayer += Random(0, 1)
+                                    Landlord:rapportwithplayer += Random(0, 1)
+                                Else
+                                    "Unfortunately for me, <Landlord.name> didn't seem interested to give me a blowjob."
+                                Endif
+                            Elseif 54
+                                If Landlord.isInterestedIn(Player) && Landlord:arousal > 15
+                                    Landlord(Happy)::"Sure, let's go..."
+                                    Player:perversion += Random(0, 1)
+                                    Landlord.strip()
+                                    Filter(Handjob)
+                                    Sex(Player, Landlord)
+                                    Landlord.show(2)
+                                    "<Landlord.His_or_Her> <Landlord.cock_or_vagina> was <Landlord.hard_or_soft> and <Landlord.slimy_or_juicy>. <Landlord.He_or_She> put <Landlord.his_or_her> clothes back on afterwards and we continued our date."
+                                    Player.dress()
+                                    Landlord.dress()
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    EndIf
+                                    passTime(0.2, 1.5)
+                                    Landlord:attractiontoplayer += Random(0, 1)
+                                    Landlord:rapportwithplayer += Random(0, 1)
+                                Else
+                                    "Unfortunately for me, <Landlord.name> didn't seem interested to give me a handjob."
+                                Endif
+                            Elseif 60
+                                If Landlord.isInterestedIn(Player) && Landlord:arousal > 15
+                                    Landlord(Happy)::"Sure, let's go..."
+                                    Player:perversion += Random(0, 1)
+                                    Player.strip()
+                                    Landlord.strip()
+                                    Sex(Player, Landlord)
+                                    Landlord.show(2)
+                                    "The sex was amazing. We put our clothes back on afterwards and continued our date."
+                                    Player.dress()
+                                    Landlord.dress()
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    EndIf
+                                    passTime(0.2, 1.5)
+                                    Landlord:attractiontoplayer += Random(0, 1)
+                                    Landlord:rapportwithplayer += Random(0, 1)
+                                Else
+                                    "Unfortunately for me, <Landlord.name> didn't seem interested to fuck."
+                                Endif
+                            Endif
                         Endif
-        
+                        
+                        If Landlord.isInterestedIn(Player) && Landlord:arousal > 15 && random(0, 100) < 20 && !ActorAskForIt1
+                            Landlord(Grin)::"Do you want a handjob, I'm a expert!"
+                            "What I should say?"
+                            0::"Yes"
+                            99::"No"
+                            
+                            If 0
+                                Landlord(Happy)::"Sure, let's see if it's true..."
+                                Player:perversion += Random(0, 1)
+                                Player.strip()
+                                Filter(Handjob)
+                                Sex(Landlord, Player)
+                                Landlord.show(2)
+                                "The handjob was amazing. I put my clothes back on afterwards and we continued our date."
+                                Player.dress()
+                                Landlord.dress()
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
+                                passTime(0.2, 1.5)
+                                ActorAskForIt1 = true
+                                Landlord:attractiontoplayer += Random(0, 1)
+                                Landlord:rapportwithplayer += Random(0, 1)
+                            Else
+                                "Unfortunately, I told <Landlord.name> that I was not in the mood for this!"
+                                Landlord:attractiontoplayer -= Random(0, 1)
+                                Landlord:rapportwithplayer -= Random(0, 1)
+                            Endif
+                        
+                        Elseif Landlord.isInterestedIn(Player) && Landlord:arousal > 15 && [random(0, 100) > 20.5 && random(0, 100) < 50] && !ActorAskForIt2
+                            Landlord(Grin)::"Do you want a blowjob, I love licking <Player.dick_or_pussy>...!"
+                            "What I should say?"
+                            0::"Yes"
+                            99::"No"
+                            
+                            If 0
+                                Player(Happy)::"Sure, let's go..."
+                                Player:perversion += Random(0, 1)
+                                Player.strip()
+                                Filter(Blowjob)
+                                Sex(Landlord, Player)
+                                Landlord.show(2)
+                                "The blowjob was amazing. I put my clothes back on afterwards and we continued our date."
+                                Player.dress()
+                                Landlord.dress()
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
+                                passTime(0.2, 1.5)
+                                ActorAskForIt2 = true
+                                Landlord:attractiontoplayer += Random(0, 1)
+                                Landlord:rapportwithplayer += Random(0, 1)
+                            Else
+                                "Unfortunately, I told <Landlord.name> that I was not in the mood for this!"
+                                Landlord:attractiontoplayer -= Random(0, 1)
+                                Landlord:rapportwithplayer -= Random(0, 1)
+                            Endif
+
+                        Elseif Landlord.isInterestedIn(Player) && Landlord:arousal > 15 && ActorAskForIt3 < 5
+                            Landlord(Grin)::"Do you want to drink alcohol...!"
+                            "What I should say?"
+                            0::"Yes"
+                            99::"No"
+                            
+                            If 0
+                                Player(Happy)::"Sure,..."
+                                Player.animate(drinkglass)
+                                Landlord.animate(drinkglass)
+                                "We had a drink alcohol together ..."
+                                Player:intoxication += Random(5,15)
+                                Landlord:intoxication += Random(5,15)
+                                passTime(0.1, 0.2)
+                                Player.animate()
+                                Landlord.animate()
+                                If UrgeToPeeEnable > 0
+                                    Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                                EndIf
+                                ActorAskForIt3 += 1
+                                Landlord:attractiontoplayer += Random(0, 1)
+                                Landlord:rapportwithplayer += Random(0, 1)
+                            
+                            Else
+                                "Unfortunately, I told <Landlord.name> that I was not in the mood for this!"
+                                Landlord:attractiontoplayer -= Random(0, 1)
+                                Landlord:rapportwithplayer -= Random(0, 1)
+                            Endif
+                        
+                        Elseif Landlord.isInterestedIn(Player) && Landlord:arousal > 15 && ActorAskForIt4 < 5
+                            Landlord(Grin)::"Do you want to fuck...!"
+                            "What I should say?"
+                            0::"Yes"
+                            99::"No"
+                            
+                            If 0
+                                Landlord(Happy)::"Sure, let's go..."
+                                Player:perversion += Random(0, 1)
+                                Player.strip()
+                                Landlord.strip()
+                                Sex(Player, Landlord)
+                                Landlord.show(2)
+                                "The sex was amazing. We put our clothes back on afterwards and continued our date."
+                                Player.dress()
+                                Landlord.dress()
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                passTime(0.2, 1.5)
+                                ActorAskForIt4 += 1
+                                Landlord:attractiontoplayer += Random(0, 1)
+                                Landlord:rapportwithplayer += Random(0, 1)
+                            
+                            Else
+                                "Unfortunately, I told <Landlord.name> that I was not in the mood for this!"
+                                Landlord:attractiontoplayer -= Random(0, 1)
+                                Landlord:rapportwithplayer -= Random(0, 1)
+                            Endif
+                        Endif
+                        
                         If Kissed || [Landlord.isInterestedIn(Player) && !hadSex && Landlord:attractiontoplayer > Random(0, 200)]
                             AnimatePair(Player, Landlord, Kissing)
                             Player(Kiss):: "..."
@@ -415,15 +650,10 @@ OTHER: none
                                     passTime(0.2, 0.5)
                                         
                                 Else
-                                    
                                     "Unfortunately for me, <Landlord.name> didn't seem interested in letting things escalate any further and pulled away."
-                                        
                                 Endif
-                                    
                             Else
-                                
                                 "I decided to stop it there and not go any further."
-                                    
                             Endif
                                 
                         Elseif Random(0, 100) < 20
