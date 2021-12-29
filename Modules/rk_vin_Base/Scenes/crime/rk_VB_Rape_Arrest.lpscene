@@ -38,7 +38,7 @@ OTHER: none
                     PoliceMan.show(2)
                     Actor1.dressUniform(Police)
                     Actor1.show(4)
-                    PoliceMan(Furious)::"'Hands in the air, now!'"
+                    PoliceMan(Furious)::"'Hands in the air, don't move...!'"
                     
                     Player(Angry):: "You will not taking me alive."
                     0:: "Run"
@@ -65,9 +65,7 @@ OTHER: none
                             While copfired < 5
                         
                                 If copfired > 0
-                        
                                     PoliceMan(Angry)::"HEY YOU THERE, I ASKED YOU TO STOP!"
-                        
                                 EndIf
                                 "Pow!"
                                 Player.hide()
@@ -106,9 +104,9 @@ OTHER: none
                         Player.animate(fightlost)
                         Player(Scared):: "Please, don't shoot!"
                         "I put my hands up and surrendered to the overwhelming number of cops."
-                        sentence += Random(1825, 2000)
-                        AddSent = Player:sentence
-                        Player.modifyActorVar(rk_VB_TotalSentences, AddSent)
+                        sentence += Random(1825, 2000) 
+                        AddSent = Player:sentence 
+                        Player.modifyActorVar(rk_VB_TotalSentences, AddSent) 
                         followUp(imprisoned)
                         
                     Endif 
@@ -124,12 +122,14 @@ OTHER: none
                 sneak -= 5
                 mood -= 5
                 sentence += Random(300, 1000)
-                AddSent = Player:sentence
-                Player.modifyActorVar(rk_VB_TotalSentences, AddSent)
+                AddSent = Player:sentence 
+                Player.modifyActorVar(rk_VB_TotalSentences, AddSent) 
                 followUp(imprisoned)
                 
             Endif
-            
+        Else
+            "I raped <Actor.name>. I wonder if there will be any consequences in the future." 
+            sneak += 1
         Endif
         
-    SceneEnd() // Scene improved by Raddeck
+    SceneEnd() // Scene created by Raddeck

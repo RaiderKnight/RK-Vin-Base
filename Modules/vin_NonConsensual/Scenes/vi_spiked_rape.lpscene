@@ -2,7 +2,7 @@ WHAT: all, -go_to_the_bathroom
 WHERE: bar, nightclub
 WHEN: 21 - 4
 WHO: none
-OTHER: !isWithCompanion() && Random(40, 80) < attractiveness && Random(2, 50) > karma
+OTHER: !isWithCompanion() && Random(40, 500) < attractiveness
 
     SceneStart()
 
@@ -40,9 +40,10 @@ OTHER: !isWithCompanion() && Random(40, 80) < attractiveness && Random(2, 50) > 
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
+            Actor.setActorVar(tag_Rapist, 1)
             mood => 0
         Else
             "You can never be too careful nowadays. I'd better not accept a drink from a complete stranger."
         Endif
     SceneEnd()
-    timeout(250, vi_spiked_rape) // Improved by Ravenger6660
+    timeout(250, vi_spiked_rape) // Improved by Raddeck

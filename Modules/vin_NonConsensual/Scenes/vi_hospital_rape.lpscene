@@ -2,7 +2,7 @@ WHAT: get_a_health_checkup
 WHERE: all
 WHEN: 0 - 24
 WHO: none
-OTHER: !isWithCompanion() && Random(2, 50) > karma
+OTHER: !isWithCompanion() && Random(70, 1000) < attractiveness
 
     SceneStart()
 
@@ -38,6 +38,7 @@ OTHER: !isWithCompanion() && Random(2, 50) > karma
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
+            Actor.setActorVar(tag_Rapist, 1)
             mood => 0
         Endif
     SceneEnd() // Scene improved by Raddeck

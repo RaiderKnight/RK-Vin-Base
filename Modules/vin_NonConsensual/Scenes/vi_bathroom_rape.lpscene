@@ -2,7 +2,7 @@ WHAT: go_to_the_bathroom
 WHERE: nightclub, bar, toilets, community_centre
 WHEN: 0 - 24
 WHO: none
-OTHER: !isWithCompanion() && Random(2, 50) > karma
+OTHER: !isWithCompanion() && Random(70, 1000) < attractiveness
 
     SceneStart()
 
@@ -17,7 +17,7 @@ OTHER: !isWithCompanion() && Random(2, 50) > karma
         Endwhile
         "All of a sudden, a stranger force opened the cubicle door and grabbed me."
         Actor.show(2)
-        If martial > Actor:martial
+        If Actor:martial - Actor:intoxication < martial - intoxication
             Actor(Pain):: "Ah!"
             Player(Angry):: "That should teach you to not sexually assault people in public bathrooms!"
         Else
@@ -27,9 +27,10 @@ OTHER: !isWithCompanion() && Random(2, 50) > karma
             Filter(Aggressive)
             TalkNonConsensual()
             SexNoAffair(Actor, Player)
+            Actor.setActorVar(tag_Rapist, 1)
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
         Endif
     SceneEnd()
-    timeout(500, vi_bathroom_rape) // Improved by Ravenger6660
+    timeout(500, vi_bathroom_rape) // Improved by Raddeck

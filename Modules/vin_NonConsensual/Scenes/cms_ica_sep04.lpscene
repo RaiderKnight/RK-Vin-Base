@@ -2,7 +2,7 @@ WHAT: all
 WHERE: sports_centre
 WHEN: 8 - 20
 WHO: none
-OTHER: !isWithCompanion() && Random(0, 100) < 1 && masochist > 50
+OTHER: Random(0, 100) < 1 && masochist > 50
 
     SceneStart()
 
@@ -36,7 +36,7 @@ OTHER: !isWithCompanion() && Random(0, 100) < 1 && masochist > 50
                 Else
                     Filter(Aggressive)
                 Endif
-                TalkNonConcensual()
+                TalkNonConsensual()
                 SexNoAffair(Actor, Player)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -3)
@@ -49,7 +49,7 @@ OTHER: !isWithCompanion() && Random(0, 100) < 1 && masochist > 50
             Endif
         Else
             "I tried to fight my way out!"
-            If Random(0, 100) > martial
+            If Actor:martial - Actor:intoxication > martial - intoxication
                 "Unfortunately <Actor.he_or_she> was too strong for me ..."
                 If Actor.isFemale() && Player.isMale()
                     Filter(AggressiveFM)
@@ -57,7 +57,7 @@ OTHER: !isWithCompanion() && Random(0, 100) < 1 && masochist > 50
                     Filter(Aggressive)
                 Endif
                 mood -= 25
-                TalkNonConcensual()
+                TalkNonConsensual()
                 SexNoAffair(Actor, Player)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -3)
@@ -69,4 +69,4 @@ OTHER: !isWithCompanion() && Random(0, 100) < 1 && masochist > 50
         Endif 
         energy -= 15
     SceneEnd()
-    timeout(500, cms_ica_sep04) // Improved by Ravenger6660 - Raddeck
+    timeout(500, cms_ica_sep04) // Improved by Raddeck - Ravenger6660

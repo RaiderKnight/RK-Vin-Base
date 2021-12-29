@@ -1,8 +1,8 @@
 WHAT: all, -sleep, -nap
 WHERE: home
 WHEN: 0 - 24
-WHO: Actor = getSpecific(ExDating); If Random(-90, -50) > Actor:masochist && Random(70, 90) < Actor:martial
-OTHER: !isWithCompanion() && isAtHome() && masochist > -5 && Random(2, 50) > karma
+WHO: Actor = getSpecific(ExDating); If Random(-100, -50) > Actor:masochist - Actor:intoxication*0.5 && Random(70, 200) < Actor:martial + Actor:intoxication*0.5
+OTHER: !isWithCompanion() && isAtHome()
 
     SceneStart()
 
@@ -29,6 +29,7 @@ OTHER: !isWithCompanion() && isAtHome() && masochist > -5 && Random(2, 50) > kar
             Filter(Aggressive)
             TalkNonConsensual()
             Sex(Actor, Player)
+            Actor.setActorVar(tag_Rapist, 1)
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
@@ -38,4 +39,4 @@ OTHER: !isWithCompanion() && isAtHome() && masochist > -5 && Random(2, 50) > kar
             "Maybe I should just stay silent and hide in my room, pretending that I'm not here, until <Actor.he_or_she> gets tired of hammering on the door and leaves."
         Endif
     SceneEnd()
-    timeout(500, vi_ex_rape) // Improved by Ravenger6660
+    timeout(500, vi_ex_rape) // Improved by Raddeck

@@ -15,7 +15,6 @@ OTHER: none
         Until = HoursElapsed + Random(1, 3)
         CurrentCompanion.setUntil(Until)
         CurrentCompanion.show(2)
-        
         If CurrentCompanion.isCreature()
         
             "Time flies. I have enjoyed taking <CurrentCompanion.name> out for a walk but it's time to head home."         
@@ -32,9 +31,7 @@ OTHER: none
                 "It has been good catching up with my <CurrentCompanion.relationship>."
                 
             Elseif CurrentCompanion.IsDominantSex(Player)
-            
                 If !isAtHome() && [Dating || CurrentCompanion:interpersonal + CurrentCompanion:attractiontoplayer > Random(0, 100)]
-                
                     CurrentCompanion::"I'll be glad to walk you home safe. It's only my duty."
                     0:: "Be walked home"
                     1:: "Decline"
@@ -73,11 +70,8 @@ OTHER: none
                     
                         Player(Surprised)::"It's not neccessary! Thank you for the nice offer though."
                         "We went our separate ways."
-                        
                     Endif
-                    
                 Endif
-                
             Else
             
                 "Should I offer to walk <CurrentCompanion.name> home?"
@@ -155,7 +149,7 @@ OTHER: none
                     2:: "Watch a movie"
                     3:: "Drink alcohol"
                     4:: !hadSex:: "Kiss <CurrentCompanion.him_or_her>"
-                    5:: MyHome:: "Politely leave <CurrentCompanion.him_or_her>"
+                    5:: "Politely leave <CurrentCompanion.him_or_her>"
                     7:: Dating && !IsPlayerMarried():: "Break up!"
                     8:: Dating && IsPlayerMarried():: "Divorce!"
                 
@@ -388,6 +382,6 @@ OTHER: none
                 Endwhile
             Endif
         Endif
-
+        CurrentCompanion:intoxication => 0
     sceneEnd() // Scene improved by: Raddeck
     endDate()

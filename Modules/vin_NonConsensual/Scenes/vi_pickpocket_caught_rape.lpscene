@@ -2,7 +2,7 @@ WHAT: pickpocket
 WHERE: all
 WHEN: 0 - 24
 WHO: none
-OTHER: !isWithCompanion() && Random(70, 100) < attractiveness && Random(2, 50) > sneak - (100 - karma)
+OTHER: !isWithCompanion() && Random(70, 100) < attractiveness && sneak < Random(0, 100)*Random(0, 1)*Random(0, 1)
 
     SceneStart()
 
@@ -22,7 +22,7 @@ OTHER: !isWithCompanion() && Random(70, 100) < attractiveness && Random(2, 50) >
         Actor(Evil):: "Call the cops? What good does that do to me? Oh no, I have much better use for a pretty thief like you."
         Actor(Evil):: "Now, stay still and enjoy it. I'll let you go and won't call the cops if you act like a good <Player.boy_or_girl>."
         Player(Surprised):: "What are you doing? Get your hands off me, you pervert!"
-        If martial*0.5 > Actor:martial
+        If Actor:martial - Actor:intoxication < martial - intoxication
             "Unfortunately for the perverted owner, even with my hands tied, I was more than a handful for <Actor.him_or_her> to subdue. After a brief struggle, I managed to get away from <Actor.him_or_her> and escaped the place."  
         Else
             "With my hands tied to a chair, I never stood a chance and the perverted owner managed to overcome my struggles easily. Soon, <Actor.he_or_she> was ripping my clothes off and proceeded to force <Actor.himself_or_herself> upon me."
@@ -30,6 +30,7 @@ OTHER: !isWithCompanion() && Random(70, 100) < attractiveness && Random(2, 50) >
             Filter(Aggressive)
             TalkNonConsensual()
             SexNoAffair(Actor, Player)
+            Actor.setActorVar(tag_Rapist, 1)
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
@@ -38,4 +39,4 @@ OTHER: !isWithCompanion() && Random(70, 100) < attractiveness && Random(2, 50) >
             Actor(Evil):: "That was good, bitch. Now, get out of my sight. You pleasured me well - I won't call the cops on your little pickpocketing adventure."
         Endif
     SceneEnd() 
-    timeout(1000, vi_pickpocket_caught_rape) // Improved by Ravenger6660
+    timeout(1000, vi_pickpocket_caught_rape) // Improved by Raddeck

@@ -63,7 +63,7 @@ OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && intelligence < 
             "A fierce fight ensued ..."
             Player.animate()
             Actor.animate()        
-            If martial > Actor:martial
+            If Actor:martial - Actor:intoxication < martial - intoxication
                 Rape = false
                 Actor.animate(fightlost)
                 Actor(Pain):: "Ah!"
@@ -101,6 +101,7 @@ OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && intelligence < 
                 Filter(Aggressive)
                 TalkNonConsensual()
                 SexNoAffair(Actor, Player)
+                Actor.setActorVar(tag_Rapist, 1)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
@@ -109,4 +110,4 @@ OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && intelligence < 
             Endif
         Endif
     SceneEnd()
-    timeout(500, vi_darkalley_rape) // Improved by Ravenger6660
+    timeout(500, vi_darkalley_rape) // Improved by Raddeck

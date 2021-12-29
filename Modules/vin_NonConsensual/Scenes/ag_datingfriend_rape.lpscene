@@ -54,7 +54,7 @@ OTHER: none
                     1:: masochist < 0:: "Blackmail <Actor.him_or_her>"
                     
                     If 0
-                        Player(Embarassed):: "I'm sorry ... It was a moment of passion. I didn't know what I was doing ... Please don't tell <Actor2.name>."
+                        Player(Embarrassed):: "I'm sorry ... It was a moment of passion. I didn't know what I was doing ... Please don't tell <Actor2.name>."
                     Else
                         Player(Furious):: "Nobody rejects me like that! Let's see if you can remain so loyal to your friend after a hard pounding!"
                         Actor(Angry):: "Get your hands off me! Have you gone crazy? Help!"
@@ -64,6 +64,7 @@ OTHER: none
                         Filter(Aggressive)
                         TalkNonConsensual()
                         SexNoAffair(Player, Actor)
+                        Actor.setActorVar(tag_Raped, 1)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf

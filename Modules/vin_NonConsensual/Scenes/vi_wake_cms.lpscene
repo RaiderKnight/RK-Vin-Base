@@ -2,7 +2,7 @@ WHAT: sleep
 WHERE: home
 WHEN: 22 - 4
 WHO: none
-OTHER: !Player.isAsexual() && Random(2, 50) > karma
+OTHER: !Player.isAsexual() && Random(0, 100) < 5
 
     SceneStart()
 
@@ -45,10 +45,11 @@ OTHER: !Player.isAsexual() && Random(2, 50) > karma
             Endif
             TalkNonConsensual()
             Sex(Actor, Player)
+            Actor.setActorVar(tag_Rapist, 1)
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
         Endif
         
     SceneEnd()
-    timeout(200, vi_wake_cms) // Improved by Ravenger6660 - Raddeck
+    timeout(200, vi_wake_cms) // Improved by Raddeck

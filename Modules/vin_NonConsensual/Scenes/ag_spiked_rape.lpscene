@@ -64,7 +64,11 @@ OTHER: none
                 Actor2.hide()
                 "Soon enough, I was back with drinks for both of us. We enjoyed our drinks while having a pleasant conversation."
                 "A while later ..."
-                "<Actor.His_or_Her> speech is becoming slurred now. It seems the drug is taking effect. Let's get <Actor.him_or_her> out of here and into the nearest hotel room."
+                
+                If UrgeToPeeEnable > 0
+                    Player.modifyActorVar(rk_VB_UrgeToPee, -1)
+                EndIf
+                "<Actor.His_or_Her> speech is becoming slurred now. It seems the drug is taking effect. Let's get <Actor.him_or_her> out of here and into the nearest hotel room." // Edit Raddeck
                 IRape = false
                 
                 If isModEnabled(vin_NTR)
@@ -121,14 +125,22 @@ OTHER: none
                     "Let's get <Actor.him_or_her> out of here and into the nearest hotel room."
                     "A while later ..."
                     setBackground(home)
-                    Player(Flirty):: "Now, let us have some fun, because you're gonna forget all about this in the morning!"
-                    "<Actor.name> is so drugged up with aphrodisiac that <Actor.he_or_she> starts begging me to give it to <Actor.him_or_her."
-                    Filter(Aggressive)
-                    TalkNonConsensual()
-                    SexNoAffair(Player, Actor)
-                    If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -3)
-                    EndIf
+                    If Actor:martial*0.5 - Actor:intoxication > martial - intoxication
+                        "Despite the spiked drink, unfortunately for me, <Actor.name> still managed to struggle against me and ran off."
+                    Else
+                        "<Actor.name> struggled a bit initially, but <Actor.his_or_her> drugged up self was no match for my strength in the end."
+                        Player(Flirty):: "Now, let us have some fun, because you're gonna forget all about this in the morning!"
+                        "<Actor.name> is so drugged up with aphrodisiac that <Actor.he_or_she> starts begging me to give it to <Actor.him_or_her."
+                        Filter(Aggressive)
+                        TalkNonConsensual()
+                        SexNoAffair(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                        EndIf
+                        If !Actor.isTemporary()
+                            Actor.setActorVar(tag_Raped, 1)
+                        Endif
+                    Endif
                 Endif
             Else
                 Player(Angry):: "I'm not Bill Cosby! What kind of bartender are you?"

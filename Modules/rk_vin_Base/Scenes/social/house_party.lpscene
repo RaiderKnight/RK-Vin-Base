@@ -26,7 +26,6 @@ OTHER: none
             99::"I changed my mind!"
             
             If 0
-            
                 "Who should be my first guest?"
                 selectNPC()
                 Guest1 = getSelectedNPC()
@@ -102,7 +101,7 @@ OTHER: none
                     Guest5.delete()
                 Endif
                 
-            ElseIf
+            ElseIf 1
         
                 "I decided to invite random Facebook friends at my party..."
                 PartyWillStart += 1
@@ -309,7 +308,7 @@ OTHER: none
                         
                     Endif
                     
-                    If SitWith.IsInterestedIn(Player) && Player.IsInterestedIn(SitWith) && [SitWith:attractiontoplayer > 50 || intoxication > 70]
+                    If 0 || [SitWith.IsInterestedIn(Player) && Player.IsInterestedIn(SitWith) && [SitWith:attractiontoplayer > 50 || intoxication > 70]]
                         KissBack = false
                         
                         If SitWith.IsDominantSex(Player) && SitWith:perversion + SitWith:attractiontoplayer > Random(0, 200)
@@ -324,6 +323,33 @@ OTHER: none
                             Else
                                 "I pulled myself away from <SitWith.him_or_her>. <SitWith.He_or_She> was visibly embarrassed."
                                 SitWith:attractiontoplayer -= Random(0, 1)
+                                        
+                                If isModEnabled(vin_NonConsensual) && SitWith:masochist < -50 && SitWith:perversion > 50
+                                    "Instead of giving up, my rejection seemed to make <SitWith.name> more aggressive ..."
+                                    setBackground(home)
+                                    "<SitWith.He_or_She> pushed me into one of the bedrooms ..."
+                                    SitWith(Furious):: "Nobody rejects me like that! Let's see if I can't change your mind after a hard pounding!"
+                                    Player(Angry):: "Get your hands off me! Have you gone crazy? Help!"
+                                    If SitWith:martial - SitWith:intoxication < martial - intoxication
+                                        "Unfortunately for <SitWith.name>, even drunk, I was more than a handful for <SitWith.him_or_her> to subdue. After a brief struggle, I managed to get away from <SitWith.him_or_her> and escaped <SitWith.his_or_her> apartment."  
+                                    Else
+                                        "Affected by the alcohol, I never stood a chance and <SitWith.name> managed to overcome my struggles easily. Soon, <SitWith.he_or_she> was ripping my clothes off and proceeded to force <SitWith.himself_or_herself> upon me."
+                                        Player(Crying):: "No! Please stop ... I trusted you ... Somebody help ..."
+                                        Filter(Aggressive)
+                                        TalkNonConsensual()
+                                        SexNoAffair(SitWith, Player)
+                                        If HungerEnable > 0
+                                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                                        EndIf
+                                        SitWith.setSitWithVar(tag_Rapist, 1)
+                                        SitWith.hide()
+                                        mood => 0
+                                    Endif
+                                    
+                                    SitWith:rapportwithplayer => -100
+                                    blockContact(SitWith)
+                                    PartyOngoing = false
+                                Endif
                             Endif
                         Else
                             "From the way <SitWith.name> was checking me out, I could tell that <SitWith.he_or_she> was totally into me. Should I make my move now and kiss <SitWith.him_or_her>?"
@@ -339,7 +365,33 @@ OTHER: none
                                     "Wow, that's quite a pleasant surprise. <SitWith.name> was totally receptive to my advance. In fact, <SitWith.he_or_she> certainly showed that <SitWith.he_or_she> wanted something more ..."
                                     KissBack = true
                                 Else
-                                    "<SitWith.name> pulled away from my advances. Embarrassed, I retreated, pretending for the rest of the party as if nothing happened ..."
+                                    "<SitWith.name> pulled away from my advances. Embarrassed, I retreated, pretending nothing happened ..."
+                                    0:: isModEnabled(vin_NonConsensual):: "Rape <SitWith.him_or_her>"
+                                    1:: "Give up"
+                                    
+                                    If 0
+                                        setBackground(home)
+                                        "I pushed <SitWith.name> into one of the bedrooms ..."
+                                        Player(Furious):: "Nobody keeps rejecting me like that! Let's see if I can't change your mind after a hard pounding!"
+                                        Actor(Angry):: "Get your hands off me! Have you gone crazy? Help!"
+                                        If Actor:martial - Actor:intoxication > martial - intoxication
+                                            "Unfortunately for me, even drunk, <Actor.name> was more than a handful for me to subdue. After a brief struggle, <Actor.he_or_she> managed to get away from me and escaped my apartment."  
+                                        Else
+                                            "Affected by the alcohol, <Actor.name> never stood a chance and I managed to overcome <Actor.his_or_her> struggles easily. Soon, I was ripping <Actor.his_or_her> clothes off and proceeded to force myself upon <Actor.him_or_her>."
+                                            Actor(Crying):: "No! Please stop ... I trusted you ... Somebody help ..."
+                                            Filter(Aggressive)
+                                            TalkNonConsensual()
+                                            SexNoAffair(Player, Actor)
+                                            Actor.hide()
+                                            Actor.setActorVar(tag_Raped, 1)
+                                        Endif
+                                        
+                                        Actor:rapportwithplayer => -100
+                                        blockContact(Actor)
+                                        PartyOngoing = false
+                                    Else
+                                        "Embarrassed, I retreated, pretending for the rest of the party as if nothing happened ..."
+                                    Endif
                                 Endif
                             Else
                                 "Perhaps not ... It would be extremely embarrassing to be rejected in front of everyone."
@@ -350,7 +402,8 @@ OTHER: none
                             Player(Kiss):: "..."
                             "I responded in kind and we indulged ourselves in a passionate kiss."
                             SitWith:attractiontoplayer += Random(0, 1)
-                            0:: IsModEnabled(vin_VanillaPorn) :: "Have sex right here"
+                            0:: SitWith.IsSameAs(Host) || IsModEnabled(vin_VanillaPorn) :: "Have sex right here"
+                            1:: !SitWith.IsSameAs(Host):: "Invite <SitWith.him_or_her> home"
                             2:: "Stop it there"
                             
                             If 0 
@@ -359,11 +412,28 @@ OTHER: none
                                 perversion += Random(0, 0.2)
                                 Sex(SitWith, Player)
                                 If HungerEnable > 0
-                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
                                 SitWith.show(2)
                                 "The sex was amazing. We put our clothes back on and went back to rejoin the party. We must have made plenty of noises, the look on everyone's faces suggested as much."
-
+                            Elseif 1
+                                "As much as I'd love to have <SitWith.him_or_her> right here. It was not my house and I didn't want to upset <Host.name>."
+                                Player(Flirty):: "Hey, not here. Let's go back to my place ..."
+                                SitWith(Excited):: "Of course, let's go!"
+                                "We excused ourselves from the party and started heading back to my apartment. Our feet were very eager indeed."
+                                setBackground(street)
+                                "A while later ..."
+                                passTime(0.2, 1)
+                                moveTo(Home)
+                                setBackground(home)
+                                "As soon as we were inside, our hands were all over each other and we started passionately making out."
+                                perversion += Random(0, 0.2)
+                                Sex(SitWith, Player)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                "The sex was amazing. <SitWith.name> excused <SitWith.himself_or_herself> after we were done and I went to bed ... At least we didn't do it in front of everyone."
+                                PartyOngoing = false
                             Else
                                 "I enjoyed the kiss but didn't feel like going any further ..."
                             Endif

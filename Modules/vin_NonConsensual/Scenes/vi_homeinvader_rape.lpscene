@@ -10,26 +10,48 @@ OTHER: !isWithCompanion() && Random(2, 50) > karma
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        Actor = generatePersonTemporary()
-        While !Player.isInterestedIn(Actor)
-            Actor = generatePersonTemporary()
-        Endwhile
-        Actor.show(2)
-        Actor(Evil):: "Wake up, whore. And prepare to get fucked!"
-        "What's going on? Oh no, my bedroom has been invaded by a rapist. <Actor.He_or_She> chose a day when there's no-one else in the apartment too ..."
-        If martial + (energy - 100) > Actor:martial
-            Player(Angry):: "Thug, take this!"
-            Actor(Pain):: "Ah!"
-            "Thankfully, I managed to react well to the situation and overpower the thug eventually. I then called the cops, who promptly arrested the wannabe rapist." 
+        IBuyaASys = rk_VB_IBuyaASys.getGlobal()
+        AlarmEnable = rk_VB_AlarmEnable.getGlobal()
+        If IBuyaASys > 0
+            KRisk = 0
+            If IBuyaASys == 1
+                KRisk = 50
+            Elseif IBuyaASys == 2
+                KRisk = 75
+            Elseif IBuyaASys == 3
+                KRisk = 90
+            Endif
+        Endif
+        KidnapAttemp = random(0, 100)
+        If [KRisk > KidnapAttemp] && AlarmEnable > 0
+            "All of a sudden the alarm system starts ringing."
+            Player(Curious):: "WTF, well, let's go see what's going on!"
+            Player(Curious):: "Hum, I can't see anything!"
+            Player(Curious):: "Let's hope it was just an animal..."
         Else
-            Player(Crying):: "No, please stop ... Somebody help!"
-            "Unfortunately, the element of surprise was too much and my struggles against the home invader were futile. I have no choice now but to endure giving this vile creature pleasure against my will ..."
-            Filter(Aggressive)
-            TalkNonConsensual()
-            SexNoAffair(Actor, Player)
-            If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -2)
-            EndIf
+        
+            Actor = generatePersonTemporary()
+            While !Player.isInterestedIn(Actor)
+                Actor = generatePersonTemporary()
+            Endwhile
+            Actor.show(2)
+            Actor(Evil):: "Wake up, whore. And prepare to get fucked!"
+            "What's going on? Oh no, my bedroom has been invaded by a rapist. <Actor.He_or_She> chose a day when there's no-one else in the apartment too ..."
+            If Actor:martial - Actor:intoxication < martial - intoxication
+                Player(Angry):: "Thug, take this!"
+                Actor(Pain):: "Ah!"
+                "Thankfully, I managed to react well to the situation and overpower the thug eventually. I then called the cops, who promptly arrested the wannabe rapist." 
+            Else
+                Player(Crying):: "No, please stop ... Somebody help!"
+                "Unfortunately, the element of surprise was too much and my struggles against the home invader were futile. I have no choice now but to endure giving this vile creature pleasure against my will ..."
+                Filter(Aggressive)
+                TalkNonConsensual()
+                SexNoAffair(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+                Actor.setActorVar(tag_Rapist, 1)
+            Endif
         Endif
     SceneEnd()
-    timeout(1000, vi_homeinvader_rape) // Improved by Ravenger6660
+    timeout(1000, vi_homeinvader_rape) // Improved by Raddeck

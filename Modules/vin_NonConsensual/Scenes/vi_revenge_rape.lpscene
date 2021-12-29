@@ -1,8 +1,8 @@
 WHAT: all
 WHERE: all, -home, -hotel
 WHEN: 22 - 4
-WHO: Actor = getPerson(); If !Actor.isDating() && !Actor.isRelative() && Random(-100, -50) > Actor:rapportwithplayer && Random(50, 200) < Actor:perversion && Random(-100, -50) > Actor:masochist
-OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && Random(2, 50) > karma
+WHO: Actor = getPerson(); If !Actor.isDating() && !Actor.isRelative() && Random(-100, -50) > Actor:rapportwithplayer && Random(50, 200) < Actor:perversion + Actor:intoxication*0.5 && Random(-100, -50) > Actor:masochist - Actor:intoxication*0.5
+OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && intelligence < Random(0, 100)*Random(0, 1)*Random(0, 1)
 
     SceneStart()
 
@@ -23,29 +23,24 @@ OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && Random(2, 50) >
         If 0
         
             "I decided to make a run for it!"
-            
-            If Actor:fitness < fitness
-            
+            MyFitness = Player:fitness // Edit by Raddeck
+            If MyFitness > Actor:fitness  // Edit by Raddeck
                 Actor.hide()
                 "I did it! <Actor.name> was long left behind and I escaped. Phew, that was close."
                 Rape = false
                 sneak += 1 // Edit by Raddeck
                 mood += 3 // Edit by Raddeck
                 energy -= 10 // Edit by Raddeck
-                
             Else
-            
                 "I tried to escape but <Actor.name> was too fast for me and knocked me down to the ground."
                 Actor(Evil):: "You think you can just run away? You should have saved the energy to endure a hard pounding from me tonight."
                 Rape = true
                 sneak -= 1 // Edit by Raddeck
                 mood -= 3 // Edit by Raddeck
                 energy -= 10 // Edit by Raddeck
-                
             Endif   
             
         Else
-        
             Player.animate(martialart)
             Player.moveToPersonStand(Actor, 100)
             Player(Furious):: "You messed with the wrong <Player.guy_or_girl>! Take this."
@@ -55,8 +50,7 @@ OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && Random(2, 50) >
             "A fierce fight ensued ..."
             Player.animate()
             Actor.animate()
-            
-            If martial > Actor:martial
+            If Actor:martial - Actor:intoxication < martial - intoxication
                 Rape = false
                 Actor.animate(fightlost)
                 Actor(Pain):: "Ah!"
@@ -67,11 +61,9 @@ OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && Random(2, 50) >
                 Player(Pain):: "Ah!"
                 Actor(Evil):: "Ha! You really thought you could match me in a fight? I have to say - this just makes me want to fuck your brains out even more, you'll see how I conquer this wild bitch tonight!"            
             Endif
-            
         Endif
         
         If Rape
-        
             "Soon, <Actor.he_or_she> was ripping my clothes off and proceeded to force <Actor.himself_or_herself> upon me."
             Player.animate(fightlost)
             Player(Crying):: "No! Please stop ... I beg you ... Somebody help ..."
@@ -84,6 +76,9 @@ OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && Random(2, 50) >
                 Cop1 = generatePersonTemporary()
                 cop2 = generatePersonTemporary()
                 cop3 = generatePersonTemporary()
+                Cop1.dressUniform(Police)
+                cop2.dressUniform(Police)
+                cop3.dressUniform(Police)
                 cop1.show()
                 cop2.show()
                 cop3.show()
@@ -99,6 +94,7 @@ OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && Random(2, 50) >
                 Filter(Aggressive)
                 TalkNonConsensual()
                 SexNoAffair(Actor, Player)
+                Actor.setActorVar(tag_Rapist, 1)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -3)
                 EndIf
@@ -108,4 +104,4 @@ OTHER: !isWithCompanion() && Random(50, 300) < attractiveness && Random(2, 50) >
             Endif
         Endif
     SceneEnd()
-    timeout(500, vi_revenge_rape) // Improved by Ravenger6660
+    timeout(500, vi_revenge_rape)

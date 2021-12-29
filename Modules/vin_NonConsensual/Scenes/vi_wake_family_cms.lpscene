@@ -1,7 +1,7 @@
 WHAT: sleep
 WHERE: home
 WHEN: 22 - 4
-WHO: Actor = getRelative(); If Actor.livesWithPlayer() && Actor.isInterestedIn(Player) && Player.isInterestedIn(Actor) && Actor:perversion > 50 && Actor:masochist < -50
+WHO: Actor = getRelative(); If Actor.livesWithPlayer() && Actor.isInterestedIn(Player) && Player.isInterestedIn(Actor) && Actor:perversion + Actor:intoxication*0.5 > 50 && Actor:masochist - Actor:intoxication*0.5 < -50
 OTHER: isModEnabled(vin_Incest) && masochist > 30
 
     SceneStart()
@@ -19,7 +19,7 @@ OTHER: isModEnabled(vin_Incest) && masochist > 30
         1:: "Surrender ..."
         
         If 0
-            If martial < Actor:martial
+            If Actor:martial - Actor:intoxication > martial - intoxication
                 "Unfortunately, my <Actor.relationship> was too strong for me ..."
                 mood -= 5
                 Rape = true
@@ -27,6 +27,7 @@ OTHER: isModEnabled(vin_Incest) && masochist > 30
                 "I managed to push my <Actor.relationship> off me. Defeated, <Actor.he_or_she> promptly left ..."
                 "Phew, that was close ... don't know if I should report this to the police though ... we're family after all. Maybe <Actor.he_or_she> was drunk and didn't know what <Actor.he_or_she> was doing ..."
                 Rape = false
+                mood += 3
             Endif
         Else
             Rape = true
@@ -40,6 +41,7 @@ OTHER: isModEnabled(vin_Incest) && masochist > 30
             Endif
             TalkNonConsensual()
             Sex(Actor, Player)
+            Actor.setActorVar(tag_Rapist, 1)
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
@@ -64,4 +66,4 @@ OTHER: isModEnabled(vin_Incest) && masochist > 30
             "The jail sentence that was handed out was so long that I probably will never see my assaulter again ..."
         Endif
     SceneEnd()
-    timeout(200, vi_wake_family_cms) // Improved by Ravenger6660 - Raddeck
+    timeout(200, vi_wake_family_cms) // Improved by Raddeck

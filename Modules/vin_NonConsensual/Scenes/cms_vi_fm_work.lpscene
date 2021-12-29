@@ -2,7 +2,7 @@ WHAT: work
 WHERE: work
 WHEN: 18 - 5
 WHO: Actor = getSpecific(Colleague); If Actor.isFemale() && Actor.isInterestedIn(Player) && Actor:perversion > 70 && Actor:masochist < -50 && !Actor.hadSex()
-OTHER: Player.isMale() && Random(2, 50) > karma && energy < 25
+OTHER: Player.isMale() && Random(20, 100) < masochist
 
     SceneStart()
 
@@ -30,6 +30,7 @@ OTHER: Player.isMale() && Random(2, 50) > karma && energy < 25
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
+            Actor.setActorVar(tag_Rapist, 1)
         Endif
     SceneEnd()
-    timeout(500, cms_vi_fm_work) // Improved by Ravenger6660
+    timeout(500, cms_vi_fm_work) // Improved by Raddeck

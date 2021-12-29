@@ -208,6 +208,7 @@ OTHER: none
                 4::"Use interracial dating app"
                 20:: arousal > 50 ::"Look for CMS porn"
                 35:: arousal > 40 ::"Watch Porn Tube"
+                80::isModEnabled(vin_NonConsensual):: "Browse rape fetish website"
                 90::isModEnabled(vin_Bestiality) && Random(0, 70) < perversion :: "Look for bestiality porn"
                 99::"Go back"
                 
@@ -250,11 +251,10 @@ OTHER: none
                     arousal += 0.05
                     energy -= 1
                     passTime(0.15, 1)
-                
+                ElseIf 80
+                    followUp(browse_rape_website)
                 ElseIf 90
-                    
                     followUp(bestiality_porn)
-                
                 Else
                 
                     SceneEnd()

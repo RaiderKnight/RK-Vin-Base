@@ -45,12 +45,12 @@ OTHER: Player.isInterestedIn(Actor) && Random(70, 300) < Actor:attractiveness
                     1:: masochist < 0:: "Force myself upon <Actor.him_or_her>"
                     
                     If 0
-                        Player(Embarassed):: "I'm sorry ... It was a moment of passion. I didn't know what I was doing ..."
+                        Player(Embarrassed):: "I'm sorry ... It was a moment of passion. I didn't know what I was doing ..."
                     Else
                         karma -= 20
                         Player(Furious):: "Nobody rejects me like that! Let's see if I can't convert you after a hard pounding!"
                         Actor(Angry):: "Get your hands off me! Have you gone crazy? Help!"
-                        If Actor:martial*0.5 > martial
+                        If Actor:martial - Actor:intoxication > martial - intoxication
                             "Unfortunately for me, even drunk, <Actor.name> was more than a handful for me to subdue. After a brief struggle, <Actor.he_or_she> managed to get away from me and escaped my apartment."  
                         Else
                             "Affected by the alcohol, <Actor.name> never stood a chance and I managed to overcome <Actor.his_or_her> struggles easily. Soon, I was ripping <Actor.his_or_her> clothes off and proceeded to force myself upon <Actor.him_or_her>."
@@ -58,6 +58,8 @@ OTHER: Player.isInterestedIn(Actor) && Random(70, 300) < Actor:attractiveness
                             Filter(Aggressive)
                             TalkNonConsensual()
                             SexNoAffair(Player, Actor)
+                            Actor.setActorVar(tag_Raped, 1)
+                            Actor.hide()
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf

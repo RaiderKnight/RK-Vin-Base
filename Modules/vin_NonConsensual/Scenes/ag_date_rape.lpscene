@@ -50,6 +50,7 @@ OTHER: Random(50, 200) < Actor:attractiveness && Actor:attractiontoplayer < 10 &
                 Filter(Aggressive)
                 TalkNonConsensual()
                 SexNoAffair(Player, Actor)
+                Actor.setActorVar(tag_Raped, 1)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
@@ -74,5 +75,5 @@ OTHER: Random(50, 200) < Actor:attractiveness && Actor:attractiontoplayer < 10 &
         Else
             "No way. <Actor.He_or_She> is way too hot for me and completely out of my league."
         Endif
-    SceneEnd()
+    SceneEnd() // Improved by Raddeck
     timeout(250, ag_date_rape)

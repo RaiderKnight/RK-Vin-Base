@@ -17,7 +17,7 @@ OTHER: none
         If 0
             "I decided to be more careful around <Actor.name> so even if those dark desires are there, there are no oppotunities to act upon them."
         Else
-            If karma < Actor:attractiontoplayer
+            If Random(40, 200) < Actor:attractiontoplayer
                 Actor2 = generatePersonTemporary()
                 While Actor2.isMale()
                     Actor2 = generatePersonTemporary()
@@ -41,7 +41,7 @@ OTHER: none
                     Player(Angry):: "I'm leaving! I can't believe you just forced a kiss on me like that!"
                     
                     If Random(-100, 0) < masochist
-                        Actor(Embarassed):: "I'm sorry ... It was a moment of passion. I didn't know what I was doing ..."
+                        Actor(Embarrassed):: "I'm sorry ... It was a moment of passion. I didn't know what I was doing ..."
                     Else
                         Actor(Furious):: "Nobody rejects me like that! Let's see if I can't change your mind after a hard pounding!"
                         Player(Angry):: "Get your hands off me! Have you gone crazy? Help!"
@@ -55,6 +55,7 @@ OTHER: none
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -3)
                             EndIf
+                            Actor.setActorVar(tag_Rapist, 1)
                             Actor.hide()
                             mood => 0
                         Endif
@@ -68,4 +69,4 @@ OTHER: none
             Endif        
         Endif
     SceneEnd()
-    timeout(400, vi_2female_rape_cms) // Improved by Ravenger6660
+    timeout(400, vi_2female_rape_cms) // Improved by Raddeck

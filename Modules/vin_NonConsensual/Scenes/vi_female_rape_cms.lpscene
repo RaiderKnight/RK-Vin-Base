@@ -1,7 +1,7 @@
 WHAT: all
 WHERE: all
 WHEN: 0 - 24
-WHO: Actor = getCompanion(); If !CurrentCompanion.isMale() && CurrentCompanion:masochist < -50 && CurrentCompanion:perversion > 70 && !CurrentCompanion.isDating()
+WHO: Actor = getCompanion(); If !CurrentCompanion.isMale() && CurrentCompanion:masochist - Actor:intoxication*0.5 < -50 && CurrentCompanion:perversion + Actor:intoxication*0.5 > 70 && !CurrentCompanion.isDating()
 OTHER: none
 
     SceneStart()
@@ -35,11 +35,11 @@ OTHER: none
                     Player(Angry):: "I'm leaving! I can't believe you just forced a kiss on me like that!"
                     
                     If Random(-100, 0) < masochist
-                        Actor(Embarassed):: "I'm sorry ... It was a moment of passion. I didn't know what I was doing ..."
+                        Actor(Embarrassed):: "I'm sorry ... It was a moment of passion. I didn't know what I was doing ..."
                     Else
                         Actor(Furious):: "Nobody rejects me like that! Let's see if I can't change your mind after a hard pounding!"
                         Player(Angry):: "Get your hands off me! Have you gone crazy? Help!"
-                        If martial*0.5 > Actor:martial
+                        If Actor:martial - Actor:intoxication < martial - intoxication
                             "Unfortunately for <Actor.name>, even drunk, I was more than a handful for <Actor.him_or_her> to subdue. After a brief struggle, I managed to get away from <Actor.him_or_her> and escaped <Actor.his_or_her> apartment."  
                         Else
                             "Affected by the alcohol, I never stood a chance and <Actor.name> managed to overcome my struggles easily. Soon, <Actor.he_or_she> was ripping my clothes off and proceeded to force <Actor.himself_or_herself> upon me."
@@ -51,6 +51,7 @@ OTHER: none
                             Endif
                             TalkNonConsensual()
                             SexNoAffair(Actor, Player)
+                            Actor.setActorVar(tag_Rapist, 1)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
@@ -67,4 +68,4 @@ OTHER: none
             Endif        
         Endif
     SceneEnd()
-    timeout(200, vi_female_rape_cms) // Improved by Ravenger6660
+    timeout(200, vi_female_rape_cms) // Improved by Raddeck
