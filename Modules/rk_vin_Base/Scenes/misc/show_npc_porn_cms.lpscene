@@ -122,43 +122,46 @@ OTHER: none
                 Actor2.hide()
                 Actor3.hide()
                 Actor4.hide()
-                
                 Player.show()
                 Actor5.show()
                 "You decide to watch a porn movie with <Actor5.name>. The action on the screen turns you both on."
                 If Random(0, 100) < Actor5:perversion + Actor5:attractiontoplayer
                 
-                    "After watching the film you both feel incredibly turned on. You look at <Actor5.name> and she looks at you. You make a move. She reciprocates. Before you know it, you are both overcome with passion."
+                    "After watching the film you both feel incredibly turned on. You look at <Actor5.name> and <Actor5.he_or_she> looks at you. You make a move. <Actor5.He_or_She> reciprocates. Before you know it, you are both overcome with passion."
+                    Player.strip()
+                    Actor5.strip()
+                    Actor5(Happy):: "Oh my God... You read in my head... I'm so horny... yes! LET'S DO IT!"
                     Sex(Player, Actor5)
                     If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
                     EndIf
-                    If Best
+                    
+                    If Best && Actor6.livesWithPlayer()
                     
                         "You begin to think about the movie you just watched. You remember how turned on you were at seeing those dogs fucking those women. You want to try and see it in real life. Do you ..."
                         0:: "Decide to leave it as a fantasy"
                         1:: "Suggest getting your own dog involved"
                         
                         If 1
-                        
-                            Actor6.show()
-                            Player(Curious)::"You'll probably say no... but how about I bring <Actor6.name> in and you and me try doing what we just watched in that film?"
-                            Actor5(Happy):: "Oh my God... Jesus... I'm so horny... yes! LET'S DO IT!"
-                            Sex(Actor6, Player)
-                            Sex(Actor6, Actor5)
-                            Sex(Actor6, Player, Actor5)
-                            If HungerEnable > 0
-                                Player.modifyActorVar(rk_VB_Hunger, -2)
-                            EndIf
-                            
+                            Player(Curious)::"You'll probably going to say no... but what if I bring <Actor6.name> in and you and we tried to do what we just saw in this movie?"
+                            If Actor5:arousal > 15 && Actor5:perversion > 70
+                                Actor6.show()
+                                Actor5(Happy):: "Oh my God... You read in my head... I'm so horny... yes! LET'S DO IT!"
+                                Player.strip()
+                                Actor5.strip()
+                                Sex(Actor6, Player)
+                                Sex(Actor6, Actor5)
+                                Sex(Actor6, Player, Actor5)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -4)
+                                EndIf
+                            Else
+                                Actor5(Sad)::"I wish you're joking? No way!"
+                                Player(Grin)::"I wish you're joking? No way!"
                         Endif
-                        
                     Endif
-                    
                 Else
-                
                     "You both enjoy the film but not quite enough for it to lead to anything else. You hope to have better luck next time."
-                    
                 Endif
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -1)
@@ -166,10 +169,7 @@ OTHER: none
                 perversion += 2
                 
             Endif
-        
         Else
-        
             "You don't have any movie in your inventory, go buy some ..."
-
         Endif
     SceneEnd() // Improved by Raddeck
