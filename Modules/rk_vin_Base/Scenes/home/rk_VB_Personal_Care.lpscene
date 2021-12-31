@@ -9,7 +9,7 @@ OTHER: none
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         UrgeToPeeCons = rk_VB_UrgeToPeeCons.getGlobal()
-
+        BodyFat = Player.getActorVar(BodyFat)
         If energy < 2
             
             "You don't have enough energy...."
@@ -24,7 +24,7 @@ OTHER: none
             99::"Go back"
     
             If 3
-
+                Player.show()
                 Player.animate(dental)
                 "I decided to brush my teeth..."
                 mood += 0.5
@@ -33,7 +33,7 @@ OTHER: none
                 passTime(0.25, 0.5)
                 
             Elseif 5
-
+                Player.show()
                 Player.animate(makeup)
                 "I decided to groom..."
                 mood += 0.5
@@ -46,7 +46,7 @@ OTHER: none
                 followUp(masturbate)
             
             Elseif 81
-            
+                Player.show()
                 Player.animate(toilet)
                 "Ah, what a relief!"
                 Player.setActorVar(rk_VB_UrgeToPee, 0)
@@ -72,7 +72,7 @@ OTHER: none
             99::"Go back"
     
             If 3
-
+                Player.show()
                 Player.animate(dental)
                 "I decided to brush my teeth..."
                 mood += 0.5
@@ -85,7 +85,7 @@ OTHER: none
                 followUp(masturbate)
             
             Elseif 11
-            
+                Player.show()
                 Player.animate(drinkbottle)
                 "I decided to take chinese aphrodisiac..."
                 stock_chineseaphrodisiac -=1
@@ -94,7 +94,7 @@ OTHER: none
                 passTime(0.05, 0.15)
             
             Elseif 12
-            
+                Player.show()
                 Player.animate(makeup)
                 "I decided to put some makeup..."
                 stock_makeup -= 0.05
@@ -116,7 +116,7 @@ OTHER: none
                 EndIf
                 
             Elseif 15
-            
+                Player.show()
                 Player.animate(drinkbottle)
                 "I decided to take supplements..."
                 stock_supplement -= 1
@@ -126,7 +126,7 @@ OTHER: none
                 passTime(0.05, 0.15)
             
              Elseif 17
-            
+                Player.show()
                 Player.animate(makeup)
                 "I decided to use skincare..."
                 stock_skincare -= 0.05
@@ -140,7 +140,7 @@ OTHER: none
                 followUp(naked_with_doctor)
             
             Elseif 81
-            
+                Player.show()
                 Player.animate(toilet)
                 "Ah, what a relief!"
                 Player.setActorVar(rk_VB_UrgeToPee, 0)
@@ -173,7 +173,7 @@ OTHER: none
             99::"Go back"
     
             If 0
-            
+                setBackground(shower)
                 Player.show()
                 Player.strip()
                 Filter(Shower)
@@ -186,36 +186,36 @@ OTHER: none
                 passTime(0.35, 1)
             
             Elseif 1
-            
-                setBackground(toilets)
+                
+                setBackground(shower)
                 Player.show()
                 Player.strip()
-                Player.animate(bathe)
                 "I decided to bathe..."
+                Player.animate(bathe)
                 mood += 5
                 energy += 1
                 attractiveness += 0.05
                 karma += 0.25
                 passTime(0.35, 1)
-            
+                Player.animate()
             Elseif 2
-
+                Player.show()
                 Player.animate(dental)
                 "I decided to brush my teeth..."
                 mood += 0.5
                 attractiveness += 0.03
                 energy -= 0.5
                 passTime(0.25, 0.5)
-            
+                Player.animate()
             Elseif 3
-
+                Player.show()
                 Player.animate(makeup)
                 "I decided to groom..."
                 mood += 0.5
                 attractiveness += 0.01
                 energy -= 1
                 passTime(0.25, 1)
-            
+                Player.animate()
             ElseIf 4
             
                 XBodyFat = Player.getActorVar(BodyFat)
@@ -270,11 +270,10 @@ OTHER: none
                     "<CCLBS> lbs / <CCBodyFat> kg"
                 Endif
                 
-                Player.dress()
                 passTime(0.5,1)
                 
             ElseIf 5
-            
+                Player.show()
                 Player.animate(bathe)
                 "I decided to use haircare..."
                 stock_haircare -= 0.05
@@ -282,9 +281,9 @@ OTHER: none
                 mood += 1
                 energy -= 1
                 passTime(0.05, 0.15)
-            
+                Player.animate()
             Elseif 6
-            
+                Player.show()
                 Player.animate(makeup)
                 "I decided to put some makeup..."
                 stock_makeup -= 0.05
@@ -292,9 +291,9 @@ OTHER: none
                 attractiveness += 5
                 energy -= 1
                 passTime(0.15, 0.5)
-            
+                Player.animate()
             Elseif 7
-            
+                Player.show()
                 Player.animate(makeup)
                 "I decided to use skincare..."
                 stock_skincare -= 0.05
@@ -302,9 +301,9 @@ OTHER: none
                 mood += 1
                 energy -= 1
                 passTime(0.05, 0.15)
-            
+                Player.animate()
             Elseif 8
-            
+                Player.show()
                 Player.animate(drinkbottle)
                 "I decided to take supplements..."
                 stock_supplement -= 1
@@ -312,7 +311,7 @@ OTHER: none
                 attractiveness += 0.01
                 intelligence += 0.01
                 passTime(0.05, 0.15)
-            
+                Player.animate()
             Elseif 9
             
                 followUp(get_a_massage)
@@ -330,14 +329,14 @@ OTHER: none
                 followUp(masturbate)
 
             Elseif 13
-            
+                Player.show()
                 Player.animate(drinkbottle)
                 "I decided to take chinese aphrodisiac..."
                 stock_chineseaphrodisiac -=1
                 mood +=10
                 arousal +=100
                 passTime(0.05, 0.15)
-
+                Player.animate()
             Elseif 14
 
                 If isModEnabled(sb_BetterPregnancy)
@@ -352,12 +351,12 @@ OTHER: none
                 EndIf
             
             Elseif 81
-            
+                Player.show()
                 Player.animate(toilet)
                 "Ah, what a relief!"
                 Player.setActorVar(rk_VB_UrgeToPee, 0)
                 mood += 3
-
+                Player.animate()
             EndIf
     
         EndIf

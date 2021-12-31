@@ -33,8 +33,9 @@ OTHER: none
             Vanilla = IsModEnabled(vin_VanillaRealistic)
             MyHome = true
             
-            While choice < 5
+            While choice <= 99
                 Kissed = false
+                MeKissed = false
                 "What should I suggest to <Actor.name> that we do?"
                 0:: "Chat"
                 1:: !ate && stock_snack > 0.8:: "Eat something together"
@@ -98,7 +99,9 @@ OTHER: none
                         Actor.animate()
                         
                     Elseif 21
-                    
+                        
+                        Player.show()
+                        Actor.show()
                         setBackgroundCustom(livingroom)
                         Player.animate(sofawatch)
                         Actor.animate(sofawatch)
@@ -165,6 +168,7 @@ OTHER: none
                         
                     Elseif 4
                         Kissed = true
+                        MeKissed = true
                     
                     Elseif 50
                         "What should I ask?"
@@ -268,9 +272,14 @@ OTHER: none
                         Endif
                     ElseIf 60
                         Actor.startDate()
+                        SceneEnd()
                     Endif // End me
                     If Kissed || [Actor.isInterestedIn(Player) && !hadSex && Actor:attractiontoplayer > Random(0, 200)]
-                        "I decided to kiss <Actor.him_or_her> ..."
+                        If MeKissed
+                            "I decided to kiss <Actor.him_or_her> ..."
+                        Else
+                            "<Actor.name> decided to kiss me..."
+                        Endif
                         AnimatePair(Player, Actor, Kissing)
                         Player(Kiss):: "..."
                         Actor(Kiss):: "..."
@@ -344,6 +353,4 @@ OTHER: none
             Endif
             Actor:attractiontoplayer += Random(-1, 1)
         Endif
-        Player.dress()
-        Actor.dress()
     SceneEnd() // Scene improved by: Raddeck

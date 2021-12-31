@@ -1,13 +1,14 @@
 WHAT: all, -go_to_the_bathroom
 WHERE: all, -toilets, -PC, -office
 WHEN: 0-24
-WHO: Companion = getCompanion(); If CurrentCompanion.isDating() && CurrentCompanion:attractiontoplayer > Random(65, 90) && CurrentCompanion:rapportwithplayer > Random(65, 90)
+WHO: Companion = getCompanion(); If CurrentCompanion.isDating() && CurrentCompanion:attractiontoplayer > Random(65, 100) && CurrentCompanion:rapportwithplayer > Random(65, 100)
 OTHER: !isPlayerMarried()
 
     SceneStart()
         CEngaged = false
         NPCisEngaged = rk_VB_isEngaged.getGlobal()
         setBackground(restaurant)
+        CurrentCompanion.show(2)
         CurrentCompanion(Anxious):: "Baby, I have something really important to tell you ..."
         "<CurrentCompanion.name> has taken me to a fancy restaurant but been acting rather weirdly today, as if he had something important to say to me all day."
         Player(Curious):: "Of course, darling. What is it?"
@@ -53,5 +54,5 @@ OTHER: !isPlayerMarried()
             followUp(rk_VB_bachelor_Party)
         Endif
 
-    SceneEnd() // Scene edited by Ravenger6660
+    SceneEnd() // Scene edited by Raddeck - Ravenger6660
     timeout(1000, rk_VB_NPC_marriage_proposal)

@@ -61,9 +61,9 @@ SceneStart()
         While stayInMenu
         
             Player(Curious)::"Let see what I got in my refrigerator"
-            2:: stock_juice >= 0.8::"Juice inventory (<stock_juice>)"
-            7:: stock_meal >= 0.8 ::"Meal inventory (<stock_meal>)"
-            0:: "Check vegan meal(s) inventory (<stock_veganmeal>)"
+            0:: stock_juice >= 0.8::"Juice inventory (<stock_juice>)"
+            0:: stock_meal >= 0.8 ::"Meal inventory (<stock_meal>)"
+            11:: "Check vegan meal(s) inventory (<stock_veganmeal>)"
             10:: "Check meat dish(es) inventory (<stock_meatprod>)"
             30:: "--------------"
             40:: "Drink water"
@@ -73,7 +73,7 @@ SceneStart()
             60:: "Eat a meat dish"
             99::"Nevermind, I will check later !"
         
-            If 0
+            If 11
         
                 If stock_veganmeal  < 1
                     Player(Anxious)::"Ok, I don't have any vegan meal! I have to go shopping to the greengrocer !"
@@ -124,7 +124,7 @@ SceneStart()
                 EndIf
                 passTime(0.15, 0.5)
             
-            ElseIf 40 || 2
+            ElseIf 42
             
                 Player.animate(drinkglass)
                 "I decided to drink juice..."
@@ -140,7 +140,7 @@ SceneStart()
                 EndIf
                 passTime(0.15, 0.5)
             
-            ElseIf 47 || 7
+            ElseIf 47
             
                 Player.animate(eat)
                 "I decided to eat a ready meal.."
@@ -161,11 +161,11 @@ SceneStart()
             
                 followUp(rk_VB_eat_meat_in)
                 stayInMenu = false
+            Else
+            
+                stayInMenu = false
         
             Endif
-        
         EndWhile
-        
     Endif
-
 SceneEnd()
