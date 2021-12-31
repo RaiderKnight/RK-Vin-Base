@@ -14,33 +14,51 @@ OTHER: Random(0, 100) < attractiveness && !Player.isProstitute() && !isWithCompa
         Actor.makeInterested(Player)
         Actor.dress()
         Actor.show()
+        WeGoFucked = false
         "I was going about my business when suddenly a <Actor.man_or_woman> approached me ..."
-        Actor:: "How much?"
+        Actor(Flirty):: "How much?"
         "<Actor.name> must have mistaken me for a prostitute ... or maybe this <Actor.man_or_woman> just goes around offering pretty <Player.guys_or_girls> money to sleep with <Actor.him_or_her>."
         0:: "Not for sale"
         1:: "Negotiate a price"
         2:: "I'll do it for free"
         
         If 0
-            Player:: "Sorry, I'm not that type of <Player.guy_or_girl>."
+            Player(Sad):: "Sorry, I'm not that type of <Player.guy_or_girl>."
             perversion -= 1
-        Else
-            If 1
-                "Maybe this could be the start of a new career for me?"
+        ElseIf 1
+            "Maybe this could be the start of a new career for me?"
+            Givemoney = Random(200, 400)
+            GivemoneyLoc = Givemoney.convertToLocalCurrency()
+            perversion += 0.5
+            "<Actor.name> offers to give me <GivemoneyLoc>. Should I accept?"
+            0::"Yes"
+            1::"No"
+            
+            If 0
+                WeGoFucked = true
                 money += Random(200, 400)
                 perversion += 1
             Else
-                perversion += 2
-                "I can't believe I'm doing this ... but the thrill of just randomly having sex with someone I just met was too much for me to refuse ..."
+                Player(Sad)::"Maybe next time, your offer is too low..."
             Endif
+        Else
+            WeGoFucked = true
+            perversion += 2
+            "I can't believe I'm doing this ... but the thrill of just randomly having sex with someone I just met was too much for me to refuse ..."
+        EndIf
+        
+        If WeGoFucked
             Loc = findNearbyBuilding(hotel)
             moveTo(Loc)
             setBackground(home)
             "Soon, we were back in a local hotel to conduct our little 'transaction'."
+            Player.strip()
+            Actor.strip()
             Sex(Actor, Player)
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
         Endif
+        Actor.hide()
     SceneEnd()
-    timeout(200, cash_for_ass)
+    timeout(300, cash_for_ass) // Improved by Raddeck
