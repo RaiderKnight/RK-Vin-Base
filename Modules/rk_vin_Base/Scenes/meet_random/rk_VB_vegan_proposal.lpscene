@@ -1,0 +1,66 @@
+WHAT: all
+WHERE: greengrocer
+WHEN: 8-24
+WHO: none
+OTHER: Player.isMale() && Actor:perversion > 60 && Actor:arousal > 25 && Random(0, 100) < 50
+
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Actor = generatePersonTemporary()
+        While Actor.isInterestedIn(Player)
+            Actor = generatePersonTemporary()
+        Endwhile
+        Actor.dress()
+        Actor.show()
+        "I was looking at the nut aisle, when suddenly a <Actor.douched_or_slut> <Actor.guy_or_girl> approaches me and says:"
+        Actor(Flirty):: "Oh my God, you like nuts too,... I love it too, especially licking them sensually!"
+        "Wow, that's a quite disturbing line ... What I should answer?"
+        0:: "WTF, go away!"
+        1:: "Is it an invitation?"
+        99:: "Ignore <Actor.him_or_her>!"
+        
+        If 0
+            Player(Angry)::"Get the fuck off or I call the Police!"
+            "The <Actor.guy_or_girl> just left without a words..."
+            
+        ElseIf 1
+            Player:arousal += random(0, 1)
+            Actor(Flirty)::"Well, if you want, but if you come, I will not only lick your nuts, but the whole body."
+            Player(Flirty)::"I can't wait to see it!"
+            setBackground(home)
+            "I followed <Actor.name> back to <Actor.his_or_her> house..."
+            "As soon as we arrived, we undressed and we immediately started to caress each other..."
+            Sex(Actor, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -2)
+            EndIf
+            perversion += 1
+            "<Actor.name> wasn't joking around. <Actor.He_or_She>'s really in adoration with nuts..."
+            
+            "Should I ask for <Actor.his_or_her> number?"
+            0:: "Yes"
+            1:: "No"
+            
+            If 0
+                exchangeContact(Actor)
+                "We exchanged numbers and parted ways."
+            Else
+                "I decided not to give <Actor.him_or_her> my number."
+            EndIf
+
+            If !wasCondomUsedDuringLastSex() && Random(0,100)<=3
+            
+                contactSTD()
+                "Oh no, I have a STD."
+            EndIf
+        
+        Else
+            Actor(Flirty)::"Oh well, you don't want to talk a bit... fine!"
+            
+        Endif
+        Actor.hide()
+        
+    SceneEnd() // Improved by Raddeck
+    timeout(5000, rk_VB_vegan_proposal)
