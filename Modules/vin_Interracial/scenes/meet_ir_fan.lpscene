@@ -129,19 +129,29 @@ OTHER:
         2:: "Get offended and leave"
         
         If 0
-            "This <Actor.race> <Actor.guy_or_chick> is a bit weird for sure, but I can't say no to free <Actor.dick_or_pussy> that so willingly offers itself ..."
-            moveTo(home)
-            setBackground(home)
-            "I invited <Actor.him_or_her> home and as soon as we were there, I gave <Actor.him_or_her> that <Player.race> <Player.dick_or_pussy> <Actor.he_or_she> so craved."
-            Sex(Player, Actor)
+            If Player:arousal > 15 && Player:perversion > 70 && Actor:arousal > 15 && Actor:perversion > 70
+                "This <Actor.race> <Actor.guy_or_chick> is a bit weird for sure, but I can't say no to free <Actor.dick_or_pussy> that so willingly offers itself ..."
+                moveTo(home)
+                setBackground(home)
+                "I invited <Actor.him_or_her> to my home and as soon as we were there, I gave <Actor.him_or_her> that <Player.race> <Player.dick_or_pussy> <Actor.he_or_she> so craved."
+                Sex(Player, Actor)
+                Actor.makePermanent() // Edit by Raddeck
+                exchangeContact(Actor) // Edit by Raddeck
+                
+            Else
+                "This <Actor.race> <Actor.guy_or_chick> is a bit weird for sure, but I can't say no to free <Actor.dick_or_pussy> that so willingly offers itself ..."
+                "So, I invited <Actor.him_or_her> to my home..." // Edit by Raddeck
+                followUp(invite_home) // Edit by Raddeck
+            EndIf
+            
         Elseif 1
             "I'm a bit flattered by the clear sexual interest to be honest, even if it's racially motivated. I guess there's nothing wrong with not being politically correct and freely admitting you have a clear preference for a certain race."
             "I decided to exchange numbers with my new <Actor.race> admirer. Maybe we can go on a date soon."
             Actor.makePermanent()
             exchangeContact(Actor)
         Else
-            Player:: "So basically, you consider <Player.race> <Player.men_or_women> like me as some sort of exotic sexual pets."
-            Player:: "That's so racist. Bye!"
+            Player(Annoyed):: "So basically, you consider <Player.race> <Player.men_or_women> like me as some sort of exotic sexual pets."
+            Player(Sad):: "That's so racist. Bye!"
         Endif
 
     SceneEnd()

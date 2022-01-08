@@ -1,19 +1,40 @@
-WHAT: all
-WHERE: stripclub
-WHEN: 17 - 6
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
 WHO: none
-OTHER: arousal > 50
+OTHER:
 
     SceneStart()
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         perversion += Random(0, 2)
         Fuck = false
-        Stripper = generatePersonTemporary()
-        While !Player.isInterestedIn(Stripper) || age > 39
+        // Start edit Raddeck
+        "Which gender will I choose for the dancer?"
+        0::"Female"
+        1::"Male"
+        2::"Trans"
+        
+        If 0
             Stripper = generatePersonTemporary()
-        Endwhile
+            While Stripper.isMale() && Stripper.isInterestedIn(Player)
+                Stripper = generatePersonTemporary()
+            EndWhile
+        ElseIf 1
+            Stripper = generatePersonTemporary()
+            While !Stripper.isMale() && Stripper.isInterestedIn(Player)
+                Stripper = generatePersonTemporary()
+            EndWhile
+        Else
+            Stripper = generatePersonTemporary()
+            While Stripper.isTrans() && Stripper.isInterestedIn(Player)
+                Stripper = generatePersonTemporary()
+            EndWhile
+        Endif  // End edit Raddeck
+        
         If Stripper.isMale()
             Random
                 Stripper.loadPreset(athletic)
@@ -56,14 +77,15 @@ OTHER: arousal > 50
         Stripper:likes_tribadism += Random(25, 50)
         Stripper:fitness += 25
         Stripper:perversion += Random(10, 45)
-        Stripper.dressuniform(sexwork)
+        Stripper.dressUniform(sexwork)
+        Stripper.moveToPerson(Player)
         Stripper.show()
+        "<Stripper.name> will give me a show."
         Stripper.animate(dance)
         Player.animate(receivelapdance)
         count = 0
-        Stripper.show()
-        "<Stripper.name> is givin a good show."
-        While !Stripper.isNaked() && count < 5
+        arousal += Random(0, 30)
+        While !Stripper.isNaked() && count < 10
             "Give a tip"
             1:: "Yes"
             0:: "No"
@@ -78,8 +100,6 @@ OTHER: arousal > 50
             Endif
             count += 1  
         Endwhile
-        Stripper.setNoRedress()
-        "I'm getting a lap dance from <Stripper.name>"
         Player.animate(receivelapdance)
         Stripper.moveToPerson(Player)
         Stripper.animate(dance)
@@ -326,7 +346,7 @@ OTHER: arousal > 50
             perversion += 5
             Sex(Player, Stripper)
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -1)
+                Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
             Stripper.show(2)
             passTime(0.3)

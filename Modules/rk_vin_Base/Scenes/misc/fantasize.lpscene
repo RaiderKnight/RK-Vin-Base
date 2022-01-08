@@ -9,6 +9,9 @@ OTHER: Random(0, 200) < perversion && arousal > 10
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         Wetdream = false
+        goforelf = false // Edit Raddeck
+        gofororc = false // Edit Raddeck
+        goforvamp = false // Edit Raddeck
         "Sometimes I cannot help but fantasize about having sex with ..."
         0:: "Someone"
         1:: "Think of something else"
@@ -18,13 +21,23 @@ OTHER: Random(0, 200) < perversion && arousal > 10
             "Who is my crush?"
             0::"One of my contact"
             1::"Random person"
+            2::"An Elf" // Edit Raddeck
+            3::"An orc" // Edit Raddeck
+            4::"A Vampire" // Edit Raddeck
             
             If 0
                 selectNPC()
                 Actor = getSelectedNPC()
             Else
+                If 2
+                    goforelf = true // Edit Raddeck
+                Elseif 3
+                    gofororc = true // Edit Raddeck
+                Elseif 4
+                    goforvamp = true // Edit Raddeck
+                EndIf
                
-               "Which gender?"
+                "Which gender?"
                 0::"Female"
                 1::"Male"
                 2::"Trans"
@@ -34,16 +47,54 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                     While Actor.isMale() && Actor.isInterestedIn(Player)
                         Actor = generatePersonTemporary()
                     EndWhile
+                    If goforelf // Edit Raddeck
+                        Actor.blendPreset(Elf)
+                        Actor.randomizeRace()
+                    EndIf
+                    If gofororc // Edit Raddeck
+                        Actor.blendPreset(orc)
+                        Actor.randomizeRace()
+                    EndIf
+                    If goforvamp // Edit Raddeck
+                        Actor.blendPreset(vampire)
+                        Actor.randomizeRace()
+                    EndIf
                 Elseif 1
                     Actor = generatePersonTemporary()
                     While !Actor.isMale() && Actor.isInterestedIn(Player)
                         Actor = generatePersonTemporary()
                     EndWhile
+                    
+                    If goforelf // Edit Raddeck
+                        Actor.blendPreset(Elf)
+                        Actor.randomizeRace()
+                    EndIf
+                    If gofororc // Edit Raddeck
+                        Actor.blendPreset(orc)
+                        Actor.randomizeRace()
+                    EndIf
+                    If goforvamp // Edit Raddeck
+                        Actor.blendPreset(vampire)
+                        Actor.randomizeRace()
+                    EndIf
                 Else
                     Actor = generatePersonTemporary()
                     While Actor.isTrans() && Actor.isInterestedIn(Player)
                         Actor = generatePersonTemporary()
                     EndWhile
+                    
+                    If goforelf // Edit Raddeck
+                        Actor.blendPreset(Elf)
+                        Actor.randomizeRace()
+                    EndIf
+                    If gofororc // Edit Raddeck
+                        Actor.blendPreset(orc)
+                        Actor.randomizeRace()
+                    EndIf
+                    If goforvamp // Edit Raddeck
+                        Actor.blendPreset(vampire)
+                        Actor.randomizeRace()
+                    EndIf
                 EndIf
             Endif
             If Actor.isValid()
