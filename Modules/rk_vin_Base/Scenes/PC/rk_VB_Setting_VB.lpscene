@@ -12,7 +12,7 @@ OTHER: none
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         TuitionPriceEqualEnable = rk_VB_TuitionPriceEqualEnable.getGlobal()
         
-        If !isModEnabled(nn_VB_HomeExpander) ||  !isModEnabled(nn_HomeExpander)
+        If !isModEnabled(nn_VB_HomeExpander) || !isModEnabled(nn_HomeExpander)
             
             "The HomeExpander module is currently OFF or don't exist. This particular version of the game has optional inventories if you have this module turned on. You can proceed or you can exit this scene, then Ctrl + M > tick Official nn_HomeExpander Module > Confirm to enjoy all the new inventories."
             0:: "Proceed, without HomeExpander"
@@ -37,7 +37,11 @@ OTHER: none
             99::"Go back!"
             
             If 1
-                
+                If HungerEnable >= 0
+                    "Hunger level is enable"
+                Else
+                    "Hunger level is disable"
+                Endif
                 "What should I do?"
                 1::"Enable hunger"
                 2::"Disable hunger"
@@ -66,7 +70,11 @@ OTHER: none
                 EndIf
                 
             ElseIf 2
-                
+                If UrgeToPeeEnable >= 0
+                    "Hunger level is enable"
+                Else
+                    "Hunger level is disable"
+                Endif
                 "What should I do?"
                 1::"Enable the urge to pee"
                 2::"Disable the urge to pee"

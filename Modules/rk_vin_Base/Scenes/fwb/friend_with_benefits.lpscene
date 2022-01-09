@@ -18,9 +18,7 @@ OTHER:
             picked = false
             While !picked
                 Actor = getPerson(tag_fwb)
-                
                 If Actor.isValid()
-                
                     secondScreen(Actor)
                     Actor.show()
                     "Should I call my friend with benefits <Actor.name> over to fuck?"
@@ -28,7 +26,6 @@ OTHER:
                     1:: "Not <Actor.him_or_her>"
                     
                     If 0
-                    
                         secondScreen()
                         picked = true
                         Actor.dress()
@@ -36,19 +33,15 @@ OTHER:
                         "Soon enough, <Actor.name> came over and we got down to business right away."
                         Sex(Player, Actor)
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         mood += 5
                 
                     Else
-                    
                         secondScreen()
                         Actor.hide()
-                        
                     Endif
-                    
                 Else
-                
                     "No other friend with benefits to call ..."
                     picked = true
                     
@@ -81,28 +74,19 @@ OTHER:
                         Actor.setActorVar(tag_fwb, 1)
                         Sex(Player, Actor)
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         mood += 5
-                    
                     Else
-                    
                         "<Actor.name> isn't comfortable with the idea and turned me down."
                         Actor:rapportwithplayer -= 3
                         mood -= 3
-                    
                     Endif
-                    
                 Endif
-                
             Else
-            
                 "You didn't select a valid person ..."
-                
             Endif
-            
         Else
-        
             picked = false
             While !picked
             
@@ -116,30 +100,22 @@ OTHER:
                     1:: "Not <Actor.him_or_her>"
                     
                     If 0
-                    
                         "I told <Actor.name> that our arrangement was over ..."
                         Actor.setActorVar(tag_fwb, 0)
                         Actor:attractiontoplayer -= 10
                         Actor:rapportwithplayer -= 10
                         secondScreen()
                         picked = true
-                        
                     Else
-                    
                         secondScreen()
                         Actor.hide()
-                        
                     Endif
                     
                 Else
-                
                     "No other friend with benefits ..."
                     picked = true
-                    
                 Endif
-                
             Endwhile 
-            
         Endif
         
     SceneEnd() // Scene improved by Raddeck
