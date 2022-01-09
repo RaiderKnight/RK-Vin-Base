@@ -1,0 +1,269 @@
+WHAT: none
+WHERE: none
+WHEN: 0-18
+WHO: none
+OTHER:
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        GotBakeryJob = rk_VB_GotBakeryJob.getGlobal()
+        Jonathan = getPerson(tag_baker)
+        Jake = getPerson(tag_baker1)
+        Client = generatePersonTemporary()
+        DaysJobCount = Player.getActorVar(rk_VB_DaysJobCount)
+        BakerSalary = Player.getActorVar(rk_VB_BakerSalary)
+        While Client.isInterestedIn(Player)
+            Client = generatePersonTemporary()
+        EndWhile
+        If GotBakeryJob == 1 && DaysJobCount <= 0
+            "I quickly settled into a routine with this new job that I love." 
+            "I appreciate their sense of humor and the relaxed work environment. The clientele is also nice - a lot of street traffic, but also a lot of regular customers who come in for pre-ordered cakes and cookies."
+            "Basically, I don't even have time to see what's in the boxes, because <Jonathan.name> always closes the boxes and he's very picky about tying things up with decorative bows."
+            "After helping a few clients, I went home."
+            Player.modifyActorVar(rk_VB_DaysJobCount, 1)
+            money += BakerSalary
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -10)
+            EndIf
+            passTime(4, 6)
+            moveTo(home)
+        ElseIf DaysJobCount >= 1 && DaysJobCount <= 14 || DaysJobCount >= 16
+            "I decided to come to work for a few hours..."
+            "Suddenly, one of our regular customers, walks into the store...."
+            Client.show()
+            Client.dress()
+            Player(Happy)::"Hello, <Client.Mr_or_Mrs>. <Client.name_last>, what can I do for you?"
+            If Client.isMale() && Client:arousal > 15 && Client:perversion > 70
+                Client(Happy)::"Hi <Player.name>! Should there be a box waiting for me?"
+                Player(Happy)::"Yes, but <Jake.name> told me you wanted something special on your pastries? But, he didn't have time to tell me everything so, yes...."
+                Client(Happy)::"<Jake.name> told me that you were an open-minded person and that you could maybe help me?"
+                Player(Happy)::"Sure, what can I do for you?"
+                Client(Happy)::"Um, well my wife loves chocolate eclairs and... sperm. So I would like to have the chocolate eclairs topped with my sperm."
+                Client(Happy)::"I'm not a good aimer when I ejaculate so I would need your help to fill the chocolate eclairs..."
+                "What do I say?"
+                0::"No problem, I'll help you"
+                1::"No problem, but there is an extra charge."
+                99::"Refuse"
+                
+                If 1
+                    perversion += 2
+                    Client:arousal += 50
+                    Player(Flirty)::"Take off your pants and panties so we can start the session, I remind you that we have 6 eclairs to fill. I hope your balls are well filled otherwise we will add whipped cream."
+                    Client.strip()
+                    Client.dressExcept(Bottom, Bottom_Under)
+                    Client(Flirty)::"I'm ready"
+                    MasturbSession = 0
+                    While MasturbSession < 6
+                        Filter(Handjob)
+                        sex(Player, Client)
+                        Client:arousal += 50
+                        MasturbSession += 1
+                        Client(Flirty)::"Your hands are so soft... continue!"
+                        If MasturbSession == 1
+                            "Here's the first one filled"
+                        Else
+                            "Here's another one filled"
+                        EndIf
+                    EndWhile
+                    Player(Happy)::"And here we are, we managed to fill them all, I'm sure your wife will love them"
+                    Client(Flirty)::"Thanks for everything..."
+                ElseIf 2
+                    perversion += 2
+                    Client:arousal += 50
+                    Player(Flirty)::"Take off your pants and panties so we can start the session, I remind you that we have 6 eclairs to fill. I hope your balls are well filled otherwise we will add whipped cream."
+                    Client.strip()
+                    Client.dressExcept(Bottom, Bottom_Under)
+                    Client(Flirty)::"I'm ready"
+                    MasturbSession = 0
+                    While MasturbSession < 6
+                        Filter(Handjob)
+                        sex(Player, Client)
+                        Client:arousal += 50
+                        MasturbSession += 1
+                        Client(Flirty)::"Your hands are so soft... continue!"
+                        If MasturbSession == 1
+                            "Here's the first one filled"
+                        Else
+                            "Here's another one filled"
+                        EndIf
+                    EndWhile
+                    Player(Happy)::"And here we are, we managed to fill them all, I'm sure your wife will love them"
+                    Client(Flirty)::"Thanks for everything..."
+                    money += random(100, 150)
+                Else
+                    Player(Sad)::"Sorry, he was probably talking about someone else, I don't offer that kind of personalized service..."
+                EndIf
+            Else
+                Random
+                    Client(Happy)::"Hi <Player.name>, nice to see you again! There should be a box waiting for me?"
+                    Client(Happy)::"Hi <Player.name>, good to see you! Can I pick up my order?"
+                    Client(Happy)::"Hi <Player.name>! Should there be a box waiting for me?"
+                EndRandom
+                Player(Happy)::"Yes, let me go in back and see if I can find it."
+            EndIf
+            "After helping a few clients, I went home."
+            jobperformance += random(1, 5)
+            jobexperience += random(1, 5)
+            mood += random(1, 3)
+            Player.modifyActorVar(rk_VB_DaysJobCount, 1)
+            money += BakerSalary
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -10)
+            EndIf
+            passTime(4, 6)
+            moveTo(home)
+        ElseIf DaysJobCount == 15
+            Player.modifyActorVar(rk_VB_DaysJobCount, 1)
+            "I've been at work for about three weeks now, and today, the guys decided to leave me alone and in charge for an afternoon while they went shopping."
+            Jonathan.show()
+            Jonathan(Happy)::"Don't worry, it'll be fine - it should be a quiet afternoon, and we trust you!"
+            Jonathan.hide()
+            Player.animate(browse)
+            "They were right, it was a quiet afternoon. I had actually pulled out my phone to do a little browsing when <Client.Mr_or_Mrs>. <Client.name_last> came in - one of the best customers."
+            Client.show()
+            Player(Happy)::"Hello, <Client.Mr_or_Mrs>. <Client.name_last>, what can I do for you?"
+            Client(Happy)::"Hi <Player.name>, nice to see you again! There should be a big box waiting for me?"
+            Player(Happy)::"Oh, hmm... I'm alone this afternoon, and they didn't mention anything, but let me go in back and see if I can find it."
+            "It wasn't like <Jonathan.name> to forget about a customer's order, so I was sure I would find a lovely wrapped box. As I entered the back room, I did find a box with a post-it on which was scrawled '<Client.Mr_or_Mrs>. <Client.name_last>', but it looked like <Jonathan.name> hadn't done his nice wrapping job yet."
+            "Oh well, I wouldn't keep her waiting, I'd bring it to her as is..."
+            "As I walked back out front with the box, I realized it was my chance to take a peek at one of their creations - since I never got to see the custom cakes."
+            "So I opened the box! There, on top of what looked like a delicious chocolate cake, was a penis, at least 10 inches long! After a moment of total shock, I gathered myself as much as possible, closed up the box again, and took it out to <Client.Mr_or_Mrs>. <Client.name_last>, making the sale and wishing <Client.him_or_her> a nice weekend."
+            Client(Happy)::"Thanks, have a great weekend too!"
+            Client.hide()
+            jobperformance += 1
+            jobexperience += 1
+            "After the door closed behind her, I allowed my thoughts to whirl again. I wasn't offended, just shocked."
+            "Did all of the wrapped boxes contain cock cakes, or was it just that one? Was their innocent store front, selling loaves of bread and oatmeal cookies to folks who dropped in off the street, just a front for their erotic bakery?"
+            "Overcome by curiousity, I decided to take the opportunity, with <Jonathan.name> and <Jake.name> still not back, to go back into the kitchen and do more exploration. If a customer came in, I'd hear the bell on the door and could quickly come back out front. My browsing could wait - this mystery was more pressing at the moment!"
+            "There were a couple of other boxes on the table where I had found <Client.Mr_or_Mrs>. <Client.name_last>'s, so I tried those first. Nothing exciting - one was cookies, and the other was a cake with a lovely, but completely non-erotic, birthday message. Hmm. The fridge?"
+            "As I opened the door to the big, restaurant-sized refrigerator, I realized I'd hit the jackpot. First, I was confronted with a tray full of breasts. On the shelf below that, some exquisitely carved pussies. And on the very bottom, cocks of all shapes, sizes, and colors."
+            "Wow, I had never before been simultaneously turned on and hungry! The aroma was distinct - the suggestive tidbits were all carved from marzipan."
+            arousal += random(1, 3)
+            "I quickly ran out front to see if anyone was coming, and then just as quickly made my way back to the kitchen again, the refrigerator door still open."
+            "I knelt down so that I was eye-level with the tray of cocks, and slowly reached out to grab a small one, thinking I could rearrange the others on the tray and nobody would notice one missing."
+            "With the stolen cock in one hand, I shut the refrigerator door with the other and walked over to the counter, where I found some chocolate syrup still sitting where <Jonathan.name> had obviously been using it to decorate some of his most recent creations."
+            "I drizzled a bit of the chocolate onto the end of the marzipan cock and slowly sunk my teeth into the delicacy."
+            arousal += random(1, 3)
+            perversion += random(1, 2)
+            "As I savored the delicious flavor combination, I was slightly surprised at the combination of feelings running through my body - not only was I hungry for more, I was also turned on by the imagery, sliding this sweet little cock into my mouth."
+            "Before I knew what was happening, I felt an arm around my waist, and a familiar voice in my ear. I spun around, shocked that I hadn't heard anyone come in, and was face-to-face with <Jake.name>."
+            Jake.show()
+            Jake(Flirty)::"I see you've discovered the loot,"
+            "Completely embarrassed for several reasons, I stammered, attempting to explain and apologize all at once. He responded by putting a finger to my lips."
+            Jake(Flirty)::"Don't worry, <Player.name>, I'm not upset. We shouldn't have kept you in the dark for so long. As you've obviously discovered, <Jonathan.name> and I are actually running an erotic bakery. We sell custom cakes and cookies both here in the bakery and also online."
+            Jake(Flirty)::"But in a town like this, we'd never be able to hang up a shingle proclaiming what we do, so we have to do things kind of under the radar. I hope you'll still be willing to work here?"
+            "Am I still interested in working in this bakery?"
+            0::"Yes"
+            1::"No"
+
+            If 0    
+                Player(Flirty)::"Oh, absolutely - I'm not offended by this stuff. In fact, I have to admit, I was turned on by finding all of those cocks in the refrigerator!"
+                "Again, I found myself saying something to <Jake.name> that I never would have said to another man, because I knew he was gay."
+                Jake(Flirty):: "You tried one of the small ones?"
+                Player(Flirty)::"Yes why?"
+                "He quickly walked over to the refrigerator and pulled out one of the larger marzipan cocks - almost life-sized - and brought it back to me."
+                Jake(Flirty):: "You should really try one of these, we put nuts in the bigger ones."
+                "Before I could stop him, he was feeding it to me, shoving the candy-sweet cock into my mouth."
+                "As he did this, his other hand dropped to my thigh, his fingers tracing their way under my short skirt until his hand was on my panties. I gasped, the marzipan rod still in my mouth, but couldn't help but respond to his touch."
+                arousal =+ 10
+                Jake(Flirty)::"I see you're already wet. How would you like a real cock in your mouth?"
+                "He pulled the sweet treat out of my mouth long enough for me to reply."
+                Player(Curious)::"B... but, what about <Jonathan.name>?"
+                Jake(Curious)::"Oh, don't worry, he's not coming back this afternoon, and I already locked up out front. We won't be interrupted."
+                Player(Curious)::"No, I mean... um... won't he be jealous?"
+                Jake(Curious)::"What? Why?"
+                "Puzzled, I decided the best thing was just to be straightforward. After all, the man was cupping my wet crotch."
+                Player(Embarrassed)::"Aren't you gay?"
+                "He laughed an honest laugh, obviously not offended, but also obviously entertained."
+                Jake(Happy)::"Oh, I see, when <Jonathan.name> introduced me as his 'partner', you assumed we were partners in all senses of the word?"
+                Player(Embarrassed)::"Well, yeah! Aren't you?"
+                Jake(Happy)::"No - we're best friends, going way back, and we love being in business together. But he's in a relationship with another man, and I'm, well, as straight as they come."
+                Jake(Flirty)::"And I've been barely able to keep my cock in my pants, watching you strut around the bakery in your cute little outfits."
+                Player(Flirty)::"Oh, really?" 
+                Player(Flirty)::"Well, the feeling is mutual - if I hadn't thought you were gay, I would have been throwing myself at you all this time."
+                "His fingers now worked their way inside my panties, and as he touched my clit, skin to skin, I arched my back and moaned. He pushed the marzipan back into my mouth again, and began moving it in and out."
+                "I loved the taste, as well as the suggestive motion. As he slid a finger into my pussy, he pulled the candy cock out once and for all, and I watched as he reached for the chocolate syrup."
+                "He held it high in the air above me, slowly tipped up the bottle, and drizzled just a few drops into my mouth, then more onto my chest, which he quickly attacked with his tongue."
+                "I reached for his belt, and then his zipper, and then his boxers, freeing him one layer at a time from his clothes."
+                Jake.strip()
+                Jake.dressExcept(Bottom, Bottom_Under)
+                "I didn't want to hurry the fabulous finger-fucking he was giving me, but I also wanted access to his cock."
+                "As he slid two and then three fingers into me, stretching my tight pussy and pumping it faster, I took the syrup bottle from his other hand, poured some of the sweet, sticky liquid onto my hand, and began stroking his half-erect cock."
+                Jake(Flirty)::"I suppose I should let you lick that off my cock?"
+                Player(Flirty)::"Oh, yes, please. Will you let me?"
+                "He answered by pulling his fingers out of me and gently pushing me down to my knees. I quickly took his whole length into my mouth, savoring the taste of the chocolate along with the salty sweat from his skin."
+                "He took hold of my hair, and I began quickly moving back and forth on his cock, the chocolate flavor gradually disappearing as he grew in my mouth."
+                Filter(Blowjob)
+                sex(Player, Jake)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                "I would have been happy to have him cum in my mouth, but he obviously had other plans, and pulled me to my feet."
+                Player.strip()
+                Player.dressExcept(Top, Bottom)
+                "He pulled my shirt over my head and my skirt down to the floor, leaving me in my bra and matching lacy panties."
+                Jake.strip()
+                "He then pulled his own shirt over his head, so that he was now naked. Seeing his body was a huge turn on, but nothing compared to what he did next."
+                "He hoisted me up onto the counter, and then went to the refrigerator, coming back with a can of whipped cream."
+                "Before I could either protest or beg, he pulled my left breast out of the bra cup, shot a load of whipped cream onto it, and devoured it."
+                "As soon as he had cleaned off that breast, thoroughly licking and nibbling my nipple to make sure he had gotten all of it, he proceeded to do the same with the other breast."
+                Player(Kiss)::"..."
+                animatePair(Jake, Player, Kissing)
+                Jake(Kiss)::"..."
+                Player.strip()
+                "When he was done there, he pulled off my panties, and reached again for the chocolate syrup, and very slowly drizzled a line from my navel down to my pussy."
+                "When the liquid hit my clit and then slipped between my pussy lips, I jumped with pleasure."
+                Player(Flirty)::"Please, eat me out,"
+                "He traced the line of chocolate, tickling my navel with his tongue and then making his way to my clit. He licked in steady strokes from my tingling, engorged clit down to my pussy lips, occasionally darting his tongue into me."
+                "I let my weight fall back onto the big bakery work table, leaving my exposed pussy completely at his mercy. As he brought me to ever higher levels of pleasure, I involuntarily clamped my thighs around his head, and had my first orgasm in this position, his tongue now darting in and out of me quickly as his thumb manipulated my clit."
+                Filter(LickPussy, Blowjob)
+                sex(Jake, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                "As soon as I had recovered, he helped me off the table, and when I was back on my feet, held me in a passionate embrace, forcing his tongue into my mouth. I could feel his hard cock against my body, and knew that I wanted to feel it inside me."
+                Player(Kiss)::"..."
+                animatePair(Jake, Player, Kissing)
+                Jake(Kiss)::"..."
+                "This time I was going to choose the position, and I knew it would be one that would please him. Ending our intense kiss, I spun around, putting my forearms down on the table, and looking back at him over my shoulder."
+                Player(Flirty)::"Fuck me, <Jake.name> - I want you to take me from behind with that big cock of yours."
+                "He responded quickly, but teased me at first, just rubbing the head of his cock against my pussy. I began bucking against him, trying to make him enter me, but he was stubborn, and I realized I wouldn't have him inside of me until I gave up control."
+                "I stopped moving, and he thrust into me, bottoming out in his first stroke. His cock was the biggest I had ever had inside of me, and the feeling of fullness almost brought me to another orgasm instantly."
+                "Perhaps sensing the intensity of my feelings, he didn't move right away, but instead left his cock buried deep inside of me. As my pussy muscles began to pulsate around him, he reached around and took both of my breasts in one of his big strong hands, kneading them gently."
+                "Our movements then began simultaneously. As my pussy stretched a bit to accommodate him, he began stroking in and out of me, slowly at first, but then more quickly and with more length on each stroke. He brought his other hand around my torso as well, and with one breast in each hand, kept us moving together as our fucking reached a feverish pace."
+                "He now let my breasts go, and positioned himself to take complete control. He used both hands to gently gather my long hair, which had been hanging loose, until he had it into a ponytail, which he then held with his left hand. His right hand again reached around my torso, but this time found my clit."
+                "As he continued to fuck me, he now controlled our pace by his hold on my hair, and brought me quickly to the verge of a powerful orgasm by fingering my clit. I had never let a man grab me by the hair before, but I found that I enjoyed letting go of control, leaving him in charge of our motions together, and even enjoyed the slight pain of the occasionally stronger tug."
+                "He was now furiously fingering my clit, and I could tell he was about to cum. I let myself go, bucking wildly underneath him, just before he shot his load deep inside of me. He slowed significantly after he came, but he continued to stroke my pussy gently, which only prolonged the wave of pleasure that I was riding."
+                sex(Jake, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -10)
+                EndIf
+                "When he finally pulled out of me, I could feel our combined juices trickle down my inner thigh as I collapsed in exhaustion onto the table."
+                "After we pulled on our clothes, we both laughed at the mess we had left - splotches of whipped cream, drops of chocolate syrup, and a pool of cum."
+                "We diligently cleaned up the kitchen, knowing that <Jonathan.name> would have a heart attack if he saw it like this."
+                Jake.dress()
+                Player.dress()
+                Jake(Wink)::"So, as long as we tidy up afterwards, what do you say we do this again sometime?"
+                Player(Flirty)::"Sounds yummy. And can I help with the erotic baking from now on?"
+                Jake(Wink)::"Oh, yeah - as long as you let me watch you work!"
+                Player(Flirty)::"Well, I'm going to go home and wash up, we'll see you soon..."
+                Jake.setActorVar(tag_fwb, 1)
+                "<Jake.name> is now my friend with benefits!"
+                jobperformance += random(1, 2)
+                jobexperience += random(1, 2)
+                money += BakerSalary
+                passTime(4, 6)
+                moveTo(home)
+            Else
+                "I decided to resign..."
+                perversion -= random(0, 10)
+                arousal -= random(0, 10)
+                followUp(rk_VB_resign_Bakery_job)
+            EndIf
+        Else
+            "I do not work here. I have to 'Ask for a job' in order to work here as an employee."        
+        EndIf
+    SceneEnd()

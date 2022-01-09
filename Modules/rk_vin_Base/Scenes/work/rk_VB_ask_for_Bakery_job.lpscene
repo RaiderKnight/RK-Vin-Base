@@ -1,0 +1,101 @@
+WHAT: none
+WHERE: none
+WHEN: 0-18
+WHO: none
+OTHER:
+
+    SceneStart()
+        // Bug: I can't pinpoint a building location for this store, so you can go work at any bakery in town.
+        // Story from: kimbelina
+        Jonathan = generatePersonTemporary()
+        While !Jonathan.isMale() && !Jonathan.isTrans()
+            Jonathan = generatePersonTemporary()
+        EndWhile
+        Jonathan:age => random(40, 49)
+        Jonathan.randomizeRace()
+        Jonathan.randomizeFace()
+        Jonathan.randomizeHairs()
+        Jonathan.hide()
+        
+        Jake = generatePersonTemporary(athletic)
+        While !Jake.isMale() && !Jake.isTrans()
+            Jake = generatePersonTemporary()
+        EndWhile
+        Jake.randomizeRace()
+        Jake.randomizeFace()
+        Jake.randomizeHairs()
+        Jake:age => random(40, 49)
+        Jake.hide()
+        
+        GotBakeryJob = rk_VB_GotBakeryJob.getGlobal()
+        SalaryOffer = 300
+        SalaryOfferLoc = SalaryOffer.convertToLocalCurrency()
+        BakerSalary = Player.getActorVar(rk_VB_BakerSalary)
+        If GotBakeryJob == 0
+            "A sign caught my eye when I walked into the store,..."
+            "Help Wanted: seeking nice looking woman for bakery assistant, no experience necessary <SalaryOfferLoc>/day."
+            "Should I apply for this position?"
+            0:: !Player.isMale() ::"Yes"
+            1:: "No"
+            
+            If 0
+                "Desperate as I was to find another job quickly, I thought to myself 'what the hell' and asked to see the manager."
+                "I was immediately hit with both the heat of the air and the wonderful smells from the kitchen - bread, cinnamon rolls, chocolate chip cookies, all of the aromas filled the air, a confused but pleasing potpurri."
+                Jonathan.dress()
+                Jonathan.show()
+                Jonathan.animate(socialize)
+                Jonathan.moveToPerson(Player)
+                Jonathan(Happy)::"What can I get you, sweetie?"
+                "Any suspicion I may have had about the help wanted sign specifying a nice looking woman immediately washed away when I began talking to this obviously gay man."
+                Player.animate(socialize)
+                Player(Curious)::"Actually, I'm here about the sign in the window - are you still looking for someone?"
+                If Player:attractiveness > 60
+                    Jonathan.makePermanent()
+                    Jake.makePermanent()
+                    exchangeContact(Jonathan)
+                    exchangeContact(Jake)
+                    Jake.makeInterested(Player)
+                    Jonathan.setActorVar(tag_baker, 1)
+                    Jake.setActorVar(tag_baker1, 1)
+                    Jonathan(Happy)::"Oh, yes, thanks for coming in. I'm <Jonathan.name>, the owner of this little establishment."
+                    Jonathan(Happy)::"What's your name?"
+                    Player(Happy)::"<Player.name>. I'm in desperate need of a job!"
+                    Player(Happy)::"I've never worked in a bakery, but I do have quite a bit of waitressing and customer service experience."
+                    Jonathan(Happy)::"No worries, dear. We need someone to start right away, and you're the first to ask about the job, so, consider yourself hired!"
+                    Player.setActorVar(rk_VB_BakerSalary, SalaryOffer)
+                    Player(Happy)::"Cool, thanks..."
+                    rk_VB_GotBakeryJob.setGlobal(1)
+                    "We discussed schedules and my availability - it was exactly what they needed."
+                    "<Jonathan.name> explained to me that he and his partner <Jake.name>, were starting to fall behind on orders now that the bakery was more successful."
+                    "They need someone to work with the customers in the front while they work in the kitchen."
+                    "While we were chatting, <Jake.name> came to join us..."
+                    Jake.dress()
+                    Jake.show()
+                    "As soon as I saw <Jake.name>, his piercing eyes immediately started to melt me, but I remembered he was <Jonathan.name>'s partner and pulled myself together."
+                    "They gave me a tour of the place, made sure I knew what they expected, and after helping a few clients, I went home."
+                    jobperformance += random(1, 5)
+                    jobexperience += random(1, 5)
+                    mood += random(1, 3)
+                    passTime(2, 4)
+                    moveTo(home)
+                    Jonathan.animate()
+                    Jonathan.hide()
+                    Jake.hide()
+                Else
+                    Jonathan(Happy)::"No, sorry, we found someone yesterday, I just forgot to remove the flyer."
+                    Player(Sad)::"Ok, then!"
+                    Player.animate()
+                    Jonathan.animate()
+                    Jonathan.hide()
+                EndIf
+            Else
+                If Player.isMale()
+                    "I decided not to apply for this job. They look for woman only..."
+                Else
+                    "I decided not to apply for this job."
+                EndIf
+            EndIf
+        Else
+            "I already have a job here!"
+        EndIf
+    SceneEnd()
