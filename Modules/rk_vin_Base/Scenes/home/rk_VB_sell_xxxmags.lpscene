@@ -1,0 +1,213 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+SceneStart()
+
+    SoloShootings_XXXmagazines = Player.getActorVar(rk_VB_SoloShootings_XXXmagazines_InStock)
+    AmateurShootings_XXXmagazines = Player.getActorVar(rk_VB_AmateurShootings_XXXmagazines_InStock)
+    ThreesomeShootings_XXXmagazines = Player.getActorVar(rk_VB_ThreesomeShootings_XXXmagazines_InStock)
+    GangBangShootings_XXXmagazines = Player.getActorVar(rk_VB_GangBangShootings_XXXmagazines_InStock)
+    RevGangBangShootings_XXXmagazines = Player.getActorVar(rk_VB_RevGangBangShootings_XXXmagazines_InStock)
+    LesbianShootings_XXXmagazines = Player.getActorVar(rk_VB_LesbianShootings_XXXmagazines_InStock)
+    GayShootings_XXXmagazines = Player.getActorVar(rk_VB_GayShootings_XXXmagazines_InStock)
+    MixedShootings_XXXmagazines = Player.getActorVar(rk_VB_MixedShootings_XXXmagazines_InStock)
+    
+    SoldSoloShootings_XXXmagazines = Player.getActorVar(rk_VB_SoloShootings_XXXmagazines_Sold)
+    SoldAmateurShootings_XXXmagazines = Player.getActorVar(rk_VB_AmateurShootings_XXXmagazines_Sold)
+    SoldThreesomeShootings_XXXmagazines = Player.getActorVar(rk_VB_ThreesomeShootings_XXXmagazines_Sold)
+    SoldGangBangShootings_XXXmagazines = Player.getActorVar(rk_VB_GangBangShootings_XXXmagazines_Sold)
+    SoldRevGangBangShootings_XXXmagazines = Player.getActorVar(rk_VB_RevGangBangShootings_XXXmagazines_Sold)
+    SoldLesbianShootings_XXXmagazines = Player.getActorVar(rk_VB_LesbianShootings_XXXmagazines_Sold)
+    SoldGayShootings_XXXmagazines = Player.getActorVar(rk_VB_GayShootings_XXXmagazines_Sold)
+    SoldMixedShootings_XXXmagazines = Player.getActorVar(rk_VB_MixedShootings_XXXmagazines_Sold)
+    
+    If !isModEnabled(nn_PornEmpire)
+        "You need to enable Porn Empire mod from NickNo, to be able to sell magazines..."
+    Else
+        "You need at least 50 items of the same types to be able to sell something!"
+        
+        stayInMenu = true
+        While stayInMenu
+
+            Price_soloX = Random(9, 12)
+            Price_AmateurX = Random(9, 12)
+            Price_ThreesomeX = Random(9, 12)
+            Price_GangBangX = Random(9, 12)
+            Price_RevGangBangX = Random(9, 12)
+            Price_LesbianX = Random(9, 12)
+            Price_GayX = Random(9, 12)
+            Price_MixedX = Random(9, 12)
+            Price_soloX_Loc  = Price_soloX.convertToLocalCurrency()
+            Price_AmateurX_Loc = Price_AmateurX.convertToLocalCurrency()
+            Price_ThreesomeX_Loc = Price_ThreesomeX.convertToLocalCurrency()
+            Price_GangBangX_Loc = Price_GangBangX.convertToLocalCurrency()
+            Price_RevGangBangX_Loc = Price_RevGangBangX.convertToLocalCurrency()
+            Price_LesbianX_Loc = Price_LesbianX.convertToLocalCurrency()
+            Price_GayX_Loc = Price_GayX.convertToLocalCurrency()
+            Price_MixedX_Loc = Price_MixedX.convertToLocalCurrency()
+            
+            "What type of XXX magazines I want to sell?"
+            0:: SoloShootings_XXXmagazines > 50 ::"Solo Shootings XXXmagazines <SoloShootings_XXXmagazines> in stock"
+            1:: AmateurShootings_XXXmagazines > 50 ::"Amateur Shootings XXXmagazines <AmateurShootings_XXXmagazines> in stock"
+            2:: ThreesomeShootings_XXXmagazines > 50 ::"Threesome Shootings XXXmagazines <ThreesomeShootings_XXXmagazines> in stock"
+            3:: GangBangShootings_XXXmagazines > 50 ::"GangBang Shootings XXXmagazines <GangBangShootings_XXXmagazines> in stock"
+            4:: RevGangBangShootings_XXXmagazines > 50 ::"RevGangBang Shootings XXXmagazines <RevGangBangShootings_XXXmagazines> in stock"
+            5:: LesbianShootings_XXXmagazines > 50 ::"Lesbian Shootings XXXmagazines <LesbianShootings_XXXmagazines> in stock"
+            6:: GayShootings_XXXmagazines > 50 ::"Gay Shootings XXXmagazines <GayShootings_XXXmagazines> in stock"
+            7:: MixedShootings_XXXmagazines > 50 ::"Mixed Shootings XXXmagazines <MixedShootings_XXXmagazines> in stock"
+            99::"Go back"
+            
+            If 0
+        
+                MSSnum = Random(1,20)  // number of product
+                Price_soloX = MSSnum * Random(6,7)  // total price
+                Price_soloX_Loc = Price_soloX.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling Solo Shootings XXX magazines."
+                        
+                countPrice_soloX = SoloShootings_XXXmagazines - MSSnum
+                Player.setActorVar(rk_VB_SoloShootings_XXXmagazines_InStock, countPrice_soloX)
+
+                passTime(2,4)
+                energy -= Random(5,10)
+                money += Price_soloX
+                Player.modifyActorVar(rk_VB_SoloShootings_XXXmagazines_Sold, MSSnum)
+                        
+                "You were able to sell <MSSnum> solo Shootings XXX magazine(s) for a total in revenue: <Price_soloX_Loc>. <countPrice_soloX> remain in stock."
+            
+            ElseIf 1
+        
+                MSSnum = Random(1,20)  // number of product
+                Price_AmateurX = MSSnum * Random(6,7)  // total price
+                Price_AmateurX_Loc = Price_AmateurX.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling Amateur Shootings XXX magazines."
+                        
+                countAmateurX = AmateurShootings_XXXmagazines - MSSnum
+                Player.setActorVar(rk_VB_AmateurShootings_XXXmagazines_InStock, countAmateurX)
+
+                passTime(2,4)
+                energy -= Random(5,10)
+                money += Price_AmateurX
+                Player.modifyActorVar(rk_VB_AmateurShootings_XXXmagazines_Sold, MSSnum)
+                        
+                "You were able to sell <MSSnum> Amateur Shootings XXX magazine(s) for a total in revenue: <Price_AmateurX_Loc>. <countAmateurX> remain in stock."
+                
+            ElseIf 2
+        
+                MSSnum = Random(1,20)  // number of product
+                Price_ThreesomeX = MSSnum * Random(6,7)  // total price
+                Price_ThreesomeX_Loc = Price_ThreesomeX.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling Threesome Shootings XXX magazines."
+                        
+                countThreesomeX = ThreesomeShootings_XXXmagazines - MSSnum
+                Player.setActorVar(rk_VB_ThreesomeShootings_XXXmagazines_InStock, countThreesomeX)
+
+                passTime(2,4)
+                energy -= Random(5,10)
+                money += Price_ThreesomeX
+                Player.modifyActorVar(rk_VB_ThreesomeShootings_XXXmagazines_Sold, MSSnum)
+                        
+                "You were able to sell <MSSnum> Threesome Shootings XXX magazine(s) for a total in revenue: <Price_ThreesomeX_Loc>. <countThreesomeX> remain in stock."
+                
+            ElseIf 3
+        
+                MSSnum = Random(1,20)  // number of product
+                Price_GangBangX = MSSnum * Random(6,7)  // total price
+                Price_GangBangX_Loc = Price_GangBangX.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling GangBang Shootings XXX magazines."
+                        
+                countGangBangX = GangBangShootings_XXXmagazines - MSSnum
+                Player.setActorVar(rk_VB_GangBangShootings_XXXmagazines_InStock, countGangBangX)
+
+                passTime(2,4)
+                energy -= Random(5,10)
+                money += Price_GangBangX
+                Player.modifyActorVar(rk_VB_GangBangShootings_XXXmagazines_Sold, MSSnum)
+                        
+                "You were able to sell <MSSnum> GangBang Shootings XXX magazine(s) for a total in revenue: <Price_GangBangX_Loc>. <countGangBangX> remain in stock."
+                
+            ElseIf 4
+        
+                MSSnum = Random(1,20)  // number of product
+                Price_RevGangBangX = MSSnum * Random(6,7)  // total price
+                Price_RevGangBangX_Loc = Price_RevGangBangX.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling RevGangBang Shootings XXX magazines."
+                        
+                countRevGangBangX = RevGangBangShootings_XXXmagazines - MSSnum
+                Player.setActorVar(rk_VB_RevGangBangShootings_XXXmagazines_InStock, countRevGangBangX)
+
+                passTime(2,4)
+                energy -= Random(5,10)
+                money += Price_RevGangBangX
+                Player.modifyActorVar(rk_VB_RevGangBangShootings_XXXmagazines_Sold, MSSnum)
+                        
+                "You were able to sell <MSSnum> RevGangBang Shootings XXX magazine(s) for a total in revenue: <Price_RevGangBangX_Loc>. <countRevGangBangX> remain in stock."
+                
+            ElseIf 5
+        
+                MSSnum = Random(1,20)  // number of product
+                Price_LesbianX = MSSnum * Random(6,7)  // total price
+                Price_LesbianX_Loc = Price_LesbianX.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling Lesbian Shootings XXX magazines."
+                        
+                countLesbianX = LesbianShootings_XXXmagazines - MSSnum
+                Player.setActorVar(rk_VB_LesbianShootings_XXXmagazines_InStock, countLesbianX)
+
+                passTime(2,4)
+                energy -= Random(5,10)
+                money += Price_LesbianX
+                Player.modifyActorVar(rk_VB_LesbianShootings_XXXmagazines_Sold, MSSnum)
+                        
+                "You were able to sell <MSSnum> Lesbian Shootings XXX magazine(s) for a total in revenue: <Price_LesbianX_Loc>. <countLesbianX> remain in stock."
+                
+            ElseIf 6
+        
+                MSSnum = Random(1,20)  // number of product
+                Price_GayX = MSSnum * Random(6,7)  // total price
+                Price_GayX_Loc = Price_GayX.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling Gay Shootings XXX magazines."
+                countGayX = GayShootings_XXXmagazines - MSSnum
+                Player.setActorVar(rk_VB_GayShootings_XXXmagazines_InStock, countGayX)
+
+                passTime(2,4)
+                energy -= Random(5,10)
+                money += Price_GayX
+                Player.modifyActorVar(rk_VB_GayShootings_XXXmagazines_Sold, MSSnum)
+                        
+                "You were able to sell <MSSnum> Gay Shootings XXX magazine(s) for a total in revenue: <Price_GayX_Loc>. <countGayX> remain in stock."
+                
+            ElseIf 7
+        
+                MSSnum = Random(1,20)  // number of product
+                Price_MixedX = MSSnum * Random(6,7)  // total price
+                Price_MixedX_Loc = Price_MixedX.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling Mixed Shootings XXX magazines."
+                countMixedX = MixedShootings_XXXmagazines - MSSnum
+                Player.setActorVar(rk_VB_MixedShootings_XXXmagazines_InStock, countMixedX)
+
+                passTime(2,4)
+                energy -= Random(5,10)
+                money += Price_MixedX
+                Player.modifyActorVar(rk_VB_MixedShootings_XXXmagazines_Sold, MSSnum)
+                        
+                "You were able to sell <MSSnum> Mixed Shootings XXX magazine(s) for a total in revenue: <Price_MixedX_Loc>. <countMixedX> remain in stock."
+
+            Else
+            
+                stayInMenu = false
+
+            EndIf
+            
+        EndWhile
+        Endif
+SceneEnd()

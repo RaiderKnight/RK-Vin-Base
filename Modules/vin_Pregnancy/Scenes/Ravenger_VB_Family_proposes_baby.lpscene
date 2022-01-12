@@ -4,9 +4,10 @@ WHEN: 0 - 24
 WHO: Actor = getRelative(); If Actor.livesWithPlayer() && !Actor.isMale() && !Actor.isPregnant() && !Actor.isDating() && Random(40, 100) < Actor:rapportwithplayer && Actor:fertility > 0 && !Actor.hasRelationship(Spouses, Dating) && Actor.WantsBabies(true)
 OTHER: isModEnabled(vin_Incest) && !Player.isFemale() && Player:fertility > 0
 
-Actor6 = Actor.getRelatedPerson(Child)
-If !Actor6.isvalid()
-    SceneStart()
+SceneStart()
+    Actor6 = Actor.getRelatedPerson(Child)
+    If !Actor6.isvalid()
+    
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
@@ -34,7 +35,8 @@ If !Actor6.isvalid()
         Else
             Player:: "Sorry, but it would too weird ..."
         Endif
-    SceneEnd() // Improved by Raddeck
-    timeout(500, Ravenger_VB_Family_proposes_baby)
-Endif   
-timeoutActor(1000, Ravenger_VB_Family_proposes_baby, Actor)   
+    
+        timeout(500, Ravenger_VB_Family_proposes_baby)
+    Endif   
+    timeoutActor(1000, Ravenger_VB_Family_proposes_baby, Actor)
+SceneEnd() // Improved by Raddeck

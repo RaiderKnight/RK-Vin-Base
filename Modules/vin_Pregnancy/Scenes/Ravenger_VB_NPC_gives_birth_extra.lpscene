@@ -4,11 +4,12 @@ WHEN: 0 - 24
 WHO: Actor = getSpecific(Impregnated)
 OTHER: none
 
+SceneStart()
     Days = Actor.countPregnancyDays()
     
     If Days > 279
         If !Actor.isMale()
-            SceneStart()
+            
 
             Hunger = Player.getActorVar(rk_VB_Hunger)
             HungerEnable = rk_VB_EnableHunger.getGlobal()
@@ -121,10 +122,10 @@ OTHER: none
                     Endif
                 Endif
             Endif
-            SceneEnd()  // scene improved by Raddeck
+            
         Else
             Actor.setActorVar(tag_Pregnant, -1)
         Endif
         timeout(10, Ravenger_VB_NPC_gives_birth_extra) 
     Endif
- 
+SceneEnd()  // scene improved by Raddeck

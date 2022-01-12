@@ -4,162 +4,159 @@ WHEN: 0 - 24
 WHO: Actor = getSpecific(Impregnated)
 OTHER: none
 
-    Daddy = Actor.getSpecific(CurrentBabyDaddy)
-    Days = Actor.countPregnancyDays()
+    SceneStart()
+        Daddy = Actor.getSpecific(CurrentBabyDaddy)
+        Days = Actor.countPregnancyDays()
+        Know = Actor.getActorVar(tag_Pregnant)
+        If Days > 10 && Know < 1 && Player != Daddy && !Actor.isMale() && !Actor.isDating()
 
-    Know = Actor.getActorVar(tag_Pregnant)
-    If Days > 10 && Know < 1 && Player != Daddy && !Actor.isMale() && !Actor.isDating()
-        SceneStart()
+            Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+            UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+            
+            Actor.dress()
+            Actor.show(2)
+            "<Actor.name> is pregnant. She just announced the news on Facebook."
+            0:: "Good for her"
+            1:: "I always fantasize about sex with a pregnant woman"
 
-        Hunger = Player.getActorVar(rk_VB_Hunger)
-        HungerEnable = rk_VB_EnableHunger.getGlobal()
-        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
-        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        
-        Actor.dress()
-        Actor.show(2)
-        "<Actor.name> is pregnant. She just announced the news on Facebook."
-        0:: "Good for her"
-        1:: "I always fantasize about sex with a pregnant woman"
-
-        "I suspected as much: her belly clearly got bigger in recent months."
-        Actor.setActorVar(tag_Pregnant, 1)
-        If 1
-            perversion += Random(0,0.5)
-        Endif
-        SceneEnd()
-        timeoutActor(1600, NPC_discovers_pregnany_Extra, Actor)
-    Elseif Days > 10 && Know < 1 && Player != Daddy && !Actor.isMale() && Actor.isDating()
-        SceneStart()
-        setBackground(home)
-        Actor.dress()
-        Actor.show(2)
-        Actor(Sad):: "<Player.name>, we need to talk ..."
-        Player(Happy):: "Sure, what is it?"
-        Actor(Sad):: "<Player.name>, I'm pregnant ..."  
-        Actor.setActorVar(tag_Pregnant, 1)        
-        Player(Sad):: "How? How did this happen?"
-        Rape = Actor.getPregnancyTag()
-        If Rape.isString("Aggressive") && !OpenRelationship()
-            "Of course <Actor.name> confessed that it was the result of sexual assault on by <Daddy.name>."
-            0:: "Accept <Actor.name> & the baby all the same."
-            1:: "Revenge on her attacker."
-            2:: "Walk away"
-                    
-            If 0
-                "<Actor.name> may have raped but I wasn't heartless. Of course, I'll be happy to start a family with <Actor.name> and our unborn baby."
-                "Not the most romantic love story but maybe with time, both of us will forget that <Daddy.name> raped her & got her pregnant and we will actually turn out to be a healthy family."
-                Actor:attractiontoplayer += 10
-                Actor.setActorVar(tag_Mine, 1)
-                karma += 50
-                      
-            Elseif 1
-                Actor2 = Daddy.getRelatedPerson(Spouses, Dating)
-                "<Daddy.name> will pay for what they did to <Actor.name>."
-                0:: "Kill <Daddy.name>."
-                1:: "Send them to jail."
-                3:: [Actor2.isValid() && !Actor2.isMale()] :: "Fuck their <Actor2.boyfriend_or_girlfriend>"
-                    
+            "I suspected as much: her belly clearly got bigger in recent months."
+            Actor.setActorVar(tag_Pregnant, 1)
+            If 1
+                perversion += Random(0,0.5)
+            Endif
+        Elseif Days > 10 && Know < 1 && Player != Daddy && !Actor.isMale() && Actor.isDating()
+            
+            setBackground(home)
+            Actor.dress()
+            Actor.show(2)
+            Actor(Sad):: "<Player.name>, we need to talk ..."
+            Player(Happy):: "Sure, what is it?"
+            Actor(Sad):: "<Player.name>, I'm pregnant ..."  
+            Actor.setActorVar(tag_Pregnant, 1)        
+            Player(Sad):: "How? How did this happen?"
+            Rape = Actor.getPregnancyTag()
+            If Rape.isString("Aggressive") && !OpenRelationship()
+                "Of course <Actor.name> confessed that it was the result of sexual assault on by <Daddy.name>."
+                0:: "Accept <Actor.name> & the baby all the same."
+                1:: "Revenge on her attacker."
+                2:: "Walk away"
+                        
                 If 0
+                    "<Actor.name> may have raped but I wasn't heartless. Of course, I'll be happy to start a family with <Actor.name> and our unborn baby."
+                    "Not the most romantic love story but maybe with time, both of us will forget that <Daddy.name> raped her & got her pregnant and we will actually turn out to be a healthy family."
+                    Actor:attractiontoplayer += 10
+                    Actor.setActorVar(tag_Mine, 1)
+                    karma += 50
+                          
+                Elseif 1
+                    Actor2 = Daddy.getRelatedPerson(Spouses, Dating)
+                    "<Daddy.name> will pay for what they did to <Actor.name>."
+                    0:: "Kill <Daddy.name>."
+                    1:: "Send them to jail."
+                    3:: [Actor2.isValid() && !Actor2.isMale()] :: "Fuck their <Actor2.boyfriend_or_girlfriend>"
+                        
+                    If 0
+                        setBackground(home)
+                        Daddy.dress()
+                        blockContact(Daddy)
+                        Player(Angry):: "Open the fucking door!"
+                        Daddy.show(2)
+                        Player.animate(gun)
+                        Player.moveToPerson(Daddy)
+                        Player(Furious):: "You fucked my girlfriend and make her pregnant! Now die, <Daddy.scum_or_bitch>!"
+                        followUp(rk_VB_Murder_Arrest)
+                    Elseif 3 && !Actor2.isMale()
+                        "<Daddy.name> raped my girlfriend I will rape theirs."
+                        "-Some Time Later-"
+                        Actor2(Crying):: "No! Please stop ... I beg you ... Somebody help ..."
+                        "<Actor2.His_or_Her> cries for help went unheard and <Actor2.he_or_she> had no choice but endure it all."
+                        Filter(Aggressive)
+                        TalkNonConsensual()
+                        SexNoAffair(Player, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Actor2.impregnate(Player)
+                        karma -= 50
+                    Else
+                        "<Daddy.name> went to jail."
+                        Daddy.hide()
+                        Daddy.DeletePerson()
+                    Endif
+                    "<Actor.name> may have raped but I wasn't heartless. Of course, I'll be happy to start a family with <Actor.name> and our unborn baby."
+                    "Not the most romantic love story but maybe with time, both of us will forget that <Daddy.name> raped her & got her pregnant and we will actually turn out to be a healthy family."
+                    Actor:attractiontoplayer += 10
+                    Actor.setActorVar(tag_Mine, 1)
+                Else
+                    "Modder:The fuck kind of person leaves a person who was raped! You Heartless Bastard."
+                    karma -= 1000
+                    mood -= 1000
+                    energy -= 1000
+                    fertility -= 1000
+                    fitness -= 1000
+                Endif
+                    
+            Elseif Rape.isString("AggressiveFM") && !OpenRelationship()
+                "Of course <Actor.name> confessed that she sexual assaulted <Daddy.name> and as a result got pregnant."
+                0:: "Accept <Actor.name> & the baby all the same."
+                2:: "Walk away"
+                        
+                If 0
+                    "<Actor.name> may have raped <Daddy.name> but I wasn't heartless. Of course, I'll be happy to start a family with <Actor.name> and our unborn baby."
+                    "So what if she got pregnant and we will actually turn out to be a healthy family."
+                    Actor:attractiontoplayer += 10
+                    Actor.setActorVar(tag_Mine, 1)
+                    "Modder: You do realize that she raped someone right?"
+                          
+                Else
+                    "Modder: I don't blame you that bitch is crazy."
+
+                Endif          
+                    
+            Elseif OpenRelationship()
+                "Of course <Actor.name> confessed that <Daddy.name> is the <Daddy.father_or_donor>."
+                "This is sometimes the result of an open relationship."
+                
+            Else
+                "Of course <Actor.name> confessed that <Daddy.name> is the <Daddy.father_or_donor>."
+                0:: "Forgive <Actor.name> & accept the baby all the same."
+                1:: "Kill them all."
+                2:: "Walk away"
+                        
+                If 0
+                    "<Actor.name> may have raped <Daddy.name> but I wasn't heartless. Of course, I'll be happy to start a family with <Actor.name> and our unborn baby."
+                    "So what if she got pregnant and we will actually turn out to be a healthy family."
+                    Actor:attractiontoplayer += 10
+                    Actor.setActorVar(tag_Mine, 1)
+                    "Modder: You do realize that she raped someone right?"
+                    karma += 100
+                          
+                Elseif 1
+                    Actor.DeletePerson()
                     setBackground(home)
-                    Daddy.dress()
+                    blockContact(Actor)
                     blockContact(Daddy)
+                    Daddy.dress()
                     Player(Angry):: "Open the fucking door!"
                     Daddy.show(2)
                     Player.animate(gun)
                     Player.moveToPerson(Daddy)
-                    Player(Furious):: "You fucked my girlfriend and make her pregnant! Now die, <Daddy.scum_or_bitch>!"
+                    Player(Furious):: "You fucked my girlfriend and made her pregnant! Now die, <Daddy.scum_or_bitch>!"
                     followUp(rk_VB_Murder_Arrest)
-                Elseif 3 && !Actor2.isMale()
-                    "<Daddy.name> raped my girlfriend I will rape theirs."
-                    "-Some Time Later-"
-                    Actor2(Crying):: "No! Please stop ... I beg you ... Somebody help ..."
-                    "<Actor2.His_or_Her> cries for help went unheard and <Actor2.he_or_she> had no choice but endure it all."
-                    Filter(Aggressive)
-                    TalkNonConsensual()
-                    SexNoAffair(Player, Actor2)
-                    If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -2)
-                    EndIf
-                    Actor2.impregnate(Player)
-                    karma -= 50
                 Else
-                    "<Daddy.name> went to jail."
-                    Daddy.hide()
-                    Daddy.DeletePerson()
-                Endif
-                "<Actor.name> may have raped but I wasn't heartless. Of course, I'll be happy to start a family with <Actor.name> and our unborn baby."
-                "Not the most romantic love story but maybe with time, both of us will forget that <Daddy.name> raped her & got her pregnant and we will actually turn out to be a healthy family."
-                Actor:attractiontoplayer += 10
-                Actor.setActorVar(tag_Mine, 1)
-            Else
-                "Modder:The fuck kind of person leaves a person who was raped! You Heartless Bastard."
-                karma -= 1000
-                mood -= 1000
-                energy -= 1000
-                fertility -= 1000
-                fitness -= 1000
+                    Actor:attractiontoplayer -= 50
+                    Actor:rapportwithplayer -= 50
+                    blockContact(Actor)
+                    If Actor.isDating()
+                        loseDating()
+                        "Needless to say though, <Actor.name> & I broke up ..."
+                    Endif
+                Endif  
             Endif
-                
-        Elseif Rape.isString("AggressiveFM") && !OpenRelationship()
-            "Of course <Actor.name> confessed that she sexual assaulted <Daddy.name> and as a result got pregnant."
-            0:: "Accept <Actor.name> & the baby all the same."
-            2:: "Walk away"
-                    
-            If 0
-                "<Actor.name> may have raped <Daddy.name> but I wasn't heartless. Of course, I'll be happy to start a family with <Actor.name> and our unborn baby."
-                "So what if she got pregnant and we will actually turn out to be a healthy family."
-                Actor:attractiontoplayer += 10
-                Actor.setActorVar(tag_Mine, 1)
-                "Modder: You do realize that she raped someone right?"
-                      
-            Else
-                "Modder: I don't blame you that bitch is crazy."
-
-            Endif          
-                
-        Elseif OpenRelationship()
-            "Of course <Actor.name> confessed that <Daddy.name> is the <Daddy.father_or_donor>."
-            "This is sometimes the result of an open relationship."
-            
         Else
-            "Of course <Actor.name> confessed that <Daddy.name> is the <Daddy.father_or_donor>."
-            0:: "Forgive <Actor.name> & accept the baby all the same."
-            1:: "Kill them all."
-            2:: "Walk away"
-                    
-            If 0
-                "<Actor.name> may have raped <Daddy.name> but I wasn't heartless. Of course, I'll be happy to start a family with <Actor.name> and our unborn baby."
-                "So what if she got pregnant and we will actually turn out to be a healthy family."
-                Actor:attractiontoplayer += 10
-                Actor.setActorVar(tag_Mine, 1)
-                "Modder: You do realize that she raped someone right?"
-                karma += 100
-                      
-            Elseif 1
-                Actor.DeletePerson()
-                setBackground(home)
-                blockContact(Actor)
-                blockContact(Daddy)
-                Daddy.dress()
-                Player(Angry):: "Open the fucking door!"
-                Daddy.show(2)
-                Player.animate(gun)
-                Player.moveToPerson(Daddy)
-                Player(Furious):: "You fucked my girlfriend and made her pregnant! Now die, <Daddy.scum_or_bitch>!"
-                followUp(rk_VB_Murder_Arrest)
-            Else
-                Actor:attractiontoplayer -= 50
-                Actor:rapportwithplayer -= 50
-                blockContact(Actor)
-                If Actor.isDating()
-                    loseDating()
-                    "Needless to say though, <Actor.name> & I broke up ..."
-                Endif
-            Endif  
+            Actor.setActorVar(tag_Pregnant, -1)
         Endif
-        SceneEnd() // scene improved by Raddeck
-        timeoutActor(1600, Ravenger_VB_NPC_discovers_pregnany_Extra, Actor)
-    Else
-        Actor.setActorVar(tag_Pregnant, -1)
-    Endif
+    SceneEnd() // scene improved by Raddeck
+    timeoutActor(1600, Ravenger_VB_NPC_discovers_pregnany_Extra, Actor)

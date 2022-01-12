@@ -2,20 +2,18 @@ WHAT: all, -sleep, -sleep_hotel
 WHERE: all, -work
 WHEN: 12 - 4
 WHO: Breeder = getPerson(tag_Breeder);
-OTHER: !IsWithCompanion() && !Player.isFemale() 
-
-    If !Breeder.isValid()
-        Breeder = generatePersonTemporary()
-        While Breeder.isMale() || !Breeder.isInterestedIn(Player) || Breeder:age > 35
-            Breeder = generatePersonTemporary()
-        endWhile
-        Breeder.setWantsBabies()
-        Breeder:likes_vaginal += 100
-        Breeder.setActorVar(tag_Breeder, 1)
-    Endif
+OTHER: !IsWithCompanion() && !Player.isFemale()
     
     SceneStart()
-    
+        If !Breeder.isValid()
+            Breeder = generatePersonTemporary()
+            While Breeder.isMale() || !Breeder.isInterestedIn(Player) || Breeder:age > 35
+                Breeder = generatePersonTemporary()
+            endWhile
+            Breeder.setWantsBabies()
+            Breeder:likes_vaginal += 100
+            Breeder.setActorVar(tag_Breeder, 1)
+        Endif
         Hunger = Player.getActorVar(rk_VB_Hunger) // Edited by Raddeck
         HungerEnable = rk_VB_EnableHunger.getGlobal() // Edited by Raddeck
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal() // Edited by Raddeck

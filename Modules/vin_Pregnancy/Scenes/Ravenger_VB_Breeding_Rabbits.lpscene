@@ -4,10 +4,10 @@ WHEN: 0 - 20
 WHO: none
 OTHER: !IsWithCompanion() && !Player.isFemale()
 
+SceneStart()
     Breeder = getPerson(tag_Breeder)
     
     If Breeder.isValid() && Breeder.WantsBabies(true) && !Breeder.isMale() && Breeder.isOnPeriod() && !Breeder.isPregnant()
-        SceneStart()
     
             Hunger = Player.getActorVar(rk_VB_Hunger)
             HungerEnable = rk_VB_EnableHunger.getGlobal()
@@ -64,8 +64,8 @@ OTHER: !IsWithCompanion() && !Player.isFemale()
                 Breeder.setActorVar(tag_Breeder, -1)
                 "<Breeder.name> got Pregnant."
             Endif
-    
-        SceneEnd() // Improved by Raddeck
+
         timeoutActor(400, Ravenger_VB_Breeding_Rabbits, Breeder)
         timeout(200, Ravenger_VB_Breeding_Rabbits) 
     Endif
+SceneEnd() // Improved by Raddeck

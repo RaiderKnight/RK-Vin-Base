@@ -4,11 +4,10 @@ WHEN: 0 - 20
 WHO: Breeder = getPerson(true); if [Breeder.WantsBabies() || [Breeder:attractiontoplayer > 85 && Breeder:rapportwithplayer > 60 && Breeder.hadSex()]] && !Breeder.isMale() && Breeder.isOnPeriod() && !Breeder.isPregnant()
 OTHER: !IsWithCompanion() && !Player.isFemale()
 
+sceneStart()
     Actor2 = Breeder.getRelatedPerson(Spouses, Dating)
     If !Actor2.isvalid()
-    
-        sceneStart()
-    
+
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -65,5 +64,6 @@ OTHER: !IsWithCompanion() && !Player.isFemale()
         Endif
         timeoutActor(400, Ravenger_VB_Wants_Baby, Breeder)
         timeoutPrecise(200, Ravenger_VB_Wants_Baby) 
-        sceneEnd() // Improved by Raddeck
-    Endif   
+        
+    Endif
+sceneEnd() // Improved by Raddeck
