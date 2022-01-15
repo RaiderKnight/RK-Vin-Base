@@ -6,6 +6,7 @@ OTHER: none
 
 SceneStart()
 
+    personal_XXXmagazines = Player.getActorVar(rk_VB_personal_XXXmagazines_InStock)
     SoloShootings_XXXmagazines = Player.getActorVar(rk_VB_SoloShootings_XXXmagazines_InStock)
     AmateurShootings_XXXmagazines = Player.getActorVar(rk_VB_AmateurShootings_XXXmagazines_InStock)
     ThreesomeShootings_XXXmagazines = Player.getActorVar(rk_VB_ThreesomeShootings_XXXmagazines_InStock)
@@ -15,6 +16,7 @@ SceneStart()
     GayShootings_XXXmagazines = Player.getActorVar(rk_VB_GayShootings_XXXmagazines_InStock)
     MixedShootings_XXXmagazines = Player.getActorVar(rk_VB_MixedShootings_XXXmagazines_InStock)
     
+    Soldpersonal_XXXmagazines = Player.getActorVar(rk_VB_personal_XXXmagazines_Sold)
     SoldSoloShootings_XXXmagazines = Player.getActorVar(rk_VB_SoloShootings_XXXmagazines_Sold)
     SoldAmateurShootings_XXXmagazines = Player.getActorVar(rk_VB_AmateurShootings_XXXmagazines_Sold)
     SoldThreesomeShootings_XXXmagazines = Player.getActorVar(rk_VB_ThreesomeShootings_XXXmagazines_Sold)
@@ -58,6 +60,7 @@ SceneStart()
             5:: LesbianShootings_XXXmagazines > 50 ::"Lesbian Shootings XXXmagazines <LesbianShootings_XXXmagazines> in stock"
             6:: GayShootings_XXXmagazines > 50 ::"Gay Shootings XXXmagazines <GayShootings_XXXmagazines> in stock"
             7:: MixedShootings_XXXmagazines > 50 ::"Mixed Shootings XXXmagazines <MixedShootings_XXXmagazines> in stock"
+            8:: personal_XXXmagazines > 50 ::"Personnal pics XXXmagazines <personal_XXXmagazines> in stock"
             99::"Go back"
             
             If 0
@@ -201,6 +204,23 @@ SceneStart()
                 Player.modifyActorVar(rk_VB_MixedShootings_XXXmagazines_Sold, MSSnum)
                         
                 "You were able to sell <MSSnum> Mixed Shootings XXX magazine(s) for a total in revenue: <Price_MixedX_Loc>. <countMixedX> remain in stock."
+            
+            ElseIf 8
+        
+                MSSnum = Random(1,20)  // number of product
+                Price_MeX = MSSnum * Random(4,5)  // total price
+                Price_MeX_Loc = Price_MeX.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling Gay Shootings XXX magazines."
+                countMeX = personal_XXXmagazines - MSSnum
+                Player.setActorVar(rk_VB_personal_XXXmagazines_InStock, countMeX)
+
+                passTime(2,4)
+                energy -= Random(5,10)
+                money += Price_MeX
+                Player.modifyActorVar(rk_VB_personal_XXXmagazines_Sold, MSSnum)
+                        
+                "You were able to sell <MSSnum> magazine(s) of yourself for a total in revenue: <Price_MeX_Loc>. <countMeX> remain in stock."
 
             Else
             
@@ -209,5 +229,5 @@ SceneStart()
             EndIf
             
         EndWhile
-        Endif
+    Endif
 SceneEnd()

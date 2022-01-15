@@ -6,6 +6,7 @@ OTHER: none
 
 SceneStart()
 
+    personal_Calendars = Player.getActorVar(rk_VB_personal_Calendars_InStock)
     SoloShootings_Calendars = Player.getActorVar(rk_VB_SoloShootings_Calendars_InStock)
     AmateurShootings_Calendars = Player.getActorVar(rk_VB_AmateurShootings_Calendars_InStock)
     ThreesomeShootings_Calendars = Player.getActorVar(rk_VB_ThreesomeShootings_Calendars_InStock)
@@ -14,6 +15,7 @@ SceneStart()
     LesbianShootings_Calendars = Player.getActorVar(rk_VB_LesbianShootings_Calendars_InStock)
     GayShootings_Calendars = Player.getActorVar(rk_VB_GayShootings_Calendars_InStock)
     
+    Soldpersonal_Calendars = Player.getActorVar(rk_VB_personal_Calendars_Sold)
     SoldSoloShootings_Calendars = Player.getActorVar(rk_VB_SoloShootings_Calendars_Sold)
     SoldAmateurShootings_Calendars = Player.getActorVar(rk_VB_AmateurShootings_Calendars_Sold)
     SoldThreesomeShootings_Calendars = Player.getActorVar(rk_VB_ThreesomeShootings_Calendars_Sold)
@@ -53,6 +55,7 @@ SceneStart()
             4:: RevGangBangShootings_Calendars > 50 ::"RevGangBang Shootings calendars <RevGangBangShootings_Calendars> in stock"
             5:: LesbianShootings_Calendars > 50 ::"Lesbian Shootings calendars <LesbianShootings_Calendars> in stock"
             6:: GayShootings_Calendars > 50 ::"Gay Shootings calendars <GayShootings_Calendars> in stock"
+            7:: personal_Calendars > 50 ::"Personnal pics calendars <personal_Calendars> in stock"
             99::"Go back"
             
             If 0
@@ -173,7 +176,24 @@ SceneStart()
                 money += Price_GayC
                 Player.modifyActorVar(rk_VB_GayShootings_Calendars_Sold, MSSnum)
                 "You were able to sell <MSSnum> Gay Shootings calendar(s) for a total in revenue: <Price_GayC_Loc>. <countGayC> remain in stock."
-                
+            
+            ElseIf 7
+        
+                MSSnum = Random(1,20)  // number of product
+                Price_MeC = MSSnum * Random(4,5)  // total price
+                Price_MeC_Loc = Price_MeC.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling your calendars."
+                        
+                countMeC = personal_Calendars - MSSnum
+                Player.setActorVar(rk_VB_personal_Calendars_InStock, countMeC)
+
+                passTime(2,4)
+                energy -= Random(5,10)
+                money += Price_MeC
+                Player.modifyActorVar(rk_VB_personal_Calendars_Sold, MSSnum)
+                "You were able to sell <MSSnum> calendar(s) of yourself for a total in revenue: <Price_MeC_Loc>. <countMeC> remain in stock."
+            
             Else
             
                 stayInMenu = false
@@ -181,5 +201,5 @@ SceneStart()
             EndIf
             
         EndWhile
-        Endif
+    Endif
 SceneEnd()
