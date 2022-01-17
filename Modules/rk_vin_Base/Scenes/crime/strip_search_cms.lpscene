@@ -2,7 +2,7 @@ WHAT: all
 WHERE: all, -home, -prison, -work, -stripclub, -nightclub, -brothel, -police
 WHEN: 0 - 24
 WHO: none
-OTHER: Player.isFemale()
+OTHER:
 
 
     SceneStart()
@@ -12,13 +12,13 @@ OTHER: Player.isFemale()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         "I was going about my day when I was suddenly stopped by a female police officer."
         Actor = generatePersonTemporary()
-        While Actor.isMale()
+        While !Actor.isFemale()
             Actor = generatePersonTemporary()
         Endwhile
         Actor.dressUniform(Police)
         Actor.show()
         Actor(Curious):: "Excuse me, citizen, that shop owner over there accuses you of shoplifting. You'll have to follow me to the nearest police station for a strip search ..."
-        "What!? This is ridiculous! I haven't even been inside that damn shop!"
+        Player(Curious)::"What!? This is ridiculous! I haven't even been inside that damn shop!"
         0:: "Agree to the strip search"
         1:: "Scare her off with my legal rights"
         
@@ -28,11 +28,17 @@ OTHER: Player.isFemale()
             mood -= 2 // Edit by Raddeck
             setBackground(police)
             "Back in the police station, the police officer ask me to strip down..."
-            
             Player.strip() // Edit by Raddeck
             "The strip search began..."
-            Actor.moveToPersonStand(Player, 50) // Edit by Raddeck
-            "After a while..." // Edit by Raddeck
+            Actor.moveToPersonStand(Player, 50) // Start edit by Raddeck
+            If Player.isFemale()
+                Filter(Stripsearch)
+                SexNoAffair(Actor, Player)
+            Else
+                animatePair(Actor, Player, Stripsearch)
+            EndIf
+            Actor:arousal += random(0, 3)
+            "After a while..." // End edit by Raddeck
             "The police officer seems to be having a little too much fun touching all my private parts."
             "Should I say something?" // Edit by Raddeck
             0::"Just let her do her job!" // Edit by Raddeck
@@ -40,10 +46,15 @@ OTHER: Player.isFemale()
             
             If 0
                 Actor(Flirty)::"Now, I will search more deeper... spread your legs...!"
-                Filter(Stripsearch)
-                sex(Actor, Player)
+                If Player.isFemale()
+                    Filter(Stripsearch)
+                    SexNoAffair(Actor, Player)
+                Else
+                    animatePair(Actor, Player, Stripsearch)
+                EndIf
+                Actor:arousal += random(0, 3)
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
                 EndIf
                 "The police officer found nothing and I was free to go, but did the cop go too far there? The whole thing didn't seem entirely by the books."
                 PfuckMe = false
@@ -55,11 +66,14 @@ OTHER: Player.isFemale()
                     1::"No thanks..."
                     
                     If 0
+                        perversion += 1
                         "As soon, we undressed and we immediately started to caress each other..."
-                        Sex(Actor, Player)
+                        Actor.strip()
+                        SexNoAffair(Actor, Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
+                        Actor.dressUniform(Police)
                         "That was good sex..."
                         "Should I ask for her number?"
                         0:: "Yes"
@@ -87,21 +101,27 @@ OTHER: Player.isFemale()
             Else
                 
                 Actor(Flirty)::"Now, I will search more deeper... spread your legs and your arms...!"
-                Filter(Stripsearch)
-                sex(Actor, Player)
+                If Player.isFemale()
+                    Filter(Stripsearch)
+                    SexNoAffair(Actor, Player)
+                Else
+                    animatePair(Actor, Player, Stripsearch)
+                EndIf
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
                 EndIf
                 
                 Player(Curious)::"So, is it done?"
                 
                 If Actor:arousal > 15 && Actor:perversion > 70 && Actor:masochist <= 0 && 50 > random(0, 300)
                     Actor(Evil)::"You will shut up, I'm not done with you! I'm going to look deeper... so shut up if you don't want to go straight to jail!"
+                    Actor.strip()
                     Filter(Agressive)
                     SexNoAffair(Actor, Player)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -3)
                     EndIf
+                    Actor.dressUniform(Police)
                     "The police officer found nothing and I was free to go, but the cop go a little too far there? The whole thing didn't seem entirely by the books."
                 Else
                     Actor(Flirty)::"Yes, your good to go!"

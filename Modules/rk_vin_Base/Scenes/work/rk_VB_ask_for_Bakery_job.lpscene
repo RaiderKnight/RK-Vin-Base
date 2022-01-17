@@ -32,11 +32,11 @@ OTHER:
         SalaryOfferLoc = SalaryOffer.convertToLocalCurrency()
         BakerSalary = Player.getActorVar(rk_VB_BakerSalary)
         If GotBakeryJob == 0
-            "A sign caught my eye when I walked into the store,..."
-            "Help Wanted: seeking nice looking woman for bakery assistant, no experience necessary <SalaryOfferLoc>/day."
             If Player.isMale() || Player.isTrans()
                 followUp(rk_VB_ask_for_Bakery_job_MV)
             Else
+                "A sign caught my eye when I walked into the store,..."
+                "Help Wanted: seeking nice looking woman for bakery assistant, no experience necessary <SalaryOfferLoc>/day."
                 "Should I apply for this position?"
                 0:: !Player.isMale() ::"Yes"
                 1:: "No"

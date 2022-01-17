@@ -2,10 +2,10 @@ WHAT: all
 WHERE: all, -home, -work, -prison
 WHEN: 0-24
 WHO: none
-OTHER: !Player.isEthnic(asian) && martial > 50 && !isTimingOut(strt_asian_f)
+OTHER: martial > 50 && !isTimingOut(strt_asian_f)
 
     SceneStart()
-    
+        martialStage = Player.getActorVar(rk_VB_martialStage)
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Hunger = Player.getActorVar(rk_VB_Hunger)
@@ -17,14 +17,13 @@ OTHER: !Player.isEthnic(asian) && martial > 50 && !isTimingOut(strt_asian_f)
         
         If 0
             stage += 1
-            
-            If stage == 1
+            Player.modifyActorVar(rk_VB_martialStage, 1) // Edit Raddeck
+
+            If stage == 1 || martialStage == 1 // Edit Raddeck
                 "While starting to learn more about the technique, I soon recieve an anonymous and rather brutally racist letter telling you how you're seeking secrets that are 'not for your kind; and how the sender won't stand by and let an 'ancient and pure style be sullied by filth like you'."
-            Elseif stage < 6
+            Else
                 setBackground(street)
-    
                 setRaceGenerated(asian)
-                
                 Actor = generatePersonTemporary()
                 If Actor.isMale()
                     Actor.blendPreset(strt_asian_m)
@@ -42,18 +41,22 @@ OTHER: !Player.isEthnic(asian) && martial > 50 && !isTimingOut(strt_asian_f)
                 Actor2.dress()
                 Actor.show()
                 Actor2.show()
-                
-                "One day, I was just going about my business when I was ambushed by two Asian assailants"
+                Actor3 = getCompanion()
+                If Actor3.isValid()
+                    "One day, me and <Actor3.name> was just going about our business when we were ambushed by two Asian assailants"
+                Else
+                    "One day, I was just going about my business when I was ambushed by two Asian assailants"
+                Endif
                 Actor.animate(martialart)
                 Actor2.animate(martialart)
                 Player.animate(martialart)
                 "I had no choice but fight back."
-                If martial + fitness + muscle > Actor:martial*stage
+                If martial + fitness + muscle > Actor:martial*martialStage
                     Actor.hide()
                     Actor2.hide()
-                    If stage > 6
+                    If stage > 6 || martialStage >= 6 // Edit Raddeck
                         "I managed to defeat my assailants ..."
-    
+                        martial += 3 // Edit Raddeck
                         Actor4 = getPerson(tag_martialmaster)
                         
                         If !Actor4.isValid()
@@ -69,7 +72,7 @@ OTHER: !Player.isEthnic(asian) && martial > 50 && !isTimingOut(strt_asian_f)
                             Actor4.makePermanent()
                             Actor4.setActorVar(tag_martialmaster, 1)
                         Endif
-                        
+                        Player.modifyActorVar(rk_VB_martialStage, 1) // Edit Raddeck
                         "I manage to get an address from a note in the attacker's pocket."
                         Actor.show()
                         Actor2.show()
@@ -78,22 +81,30 @@ OTHER: !Player.isEthnic(asian) && martial > 50 && !isTimingOut(strt_asian_f)
                         "You go there and find that this has all been orchestrated by a master of the style, who is all too happy to insult you face to face before trying to beat your ass themselves."
                         Actor4.animate(martialart)
                         Player.animate(martialart)
+                        If Actor3.isValid()
+                            Player::"<Actor3.name>, I need to take care of this bastard. See you later!"
+                            Actor3(Sad)::"Ok bye, be careful..."
+                            endDate()
+                        EndIf
                         "The fight begins"
-                        If martial + fitness + muscle > Actor4:martial*stage
+                        If martial + fitness + muscle > Actor4:martial*martialStage
                             Actor4.animate(fightlost)
                             "I defeated the master!"
                             0:: "Be a gracious victor"
                             1:: isModEnabled(vin_NonConsensual):: "Get your revenge with sex"
                             
                             If 0
-                                If stage == 7
+                                If stage == 7 || martialStage == 7
                                     Actor4:: "It was just a fluke"
-                                Elseif stage == 8
+                                    Player.modifyActorVar(rk_VB_martialStage, 1) // Edit Raddeck
+                                Elseif stage == 8 || martialStage == 8
                                     "The master just frown and silently leaves the room."
+                                    Player.modifyActorVar(rk_VB_martialStage, 1) // Edit Raddeck
                                 Else
                                     "They finally admit they were wrong, that despite your race you're absolutely worthy of the style... and very attractive too..."
                                     0:: "Fuck <Actor4.him_or_her>"
-                                    1:: "Decline"
+                                    1:: "Exchange numbers with <Actor4.name>" // Edit Raddeck
+                                    99:: "Decline"
                                     
                                     If 0
                                         Sex(Player, Actor4)
@@ -102,9 +113,14 @@ OTHER: !Player.isEthnic(asian) && martial > 50 && !isTimingOut(strt_asian_f)
                                         EndIf
                                         "Afterwards, <Actor4.name> gave me <Actor4.his_or_her> number and asked me to come and 'practice' anytime."
                                         exchangeContact(Actor4)
+                                    Elseif 1
+                                        "Afterwards, <Actor4.name> gave me <Actor4.his_or_her> number and asked me to come and 'practice' anytime." // Edit Raddeck
+                                        exchangeContact(Actor4) // Edit Raddeck
                                     Endif
                                     Actor4.setActorVar(tag_martialmaster, 0)
                                     stage => 0
+                                    Player.setActorVar(rk_VB_martialStage, 0) // Edit Raddeck
+                                    asianmartial.setGlobal(stage)
                                 Endif
                             
                             Else
@@ -113,17 +129,25 @@ OTHER: !Player.isEthnic(asian) && martial > 50 && !isTimingOut(strt_asian_f)
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
+                                Actor4.setActorVar(tag_martialmaster, 0) // Edit Raddeck
+                                stage => 0 // Edit Raddeck
+                                Player.setActorVar(rk_VB_martialStage, 0) // Edit Raddeck
+                                asianmartial.setGlobal(stage)
                             Endif
                         Else
                             Player.animate(fightlost)
                             "Unfortunately, <Actor4.he_or_she> was too good for me ..."
                             "They threw me out ..."
                             stage -= 2
+                            Player.modifyActorVar(rk_VB_martialStage, -2) // Edit Raddeck
                         Endif
                     Else
+                        martial += 3 // Edit Raddeck
                         "I managed to defeat my assailants, who turned and ran away"
                         Actor3 = getCompanion()
                         If Actor3.isValid() && Actor3.isInterestedIn(Player) && Actor3.hadSex()
+                            Actor3(Flirty)::"Wow honey, you are so strong..." // Edit Raddeck
+                            Actor3:arousal += 2 // Edit Raddeck
                             "My victory has left my companion <Actor3.name> all horny. <Actor3.He_or_She> wants me to bang <Actor3.him_or_her> now!"
                             0:: "Claim my prize"
                             1:: "Decline"
@@ -139,7 +163,7 @@ OTHER: !Player.isEthnic(asian) && martial > 50 && !isTimingOut(strt_asian_f)
                 Else
                     Player.animate(fightlost)
                     "Unfortunately, they were too good for me ..."
-                    
+                    Player.modifyActorVar(rk_VB_martialStage, -1)
                     stage -= 1
                     
                     Actor3 = getCompanion()
@@ -157,6 +181,6 @@ OTHER: !Player.isEthnic(asian) && martial > 50 && !isTimingOut(strt_asian_f)
             timeoutPrecise(2000, asian_learn_martial_cms)    
         Endif
         
-        asianmartial.setGlobal(stage)
+        // asianmartial.setGlobal(stage)
     SceneEnd()
     timeout(200, asian_learn_martial_cms) // Improved by Raddeck
