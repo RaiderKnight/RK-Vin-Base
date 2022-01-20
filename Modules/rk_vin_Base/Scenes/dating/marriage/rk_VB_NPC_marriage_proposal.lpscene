@@ -5,6 +5,10 @@ WHO: Companion = getCompanion(); If CurrentCompanion.isDating() && CurrentCompan
 OTHER: !isPlayerMarried()
 
     SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         CEngaged = false
         NPCisEngaged = rk_VB_isEngaged.getGlobal()
         setBackground(restaurant)
@@ -22,7 +26,6 @@ OTHER: !isPlayerMarried()
             1:: "Reject <CurrentCompanion.him_or_her>"
                 
             If 0
-            
                 Player(Happy):: "Yes! Yes! Of course, I'll be your <Player.husband_or_wife>! I'd love nothing more than spending the rest of my life with you."
                 CEngaged = true
                 rk_VB_isEngaged.setGlobal(1)

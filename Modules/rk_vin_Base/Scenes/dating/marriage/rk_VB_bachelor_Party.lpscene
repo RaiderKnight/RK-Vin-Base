@@ -46,7 +46,7 @@ OTHER: none
                     Stripper.blendPreset(bodybuilder)
                 Else
                     Stripper.blendpreset(hourglass1_F)
-                Endif
+                EndIf
                 Stripper.randomizeFace()
                 Stripper.randomizeHairs()
                 
@@ -54,7 +54,7 @@ OTHER: none
                     Stripper2.blendPreset(bodybuilder)
                 Else
                     Stripper2.blendpreset(hourglass1_F)
-                Endif
+                EndIf
                 Stripper2.randomizeFace()
                 Stripper2.randomizeHairs()
                 
@@ -77,13 +77,13 @@ OTHER: none
                 Else
                     "No way, this is going way too far. I must remain faithful to my fiance and not give in to peer pressure. I can't risk our marriage just for a few minutes of wild fun."
                     "Having made my decision, I sent the strippers on their way. My friends were clearly disappointed and the whole thing was a bit of a killjoy for the rest of the party."
-                Endif
+                EndIf
                 Stripper.hide()
                 Stripper2.hide()
             Else
                 CurrentCompanion:attractiontoplayer += Random(0, 5)
                 "No, nothing good would come out of it. Let's just focus on making the proper preparations for the wedding."
-            Endif
+            EndIf
             
             Actor = getSpecific(ExDating)
             If Actor.isValid() && Actor.isContactExchanged() && Actor:masochist > 0 && Actor:rapportwithplayer > 0 && Actor:attractiontoplayer > 20
@@ -181,88 +181,60 @@ OTHER: none
                             
                             Elseif 4
                                 Kissed = true
-                            Endif
+                            EndIf
     
-                            If Kissed || [Actor.isInterestedIn(Player) && !hadSex && Actor:attractiontoplayer > Random(0, 200)]
+                            If Kissed || [!hadSex && Actor:attractiontoplayer > Random(30, 200)]
                                 AnimatePair(Player, Actor, Kissing)
                                 Player(Kiss):: "..."
                                 Actor(Kiss):: "..."
-                                If Dating
-                                    "We kissed. It started slow but soon became more passionate. It was obvious what we both wanted ..."
-                                Else
-                                    "We had a kiss, an awkward one at first, but soon moving towards a more passionate direction."
-                                Endif
+                                "We had a kiss, an awkward one at first, but soon moving towards a more passionate direction."
+                                karma -= 2
                                 "Should I let this escalate further?"
                                 0:: Vanilla:: "Make out"
                                 1:: "Stop"
                         
                                 If 0
                                 
-                                    If Actor.isDating() || [Actor.isInterestedIn(Player) && [Actor.IsDominantSex(Player) || Actor:attractiontoplayer + Actor:perversion > Random(50, 200) || Actor:intoxication > 80]]
+                                    If Actor.isDating() || [Actor.isInterestedIn(Player) && Actor.IsDominantSex(Player)] || Actor:intoxication > 75
                                     
                                         "Our kiss got more and more steamy and soon we were making out, our hands all over each other."
                                     
-                                        If TfGame() && Actor.isMale()
-                                            "I'm a man trapped inside a woman's body. I don't think I'm gay, but here I am, about to hook up with my male date."
-                                        Endif
-                                    
                                         hadSex = true
                                         Player:perversion += Random(0, 1)
+                                        karma -= 20
                                         Sex(Player, Actor)
-                                        Actor.show(2)
+                                        Actor.hide()
+                                        Player.show(0)
                                         "The sex was amazing. We put our clothes back on afterwards and continued our date."
                                         If HungerEnable > 0
                                             Player.modifyActorVar(rk_VB_Hunger, -2)
                                         EndIf
                                         Cheated = true
+                                        "Why did I do that? I let the old flame spark again ... I can only hope that my fiance will never find out about it."
                                         passTime(0.2, 0.5)
-                                    
                                     Else
-                                
                                         "Unfortunately for me, <Actor.name> didn't seem interested in letting things escalate any further and pulled away."
-                                    
-                                    Endif
-                                
+                                    EndIf
                                 Else
+                                    "I decided to stop it there and not go any further. This could have destroyed my future marriage."
+                                EndIf
                             
-                                    "I decided to stop it there and not go any further."
-                                
-                                Endif
-                            
-                            Elseif Random(0, 100) < 20
-                                If Dating
-                                    "After a while, we were both exhausted and went to bed together for the night."
-                                    passTime(4, 8)
-                                    energy += Random(50, 100)
-                                    "The next morning ..."
-                                    If MyHome
-                                        Actor(Happy):: "I've gotta go now, honey. Thanks for letting me stay the night. I can't wait to see you again soon!"
-                                    Else
-                                        Player(Happy):: "I've gotta go now, honey. Thanks for letting me stay the night. I can't wait to see you again soon!"
-                                    Endif
-                                    Actor:attractiontoplayer += Random(0, 1)
-                                Else
-                                    If MyHome
-                                        Actor(Happy):: "I've gotta go now. Thank you for inviting me in."
-                                        Player(Happy):: "Alright. Thank you for staying. Goodbye!"
-                                    Else
-                                        Actor(Happy):: "It has been a great day, but I'm getting quite tired now. Do you mind ..."
-                                        "Getting the message from <Actor.name>, I said goodbye."
-                                    Endif
-                                    "We parted ways."
-                                Endif
+                            Elseif Random(0, 100) < 15
+                                Actor:attractiontoplayer += Random(0, 1)
+                                Actor(Happy):: "I've gotta go now. Thank you for inviting me in."
+                                Actor(Happy):: "It has been a great day, but I'm getting quite tired now..."
+                                Player(Happy):: "Alright. Thank you for staying. Goodbye!"
+                                "We parted ways."
                                 choice = 5            
-                            Endif        
-                        Endif
+                            EndIf        
+                        EndIf
                     Endwhile
-            
-                Endif
+                EndIf
                 Actor.hide()
-            Endif
+            EndIf
             
             Affair = getSpecific(Affair)
             If intelligence < CurrentCompanion:intelligence*Random(0, 1) && [Cheated || Affair.isValid()]
-            
                 setBackground(home)
                 CurrentCompanion.show(2)
                 CurrentCompanion(Angry):: "<Player.name>, we need to talk!"
@@ -278,6 +250,35 @@ OTHER: none
                 rk_VB_isEngaged.setGlobal(0)
             Else
             
+                // If you're getting married, one of your regular Johns offers you a small fortune to be a wedding guest and then be the one to actually bang you on your wedding night instead of your newly-wed spouse. If the John is also interested in your spouse's gender, the offer involves them banging your spouse as well. You could reject the offer or try to convince your spouse that wedding night sex is only sentimental anyway and the money could go a long way to financial security for your life together.
+                SexCashOffer = Random(2000, 5000)
+                SexCashOffer_loc = SexCashOffer.convertToLocalCurrency()
+                John = getPerson(tag_john)
+                If John.isValid()
+                    secondScreen(John)
+                    John.dress()
+                    John.show()
+                    "Just a few days before the wedding, one of my regular customers as a sex worker, <John.name>, found out that I was getting married and called me."
+                    "<John.He_or_She> congratulated me, but made me an offer that <John.he_or_she> was confident I couldn't refuse."
+                    "<John.name> offers me a small fortune (<SexCashOffer_loc>) to be a wedding guest and then be the one to actually bang me on my wedding night instead of my newly-wed <CurrentCompanion.husband_or_wife> <CurrentCompanion.name> while <CurrentCompanion.name> watches."
+                    If John.isInterestedIn(CurrentCompanion)
+                        "In fact, once <John.he_or_she>'s done with me, <John.he_or_she> wants to fuck my new <CurrentCompanion.husband_or_wife> as well."
+                    EndIf
+                    secondScreen()
+                    "Should I try to convince <CurrentCompanion.name> to accept <John.name>'s offer?"
+                    0:: "Yes"
+                    1:: "No"
+                    
+                    If 0
+                        "I managed to convince <CurrentCompanion.name> that wedding night sex is only sentimental anyway and the money being offered could go a long way to financial security for our life together."
+                        JohnFucks = true
+                    Else
+                        "I rejected <John.name>'s offer on our behalf."
+                        JohnFucks = false
+                    EndIf
+                Else
+                    JohnFucks = false
+                EndIf
                 Player.show(0)
                 CurrentCompanion.show(1)
                 Player.dressUniform(Wedding)
@@ -295,12 +296,12 @@ OTHER: none
                 "We are so happy to be getting married... I will tell you that I can't wait for my honeymoon."
                 
                 If CurrentCompanion.isExRelative()
-                    If isQuestCompleted(legalized)
+                    If isQuestCompleted(legalized) && isModEnabled(vin_Incest) // Edited by Raddeck
                         "Thanks to the recent legalization of incest, we had no problem registering the marriage with the government and have a proper public wedding. Incest being legal doesn't stop some close-minded people from talking shit about us of course, but we couldn't care less about that."
                     Else
                         "Registering this marriage with the government is a no-goer - incest is illegal in this country so that would just send us straight to jail ... Still, we wanted to have a proper wedding, so we only only invited a few particularly open-minded family and friends, as well as guests who met us after we became a couple and had no idea we were related."
-                    Endif
-                Endif
+                    EndIf
+                EndIf
 
                 Master.show(3)
                 Master(Happy):: "Hi, welcome to my two newlyweds... Get in place, we are going to start the ceremony..."
@@ -313,44 +314,60 @@ OTHER: none
                     Master(Happy):: "You may now kiss your husband!"
                 Else
                     Master(Happy):: "You may now kiss your bride!"
-                Endif
+                EndIf
                 
                 Player(Kiss):: "..."
                 AnimatePair(Player, CurrentCompanion, Kissing)
                 CurrentCompanion(Kiss):: "..."
                 Player:arousal += 1
                 CurrentCompanion:arousal += 1
-
                 "And that's it - it's official, we're married! <CurrentCompanion.name> is now my dear <CurrentCompanion.husband_or_wife>."
                 "The rest of the wedding ceremony went without issues, although honestly, both of us couldn't wait for it to end and the guests to leave so that we can begin our intimate wedding night."
+                Master.hide()
+                "We went home to celebrate more officially..."
+                setBackground(home)
                 karma += 20
                 mood += 5
                 CurrentCompanion:rapportwithplayer += random(2, 5)
                 CurrentCompanion:attractiontoplayer += random(2, 5)
-                Master.hide()
-                setBackground(home)
-                
-                If CurrentCompanion.isDominantSex(Player)
-                    Player.matchLastName(CurrentCompanion)
+                If JohnFucks
+                    money += SexCashOffer
+                    "Of course, this is an entirely different way to consummate one's marriage, as we already agreed with my wealthy client <John.name>."
+                    John.show()
+                    "Having attended the wedding as a guest, <John.name> followed us to the wedding night suite ..."
+                    "And just like that, <John.name> fucked me while my newly-wed <CurrentCompanion.husband_or_wife> could do nothing but watch <CurrentCompanion.his_or_her> newly-wed <Player.husband_or_wife> do my duty as a prositute to a regular customer on our wedding night."
+                    Sex(John, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    If John.isInterestedIn(CurrentCompanion)
+                        "Of course, the arrangement didn't end there. And <John.name> proceeded to have sex with my newly-wed <CurrentCompanion.husband_or_wife> as well."
+                        "Everyone assumed that both partners have sex on their wedding night, but the assumption is that they have sex with each other. Our wedding night is certainly unique."
+                        Sex(John, CurrentCompanion)
+                    EndIf
                 Else
-                    CurrentCompanion.matchLastName(Player)
-                Endif
+                    If CurrentCompanion.isDominantSex(Player)
+                        Player.matchLastName(CurrentCompanion)
+                    Else
+                        CurrentCompanion.matchLastName(Player)
+                    EndIf
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -5)
+                    EndIf
+                    "Arriving at the house, it didn't take 5 minutes, that we had already started to undress to make love like sex starved."
+                    Player.strip()
+                    CurrentCompanion.strip()
+                    Sex(Player, CurrentCompanion)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    Player.dress()
+                    CurrentCompanion.dress()
+                    rk_VB_isEngaged.setGlobal(0)
+                    mood += 10
+                EndIf
                 CurrentCompanion.setActorVar(tag_Married, 1)
                 getMarried()
-                If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -5)
-                EndIf
-                "Arriving at the house, it didn't take 5 minutes, that we had already started to undress to make love like sex starved."
-                Player.strip()
-                CurrentCompanion.strip()
-                Sex(Player, CurrentCompanion)
-                If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -2)
-                EndIf
-                Player.dress()
-                CurrentCompanion.dress()
-                rk_VB_isEngaged.setGlobal(0)
-                mood += 10
                 If PlayerHasHome() && DatingHasHome()
                     CurrentCompanion.show(2)
                     Player.show(0)
@@ -375,11 +392,10 @@ OTHER: none
                         mood += 10
                         CurrentCompanion:attractiontoplayer += Random(2, 10)
                         CurrentCompanion:rapportwithplayer +=  Random(2, 5)
-                    Endif
+                    EndIf
                     timeout(500, move_in_with_dating) 
-                Endif
-            Endif
-            timeout(300, rk_VB_bachelor_Party)
-        Endif
+                EndIf
+            EndIf
+        EndIf
         endDate()
     SceneEnd() // Scene edited by Raddeck

@@ -5,20 +5,21 @@ WHO: none
 OTHER: none
 
     SceneStart()
-        
-        NPCisEngaged = rk_VB_isEngaged.getGlobal()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        NPCisEngaged = rk_VB_isEngaged.getGlobal()
         CurrentCompanion.show(2)
         CEngaged = false
         
-        If [!isPlayerMarried() && CurrentCompanion.isDating() && CurrentCompanion:attractiontoplayer > Random(65, 100)] || [Player.IsDominantSex(CurrentCompanion) || [interpersonal > Random(90, 100) && masochist < -70]]
+        If !isPlayerMarried() && CurrentCompanion.isDating() || [Player.IsDominantSex(CurrentCompanion) || [interpersonal > Random(90, 100) && masochist < -70]]
             "I think I'm in love with <CurrentCompanion.name>, and I know <CurrentCompanion.name> feels the same. However, have I ever imagined <CurrentCompanion.him_or_her> as my <CurrentCompanion.husband_or_wife>?"
             0:: "Yes"
             1:: "No"
             
             If 0
-                If CurrentCompanion.isExRelative() && isModEnabled(vin_Incest)
+                If CurrentCompanion.isExRelative() && isModEnabled(vin_Incest) // Edited by Raddeck
                     "Even though we're related and incest is both frowned upon and forbidden, I cannot help but see myself spending the rest of my days with <CurrentCompanion.him_or_her> as my life partner."            
                 Else
                     "I can definitely see myself spending the rest of my days with <CurrentCompanion.him_or_her> indeed."
@@ -30,12 +31,12 @@ OTHER: none
                 If 0
                     Player(Anxious):: "Baby, I have something really important to tell you ..."
                     CurrentCompanion(Curious):: "Of course, <Player.name>. What is it?"
-                    Player(Anxious):: "We'll go to the restaurant, here not far, I reserved the place, we'll be quiet... ..."
-                    CurrentCompanion(Curious):: "Ok let's go!... I find you strange, everything fine..."
-                    Player(Anxious):: "It's a surprised, you'll see..."
-                    CurrentCompanion.animate()
+                    Player(Anxious):: "We'll go to the restaurant, here not far, I reserved the place, we'll be quiet... ..." // Edited by Raddeck
+                    CurrentCompanion(Curious):: "Ok let's go!... I find you strange, everything fine..." // Edited by Raddeck
+                    Player(Anxious):: "It's a surprised, you'll see..." // Edited by Raddeck
+                    CurrentCompanion.animate() // Edited by Raddeck
                     setBackground(restaurant)
-                    "We have now arrived at the restaurant..."
+                    "We have now arrived at the restaurant..." // Edited by Raddeck
                     If interpersonal < 50
                         "Alright, this is the moment. <Player.name>, you can do this! Be brave. Keep calm ... Keep calm ... Don't screw this up!"
                     Endif
@@ -45,7 +46,7 @@ OTHER: none
                     Player(Happy):: "<CurrentCompanion.name>, will you marry me?"
                     CurrentCompanion(Surprised):: "<Player.name>! I ..."
                     
-                    If CurrentCompanion:attractiontoplayer > Random(75, 100)
+                    If CurrentCompanion:attractiontoplayer > 60
                         CurrentCompanion(Happy):: "Yes! Yes! Of course, I'll be your <CurrentCompanion.husband_or_wife>! I'd love nothing more than spending the rest of my life with you"
                         CEngaged = true
                         rk_VB_isEngaged.setGlobal(1)
@@ -66,7 +67,6 @@ OTHER: none
                         Endif // Edited by Ravenger6660
 
                     Else
-                    
                         If CurrentCompanion.isExRelative() && isModEnabled(vin_Incest) && !isQuestCompleted(legalized)
                             CurrentCompanion(Surprised):: "<Player.name> ... I love you too ... but I'm not sure a marriage will ever be possible. We're related after all ... and incest is illegal in this country."                    
                         Else
@@ -99,5 +99,5 @@ OTHER: none
             followUp(rk_VB_bachelor_Party)
         Endif
         timeout(1000, marriage_proposal)
-        //endDate()
+        endDate()
     SceneEnd() // Scene improved by Raddeck - Edited by Ravenger6660

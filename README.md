@@ -3,7 +3,7 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Version: 1.2.2</p>
+<p>Version: 1.2.3</p>
 <br>
 <br>
 <p><strong>Rework In Progress (WIP)</strong></p>
@@ -11,7 +11,7 @@
 <br>
 <p><strong>What else does this project bring more?</strong></p>
 <br>
-<p>- More than 1500 files have been edited.</p>
+<p>- Almost all files inside vin_ folders have been edited.</p>
 <p>- Menu better organized.</p>
 <p>- Contain 75% more content and 40% more items.</p>
 <p>- Universities have a purpose.</p>
