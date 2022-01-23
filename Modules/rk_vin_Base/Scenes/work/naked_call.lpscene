@@ -16,14 +16,14 @@ OTHER: none
             Actor.dress()
             secondScreen(Actor)
             Actor.show()
-            Actor:: "Welcome everyone to today's video conference call. Today's agenda includes ..."
-            Actor:: "What the fuck, <Player.name>? Why are you naked?"
+            Actor(Serene):: "Welcome everyone to today's video conference call. Today's agenda includes ..."
+            Actor(Shocked):: "What the fuck, <Player.name>? Why are you naked?"
             "Oh no! In my hurry to log into the conference call in time, I completely forgot to get dressed."
             
             If Actor:perversion > 50 || Actor.hadSex()
             
-                Actor:: "Well, since you're already nude, I think we might be able to fit some adult entertainment into the agenda."
-                Actor:: "Why don't you start playing with yourself? Spice this boring conference call up a bit"
+                Actor(Flirty):: "Well, since you're already nude, I think we might be able to fit some adult entertainment into the agenda."
+                Actor(Flirty):: "Why don't you start playing with yourself? Spice this boring conference call up a bit"
                 0:: "Masturbate for everyone to watch"
                 1:: "I'll just put on some clothes"
                 
@@ -40,20 +40,20 @@ OTHER: none
                 Else
                 
                     jobperformance -= 5
-                    
+                    mood -= 5
                 Endif
                 
             Else
             
-                Actor:: "This is the most unprofessional behaviour I've ever seen. Rest assured this will be reflected in your next performance review!"
+                Actor(Shocked):: "This is the most unprofessional behaviour I've ever seen. Rest assured this will be reflected in your next performance review!"
                 jobperformance -= 5
-                
+                mood -= 5
             Endif
             
         Else
         
             "The video conference call went according to plans. I have the technology to thank for being able to work from home so effectively." 
-            
+            mood += 5
         Endif
         
     SceneEnd() // Improved by Raddeck

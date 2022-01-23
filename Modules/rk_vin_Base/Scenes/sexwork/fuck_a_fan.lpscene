@@ -23,11 +23,28 @@ OTHER: Random(1, 100) < pornfame
             "The fan was polite enough so I was happy to take a selfie with <Actor.him_or_her>."
             Actor.moveToPersonStand(Player, 50)
             Actor.animate(browse)
+            "Do I grope <Actor.him_or_her> ass while <Actor.he_or_she>'s taking the picture?"
+            0:: "Yes"
+            1:: "No"
+            
+            If 0
+                perversion += 1
+                If Actor.isInterestedIn(Player)
+                    Actor:arousal += 5
+                    Actor:perversion += random(1, 10)
+                    "<Actor.name> didn't say a word but smiled at me. <Actor.He_or_She> definitely enjoyed my groping."
+                Else
+                    Actor:arousal -= 5
+                    Actor:perversion -= random(1, 10)
+                    "<Actor.name> didn't say a word but <Actor.he_or_she> definitely didn't enjoyed my groping."
+                EndIf
+            EndIf
+            
             "The fan snapped a selfie of us together."
             If Actor.isInterestedIn(Player) && Actor:interpersonal > 50 && Actor:perversion > 50
                 Actor:: "You have no idea how much I fantasize about being able to fuck you whenever I watch one of your videos."
                 Actor:: "Now that you're so close, I couldn't help but ask ..."
-                0:: "I don't escort"
+                0:: "I'm not an escort"
                 1:: "Name my price"
                 2:: "Only if it's filmed"
                 

@@ -655,7 +655,7 @@ OTHER: !IsWithCompanion() && Random(0, 250) < fitness*actionDuration
                                     Actor2(Pain):: "Ah!"
                                     Player(Angry):: "That right I kicked both of your asses."
                                     jobperformance += Random(5, 20)
-        
+                                
                                 Else
         
                                     Player.animate(fightlost)
@@ -674,8 +674,7 @@ OTHER: !IsWithCompanion() && Random(0, 250) < fitness*actionDuration
                                     Endif   
                                     
                                 Endif
-                                
-                                
+
                             Endif
                         
                         Endif
@@ -688,109 +687,153 @@ OTHER: !IsWithCompanion() && Random(0, 250) < fitness*actionDuration
                     SecondScreen()
                     Cop1.hide
                     "Looks like a robber trying to steal some stuff."
-                        "What should do?"
-                        0:: "Freeze!"
-                        1:: "Sneak Attack"
+                    "What should do?"
+                    0:: "Freeze!"
+                    1:: "Sneak Attack"
             
-                        If 0
-                            karma += 2.5
-                            "Freeze! Put your hands up!"
-                            Player.animate(gun)
-                            If Actor:fitness > 50        
-                                "The thief is making a run for it!"
-                                0:: "Shoot"
-                                1:: "Chase"
-                    
-                                If 0
-                                    "POW"
-                                    If firearms > 70
-                                        "Shot them in the leg."
-                                        "They would live to see jail time."
-                                        jobperformance += 10
-                                        Actor2.show(2)
-                                        "Another thief!"
-                                        0:: "Freeze!"
-                                        1:: "Shoot"
-                                        
-                                        If 1
-                                            "POW"
-                                            If firearms > 70
-                                                "Shot them in the leg."
-                                                "They would live to see jail time."
-                                                jobperformance += 10
-                                        
-                                            Else
-                                                Actor2.hide()
-                                                "Clean kill."
-                                                jobperformance += Random(0, 5)
-                                                Actor2.Delete()
-                                            Endif
-                                        
+                    If 0
+                        karma += 2.5
+                        "Freeze! Put your hands up!"
+                        Player.animate(gun)
+                        If Actor:fitness > 50        
+                            "The thief is making a run for it!"
+                            0:: "Shoot"
+                            1:: "Chase"
+                
+                            If 0
+                                "POW"
+                                If firearms > 70
+                                    "Shot them in the leg."
+                                    "They would live to see jail time."
+                                    jobperformance += 10
+                                    Actor2.show(2)
+                                    "Another thief!"
+                                    0:: "Freeze!"
+                                    1:: "Shoot"
+                                    
+                                    If 1
+                                        "POW"
+                                        If firearms > 70
+                                            "Shot them in the leg."
+                                            "They would live to see jail time."
+                                            jobperformance += 10
+                                    
                                         Else
-                                            "The thief gave up very quickly."
-                                            jobperformance += 30
-                                        
+                                            Actor2.hide()
+                                            "Clean kill."
+                                            jobperformance += Random(0, 5)
+                                            Actor2.Delete()
                                         Endif
+                                    
                                     Else
-                                        Actor.hide()
-                                        "Clean kill."
-                                        jobperformance += Random(0, 5)
-                                        Actor.Delete()
-                                        Actor2.show(2)
-                                        "Another thief!"
-                                        0:: "Freeze!"
-                                        1:: "Shoot"
-                                        
-                                        If 1
-                                            "POW"
-                                            If firearms > 70
-                                                "Shot them in the leg."
-                                                "They would live to see jail time."
-                                                jobperformance += 10
-                                        
-                                            Else
-                                                Actor2.hide()
-                                                "Clean kill."
-                                                jobperformance += Random(0, 5)
-                                                Actor2.Delete()
-                                            Endif
-                                        Else
-                                            "The thief gave up very quickly."
-                                            jobperformance += 30
-                                            
-                                        Endif   
+                                        "The thief gave up very quickly."
+                                        jobperformance += 30
+                                    
                                     Endif
-                    
                                 Else
-                                    "I give chase."
-                                    setBackground(street)
-                                    If fitness > Actor:fitness
-                                        "thief didn't get very far. Because I soon arrest them."
-                                        jobperformance += 20
-                                        If Guard
-                                            "There was a second robber but luckly <Cop1.name> caught <Actor2.him_or_her>."
+                                    Actor.hide()
+                                    "Clean kill."
+                                    jobperformance += Random(0, 5)
+                                    Actor.Delete()
+                                    Actor2.show(2)
+                                    "Another thief!"
+                                    0:: "Freeze!"
+                                    1:: "Shoot"
+                                    
+                                    If 1
+                                        "POW"
+                                        If firearms > 70
+                                            "Shot them in the leg."
+                                            "They would live to see jail time."
+                                            jobperformance += 10
+                                    
                                         Else
-                                            "Unfortunately there was a second robber that made off with more money."
-                                            jobperformance -= 5
+                                            Actor2.hide()
+                                            "Clean kill."
+                                            jobperformance += Random(0, 5)
+                                            Actor2.Delete()
                                         Endif
-                                        
                                     Else
-                                        Actor.hide()
-                                        "Shit, I lost them."
-                                        jobperformance -= Random(0, 5)
-                                        If Guard
-                                            "There was a second robber but luckly <Cop1.name> caught <Actor2.him_or_her>."
-                                        Else
-                                            "Unfortunately there was a second robber that made off with more money."
-                                            jobperformance -= 10
-                                        Endif   
-                                    Endif
-                    
+                                        "The thief gave up very quickly."
+                                        jobperformance += 30
+                                        
+                                    Endif   
                                 Endif
+                
                             Else
-                                "The thief gave up very quickly."
+                                "I give chase."
+                                setBackground(street)
+                                If fitness > Actor:fitness
+                                    "thief didn't get very far. Because I soon arrest them."
+                                    jobperformance += 20
+                                    If Guard
+                                        "There was a second robber but luckly <Cop1.name> caught <Actor2.him_or_her>."
+                                    Else
+                                        "Unfortunately there was a second robber that made off with more money."
+                                        jobperformance -= 5
+                                    Endif
+                                    
+                                Else
+                                    Actor.hide()
+                                    "Shit, I lost them."
+                                    jobperformance -= Random(0, 5)
+                                    If Guard
+                                        "There was a second robber but luckly <Cop1.name> caught <Actor2.him_or_her>."
+                                    Else
+                                        "Unfortunately there was a second robber that made off with more money."
+                                        jobperformance -= 10
+                                    Endif   
+                                Endif
+                
+                            Endif
+                        Else
+                            "The thief gave up very quickly."
+                            Actor2.show(3)
+                            "Uh-oh look like <Actor.he_or_she> was not alone."                      
+                            Player.animate(martialart)
+                            Player.moveToPersonStand(Actor2, 100)                                   
+                            Player(Furious):: "Take this!"
+                            Actor2.animate(martialart)
+                            faceEachOther(Actor2, Player)
+                            Actor2(Furious):: "You dare sucker-punch me? I'll teach you a lesson."
+                            "A fierce fight ensued ..."
+                            Player.animate()
+                            Actor2.animate()
+                            If martial > Actor2:martial
+                                Actor2.animate(fightlost)
+                                Actor2(Pain):: "Ah!"
+                                Player(Angry):: "That should teach you."
+                                jobperformance += Random(1, 10)
+    
+                            Else
+                                Player.animate(fightlost)
+                                Player(Pain):: "Ah!"
+                                Actor2(Evil):: "Ha! You really thought you could match me in a fight?" 
+                                If Guard
+                                    "POW"
+                                    Actor2.hide()
+                                    Cop1.show(2)
+                                    "<Cop1.name> shot <Actor2.him_or_her> in the back."
+                                Else    
+                                    money -= Random(30, 300)
+                                    jobperformance -= Random(5, 15)
+                                Endif   
+                            Endif
+                        Endif   
+                    
+                    Else
+                        "I decided to ambush them."
+                        SneakGame()
+                        Strike = sneak + martial
+                        If Strike > 100
+                            "I knock <Actor.him_or_her> out."
+                            Actor.hide()
+                            If Strike > 170
+                                "Look like the second thief don't even notice as I knock <Actor2.him_or_her> out too."
+                                jobperformance += 30
+                            Else
                                 Actor2.show(3)
-                                "Uh-oh look like <Actor.he_or_she> was not alone."                      
+                                "Uh-oh look like <Actor.he_or_she> was not alone."
                                 Player.animate(martialart)
                                 Player.moveToPersonStand(Actor2, 100)                                   
                                 Player(Furious):: "Take this!"
@@ -804,8 +847,8 @@ OTHER: !IsWithCompanion() && Random(0, 250) < fitness*actionDuration
                                     Actor2.animate(fightlost)
                                     Actor2(Pain):: "Ah!"
                                     Player(Angry):: "That should teach you."
-                                    jobperformance += Random(1, 10)
-        
+                                    jobperformance += Random(5, 15)
+    
                                 Else
                                     Player.animate(fightlost)
                                     Player(Pain):: "Ah!"
@@ -820,100 +863,56 @@ OTHER: !IsWithCompanion() && Random(0, 250) < fitness*actionDuration
                                         jobperformance -= Random(5, 15)
                                     Endif   
                                 Endif
-                            Endif   
-                        
-                        Else
-                            "I decided to ambush them."
-                            SneakGame()
-                            Strike = sneak + martial
-                            If Strike > 100
-                                "I knock <Actor.him_or_her> out."
-                                Actor.hide()
-                                If Strike > 170
-                                    "Look like the second thief don't even notice as I knock <Actor2.him_or_her> out too."
-                                    jobperformance += 30
-                                Else
-                                    Actor2.show(3)
-                                    "Uh-oh look like <Actor.he_or_she> was not alone."
-                                    Player.animate(martialart)
-                                    Player.moveToPersonStand(Actor2, 100)                                   
-                                    Player(Furious):: "Take this!"
-                                    Actor2.animate(martialart)
-                                    faceEachOther(Actor2, Player)
-                                    Actor2(Furious):: "You dare sucker-punch me? I'll teach you a lesson."
-                                    "A fierce fight ensued ..."
-                                    Player.animate()
-                                    Actor2.animate()
-                                    If martial > Actor2:martial
-                                        Actor2.animate(fightlost)
-                                        Actor2(Pain):: "Ah!"
-                                        Player(Angry):: "That should teach you."
-                                        jobperformance += Random(5, 15)
-        
-                                    Else
-                                        Player.animate(fightlost)
-                                        Player(Pain):: "Ah!"
-                                        Actor2(Evil):: "Ha! You really thought you could match me in a fight?" 
-                                        If Guard
-                                            "POW"
-                                            Actor2.hide()
-                                            Cop1.show(2)
-                                            "<Cop1.name> shot <Actor2.him_or_her> in the back."
-                                        Else    
-                                            money -= Random(30, 300)
-                                            jobperformance -= Random(5, 15)
-                                        Endif   
-                                    Endif
-                                Endif
-                            
-                            Else
-                                "Chap they heard me!"
-                                Actor2.show(3)
-                                "Uh-oh look like <Actor.he_or_she> was not alone."
-                                Player.animate(martialart)
-                                Player.moveToPersonStand(Actor, 100)
-                                Actor2.moveToPersonStand(Actor, 100)                                    
-                                Player(Furious):: "Take this!"
-                                faceEachOther(Actor, Player)
-                                Actor.animate(martialart)
-                                Actor2.animate(martialart)
-                                faceEachOther(Actor2, Player)
-                                Actor(Furious):: "You dare sucker-punch me? I'll teach you a lesson."
-                                "A fierce fight ensued ..."
-                                Player.animate()
-                                Actor.animate()
-                                Actor2.animate()
-                                If martial > [Actor:martial + Actor2:martial]
-                                    Actor.animate(fightlost)
-                                    Actor(Pain):: "Ah!"
-                                    Actor2.animate(fightlost)
-                                    Actor2(Pain):: "Ah!"
-                                    Player(Angry):: "That right I kicked both of your asses."
-                                    jobperformance += Random(5, 20)
-        
-                                Else
-        
-                                    Player.animate(fightlost)
-                                    Player(Pain):: "Ah!"
-                                    Actor2(Evil):: "Ha! You really thought you could match us in a fight?"
-                                    If Guard
-                                        "POW"
-                                        Actor.hide()
-                                        "POW"
-                                        Actor2.hide()
-                                        Cop1.show(2)
-                                        "<Cop1.name> shot them both in the back."
-                                    Else    
-                                        money -= Random(30, 300)
-                                        jobperformance -= Random(5, 15)
-                                    Endif   
-                                    
-                                Endif
-                                
                             Endif
                         
+                        Else
+                            "Chap they heard me!"
+                            Actor2.show(3)
+                            "Uh-oh look like <Actor.he_or_she> was not alone."
+                            Player.animate(martialart)
+                            Player.moveToPersonStand(Actor, 100)
+                            Actor2.moveToPersonStand(Actor, 100)                                    
+                            Player(Furious):: "Take this!"
+                            faceEachOther(Actor, Player)
+                            Actor.animate(martialart)
+                            Actor2.animate(martialart)
+                            faceEachOther(Actor2, Player)
+                            Actor(Furious):: "You dare sucker-punch me? I'll teach you a lesson."
+                            "A fierce fight ensued ..."
+                            Player.animate()
+                            Actor.animate()
+                            Actor2.animate()
+                            If martial > [Actor:martial + Actor2:martial]
+                                Actor.animate(fightlost)
+                                Actor(Pain):: "Ah!"
+                                Actor2.animate(fightlost)
+                                Actor2(Pain):: "Ah!"
+                                Player(Angry):: "That right I kicked both of your asses."
+                                jobperformance += Random(5, 20)
+    
+                            Else
+    
+                                Player.animate(fightlost)
+                                Player(Pain):: "Ah!"
+                                Actor2(Evil):: "Ha! You really thought you could match us in a fight?"
+                                If Guard
+                                    "POW"
+                                    Actor.hide()
+                                    "POW"
+                                    Actor2.hide()
+                                    Cop1.show(2)
+                                    "<Cop1.name> shot them both in the back."
+                                Else    
+                                    money -= Random(30, 300)
+                                    jobperformance -= Random(5, 15)
+                                Endif   
+                                
+                            Endif
+                            
                         Endif
-                        
+                    
+                    Endif
+
                 Else
                     "Nothing to see."
                     "However, turn out it was robbers managed to steal a bunch of stuff."

@@ -8,6 +8,8 @@ OTHER: IsAtHome() && arousal > 50 && perversion > 30
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         
         "I'm so horny, damn it! Maybe I should just get a hooker and get my needs taken care of?"
         0:: "Yes"
@@ -51,7 +53,7 @@ OTHER: IsAtHome() && arousal > 50 && perversion > 30
                 perversion += Random(0, 0.5)
                 money -= Random(100, 300)
                 Actor.show(2)
-                
+                AmNotVirgin => 1
                 Actor2 = getCreature()
                 If WHERE == home && isModEnabled(vin_Bestiality) && Actor2.isValid() && Actor2.isCreatureType(Dog)      
                     Actor2.show()
@@ -121,7 +123,7 @@ OTHER: IsAtHome() && arousal > 50 && perversion > 30
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -3)
                     EndIf
-                    
+                    AmNotVirgin => 1
                     perversion += Random(0, 1)
                     money -= Random(200, 600)
                     Actor.show(2)
@@ -163,6 +165,7 @@ OTHER: IsAtHome() && arousal > 50 && perversion > 30
                         Actor2.show(3)
                         Actor3.show(4)
                         "I paid the hookers and we parted ways. Good service that was!"
+                        AmNotVirgin => 1
                     Elseif 2
                         Actor4 = generatePersonTemporary()
                         While !Player.isInterestedIn(Actor4)
@@ -187,7 +190,7 @@ OTHER: IsAtHome() && arousal > 50 && perversion > 30
                             Else            
                                 "In no time at all, the four prostitutes arrived and we got it on immediately."
                             Endif
-                            
+                            AmNotVirgin => 1
                             Sex(Player, Actor, Actor2, Actor3, Actor4)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -5)

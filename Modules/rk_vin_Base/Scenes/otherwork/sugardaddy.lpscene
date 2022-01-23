@@ -5,7 +5,10 @@ WHO: none
 OTHER: none
     
     SceneStart()
-    
+        If isWithCompanion() && CurrentCompanion.isValid()
+            Player::"<CurrentCompanion.Name>, I need to take care of something. See you later!"
+            endDate()
+        EndIf
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         SugarBabe = SugarBabe.getGlobal()
@@ -17,7 +20,7 @@ OTHER: none
             Actor.dress()
             Actor.show(2)
             "What should I ask to my sugarbabe?"
-            0:: "Ask to hangout tonight"
+            0:: money > 20000 :: "Ask to hangout tonight"
             1:: "No"
             2:: "End arrangement"
             

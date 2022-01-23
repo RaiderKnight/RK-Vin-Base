@@ -5,16 +5,17 @@ WHO: none
 OTHER: Random(0, 200) < perversion && arousal > 10
 
     SceneStart()
-
+        Dating = getSpecific(Dating)
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         Wetdream = false
         goforelf = false // Edit Raddeck
         gofororc = false // Edit Raddeck
         goforvamp = false // Edit Raddeck
-        "Sometimes I cannot help but fantasize about having sex with ..."
-        0:: "Someone"
-        1:: "Think of something else"
+        "Sometimes I cannot help but fantasize about ..."
+        0:: "Having sex with someone"
+        10:: isModEnabled(vin_NTR) ::"My Dating fucking with another <Player.man_or_woman> of a different race"
+        99:: "Think of something else"
         
         If 0
             blockPregnancy()
@@ -233,6 +234,8 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                     Endif
                 Endif
             Endif
+        ElseIf 10
+            followUp(cuckold_ir)
         Endif
         
     SceneEnd() // Improved by Raddeck

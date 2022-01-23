@@ -2,7 +2,7 @@ WHAT: all, -sleep_hotel, -nap_hotel, -go_to_the_bathroom, -pickpocket, -sleep, -
 WHERE: all, -home, -fraternity, -bathroom, -prison
 WHEN: 0 - 24
 WHO: none
-OTHER: Player.isNaked() && !Player.isAsexual()
+OTHER: Player.isNaked()
 
     SceneStart()
     
@@ -15,7 +15,7 @@ OTHER: Player.isNaked() && !Player.isAsexual()
         Actor:perversion => Random(50, 100)
         
         // Start edit DBCaf
-        If Player.isNaked() && !isWithCompanion() && Random(10, 50) > karma && WHERE !=home && WHERE !=work && WHERE !=hotel && WHERE !=university:school && WHERE !=university:work 
+        If Player.isNaked() && !isWithCompanion() && WHERE !=home && WHERE !=work && WHERE !=hotel && WHERE !=university:school && WHERE !=university:work 
 
             Actor = generatePersonTemporary()
             While !Actor.isInterestedIn(Player)
@@ -74,7 +74,7 @@ OTHER: Player.isNaked() && !Player.isAsexual()
                     TalkNonConsensual()
                     SexNoAffair(Actor2, Player)
                     If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                        Player.modifyActorVar(rk_VB_Hunger, -4)
                     EndIf
             
                     If Random(50, 120) > masochist
@@ -114,7 +114,7 @@ OTHER: Player.isNaked() && !Player.isAsexual()
                     TalkNonConsensual()
                     SexNoAffair(Actor2, Player)
                     If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                        Player.modifyActorVar(rk_VB_Hunger, -4)
                     EndIf
                     If Random(50, 120) > masochist
                         mood -= Random(20, 40)
@@ -137,7 +137,7 @@ OTHER: Player.isNaked() && !Player.isAsexual()
                 TalkNonConsensual()
                 SexNoAffair(Actor2, Player)
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                    Player.modifyActorVar(rk_VB_Hunger, -4)
                 EndIf
                 If Random(50, 120) > masochist
                     mood -= Random(20, 40)
@@ -157,7 +157,7 @@ OTHER: Player.isNaked() && !Player.isAsexual()
             
                 Sex(Actor, Player)
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
                 Actor:attractiontoplayer += Random(0, 5)
                 

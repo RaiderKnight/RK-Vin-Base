@@ -8,6 +8,8 @@ OTHER: !IsWithCompanion() && Random(0, 100) < fitness
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Friend.dress()
     
         "My phone rang ... It's my <Friend.relationship>, <Friend.name>, calling."
@@ -34,9 +36,7 @@ OTHER: !IsWithCompanion() && Random(0, 100) < fitness
             energy -= Random(0, 25)
             mood += Random(0, 10)
             If HungerEnable > 0
-        
-                 Player.modifyActorVar(rk_VB_Hunger, -5)
-            
+                Player.modifyActorVar(rk_VB_Hunger, -5)
             EndIf
             
         Else

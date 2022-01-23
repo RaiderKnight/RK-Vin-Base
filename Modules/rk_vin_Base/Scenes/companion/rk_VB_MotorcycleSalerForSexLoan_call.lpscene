@@ -6,6 +6,11 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+    
         MotorcycleDealer_ID = rk_VB_MotorcycleDealer_ID.getGlobal()
         stock_VULCAN = Player.getActorVar(stock_VULCAN)
         stock_Ruckus = Player.getActorVar(stock_Ruckus)
@@ -106,7 +111,9 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
                 "I immediately understood that I had to undress too! At least if I want my motorcycle, I have to sacrifice myself ..."
                 Player.strip()
                 sex(MotorcycleDealer, Player)
-                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
                 If MotorcycleSelectedIs == 1
                     Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -1)
                     MotorcycleSexLoanValue1 = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
@@ -126,7 +133,6 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
                 timeout(12, rk_VB_MotorcycleSalerForSexLoan_call)
                 
             Endif
-            
         Endif   
         timeout(36, rk_VB_MotorcycleSalerForSexLoan_call)
 

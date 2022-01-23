@@ -5,6 +5,11 @@ WHO: none
 OTHER: !IsWithCompanion() && !isWithCompanionCreature()
 
     SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
 
         CarDealer_ID = rk_VB_CarDealer_ID.getGlobal()
         stock_Tesla = Player.getActorVar(stock_Tesla)
@@ -100,6 +105,9 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
                 "I immediately understood that I had to undress too! At least if I want my car, I have to sacrifice myself ..."
                 Player.strip()
                 sex(CarDealer, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
                 
                 If CarSelectedIs == 1
                     Player.modifyActorVar(rk_VB_CarSexLoanValue, -1)
@@ -120,7 +128,6 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature()
                 timeout(12, rk_VB_CarSalerForSexLoan_call)
                 
             Endif
-            
         Endif   
         timeout(36, rk_VB_CarSalerForSexLoan_call)
 

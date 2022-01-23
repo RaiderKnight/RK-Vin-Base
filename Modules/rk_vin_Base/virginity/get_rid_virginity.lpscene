@@ -10,13 +10,25 @@ OTHER: none
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         
-        If isWithCompanion()
-    
-            SceneStart()
+        If isWithCompanion() && CurrentCompanion.isValid()
             
-                "Uh! let's make a scene for that!"
-            
-            SceneEnd()
+            "I'm still a virgin ..."
+            0:: "And I'm proud of it!"
+            1:: "Ask companion to help you out!"
+        
+            If 0
+                "And it's completely by choice. I will continue to save myself for someone very special."
+                AmNotVirgin => 0
+            Else
+                CurrentCompanion.dress()
+                CurrentCompanion.show()
+                "Needless to say, the opportunity to get deflowered by <CurrentCompanion.name> is about to happen..."
+                Sex(Player, CurrentCompanion)
+                AmNotVirgin => 1
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            EndIf
     
         EndIf
         
@@ -29,7 +41,7 @@ OTHER: none
             If 0
             
                 "And it's completely by choice. I will continue to save myself for someone special."
-    
+                AmNotVirgin => 0
             Else
             
                 "To be honest, I just can't wait to get over this stupid hurdle, get rid of my virginity and live my life as confidently as the rest of my peers. But who would be a good candidate to be my first?"
@@ -50,7 +62,7 @@ OTHER: none
                         Sex(Player, Actor)
                         AmNotVirgin => 1
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         
                     Else
@@ -81,7 +93,7 @@ OTHER: none
                         Sex(Player, Actor)
                         AmNotVirgin => 1
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         
                     Endif

@@ -17,7 +17,7 @@ OTHER: Random(0, 100) < attractiveness && !Player.isProstitute() && !isWithCompa
         WeGoFucked = false
         "I was going about my business when suddenly a <Actor.man_or_woman> approached me ..."
         Actor(Flirty):: "How much?"
-        "<Actor.name> must have mistaken me for a prostitute ... or maybe this <Actor.man_or_woman> just goes around offering pretty <Player.guys_or_girls> money to sleep with <Actor.him_or_her>."
+        "This <Actor.man_or_woman> must have mistaken me for a prostitute ... or maybe this <Actor.man_or_woman> just goes around offering pretty <Player.guys_or_girls> money to sleep with <Actor.him_or_her>."
         0:: "Not for sale"
         1:: "Negotiate a price"
         2:: "I'll do it for free"
@@ -36,7 +36,7 @@ OTHER: Random(0, 100) < attractiveness && !Player.isProstitute() && !isWithCompa
             
             If 0
                 WeGoFucked = true
-                money += Random(200, 400)
+                money += Givemoney
                 perversion += 1
             Else
                 Player(Sad)::"Maybe next time, your offer is too low..."
@@ -58,6 +58,8 @@ OTHER: Random(0, 100) < attractiveness && !Player.isProstitute() && !isWithCompa
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
+            Player.dress()
+            Actor.dress()
         Endif
         Actor.hide()
     SceneEnd()

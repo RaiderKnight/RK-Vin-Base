@@ -1,11 +1,14 @@
-WHAT: all, -sleep, -nap, -sleep_hotel, -nap_hotel
-WHERE: all
+WHAT: none
+WHERE: none
 WHEN: 16 - 22
 WHO: none
-OTHER: !isWithCompanion() && [jobexperience > 60 || money > 20000] && age > 30
+OTHER: none
     
     SceneStart()
-    
+        If isWithCompanion() && CurrentCompanion.isValid()
+            Player::"<CurrentCompanion.Name>, I need to take care of something. See you later!"
+            endDate()
+        EndIf
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         SugarParent = SugarParent.getGlobal()
@@ -35,11 +38,11 @@ OTHER: !isWithCompanion() && [jobexperience > 60 || money > 20000] && age > 30
                 setBackground(home)
                 Sex(Player, Actor)
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
                 Actor.show(2)
                 "With the deed done, we spent the night together and <Actor.name> give me a big fat envelope, as usual."
-                money -= Random(100, 300)
+                money += Random(100, 300)
                 perversion += Random(0, 0.25)
                 moood += 2
                 

@@ -15,6 +15,9 @@ OTHER: none
         houseviewing = rk_VB_houseviewing.getGlobal()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        
         "I was looking for a new place to live, I discovered a nice place that might just fit my budget. The rent per month being advertised, including utility bills, is around <RentConverted>. However, I reckon I can try to negotiate that down."
         
         If Rent > money 
@@ -52,6 +55,10 @@ OTHER: none
             ActorAskForIt2 = false
             ActorAskForIt3 = 0
             ActorAskForIt4 = 0
+            GetADeals1 = 0
+            GetADeals2 = 0
+            GetADeals3 = 0
+            GetADeals4 = 0
             If money < Price
                 "I don't have enough money to afford a house, so I'll have to rent an apartment... hopefully I'll find something decent, if this one doesn't suit me."
             Endif
@@ -67,7 +74,7 @@ OTHER: none
                 5:: !Bought && money > Price:: "Offer to buy"
                 
                 If 0
-                
+                    
                     Player(Happy):: "Actually, I think I can afford to rent this apartment outright."
                     Landlord.animate(socialize)
                     Player.animate(write)
@@ -95,8 +102,13 @@ OTHER: none
                     "It was too expensive at this current rent so I had no choice but to look elsewhere. I thanked the landlord for <Landlord.his_or_her> time and left."
                     
                 Elseif 5
-                
-                    PriceConverted = Price.convertToLocalCurrency(true)
+                    TotalDeals = GetADeals1 + GetADeals2 + GetADeals3 + GetADeals4
+                    If TotalDeals > 0
+                        Price = Price - TotalDeals
+                        PriceConverted = Price.convertToLocalCurrency(true)
+                    Else
+                        PriceConverted = Price.convertToLocalCurrency(true)
+                    EndIf
                     Landlord.animate(socialize)
                     Player.animate(socialize)
                     Landlord(Surprised):: "Oh really? You know what: I'm prepared to sell it to you at <PriceConverted>."
@@ -147,7 +159,7 @@ OTHER: none
                     RentConverted = Rent.convertToLocalCurrency(true)
                     Landlord(Sarcastic):: "Alright, alright. You're a smart cookie - you should become a landlord yourself someday. How about <RentConverted> a month? That's surely lower than the going rate around."
                     Knowledge = true  
-                    
+                    GetADeals1 += Random(110, 150)
                 Elseif 3 && Random(0,100)*Difficulty < interpersonal
                 
                     "I used all my smooth talking to charm the landlord into giving me a discount."
@@ -155,7 +167,7 @@ OTHER: none
                     RentConverted = Rent.convertToLocalCurrency(true)
                     Landlord(Happy):: "Okay then, you seems like a nice enough person. I can give you the apartment for just <RentConverted> a month, but you'd better not tell my other tenants about it."
                     Charm = true
-                    
+                    GetADeals2 += Random(110, 150)
                 Elseif 4 && Landlord.IsInterestedIn(Player) && Landlord:perversion + Landlord:attractiontoplayer > Random(0,100)*Difficulty
                 
                     "I flirted with the landlord while trying to look as sexy as possible. <Landlord.He_or_She> seemed receptive to my advances."
@@ -176,10 +188,12 @@ OTHER: none
                             Landlord(Flirty):: "Oh well, I'm not forcing anything on you. It was you who flirted with me first. I simply got the wrong signal, don't mind me."
                             
                         Else
-                        
+                            GetADeals3 += Random(210, 250)
                             Player(Flirty):: "You'd better give me one hell of a deal for this ..."
                             Landlord.strip()
                             Filter(Blowjob, LickPussy)
+                            Player.strip()
+                            Landlord.strip()
                             Sex(Landlord, Player)
                             Landlord.dress()
                             Landlord.show(2)
@@ -213,8 +227,10 @@ OTHER: none
                             Endif
                             
                             If Landlord:perversion > Random(20, 100)
-                            
+                                GetADeals4 += Random(1000, 5000)
                                 Landlord(Flirty):: "Oh? If that's on offer, then yes, perhaps I can change my mind indeed"
+                                Player.strip()
+                                Landlord.strip()
                                 Sex(Landlord, Player)
                                 Landlord.show(2)
                                 perversion += Random(0, 2)
@@ -328,9 +344,7 @@ OTHER: none
                             "We made some quick snacks and enjoyed them together ..."
                             ate = true
                             If HungerEnable > 0
-                    
                                 Player.modifyActorVar(rk_VB_Hunger, 5)
-                        
                             EndIf
                             Landlord:attractiontoplayer += 1
                             Landlord:rapportwithplayer += 1

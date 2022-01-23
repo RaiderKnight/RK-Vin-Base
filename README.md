@@ -55,10 +55,9 @@
 <br>
 <h3>Module requirements</h3>
 <p>At least the game LifePlay 4.0.4</p>
-<p>Optional - nn_HomeExpander</p>
 <br>
 <h3>Module conflict</h3>
-<p>All other mods who are not in list below (For the moment...)</p>
+<p>All other mods who are not listed below (For the moment...)</p>
 <br>
 <hr>
 <br>
@@ -74,7 +73,7 @@
 <hr>
 <br>
 <h3> How to install</h3>
-<p>Visit the Wiki: <a href="https://raiderknight-mods.fandom.com/wiki/How_to_install_the_LifePlay_Remake_version">RaiderKnight Mods Wiki</a></p>
+<p>Visit the Wiki: <a href="https://lifeplay.site/viewtopic.php?t=398">RaiderKnight Mods Wiki</a></p>
 <br>
 <hr>
 <br>
@@ -87,7 +86,7 @@
 <br>
 <h3>How to contribute</h3>
 <ul>
-<li>Visit the <a href="https://lifeplay.site">LifePlay community forums</a></li>
+<li>Visit the <a href="https://lifeplay.site" title="LifePlay forums">LifePlay community forums</a></li>
 <li>Supporting me on <a href="https://www.patreon.com/raiderknight">Patreon</a></li>
 <li>Sending your ideas or feedback: Here on Github or on <a href="https://discord.gg/d3U9E2wb4Y">Discord</a></li>
 <li>Adding more content to the module.</li>
