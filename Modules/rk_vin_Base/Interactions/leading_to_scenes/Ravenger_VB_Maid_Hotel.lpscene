@@ -14,78 +14,78 @@ OTHER: money > 2000
         Warning = false
         Actor = getPerson(tag_maidH)
         If !Actor.isValid()   // HIRE
-            "I found a maid."
+            "Knock, Knock, Knock,..." // Edit Raddeck
             Actor = generatePersonTemporary()
             Actor.dress()
             Actor.show()
-            Actor:: "Hello if you wish I can clean your home."
+            Actor(Flirty):: "Hi, sorry to bother you, I am the maid, if you want, I can clean your room." // Edit Raddeck
             If Actor.isInterestedIn(Player) && Actor:attractiontoplayer > 50
-                "I couldn't help but notice that <Actor.name> seem to be flirting with me."
+                "I couldn't help but notice that <Actor.he_or_she> seem to be flirting with me."
             Endif
-            "Should I let <Actor.him_or_her> clean home?"
-            0:: "Hire maid"
-            1:: "I don't need a maid actually"
+            "Should I let <Actor.him_or_her> clean my room?" // Edit Raddeck
+            0:: "Yes" // Edit Raddeck
+            1:: "No" // Edit Raddeck
             
             If 0
                 Actor.makePermanent()
                 Actor.setActorVar(tag_maidH, 1)
                 exchangeContact(Actor)
-                "I decided to hire <Actor.name> as my maid."
+                "I decided to let the maid do <Actor.his_or_her> job..." // Edit Raddeck
             Else
-                "Let's stop looking for a maid altogether. I'm not used to having one."
-                timeout(9000, Ravenger_VB_Maid_Hotel)
+                "I don't actually need to have my room cleaned." // Edit Raddeck
+                timeout(6000, Ravenger_VB_Maid_Hotel)
             Endif
         Else
             Actor.dress()
             Actor.show()
-            "<Actor.name> is my current maid."
-            0:: "I'm happy with <Actor.him_or_her>"
-            1:: "Don't need to come in today."
+            Actor(Flirty):: "Hi <Player.mister_or_miss> <Player.name_last> do you need any cleanup?" // Edit Raddeck
+            0:: "Make <Actor.him_or_her> work" // Edit Raddeck
+            1:: "I don't need my room cleaned" // Edit Raddeck
             2:: "Fire <Actor.him_or_her>"
             
             If 0       
                 If Actor:attractiontoplayer > 50
-                    "And they like me."
+                    "<Actor.name> seems to like coming to clean my room." // Edit Raddeck
                 Endif
                 If [!Player.isVisible(Bottom) && !Player.isVisible(Bottom_Under)] || [!Player.isVisible(Top) && !Player.isVisible(Top_Under) && !Player.isMale()]
-                    "<Actor.name> can't help but notice my naked body."
+                    "I think <Actor.name> just noticed that I am naked." // Edit Raddeck
                     Actor.arousal += 10
                 Endif   
                 stage = Actor.getActorVar(tag_maidH)
                 If stage < 2
                     "What should I ask <Actor.name> to do today?"
-                    0:: "Watch them work"
-                    1:: "Suggest working in Underwear."
+                    0:: "Watch <Actor.him_or_her> work"
+                    1:: "Suggest working in underwear"
                     
                     If 0
                         Actor:attractiontoplayer += 1
-                        "Should I flirt a bit with <Actor.name>?"
+                        "Should I flirt a bit with <Actor.him_or_her>?"
                         0:: "Yes"
                         1:: "No"
                         
                         If 0
                             Actor:attractiontoplayer += 2
-                            "I took every opportunity we had flirt with <Actor.name>."
+                            "I took every opportunity to flirt with <Actor.name>." // Edit Raddeck
                             If Actor:attractiontoplayer > 50
-                                "They enjoy my company."
+                                "<Actor.He_or_She> enjoy my company." // Edit Raddeck
                             Endif
                             If isModEnabled(vin_NonConsensual) && masochist < -30
-                                "Should I grope them?"
+                                "Should I grope <Actor.him_or_her>?"
                                 0:: "Yes"
                                 1:: "No"
                                 
                                 If 0
-                                    "I begin groping them."
+                                    "I started to grope <Actor.him_or_her>." // Edit Raddeck
                                     Actor:perversion += 1
                                     If Actor:perversion > 35 || Actor:arousal > 35 || masochist > 30
-                                        "They don't seem to mind"
+                                        "<Actor.He_or_She> don't seem to mind" // Edit Raddeck
                                         Actor:perversion += 1
                                         Actor:attractiontoplayer += 2
                                         If Actor:masochist > 30
-                                            "I think they enjoy it."
+                                            "I think <Actor.he_or_she> enjoy it." // Edit Raddeck
                                         Endif
                                     Else
-                                        "<Actor.name> doesn't like you touching them."
+                                        "<Actor.name> doesn't like being touched by me." // Edit Raddeck
                                     Endif
                                     
                                 Endif   
@@ -99,20 +99,20 @@ OTHER: money > 2000
                         Expo += Actor:perversion
                         
                         If Expo > 50
-                            Actor:: "Sure I don't mind. So long as you don't mind paying extra."
-                            "From now on, <Actor.name> will be work in underwear."
+                            Actor:: "Sure I don't mind. So long as you don't mind paying for an extra."
+                            "From now on, <Actor.name> will be work in <Actor.his_or_her> underwear." // Edit Raddeck
                             Actor.setActorVar(tag_maidH, 2)
                         Else
                             Actor:: "That's a joke, right?"
-                            "Should I bribe <Actor.his_or_her>."
-                            0:: "Yes"
+                            "Should I bribe <Actor.him_or_her>." // Edit Raddeck
+                            0:: money >= 100:: "Yes" // Edit Raddeck
                             1:: "No"
     
                             If 0
-                                Player:: "I'll pay extra if you do."
+                                Player(Wink):: "I'll give you an extra if you do."
                                 money -= 100
                                 Actor:: "Fine. So long as you're paying extra."
-                                "From now on, <Actor.name> will be work in underwear."
+                                "From now on, <Actor.name> will be work in <Actor.his_or_her> underwear." // Edit Raddeck
                                 Actor.setActorVar(tag_maidH, 2)
                             Else
                                 "Oh well, at least <Actor.he_or_she> didn't quit."
@@ -146,15 +146,15 @@ OTHER: money > 2000
                         Actor.dress(Cool-Bra_3_F,Appealing-Panties_3_F)
                         Actor.dress(Cool-Bra_3_F,Appealing-Panties_4_F)
                     EndRandom
-                    "<Actor.name> procede to remove clothing and work in underwear."
+                    "<Actor.name> took off <Actor.his_or_her> clothes and started working in <Actor.his_or_her> underwear." // Edit Raddeck
                     If Actor:attractiontoplayer > 75
-                        "And they like to tease me."
+                        "Watching <Actor.him_or_her> work, I can tell <Actor.he_or_she>'s likes strutting <Actor.his_or_her> ass in front of me!" // Edit Raddeck
                     Endif
                     Player.arousal += 10
                     perversion += Random(0, 0.5)
                     "What should I ask <Actor.name> to do today?"
-                    0:: "Watch them work"
-                    1:: "Suggest working in nude."
+                    0:: "Watch <Actor.him_or_her> work" // Edit Raddeck
+                    1:: "Suggest to work naked" // Edit Raddeck
                     
                     If 0
                         Actor:attractiontoplayer += 4
@@ -166,32 +166,32 @@ OTHER: money > 2000
                         If 0
                             Actor:attractiontoplayer += 4
                             Actor:perversion += 2
-                            "I took every opportunity we had flirt with <Actor.name>."
+                            "I took every opportunity to flirt with <Actor.name>." // Edit Raddeck
                             If Actor:attractiontoplayer > 75
-                                "They enjoy my company."
+                                "<Actor.He_or_She> enjoy my company." // Edit Raddeck
                             Endif
                             If isModEnabled(vin_NonConsensual) && masochist < -30
-                                "Should I grope them?"
+                                "Should I grope <Actor.him_or_her>?" // Edit Raddeck
                                 0:: "Yes"
                                 1:: "No"
                                 
                                 If 0
-                                    "I begin groping them."
+                                    "I started to grope <Actor.him_or_her>." // Edit Raddeck
                                     Actor:perversion += 2
                                     Actor:masochist += 1
                                     Actor:arousal += 1
                                     If Actor:perversion > 65 || Actor:arousal > 65 || masochist > 65
-                                        "They don't seem to mind"
+                                        "<Actor.He_or_She> don't seem to mind" // Edit Raddeck
                                         Actor:attractiontoplayer += 4
                                         Actor:perversion += 2
                                         Player:arousal += 15
                                         Actor:arousal += 15
                                         If Actor:masochist > 65
-                                            "I think they enjoy it."
+                                            "I think <Actor.he_or_she> enjoy it." // Edit Raddeck
                                             Actor:arousal += 15
                                         Endif
                                         If Player:arousal > 85
-                                            Player():: "You look so sexy in you underwear. I want you now!"
+                                            Player():: "You look so sexy in your underwear. I want you now!"
                                             If Actor:arousal > 85 
                                                 Actor():: "Take me NOW!"
                                                 Actor:attractiontoplayer += Random(1, 10)
@@ -205,8 +205,8 @@ OTHER: money > 2000
                                                 Actor.setActorVar(tag_maidH, 3)
                                             Else
                                                 Actor():: "Calm down. Just let me do my work."
-                                                0:: "Trick them."
-                                                1:: isModEnabled(vin_NonConsensual) && masochist < -30:: "Force them."
+                                                0:: "Trick <Actor.him_or_her>." // Edit Raddeck
+                                                1:: isModEnabled(vin_NonConsensual) && masochist < -30:: "Force <Actor.him_or_her>." // Edit Raddeck
                                                 2:: "Nothing"
                             
                                                 If 0
@@ -214,11 +214,11 @@ OTHER: money > 2000
                                                     If Actor:intelligence < intelligence
                                                         Actor.animate(sweep)
                                                         Player.strip()
-                                                        "While they mop the floors, I begin masturbating."
+                                                        "While <Actor.he_or_she> is mopping the floor, I begin masturbating." // Edit Raddeck
                                                         Sex(Player)
                                                         Actor:arousal += 50
                                                         If Actor:arousal > 85
-                                                            "I think they want a play too?"
+                                                            "I think <Actor.he_or_she> wants to play with, too?" // Edit Raddeck
                                                             Actor:attractiontoplayer += Random(1, 10)
                                                             Actor:perversion += Random(5, 20)
                                                             Sex(Player, Actor)
@@ -229,7 +229,7 @@ OTHER: money > 2000
                                                             mood += 30
                                                             Actor.setActorVar(tag_maidH, 3)                                                      
                                                         Else
-                                                            "They quickly leave."
+                                                            "<Actor.He_or_She> quickly leave." // Edit Raddeck
                                                             Actor:attractiontoplayer -= Random(1, 10)
                                                             Actor:perversion -= Random(5, 20)
                                                             perversion += Random(0, 2)
@@ -238,7 +238,7 @@ OTHER: money > 2000
                                                         Endif
                                     
                                                     Else
-                                                        "They are not falling for my tricks"
+                                                        "<Actor.He_or_She>'s not falling into my tricks" // Edit Raddeck
                                                     Endif
                             
                                                 Elseif 1
@@ -262,7 +262,7 @@ OTHER: money > 2000
                                             Endif
                                         
                                         Elseif Actor:arousal > 85 
-                                            "<Actor.name> is starting to get too close for comfort. And now they are in a very suggestive position..."
+                                            "<Actor.name> is starting to get too close for comfort. And now <Actor.he_or_she> is in a very suggestive position..."
                                             "My resistance is futile."
                                             Actor:attractiontoplayer += Random(1, 10)
                                             Actor:perversion += Random(5, 20)
@@ -276,7 +276,7 @@ OTHER: money > 2000
                                         
                                         Endif
                                     Else
-                                        "<Actor.name> doesn't like you touching them."
+                                        "<Actor.name> doesn't like being touched by me." // Edit Raddeck
                                     Endif
                                     
                                 Endif   
@@ -314,14 +314,14 @@ OTHER: money > 2000
                     money -= [50 - Actor:attractiontoplayer]
                     Player.arousal += 20
                     perversion += Random(0, 1)
-                    "<Actor.name> procede to remove clothing and work in nude."
+                    "<Actor.name> took off <Actor.his_or_her> clothes and started working naked." // Edit Raddeck
                     "What should I ask <Actor.name> to do today?"
                     0:: "Watch them work"
                     1:: "Ask for sexual favours"
                     
                     If 0
                         If [!Player.isVisible(Bottom) && !Player.isVisible(Bottom_Under)] || [!Player.isVisible(Top) && !Player.isVisible(Top_Under) && !Player.isMale()]
-                            "During the Cleaning <Actor.name> can't help but stare a my naked body."
+                            "During the Cleaning <Actor.name> can't stop to stare a my naked body." // Edit Raddeck
                             Actor.arousal += 15
                             Lust = 0
                             Lust += Actor:arousal
@@ -330,7 +330,7 @@ OTHER: money > 2000
                             If Player:arousal > 75
                                 Player():: "How about a real cleaning?"
                                 If [Actor.hadsex() && Lust > 100] || Lust > Random(150, 250)
-                                    Actor():: "Just the cleaning I needed."
+                                    Actor(Flirty):: "Just the type of cleaning I like." // Edit Raddeck
                                     Actor:attractiontoplayer += Random(1, 10)
                                     Actor:perversion += Random(5, 20)
                                     Sex(Player, Actor)
@@ -363,7 +363,7 @@ OTHER: money > 2000
                                 Endif
                     
                            Elseif [Actor.hadsex() && Lust > 100] || Lust > Random(150, 250)
-                                "<Actor.name> is starting to get too close for comfort. And now they are in a very suggestive position..."
+                                "<Actor.name> is starting to get too close for my comfort. And now <Actor.he_or_she> is in a very suggestive position..." // Edit Raddeck
                                 "My resistance is futile."
                                 Actor:attractiontoplayer += Random(1, 10)
                                 Actor:perversion += Random(5, 20)
@@ -375,7 +375,7 @@ OTHER: money > 2000
                                 mood += 30
             
                             Else
-                                "I watch <Actor.name> clean room."
+                                "I watch <Actor.name> cleaning the room." // Edit Raddeck
                                 mood += 15
                                 perversion += Random(0, 1)                      
                                 Actor:attractiontoplayer += 4
@@ -387,28 +387,28 @@ OTHER: money > 2000
                                 If 0
                                     Actor:attractiontoplayer += 5
                                     Actor:perversion += 3
-                                    "I took every opportunity we had flirt with <Actor.name>."
+                                    "I took every opportunity to flirt with <Actor.name>." // Edit Raddeck
                                     If Actor:attractiontoplayer > 75
-                                        "They enjoy my company."
+                                        "<Actor.He_or_She> enjoy my company." // Edit Raddeck
                                     Endif
                                     If isModEnabled(vin_NonConsensual) && masochist < -30
-                                        "Should I grope them?"
+                                        "Should I grope <Actor.him_or_her>?" // Edit Raddeck
                                         0:: "Yes"
                                         1:: "No"
                                 
                                         If 0
-                                            "I begin groping them."
+                                            "I started to grope <Actor.him_or_her>." // Edit Raddeck
                                             Actor:perversion += 3
                                             Actor:masochist += 2
                                             Actor:arousal += 2
                                             If Actor:perversion > 65 || Actor:arousal > 65 || masochist > 65
-                                                "They don't seem to mind"
+                                                "<Actor.He_or_She> don't seem to mind" // Edit Raddeck
                                                 Actor:attractiontoplayer += 4
                                                 Actor:perversion += 2
                                                 Player:arousal += 15
                                                 Actor:arousal += 15
                                                 If Actor:masochist > 65
-                                                    "I think they enjoy it."
+                                                    "I think <Actor.he_or_she> enjoy it." // Edit Raddeck
                                                     Actor:arousal += 15
                                                 Endif
                                                 If Player:arousal > 85
@@ -426,8 +426,8 @@ OTHER: money > 2000
                                                         Actor.setActorVar(tag_maidH, 3)
                                                     Else
                                                         Actor():: "Calm down. Just let me do my work."
-                                                        0:: "Trick them."
-                                                        1:: isModEnabled(vin_NonConsensual) && masochist < -30:: "Force them."
+                                                        0:: "Trick <Actor.him_or_her>." // Edit Raddeck
+                                                        1:: isModEnabled(vin_NonConsensual) && masochist < -30:: "Force <Actor.him_or_her>." // Edit Raddeck
                                                         2:: "Nothing"
                             
                                                         If 0
@@ -435,11 +435,11 @@ OTHER: money > 2000
                                                             If Actor:intelligence < intelligence
                                                                 Actor.animate(sweep)
                                                                 Player.strip()
-                                                                "While they mop the floors, I begin masturbating."
+                                                                "While <Actor.he_or_she> is mopping the floor, I begin masturbating." // Edit Raddeck
                                                                 Sex(Player)
                                                                 Actor:arousal += 50
                                                                 If Actor:arousal > 85
-                                                                    "I think they want a play too?"
+                                                                    "I think <Actor.he_or_she> wants to play with, too?" // Edit Raddeck
                                                                     Actor:attractiontoplayer += Random(1, 10)
                                                                     Actor:perversion += Random(5, 20)
                                                                     Sex(Player, Actor)
@@ -450,7 +450,7 @@ OTHER: money > 2000
                                                                     mood += 30
                                                                     Actor.setActorVar(tag_maidH, 3)                                                      
                                                                 Else
-                                                                   "They quickly leave."
+                                                                   "<Actor.He_or_She> quickly leave." // Edit Raddeck
                                                                     Actor:attractiontoplayer -= Random(1, 10)
                                                                     Actor:perversion -= Random(5, 20)
                                                                     perversion += Random(0, 2)
@@ -459,7 +459,7 @@ OTHER: money > 2000
                                                                 Endif
                                     
                                                             Else
-                                                                "They are not falling for my tricks"
+                                                                "<Actor.He_or_She>'s not falling into my tricks" // Edit Raddeck
                                                             Endif
                             
                                                         Elseif 1
@@ -483,7 +483,7 @@ OTHER: money > 2000
                                                     Endif
                                         
                                                 Elseif Actor:arousal > 85 || [Actor.hadsex() && Actor:perversion > 85 && Player.isnaked()]
-                                                    "<Actor.name> is starting to get too close for comfort. And now they are in a very suggestive position..."
+                                                    "<Actor.name> is starting to get too close for my comfort. And now <Actor.he_or_she> is in a very suggestive position..." // Edit Raddeck
                                                     "My resistance is futile."
                                                     Actor:attractiontoplayer += Random(1, 10)
                                                     Actor:perversion += Random(5, 20)
@@ -497,7 +497,7 @@ OTHER: money > 2000
                                         
                                                 Endif
                                             Else
-                                                "<Actor.name> doesn't like you touching them."
+                                                "<Actor.name> doesn't like being touched by me." // Edit Raddeck
                                             Endif
                                         Endif
                                     Endif   
@@ -522,7 +522,7 @@ OTHER: money > 2000
                                 If Player:arousal > 75
                                     Player():: "How about a real cleaning?"
                                     If [Actor.hadsex() && Lust > 100] || Lust > Random(150, 250)
-                                        Actor():: "Just the cleaning I needed."
+                                        Actor(Flirty):: "Just the type of cleaning I like." // Edit Raddeck
                                         Actor:attractiontoplayer += Random(1, 10)
                                         Actor:perversion += Random(5, 20)
                                         Sex(Player, Actor)
@@ -555,7 +555,7 @@ OTHER: money > 2000
                                     Endif
                     
                                 Elseif [Actor.hadsex() && Lust > 100] || Lust > Random(150, 250)
-                                    "<Actor.name> is starting to get too close for comfort. And now they are in a very suggestive position..."
+                                    "<Actor.name> is starting to get too close for my comfort. And now <Actor.he_or_she> is in a very suggestive position..." // Edit Raddeck
                                     "My resistance is futile."
                                     Actor:attractiontoplayer += Random(1, 10)
                                     Actor:perversion += Random(5, 20)
@@ -582,28 +582,28 @@ OTHER: money > 2000
                                 If 0
                                     Actor:attractiontoplayer += 4
                                     Actor:perversion += 2
-                                    "I took every opportunity we had flirt with <Actor.name>."
+                                    "I took every opportunity to flirt with <Actor.name>." // Edit Raddeck
                                     If Actor:attractiontoplayer > 75
-                                        "They enjoy my company."
+                                        "<Actor.He_or_She> enjoy my company." // Edit Raddeck
                                     Endif
                                     If isModEnabled(vin_NonConsensual) && masochist < -30
-                                        "Should I grope them?"
+                                        "Should I grope <Actor.him_or_her>?" // Edit Raddeck
                                         0:: "Yes"
                                         1:: "No"
                                 
                                         If 0
-                                            "I begin groping them."
+                                            "I started to grope <Actor.him_or_her>." // Edit Raddeck
                                             Actor:perversion += 2
                                             Actor:masochist += 1
                                             Actor:arousal += 1
                                             If Actor:perversion > 65 || Actor:arousal > 65 || masochist > 65
-                                                "They don't seem to mind"
+                                                "<Actor.He_or_She> don't seem to mind" // Edit Raddeck
                                                 Actor:attractiontoplayer += 4
                                                 Actor:perversion += 2
                                                 Player:arousal += 15
                                                 Actor:arousal += 15
                                                 If Actor:masochist > 65
-                                                    "I think they enjoy it."
+                                                    "I think <Actor.he_or_she> enjoy it." // Edit Raddeck
                                                     Actor:arousal += 15
                                                 Endif
                                                 If Player:arousal > 85
@@ -621,8 +621,8 @@ OTHER: money > 2000
                                                         Actor.setActorVar(tag_maidH, 3)
                                                     Else
                                                         Actor():: "Calm down. Just let me do my work."
-                                                        0:: "Trick them."
-                                                        1:: isModEnabled(vin_NonConsensual) && masochist < -30:: "Force them."
+                                                        0:: "Trick <Actor.him_or_her>." // Edit Raddeck
+                                                        1:: isModEnabled(vin_NonConsensual) && masochist < -30:: "Force <Actor.him_or_her>." // Edit Raddeck
                                                         2:: "Nothing"
                             
                                                         If 0
@@ -630,11 +630,11 @@ OTHER: money > 2000
                                                             If Actor:intelligence < intelligence
                                                                 Actor.animate(sweep)
                                                                 Player.strip()
-                                                                "While they mop the floors, I begin masturbating."
+                                                                "While <Actor.he_or_she> is mopping the floor, I begin masturbating." // Edit Raddeck
                                                                 Sex(Player)
                                                                 Actor:arousal += 50
                                                                 If Actor:arousal > 85
-                                                                    "I think they want a play too?"
+                                                                    "I think <Actor.he_or_she> wants to play with, too?" // Edit Raddeck
                                                                     Actor:attractiontoplayer += Random(1, 10)
                                                                     Actor:perversion += Random(5, 20)
                                                                     Sex(Player, Actor)
@@ -645,7 +645,7 @@ OTHER: money > 2000
                                                                     mood += 30
                                                                     Actor.setActorVar(tag_maidH, 3)                                                      
                                                                 Else
-                                                                   "They quickly leave."
+                                                                   "<Actor.He_or_She> quickly leave." // Edit Raddeck
                                                                     Actor:attractiontoplayer -= Random(1, 10)
                                                                     Actor:perversion -= Random(5, 20)
                                                                     perversion += Random(0, 2)
@@ -654,7 +654,7 @@ OTHER: money > 2000
                                                                 Endif
                                     
                                                             Else
-                                                                "They are not falling for my tricks"
+                                                                "<Actor.He_or_She>'s not falling into my tricks" // Edit Raddeck
                                                             Endif
                             
                                                         Elseif 1
@@ -681,7 +681,7 @@ OTHER: money > 2000
                                                     Endif
                                         
                                                 Elseif Actor:arousal > 85 || [Actor.hadsex() && Actor:perversion > 85 && Player.isnaked()]
-                                                    "<Actor.name> is starting to get too close for comfort. And now they are in a very suggestive position..."
+                                                    "<Actor.name> is starting to get too close for my comfort. And now <Actor.he_or_she> is in a very suggestive position..." // Edit Raddeck
                                                     "My resistance is futile."
                                                     Actor:attractiontoplayer += Random(1, 10)
                                                     Actor:perversion += Random(5, 20)
@@ -695,7 +695,7 @@ OTHER: money > 2000
                                         
                                                 Endif
                                             Else
-                                                "<Actor.name> doesn't like you touching them."
+                                                "<Actor.name> doesn't like being touched by me." // Edit Raddeck
                                             Endif
                                         Endif
                                     Endif   
@@ -754,7 +754,7 @@ OTHER: money > 2000
                         Else
                             Actor(Flirty):: "So long as it doesn't involve sex. Of course, boss."
                             "Judging from <Actor.his_or_her> face expression, They don't want what I'm was offering..."
-                            0:: "Trick them."
+                            0:: "Trick <Actor.him_or_her>." // Edit Raddeck
                             1:: isModEnabled(vin_NonConsensual) && masochist < -30:: "Grope/Force them."
                             2:: "Nothing"
                             
@@ -764,11 +764,11 @@ OTHER: money > 2000
                                     Actor.animate(sweep)
                                     Actor.strip()
                                     Player.strip()
-                                    "While they mop the floors, I begin masturbating."
+                                    "While <Actor.he_or_she> is mopping the floor, I begin masturbating." // Edit Raddeck
                                     Sex(Player)
                                     Actor:arousal += 50
                                     If Actor:arousal > 85
-                                        "I think they want a play too?"
+                                        "I think <Actor.he_or_she> wants to play with, too?" // Edit Raddeck
                                         Actor:attractiontoplayer += Random(1, 10)
                                         Actor:perversion += Random(5, 20)
                                         Sex(Player, Actor)
@@ -778,7 +778,7 @@ OTHER: money > 2000
                                         perversion += Random(0, 2)
                                         mood += 30                                                             
                                     Else
-                                        "They quickly leave."
+                                        "<Actor.He_or_She> quickly leave." // Edit Raddeck
                                         Actor:attractiontoplayer -= Random(1, 10)
                                         Actor:perversion -= Random(5, 20)
                                         perversion += Random(0, 2)
@@ -787,7 +787,7 @@ OTHER: money > 2000
                                     Endif
                                     
                                 Else
-                                    "They are not falling for my tricks"
+                                    "<Actor.He_or_She>'s not falling into my tricks" // Edit Raddeck
                                 Endif
                             
                             Elseif 1
@@ -817,10 +817,9 @@ OTHER: money > 2000
                     Endif
                 Endif
             Elseif 1
-                "I don't need you today." 
-    
+                "I don't actually need to have my room cleaned." // Edit Raddeck
             Else
-                "I decided to fire <Actor.name> from the maid position."
+                "I decided to fire <Actor.name>." // Edit Raddeck
                 Actor.setActorVar(tag_maidH, 0)
             Endif
             timeout(200, Ravenger_VB_Maid_Hotel)

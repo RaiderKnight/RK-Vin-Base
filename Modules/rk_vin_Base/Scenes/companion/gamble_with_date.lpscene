@@ -6,6 +6,11 @@ OTHER: isModEnabled(vin_NTR) && intelligence < Random(0, 80)*Random(0, 1)
 
     SceneStart()
     
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+    
         If money <= 0
         
             "Oh no, I have rotten luck today. I have lost all my money."
@@ -43,7 +48,9 @@ OTHER: isModEnabled(vin_NTR) && intelligence < Random(0, 80)*Random(0, 1)
                 masochist -= Random(0, 2)
                 Sex(Actor2, Player)
                 paying = false
-            
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
             Else
             
                 masochist += Random(0, 2)

@@ -68,8 +68,8 @@ OTHER: none
                 "What should I do?"
                 0:: money > Rent::"Sign the lease"
                 1:: "Look elsewhere"
-                2:: !Knowledge && !Seduce:: "Use your knowledge to negotiate"
-                3:: !Charm && !Seduce:: "Use your charm to haggle"
+                2:: !Knowledge:: "Use your knowledge to negotiate"
+                3:: !Charm:: "Use your charm to haggle"
                 4:: !Seduce:: "Use your sex appeal"
                 5:: !Bought && money > Price:: "Offer to buy"
                 
@@ -120,7 +120,6 @@ OTHER: none
                         SceneEnd()
             
                     Else
-        
                         "This price seems reasonable and might just fit in my budget."
                         Player(Happy):: "Actually, I think I can afford to buy the home outright."
             
@@ -147,110 +146,118 @@ OTHER: none
                         Endif
                         
                     Else
-                    
                         choice = 5
-                        
                     Endif
                     
-                Elseif 2 && Random(0,100)*Difficulty < intelligence
-                
-                    "I used my research about the market rate of rent in the surrounding area to show the landlord that I had alternatives."
-                    Rent /= 1.1
-                    RentConverted = Rent.convertToLocalCurrency(true)
-                    Landlord(Sarcastic):: "Alright, alright. You're a smart cookie - you should become a landlord yourself someday. How about <RentConverted> a month? That's surely lower than the going rate around."
-                    Knowledge = true  
-                    GetADeals1 += Random(110, 150)
-                Elseif 3 && Random(0,100)*Difficulty < interpersonal
-                
-                    "I used all my smooth talking to charm the landlord into giving me a discount."
-                    Rent /= 1.1
-                    RentConverted = Rent.convertToLocalCurrency(true)
-                    Landlord(Happy):: "Okay then, you seems like a nice enough person. I can give you the apartment for just <RentConverted> a month, but you'd better not tell my other tenants about it."
-                    Charm = true
-                    GetADeals2 += Random(110, 150)
-                Elseif 4 && Landlord.IsInterestedIn(Player) && Landlord:perversion + Landlord:attractiontoplayer > Random(0,100)*Difficulty
-                
-                    "I flirted with the landlord while trying to look as sexy as possible. <Landlord.He_or_She> seemed receptive to my advances."
-                    Rent /= 1.1
-                    RentConverted = Rent.convertToLocalCurrency(true)
-                    Landlord(Flirty):: "Okay, just for a good-looking tenant like you, I can drop the rent to <RentConverted> a month. But that's the lowest I'm going to go today ..."
-                    Seduce = true
-                    
-                    If Landlord.IsDominantSex(Player) && Landlord:perversion > Random(30, 100)
-                    
-                        Landlord(Flirty):: "... unless you want to use that sexy mouth of yours for something better than negotiating"
-                        0:: "No"
-                        1:: Vanilla && perversion > 20:: "Fuck <Landlord.him_or_her>"
-                        
-                        If 0
-                        
-                            Player(Angry):: "I'm not doing that! Not in a million years."
-                            Landlord(Flirty):: "Oh well, I'm not forcing anything on you. It was you who flirted with me first. I simply got the wrong signal, don't mind me."
-                            
-                        Else
-                            GetADeals3 += Random(210, 250)
-                            Player(Flirty):: "You'd better give me one hell of a deal for this ..."
-                            Landlord.strip()
-                            Filter(Blowjob, LickPussy)
-                            Player.strip()
-                            Landlord.strip()
-                            Sex(Landlord, Player)
-                            Landlord.dress()
-                            Landlord.show(2)
-                            perversion += Random(0, 1.5)
-                            Rent /= 1.2
-                            RentConverted = Rent.convertToLocalCurrency(true)
-                            Landlord(Flirty):: "Well, now that we've got to know each other on a more ... personal level, you can have the apartment for just <RentConverted>. Trust me, I never gave anyone such a good offer in all my years."
-                            If HungerEnable > 0
-                                Player.modifyActorVar(rk_VB_Hunger, -2)
-                            EndIf
-                        
-                        Endif
-                        
+                Elseif 2
+                    If Random(0,100)*Difficulty < intelligence
+                        "I used my research about the market rate of rent in the surrounding area to show the landlord that I had alternatives."
+                        Rent /= 1.1
+                        RentConverted = Rent.convertToLocalCurrency(true)
+                        Landlord(Sarcastic):: "Alright, alright. You're a smart cookie - you should become a landlord yourself someday. How about <RentConverted> a month? That's surely lower than the going rate around."
+                        Knowledge = true  
+                        GetADeals1 += Random(110, 150)
                     Else
-                    
-                        0:: "Thank <Landlord.him_or_her>"
-                        1:: Vanilla && perversion > 30:: "Offer sex"
+                        Landlord(Annoyed):: "I already told you this is the best deal I can give you."
+                        "My negotiations failed miserably. All it did was annoying the landlord. I probably shouldn't try to haggle more, or <Landlord.he_or_she> will refuse to even rent me the apartment."
+                        Knowledge = true
+                    Endif
+                Elseif 3
+                    If Random(0,100)*Difficulty < interpersonal
+                        "I used all my smooth talking to charm the landlord into giving me a discount."
+                        Rent /= 1.1
+                        RentConverted = Rent.convertToLocalCurrency(true)
+                        Landlord(Happy):: "Okay then, you seems like a nice enough person. I can give you the apartment for just <RentConverted> a month, but you'd better not tell my other tenants about it."
+                        Charm = true
+                        GetADeals2 += Random(110, 150)
+                    Else
+                        Landlord(Annoyed):: "I already told you this is the best deal I can give you."
+                        "My negotiations failed miserably. All it did was annoying the landlord. I probably shouldn't try to haggle more, or <Landlord.he_or_she> will refuse to even rent me the apartment."
+                        Charm = true
+                    Endif
+                Elseif 4
+                    If Landlord.IsInterestedIn(Player) && Landlord:perversion + Landlord:attractiontoplayer > Random(0,100)*Difficulty
+                        "I flirted with the landlord while trying to look as sexy as possible. <Landlord.He_or_She> seemed receptive to my advances."
+                        Rent /= 1.1
+                        RentConverted = Rent.convertToLocalCurrency(true)
+                        Landlord(Flirty):: "Okay, just for a good-looking tenant like you, I can drop the rent to <RentConverted> a month. But that's the lowest I'm going to go today ..."
+                        Seduce = true
                         
-                        If 1
+                        If Landlord.IsDominantSex(Player) && Landlord:perversion > Random(30, 100)
                         
-                            Player(Flirty):: "Surely you can change your mind and go even lower if I go down on you?"
+                            Landlord(Flirty):: "... unless you want to use that sexy mouth of yours for something better than negotiating"
+                            0:: "No"
+                            1:: Vanilla && perversion > 20:: "Fuck <Landlord.him_or_her>"
                             
-                            If TfGame() && Landlord.isMale()
+                            If 0
                             
-                                "When I was a man I used to hold the moral high ground and somewhat looked down on women who use their bodies to get advantages in life. Here I am, offering my body in exchange of rent discount. I'm such a hypocrite after all."
-                            
-                            Elseif TfGame() && Landlord.isFemale()
-                            
-                                "When I was a female I used to hold the moral high ground and somewhat looked down on men who use their looks to get advantages in life. Here I am, offering my body in exchange of rent discount. I'm such a hypocrite after all."
-                            
-                            Endif
-                            
-                            If Landlord:perversion > Random(20, 100)
-                                GetADeals4 += Random(1000, 5000)
-                                Landlord(Flirty):: "Oh? If that's on offer, then yes, perhaps I can change my mind indeed"
+                                Player(Angry):: "I'm not doing that! Not in a million years."
+                                Landlord(Flirty):: "Oh well, I'm not forcing anything on you. It was you who flirted with me first. I simply got the wrong signal, don't mind me."
+                                
+                            Else
+                                GetADeals3 += Random(210, 250)
+                                Player(Flirty):: "You'd better give me one hell of a deal for this ..."
+                                Landlord.strip()
+                                Filter(Blowjob, LickPussy)
                                 Player.strip()
                                 Landlord.strip()
                                 Sex(Landlord, Player)
+                                Landlord.dress()
                                 Landlord.show(2)
-                                perversion += Random(0, 2)
+                                perversion += Random(0, 1.5)
                                 Rent /= 1.2
                                 RentConverted = Rent.convertToLocalCurrency(true)
                                 Landlord(Flirty):: "Well, now that we've got to know each other on a more ... personal level, you can have the apartment for just <RentConverted>. Trust me, I never gave anyone such a good offer in all my years."
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
-                            Else
-                                Landlord(Angry):: "What? Who do you take me for? I'm running a serious business, not a brothel. I already told you it's the lowest I could go for the rent. Take it or leave it!"
+                            
+                            Endif
+                            
+                        Else
+                        
+                            0:: "Thank <Landlord.him_or_her>"
+                            1:: Vanilla && perversion > 30:: "Offer sex"
+                            
+                            If 1
+                            
+                                Player(Flirty):: "Surely you can change your mind and go even lower if I go down on you?"
+                                
+                                If TfGame() && Landlord.isMale()
+                                
+                                    "When I was a man I used to hold the moral high ground and somewhat looked down on women who use their bodies to get advantages in life. Here I am, offering my body in exchange of rent discount. I'm such a hypocrite after all."
+                                
+                                Elseif TfGame() && Landlord.isFemale()
+                                
+                                    "When I was a female I used to hold the moral high ground and somewhat looked down on men who use their looks to get advantages in life. Here I am, offering my body in exchange of rent discount. I'm such a hypocrite after all."
+                                
+                                Endif
+                                
+                                If Landlord:perversion > Random(20, 100)
+                                    GetADeals4 += Random(1000, 5000)
+                                    Landlord(Flirty):: "Oh? If that's on offer, then yes, perhaps I can change my mind indeed"
+                                    Player.strip()
+                                    Landlord.strip()
+                                    Sex(Landlord, Player)
+                                    Landlord.show(2)
+                                    perversion += Random(0, 2)
+                                    Rent /= 1.2
+                                    RentConverted = Rent.convertToLocalCurrency(true)
+                                    Landlord(Flirty):: "Well, now that we've got to know each other on a more ... personal level, you can have the apartment for just <RentConverted>. Trust me, I never gave anyone such a good offer in all my years."
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    EndIf
+                                Else
+                                    Landlord(Angry):: "What? Who do you take me for? I'm running a serious business, not a brothel. I already told you it's the lowest I could go for the rent. Take it or leave it!"
+                                Endif
                             Endif
                         Endif
-                    Endif
-                    choice = 4
-                    
-                Else
-                    Landlord(Annoyed):: "I already told you this is the best deal I can give you."
-                    "My negotiations failed miserably. All it did was annoying the landlord. I probably shouldn't try to haggle more, or <Landlord.he_or_she> will refuse to even rent me the apartment."
-                    Seduce = true
+                        choice = 4
+                    Else
+                        Landlord(Annoyed):: "I already told you this is the best deal I can give you."
+                        "My negotiations failed miserably. All it did was annoying the landlord. I probably shouldn't try to haggle more, or <Landlord.he_or_she> will refuse to even rent me the apartment."
+                        Seduce = true
+                    EndIf
                 Endif
                     
                 If Player.isNaked()

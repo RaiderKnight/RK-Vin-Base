@@ -9,29 +9,29 @@ OTHER: !isWithCompanion()
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
-        
+        "Knock, knock, knock,..." // Edit Raddeck
+        "Someone is knocking on the door..." // Edit Raddeck
         Actor.dress()
         Actor.show(2)
         Actor(Sad)::"Excuse me ..."
         If Player.isNaked()
             Actor:arousal += 15
         Endif   
-        Player(Happy)::"It's another guest staying at the hotel. I wonder what <Actor.he_or_she> wants?"
-    
-        Actor(Sad)::"My name is <Actor.name> and am shower broke and I was wonder if I could borow yours?"    
+        "It's another guest of the hotel. I wonder what <Actor.he_or_she> wants?"
+        Actor(Curious)::"Hi, sorry to bother you, I'm in the room right next to yours, my name is <Actor.name> and my shower is broken and I was wondering if I could borrow yours?" // Edit Raddeck  
         1:: "Wish <Actor.him_or_her> luck"
         2:: "Offer help"
         
         If 1
-            Player(Sad):: "Oh, that sucks. Good luck with your shower."
-            Actor(Sad):: "Thanks."
+            Player(Sad):: "Oh, that sucks, I don't know anything about plumbing. Good luck with your shower. I can refer you to a good plumber if you want..." // Edit Raddeck
+            Actor(Sad):: "Ok, thanks, I will find help somewhere else..." // Edit Raddeck
     
         Else
             Player(Sad):: "Sure, I'll help you out."
             Actor(Happy):: "Thank you."
-            "<Actor.name> enters my apartment and heads to bathroom."
+            "<Actor.name> enters my apartment and heads to the bathroom."
             Actor.hide()
-            "I can hear water running in the bathroom must be taking shower ..."
+            "I hear the water running in the bathroom, <Actor.he_or_she> must be under the shower at the moment..." // Edit Raddeck
             0:: "Peep on <Actor.him_or_her>"
             1:: "Better not"
         
@@ -61,18 +61,19 @@ OTHER: !isWithCompanion()
                     Hot += Actor:perversion
                     Hot += Actor:arousal
                     If Hot > 100
-                        "Wow <Actor.he_or_she> watching masturbate got me all horny. Maybe I can just join <Actor.him_or_her>?"
-                        0:: "Join in"
+                        
+                        "Wow watching <Actor.him_or_her> masturbate is starting to turn me on all of a sudden. Should I join <Actor.him_or_her> in the shower?" // Edit Raddeck
+                        0:: "Join <Actor.him_or_her>"
                         1:: "Leave"
            
                         If 0
                             Player.strip()
-                            Player(Flirty):: "Damn it baby, you got me all horny. Mind if I join you in there?"            
+                            Player(Flirty):: "Sorry but, the door was open, I saw you naked rubbing your body, you got me excited. Do you mind if I join you in the shower?" // Edit Raddeck
                             Hot += Actor:attractiontoplayer
                             If Random(150, 250) < Hot
                                 Sex(Player, Actor)
                                 If HungerEnable > 0
-                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
                                 Actor:perversion += Random(0, 5)
                                 Actor:attractiontoplayer += Random(0, 5)
@@ -86,11 +87,11 @@ OTHER: !isWithCompanion()
                         Else
                             "I better not push my luck."
                             If Actor:intelligence + Random(0, 25) > sneak
-                                If !Actor.ismale()
+                                If !Actor.isMale()
                                     Actor.dress(Towel_1_F)
                                 Endif
-                                "How ever later <Actor.name> came to confront me about what I saw." 
-                                Actor(Angry):: "I know you were outside my room."
+                                "However later, <Actor.name> came to confront me about what I saw." 
+                                Actor(Angry):: "I know you were spying on me, you vicious!" // Edit Raddeck
                                 Love = 0
                                 Love += Actor:attractiontoplayer
                                 Love += Actor:perversion
@@ -101,7 +102,7 @@ OTHER: !isWithCompanion()
                                     Actor(Flirty):: "You know what. I think I'm going to have some fun with you."
                                     Sex(Player, Actor)
                                     If HungerEnable > 0
-                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
                                     EndIf
                                     Actor:attractiontoplayer += Random(0, 50)
                                 Else
@@ -114,13 +115,13 @@ OTHER: !isWithCompanion()
                         Endif
                     
                     Else
-                        "Wow that was hot watching <Actor.him_or_her>. Maybe I can just join <Actor.him_or_her>?"
-                        0:: "Join in"
+                        "Wow watching <Actor.him_or_her> naked is starting to turn me on all of a sudden. Should I join <Actor.him_or_her> in the shower?" // Edit Raddeck
+                        0:: "Join <Actor.him_or_her>"
                         1:: "Leave"
            
                         If 0
                             Player.strip()
-                            Player(Flirty):: "Damn it baby, you got me all horny. Mind if I join you in there?"            
+                            Player(Flirty):: "Sorry but, the door was open, I saw you naked, you got me excited. Do you mind if I take a shower with you?" // Edit Raddeck
                             Love = 0
                             Love += Actor:attractiontoplayer
                             Love += Actor:perversion
@@ -128,7 +129,7 @@ OTHER: !isWithCompanion()
                             If Random(100, 150) < Love
                                 Sex(Player, Actor)
                                 If HungerEnable > 0
-                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
                                 Actor:perversion += Random(0, 5)
                                 Actor:attractiontoplayer += Random(0, 5)
@@ -142,11 +143,11 @@ OTHER: !isWithCompanion()
                         Else
                             "I better not push my luck."
                             If Actor:intelligence + Random(0, 75) > sneak
-                                If !Actor.ismale()
+                                If !Actor.isMale()
                                     Actor.dress(Towel_1_F)
                                 Endif
-                                "How ever later <Actor.name> came to confront me about what I saw." 
-                                Actor(Angry):: "I know you were outside my room."
+                                "However later, <Actor.name> came to confront me about what I saw." 
+                                Actor(Angry):: "I know you were spying on me, you vicious!" // Edit Raddeck
                                 Love = 0
                                 Love += Actor:attractiontoplayer
                                 Love += Actor:perversion
@@ -156,7 +157,7 @@ OTHER: !isWithCompanion()
                                     Actor(Flirty):: "You know what. I think I'm going to have some fun with you."
                                     Sex(Player, Actor)
                                     If HungerEnable > 0
-                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
                                     Actor:attractiontoplayer += Random(0, 50)
                                 Else
@@ -169,12 +170,12 @@ OTHER: !isWithCompanion()
                         Endif
                     Endif
                 Else
-                    "Damn I think they heard me. [run]"
-    
+                    "Damn I think <Actor.he_or_she> heard me. [run]" // Edit Raddeck
+                    sneak -= 1 // Edit Raddeck
                 Endif
             Else
-                "I deside to leave them be."
-                "Sounds like <Actor.name> is done."
+                "I decided not to spy on <Actor.him_or_her> while <Actor.he_or_she> was taking a shower..." // Edit Raddeck
+                "Looks like <Actor.name> has finished showering, the water has stopped running..." // Edit Raddeck
                 Love = 0
                 Love += Actor:attractiontoplayer
                 Love += Actor:perversion
@@ -182,16 +183,25 @@ OTHER: !isWithCompanion()
                 If Random(150, 250) < Love
                     Actor.strip()
                     Actor.show(2)
-                    Actor(Flirty):: "I just wanted to thank you for letting me use your shower..."
-                    Player(Surprised):: "Um..."
-                    Sex(Player, Actor)
-                    If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -1)
-                    EndIf
-                    Actor:attractiontoplayer += Random(1, 50)
+                    Actor(Flirty):: "Thank you so much for letting me use your shower... Now I feel better and horny!" // Edit Raddeck
+                    Player(Surprised):: "Um..." // Edit Raddeck
+                    Actor(Flirty):: "Do you want to fuck?" // Edit Raddeck
+                    0::"Yes" // Edit Raddeck
+                    1::"No" // Edit Raddeck
+                    
+                    If 0 // Edit Raddeck
+                        Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Actor:attractiontoplayer += Random(1, 50)
+                    Else // Edit Raddeck
+                        Player(Surprised):: "Sorry, not interested..." // Edit Raddeck
+                        Actor:rapportwithplayer -= Random(1, 5) // Edit Raddeck
+                    EndIf // Edit Raddeck
                 Else
                     Actor.show(2)
-                    Actor:: "Thanks for letting me use your shower."
+                    Actor(Happy):: "Thank you so much for letting me use your shower... Now I feel better!" // Edit Raddeck
                     Actor:rapportwithplayer += Random(1, 9)
                 Endif
             
@@ -211,4 +221,4 @@ OTHER: !isWithCompanion()
             Endif
         Endif   
     SceneEnd() // Edited by Raddeck
-    timeout(200, Hotel_Shower_broke)
+    timeout(200, Ravenger_VB_Hotel_Shower_broke)
