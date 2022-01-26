@@ -11,6 +11,7 @@ OTHER: none
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         TuitionPriceEqualEnable = rk_VB_TuitionPriceEqualEnable.getGlobal()
+        JobRestrictionEnable = rk_VB_JobRestrictionEnable.getGlobal()
         
         If !isModEnabled(nn_VB_HomeExpander) || !isModEnabled(nn_HomeExpander)
             
@@ -31,6 +32,7 @@ OTHER: none
             1::"Enable/disable Hunger"
             2::"Enable/disable Urge to pee"
             3::"Enable Same tuition price for all courses"
+            4::"Enable job restrictions"
             30::"Set racial stereotypes"
             89::"---------------------------------"
             90::"Stuff in hand to store - Debugger"
@@ -101,7 +103,11 @@ OTHER: none
                 EndIf
                 
             ElseIf 3
-                
+                If TuitionPriceEqualEnable >= 0
+                    "Same tuition price is enable"
+                Else
+                    "Same tuition price is disable"
+                Endif
                 "What should I do?"
                 1::"Enable same tuition price for all courses"
                 2::"Disable same tuition price for all courses"
@@ -116,6 +122,29 @@ OTHER: none
                 
                     "Same tuition price for all courses is now disabled!"
                     rk_VB_TuitionPriceEqualEnable.setGlobal(0)
+                
+                EndIf
+            ElseIf 4
+                If JobRestrictionEnable >= 0
+                    "Same tuition price is enable"
+                Else
+                    "Same tuition price is disable"
+                Endif
+                "If you enable this option: For some jobs, you will need to have completed the university course related to that job."
+                "What should I do?"
+                1::"Enable job restrictions"
+                2::"Disable job restrictions"
+                99::"Go back!"
+            
+                If 1
+                
+                    "Job restrictions is now enabled!"
+                    rk_VB_JobRestrictionEnable.setGlobal(1)
+                
+                ElseIf 2
+                
+                    "Job restrictions is now disabled!"
+                    rk_VB_JobRestrictionEnable.setGlobal(0)
                 
                 EndIf
             ElseIf 30

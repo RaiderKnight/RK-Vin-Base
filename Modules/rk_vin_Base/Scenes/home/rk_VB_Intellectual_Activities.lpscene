@@ -26,6 +26,10 @@ OTHER: none
         Philosophy_Major_Ses = rk_VB_Philosophy_Major_Ses.getGlobal()
         Psychology_Major_Ses = rk_VB_Psychology_Major_Ses.getGlobal()
         Political_Sciences_Major_Ses = rk_VB_Political_Sciences_Major_Ses.getGlobal()
+        SalesMarketing_Major_Ses = rk_VB_SalesMarketing_Major_Ses.getGlobal()
+        Dental_Major_Ses = rk_VB_Dental_Major_Ses.getGlobal()
+        Veterinary_Major_Ses = rk_VB_Veterinary_Major_Ses.getGlobal()
+        TravelTourism_Major_Ses = rk_VB_TravelTourism_Major_Ses.getGlobal()
         
         // Get if sessions is ended or not 1 = yes
         Architecture_Major_Ses_Done = rk_VB_Architecture_Major_Ses_Done.getGlobal()
@@ -44,6 +48,10 @@ OTHER: none
         Philosophy_Major_Ses_Done = rk_VB_Philosophy_Major_Ses_Done.getGlobal()
         Psychology_Major_Ses_Done = rk_VB_Psychology_Major_Ses_Done.getGlobal()
         Political_Sciences_Major_Ses_Done = rk_VB_Political_Sciences_Major_Ses_Done.getGlobal()
+        SalesMarketing_Major_Ses_Done = rk_VB_SalesMarketing_Major_Ses_Done.getGlobal()
+        Dental_Major_Ses_Done = rk_VB_Dental_Major_Ses_Done.getGlobal()
+        Veterinary_Major_Ses_Done = rk_VB_Veterinary_Major_Ses_Done.getGlobal()
+        TravelTourism_Major_Ses_Done = rk_VB_TravelTourism_Major_Ses_Done.getGlobal()
         
         // Get number of credits/units to pass to the next degree
         Architecture_Major_Units = Player.getActorVar(rk_VB_Architecture_Major_Units)
@@ -62,6 +70,10 @@ OTHER: none
         Philosophy_Major_Units = Player.getActorVar(rk_VB_Philosophy_Major_Units)
         Psychology_Major_Units = Player.getActorVar(rk_VB_Psychology_Major_Units)
         Political_Sciences_Major_Units = Player.getActorVar(rk_VB_Political_Sciences_Major_Units)
+        SalesMarketing_Major_Units = Player.getActorVar(rk_VB_SalesMarketing_Major_Units)
+        Dental_Major_Units = Player.getActorVar(rk_VB_Dental_Major_Units)
+        Veterinary_Major_Units = Player.getActorVar(rk_VB_Veterinary_Major_Units)
+        TravelTourism_Major_Units = Player.getActorVar(rk_VB_TravelTourism_Major_Units)
         
         // level for each session, reset at the end of the session
         Architecture_Major_Level = Player.getActorVar(rk_VB_Architecture_Major_Level)
@@ -80,6 +92,10 @@ OTHER: none
         Philosophy_Major_Level = Player.getActorVar(rk_VB_Philosophy_Major_Level)
         Psychology_Major_Level = Player.getActorVar(rk_VB_Psychology_Major_Level)
         Political_Sciences_Major_Level = Player.getActorVar(rk_VB_Political_Sciences_Major_Level)
+        SalesMarketing_Major_Level = Player.getActorVar(rk_VB_SalesMarketing_Major_Level)
+        Dental_Major_Level = Player.getActorVar(rk_VB_Dental_Major_Level)
+        Veterinary_Major_Level = Player.getActorVar(rk_VB_Veterinary_Major_Level)
+        TravelTourism_Major_Level = Player.getActorVar(rk_VB_TravelTourism_Major_Level)
         
         // Session is it started 1 = yes
         Session_TAR = Player.getActorVar(rk_VB_Session_TAR)
@@ -98,6 +114,10 @@ OTHER: none
         Session_TPH = Player.getActorVar(rk_VB_Session_TPH)
         Session_TPS = Player.getActorVar(rk_VB_Session_TPS)
         Session_TPOL = Player.getActorVar(rk_VB_Session_TPOL)
+        Session_TSM = Player.getActorVar(rk_VB_Session_TSM)
+        Session_TDM = Player.getActorVar(rk_VB_Session_TDM)
+        Session_TVE = Player.getActorVar(rk_VB_Session_TVE)
+        Session_TTT = Player.getActorVar(rk_VB_Session_TTT)
 
         If HungerEnable > 0 && Hunger < 9
             
@@ -163,22 +183,26 @@ OTHER: none
                 
                 choiceCourseMajor => 0
                 "Now, which lectures should I study?"
-                0:: Architecture_Major_Ses_Done > 0 && rk_VB_Session_TAR > 0 ::"Architecture"
-                1:: Chemical_Engineering_Major_Ses_Done > 0 && rk_VB_Session_TCE > 0 ::"Chemical Engineering"
-                2:: Classics_Major_Ses_Done > 0 && rk_VB_Session_TCL > 0 ::"Classics"
-                3:: Computer_Science_Major_Ses_Done > 0 && rk_VB_Session_TCS > 0 ::"Computer Science"
-                4:: Economics_Major_Ses_Done > 0 && rk_VB_Session_TEC > 0 ::"Economics"
-                5:: Education_Major_Ses_Done > 0 && rk_VB_Session_TED > 0 ::"Education"
-                6:: English_Major_Ses_Done > 0 && rk_VB_Session_TEN > 0 ::"English"
-                7:: Geography_Major_Ses_Done > 0 && rk_VB_Session_TGE > 0 ::"Geography"
-                8:: History_Major_Ses_Done > 0 && rk_VB_Session_THI > 0 ::"History"
-                9:: Law_Major_Ses_Done > 0 && rk_VB_Session_TLA > 0 ::"Law"
-                10:: Mathematics_Major_Ses_Done > 0 && rk_VB_Session_TMA > 0 ::"Mathematics"
-                11:: Medicine_Major_Ses_Done > 0 && rk_VB_Session_TME > 0 ::"Medicine"
-                12:: Music_Major_Ses_Done > 0 && rk_VB_Session_TMU > 0 ::"Music"
-                13:: Philosophy_Major_Ses_Done > 0 && rk_VB_Session_TPH > 0 ::"Philosophy"
-                14:: Psychology_Major_Ses_Done > 0 && rk_VB_Session_TPS > 0 ::"Psychology"
-                15:: Political_Sciences_Major_Ses_Done > 0 && rk_VB_Session_TPOL > 0 ::"Political Sciences"
+                0:: Architecture_Major_Ses_Done > 0 && Session_TAR > 0 ::"Architecture"
+                1:: Chemical_Engineering_Major_Ses_Done > 0 && Session_TCE > 0 ::"Chemical Engineering"
+                2:: Classics_Major_Ses_Done > 0 && Session_TCL > 0 ::"Classics"
+                3:: Computer_Science_Major_Ses_Done > 0 && Session_TCS > 0 ::"Computer Science"
+                31:: Dental_Major_Ses_Done > 0 && Session_TDM > 0 ::"Dental"
+                4:: Economics_Major_Ses_Done > 0 && Session_TEC > 0 ::"Economics"
+                5:: Education_Major_Ses_Done > 0 && Session_TED > 0 ::"Education"
+                6:: English_Major_Ses_Done > 0 && Session_TEN > 0 ::"English"
+                7:: Geography_Major_Ses_Done > 0 && Session_TGE > 0 ::"Geography"
+                8:: History_Major_Ses_Done > 0 && Session_THI > 0 ::"History"
+                9:: Law_Major_Ses_Done > 0 && Session_TLA > 0 ::"Law"
+                10:: Mathematics_Major_Ses_Done > 0 && Session_TMA > 0 ::"Mathematics"
+                11:: Medicine_Major_Ses_Done > 0 && Session_TME > 0 ::"Medicine"
+                12:: Music_Major_Ses_Done > 0 && Session_TMU > 0 ::"Music"
+                13:: Philosophy_Major_Ses_Done > 0 && Session_TPH > 0 ::"Philosophy"
+                14:: Psychology_Major_Ses_Done > 0 && Session_TPS > 0 ::"Psychology"
+                15:: Political_Sciences_Major_Ses_Done > 0 && Session_TPOL > 0 ::"Political Sciences"
+                60:: SalesMarketing_Major_Ses_Done > 0 && Session_TSM > 0 ::"Sales and Marketing"
+                80:: TravelTourism_Major_Ses_Done > 0 && Session_TTT > 0 ::"Travel and Tourism"
+                90:: Veterinary_Major_Ses_Done > 0 && Session_TVE > 0 ::"Veterinary"
                 16::"Just for myself"
                 99::"Go back!"
                 
@@ -201,6 +225,11 @@ OTHER: none
                 
                     TextMajorChosen = "computer science"
                     choiceCourseMajor => 4
+                    
+                Elseif 31
+                
+                    TextMajorChosen = "dental"
+                    choiceCourseMajor => 31
                         
                 Elseif 4
 
@@ -261,6 +290,19 @@ OTHER: none
 
                     TextMajorChosen = "political sciences"
                     choiceCourseMajor => 16
+                
+                Elseif 60
+
+                    TextMajorChosen = "Sales and Marketing"
+                    choiceCourseMajor => 60
+                Elseif 80
+
+                    TextMajorChosen = "Travel and Tourism"
+                    choiceCourseMajor => 80
+                Elseif 90
+
+                    TextMajorChosen = "veterinary"
+                    choiceCourseMajor => 90
                     
                 Elseif 16
 
@@ -287,6 +329,9 @@ OTHER: none
                 Elseif choiceCourseMajor == 3
                 
                     Player.modifyActorVar(rk_VB_Classics_Major_Level, 0.25)
+                Elseif choiceCourseMajor == 31
+                
+                    Player.modifyActorVar(rk_VB_Dental_Major_Level, 0.25)
                     
                 Elseif choiceCourseMajor == 4
                 
@@ -340,6 +385,15 @@ OTHER: none
                 
                     Player.modifyActorVar(rk_VB_Political_Sciences_Major_Level, 0.25)
                     
+                Elseif choiceCourseMajor == 60
+                    
+                    Player.modifyActorVar(rk_VB_SalesMarketing_Major_Level, 0.25)
+                Elseif choiceCourseMajor == 80
+                    
+                    Player.modifyActorVar(rk_VB_TravelTourism_Major_Level, 0.25) 
+                Elseif choiceCourseMajor == 90
+                    
+                    Player.modifyActorVar(rk_VB_Veterinary_Major_Level, 0.25)    
                 Endif
 
                 passTime(0.5, 1.5)
