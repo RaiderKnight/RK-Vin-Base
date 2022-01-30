@@ -1,8 +1,8 @@
-WHAT: rk_VB_Housework
+WHAT: rk_VB_Housework, do_housework, do_housework_together
 WHERE: none
 WHEN: 0-24
-WHO: Actor = getCreature(); If Actor:perversion + Actor:arousal > 70
-OTHER: isModEnabled(vin_Bestiality) && Player.isNaked()
+WHO: Actor = getCreature(Dog); If Actor:perversion + Actor:arousal > 50
+OTHER: 
 
     SceneStart()
         
@@ -10,8 +10,34 @@ OTHER: isModEnabled(vin_Bestiality) && Player.isNaked()
         Dchoice = Dchoice.round()
         Actor.show()
         Actor.moveToPerson(Player)
-        If Actor.isMale() && Dchoice == 1
+        Player.animate(sweep)
+        If CurrentCompanion.isValid()
+            If 50 > Random(0, 100)
+                CCCome = true
+            Endif
+        Endif
+        FuckD = false
+        If !Actor.isMale()
+            "I was just doing some housework. I needed to bend over to grab something that I dropped by accident."
+            "All of a sudden my dog throws herself in front of me and shows me her pussy while jerking her ass at the same time."
+            "I can see perfectly that my dod is horny to the max by seeing her dripping pussy."
+            "Do I fuck with her?"
+            0::"Yes"
+            1::"No"
+            
+            If 0
+                perversion += 1
+                Player(Happy)::"Oh yeah! You want to fuck baby ...!"
+                Player.strip()
+                Sex(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                FuckD = true
+            EndIf
+        Elseif Actor.isMale() && Dchoice == 1
             "While cleaning, I decide to get on all fours to clean under my bed when suddenly my dog decides to try to fuck me."
+            animatePair(Actor, Player, Doggy)
             "Do I let it happen?"
             0::"Yes"
             1::"No"
@@ -20,19 +46,12 @@ OTHER: isModEnabled(vin_Bestiality) && Player.isNaked()
         
                 perversion += 1
                 Player(Happy)::"Oh yeah! Fuck me hard baby ...!"
+                Player.strip()
                 Sex(Actor, Player)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
-                
-                If CurrentCompanion.isValid()
-                    "Suddenly, <CurrentCompanion.name> saw what's happening and decided to join in the fun."
-                    Sex(CurrentCompanion, Actor, Player)
-                    If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -3)
-                    EndIf
-                Endif
-                
+                FuckD = true
             Else
         
                 "Aaah, dog instinct ..."
@@ -42,8 +61,9 @@ OTHER: isModEnabled(vin_Bestiality) && Player.isNaked()
                 
             Endif
             
-        Elseif Dchoice == 2
+        Elseif Actor.isMale() && Dchoice == 2
             "While cleaning, I decide to get on all fours to clean the under my bed when suddenly my dog decides to lick my ass."
+            animatePair(Actor, Player, Licking)
             "Do I let it happen?"
             0::"Yes"
             1::"No"
@@ -53,27 +73,40 @@ OTHER: isModEnabled(vin_Bestiality) && Player.isNaked()
                 perversion += 1
                 Player(Happy)::"Oh yeah! Clean me that hole ...!"
                 Filter(Licking)
+                Player.strip()
                 Sex(Actor, Player)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
-                
-                If CurrentCompanion.isValid()
-                    "Suddenly, <CurrentCompanion.name> saw what's happening and decided to join in the fun."
-                    Sex(CurrentCompanion, Actor, Player)
-                    If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -3)
-                    EndIf
-                Endif
+                FuckD = true
             Else
-        
                 "Aaah, dog instinct ..."
-                Player(Angry)::"Hey, no! Don't do that on me boy!"
+                Player(Angry)::"Hey, no! Don't do that big <Actor.boy_or_girl>!"
                 perversion -= Random(1, 3)
                 arousal -= Random(1, 3)
-                
             Endif
         Endif
         
+        If CCCome && FuckD
+            CurrentCompanion.show()
+            CurrentCompanion.dress()
+            CurrentCompanion(Happy):: "<Player.name>, I'm home. How was your ... What the fuck!"
+            If CurrentCompanion:perversion > 70
+                "Suddenly, <CurrentCompanion.name> saw what's happening and decided to join in the fun."
+                CurrentCompanion.strip()
+                Sex(CurrentCompanion, Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+            Else    
+                "Suddenly, <CurrentCompanion.name> saw what's happening and literally freaked out."
+                CurrentCompanion(Angry):: "Are you fucking serious! That's disgusting! I can't believe you fuck with our dog."
+                CurrentCompanion:attractiontoplayer -= Random(0, 15)
+                CurrentCompanion:arousal -= Random(0, 15)
+                CurrentCompanion:rapportwithplayer -= Random(0, 15)
+                CurrentCompanion:perversion -= Random(0, 15)
+            Endif
+        Endif
+        Player.animate()
     SceneEnd()
     timeout(250, rk_VB_HornyDog)

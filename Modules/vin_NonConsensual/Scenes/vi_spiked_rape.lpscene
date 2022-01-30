@@ -38,10 +38,22 @@ OTHER: !isWithCompanion() && Random(40, 500) < attractiveness
             TalkNonConsensual()
             SexNoAffair(Actor, Player)
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -2)
+                Player.modifyActorVar(rk_VB_Hunger, -3)
             EndIf
             Actor.setActorVar(tag_Rapist, 1)
             mood => 0
+            If isModEnabled(vin_Bestiality) && 50 > random(0, 100)
+            Actor2 = generateCreatureTemporary()
+            While !Player.isInterestedIn(Actor2)
+                Actor2 = generateCreatureTemporary()
+            Endwhile
+            Actor2.show()
+            "Just as I thought this night couldn't possibly get any worse, my rapist brought in <Actor.his_or_her> pet dog. <Actor.He_or_She> held me down while guiding the dog to breed me."
+            SexNoAffair(Actor2, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -3)
+            EndIf
+        Endif
         Else
             "You can never be too careful nowadays. I'd better not accept a drink from a complete stranger."
         Endif

@@ -14,10 +14,44 @@ OTHER:
         If Actor.isValid()
             setBackgroundCustom(livingroom)
             money -= 30
-            Actor4 = getSpecific(Dating)
             "I had some business to attend to today so I called the babysitter <Actor.name> over to take care of <Actor2.name>"
+            If Random(0, 100) < 20 && isModEnabled(vin_Bestiality)
+                Actor4 = getCreature(Dog)
+                While !Actor.isInterestedIn(Actor4) && Actor4.isValid()
+                    Actor4 = getCreature(Dog)
+                Endwhile    
+            Endif
+            
+            If !Actor4.isValid()
+                Actor4 = getSpecific(Dating)
+            Endif
             "I was lucky to get there earlier than expected" // Edit Raddeck
-            If Random(0, 100) < 25
+            If Actor4.isValid() && Actor4.isCreature() && isModEnabled(vin_Bestiality) // Edit Raddeck
+                Player(Curious):: "What the fuck!"
+                setBackground(home)
+                Actor.show()
+                Actor4.show()
+                Sex(Actor, Actor4)
+                Actor.strip()
+                "The babysitter is having bestiality sex with my pet dog <Actor4.name>!"
+                0:: "Get angry and fire the babysitter on the spot"
+                1:: "Join them for some fun"
+                2:: "Keep quiet and ignore"
+                
+                If 0
+                    Actor.setActorVar(tag_babysitter, 0)
+                    "I promptly fired the misbehaving babysitter. How dares <Actor.he_or_she> abuse my pet?"
+                Elseif 1
+                    Player(Flirty):: "I see you've discovered the pleasure of bestiality as well. I knew there was something special about you. That's why I hired you."
+                    Player(Flirty):: "But, if you want to play with my pet, you will have to play with me also." // Edit Raddeck
+                    Actor(Flirty):: "No problem..." // Edit Raddeck
+                    Player.strip() // Edit Raddeck
+                    Sex(Player, Actor, Actor4)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                    EndIf
+                Endif      
+            Elseif Random(0, 100) < 25
                 Player(Curious):: "What the fuck!"
                 setBackground(home)
                 Actor.show()
@@ -364,6 +398,7 @@ OTHER:
                     Actor(Shy)::"We'll get dressed right away..."
                     Actor.dress()
                     Actor4.dress()
+                    Actor4(Curious)::"Hi honey, you got here early..."
                     //End edit Raddeck
                 Endif
             Else

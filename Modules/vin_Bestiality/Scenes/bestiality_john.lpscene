@@ -1,0 +1,62 @@
+WHAT: all 
+WHERE: all
+WHEN: 0-24
+WHO: Actor = getPerson(tag_john); If Actor:perversion > 65
+OTHER:
+
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        secondScreen(Actor)
+        Actor.show()
+        "One of my regular customers, <Actor.name> got in touch with me again and wanted to 'meet' tonight ..."
+        "<Actor.He_or_She> mentioned <Actor.he_or_she> would be bringing along one of <Actor.his_or_her> dogs, but would pay me generously."
+        "This particular customer admitted to me previously that <Actor.he_or_she> enjoyed bestiality porn from time to time, so it wasn't hard to grasp what <Actor.he_or_she> had in mind this time. I would be well compensated for it though ..."
+        0:: "Get paid for fucking a dog"
+        1:: "There's a limit"
+        
+        If 0
+            "<Actor.name>'d better pay me extremely well for this."
+            
+            Actor3 = generateCreatureTemporary(Dog)
+            While !Actor3.isSameGender(Actor)
+                Actor3 = generateCreatureTemporary(Dog)
+            Endwhile
+            secondScreen()
+            SetBackground(home)
+            Actor3.show()
+            Actor.dress()
+            Actor.show()
+            Actor.strip()
+            "I arrive at a nice hotel room where <Actor.name> and <Actor.his_or_her> dog <Actor3.name> were already there waiting for me." //Edit Vin
+            // Start edit Raddeck
+            SexDeal = Random(200, 1000)
+            SexDeal_loc = SexDeal.convertToLocalCurrency()
+            Actor(Flirty)::"Good to see you! So, About what we talked about earlier, I offer you <SexDeal_loc>?"
+            "What should I do?"
+            0::"Accept"
+            1::"Refuse"
+            
+            If 0
+                perversion += 1
+                "<Actor.His_or_Her> dog must have done this before with other prostitutes. <Actor3.He_or_She> knew right away what to do with me." //Edit Vin
+                Player.strip()
+                Sex(Actor3, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                money += SexDeal
+                "Pleased with the show <Actor.his_or_her> dog and I put on, <Actor.name> gave me a big tip for my troubles." //Edit Vin
+                Actor:arousal += 5
+                money += 200
+            Else
+                Player(Sad)::"Sorry, but your offer is to low!"
+            Endif 
+        Else
+            Player(Sad)::"No, I do not do such things!" // End edit Raddeck
+        Endif
+    SceneEnd()
+    timeout(500, bestiality_john) // scene improved by Raddeck

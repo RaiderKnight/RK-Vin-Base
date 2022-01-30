@@ -20,10 +20,12 @@ OTHER:
             0:: "Fuck my slave"
             1:: "Make my slave fuck someone I know"
             2:: "Tie my slave up and let strangers fuck <Actor.him_or_her>"
-            3:: "Nothing"
+            3:: isModEnabled(vin_Bestiality):: "Make my slave fuck an animal"
+            99:: "Nothing"
             
             If 0
-                Actor:: "Yes, of course, I'm at your service, <Player.Master_or_Mistress>."
+                Actor(Happy):: "Yes, of course, I'm at your service, <Player.Master_or_Mistress>."
+                Player,strip()
                 Sex(Player, Actor)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
@@ -36,7 +38,8 @@ OTHER:
                 If Actor2.isInterestedIn(Actor) && [Actor2:perversion > 50 || Actor2.hadSex()]
                     Actor2.dress()
                     Actor2.show()
-                    Actor:: "Yes, of course, anything you want, <Player.Master_or_Mistress>. I'll pleasure <Actor2.Mr_or_Ms> <Actor2.name> as best as I can on your behalf."
+                    Actor(Happy):: "Yes, of course, anything you want, <Player.Master_or_Mistress>. I'll pleasure <Actor2.Mr_or_Ms> <Actor2.name> as best as I can on your behalf."
+                    Actor2,strip()
                     Sex(Actor2, Actor)                
                 Else
                     "Unfortunately, <Actor2.name> didn't seem overly interested in my slave."
@@ -48,7 +51,6 @@ OTHER:
                 Actor.dressBondage(Handcuffs)
                 Actor.dressBondage(Shincuffs)
                 Actor.dressBondage(Thighcuffs)
-    
                 "I also left a sign next to <Actor.him_or_her> that simply said 'Enjoy!'"
                 count = 0
                 While count < 3
@@ -59,10 +61,36 @@ OTHER:
                     Actor2.dress()
                     Actor2.show()
                     "A stranger passed by and took up the offer."
+                    Actor2,strip()
                     Sex(Actor2, Actor)
                     count += 1
                 Endwhile
                 Player(Happy):: "Well done, slave, you've worked hard for your <Player.Master_or_Mistress> today ..."
+            Elseif 3
+                Actor2 = getCreature()
+                While !Actor.isInterestedIn(Actor2) && Actor2.isValid()
+                    Actor2 = getCreature()
+                Endwhile
+                
+                If Actor2.isValid()           
+                    If Actor2.isCreatureType(Horse)
+                        setBackgroundCustom(stable)
+                    Endif
+                    
+                    Actor2.show()
+                    
+                    "Perhaps <Actor2.name> would be a good candidate for my slave to fuck?"
+                    0:: "Yes"
+                    1:: "No"
+                    
+                    If 0
+                        Actor(Happy):: "Of course, <Player.Master_or_Mistress>, anything for you ..."
+                        Actor2,strip()
+                        Sex(Actor2, Actor)
+                    Endif
+                Else
+                    "I can't think of any animals I own that would be appropriate for this."
+                Endif
             Endif
         Else
             "<Actor.name> has not submitted to me and accepted me as <Actor.his_or_her> rightful <Player.master_or_mistress> yet ..."
@@ -80,7 +108,7 @@ OTHER:
                     Actor.dressBondage(Collar)
                     "To show my newly recognized ownership of my new slave, I put a collar around <Actor.his_or_her> neck and forbid <Actor.him_or_her> from ever removing it."
                     Actor:masochist => 100
-                Else
+                Else // Start edit Raddeck
                     Actor:masochist -= 5
                     "Unfortunately, <Actor.name> still showed some resistance and didn't quite submit to me just yet."
                     "What should I do?"
@@ -143,7 +171,7 @@ OTHER:
                         "I'll give <Actor.him_or_her> some time to get used to it..."
                         Actor:attractiontoplayer += random(0, 2)
                     Endif
-                Endif
+                Endif // End edit Raddeck
             Endif
         Endif
     SceneEnd() // scene improved by Raddeck

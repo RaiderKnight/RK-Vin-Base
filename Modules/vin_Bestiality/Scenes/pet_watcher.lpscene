@@ -1,0 +1,153 @@
+WHAT: all
+WHERE: work
+WHEN: 0 - 24
+WHO: Actor = getCreature(Dog)
+OTHER:
+
+    // If you own a pet and are working in an office, sometimes you have to go on a business trip out of town for a few days. You'll be prompted to ask someone to watch your pet for you. Your business trip ends up being shorter than expected and you arrive home. Either nothing happens or because of either the pet's previous experience with you or your friend's high perversion, you catch them in the act. You can then get angry or join them.
+
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        "I have an opportunity to go a business trip out of town for a few days. I could decline but this trip be good for my career advancement. My only concern is that there'll be no-one to look after <Actor.name>."
+        0:: "Ask someone to house-sit and look after my pet"
+        1:: "Stay home"
+        
+        If 0
+            "Who should I ask to look after <Actor.name> while I'm away on business? They should be someone I'm friendly with."
+            selectNpc()
+            Actor2 = getSelectedNpc()
+            
+            If Actor2:rapportwithplayer > 10 || Actor2.isDating() || Actor2.hadSex()
+                jobperformance += 10
+                jobexperience += 3
+                "<Actor2.name> gladly accepted my request. <Actor2.He_or_She> will be staying at my place for the duration of my business trip."
+                
+                setBackground(street)
+                "A few days later ..."
+                "That was a successful business trip, although it did end one day earlier than expected. Let's go home now ..."
+                moveTo(home)
+                setBackgroundCustom(livingroom)
+                Player(Happy):: "<Actor2.name>, I'm home early. I hope everything was okay?"
+                If Actor2.isInterestedIn(Actor) && [Actor2:perversion > 50 || Actor.hadSex()]
+                    Actor2.show()
+                    Actor.show()
+                    animatePair(Actor, Actor2, Penetration)
+                    "What the fuck!?"
+                    Sex(Actor, Actor2)
+                    "I caught my house-sitter fucking my dog!"
+                    
+                    "How should I react?"
+                    0:: "Get angry"
+                    1:: "Say it's okay"
+                    2:: "Join them"
+                    
+                    If 0
+                        Player(Shocked):: "What the fuck!?" //Edit by Raddeck
+                        Player(Angry):: "I trusted you! How could you?"
+                        Actor2:rapportwithplayer -= 10
+                        If Actor.hadSex()
+                            Actor2(Sad):: "It's not my fault ... Your dog started it ... It's as if <Actor.he_or_she> has done this many times with another human." 
+                        Else
+                            Actor2(Sad):: "I'm sorry but I've been feeling so lonely here the last few days and your dog is so hot."
+                        Endif
+                        mood -= 5 //Start edit by Raddeck
+                        "What should I do?"
+                        0::"Call the police"
+                        1::"Extorting <Actor2.him_or_her>"
+                        2::"Fire <Actor2.him_or_her>"
+                        
+                        If 0
+                            perversion -= 5
+                            arousal -= 5
+                            Player.animate(call)
+                            Player(Shocked)::"Ok, I have no choice but to call the police, you are such a creep!"
+                            Player.animate()
+                            "Sure enough, the cops promptly arrived."
+                            "They immediately arrested this deranged house-sitter..."
+                            mood += 5
+                            Actor2.hide()
+                        Elseif 1
+                            perversion += 2
+                            arousal += 2
+                            Player(Grin)::"Well, well, if you want me to keep my mouth shut about what I just saw, you're going to have to..."
+                            Actor2(Flirty)::"I guess I don't have a choice..."
+                            Player.strip()
+                            "What I should ask?"
+                            1::"<Player.suck_or_lick> my <Player.dick_or_pussy>"
+                            2::"<Player.masturb_or_finger> my <Player.dick_or_pussy>"
+                            3::"Fuck with me"
+                            3::"Fuck with me and my dog"
+                            
+                            If 1
+                                Filter(Blowjob, LickPussy)
+                                sex(Actor2, Player)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
+                            Elseif 2
+                                Filter(Handjob, Fingering)
+                                sex(Actor2, Player)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
+                            Elseif 3
+                                sex(Player, Actor2)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                            Else
+                                sex(Player, Actor, Actor2)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                                EndIf
+                            Endif
+                        Else
+                            perversion -= 4
+                            arousal -= 4
+                            Player(Angry):: "Get out of here!"
+                            Actor2(Sad):: "ok, I'm leaving!"
+                            Actor2.hide()
+                        Endif //End edit by Raddeck
+                    Elseif 1
+                        //Start edit by Raddeck
+                        Player(Shocked):: "What the fuck!?"
+                        Player(Curious):: "What are you both doing?"
+                        perversion += Random(0, 1)
+                        arousal -= Random(0, 1)
+                        //Start edit by Vin
+                        If Actor.hadSex()
+                            Actor2(Sad):: "It's not my fault ... Your dog started it ... It's as if <Actor.he_or_she> has done this many times with another human." 
+                        Else
+                            Actor2(Sad):: "I'm sorry but I've been feeling so lonely here the last few days and your dog is so hot."
+                        Endif
+                        Player(Serene):: "It's okay ... We all make mistakes ..." //End edit by Vin
+                        Actor2:rapportwithplayer += Random(0, 1)
+                        Actor2:attractiontoplayer += Random(0, 1)
+                        //End edit by Raddeck
+                    Else
+                        Player(Grin):: "Looks like you two have been having all the fun while I'm busy working out of town."
+                        Player(Grin):: "That's so unfair, you know! We'll have to fix this injustice!"
+                        Player.strip() //Edit by Raddeck
+                        Sex(Actor, Player, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                        EndIf
+                    Endif
+                Else
+                    Actor2.dress()
+                    Actor2.show()
+                    Actor.show()
+                    Actor2(Happy):: "Oh, you're back! Yeah, everything is okay! <Actor.name>'s been a good dog."
+                    Actor:mood += 15 //Edit by Raddeck
+                Endif
+            Else
+                "Unfortunately, <Actor2.name> turned me down. I have no choice but stay home this time."
+                mood -= 5 //Edit by Raddeck
+            Endif
+        Endif
+    SceneEnd()
+    timeout(300, pet_watcher) // scene improved by Raddeck

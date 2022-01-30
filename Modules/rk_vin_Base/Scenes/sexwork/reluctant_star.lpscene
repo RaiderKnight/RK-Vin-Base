@@ -9,13 +9,14 @@ OTHER: isModEnabled(vin_NonConsensual) && pornfame == 0 && !Player.isGay()
 
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         "It's been a decent date with <Actor.name> I guess. <Actor.He_or_She> is a bit handsy though, but I'm giving <Actor.him_or_her> none of it."
         Actor(Happy):: "You're the most <Player.handsome_or_beautiful> <Player.guy_or_girl> I've ever been on a date with. I'd love nothing more than being able to buy you a drink."
         0:: "Yes"
         1:: "No"
     
         If 0
-        
             "Ah, what a charming <Actor.gentleman_or_lady>!"
             Player(Happy):: "Of course! I'd love to have a drink with you."
             If UrgeToPeeEnable > 0
@@ -39,17 +40,37 @@ OTHER: isModEnabled(vin_NonConsensual) && pornfame == 0 && !Player.isGay()
             TalkNonConsensual()
             SexNoAffair(Actor, Player)
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -2)
+                Player.modifyActorVar(rk_VB_Hunger, -3)
             EndIf
             mood => 0
+            Actor.animate(camera)
             "I was barely conscious while <Actor.name> was raping me but at one point, I did notice that <Actor.he_or_she> was filming the whole thing ..."
+            If isModEnabled(vin_Bestiality)
+                Actor2 = generateCreatureTemporary(Dog)
+                While !Player.isInterestedIn(Actor2)
+                    Actor2 = generateCreatureTemporary(Dog)
+                Endwhile
+                Actor2.show()
+                Actor.animate(camera)
+                "Just as I thought this night couldn't possibly get any worse, my rapist brought in <Actor.his_or_her> pet dog. <Actor.He_or_She> held me down while guiding the dog to breed me. Of course, <Actor.he_or_she> didn't stop filming either."
+                SexNoAffair(Actor2, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            Endif
             Actor.hide()
             "I woke up the next morning. Of course, <Actor.name> was long gone ..."
             "There's a new message from <Actor.him_or_her> on my phone! <Actor.He_or_She> still had the <Actor.balls_or_galls> to text me after what happened?"
             "It's a PornHub link ..."
             "Oh no ... <Actor.name> filmed everything and put it everywhere on the internet as porn ..."
             "Even though I was a rape victim, an even bigger punishment is that my life is basically over now that all my intimates are out there for everyone to see ..."
+            If Actor2.isValid()
+                "And it wasn't just any regular intercourse either, since my rapist made me have sex with <Actor.his_or_her> pet dog in the end ..."
+            Endif
             "For some reason, I couldn't help but notice that the videos were getting a huge number of views. I ended up scrolling down to the comments, all of them are asking who the porn <Player.actor_or_actress> is cause they find <Player.him_or_her> so hot."
+            If Actor2.isValid()
+                "In particular, many of them express their pleasant surprise that such a hot porn actress would be willing to partake in a bestiality porn shoot."
+            Endif 
             "They are referring to me of course ..."
             "Trying to take down the video would be futile. Once something is on the internet, it's there forever ..."
             "Maybe I could make the most out of this terrible situation ..."
@@ -66,6 +87,5 @@ OTHER: isModEnabled(vin_NonConsensual) && pornfame == 0 && !Player.isGay()
         Else
             "You can never be too careful nowadays. I'd better not accept a drink from someone I don't know that well."
         Endif
-        
     SceneEnd() // Improved by Raddeck
     timeout(1000, reluctant_star)

@@ -1,8 +1,8 @@
-WHAT: sleep, nap
+WHAT: sleep, nap, rk_VB_small_sleep
 WHERE: home
 WHEN: 22 - 4
 WHO: none
-OTHER: !isWithCompanion() && Random(2, 50) > karma
+OTHER: !isWithCompanion() && [[Random(60, 500) < attractiveness && intelligence < Random(0, 100)*Random(0, 1)] || isModEnabled(vin_Bestiality)]
 
     SceneStart()
 
@@ -12,6 +12,7 @@ OTHER: !isWithCompanion() && Random(2, 50) > karma
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         IBuyaASys = rk_VB_IBuyaASys.getGlobal()
         AlarmEnable = rk_VB_AlarmEnable.getGlobal()
+        DogGuardianStats = Player.getActorVar(DogGuardianStat)
         If IBuyaASys > 0
             KRisk = 0
             If IBuyaASys == 1
@@ -29,29 +30,116 @@ OTHER: !isWithCompanion() && Random(2, 50) > karma
             Player(Curious):: "Hum, I can't see anything!"
             Player(Curious):: "Let's hope it was just an animal..."
         Else
-        
+            fightStart = false
             Actor = generatePersonTemporary()
             While !Player.isInterestedIn(Actor)
                 Actor = generatePersonTemporary()
             Endwhile
+            RapIsIn = true
+            Actor.dressUniform(Crime)
             Actor.show(2)
-            Actor(Evil):: "Wake up, whore. And prepare to get fucked!"
-            "What's going on? Oh no, my bedroom has been invaded by a rapist. <Actor.He_or_She> chose a day when there's no-one else in the apartment too ..."
-            If Actor:martial - Actor:intoxication < martial - intoxication
-                Player(Angry):: "Thug, take this!"
-                Actor(Pain):: "Ah!"
-                "Thankfully, I managed to react well to the situation and overpower the thug eventually. I then called the cops, who promptly arrested the wannabe rapist." 
-            Else
-                Player(Crying):: "No, please stop ... Somebody help!"
-                "Unfortunately, the element of surprise was too much and my struggles against the home invader were futile. I have no choice now but to endure giving this vile creature pleasure against my will ..."
-                Filter(Aggressive)
-                TalkNonConsensual()
-                SexNoAffair(Actor, Player)
-                If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -3)
-                EndIf
-                Actor.setActorVar(tag_Rapist, 1)
+            Actor(Evil):: "Wake up, whore. And prepare to get fucked!" // Edit Vin
+            "What's going on? Oh no, my bedroom has been invaded by a rapist. <Actor.He_or_She> chose a day when there's no-one else in the apartment too ..." // Edit Vin
+            Actor2 = getCreature(Dog) // Edit Vin
+            If Actor2.isValid() // Edit Vin
+                Actor2.show() // Edit Vin
+                RapIsIn = false
+                If DogGuardianStats > 50 || 50 > Random(1, 100)
+                    bonus = Random(1, 5)
+                    "Before things get further out of control, my trusty guard dog <Actor2.name> came to my rescue." // Edit Vin
+                    "<Actor2.name> aggressively attacked the home invader." // Edit Vin
+                    Actor2(Angry):: "Warf, warf, warf, grrrr...!"
+                    Actor2.moveToPersonStand(Actor, 30)
+                    Actor(Pain):: "Ah! Fuck,.... Ahhhhh!"
+                    
+                    If DogGuardianStats < 70
+                        "The home invader managed to knock down my dog..."
+                        mood -= 5
+                        Actor2:energy => 25
+                        Player.getActorVar(DogGuardianStat, -1)
+                        DGetFuck = true
+                    Else
+                        "After a few painful bites, the thug panicked and fled." // Edit Vin
+                        Actor.hide() // Edit Vin
+                        Player(Happy):: "Oh my God, <Actor2.name>, you saved me!" // Edit Vin
+                        Player.getActorVar(DogGuardianStat, bonus)
+                        If isModEnabled(vin_Bestiality) && Player.isInterestedIn(Actor2)
+                            CookieForDog = true
+                        Else
+                            Player(Happy):: "Good dog! Here some cookies and a big bowl of your best meal."
+                            Actor2(Happy):: "Wouf..."
+                            Actor2:energy += 25
+                            Actor2:rapportWithPlayer += 1
+                        Endif
+                    Endif
+                Else
+                    fightStart = true
+                Endif
             Endif
+            
+            If RapIsIn || fightStart
+                If Actor:martial - Actor:intoxication < martial - intoxication
+                    If Actor2.isValid()
+                        Actor2(Angry):: "Warf, warf, warf, grrrr...!"
+                        Actor2.moveToPersonStand(Actor, 30)
+                    Endif
+                    Player.moveToPersonStand(Actor, 50)
+                    Player(Angry):: "Thug, take this!" // Edit Vin
+                    Actor(Pain):: "Ah!" // Edit Vin
+                    If Actor2.isValid()
+                        bonus = Random(0, 2)
+                        "Thankfully, we managed to react well to the situation and overpower the thug eventually. I then called the cops, who promptly arrested the wannabe rapist." 
+                        Player.getActorVar(DogGuardianStat, bonus)
+                        If isModEnabled(vin_Bestiality) && Player.isInterestedIn(Actor2)
+                            CookieForDog = true
+                        Else
+                            Player(Happy):: "Good dog! Here some cookies and a big bowl of your best meal."
+                            Actor2(Happy):: "Wouf..."
+                            Actor2:energy += 25
+                            Actor2:rapportWithPlayer += 1
+                        Endif
+                    Else
+                        "Thankfully, I managed to react well to the situation and overpower the thug eventually. I then called the cops, who promptly arrested the wannabe rapist."  // Edit Vin
+                    Endif
+                    martial += Random(0, 1)
+                    muscle += Random(0, 1)
+                    fitness += Random(0, 1)
+                Else
+                    Player(Crying):: "No, please stop ... Somebody help!"
+                    "Unfortunately, the element of surprise was too much and my struggles against the home invader were futile. I have no choice now but to endure giving this vile creature pleasure against my will ..."
+                    Player.strip()
+                    Filter(Aggressive)
+                    TalkNonConsensual()
+                    SexNoAffair(Actor, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                    EndIf
+                    If isModEnabled(vin_Bestiality) && DGetFuck
+                        "To make matters worse, the burglar decides to fuck my dog too."
+                        Player(Crying):: "No, please stop ... not my dog too!"
+                        "I am too weak to move, I can't do anything for my dog..."
+                        Filter(Aggressive)
+                        TalkNonConsensual()
+                        SexNoAffair(Actor, Actor2)
+                    EndIf
+                    Actor.setActorVar(tag_Rapist, 1) // Edit Vin
+                Endif
+            Endif
+            
+            If CookieForDog
+                "I can't help but notice that the fight with the home invader seemed to have brought out the animalistic instinct in <Actor2.name>. <Actor2.He_or_She> seems 'excited'." // Edit Vin
+                0:: "Reward my hero dog with sex" // Edit Vin
+                1:: "Some dog treats are good enough rewards" // Edit Vin
+                
+                If 0
+                    "A hero saving the damsel in distress deserves to get laid. That hero not being human shouldn't matter." // Edit Vin
+                    Player.strip()
+                    Sex(Actor2, Player) // Edit Vin
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                    EndIf
+                Endif
+            EndIf
         Endif
     SceneEnd()
     timeout(1000, vi_homeinvader_rape) // Improved by Raddeck
