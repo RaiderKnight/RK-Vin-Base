@@ -7,6 +7,16 @@ OTHER: !Player.isAsexual() && Random(0, 100) < 5
     SceneStart()
         IBuyaASys = rk_VB_IBuyaASys.getGlobal()
         AlarmEnable = rk_VB_AlarmEnable.getGlobal()
+        DogGuardianStats = Player.getActorVar(DogGuardianStat)
+        If DogGuardianStats > 75
+            DRisk = 25
+        ElseIf DogGuardianStats < 75
+            DRisk = 20
+        ElseIf DogGuardianStats > 50
+            DRisk = 15
+        ElseIf DogGuardianStats > 25
+            DRisk = 10
+        EndIf
         If IBuyaASys > 0
             KRisk = 0
             If IBuyaASys == 1
@@ -18,13 +28,19 @@ OTHER: !Player.isAsexual() && Random(0, 100) < 5
             Endif
         Endif
         KidnapAttemp = random(0, 100)
-        
-        If [KRisk > KidnapAttemp] && AlarmEnable > 0
+        TRisk = KRisk + DRisk
+        Actor2 = getCreature(Dog)
+        If [TRisk > KidnapAttemp] && AlarmEnable > 0
+            If Actor2.isValid()
+                Actor2(Angry):: "Warf, warf, warf, grrrr...!"
+            EndIf
             "All of a sudden the alarm system starts ringing."
             Player(Curious):: "WTF, well, let's go see what's going on!"
             Player(Curious):: "Hum, I can't see anything!"
             Player(Curious):: "Let's hope it was just an animal..."
         Else
+            WakerIsIn = true
+            fightStart = false
             Hunger = Player.getActorVar(rk_VB_Hunger)
             HungerEnable = rk_VB_EnableHunger.getGlobal()
             UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -40,22 +56,61 @@ OTHER: !Player.isAsexual() && Random(0, 100) < 5
             "In the middle of the night ..."
             Actor.animate(na_sleep)
             "I was suddenly awakened to the sight of horror, some stranger already naked in my bed trying to rape me ..." // Edit by Ravenger6660
-            0:: "Resist"
-            1:: "I might enjoy this actually ..."
-            
-            If 0
-                If martial < Actor:martial
-                    "Unfortunately, my assailant was too strong for me ..."
-                    Rape = true
+            If Actor2.isValid()
+                Actor2.show()
+                WakerIsIn = false
+                If DogGuardianStats > 50 || 50 > Random(1, 100)
+                    bonus = Random(1, 5)
+                    "Before things get further out of control, my trusty guard dog <Actor2.name> came to my rescue."
+                    "<Actor2.name> aggressively attacked the home invader."
+                    Actor2(Angry):: "Warf, warf, warf, grrrr...!"
+                    Actor2.moveToPersonStand(Actor, 30)
+                    Actor(Pain):: "Ah! Fuck,.... Ahhhhh!"
+                    
+                    If DogGuardianStats < 70
+                        "The home invader managed to knock down my dog..."
+                        mood -= 5
+                        Actor2:energy => 25
+                        Player.getActorVar(DogGuardianStat, -1)
+                        DGetFuck = true
+                    Else
+                        "After a few painful bites, the thug panicked and fled." 
+                        Actor.hide() 
+                        Player(Happy):: "Oh my God, <Actor2.name>, you saved me!"
+                        Player.getActorVar(DogGuardianStat, bonus)
+                        If isModEnabled(vin_Bestiality) && Player.isInterestedIn(Actor2)
+                            CookieForDog = true
+                        Else
+                            Player(Happy):: "Good dog! Here some cookies and a big bowl of your best meal."
+                            Actor2(Happy):: "Wouf..."
+                            Actor2:energy += 25
+                            Actor2:rapportWithPlayer += 1
+                        Endif
+                    Endif
                 Else
-                    "I managed to push my assailant off me. Defeated, <Actor.he_or_she> promptly jumped out of the window and made a run for it ..."
-                    "Phew, that was close ..."
-                    Rape = false
+                    fightStart = true
                 Endif
-            Else
-                Rape = true
-                masochist += 2
             Endif
+            
+            If WakerIsIn || fightStart
+                0:: "Resist"
+                1:: "I might enjoy this actually ..."
+                
+                If 0
+                    If martial < Actor:martial
+                        "Unfortunately, my assailant was too strong for me ..."
+                        Rape = true
+                    Else
+                        "I managed to push my assailant off me. Defeated, <Actor.he_or_she> promptly jumped out of the window and made a run for it ..."
+                        "Phew, that was close ..."
+                        Rape = false
+                    Endif
+                Else
+                    Rape = true
+                    masochist += 2
+                Endif
+            Endif
+            
             If Rape
                 If !Actor.isMale() && Player.isMale()
                     Filter(AggressiveFM)
@@ -69,6 +124,21 @@ OTHER: !Player.isAsexual() && Random(0, 100) < 5
                     Player.modifyActorVar(rk_VB_Hunger, -3)
                 EndIf
             Endif
+            
+            If CookieForDog
+                "I can't help but notice that the fight with the home invader seemed to have brought out the animalistic instinct in <Actor2.name>. <Actor2.He_or_She> seems 'excited'." // Edit Vin
+                0:: "Reward my hero dog with sex"
+                1:: "Some dog treats are good enough rewards"
+                
+                If 0
+                    "A hero saving the damsel in distress deserves to get laid. That hero not being human shouldn't matter."
+                    Player.strip()
+                    Sex(Actor2, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                    EndIf
+                Endif
+            EndIf
         Endif
     SceneEnd()
     timeout(200, vi_wake_cms) // Improved by Raddeck

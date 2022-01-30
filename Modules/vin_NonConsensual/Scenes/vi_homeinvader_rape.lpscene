@@ -13,6 +13,15 @@ OTHER: !isWithCompanion() && [[Random(60, 500) < attractiveness && intelligence 
         IBuyaASys = rk_VB_IBuyaASys.getGlobal()
         AlarmEnable = rk_VB_AlarmEnable.getGlobal()
         DogGuardianStats = Player.getActorVar(DogGuardianStat)
+        If DogGuardianStats > 75
+            DRisk = 25
+        ElseIf DogGuardianStats < 75
+            DRisk = 20
+        ElseIf DogGuardianStats > 50
+            DRisk = 15
+        ElseIf DogGuardianStats > 25
+            DRisk = 10
+        EndIf
         If IBuyaASys > 0
             KRisk = 0
             If IBuyaASys == 1
@@ -24,7 +33,12 @@ OTHER: !isWithCompanion() && [[Random(60, 500) < attractiveness && intelligence 
             Endif
         Endif
         KidnapAttemp = random(0, 100)
-        If [KRisk > KidnapAttemp] && AlarmEnable > 0
+        TRisk = KRisk + DRisk
+        Actor2 = getCreature(Dog) // Edit Vin
+        If [TRisk > KidnapAttemp] && AlarmEnable > 0
+            If Actor2.isValid()
+                Actor2(Angry):: "Warf, warf, warf, grrrr...!"
+            EndIf
             "All of a sudden the alarm system starts ringing."
             Player(Curious):: "WTF, well, let's go see what's going on!"
             Player(Curious):: "Hum, I can't see anything!"
@@ -40,7 +54,7 @@ OTHER: !isWithCompanion() && [[Random(60, 500) < attractiveness && intelligence 
             Actor.show(2)
             Actor(Evil):: "Wake up, whore. And prepare to get fucked!" // Edit Vin
             "What's going on? Oh no, my bedroom has been invaded by a rapist. <Actor.He_or_She> chose a day when there's no-one else in the apartment too ..." // Edit Vin
-            Actor2 = getCreature(Dog) // Edit Vin
+            
             If Actor2.isValid() // Edit Vin
                 Actor2.show() // Edit Vin
                 RapIsIn = false
