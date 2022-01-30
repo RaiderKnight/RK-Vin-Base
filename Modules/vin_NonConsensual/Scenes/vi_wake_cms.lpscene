@@ -71,13 +71,13 @@ OTHER: !Player.isAsexual() && Random(0, 100) < 5
                         "The home invader managed to knock down my dog..."
                         mood -= 5
                         Actor2:energy => 25
-                        Player.getActorVar(DogGuardianStat, -1)
+                        Player.modifyActorVar(DogGuardianStat, -1)
                         DGetFuck = true
                     Else
                         "After a few painful bites, the thug panicked and fled." 
                         Actor.hide() 
                         Player(Happy):: "Oh my God, <Actor2.name>, you saved me!"
-                        Player.getActorVar(DogGuardianStat, bonus)
+                        Player.modifyActorVar(DogGuardianStat, bonus)
                         If isModEnabled(vin_Bestiality) && Player.isInterestedIn(Actor2)
                             CookieForDog = true
                         Else

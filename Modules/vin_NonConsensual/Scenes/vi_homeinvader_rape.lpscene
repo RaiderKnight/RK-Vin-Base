@@ -70,13 +70,13 @@ OTHER: !isWithCompanion() && [[Random(60, 500) < attractiveness && intelligence 
                         "The home invader managed to knock down my dog..."
                         mood -= 5
                         Actor2:energy => 25
-                        Player.getActorVar(DogGuardianStat, -1)
+                        Player.getActorVar(modifyActorVar, -1)
                         DGetFuck = true
                     Else
                         "After a few painful bites, the thug panicked and fled." // Edit Vin
                         Actor.hide() // Edit Vin
                         Player(Happy):: "Oh my God, <Actor2.name>, you saved me!" // Edit Vin
-                        Player.getActorVar(DogGuardianStat, bonus)
+                        Player.getActorVar(modifyActorVar, bonus)
                         If isModEnabled(vin_Bestiality) && Player.isInterestedIn(Actor2)
                             CookieForDog = true
                         Else
@@ -103,7 +103,7 @@ OTHER: !isWithCompanion() && [[Random(60, 500) < attractiveness && intelligence 
                     If Actor2.isValid()
                         bonus = Random(0, 2)
                         "Thankfully, we managed to react well to the situation and overpower the thug eventually. I then called the cops, who promptly arrested the wannabe rapist." 
-                        Player.getActorVar(DogGuardianStat, bonus)
+                        Player.getActorVar(modifyActorVar, bonus)
                         If isModEnabled(vin_Bestiality) && Player.isInterestedIn(Actor2)
                             CookieForDog = true
                         Else
