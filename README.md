@@ -3,7 +3,7 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Version: 1.2.3</p>
+<p>Version: 1.2.4</p>
 <br>
 <br>
 <p><strong>Rework In Progress (WIP)</strong></p>
@@ -21,8 +21,9 @@
 <p>- More actions, choices, consequence and possibilities</p>
 <p>- More online activities.</p>
 <p>- You can join the Police.</p>
+<p>- You can buy an alarm system and/or train your dog to protect you.</p>
 <p>- And a lot more...</p>
-<p>- Updated every week.</p>
+<p>- Updated almost every week.</p>
 <br>
 <p>In my eyes, 75% of the scenes are not complete enough or lack choice of actions or consequences ...</p>
 <br>
@@ -54,7 +55,7 @@
 <hr>
 <br>
 <h3>Module requirements</h3>
-<p>At least the game LifePlay 4.0.4</p>
+<p>At least the game LifePlay 4.2.1</p>
 <br>
 <h3>Module conflict</h3>
 <p>All other mods who are not listed below (For the moment...)</p>

@@ -18,32 +18,50 @@ OTHER:
         1:: "There are better ways to make money"
         
         If 0
+            perversion += 1
             setBackground(home)
             Actor = generatePersonTemporary()
             Actor.dress()
             Actor.show()
             Actor2 = generateCreatureTemporary()
             Actor2.show()
-            "<Actor.name> is offering me some cash for me to fuck <Actor.his_or_her> animal <Actor2.name> and get <Actor2.him_or_her> ready for actual breeding."
+            Price = Random(100, 1000)
+            Price_loc = Price.convertToLocalCurrency()
+            "<Actor.name> is offering me <Price_loc> to fuck <Actor.his_or_her> animal <Actor2.name> and get <Actor2.him_or_her> ready for actual breeding."
             0:: "Deal!"
             1:: "No"
             
             If 0
-                money += Random(100, 300)
+                money += Price
+                Player.strip()
                 Sex(Actor2, Player)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
                 
                 If !Player.isMale() && Random(0, 100) < 50
-                    If Random(0, 100) < 50 && Actor.isCreatureType(Dog)
-                        Actor:: "That looks like fun actually. Maybe I should join you and get some practice. Might save the money and do it myself next time."
-                        Sex(Actor2, Actor, Player)
-                        If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                    If Random(0, 100) < 50 && Actor2.isCreatureType(Dog)
+                        Actor(Flirty):: "That looks like fun actually. Maybe I should join you and get some practice. Might save the money and do it myself next time."
+                        Price = Random(200, 500)
+                        Price_loc = Price.convertToLocalCurrency()
+                        "<Actor.name> is offering me <Price_loc> to fuck with <Actor.him_or_her> and the pet?"
+                        0:: "Deal!"
+                        1:: "No"
+                        
+                        If 0
+                            Player.strip()
+                            Sex(Actor2, Actor, Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -3)
+                            EndIf
+                            money += Price
                         EndIf
                     Else
-                        Actor:: "You fucked like a pro. I have a similar animal also in need of priming for breeding. Can you do both at the same time for some extra cash?"
+                        Actor(Flirty):: "You fucked like a pro. I have a similar animal also in need of priming for breeding. Can you do both at the same time for some extra cash?"
+                        Price = Random(500, 1000)
+                        Price_loc = Price.convertToLocalCurrency()
+                        Player(Flirty):: "Double the money? Sign me up!"
+                        "<Actor.name> is offering me <Price_loc> to fuck with <Actor.him_or_her> and <Actor.his_or_her> pet?"
                         0:: "Yes"
                         1:: "No"
                         
@@ -54,15 +72,17 @@ OTHER:
                                 Actor3 = generateCreatureTemporary(Horse)
                             Endif
                             Actor3.show()
-                            Player:: "Double the money? Sign me up!"
+                            Actor.strip()
+                            Player.strip()
+                            Player(Flirty):: "Let's start!"
                             Sex(Actor2, Actor3, Player)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -3)
                             EndIf
-                            money += Random(100, 300)
+                            money += Price
                         Endif
                     Endif
                 Endif        
             Endif
         Endif
-    SceneEnd()
+    SceneEnd() // Scene improved by Raddeck

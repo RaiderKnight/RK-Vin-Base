@@ -15,13 +15,14 @@ OTHER: none
             1:: "Not now"
             
             If 0
-                Player(Happy):: "Good boy! There, fetch that ..."
+                Player(Happy):: "Good <Actor.boy_or_girl>! There, fetch that ..."
                 Actor:rapportwithplayer += Random(0, 1)
                 Actor:attractiontoplayer += Random(0, 1)
                 Actor:interpersonal += Random(0, 1)
                 Player:mood += Random(0, 5)
+                passTime(0.5, 1)
             Else
-                Player(Angry):: "Not now! We should start heading home!"
+                Player(Annoyed):: "Not now big <Actor.boy_or_girl>!"
                 Actor:rapportwithplayer -= Random(0, 1)
                 Actor:attractiontoplayer -= Random(0, 1)
                 Actor:interpersonal -= Random(0, 1)

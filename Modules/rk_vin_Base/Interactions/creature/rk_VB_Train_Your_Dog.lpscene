@@ -1,0 +1,95 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        
+        Actor1 = generatePersonTemporary()
+        While Actor1.isMale()
+            Actor1 = generatePersonTemporary()
+        endWhile
+        
+        Actor2 = generateCreatureTemporary()
+        While Actor2.isMale()
+            Actor2 = generateCreatureTemporary(Dog)
+        endWhile
+        
+        Actor3 = generateCreatureTemporary()
+        While Actor3.isFemale()
+            Actor3 = generateCreatureTemporary(Dog)
+        endWhile
+        
+        Actor4 = generatePersonTemporary()
+        While Actor4.isFemale()
+            Actor4 = generatePersonTemporary()
+        endWhile
+        
+        Actor5 = generateCreatureTemporary()
+        While Actor5.isMale()
+            Actor5 = generateCreatureTemporary(Horse)
+        endWhile
+        
+        Actor6 = generateCreatureTemporary()
+        While Actor6.isFemale()
+            Actor6 = generateCreatureTemporary(Horse)
+        endWhile
+        
+        Actor7 = generatePersonTemporary()
+        While Actor7.isMale()
+            Actor7 = generatePersonTemporary()
+            Actor7.blendPreset(Orc)
+            Actor.randomizeFace()
+        endWhile
+        
+        Actor8 = generatePersonTemporary()
+        While Actor8.isFemale()
+            Actor8 = generatePersonTemporary()
+            Actor8.blendPreset(Orc)
+            Actor.randomizeFace()
+        endWhile
+        
+        "What should do with <Actor.name>?"
+        0::"Train <Actor.him_or_her> to protect"
+        90:: isModEnabled(vin_Bestiality)::"Train <Actor.him_or_her> to fuck"
+        99::"I changed my mind!"
+        
+        If 0
+            followUp(rk_VB_Train_To_Protect)
+        ElseIf 90
+            Player.strip()
+            Actor.show()
+            perversion += 1
+            "I decided to train my pet for sexual adventures...."
+            Result = random(1, 9)
+            Result = Result.round()
+            If Result == 1
+                sex(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+            ElseIf Result == 2
+                sex(Actor, Actor1)
+            ElseIf Result == 3
+                sex(Actor, Actor2)
+            ElseIf Result == 4
+                sex(Actor, Actor3)
+            ElseIf Result == 5
+                sex(Actor, Actor4)
+            ElseIf Result == 6
+                sex(Actor, Actor5)
+            ElseIf Result == 7
+                sex(Actor, Actor6)
+            ElseIf Result == 8
+                sex(Actor, Actor7)
+            ElseIf Result == 9
+                sex(Actor, Actor8)
+            EndRandom
+        Endif
+        passTime(0.5, 1)
+    SceneEnd()

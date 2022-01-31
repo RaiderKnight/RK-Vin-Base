@@ -91,7 +91,12 @@ OTHER: isModEnabled(vin_NonConsensual) && !Player.isMale()
                 // End edit Raddeck
                 Actor.moveToPersonStand(Player, 20) // Edit Raddeck
                 "The teacher is starring at me in a creep way and is touching me, saying that he need to ajust my pose, but he is going in my private parts too…"
-                animatePair(Actor, Player, Stripsearch)
+                If Player.isFemale()
+                    Filter(Stripsearch)
+                    SexNoAffair(Actor, Player)
+                Else
+                    animatePair(Actor, Player, Stripsearch)
+                EndIf
                 // Start edit Raddeck
                 "Do I tell him to put his hands somewhere other than my genitals?"
                 0::"No"
@@ -231,7 +236,7 @@ OTHER: isModEnabled(vin_NonConsensual) && !Player.isMale()
                     Actor4.hide()
                     Actor5.hide()
             
-                    "Do I swindle the professor because he fucked me without my consent?"
+                    "Do I swindle the professor because <Actor.he_or_she> fucked me without my consent?"
                     0::"Yes"
                     1::"No"
                     

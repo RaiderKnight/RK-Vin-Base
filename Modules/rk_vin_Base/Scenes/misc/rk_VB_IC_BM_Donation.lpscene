@@ -5,8 +5,6 @@ WHO: none
 OTHER: none
 
     SceneStart()
-        PussJuice = Player.getActorVar(rk_VB_PussJuice_IC_Don)
-        sperm_IC = Player.getActorVar(rk_VB_sperm_IC_Don)
         lactation_IC = Player.getActorVar(rk_VB_lactation_IC_Don)
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
@@ -14,15 +12,7 @@ OTHER: none
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Actor = generatePersonTemporary()
         GiveDonation = false
-        If Player.isMale()
-            While Actor.isMale()
-                Actor = generatePersonTemporary()
-            endWhile
-        ElseIf Player.isMale() && Player.isGay()
-            While !Actor.isMale()
-                Actor = generatePersonTemporary()
-            endWhile
-        ElseIf Player.isFemale() && Player.isGay()
+        If Player.isFemale() && Player.isGay()
             While !Actor.isFemale()
                 Actor = generatePersonTemporary()
             endWhile
@@ -39,18 +29,6 @@ OTHER: none
         Actor(Happy)::"Great, please follow me!"
         setBackground(brothel)
         setBackground3D(Modules/rk_vin_Base/World/Massage.lpworld)
-        If Player.isFemale()
-            Actor(Happy)::"What type of donations do you want to offer?"
-            0::"Pussy juice"
-            1::"Boob milk"
-            
-            If 0
-                PJuice = true
-            Else
-                BMilk = true
-            EndIf
-        EndIf
-        
         Actor(Happy)::"How many donations do you want to give?"
         turnCount = 0
         0::"1 donation"
@@ -77,9 +55,7 @@ OTHER: none
         Counter = 0
         If GoSolo
             While Counter < turnCount
-                If BMilk
-                    "I started to press my boobs to let the milk coming out..."
-                Endif
+                "I started to press my boobs to let the milk coming out..."
                 Filter(Solo)
                 sex(Player)
                 Counter += 1
@@ -88,24 +64,14 @@ OTHER: none
                     Player.modifyActorVar(rk_VB_Hunger, -1)
                 EndIf
                 FillInML = random(150, 250)
-                If Player.isFemale() && PJuice
-                    Player.modifyActorVar(rk_VB_PussJuice_IC_Don, FillInML)
-                ElseIf Player.isFemale() && BMilk
-                    Player.modifyActorVar(rk_VB_lactation_IC_Don, FillInML)
-                Else
-                    Player.modifyActorVar(rk_VB_sperm_IC_Don, FillInML)
-                EndIf
+                Player.modifyActorVar(rk_VB_lactation_IC_Don, FillInML)
                 "I just give <FillInML>ml in donation!"
             EndWhile
             GiveDonation = true
             Player.dress()
         Else
             While Counter < turnCount
-                If BMilk
-                    "<Actor.name> started to press my boobs to let the milk coming out..."
-                Else
-                    Filter(Handjob, Fingering)
-                Endif
+                "<Actor.name> started to press my boobs to let the milk coming out..."
                 sex(Actor, Player)
                 Counter += 1
                 arousal += 40
@@ -113,13 +79,7 @@ OTHER: none
                     Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
                 FillInML = random(150, 250)
-                If Player.isFemale() && PJuice
-                    Player.modifyActorVar(rk_VB_PussJuice_IC_Don, FillInML)
-                ElseIf Player.isFemale() && BMilk
-                    Player.modifyActorVar(rk_VB_lactation_IC_Don, FillInML)
-                Else
-                    Player.modifyActorVar(rk_VB_sperm_IC_Don, FillInML)
-                EndIf
+                Player.modifyActorVar(rk_VB_lactation_IC_Don, FillInML)
                 "I just give <FillInML>ml in donation!"
             EndWhile
             GiveDonation = true
@@ -127,7 +87,7 @@ OTHER: none
         EndIf
         
         If GiveDonation
-            Actor(Happy)::"Thank you very much for your donation. Your donation will be added to our delicious dessert recipes."
+            Actor(Happy)::"Thank you very much for your donation. Your donation will be added to our delicious Formula Milk recipes."
             Price = 25*turnCount
             Price_loc = Price.convertToLocalCurrency()
             Actor(Happy)::"Here is <Price_loc> for your help!"

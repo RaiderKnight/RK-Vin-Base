@@ -1,7 +1,7 @@
 WHAT: none
 WHERE: none
-WHEN: 22 - 4
-WHO: Actor = getTarget(); If Actor.isCreature()
+WHEN: 0 - 24
+WHO: none
 OTHER: none
 
     SceneStart()
@@ -10,5 +10,11 @@ OTHER: none
         "I decided to train my dog to protect me and the house..."
         BonusStats = Random(0.01, 1)
         Player.modifyActorVar(DogGuardianStat, BonusStats)
-    
+        Actor:fitness += Random(0.01, 1)
+        Actor:muscle += Random(0.01, 1)
+        Actor:rapportwithplayer += Random(0, 1)
+        Actor:attractiontoplayer += Random(0, 1)
+        Actor:energy -= Random(10, 25)
+        Player(Happy):: "Good <Actor.boy_or_girl>! ..."
+        passTime(0.5, 1)
     SceneEnd()
