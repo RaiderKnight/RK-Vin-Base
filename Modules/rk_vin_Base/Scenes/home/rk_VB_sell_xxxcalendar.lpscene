@@ -14,6 +14,7 @@ SceneStart()
     RevGangBangShootings_Calendars = Player.getActorVar(rk_VB_RevGangBangShootings_Calendars_InStock)
     LesbianShootings_Calendars = Player.getActorVar(rk_VB_LesbianShootings_Calendars_InStock)
     GayShootings_Calendars = Player.getActorVar(rk_VB_GayShootings_Calendars_InStock)
+    regular_Calendars = Player.getActorVar(rk_VB_regular_Calendars_InStock)
     
     Soldpersonal_Calendars = Player.getActorVar(rk_VB_personal_Calendars_Sold)
     SoldSoloShootings_Calendars = Player.getActorVar(rk_VB_SoloShootings_Calendars_Sold)
@@ -23,6 +24,7 @@ SceneStart()
     SoldRevGangBangShootings_Calendars = Player.getActorVar(rk_VB_RevGangBangShootings_Calendars_Sold)
     SoldLesbianShootings_Calendars = Player.getActorVar(rk_VB_LesbianShootings_Calendars_Sold)
     SoldGayShootings_Calendars = Player.getActorVar(rk_VB_GayShootings_Calendars_Sold)
+    Soldregular_Calendars = Player.getActorVar(rk_VB_regular_Calendars_Sold)
     
     If !isModEnabled(nn_PornEmpire)
         "You need to enable Porn Empire mod from NickNo, to be able to sell calendars..."
@@ -56,6 +58,7 @@ SceneStart()
             5:: LesbianShootings_Calendars > 50 ::"Lesbian Shootings calendars <LesbianShootings_Calendars> in stock"
             6:: GayShootings_Calendars > 50 ::"Gay Shootings calendars <GayShootings_Calendars> in stock"
             7:: personal_Calendars > 50 ::"Personnal pics calendars <personal_Calendars> in stock"
+            8:: regular_Calendars > 50 ::"Regular pics calendars <regular_Calendars> in stock"
             99::"Go back"
             
             If 0
@@ -179,7 +182,15 @@ SceneStart()
             
             ElseIf 7
         
-                MSSnum = Random(1,20)  // number of product
+                If attractiveness < 50 || pornfame < 50
+                    MSSnum = Random(1,2)  // number of product
+                Elseif attractiveness < 60 || pornfame < 60
+                    MSSnum = Random(1,5)  // number of product
+                Elseif attractiveness < 70 || pornfame < 70
+                    MSSnum = Random(1,10)  // number of product
+                Elseif attractiveness > 70.8 || pornfame > 70.8
+                    MSSnum = Random(1,20)  // number of product
+                EndIf
                 Price_MeC = MSSnum * Random(4,5)  // total price
                 Price_MeC_Loc = Price_MeC.convertToLocalCurrency()  // total price local
                         
@@ -193,6 +204,31 @@ SceneStart()
                 money += Price_MeC
                 Player.modifyActorVar(rk_VB_personal_Calendars_Sold, MSSnum)
                 "You were able to sell <MSSnum> calendar(s) of yourself for a total in revenue: <Price_MeC_Loc>. <countMeC> remain in stock."
+            
+            ElseIf 8
+        
+                If attractiveness < 50 || pornfame < 50
+                    MSSnum = Random(1,2)  // number of product
+                Elseif attractiveness < 60 || pornfame < 60
+                    MSSnum = Random(1,5)  // number of product
+                Elseif attractiveness < 70 || pornfame < 70
+                    MSSnum = Random(1,10)  // number of product
+                Elseif attractiveness > 70.8 || pornfame > 70.8
+                    MSSnum = Random(1,20)  // number of product
+                EndIf
+                Price_MeC = MSSnum * Random(4,5)  // total price
+                Price_MeC_Loc = Price_MeC.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling your calendars."
+                        
+                countMeC = personal_Calendars - MSSnum
+                Player.setActorVar(rk_VB_regular_Calendars_InStock, countMeC)
+
+                passTime(2,4)
+                energy -= Random(5,10)
+                money += Price_MeC
+                Player.modifyActorVar(rk_VB_regular_Calendars_Sold, MSSnum)
+                "You were able to sell <MSSnum> regular calendar(s) for a total in revenue: <Price_MeC_Loc>. <countMeC> remain in stock."
             
             Else
             

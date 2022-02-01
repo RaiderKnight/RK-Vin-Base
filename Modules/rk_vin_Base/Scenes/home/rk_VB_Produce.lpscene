@@ -29,7 +29,8 @@ OTHER: none
             RevGangBangShootings_Calendars = Player.getActorVar(rk_VB_RevGangBangShootings_Calendars_InStock)
             LesbianShootings_Calendars = Player.getActorVar(rk_VB_LesbianShootings_Calendars_InStock)
             GayShootings_Calendars = Player.getActorVar(rk_VB_GayShootings_Calendars_InStock)
-            TotalCalendarsInStock = personal_Calendars + SoloShootings_Calendars + AmateurShootings_Calendars + ThreesomeShootings_Calendars + GangBangShootings_Calendars + RevGangBangShootings_Calendars + LesbianShootings_Calendars + GayShootings_Calendars
+            regular_Calendars = Player.getActorVar(rk_VB_regular_Calendars_InStock)
+            TotalCalendarsInStock = regular_Calendars + personal_Calendars + SoloShootings_Calendars + AmateurShootings_Calendars + ThreesomeShootings_Calendars + GangBangShootings_Calendars + RevGangBangShootings_Calendars + LesbianShootings_Calendars + GayShootings_Calendars
             
             //XXXmag InStock
             personal_XXXmagazines = Player.getActorVar(rk_VB_personal_XXXmagazines_InStock)
@@ -41,15 +42,16 @@ OTHER: none
             LesbianShootings_XXXmagazines = Player.getActorVar(rk_VB_LesbianShootings_XXXmagazines_InStock)
             GayShootings_XXXmagazines = Player.getActorVar(rk_VB_GayShootings_XXXmagazines_InStock)
             MixedShootings_XXXmagazines = Player.getActorVar(rk_VB_MixedShootings_XXXmagazines_InStock)
-            TotalXXXmagInStock = personal_XXXmagazines + SoloShootings_XXXmagazines + AmateurShootings_XXXmagazines + ThreesomeShootings_XXXmagazines + GangBangShootings_XXXmagazines + RevGangBangShootings_XXXmagazines + LesbianShootings_XXXmagazines + GayShootings_XXXmagazines + MixedShootings_XXXmagazines
+            regular_magazines = Player.getActorVar(rk_VB_regular_magazines_InStock)
+            TotalXXXmagInStock = regular_magazines + personal_XXXmagazines + SoloShootings_XXXmagazines + AmateurShootings_XXXmagazines + ThreesomeShootings_XXXmagazines + GangBangShootings_XXXmagazines + RevGangBangShootings_XXXmagazines + LesbianShootings_XXXmagazines + GayShootings_XXXmagazines + MixedShootings_XXXmagazines
             
             TotalGoodsPInStock = TotalCalendarsInStock + TotalXXXmagInStock
 
             setBackground3D(Modules/vin_Base/World/newsagent___vin01.lpworld)
             
             "What you would like to produce?"
-            0::"XXX Calendars"
-            1::"XXX Magazines"
+            0::"Calendars"
+            1::"Magazines"
 
             If 0
                 "To produce calendars you need at least 1 set of photos (20 pictures) of your desired type of shootings and you must add certain items if necessary!"
@@ -70,6 +72,7 @@ OTHER: none
                 5:: pe_LesbianShootingsInStock > 19 ::"Print some Lesbian Shootings calendars"
                 6:: pe_GayShootingsInStock > 19 ::"Print some Gay Shootings calendars"
                 7:: personal_pics > 19 ::"Print some XXX calendars of myself"
+                8:: stock_photo > 19 ::"Print some regular calendars with my pictures"
                 99:: "Go back!"
         
                 If 0
@@ -135,6 +138,14 @@ OTHER: none
                     Player.modifyActorVar(rk_VB_personal_Calendars_InStock, 100)
                     Player:energy -= 5
                     money -= TotalCostPrinting
+                    
+                ElseIf 8
+        
+                    Player(Happy)::"I just printed 100 non XXX calendars representing animals, landscapes, friends or myself."
+                    Player.modifyActorVar(stock_photo, -20)
+                    Player.modifyActorVar(rk_VB_regular_Calendars_InStock, 100)
+                    Player:energy -= 5
+                    money -= TotalCostPrinting
                 EndIf
             Else
         
@@ -155,6 +166,7 @@ OTHER: none
                 6:: pe_GayShootingsInStock > 25 ::"Print some Gay Shootings XXX magazines"
                 7:: pe_SoloShootingsInStock >= 5 && pe_AmateurShootingsInStock >= 5 && pe_ThreesomeShootingsInStock >= 5 && pe_GangBangShootingsInStock >= 5 && pe_RevGangBangShootingsInStock >= 5 ::"Print some Mixed shootings (hetero)"
                 7:: personal_pics > 25 ::"Print some XXX magazines of myself"
+                8:: stock_photo > 19 ::"Print some regular magazines with my pictures"
                 99:: "Go back!"
         
                 If 0
@@ -229,6 +241,14 @@ OTHER: none
                     Player(Happy)::"I have just printed 100 XXX magazines of myself!"
                     Player.modifyActorVar(personal_XXXmagazines, -20)
                     Player.modifyActorVar(rk_VB_personal_XXXmagazines_InStock, 100)
+                    Player:energy -= 5
+                    money -= TotalCostPrinting
+                    
+                ElseIf 9
+        
+                    Player(Happy)::"I just printed 100 non XXX magazines with picture of animals, landscapes, friends or myself."
+                    Player.modifyActorVar(stock_photo, -20)
+                    Player.modifyActorVar(rk_VB_regular_magazines_InStock, 100)
                     Player:energy -= 5
                     money -= TotalCostPrinting
                 EndIf

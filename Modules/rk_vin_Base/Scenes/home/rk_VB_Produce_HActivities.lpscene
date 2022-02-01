@@ -63,6 +63,8 @@ OTHER: none
             1:: stock_ingredient >= 1.8 && [Stock_Ovenandstoves > 0 || Stock_Microwaves > 0] ::"Cook a meal (-2 ingredient)" 
             3:: stock_alcohol >= 0.8 ::"Make a cocktail (-1 alcohol)" 
             6:: stock_ingredient >= 0.8 ::"Make a snack (-1 ingredient)" 
+            8::"Calendars"
+            9::"Magazines"
             99:: "Go back!"
             
             If 1
@@ -110,6 +112,11 @@ OTHER: none
                     Player.modifyActorVar(rk_VB_Hunger, -0.5)
                 EndIf
                 passTime(0.15, 0.5)
+            
+
+            ElseIf 8 || 9
+                
+                followUp(rk_VB_Produce)
 
             EndIf
             

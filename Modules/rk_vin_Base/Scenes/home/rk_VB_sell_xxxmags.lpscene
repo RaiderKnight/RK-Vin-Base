@@ -15,6 +15,7 @@ SceneStart()
     LesbianShootings_XXXmagazines = Player.getActorVar(rk_VB_LesbianShootings_XXXmagazines_InStock)
     GayShootings_XXXmagazines = Player.getActorVar(rk_VB_GayShootings_XXXmagazines_InStock)
     MixedShootings_XXXmagazines = Player.getActorVar(rk_VB_MixedShootings_XXXmagazines_InStock)
+    regular_magazines = Player.getActorVar(rk_VB_regular_magazines_InStock)
     
     Soldpersonal_XXXmagazines = Player.getActorVar(rk_VB_personal_XXXmagazines_Sold)
     SoldSoloShootings_XXXmagazines = Player.getActorVar(rk_VB_SoloShootings_XXXmagazines_Sold)
@@ -25,6 +26,7 @@ SceneStart()
     SoldLesbianShootings_XXXmagazines = Player.getActorVar(rk_VB_LesbianShootings_XXXmagazines_Sold)
     SoldGayShootings_XXXmagazines = Player.getActorVar(rk_VB_GayShootings_XXXmagazines_Sold)
     SoldMixedShootings_XXXmagazines = Player.getActorVar(rk_VB_MixedShootings_XXXmagazines_Sold)
+    Soldregular_magazines = Player.getActorVar(rk_VB_regular_magazines_Sold)
     
     If !isModEnabled(nn_PornEmpire)
         "You need to enable Porn Empire mod from NickNo, to be able to sell magazines..."
@@ -61,6 +63,7 @@ SceneStart()
             6:: GayShootings_XXXmagazines > 50 ::"Gay Shootings XXXmagazines <GayShootings_XXXmagazines> in stock"
             7:: MixedShootings_XXXmagazines > 50 ::"Mixed Shootings XXXmagazines <MixedShootings_XXXmagazines> in stock"
             8:: personal_XXXmagazines > 50 ::"Personnal pics XXXmagazines <personal_XXXmagazines> in stock"
+            9:: regular_magazines > 50 ::"Regular pics magazines <regular_magazines> in stock"
             99::"Go back"
             
             If 0
@@ -207,7 +210,15 @@ SceneStart()
             
             ElseIf 8
         
-                MSSnum = Random(1,20)  // number of product
+                If attractiveness < 50 || pornfame < 50
+                    MSSnum = Random(1,2)  // number of product
+                Elseif attractiveness < 60 || pornfame < 60
+                    MSSnum = Random(1,5)  // number of product
+                Elseif attractiveness < 70 || pornfame < 70
+                    MSSnum = Random(1,10)  // number of product
+                Elseif attractiveness > 70.8 || pornfame > 70.8
+                    MSSnum = Random(1,20)  // number of product
+                EndIf
                 Price_MeX = MSSnum * Random(4,5)  // total price
                 Price_MeX_Loc = Price_MeX.convertToLocalCurrency()  // total price local
                         
@@ -221,7 +232,30 @@ SceneStart()
                 Player.modifyActorVar(rk_VB_personal_XXXmagazines_Sold, MSSnum)
                         
                 "You were able to sell <MSSnum> magazine(s) of yourself for a total in revenue: <Price_MeX_Loc>. <countMeX> remain in stock."
+            
+            ElseIf 9
+                If attractiveness < 50 || pornfame < 50
+                    MSSnum = Random(1,2)  // number of product
+                Elseif attractiveness < 60 || pornfame < 60
+                    MSSnum = Random(1,5)  // number of product
+                Elseif attractiveness < 70 || pornfame < 70
+                    MSSnum = Random(1,10)  // number of product
+                Elseif attractiveness > 70.8 || pornfame > 70.8
+                    MSSnum = Random(1,20)  // number of product
+                EndIf
+                Price_MeX = MSSnum * Random(4,5)  // total price
+                Price_MeX_Loc = Price_MeX.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling regular magazines."
+                countMeX = regular_magazines - MSSnum
+                Player.setActorVar(rk_VB_regular_magazines_InStock, countMeX)
 
+                passTime(2,4)
+                energy -= Random(5,10)
+                money += Price_MeX
+                Player.modifyActorVar(rk_VB_regular_magazines_Sold, MSSnum)
+                        
+                "You were able to sell <MSSnum> regular magazine(s) for a total in revenue: <Price_MeX_Loc>. <countMeX> remain in stock."
             Else
             
                 stayInMenu = false
