@@ -41,6 +41,8 @@ SceneStart()
             Price_RevGangBangC = Random(15, 20)
             Price_LesbianC = Random(15, 20)
             Price_GayC = Random(15, 20)
+            Price_reg = Random(15, 20)
+            Price_perso = Random(15, 20)
             Price_soloC_Loc = Price_soloC.convertToLocalCurrency()
             Price_AmateurC_Loc = Price_AmateurC.convertToLocalCurrency()
             Price_ThreesomeC_Loc = Price_ThreesomeC.convertToLocalCurrency()
@@ -48,6 +50,8 @@ SceneStart()
             Price_RevGangBangC_Loc = Price_RevGangBangC.convertToLocalCurrency()
             Price_LesbianC_Loc = Price_LesbianC.convertToLocalCurrency()
             Price_GayC_Loc = Price_GayC.convertToLocalCurrency()
+            Price_reg_Loc = Price_reg.convertToLocalCurrency()
+            Price_perso_Loc = Price_perso.convertToLocalCurrency()
             
             "What type of calendars I want to sell?"
             0:: SoloShootings_Calendars > 50 ::"Solo Shootings calendars <SoloShootings_Calendars> in stock"
@@ -191,8 +195,8 @@ SceneStart()
                 Elseif attractiveness > 70.8 || pornfame > 70.8
                     MSSnum = Random(1,20)  // number of product
                 EndIf
-                Price_MeC = MSSnum * Random(4,5)  // total price
-                Price_MeC_Loc = Price_MeC.convertToLocalCurrency()  // total price local
+                Price_perso = MSSnum * Random(4,5)  // total price
+                Price_perso_Loc = Price_perso.convertToLocalCurrency()  // total price local
                         
                 "You spend some hours selling your calendars."
                         
@@ -201,9 +205,9 @@ SceneStart()
 
                 passTime(2,4)
                 energy -= Random(5,10)
-                money += Price_MeC
+                money += Price_perso
                 Player.modifyActorVar(rk_VB_personal_Calendars_Sold, MSSnum)
-                "You were able to sell <MSSnum> calendar(s) of yourself for a total in revenue: <Price_MeC_Loc>. <countMeC> remain in stock."
+                "You were able to sell <MSSnum> calendar(s) of yourself for a total in revenue: <Price_perso_Loc>. <countMeC> remain in stock."
             
             ElseIf 8
         
@@ -216,8 +220,8 @@ SceneStart()
                 Elseif attractiveness > 70.8 || pornfame > 70.8
                     MSSnum = Random(1,20)  // number of product
                 EndIf
-                Price_MeC = MSSnum * Random(4,5)  // total price
-                Price_MeC_Loc = Price_MeC.convertToLocalCurrency()  // total price local
+                Price_reg = MSSnum * Random(4,5)  // total price
+                Price_reg_Loc = Price_reg.convertToLocalCurrency()  // total price local
                         
                 "You spend some hours selling your calendars."
                         
@@ -226,9 +230,9 @@ SceneStart()
 
                 passTime(2,4)
                 energy -= Random(5,10)
-                money += Price_MeC
+                money += Price_reg
                 Player.modifyActorVar(rk_VB_regular_Calendars_Sold, MSSnum)
-                "You were able to sell <MSSnum> regular calendar(s) for a total in revenue: <Price_MeC_Loc>. <countMeC> remain in stock."
+                "You were able to sell <MSSnum> regular calendar(s) for a total in revenue: <Price_reg_Loc>. <countMeC> remain in stock."
             
             Else
             

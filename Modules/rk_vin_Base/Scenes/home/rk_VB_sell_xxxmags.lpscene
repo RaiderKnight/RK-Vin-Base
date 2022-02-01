@@ -44,6 +44,8 @@ SceneStart()
             Price_LesbianX = Random(9, 12)
             Price_GayX = Random(9, 12)
             Price_MixedX = Random(9, 12)
+            Price_reg = Random(9, 12)
+            Price_perso = Random(9, 12)
             Price_soloX_Loc  = Price_soloX.convertToLocalCurrency()
             Price_AmateurX_Loc = Price_AmateurX.convertToLocalCurrency()
             Price_ThreesomeX_Loc = Price_ThreesomeX.convertToLocalCurrency()
@@ -52,6 +54,8 @@ SceneStart()
             Price_LesbianX_Loc = Price_LesbianX.convertToLocalCurrency()
             Price_GayX_Loc = Price_GayX.convertToLocalCurrency()
             Price_MixedX_Loc = Price_MixedX.convertToLocalCurrency()
+            Price_reg_Loc = Price_reg.convertToLocalCurrency()
+            Price_perso_Loc = Price_perso.convertToLocalCurrency()
             
             "What type of XXX magazines I want to sell?"
             0:: SoloShootings_XXXmagazines > 50 ::"Solo Shootings XXXmagazines <SoloShootings_XXXmagazines> in stock"
@@ -219,19 +223,19 @@ SceneStart()
                 Elseif attractiveness > 70.8 || pornfame > 70.8
                     MSSnum = Random(1,20)  // number of product
                 EndIf
-                Price_MeX = MSSnum * Random(4,5)  // total price
-                Price_MeX_Loc = Price_MeX.convertToLocalCurrency()  // total price local
+                Price_perso = MSSnum * Random(4,5)  // total price
+                Price_perso_Loc = Price_perso.convertToLocalCurrency()  // total price local
                         
-                "You spend some hours selling Gay Shootings XXX magazines."
+                "You spend some hours selling your personnal Shootings XXX magazines."
                 countMeX = personal_XXXmagazines - MSSnum
                 Player.setActorVar(rk_VB_personal_XXXmagazines_InStock, countMeX)
 
                 passTime(2,4)
                 energy -= Random(5,10)
-                money += Price_MeX
+                money += Price_perso
                 Player.modifyActorVar(rk_VB_personal_XXXmagazines_Sold, MSSnum)
                         
-                "You were able to sell <MSSnum> magazine(s) of yourself for a total in revenue: <Price_MeX_Loc>. <countMeX> remain in stock."
+                "You were able to sell <MSSnum> magazine(s) of yourself for a total in revenue: <Price_perso_Loc>. <countMeX> remain in stock."
             
             ElseIf 9
                 If attractiveness < 50 || pornfame < 50
@@ -243,8 +247,8 @@ SceneStart()
                 Elseif attractiveness > 70.8 || pornfame > 70.8
                     MSSnum = Random(1,20)  // number of product
                 EndIf
-                Price_MeX = MSSnum * Random(4,5)  // total price
-                Price_MeX_Loc = Price_MeX.convertToLocalCurrency()  // total price local
+                Price_reg = MSSnum * Random(4,5)  // total price
+                Price_reg_Loc = Price_reg.convertToLocalCurrency()  // total price local
                         
                 "You spend some hours selling regular magazines."
                 countMeX = regular_magazines - MSSnum
@@ -252,10 +256,10 @@ SceneStart()
 
                 passTime(2,4)
                 energy -= Random(5,10)
-                money += Price_MeX
+                money += Price_reg
                 Player.modifyActorVar(rk_VB_regular_magazines_Sold, MSSnum)
                         
-                "You were able to sell <MSSnum> regular magazine(s) for a total in revenue: <Price_MeX_Loc>. <countMeX> remain in stock."
+                "You were able to sell <MSSnum> regular magazine(s) for a total in revenue: <Price_reg_Loc>. <countMeX> remain in stock."
             Else
             
                 stayInMenu = false
