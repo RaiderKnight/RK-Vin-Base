@@ -8,7 +8,12 @@ OTHER: none
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
-        
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        If isWithCompanion()
+            Player(Happy)::"Sorry babe but I have to go somewhere, I'll be back soon!"
+            endDate()
+        Endif
         If money < 160
         
             "You don't have enough money to get a sensual massage!"
@@ -20,7 +25,11 @@ OTHER: none
             Actor1.dress()
             Actor1.show(2)
             Perversion += 1
-            "I decided to go for a sensual massage today to release some stress. I was greeted by, <Actor1.name>."
+            If WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != sports_centre && WHERE != beauty
+                "I decided to go for a sensual massage today to release some stress. I was greeted by <Actor1.name>."
+            Else
+                "I decided to get a massage to release some stress. I was greeted by <Actor.name>."
+            EndIf
             "<Actor1.name> asks me what kind of masseur do I prefer?"
             0::"Female"
             1::"Male"
@@ -168,11 +177,8 @@ OTHER: none
                         Actor(Sad):: "Sorry, but I don't normally exchange numbers with clients."
                     
                     EndIf
-                    
                 Endif
-
-            Endif   
-            
-        Endif       
+            Endif
+        Endif
 
     SceneEnd() // Scene created by Raddeck

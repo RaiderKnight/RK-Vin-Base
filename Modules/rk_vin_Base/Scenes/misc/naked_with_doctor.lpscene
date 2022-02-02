@@ -2,10 +2,14 @@ WHAT: none
 WHERE: none
 WHEN: 0 - 24
 WHO: none
-OTHER: !isWithCompanion()
+OTHER: 
 
     SceneStart()
-    
+        
+        If isWithCompanion()
+            Player(Happy)::"Sorry babe but I have to go somewhere, I'll be back soon!"
+            endDate()
+        Endif
         setBackground(hospital)
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
@@ -278,7 +282,7 @@ OTHER: !isWithCompanion()
         Elseif ExamChoiceLot == 5
         
             money -= 50
-            "Now comes the genital examination. I was asked to strip down."
+            "The doctor wants to do a genital examination. I was asked to strip down."
             Player.strip()
                     
             If Actor:perversion + Actor:attractiontoplayer > Random(75, 125)

@@ -1,11 +1,12 @@
 WHAT: none
-WHERE: home
-WHEN: 18 - 24
-WHO: Actor = getPerson(true); If !Actor.isDating() && Player.isInterestedIn(Actor) && Actor:perversion > 80 && Actor:attractiontoplayer > 10
+WHERE: none
+WHEN: 0 - 24
+WHO: none
 OTHER: none
 
     SceneStart()
     
+        Actor = getPerson(true)
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -22,7 +23,7 @@ OTHER: none
         stock_LPGPower = Player.getActorVar(stock_LPGPower)
         Stock_phones = Pockstock_IPhone + Pockstock_Samsung + Pockstock_OnePlus + Pockstock_LPGPower
         
-        While Actor2.isValid() && [!Player.isInterestedIn(Actor2) || Actor2:perversion < 60 || Actor2:attractiontoplayer < 5 || Actor.isDating()]
+        While Actor2.isValid() && [!Player.isInterestedIn(Actor2) || Actor2:perversion < 60 || Actor2:attractiontoplayer < 5 || Actor2.isDating()]
             Actor2 = getPerson(true)
         EndWhile
         
@@ -41,7 +42,7 @@ OTHER: none
             Actor.hide()
             "<Actor.name> satisfied my needs, I satisfied <Actor.his_or_hers>. It's a win-win for both sides!"
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, -1)
+                Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
 
         Elseif 1

@@ -12,15 +12,20 @@ OTHER: none
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Actor = generatePersonTemporary()
         GiveDonation = false
-        If Player.isFemale() && Player.isGay()
-            While !Actor.isFemale()
+        If Player.isMale()
+            While Actor.isMale()
                 Actor = generatePersonTemporary()
             endWhile
-        ElseIf Player.isFemale()
-            While Actor.isFemale()
+        ElseIf Player.isTrans()
+            While Actor.isTrans()
+                Actor = generatePersonTemporary()
+            endWhile
+        ElseIf !Player.isMale()
+            While !Actor.isMale()
                 Actor = generatePersonTemporary()
             endWhile
         EndIf
+        Actor:age => Random(18, 21)
         Actor.makeInterested(Player)
         Actor.dress()
         Actor.show()

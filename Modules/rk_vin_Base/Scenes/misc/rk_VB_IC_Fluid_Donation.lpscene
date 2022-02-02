@@ -18,19 +18,16 @@ OTHER: none
             While Actor.isMale()
                 Actor = generatePersonTemporary()
             endWhile
-        ElseIf Player.isMale() && Player.isGay()
+        ElseIf Player.isTrans()
+            While Actor.isTrans()
+                Actor = generatePersonTemporary()
+            endWhile
+        ElseIf !Player.isMale()
             While !Actor.isMale()
                 Actor = generatePersonTemporary()
             endWhile
-        ElseIf Player.isFemale() && Player.isGay()
-            While !Actor.isFemale()
-                Actor = generatePersonTemporary()
-            endWhile
-        ElseIf Player.isFemale()
-            While Actor.isFemale()
-                Actor = generatePersonTemporary()
-            endWhile
         EndIf
+        Actor:age => Random(18, 21)
         Actor.makeInterested(Player)
         Actor.dress()
         Actor.show()
@@ -42,7 +39,7 @@ OTHER: none
         If Player.isFemale()
             Actor(Happy)::"What type of donations do you want to offer?"
             0::"Pussy juice"
-            1::"Boob milk"
+            1::Player.isPregnant()::"Boob milk"
             
             If 0
                 PJuice = true
@@ -103,8 +100,10 @@ OTHER: none
             While Counter < turnCount
                 If BMilk
                     "<Actor.name> started to press my boobs to let the milk coming out..."
-                Else
-                    Filter(Handjob, Fingering)
+                Elseif Player.isMale()
+                    Filter(Handjob)
+                ElseIf Player.isFemale()
+                    Filter(Fingering, LickPussy)
                 Endif
                 sex(Actor, Player)
                 Counter += 1
