@@ -6,6 +6,14 @@ OTHER: none
 
     SceneStart()
     
+        clearGetList()
+        
+        hasLivingroom = RE_has_lvingroom.getGlobal()
+        hasKitchen = RE_has_kitchen.getGlobal()
+        hasOfficeroom = RE_has_officeroom.getGlobal()
+        hasSecBedroom = RE_has_secondbedroom.getGlobal()
+        hasThirdBedroom = RE_has_thirdbedroom.getGlobal()
+        
         stock_book_LR = Player.getActorVar(stock_book_LR)
         stock_book_MB = Player.getActorVar(stock_book_MB)
         stock_book_O = Player.getActorVar(stock_book_O)
@@ -17,12 +25,12 @@ OTHER: none
         IBuyaBook = Player.getActorVar(rk_VB_IBuyaBook)
         
         "Where I will store this book?"
-        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom ::"Inside my living room"
+        2::isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander) && hasLivingroom > 0 ::"Inside my living room"
         3::"Inside my bedroom"
-        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom::"Inside my office room"
-        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom::"Inside my second bedroom"
+        4::isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander) && hasOfficeroom > 0::"Inside my office room"
+        5::isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander) && hasSecBedroom > 0::"Inside my second bedroom"
         6::"Inside my storage room"
-        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom::"Inside my third bedroom"
+        7::isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander) && hasThirdBedroom > 0::"Inside my third bedroom"
         8::"Keep in my pockets"
                 
         If 2
