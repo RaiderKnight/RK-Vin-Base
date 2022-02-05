@@ -3,6 +3,9 @@ NickNo's HomeExtensions (LifePlay) ReadMe, Change Log and TODO List
 
 ReadMe
 ********
+I (Raddeck) don't own what I added to this mod, it's only for users who use the Remake version. All additions and fixes to this mod are free to use for NickNo.
+
+==================================================================
 
 HomeExtensions (HE) allows you to add more rooms and life to your home.
 
