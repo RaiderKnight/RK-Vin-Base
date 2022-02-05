@@ -49,7 +49,7 @@ OTHER: none
             Actor.show(2)
             Actor.moveToPersonStand(Player, 50)
             "The <Actor.masseur_or_masseuse> in question arrives and introduces <Actor.himself_or_herself>."
-            Actor(Flirty)::"Hi, my name is <Actor.name>, it's me who will make you relax, come follow me we go to room 33."
+            Actor(Flirty)::"Hi, my name is <Actor.name>, I'll be your <Actor.masseur_or_masseuse> today, We're going to room 33, this way..."
             PriceSMassage = 150
             PriceSMassage_Loc  = PriceSMassage.convertToLocalCurrency()
             Actor(Flirty)::"The price for the massage is <PriceSMassage_Loc>"
@@ -100,18 +100,24 @@ OTHER: none
                     "<Actor.name> quickly started <Actor.his_or_her> sensual massage and started massaging my body with oil which gives me hot sensations ... "
                     "After a while, <Actor.he_or_she> finishes the job with a blowjob!"
                     
-                    Filter(Blowjob)
+                    If Player.isFemale()
+                        Filter(Licking)
+                    Else
+                        Filter(Blowjob)
+                    EndIf
                     sex(Actor, Player)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
                     EndIf
-        
                 ElseIf 1
                 
                     "<Actor.name> quickly started <Actor.his_or_her> sensual massage and started massaging my body with oil which gives me hot sensations ... "
                     "After a while, <Actor.he_or_she> finishes the job with a handjob!"
-                    
-                    Filter(Handjob)
+                    If Player.isFemale()
+                        Filter(Fingering)
+                    Else
+                        Filter(Handjob)
+                    EndIf
                     sex(Actor, Player)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
@@ -166,16 +172,12 @@ OTHER: none
                 If 1
                 
                     If Actor.isInterestedIn(Player)
-                        
                         Actor(Happy):: "Of course, I'd love to exchange numbers."
                         exchangeContact(Actor)
                         Actor:attractiontoplayer += Random(0, 3)
                         Actor:rapportwithplayer += Random(0, 3)
-                    
                     Else
-                
                         Actor(Sad):: "Sorry, but I don't normally exchange numbers with clients."
-                    
                     EndIf
                 Endif
             Endif
