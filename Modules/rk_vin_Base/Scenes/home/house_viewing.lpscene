@@ -11,13 +11,13 @@ OTHER: none
     Price = Rent*120
     PriceLoc = Price.convertToLocalCurrency(true)
     sceneStart()
-
-        houseviewing = rk_VB_houseviewing.getGlobal()
+        Player.setActorVar(rk_VB_TempGetADeals, 0)
+        houseviewing = rk_VB_houseviewing.getGlobal() // For arrest scene
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        
+        FinalHousePrice = Player.getActorVar(rk_VB_FinalHousePrice)
         "I was looking for a new place to live, I discovered a nice place that might just fit my budget. The rent per month being advertised, including utility bills, is around <RentConverted>. However, I reckon I can try to negotiate that down."
         
         If Rent > money 
@@ -31,7 +31,6 @@ OTHER: none
         1:: "No"
         
         If 0
-        
             Landlord = generatePerson()
             Landlord.dress()
             Landlord.show(2)
@@ -55,16 +54,13 @@ OTHER: none
             ActorAskForIt2 = false
             ActorAskForIt3 = 0
             ActorAskForIt4 = 0
-            GetADeals1 = 0
-            GetADeals2 = 0
-            GetADeals3 = 0
-            GetADeals4 = 0
+            GetADeals = Player.getActorVar(rk_VB_TempGetADeals)
             If money < Price
                 "I don't have enough money to afford a house, so I'll have to rent an apartment... hopefully I'll find something decent, if this one doesn't suit me."
             Endif
             
             While choice > 1
-                
+                TotalDeals = Player.getActorVar(rk_VB_TempGetADeals)
                 "What should I do?"
                 0:: money > Rent::"Sign the lease"
                 1:: "Look elsewhere"
@@ -92,20 +88,18 @@ OTHER: none
                     mood += 3
                     
                     Landlord(Happy)::"See you soon, otherwise I'll come see you the first of next month ..."
-                    Landlord:rapportwithplayer += Random(0, 2)
+                    Landlord:rapportwithplayer += random(0, 2)
                     
                     If Player:mood > 50 && Player:arousal > 15 && Player:perversion > 50
                         IwannaFuck = true
                     Endif
                 Elseif 1
-                
                     "It was too expensive at this current rent so I had no choice but to look elsewhere. I thanked the landlord for <Landlord.his_or_her> time and left."
-                    
                 Elseif 5
-                    TotalDeals = GetADeals1 + GetADeals2 + GetADeals3 + GetADeals4
+
                     If TotalDeals > 0
-                        Price = Price - TotalDeals
-                        PriceConverted = Price.convertToLocalCurrency(true)
+                        TPrice = Price - TotalDeals
+                        PriceConverted = TPrice.convertToLocalCurrency(true)
                     Else
                         PriceConverted = Price.convertToLocalCurrency(true)
                     EndIf
@@ -113,16 +107,13 @@ OTHER: none
                     Player.animate(socialize)
                     Landlord(Surprised):: "Oh really? You know what: I'm prepared to sell it to you at <PriceConverted>."
                     
-                    If money < Price
-        
+                    If money < TPrice
                         "I'm not entirely sure if this is really affordable considering my current financial situation." 
                         Player(Sad):: "Actually, I don't think I can afford to buy the home right now."
                         SceneEnd()
-            
                     Else
                         "This price seems reasonable and might just fit in my budget."
                         Player(Happy):: "Actually, I think I can afford to buy the home outright."
-            
                     Endif
                     
                     "What should I do?"
@@ -130,60 +121,65 @@ OTHER: none
                     1:: "That's too expensive"
                     
                     If 0
-                    
                         Bought = true
                         MoveHome()
-                        money => money - Price
+                        money -= TPrice
                         Zero = 0
                         Zero.setRent()
                         Player.setLandlord()
                         "I now own my home ... It's a wonderful feeling and now I don't have to worry about paying rent each month."
-                        mood += Random(0, 100)
+                        mood += random(0, 100)
                         If TfGame() && Player.isMale()
                             followUp(tf_afterlandlord)
                         Elseif TfGame() && !Player.isMale()
                             followUp(rk_VB_tff_afterlandlord)
                         Endif
-                        
+                        Player.setActorVar(rk_VB_FinalHousePrice, TPrice)
                     Else
+                        "That's too expensive, I'll wait!"
+                        mood -= 2
                         choice = 5
                     Endif
                     
                 Elseif 2
-                    If Random(0,100)*Difficulty < intelligence
+                    If random(0,100)*Difficulty < intelligence
                         "I used my research about the market rate of rent in the surrounding area to show the landlord that I had alternatives."
                         Rent /= 1.1
                         RentConverted = Rent.convertToLocalCurrency(true)
                         Landlord(Sarcastic):: "Alright, alright. You're a smart cookie - you should become a landlord yourself someday. How about <RentConverted> a month? That's surely lower than the going rate around."
                         Knowledge = true  
-                        GetADeals1 += Random(110, 150)
+                        HGetADeals1 = random(110, 450)
+                        Player.modifyActorVar(rk_VB_TempGetADeals, HGetADeals1)
                     Else
                         Landlord(Annoyed):: "I already told you this is the best deal I can give you."
                         "My negotiations failed miserably. All it did was annoying the landlord. I probably shouldn't try to haggle more, or <Landlord.he_or_she> will refuse to even rent me the apartment."
                         Knowledge = true
                     Endif
                 Elseif 3
-                    If Random(0,100)*Difficulty < interpersonal
+                    If random(0,100)*Difficulty < interpersonal
                         "I used all my smooth talking to charm the landlord into giving me a discount."
                         Rent /= 1.1
                         RentConverted = Rent.convertToLocalCurrency(true)
                         Landlord(Happy):: "Okay then, you seems like a nice enough person. I can give you the apartment for just <RentConverted> a month, but you'd better not tell my other tenants about it."
                         Charm = true
-                        GetADeals2 += Random(110, 150)
+                        HGetADeals2 = random(110, 450)
+                        Player.modifyActorVar(rk_VB_TempGetADeals, HGetADeals2)
                     Else
                         Landlord(Annoyed):: "I already told you this is the best deal I can give you."
                         "My negotiations failed miserably. All it did was annoying the landlord. I probably shouldn't try to haggle more, or <Landlord.he_or_she> will refuse to even rent me the apartment."
                         Charm = true
                     Endif
                 Elseif 4
-                    If Landlord.IsInterestedIn(Player) && Landlord:perversion + Landlord:attractiontoplayer > Random(0,100)*Difficulty
+                    If Landlord.IsInterestedIn(Player) && Landlord:perversion + Landlord:attractiontoplayer > random(0,100)*Difficulty
                         "I flirted with the landlord while trying to look as sexy as possible. <Landlord.He_or_She> seemed receptive to my advances."
                         Rent /= 1.1
                         RentConverted = Rent.convertToLocalCurrency(true)
                         Landlord(Flirty):: "Okay, just for a good-looking tenant like you, I can drop the rent to <RentConverted> a month. But that's the lowest I'm going to go today ..."
                         Seduce = true
+                        HGetADeals5 = random(310, 450)
+                        Player.modifyActorVar(rk_VB_TempGetADeals, HGetADeals5)
                         
-                        If Landlord.IsDominantSex(Player) && Landlord:perversion > Random(30, 100)
+                        If Landlord.IsDominantSex(Player) && Landlord:perversion > random(30, 100)
                         
                             Landlord(Flirty):: "... unless you want to use that sexy mouth of yours for something better than negotiating"
                             0:: "No"
@@ -195,16 +191,17 @@ OTHER: none
                                 Landlord(Flirty):: "Oh well, I'm not forcing anything on you. It was you who flirted with me first. I simply got the wrong signal, don't mind me."
                                 
                             Else
-                                GetADeals3 += Random(210, 250)
+                                HGetADeals3 = random(510, 1000)
+                                Player.modifyActorVar(rk_VB_TempGetADeals, HGetADeals3)
                                 Player(Flirty):: "You'd better give me one hell of a deal for this ..."
                                 Landlord.strip()
-                                Filter(Blowjob, LickPussy)
+                                Filter(Oral)
                                 Player.strip()
                                 Landlord.strip()
                                 Sex(Landlord, Player)
                                 Landlord.dress()
                                 Landlord.show(2)
-                                perversion += Random(0, 1.5)
+                                perversion += random(0, 1.5)
                                 Rent /= 1.2
                                 RentConverted = Rent.convertToLocalCurrency(true)
                                 Landlord(Flirty):: "Well, now that we've got to know each other on a more ... personal level, you can have the apartment for just <RentConverted>. Trust me, I never gave anyone such a good offer in all my years."
@@ -233,14 +230,15 @@ OTHER: none
                                 
                                 Endif
                                 
-                                If Landlord:perversion > Random(20, 100)
-                                    GetADeals4 += Random(1000, 5000)
+                                If Landlord:perversion > random(20, 100)
+                                    HGetADeals4 = random(1000, 5000)
+                                    Player.modifyActorVar(rk_VB_TempGetADeals, HGetADeals4)
                                     Landlord(Flirty):: "Oh? If that's on offer, then yes, perhaps I can change my mind indeed"
                                     Player.strip()
                                     Landlord.strip()
                                     Sex(Landlord, Player)
                                     Landlord.show(2)
-                                    perversion += Random(0, 2)
+                                    perversion += random(0, 2)
                                     Rent /= 1.2
                                     RentConverted = Rent.convertToLocalCurrency(true)
                                     Landlord(Flirty):: "Well, now that we've got to know each other on a more ... personal level, you can have the apartment for just <RentConverted>. Trust me, I never gave anyone such a good offer in all my years."
@@ -364,8 +362,8 @@ OTHER: none
                             Player.animate(drinkglass)
                             Landlord.animate(drinkglass)
                             "We had a drink alcohol together ..."
-                            Player:intoxication += Random(5,15)
-                            Landlord:intoxication += Random(5,15)
+                            Player:intoxication += random(5,15)
+                            Landlord:intoxication += random(5,15)
                             passTime(0.1, 0.2)
                             Player.animate()
                             Landlord.animate()
@@ -379,10 +377,10 @@ OTHER: none
                             "We smoked weed together ..."
                             Player.animate(smoke)
                             Landlord.animate(smoke)
-                            Player:intoxication += Random(3,15)
-                            Landlord:intoxication += Random(3,15)
-                            Player:mood += Random(3,10)
-                            Landlord:mood += Random(3,10)
+                            Player:intoxication += random(3,15)
+                            Landlord:intoxication += random(3,15)
+                            Player:mood += random(3,10)
+                            Landlord:mood += random(3,10)
                             Landlord:attractiontoplayer += 1
                             Landlord:rapportwithplayer += 5
                             If HungerEnable > 0
@@ -411,9 +409,9 @@ OTHER: none
                                 Player(Flirty)::"Would you like to lick my <Player.dick_or_pussy>?"
                                 If Landlord.isInterestedIn(Player) && Landlord:arousal > 15
                                     Landlord(Happy)::"Sure, let's go..."
-                                    Player:perversion += Random(0, 1)
+                                    Player:perversion += random(0, 1)
                                     Player.strip()
-                                    Filter(Blowjob, LickPussy)
+                                    Filter(Oral)
                                     Sex(Landlord, Player)
                                     Landlord.show(2)
                                     "The blowjob was amazing. I put my clothes back on afterwards and we continued our date."
@@ -423,8 +421,8 @@ OTHER: none
                                         Player.modifyActorVar(rk_VB_Hunger, -1)
                                     EndIf
                                     passTime(0.2, 1.5)
-                                    Landlord:attractiontoplayer += Random(0, 1)
-                                    Landlord:rapportwithplayer += Random(0, 1)
+                                    Landlord:attractiontoplayer += random(0, 1)
+                                    Landlord:rapportwithplayer += random(0, 1)
                                 Else
                                     "Unfortunately for me, <Landlord.name> didn't seem interested to give me a blowjob."
                                 Endif
@@ -436,9 +434,15 @@ OTHER: none
                                 EndIf
                                 If Landlord.isInterestedIn(Player) && Landlord:arousal > 15
                                     Landlord(Happy)::"Sure, let's go..."
-                                    Player:perversion += Random(0, 1)
+                                    Player:perversion += random(0, 1)
                                     Player.strip()
-                                    Filter(Handjob, Fingering)
+                                    If Landlord.isMale() && !Player.isMale() || !Landlord.isMale() && !Player.isMale()
+                                        Filter(Fingering)
+                                    Elseif !Landlord.isMale() && Player.isMale() || Landlord.isMale() && Player.isMale()
+                                        Filter(Handjob)
+                                    Else
+                                        Filter(Handjob)
+                                    Endif
                                     Sex(Landlord, Player)
                                     Landlord.show(2)
                                     "The handjob was amazing. I put my clothes back on afterwards and we continued our date."
@@ -448,8 +452,8 @@ OTHER: none
                                         Player.modifyActorVar(rk_VB_Hunger, -1)
                                     EndIf
                                     passTime(0.2, 1.5)
-                                    Landlord:attractiontoplayer += Random(0, 1)
-                                    Landlord:rapportwithplayer += Random(0, 1)
+                                    Landlord:attractiontoplayer += random(0, 1)
+                                    Landlord:rapportwithplayer += random(0, 1)
                                 Else
                                     "Unfortunately for me, <Landlord.name> didn't seem interested to give me a handjob."
                                 Endif
@@ -461,9 +465,9 @@ OTHER: none
                                 EndIf
                                 If Landlord.isInterestedIn(Player) && Landlord:arousal > 15
                                     Landlord(Happy)::"Sure, let's go..."
-                                    Player:perversion += Random(0, 1)
+                                    Player:perversion += random(0, 1)
                                     Landlord.strip()
-                                    Filter(Blowjob, LickPussy)
+                                    Filter(Oral)
                                     Sex(Player, Landlord)
                                     Landlord.show(2)
                                     "<Landlord.His_or_Her> <Landlord.cock_or_vagina> was tasty and <Landlord.slimy_or_juicy>, the must... <Landlord.He_or_She> put <Landlord.his_or_her> clothes back on afterwards and we continued our date."
@@ -473,8 +477,8 @@ OTHER: none
                                         Player.modifyActorVar(rk_VB_Hunger, -1)
                                     EndIf
                                     passTime(0.2, 1.5)
-                                    Landlord:attractiontoplayer += Random(0, 1)
-                                    Landlord:rapportwithplayer += Random(0, 1)
+                                    Landlord:attractiontoplayer += random(0, 1)
+                                    Landlord:rapportwithplayer += random(0, 1)
                                 Else
                                     "Unfortunately for me, <Landlord.name> didn't seem interested to give me a blowjob."
                                 Endif
@@ -482,9 +486,15 @@ OTHER: none
                                 Player(Flirty)::"Do you want a handjob?"
                                 If Landlord.isInterestedIn(Player) && Landlord:arousal > 15
                                     Landlord(Happy)::"Sure, let's go..."
-                                    Player:perversion += Random(0, 1)
+                                    Player:perversion += random(0, 1)
                                     Landlord.strip()
-                                    Filter(Handjob, Fingering)
+                                    If Landlord.isMale() && !Player.isMale() || !Landlord.isMale() && !Player.isMale()
+                                        Filter(Fingering)
+                                    Elseif !Landlord.isMale() && Player.isMale() || Landlord.isMale() && Player.isMale()
+                                        Filter(Handjob)
+                                    Else
+                                        Filter(Handjob)
+                                    Endif
                                     Sex(Player, Landlord)
                                     Landlord.show(2)
                                     "<Landlord.His_or_Her> <Landlord.cock_or_vagina> was <Landlord.hard_or_soft> and <Landlord.slimy_or_juicy>. <Landlord.He_or_She> put <Landlord.his_or_her> clothes back on afterwards and we continued our date."
@@ -494,8 +504,8 @@ OTHER: none
                                         Player.modifyActorVar(rk_VB_Hunger, -1)
                                     EndIf
                                     passTime(0.2, 1.5)
-                                    Landlord:attractiontoplayer += Random(0, 1)
-                                    Landlord:rapportwithplayer += Random(0, 1)
+                                    Landlord:attractiontoplayer += random(0, 1)
+                                    Landlord:rapportwithplayer += random(0, 1)
                                 Else
                                     "Unfortunately for me, <Landlord.name> didn't seem interested to give me a handjob."
                                 Endif
@@ -503,7 +513,7 @@ OTHER: none
                                 Player(Flirty)::"Do you want to fuck?"
                                 If Landlord.isInterestedIn(Player) && Landlord:arousal > 15
                                     Landlord(Happy)::"Sure, let's go..."
-                                    Player:perversion += Random(0, 1)
+                                    Player:perversion += random(0, 1)
                                     Player.strip()
                                     Landlord.strip()
                                     Sex(Player, Landlord)
@@ -515,8 +525,8 @@ OTHER: none
                                         Player.modifyActorVar(rk_VB_Hunger, -2)
                                     EndIf
                                     passTime(0.2, 1.5)
-                                    Landlord:attractiontoplayer += Random(0, 1)
-                                    Landlord:rapportwithplayer += Random(0, 1)
+                                    Landlord:attractiontoplayer += random(0, 1)
+                                    Landlord:rapportwithplayer += random(0, 1)
                                 Else
                                     "Unfortunately for me, <Landlord.name> didn't seem interested to fuck."
                                 Endif
@@ -531,9 +541,15 @@ OTHER: none
                             
                             If 0
                                 Player(Happy)::"Sure, let's see if it's true..."
-                                Player:perversion += Random(0, 1)
+                                Player:perversion += random(0, 1)
                                 Player.strip()
-                                Filter(Handjob, Fingering)
+                                If Landlord.isMale() && !Player.isMale() || !Landlord.isMale() && !Player.isMale()
+                                    Filter(Fingering)
+                                Elseif !Landlord.isMale() && Player.isMale() || Landlord.isMale() && Player.isMale()
+                                    Filter(Handjob)
+                                Else
+                                    Filter(Handjob)
+                                Endif
                                 Sex(Landlord, Player) // Need to do the opposite????
                                 Landlord.show(2)
                                 "The handjob was amazing. I put my clothes back on afterwards and we continued our date."
@@ -544,12 +560,12 @@ OTHER: none
                                 EndIf
                                 passTime(0.2, 1.5)
                                 ActorAskForIt1 = true
-                                Landlord:attractiontoplayer += Random(0, 1)
-                                Landlord:rapportwithplayer += Random(0, 1)
+                                Landlord:attractiontoplayer += random(0, 1)
+                                Landlord:rapportwithplayer += random(0, 1)
                             Else
                                 "Unfortunately, I told <Landlord.name> that I was not in the mood for this!"
-                                Landlord:attractiontoplayer -= Random(0, 1)
-                                Landlord:rapportwithplayer -= Random(0, 1)
+                                Landlord:attractiontoplayer -= random(0, 1)
+                                Landlord:rapportwithplayer -= random(0, 1)
                             Endif
                         
                         Elseif Landlord.isInterestedIn(Player) && Landlord:arousal > 15 && [random(0, 100) > 20.5 && random(0, 100) < 50] && !ActorAskForIt2
@@ -560,9 +576,9 @@ OTHER: none
                             
                             If 0
                                 Player(Happy)::"Sure, let's go..."
-                                Player:perversion += Random(0, 1)
+                                Player:perversion += random(0, 1)
                                 Player.strip()
-                                Filter(Blowjob, LickPussy)
+                                Filter(Oral)
                                 Sex(Landlord, Player) // Need to do the opposite????
                                 Landlord.show(2)
                                 "The blowjob was amazing. I put my clothes back on afterwards and we continued our date."
@@ -573,12 +589,12 @@ OTHER: none
                                 EndIf
                                 passTime(0.2, 1.5)
                                 ActorAskForIt2 = true
-                                Landlord:attractiontoplayer += Random(0, 1)
-                                Landlord:rapportwithplayer += Random(0, 1)
+                                Landlord:attractiontoplayer += random(0, 1)
+                                Landlord:rapportwithplayer += random(0, 1)
                             Else
                                 "Unfortunately, I told <Landlord.name> that I was not in the mood for this!"
-                                Landlord:attractiontoplayer -= Random(0, 1)
-                                Landlord:rapportwithplayer -= Random(0, 1)
+                                Landlord:attractiontoplayer -= random(0, 1)
+                                Landlord:rapportwithplayer -= random(0, 1)
                             Endif
 
                         Elseif Landlord.isInterestedIn(Player) && Landlord:arousal > 15 && ActorAskForIt3 < 5
@@ -595,8 +611,8 @@ OTHER: none
                                     Player.animate(drinkglass)
                                     Landlord.animate(drinkglass)
                                     "We had a drink alcohol together ..."
-                                    Player:intoxication += Random(5,15)
-                                    Landlord:intoxication += Random(5,15)
+                                    Player:intoxication += random(5,15)
+                                    Landlord:intoxication += random(5,15)
                                     passTime(0.1, 0.2)
                                     Player.animate()
                                     Landlord.animate()
@@ -604,13 +620,13 @@ OTHER: none
                                         Player.modifyActorVar(rk_VB_UrgeToPee, 1)
                                     EndIf
                                     ActorAskForIt3 += 1
-                                    Landlord:attractiontoplayer += Random(0, 1)
-                                    Landlord:rapportwithplayer += Random(0, 1)
+                                    Landlord:attractiontoplayer += random(0, 1)
+                                    Landlord:rapportwithplayer += random(0, 1)
                                 
                                 Else
                                     "Unfortunately, I told <Landlord.name> that I was not in the mood for this!"
-                                    Landlord:attractiontoplayer -= Random(0, 1)
-                                    Landlord:rapportwithplayer -= Random(0, 1)
+                                    Landlord:attractiontoplayer -= random(0, 1)
+                                    Landlord:rapportwithplayer -= random(0, 1)
                                 Endif
                             
                             Else
@@ -623,10 +639,10 @@ OTHER: none
                                     Player.animate(smoke)
                                     Landlord.animate(smoke)
                                     "We smoked weed together ..."
-                                    Player:intoxication += Random(3,15)
-                                    Landlord:intoxication += Random(3,15)
-                                    Player:mood += Random(3,10)
-                                    Landlord:mood += Random(3,10)
+                                    Player:intoxication += random(3,15)
+                                    Landlord:intoxication += random(3,15)
+                                    Player:mood += random(3,10)
+                                    Landlord:mood += random(3,10)
                                     Landlord:attractiontoplayer += 1
                                     Landlord:rapportwithplayer += 5
                                     If HungerEnable > 0
@@ -646,7 +662,7 @@ OTHER: none
                             
                             If 0
                                 Landlord(Happy)::"Sure, let's go..."
-                                Player:perversion += Random(0, 1)
+                                Player:perversion += random(0, 1)
                                 Player.strip()
                                 Landlord.strip()
                                 Sex(Player, Landlord)
@@ -659,17 +675,17 @@ OTHER: none
                                 EndIf
                                 passTime(0.2, 1.5)
                                 ActorAskForIt4 += 1
-                                Landlord:attractiontoplayer += Random(0, 1)
-                                Landlord:rapportwithplayer += Random(0, 1)
+                                Landlord:attractiontoplayer += random(0, 1)
+                                Landlord:rapportwithplayer += random(0, 1)
                             
                             Else
                                 "Unfortunately, I told <Landlord.name> that I was not in the mood for this!"
-                                Landlord:attractiontoplayer -= Random(0, 1)
-                                Landlord:rapportwithplayer -= Random(0, 1)
+                                Landlord:attractiontoplayer -= random(0, 1)
+                                Landlord:rapportwithplayer -= random(0, 1)
                             Endif
                         Endif
                         
-                        If Kissed || [Landlord.isInterestedIn(Player) && !hadSex && Landlord:attractiontoplayer > Random(0, 200)]
+                        If Kissed || [Landlord.isInterestedIn(Player) && !hadSex && Landlord:attractiontoplayer > random(0, 200)]
                             AnimatePair(Player, Landlord, Kissing)
                             Player(Kiss):: "..."
                             Landlord(Kiss):: "..."
@@ -693,12 +709,12 @@ OTHER: none
                                     Endif
                                         
                                     hadSex = true
-                                    Player:perversion += Random(0, 1)
+                                    Player:perversion += random(0, 1)
                                     Sex(Player, Landlord)
                                     Landlord.show(2)
                                     "The sex was amazing. We put our clothes back on afterwards and continued our date."
                                     If HungerEnable > 0
-                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
                                     EndIf
                                     passTime(0.2, 0.5)
                                         
@@ -709,7 +725,7 @@ OTHER: none
                                 "I decided to stop it there and not go any further."
                             Endif
                                 
-                        Elseif !Player.isInterestedIn(Landlord) && [Random(0, 100) < 20] 
+                        Elseif !Player.isInterestedIn(Landlord) && [random(0, 100) < 20] 
                         
                             Player(Happy):: "I've gotta go now. Thank you for inviting me."
                             Landlord(Happy):: "Alright. Thank you for staying. Goodbye!"
@@ -775,15 +791,15 @@ OTHER: none
                 Elseif Landlord.IsInterestedIn(Player)
                 
                     HornyLandlordTxt = "uncomfortable and I think you should wear something before someone rape you..."
-                    Landlord:attractiontoplayer += Random(0, 2)
-                    Landlord:rapportwithplayer += Random(0, 2)
+                    Landlord:attractiontoplayer += random(0, 2)
+                    Landlord:rapportwithplayer += random(0, 2)
                     Landlord:arousal += 1
                 
                 Else
                 
                     HornyLandlordTxt = "very uncomfortable and I think you should consult a doctor... now leave before I call the cops!"
-                    Landlord:attractiontoplayer -= Random(0, 5)
-                    Landlord:rapportwithplayer -= Random(0, 5)
+                    Landlord:attractiontoplayer -= random(0, 5)
+                    Landlord:rapportwithplayer -= random(0, 5)
                     CopsWantToFucked = true
                 
                 Endif
@@ -823,8 +839,8 @@ OTHER: none
                     Elseif Landlord.IsInterestedIn(Player)
                     
                         Landlord(Happy)::"You are cute but I should leave before someone see us together ...!"
-                        Landlord:attractiontoplayer += Random(0, 2)
-                        Landlord:rapportwithplayer += Random(0, 2)
+                        Landlord:attractiontoplayer += random(0, 2)
+                        Landlord:rapportwithplayer += random(0, 2)
                         Landlord:arousal += 1
                         Landlord.hide()
                         Player.animate()
@@ -832,8 +848,8 @@ OTHER: none
                     Else
                     
                         Landlord(Annoyed)::"Get out you annoying me...pervert!"
-                        Landlord:attractiontoplayer -= Random(0, 2)
-                        Landlord:rapportwithplayer -= Random(0, 2)
+                        Landlord:attractiontoplayer -= random(0, 2)
+                        Landlord:rapportwithplayer -= random(0, 2)
                         Player.animate()
                         
                     Endif
@@ -859,14 +875,14 @@ OTHER: none
                     
                     Elseif Landlord.IsInterestedIn(Player)
                         Landlord(Happy)::"Interesting..."
-                        Landlord:attractiontoplayer += Random(0, 2)
-                        Landlord:rapportwithplayer += Random(0, 2)
+                        Landlord:attractiontoplayer += random(0, 2)
+                        Landlord:rapportwithplayer += random(0, 2)
                         Landlord:arousal += 1
                         Player.animate()
                     Else
                         Landlord(Annoyed)::"Get out perv..."
-                        Landlord:attractiontoplayer -= Random(0, 2)
-                        Landlord:rapportwithplayer -= Random(0, 2)
+                        Landlord:attractiontoplayer -= random(0, 2)
+                        Landlord:rapportwithplayer -= random(0, 2)
                         Player.animate()
                     Endif
                 
@@ -877,11 +893,12 @@ OTHER: none
                     
                     rk_VB_houseviewing.setGlobal(1)
                     followUp(rk_VB_public_indecency)
+                    Player.setActorVar(rk_VB_TempGetADeals, 0)
                 Endif
             Endif
         Else
             "I decided not to arrange a viewing with the landlord. This isn't really suitable accommodation for me right now."
         Endif
-
+        Player.setActorVar(rk_VB_TempGetADeals, 0)
         passTime(0.5, 1.5)
     sceneEnd() // Scene improved by Raddeck

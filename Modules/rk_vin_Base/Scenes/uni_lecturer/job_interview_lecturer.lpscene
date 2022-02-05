@@ -5,6 +5,10 @@ WHO: none
 OTHER: none
 
     SceneStart()
+        
+        Classics_Major_Ses_Done = rk_VB_Classics_Major_Ses_Done.getGlobal()
+        Education_Major_Ses_Done = rk_VB_Education_Major_Ses_Done.getGlobal()
+        English_Major_Ses_Done = rk_VB_English_Major_Ses_Done.getGlobal()
         Tuition = CostOfLiving*[1000 + [intelligence*20]]
         TuitionConverted = Tuition.convertToLocalCurrency(true)
         "Do I want to apply for a teaching post at this university? The salary per month for someone of my qualification is around <TuitionConverted>."
@@ -12,57 +16,167 @@ OTHER: none
         1:: "No"
         
         If 0
-            moveJobs()
-            Tuition.setSalary()
-            "Yeah, academia is a good career."
-            "Now, which department of the university fits my expertise?"
-            chooseMajor()
-            setMajor()
-            setBackground(home)
-            "A month later ..."
-            "My application was successful. I cannot wait to start the course!"
-            dressFormal()
-            setBackground(bar)
-            Player.dress()
-            "The Department of <Player.Major> organized a welcome drink event a day before the start of the semester. I just had to go, this is the perfect chance to meet my colleagues and students."
-            Total = Random(10, 25)
-            count = 0
-            While count < Total
-                Actor = generatePerson()
-                If Random(0, 100) < 95
-                    Actor:age => Random(18, 22)
+            If Classics_Major_Ses_Done > 0 && Education_Major_Ses_Done > 0 && English_Major_Ses_Done > 0 
+                moveJobs()
+                Tuition.setSalary()
+                "Yeah, teaching is a good career."
+                "Now, which department of the university fits my expertise?"
+                chooseMajor()
+                setMajor()
+                "Perfect, let's go back home and wait for their calls" // Edit Raddeck
+                setBackground(home)
+                "A month later ..."
+                "My application was successful. I cannot wait to start the course!"
+                "The Department of <Player.Major> organized a welcome drink event a day before the start of the semester. I just had to go, this is the perfect chance to meet my colleagues and students."
+                setBackground(bar)
+                "Now arrived at this famous party..." // Edit Raddeck
+                dressFormal()
+                Player.dress()
+                Total = Random(10, 25)
+                count = 0
+                While count < Total
+                    Actor = generatePerson()
+                    If Random(0, 100) < 95
+                        Actor:age => Random(18, 22)
+                        Actor.randomizeHairs()
+                        Actor.randomizeFace()
+                    Endif
+                    
+                    Actor.setSameMajor()
+                    Actor.dress()
+                    Actor.show(2)
+                    Actor.moveToPersonStand(50, Player) // Edit Raddeck
+                    "A student approached me."
+                    If Actor:perversion > 70 && Actor:arousal > 25 && Actor.isInterestedIn(Player) // Start edit Raddeck
+                        Actor(Flirty):: "Good evening, <Player.Sir_or_Madam>. I'm <Actor.name>. It's my pleasure to meet you!"
+                        Actor(Flirty):: "I hope you have an open-minded teacher because, I like to play with teachers to keep my grades up, if you know what I mean..."
+                        "What I should say?"
+                        0::"I'm open mind!!"
+                        1::"Not really open mind"
+                        
+                        If 0
+                            Player(Sad)::"I pretty sure that if you fall into one of my classes, we will have fun together..."
+                            Actor(Flirty):: "We can meet in the bathroom if you want an overview?"
+                            "What I should say?"
+                            0::"Sure!"
+                            1::"Bad timing, sorry!"
+                            
+                            If 0
+                                perversion += 1
+                                setBackground(toilets)
+                                "As soon as we gets to the bathroom, <Actor.he_or_she> takes the time to lock the door before showing me <Actor.his_or_her> prowess."
+                                Actor.strip()
+                                Player.strip()
+                                sex(Actor, Player)
+                                Player(Flirty):: "Wow, you're good at fuck, I hope it was mutual?"
+                                Actor(Happy):: "Totally!"
+                                Actor:rapportwithplayer += random(1, 2)
+                                Actor:attractiontoplayer += random(0, 2)
+                                Player(Happy):: "Let's go back to the party without anyone noticing..."
+                                If random(0, 10) > 4
+                                    Actor(Flirty):: "We could exchange phone numbers, just to see each other at a place other than the university..."
+                                    "What I should say?"
+                                    0::"Sure!"
+                                    1::"Refuse"
+                                    
+                                    If 0
+                                        "We exchanged numbers and then left the bathroom..."
+                                        exchangeContact(Actor)
+                                        Actor(Flirty)::"Nice, see you later!"
+                                        Actor:rapportwithplayer += random(1, 2)
+                                        Actor:attractiontoplayer += random(0, 2)
+                                    Else
+                                        Player(Sad)::"Let's not be in too much of a hurry, if the other students see us together it might be a little suspicious"
+                                        Actor:rapportwithplayer -= random(1, 4)
+                                        Actor:attractiontoplayer -= random(0, 2)
+                                        Actor(Sad)::"Fine!"
+                                    Endif
+                                Endif
+                            Endif
+                        Else
+                            Player(Sad)::"You're going to be disappointed my dear!"
+                            Actor(Grin):: "We'll see!"
+                        Endif
+                        Actor.hide()
+                        Actor.saveandDelete()
+                    Else // End edit Raddeck
+                        Actor(Happy):: "Good evening, <Player.Sir_or_Madam>. I'm <Actor.name>. It's my pleasure to meet you!"
+                        Player(Happy):: "Nice to meet you, <Actor.name>. I'm Dr <Player.name_last>."
+                        Actor.hide()
+                        Actor.saveandDelete()
+                    Endif
+                    count += 1
+                Endwhile
+                
+                Total = Random(5, 8)
+                count = 0
+                While count < Total
+                    Actor = generatePerson()
+                    Actor:age => Random(27, 70)
                     Actor.randomizeHairs()
                     Actor.randomizeFace()
-                Endif
-                Actor.setSameMajor()
-                Actor.dress()
-                Actor.show(2)
-                "A student approached me."
-                Actor(Happy):: "Good evening, <Player.Sir_or_Madam>. I'm <Actor.name>. It's my pleasure to meet you!"
-                Player(Happy):: "Nice to meet you, <Actor.name>. I'm Dr <Player.name_last>."
-                Actor.hide()
-                Actor.saveandDelete()
-                count += 1
-            Endwhile
-            
-            Total = Random(5, 8)
-            count = 0
-            While count < Total
-                Actor = generatePerson()
-                Actor:age => Random(27, 70)
-                Actor.randomizeHairs()
-                Actor.randomizeFace()
-                Actor.setSubject()
-                Actor.dress()
-                Actor.show(2)
-                "One of the fellow lecturers approached me."
-                Actor(Happy):: "Hi there, I'm Dr <Actor.name> <Actor.name_last>. I teach the <Actor.major> module."
-                Player(Happy):: "Nice to meet you, Dr <Actor.name_last>. I'm <Player.name>. I'm looking forward to working with you."
-                exchangeContact(Actor)
-                Actor.hide()
-                Actor.saveandDelete()        
-                count += 1
-            Endwhile
-            "Eventually, the event wound down. I'm glad to have met many of my students and faculty. I cannot wait for my first day tomorrow."
+                    Actor.setSubject()
+                    Actor.dress()
+                    Actor.show(2)
+                    "One of the fellow lecturers approached me."
+                    Actor.moveToPersonStand(50, Player) // Start edit Raddeck
+                    If Actor:perversion > 70 && Actor:arousal > 25 && Actor.isInterestedIn(Player)
+                        Actor(Flirty):: "Hi sexy <Player.boy_or_girl>, I'm Dr <Actor.name> <Actor.name_last>. I teach the <Actor.major> module."
+                        Player(Happy):: "Ok??"
+                        Actor(Flirty):: "I also give private sex courses to beautiful <Player.man_or_woman> like you, I can give an overview if you're interested?"
+                        "What I should say?"
+                        0::"Can be cool"
+                        1::"Not really my kink"
+                        
+                        If 0
+                            Actor(Flirty):: "Cool, follow me I know a secret room nearby..."
+                            "Once we arrived in the room we rushed to undress and start our sex session."
+                            setBackground(bedroom)
+                            Actor.strip()
+                            Player.strip()
+                            sex(Actor, Player)
+                            Player(Flirty):: "Wow, you're good at fuck, I hope it was mutual?"
+                            Actor(Happy):: "Totally!"
+                            Actor:rapportwithplayer += random(1, 2)
+                            Actor:attractiontoplayer += random(0, 2)
+                            
+                            "Do I exchange my number with <Actor.him_or_her>?"
+                            0::"Yes"
+                            1::"No"
+                            
+                            If 0
+                                "We exchanged numbers and then..."
+                                exchangeContact(Actor)
+                                Actor.hide()
+                                Actor.saveandDelete()
+                                Actor:rapportwithplayer += random(1, 4)
+                                Actor:attractiontoplayer += random(0, 2)
+                            Endif
+                            Player(Happy):: "Let's go back to the party without anyone noticing..."
+                        Else
+                            Actor(Sad)::"I understand..."
+                            Actor:rapportwithplayer -= random(0, 1)
+                            Actor:attractiontoplayer -= random(0, 1)
+                        Endif
+                    Else
+                        Actor(Happy):: "Hi there, I'm Dr <Actor.name> <Actor.name_last>. I teach the <Actor.major> module."
+                        Player(Happy):: "Nice to meet you, Dr <Actor.name_last>. I'm <Player.name>. I'm looking forward to working with you."
+                        "Do I exchange my number with <Actor.him_or_her>?"
+                        0::"Yes"
+                        1::"No"
+                        
+                        If 0
+                            "We exchanged numbers and then <Actor.he_or_she> left to talk to someone else..."
+                            exchangeContact(Actor)
+                            Actor.hide()
+                            Actor.saveandDelete()
+                        Endif // End edit Raddeck
+                    Endif
+                    count += 1
+                Endwhile
+                "Eventually, the event wound down. I'm glad to have met many of my students and teachers. I cannot wait for my first day tomorrow."
+            Else
+                "You can't teach people if you don't have the knowledge. To become a teacher, you must have taken these 3 courses: Classics, Education and English!" // Edit Raddeck
+            Endif
         Endif
     SceneEnd() // Improved by Raddeck
