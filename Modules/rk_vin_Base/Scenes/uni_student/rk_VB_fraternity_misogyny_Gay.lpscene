@@ -5,20 +5,40 @@ WHO: none
 OTHER: Player.isGay()
 
     SceneStart()
-        "I'm in a middle of a frat party when some of my brothers started their favorite chants."
-        "'No means Yes, Yes means Anal!'"
-        "'No means Yes, Yes means Anal!'"
-        "'No means Yes, Yes means Anal!'"
-        "'No means Yes, Yes means Anal!'"
-        0:: "Chant along"
-        1:: "Stay silent"
         
-        If 0
-            Player(Evil):: "No means Yes, Yes means Anal!"
-            masochist -= Random(0, 0.5)
-            karma -= 2.5
+        If !Player.isMale()
+            "I'm in a middle of a frat party when some of my sisters started their favorite chants."
+            "'No means Yes, Yes means Pussies!'"
+            "'No means Yes, Yes means Pussies!'"
+            "'No means Yes, Yes means Pussies!'"
+            "'No means Yes, Yes means Pussies!'"
+            0:: "Chant along"
+            1:: "Stay silent"
+            
+            If 0
+                Player(Evil):: "No means Yes, Yes means Pussies!"
+                masochist -= Random(0, 0.5)
+                karma -= 2.5
+            Else
+                masochist += Random(0, 0.25)
+            Endif
+        
         Else
-            masochist += Random(0, 0.25)
+            "I'm in a middle of a frat party when some of my brothers started their favorite chants."
+            "'No means Yes, Yes means Anal!'"
+            "'No means Yes, Yes means Anal!'"
+            "'No means Yes, Yes means Anal!'"
+            "'No means Yes, Yes means Anal!'"
+            0:: "Chant along"
+            1:: "Stay silent"
+            
+            If 0
+                Player(Evil):: "No means Yes, Yes means Anal!"
+                masochist -= Random(0, 0.5)
+                karma -= 2.5
+            Else
+                masochist += Random(0, 0.25)
+            Endif
         Endif
     SceneEnd() // Improved by Raddeck
     timeout(200, rk_VB_fraternity_misogyny_Gay)
