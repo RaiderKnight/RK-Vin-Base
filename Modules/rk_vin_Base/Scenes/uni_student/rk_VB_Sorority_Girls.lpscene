@@ -1,0 +1,264 @@
+WHAT: all
+WHERE: university:school, university:work
+WHEN: 0-24
+WHO: Actor = getSpecific(Coursemate); If !Actor.isMale() && !Actor.isDating() && !Actor.hasRelationship(Spouses, Dating)
+OTHER: Player.isFemale()
+
+    SceneStart()
+        rk_money_value = Player.getActorVar(rk_money_value)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Player.hide()
+        Actor:age => 18
+        HeadHouse = generatePersonTemporary()
+        While HeadHouse.isSameGender(Actor)
+            HeadHouse = generatePersonTemporary()
+        Endwhile
+        Actor3 = generatePersonTemporary()
+        While !Actor3.isSameGender(Actor)
+            Actor3 = generatePersonTemporary()
+        Endwhile
+        Actor3:age => 67
+        "I'm looking at the window and I see my friend <Actor.name> <Actor.name_last> walking..."
+        Actor.show()
+        "When <Actor.name> <Actor.name_last> applied to join a Sorority she was a bit naïve. She knew that there were certain rituals to go through to get a full membership but she shrugged it off and moved into the House anyway."
+        "<HeadHouse.name> <HeadHouse.name_last>, the head of the house said that as part of her initiation she would have had to have sex with a man old enough to be her grandfather."
+        "She was absolutely staggered when she heard this and had pretty well decided to withdraw her application and move out again – that was until she met <Actor3.name>."
+        Actor3.makeInterested(Actor)
+        Actor3.show()
+        "<Actor3.He_or_She> just happened to sit next to her on a bench in the college one day and they got to chatting. He turned out to be a very intelligent man and they had a most interesting discussion."
+        Actor.makeInterested(Actor3)
+        "<Actor.name> saw him the following day in exactly the same place and she decided to engage him in conversation again to try and find out his age."
+        Actor.animate(socialize)
+        Actor3.animate(socialize)
+        Actor(Flirty)::"Is it too much to ask to know your age?"
+        Actor3(Flirty)::"Not at all, I am 67 years old."
+        "But the next step was a little more difficult, how do you ask a refined old man like this for a quick fuck so that you can join a sorority."
+        Actor(Sad)::"I made an application to join and what they required me to do for the initiation is horrifying."
+        Actor3(Curious)::"What they are demanding that is so bad?"
+        Actor(Flirty)::"I got to have sex with a man old enough to be his grandfather."
+        Actor3(Wink)::"Well I’m old enough to be your grandfather,..."
+        "She was shocked and was about to get up and leave but then he added,..."
+        Actor3(Flirty)::"I could always write a letter saying we’d had sex and that would let you off the hook."
+        Actor(Flirty)::"WOW that would be very nice – would you do that for me."
+        Actor3(Serene)::"Look my chauffeur will be picking me up in a minute and we can go back to my house and I’ll write the letter."
+        "He saw a little fear in her eyes and went on to explain that he had a housekeeper and a butler and so they wouldn’t be alone together."
+        "When the car arrived she was in for another shock – it was a Rolls Royce. The chauffeur opened the door and <Actor3.name> very gentlemanly stepped back for her to climb in first."
+        "After a while..."
+        passTime(0.5, 1)
+        "Shock number three came when she saw the house and the sprawling gardens and again when she walked into the lavishly decorated hallway."
+        setbackground(livingroom)
+        "The butler took her coat and <Actor3.name> escorted her into the den that was lined from floor to ceiling with books. Everything about the place indicated great wealth and she wondered how <Actor3.name> had accumulated it."
+        Actor3(Serene)::"I used to be in the investment business,... I had a few lucky hunches and made a fortune – certainly more luck that expertise I can assure you,..."
+        Actor:arousal += 5
+        "He is such a nice old man she is growing quite fond of him and he is awfully well-groomed and not at all like she imagined..."
+        "She rather thought of someone with a bushy beard and a walking cane, <Actor3.name> was far removed from that image."
+        Actor3(Serene)::"Before I start writing I think we should have some tea and sandwiches,..."
+        Actor(Flirty)::"Yeah sure!"
+        "He rang the bell and instructed the rotund little housekeeper to prepare some for them."
+        Actor3.animate(write)
+        "As he started to write the letter she wondered if it would be that bad having sex with him, maybe he couldn’t even get it up."
+        Actor(Flirty)::"<Actor3.name>,..."
+        Actor3(Curious)::"Yes"
+        Actor(Flirty)::"I don’t know how you feel about this but perhaps I shouldn’t be dishonest by saying we’ve had sex when we haven’t – if you are OK with it, we could have a quickie."
+        Actor3.animate()
+        "He stopped writing mid-line,..."
+        Actor3(Curious)::"Are you sure you’re OK with that?"
+        Actor(Flirty)::"Yes I am – you’re a good looking man, even a little sexy and I’m quite prepared."
+        If Actor.isInterestedIn(Player)
+            ActorSharedCash = false
+            Actor(Flirty)::"If you want I can call one of my friend?"
+            If Actor3:arousal > 25 && Actor3:perversion > 50
+                Actor3(Flirty)::"Yeah sure!"
+                Actor.animate(call)
+                secondScreen(Actor)
+                "I get a call from <Actor.name> and she asks me if I want to fuck a gorgeous old gent with her!"
+                "What should I say?"
+                0::"Accept"
+                1::"Refuse"
+                
+                If 0
+                    ActorSharedCash = true
+                Else
+                    Player(Sad)::"Sorry, I'm not interested!"
+                Endif
+            Else
+                Actor3(Flirty)::"Are you trying to kill me? Nah, 1 girl is enough!"
+            Endif
+            Actor.animate()
+        Endif    
+        If ActorSharedCash
+            "After a while, I finally arrived at his house."
+            Player.show()
+        Endif
+        setbackground(bedroom)
+        If ActorSharedCash
+            "When <Actor3.name> showed us into the bedroom I took a deep breath. It was huge and the furnishings were luxurious."
+        Else
+            "When <Actor3.name> showed her into the bedroom once again she took a deep breath. It was huge and the furnishings were luxurious."
+        Endif
+        Actor3(Curious)::"Why don’t we take a shower first,..."
+        "He led the way to the bathroom which was almost as big as the bedroom. There was a large shower cabinet, a Jacuzzi tub, and what could only be described as a miniature gym."
+        Actor.animate()
+        Actor3.animate()
+        setBackground(shower)
+        setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
+        If ActorSharedCash
+            Player.strip()
+        Endif
+        Actor3.strip()
+        Actor.strip()
+        If ActorSharedCash
+            "<Actor3.name> gasped when we very sensuously removed our top and short skirt and revealed a pair of our beautiful 18-year-old tits and other equally pleasing accessories."
+            Filter(Shower)
+            "We decided to take a shower..."
+            sex(Actor3, Actor, Player)
+            "Soon he was sponging us front, back and between our long, slender legs. We didn't want to admit it but we were getting more and more excited."
+            Player:arousal += 5
+        Else
+            "<Actor3.name> gasped when she very sensuously removed her top and short skirt and revealed a pair of beautiful 18-year-old tits and other equally pleasing accessories."
+            Filter(Shower)
+            "We decided to take a shower..."
+            sex(Actor3, Actor)
+            "Soon he was sponging her front, back and between her long, slender legs. She didn't want to admit it but she was getting more and more excited."
+        Endif
+        Actor:arousal += 5
+        Actor3:arousal += 5
+        If ActorSharedCash
+            "Naturally, we had to take our turn and as we lathered up his balls and cock, he got bigger and bigger."
+            "Once out of the shower... we went back to his bedroom... and began to having sex!"
+        Else
+            "Naturally, she had to take her turn and as she lathered up his balls and cock, he got bigger and bigger."
+            "Once out of the shower... they went back to his bedroom... and began to having sex!"
+        Endif
+        setbackground(bedroom)
+        If ActorSharedCash
+            "He took our hands and led us over to the bed. We lay on the spotless white covers and he bent over <Actor.name> and began to nibble on her nipples so gently and do the same to me."
+            Actor3(Kiss)::"..."
+            animatePair(Actor3, Actor, Kissing)
+            Actor3(Kiss)::"..."
+            
+            Actor3(Kiss)::"..."
+            animatePair(Actor3, Player, Kissing)
+            Actor3(Kiss)::"..."
+            "We liked it, especially when he took the whole end of our tit in his mouth and worked his tongue in circles around the crown. We felt we were very wet down there."
+            "We decided to suck his cock, thinking that if he came, he probably wouldn't be able to get hard again to fuck us."
+            "<Actor3.name> took several big breaths again and we started to worry about a possible heart attack."
+            "As he didn’t seem to be expiring anytime soon we began to licked and plunged it deep into our mouth going up and down and fingering his nut sack as we did so."
+            Filter(Blowjob)
+            sex(Player, Actor, Actor3)
+        Else
+            "He took her hand and led her over to the bed. She lay on the spotless white covers and he bent over her and began to nibble on her nipples – ever so gently."
+            Player(Kiss)::"..."
+            animatePair(Actor3, Actor, Kissing)
+            Player(Kiss)::"..."
+            "She liked it and when he took the whole end of her tit in his mouth and worked his tongue in circles around the crown she felt herself getting very wet below."
+            "She decided to suck his cock, thinking that if he came, he probably wouldn't be able to get hard again to fuck her."
+            "<Actor3.name> took several big breaths again and she started to worry about a possible heart attack."
+            "As he didn’t seem to be expiring anytime soon she plunged it deep into her mouth going up and down and fingering his nut sack as she did so."
+            Filter(Blowjob)
+            sex(Actor, Actor3)
+        Endif
+        Actor3(Curious)::"Oh! I'm about to cum..."
+        If ActorSharedCash
+            "We pulled back and worked out his goo with our hands. There was quite a lot and it shot all over the sparkling white bed covers."
+            "And he soon had our legs in the air and his face buried between them. He did everything very gently and when he opened up our slit and the tip of his tongue made contact with the lips, it sent lightning bolts throughout our body."
+            Filter(Licking)
+            sex(Actor3, Actor, Player)
+            "<Actor3.name> worked it with his fingers and his long smooth pussies flicker until we could hardly stand it anymore. Our body was beginning to get warm all over, we started to tremble, and grabbing onto his wrists we went into an earth moving orgasm."
+            "<Actor.name> flung our arms across the bed causing our tits to bounce from side to side – and this really excited <Actor3.name>."
+            Filter(Fingering)
+            sex(Actor3, Actor, Player)
+            "The next thing we knew he’d driven his cock into our tight little cunt and was pounding it like a 25-year-old."
+            "He was breathing a bit heavy but he kept up the pace and we were taking short breaths, anticipating that at any moment he was going to shoot his load on us."
+            sex(Actor3, Actor, Player)
+            "When he did cream our pie we hung onto his shoulders as he made those last powerful strokes that ignited our nerve endings and sent us into a sensational climax."
+            "After our sex session, we put our clothes back on!"
+            Actor.dress()
+            Actor3.dress()
+            Player.dress()
+            Actor3.hide()
+            "<Actor.name>, note in hand, we left the house and headed back to college in the chauffeur driven limo."
+            passTime(1.5, 2)
+            "After a few minutes, we finally arrived at the college... and I decided to go back to my room."
+        Else
+            "She pulled back and worked out his goo with her hand. There was quite a lot and it shot all over the sparkling white bed covers."
+            "And he soon had her legs in the air and his face buried between them. He did everything very gently and when he opened up her slit and the tip of his tongue made contact with the lips, it sent lightning bolts throughout her body."
+            Filter(Licking)
+            sex(Actor3, Actor)
+            "<Actor3.name> worked it with his fingers and his long smooth pussy flicker until she could hardly stand it anymore. Her body was beginning to get warm all over, she started to tremble, and grabbing onto his wrists she went into an earth moving orgasm."
+            "<Actor.name> flung her arms across the bed causing her tits to bounce from side to side – and this really excited <Actor3.name>."
+            Filter(Fingering)
+            sex(Actor3, Actor)
+            "The next thing she knew he’d driven his cock into her tight little cunt and was pounding it like a 25-year-old."
+            "He was breathing a bit heavy but he kept up the pace and she was taking short breaths, anticipating that at any moment he was going to shoot his load."
+            sex(Actor3, Actor)
+            "When he did cream her pie she hung onto his shoulders as he made those last powerful strokes that ignited her nerve endings and sent her into a sensational climax."
+            "After their sex session, they put their clothes back on!"
+            Actor.dress()
+            Actor3.dress()
+            Actor3.hide()
+            "Note in hand she left the house and headed back to college in the chauffeur driven limo."
+            passTime(1.5, 3)
+            "After a few minutes, she finally arrived at the college..."
+        Endif
+        Player.hide()
+        setBackground(fraternity)
+        "When she presented her written proof to <HeadHouse.name> and her committee they laughed hysterically,..."
+        HeadHouse.show()
+        HeadHouse.animate(socialize)
+        HeadHouse(Happy)::"You’d didn’t really have to do that,"
+        HeadHouse(Happy)::"We were just playing a joke on you."
+        HeadHouse(Happy)::"Did he take his false teeth out first,..."
+        HeadHouse(Happy)::"Did he fall asleep in the middle of it?"
+        Actor(Annoyed)::"Ah, shut up!"
+        housemother.generatePersonTemporary()
+        While housemother.isSameGender(Actor)
+            housemother = generatePersonTemporary()
+        Endwhile
+        housemother:age => random(30, 70)
+        HeadHouse.moveToPersonStand(Player, 100)
+        housemother.show()
+        housemother.moveToPersonStand(Player, 50)
+        
+        "Several weeks later during lunch, <HeadHouse.name> was once again trying to bring up the subject of her fucking an old man when a hand-delivered envelope arrived and the housemother handed it to <Actor.name>."
+        "When she opened she gasped,"
+        Actor(Shocked)::"Oh my god <Actor3.name>’s passed away – he had a heart attack."
+        "The insensitive members broke into laughter as <HeadHouse.name> cried out,..."
+        HeadHouse(Happy)::"Holy shit – she fucked him to death."
+        "<Actor.name> clasped the letter to her chest and yelled... at the top of her voice."
+        Actor(Shocked)::"Oh my god,..."
+        "Everyone went silent as tears began to run down her cheeks,"
+        Actor(Crying)::"..."
+        HeadHouse(Happy)::"What’s wrong,"
+        HeadHouse(Happy)::"Did he leave you his long underwear."
+        PriceA = 200000000
+        PriceA_loc = PriceA.convertToLocalCurrency(true)
+        PriceB = 100000000
+        PriceB_loc = PriceB.convertToLocalCurrency(true)
+        If ActorSharedCash
+            Player.show()
+            Actor(Happy)::"No, it bequeaths to me and <Player.name> his entire <PriceA_loc> fucking estate,..."
+            Actor(Happy)::"And I have you girls to thank!"
+            Actor.animate(call)
+            Player.animate(call)
+            Actor(Happy)::"Hey, you know what?"
+            Player(Curious)::"What?"
+            Actor(Happy)::"<Actor3.name>’s passed away – he had a heart attack"
+            Player(Shocked)::"What? Ok, that's sad!"
+            Actor(Happy)::"Not that much he left us his entire <PriceA_loc> fucking estate..."
+            Actor(Happy)::"You supposed to have in your bank account, a nice bonus of <PriceB_loc>"
+            Player.modifyActorVar(rk_money_value, PriceB)
+            Player(Shocked)::"What?"
+            Actor(Happy)::"Yeah, no more need to work my friend!"
+            Player(Happy)::"Wow?"
+            mood += 50
+        Else
+            Actor(Happy)::"No, he left me his whole fucking estate worth 200 million,..."
+            Actor(Happy)::"And I have you girls to thank!"
+            Actor:mood += 50
+        Endif
+    SceneEnd()
+    timeout(2000, rk_VB_Sorority_Girls)
