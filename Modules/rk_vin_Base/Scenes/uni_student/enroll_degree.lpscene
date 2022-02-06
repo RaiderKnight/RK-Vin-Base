@@ -175,7 +175,7 @@ OTHER: none
         Endif
         
         "Do I want to apply for a degree course at this university?"
-        0:: "Yes"
+        0:: money > Tuition :: "Yes"
         1:: "No"
         
         If 0
@@ -248,6 +248,7 @@ OTHER: none
                 Session_TDM = Player.getActorVar(rk_VB_Session_TDM)
                 Session_TVE = Player.getActorVar(rk_VB_Session_TVE)
                 Session_TTT = Player.getActorVar(rk_VB_Session_TTT)
+                TotalSession = Session_TAR + Session_TCE + Session_TCL + Session_TCS + Session_TEC + Session_TED + Session_TEN + Session_TGE + Session_THI + Session_TLA + Session_TMA + Session_TME + Session_TMU + Session_TPH + Session_TPS + Session_TPOL + Session_TSM + Session_TDM + Session_TVE + Session_TTT
         
                 // Get number of sessions
                 Architecture_Major_Ses = rk_VB_Architecture_Major_Ses.getGlobal()
@@ -1046,7 +1047,11 @@ OTHER: none
             Endwhile
                 
             If chooseCourse
-            
+                "Because their is no way to add new majors, to prevent bugs you need to choose a 'virtual' major."
+                chooseMajor()
+                setMajor()
+                "This major have no effect on the game..."
+                
                 chooseCourse => 0
                 "Yeah, the education is worth that money. I can get a once-in-a-lifetime experience and a much better job after I graduate."
                 
@@ -1058,7 +1063,6 @@ OTHER: none
                 dressFormal()
                 setBackground(bar)
                 Player.dress()
-                
                 "The Department of <TextMajorChosen> organized a welcome drink event a day before the course's start date. I just had to go, this is the perfect chance to meet my coursemates and lecturers."
                 Total = Random(10, 25)
                 count = 0
@@ -1111,9 +1115,11 @@ OTHER: none
                     Elseif choiceCourseMajor == 90
                         Actor.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
                     Endif
+                    
                     Actor.setSameMajor()
                     Actor.dress()
                     Actor.show(2)
+                    Actor.moveToPersonStand(Player, 50)
                     "A future coursemate approached me."
                     Actor(Happy):: "Hi there, I'm <Actor.name>. Nice to meet you!"
                     Player(Happy):: "Nice to meet you, <Actor.name>. I'm <Player.name>."
@@ -1212,6 +1218,7 @@ OTHER: none
                     Actor.setSubject()
                     Actor.dress()
                     Actor.show(2)
+                    Actor.moveToPersonStand(Player, 50)
                     "One of my future lecturers approached me."
                     Actor(Happy):: "Hi there, I'm Dr <Actor.name> <Actor.name_last>. I teach the <TextMajorChosen> module."
                     Player(Happy):: "Nice to meet you, Dr <Actor.name_last>. I'm <Player.name>. I'm looking forward to your class."

@@ -36,10 +36,10 @@ OTHER: none
         Actor(Happy)::"Great, please follow me!"
         setBackground(brothel)
         setBackground3D(Modules/rk_vin_Base/World/Massage.lpworld)
-        If Player.isFemale()
+        If !Player.isMale()
             Actor(Happy)::"What type of donations do you want to offer?"
             0::"Pussy juice"
-            1::Player.isPregnant()::"Boob milk"
+            1::Player.isPregnant() && isModEnabled(vin_Pregnancy)::"Boob milk"
             
             If 0
                 PJuice = true
