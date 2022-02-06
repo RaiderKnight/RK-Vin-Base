@@ -88,7 +88,11 @@ OTHER:
                     If 0
                         Player(Flirty)::"Okay, pull down your panties and show me that <Actor.cock_or_pussy>..."
                         Actor.strip()
-                        Filter(Blowjob, LickPussy, Oral)
+                        If Actor.isMale()
+                            Filter(Blowjob)
+                        Else
+                            Filter(Licking)
+                        EndIf
                         Sex(Player, Actor)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
@@ -99,7 +103,11 @@ OTHER:
                     ElseIf 1
                         Player(Flirty)::"Ok, pull down your panties and show me that <Actor.dick_or_pussy>..."
                         Actor.strip()
-                        Filter(Handjob, Fingering)
+                        If Actor.isMale()
+                            Filter(Handjob)
+                        Else
+                            Filter(Fingering)
+                        EndIf
                         Sex(Player, Actor)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
@@ -110,7 +118,11 @@ OTHER:
                     ElseIf 2
                         Actor(Flirty)::"Ok, pull down your panties and show me that <Player.dick_or_pussy>..."
                         Player.strip()
-                        Filter(Blowjob, LickPussy, Oral)
+                        If Player.isMale()
+                            Filter(Blowjob)
+                        Else
+                            Filter(Licking)
+                        EndIf
                         Sex(Actor, Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
@@ -122,7 +134,11 @@ OTHER:
                     ElseIf 3
                         Actor(Flirty)::"Ok, pull down your panties and show me that <Player.dick_or_pussy>..."
                         Player.strip()
-                        Filter(Handjob, Fingering)
+                        If Player.isMale()
+                            Filter(Handjob)
+                        Else
+                            Filter(Fingering)
+                        EndIf
                         Sex(Actor, Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)

@@ -33,7 +33,7 @@ OTHER: isAtHome() && !Player.isfemale() &&  70 < arousal
                 Actor.moveToPersonStand(Player, 100)
                 Actor.strip()
                 Actor(Whisper):: "I bet he won't mind if I play with it."
-                filter(Sleeping)
+                Filter(Sleeping)
                 perversion += 15
                 Player.closeEyes(true)
                 Sex(Actor, Player)
@@ -49,7 +49,7 @@ OTHER: isAtHome() && !Player.isfemale() &&  70 < arousal
                 "My <Actor.relationship> sneak closer."
                 Actor.moveToPersonStand(Player, 100)
                 Actor(Whisper):: "I bet he won't mind if I play with it." 
-                filter(Foreplay)
+                Filter(Foreplay)
                 perversion += 2
                 Player.closeEyes(true)
                 Sex(Actor, Player)
@@ -79,7 +79,7 @@ OTHER: isAtHome() && !Player.isfemale() &&  70 < arousal
                             Actor:incest += Random(0, 2)
                             If Love > Random(150, 250)
                                 Player.closeEyes(false)
-                                filter(Foreplay, vaginal)
+                                Filter(Foreplay)
                                 Sex(Player, Actor)
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -2)
@@ -88,8 +88,20 @@ OTHER: isAtHome() && !Player.isfemale() &&  70 < arousal
                                 Actor:attractiontoplayer += 10
                                 Actor:perversion += 10
                             Else
-                                Filter(Handjob, Blowjob, Boobjob)
-                                Sex(Player, Actor)
+                                If Player.isMale()
+                                    Random
+                                        Filter(Handjob)
+                                        Filter(Blowjob)
+                                        Filter(Footjob)
+                                    EndRandom
+                                Else
+                                    Random
+                                        Filter(Fingering)
+                                        Filter(Licking)
+                                        Filter(Footjob)
+                                    EndRandom
+                                EndIf
+                                Sex(Actor, Player)
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf

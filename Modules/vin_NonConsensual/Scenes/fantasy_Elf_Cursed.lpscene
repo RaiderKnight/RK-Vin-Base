@@ -2,7 +2,7 @@ WHAT: all
 WHERE: all, -home, -work, -university:school, -university:work
 WHEN: 0 - 24
 WHO: eElf = generatePersonTemporary(); If eElf.isRace(Elf) && eElf.isInterestedIn(Player) && eElf:masochist < -10
-OTHER: !isAtHome() && PercentageElves > 0
+OTHER: !isAtHome()
 
     SceneStart()
 
@@ -19,7 +19,7 @@ OTHER: !isAtHome() && PercentageElves > 0
         "Trying to force me to masturbate, furiously!."
         0:: "Give in"
         1:: "Give in"
-        2:: [intelligence > 70 && karma > 50]:: "Try to resist"
+        2:: intelligence > 70 && karma > 50:: "Try to resist"
         3:: "Give in"
             
         If 2
@@ -122,10 +122,22 @@ OTHER: !isAtHome() && PercentageElves > 0
                         If Random(135, 400) < Love 
                             Helper:incest += Random(1, 2)
                             If Helper:perversion < 50
-                                Filter(Handjob, Blowjob, Boobjob)
-                                SexNoAffair(Player, Helper)
+                                If !Player.isMale()
+                                    Random
+                                        Filter(Handjob)
+                                        Filter(Blowjob)
+                                        Filter(Footjob)
+                                    EndRandom
+                                Else
+                                    Random
+                                        Filter(Fingering)
+                                        Filter(Licking)
+                                        Filter(Footjob)
+                                    EndRandom
+                                EndIf
+                                SexNoAffair(Helper, Player)
                                 If HungerEnable > 0
-                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
                                 EndIf
                                 Helper:arousal += 50
                                 If Helper:arousal > 70 || Helper:perversion > 75
@@ -173,7 +185,7 @@ OTHER: !isAtHome() && PercentageElves > 0
                 "I make a run for it."
                 setBackground(toilets)
                 1:: "Give in"
-                2:: [intelligence > 45 && karma > 25]:: "Try to resist now."
+                2:: intelligence > 45 && karma > 25:: "Try to resist now."
                 
                 If 2
                     "I resisted the elf's magic this time."
@@ -224,7 +236,6 @@ OTHER: !isAtHome() && PercentageElves > 0
                     1:: "No"
                     
                     If 0
-                        Filter()
                         Sex(Player, Strange)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)

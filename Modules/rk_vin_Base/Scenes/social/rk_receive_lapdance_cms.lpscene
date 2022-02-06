@@ -257,7 +257,11 @@ OTHER:
                         If 0
                             Player.strip()
                             Player.dressExcept(Bottom, Bottom_Under)
-                            Filter(Blowjob, LickPussy)
+                            If Player.isMale()
+                                Filter(Blowjob)
+                            Else
+                                Filter(Licking)
+                            EndIf
                             sex(Stripper, Player)
                             Player.dress()
                             If HungerEnable > 0
@@ -266,7 +270,11 @@ OTHER:
                         ElseIf 1
                             Player.strip()
                             Player.dressExcept(Bottom, Bottom_Under)
-                            Filter(Handjob, Fingering)
+                            If Player.isMale()
+                                Filter(Handjob)
+                            Else
+                                Filter(Fingering)
+                            EndIf
                             sex(Stripper, Player)
                             Player.dress()
                             If HungerEnable > 0
@@ -349,13 +357,17 @@ OTHER:
                     Bouncer(Angry)::"So you're fun is to groped our dancers?"
                     If Bouncer:arousal > 15 && Bouncer.isInterestedIn(Player) && Bouncer:perversion > 70
                         Bouncer(Grin)::"It's illegal to do that here, but you're lucky, in this room with me it's accepted. So I'll give you two choices:"
-                        0::"Masturbate my cock!"
+                        0::"Masturbate my <Player.cock_or_pussy>!"
                         1::"Choose to be beaten"
                         
                         If 0
                             Bouncer.strip()
                             Bouncer.dressExcept(Bottom, Bottom_Under)
-                            Filter(Handjob, Fingering)
+                            If Player.isMale()
+                                Filter(Handjob)
+                            Else
+                                Filter(Fingering)
+                            EndIf
                             sex(Player, Bouncer)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
@@ -446,4 +458,4 @@ OTHER:
         ElseIf 1
             followUp(receive_lapdance_cms)
         EndIf 
-    SceneEnd()
+    SceneEnd() // Scene created by Raddeck
