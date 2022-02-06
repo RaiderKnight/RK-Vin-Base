@@ -5,7 +5,7 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    
+        tag_Police = Player.getActorVar(tag_Police)
         "Am I sure that I want to resign from Police job?"
         0:: "Yes"
         1:: "No"
@@ -15,7 +15,7 @@ OTHER: none
             "Time for a new chapter in my career."
             loseJob()
     		CopLevel => 0
-            
+            Player.setActorVar(tag_Police, 0)
         Else
         
             "On second thought, I can't afford to give up this job."

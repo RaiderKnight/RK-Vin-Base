@@ -10,8 +10,9 @@ OTHER: none
         TuitionConverted = Tuition.convertToLocalCurrency(true)
         TuitionNurse = [750 + [intelligence*20]]*CostOfLiving*0.55
         TuitionNurseConverted = TuitionNurse.convertToLocalCurrency(true)
+        tag_Police = Player.getActorVar(tag_Police)
         "Do I want to apply for a career with law enforcement? They are offering average salaries per month of <TuitionNurseConverted> for a cop."
-        0:: "Apply for the job with Police"
+        0:: tag_Police <= 0 ::"Apply as a Policeman"
         1:: "Look elsewhere"
         
         If 0
@@ -24,7 +25,7 @@ OTHER: none
             Player.SetJob(Police)
             TuitionNurse.setSalary()
             Player.dressUniform(police)
-    
+            Player.setActorVar(tag_Police, 1)
             Boss.setBoss()
             Boss = generatePerson()
             Boss:age => Random(18, 50)
