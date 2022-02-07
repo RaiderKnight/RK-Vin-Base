@@ -1060,7 +1060,7 @@ OTHER: none
                 "My application was successful. I cannot wait to start the course!"
                 
                 mood += 3
-                dressFormal()
+                // dressFormal()
                 setBackground(bar)
                 Player.dress()
                 "The Department of <TextMajorChosen> organized a welcome drink event a day before the course's start date. I just had to go, this is the perfect chance to meet my coursemates and lecturers."
@@ -1119,6 +1119,7 @@ OTHER: none
                     Actor.setSameMajor()
                     Actor.dress()
                     Actor.show(2)
+                    Actor.animate(socialize)
                     Actor.moveToPersonStand(Player, 50)
                     "A future coursemate approached me."
                     Actor(Happy):: "Hi there, I'm <Actor.name>. Nice to meet you!"
@@ -1144,10 +1145,10 @@ OTHER: none
                     Actor.hide()
                     Actor.saveandDelete()
                     count += 1
-                    
+                    Actor.animate()
                 Endwhile
                 
-                Total = Random(5, 8)
+                Total = Random(3, 5)
                 count = 0
                 While count < Total
                     Actor = generatePerson()
@@ -1219,6 +1220,7 @@ OTHER: none
                     Actor.dress()
                     Actor.show(2)
                     Actor.moveToPersonStand(Player, 50)
+                    Actor.animate(socialize)
                     "One of my future lecturers approached me."
                     Actor(Happy):: "Hi there, I'm Dr <Actor.name> <Actor.name_last>. I teach the <TextMajorChosen> module."
                     Player(Happy):: "Nice to meet you, Dr <Actor.name_last>. I'm <Player.name>. I'm looking forward to your class."
@@ -1226,6 +1228,7 @@ OTHER: none
                     Actor.hide()
                     Actor.saveandDelete()        
                     count += 1
+                    Actor.animate()
                 Endwhile
                 "Eventually, the event wound down. I'm glad to have met many of my coursemates and lecturers. I cannot wait for my first day tomorrow."
                 Player:EnrollDegree => 1

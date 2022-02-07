@@ -6,24 +6,24 @@ OTHER: none
 
     Difficulty = Random(0.25, 2)
     Salary = getSalary()
-    Rent = Random(800, 1500)*CostOfLiving+Difficulty*Salary*0.25
+    Rent = Random(200, 300)*CostOfLiving+Difficulty*Salary*0.25
     RentConverted = Rent.convertToLocalCurrency(true)
     Price = Rent*120
     PriceLoc = Price.convertToLocalCurrency(true)
     sceneStart()
+        
         Player.setActorVar(rk_VB_TempGetADeals, 0)
         houseviewing = rk_VB_houseviewing.getGlobal() // For arrest scene
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        FinalHousePrice = Player.getActorVar(rk_VB_FinalHousePrice)
-        
+        RentUnivRoom = rk_VB_RentUnivRoom.getGlobal()
         If PlayerHasHome()
             "You already have a place to live! Let me show you..."
             moveTo(home)
         Else
-            "I was looking for a new place to live, I discovered a nice place that might just fit my budget. The rent per month being advertised, including utility bills, is around <RentConverted>. However, I reckon I can try to negotiate that down."
+            "I was looking for a room to live temporary, I discovered a nice room that might just fit my budget. The rent per month being advertised, including utility bills, is around <RentConverted>. However, I reckon I can try to negotiate that down."
             
             If Rent > money 
                 "I'm not entirely sure it's a good idea considering my current financial situation." 
@@ -42,14 +42,14 @@ OTHER: none
                 Landlord.moveToPersonStand(Player, 50)
                 faceEachOther(Player, Landlord)
                 Landlord.animate(socialize)
-                Landlord(Excited):: "So that's the apartment. It's available for just <RentConverted> a month, including bills. You won't get a better deal anywhere else! What do you think? Are you going to go for it? I can prepare the lease contract right away."
-                Landlord(Excited):: "This house is also for sale, so if you are interested in buying it, it offered at <PriceLoc>."
+                Landlord(Excited):: "So that's the room. It's available for just <RentConverted> a month, including bills. You won't get a better deal anywhere else! What do you think? Are you going to go for it? I can prepare the lease contract right away."
+                
                 choice = 2
                 Knowledge = false
                 Charm = false
                 Seduce = false
                 LoweredPrice = false
-                Bought = false
+                
                 Vanilla = IsModEnabled(vin_VanillaRealistic)
                 GonnaGetFucked = false
                 GonnaGetFucked2 = false
@@ -59,24 +59,23 @@ OTHER: none
                 ActorAskForIt2 = false
                 ActorAskForIt3 = 0
                 ActorAskForIt4 = 0
-                GetADeals = Player.getActorVar(rk_VB_TempGetADeals)
+
                 If money < Price
-                    "I don't have enough money to afford a house, so I'll have to rent an apartment... hopefully I'll find something decent, if this one doesn't suit me."
+                    "I don't have enough money to afford a house, so I'll have to rent an room... hopefully I'll find something decent, if this one doesn't suit me."
                 Endif
                 
                 While choice > 1
-                    TotalDeals = Player.getActorVar(rk_VB_TempGetADeals)
+
                     "What should I do?"
                     0:: money > Rent::"Sign the lease"
                     1:: "Look elsewhere"
                     2:: !Knowledge:: "Use your knowledge to negotiate"
                     3:: !Charm:: "Use your charm to haggle"
                     4:: !Seduce:: "Use your sex appeal"
-                    5:: !Bought && money > Price:: "Offer to buy"
                     
                     If 0
                         
-                        Player(Happy):: "Actually, I think I can afford to rent this apartment outright."
+                        Player(Happy):: "Actually, I think I can afford to rent this room outright."
                         Landlord.animate(socialize)
                         Player.animate(write)
                         "I decided to sign the lease at the current rent. It wasn't too bad a deal after all."
@@ -91,7 +90,7 @@ OTHER: none
                         Player.animate()
                         Landlord.animate()
                         mood += 3
-                        
+                        rk_VB_RentUnivRoom.setGlobal(1)
                         Landlord(Happy)::"See you soon, otherwise I'll come see you the first of next month ..."
                         Landlord:rapportwithplayer += random(0, 2)
                         
@@ -100,52 +99,6 @@ OTHER: none
                         Endif
                     Elseif 1
                         "It was too expensive at this current rent so I had no choice but to look elsewhere. I thanked the landlord for <Landlord.his_or_her> time and left."
-                    Elseif 5
-
-                        If TotalDeals > 0
-                            TPrice = Price - TotalDeals
-                            PriceConverted = TPrice.convertToLocalCurrency(true)
-                        Else
-                            PriceConverted = Price.convertToLocalCurrency(true)
-                        EndIf
-                        Landlord.animate(socialize)
-                        Player.animate(socialize)
-                        Landlord(Surprised):: "Oh really? You know what: I'm prepared to sell it to you at <PriceConverted>."
-                        
-                        If money < TPrice
-                            "I'm not entirely sure if this is really affordable considering my current financial situation." 
-                            Player(Sad):: "Actually, I don't think I can afford to buy the home right now."
-                            SceneEnd()
-                        Else
-                            "This price seems reasonable and might just fit in my budget."
-                            Player(Happy):: "Actually, I think I can afford to buy the home outright."
-                        Endif
-                        
-                        "What should I do?"
-                        0:: "Go for it"
-                        1:: "That's too expensive"
-                        
-                        If 0
-                            Bought = true
-                            MoveHome()
-                            money -= TPrice
-                            Zero = 0
-                            Zero.setRent()
-                            Player.setLandlord()
-                            "I now own my home ... It's a wonderful feeling and now I don't have to worry about paying rent each month."
-                            mood += random(0, 100)
-                            If TfGame() && Player.isMale()
-                                followUp(tf_afterlandlord)
-                            Elseif TfGame() && !Player.isMale()
-                                followUp(rk_VB_tff_afterlandlord)
-                            Endif
-                            Player.setActorVar(rk_VB_FinalHousePrice, TPrice)
-                        Else
-                            "That's too expensive, I'll wait!"
-                            mood -= 2
-                            choice = 5
-                        Endif
-                        
                     Elseif 2
                         If random(0,100)*Difficulty < intelligence
                             "I used my research about the market rate of rent in the surrounding area to show the landlord that I had alternatives."
@@ -153,11 +106,10 @@ OTHER: none
                             RentConverted = Rent.convertToLocalCurrency(true)
                             Landlord(Sarcastic):: "Alright, alright. You're a smart cookie - you should become a landlord yourself someday. How about <RentConverted> a month? That's surely lower than the going rate around."
                             Knowledge = true  
-                            HGetADeals1 = random(110, 450)
-                            Player.modifyActorVar(rk_VB_TempGetADeals, HGetADeals1)
+                            
                         Else
                             Landlord(Annoyed):: "I already told you this is the best deal I can give you."
-                            "My negotiations failed miserably. All it did was annoying the landlord. I probably shouldn't try to haggle more, or <Landlord.he_or_she> will refuse to even rent me the apartment."
+                            "My negotiations failed miserably. All it did was annoying the landlord. I probably shouldn't try to haggle more, or <Landlord.he_or_she> will refuse to even rent me the room."
                             Knowledge = true
                         Endif
                     Elseif 3
@@ -165,13 +117,12 @@ OTHER: none
                             "I used all my smooth talking to charm the landlord into giving me a discount."
                             Rent /= 1.1
                             RentConverted = Rent.convertToLocalCurrency(true)
-                            Landlord(Happy):: "Okay then, you seems like a nice enough person. I can give you the apartment for just <RentConverted> a month, but you'd better not tell my other tenants about it."
+                            Landlord(Happy):: "Okay then, you seems like a nice enough person. I can give you the room for just <RentConverted> a month, but you'd better not tell my other tenants about it."
                             Charm = true
-                            HGetADeals2 = random(110, 450)
-                            Player.modifyActorVar(rk_VB_TempGetADeals, HGetADeals2)
+                            
                         Else
                             Landlord(Annoyed):: "I already told you this is the best deal I can give you."
-                            "My negotiations failed miserably. All it did was annoying the landlord. I probably shouldn't try to haggle more, or <Landlord.he_or_she> will refuse to even rent me the apartment."
+                            "My negotiations failed miserably. All it did was annoying the landlord. I probably shouldn't try to haggle more, or <Landlord.he_or_she> will refuse to even rent me the room."
                             Charm = true
                         Endif
                     Elseif 4
@@ -181,8 +132,6 @@ OTHER: none
                             RentConverted = Rent.convertToLocalCurrency(true)
                             Landlord(Flirty):: "Okay, just for a good-looking tenant like you, I can drop the rent to <RentConverted> a month. But that's the lowest I'm going to go today ..."
                             Seduce = true
-                            HGetADeals5 = random(310, 450)
-                            Player.modifyActorVar(rk_VB_TempGetADeals, HGetADeals5)
                             
                             If Landlord.IsDominantSex(Player) && Landlord:perversion > random(30, 100)
                             
@@ -196,8 +145,7 @@ OTHER: none
                                     Landlord(Flirty):: "Oh well, I'm not forcing anything on you. It was you who flirted with me first. I simply got the wrong signal, don't mind me."
                                     
                                 Else
-                                    HGetADeals3 = random(510, 1000)
-                                    Player.modifyActorVar(rk_VB_TempGetADeals, HGetADeals3)
+
                                     Player(Flirty):: "You'd better give me one hell of a deal for this ..."
                                     Landlord.strip()
                                     Filter(Oral)
@@ -209,7 +157,7 @@ OTHER: none
                                     perversion += random(0, 1.5)
                                     Rent /= 1.2
                                     RentConverted = Rent.convertToLocalCurrency(true)
-                                    Landlord(Flirty):: "Well, now that we've got to know each other on a more ... personal level, you can have the apartment for just <RentConverted>. Trust me, I never gave anyone such a good offer in all my years."
+                                    Landlord(Flirty):: "Well, now that we've got to know each other on a more ... personal level, you can have the room for just <RentConverted>. Trust me, I never gave anyone such a good offer in all my years."
                                     If HungerEnable > 0
                                         Player.modifyActorVar(rk_VB_Hunger, -2)
                                     EndIf
@@ -236,8 +184,7 @@ OTHER: none
                                     Endif
                                     
                                     If Landlord:perversion > random(20, 100)
-                                        HGetADeals4 = random(1000, 5000)
-                                        Player.modifyActorVar(rk_VB_TempGetADeals, HGetADeals4)
+
                                         Landlord(Flirty):: "Oh? If that's on offer, then yes, perhaps I can change my mind indeed"
                                         Player.strip()
                                         Landlord.strip()
@@ -246,7 +193,7 @@ OTHER: none
                                         perversion += random(0, 2)
                                         Rent /= 1.2
                                         RentConverted = Rent.convertToLocalCurrency(true)
-                                        Landlord(Flirty):: "Well, now that we've got to know each other on a more ... personal level, you can have the apartment for just <RentConverted>. Trust me, I never gave anyone such a good offer in all my years."
+                                        Landlord(Flirty):: "Well, now that we've got to know each other on a more ... personal level, you can have the room for just <RentConverted>. Trust me, I never gave anyone such a good offer in all my years."
                                         If HungerEnable > 0
                                             Player.modifyActorVar(rk_VB_Hunger, -2)
                                         EndIf
@@ -258,7 +205,7 @@ OTHER: none
                             choice = 4
                         Else
                             Landlord(Annoyed):: "I already told you this is the best deal I can give you."
-                            "My negotiations failed miserably. All it did was annoying the landlord. I probably shouldn't try to haggle more, or <Landlord.he_or_she> will refuse to even rent me the apartment."
+                            "My negotiations failed miserably. All it did was annoying the landlord. I probably shouldn't try to haggle more, or <Landlord.he_or_she> will refuse to even rent me the room."
                             Seduce = true
                         EndIf
                     Endif
@@ -289,22 +236,6 @@ OTHER: none
                         Endif
                     Endif
                 Endif // end IwannaFuck
-                
-                If Bought && !isWithCompanion()
-                    NoThanksActor = false
-                    Landlord(Flirty):: "Do you want to celebrate the purchase of your new home together? You look like alone ..."
-                    "What should I say?"
-                    0::"Yes"
-                    1::"No"
-                    
-                    If 0
-                        Player(Happy)::"Sure, ..."
-                        Landlord(Flirty):: "Come to my place, we will be more comfortable?"
-                        Gotolandlord = true
-                    Else
-                        NoThanksActor = true
-                    Endif
-                Endif // end Bought
                 
                 If Gotolandlord
                     setBackground3D(Modules/rk_vin_Base/World/Vim_RoofOfficeBedroom.lpworld)
@@ -898,13 +829,11 @@ OTHER: none
                         
                         rk_VB_houseviewing.setGlobal(1)
                         followUp(rk_VB_public_indecency)
-                        Player.setActorVar(rk_VB_TempGetADeals, 0)
                     Endif
                 Endif
             Else
                 "I decided not to arrange a viewing with the landlord. This isn't really suitable accommodation for me right now."
             Endif
-            Player.setActorVar(rk_VB_TempGetADeals, 0)
         Endif
         passTime(0.5, 1.5)
     sceneEnd() // Scene improved by Raddeck

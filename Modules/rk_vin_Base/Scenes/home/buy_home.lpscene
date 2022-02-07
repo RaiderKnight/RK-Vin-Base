@@ -12,7 +12,7 @@ OTHER: none
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        
+        RentUnivRoom = rk_VB_RentUnivRoom.getGlobal()
         "I have rented this place for a while and gotten used to calling it home. I think I can now afford to buy it for good."
         0:: "Enquire about purchase price"
         1:: "Nothing wrong with renting"
@@ -83,6 +83,7 @@ OTHER: none
                         If Player:mood > 50 && Player:arousal > 15 && Player:perversion > 50
                             IwannaFuck = true
                         Endif
+                        rk_VB_RentUnivRoom.setGlobal(0)
                         choice = 6
                     Else
                         "That's too expensive, I'll wait!"

@@ -11,12 +11,24 @@ OTHER: none
         English_Major_Ses_Done = rk_VB_English_Major_Ses_Done.getGlobal()
         Tuition = CostOfLiving*[1000 + [intelligence*20]]
         TuitionConverted = Tuition.convertToLocalCurrency(true)
+        JobRestrictionEnable = rk_VB_JobRestrictionEnable.getGlobal()
+        
         "Do I want to apply for a teaching post at this university? The salary per month for someone of my qualification is around <TuitionConverted>."
         0:: "Yes"
         1:: "No"
         
         If 0
-            If Classics_Major_Ses_Done > 0 && Education_Major_Ses_Done > 0 && English_Major_Ses_Done > 0 
+            If JobRestrictionEnable == 1
+                If Classics_Major_Ses_Done > 0 && Education_Major_Ses_Done > 0 && English_Major_Ses_Done > 0 
+                    JoboptionsEnable = true
+                Else
+                    NotEnoughK = true
+                Endif
+            Else
+                JoboptionsEnable = true
+            Endif
+            
+            If JoboptionsEnable
                 moveJobs()
                 Tuition.setSalary()
                 "Yeah, teaching is a good career."
@@ -175,7 +187,8 @@ OTHER: none
                     count += 1
                 Endwhile
                 "Eventually, the event wound down. I'm glad to have met many of my students and teachers. I cannot wait for my first day tomorrow."
-            Else
+            Endif
+            If NotEnoughK
                 "You can't teach people if you don't have the knowledge. To become a teacher, you must have taken these 3 courses: Classics, Education and English!" // Edit Raddeck
             Endif
         Endif
