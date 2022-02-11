@@ -100,8 +100,11 @@
 <h3>Contributors</h3>
 <a href="https://raiderknight-mods.fandom.com/wiki/List_of_contributors_for_Remake_of_LifePlay" title="List of contributions">List of contributions made by contributors.</a>
 <br>
+<hr>
+<br>
+<h3>Contributors Banned and/or Rejected</h3>
 <ul>
-<li>Ravenger6660 - Modder and Writer</li>
+<li>Ravenger6660 - Copy/Distribute my mods without authorisation.</li>
 </ul>
 <br>
 <hr>
