@@ -3,10 +3,12 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Version: 1.2.4</p>
+<p>Version: 2.0.0</p>
 <br>
 <br>
 <p><strong>Rework In Progress (WIP)</strong></p>
+<p><strong>No more available for free, for a limited time.</strong></p>
+<p><strong>Can be found here: <a href="https://www.buymeacoffee.com/raiderknight" title="BuyMeACoffee">https://www.buymeacoffee.com/raiderknight</a></strong></p>
 <br>
 <br>
 <p><strong>What else does this project bring more?</strong></p>
@@ -20,7 +22,6 @@
 <p>- New stats (hunger, urge to pee, christanity,...).</p>
 <p>- More actions, choices, consequence and possibilities</p>
 <p>- More online activities.</p>
-<p>- You can join the Police.</p>
 <p>- You can buy an alarm system and/or train your dog to protect you.</p>
 <p>- And a lot more...</p>
 <p>- Updated almost every week.</p>
@@ -30,14 +31,14 @@
 <p>I made the decision to create a project better suited to my mods and to expand the LifePlay world, containing more completed/fixed scenes, more texts, more possible actions and consequences, less popup scenes, menu user with fewer elements (group actions / scenes into a single element), ...</p>
 <br>
 <p><strong>Objective of the project :</strong></p>
-<p>The goal is simply to help Vinfamy build his game faster. This gives Vinfamy more time to correct its coding, create functions, new content, ... By creating a team of "Lone Wolf modders" without any conditions, to extend and redo the vin_Base mod to our liking. So if Vinfamy likes what has been achieved, he can dig in and take whatever he wants to improve the LifePlay game, in condition to mentioned who did the modifications.</p>
+<p>Creating a team of "Lone Wolf modders" without any conditions, to extend and redo the vin_Base mod to our liking.</p>
 <br>
 <p><strong>The goal is to:</strong></p>
 <p>- Keep the original story</p>
 <p>- Add more texts</p>
 <p>- Add more choices</p>
 <p>- Add more possibilities</p>
-<p>- Add missing bonuses on certain scenes (mood, fitness, arousal, ...)</p>
+<p>- Add missing stats on certain scenes (mood, fitness, arousal, ...)</p>
 <p>- Correct spelling mistakes</p>
 <p>- Correct coding errors</p>
 <p>- Reduce number of popup scenes</p>
@@ -74,7 +75,7 @@
 <hr>
 <br>
 <h3> How to install</h3>
-<p>Visit the Wiki: <a href="https://lifeplay.site/viewtopic.php?t=398">RaiderKnight Mods Wiki</a></p>
+<p>Visit the Wiki: <a href="https://lifeplay.site/viewtopic.php?t=398">Remake Wiki</a></p>
 <br>
 <hr>
 <br>
@@ -87,7 +88,7 @@
 <br>
 <h3>How to contribute</h3>
 <ul>
-<li>Visit the <a href="https://lifeplay.site" title="LifePlay forums">LifePlay community forums</a></li>
+<li>Visit the <a href="https://lifeplay.site" title="Raider Knight forums">Raider Knight community forums</a></li>
 <li>Supporting me on <a href="https://www.patreon.com/raiderknight">Patreon</a></li>
 <li>Sending your ideas or feedback: Here on Github or on <a href="https://discord.gg/d3U9E2wb4Y">Discord</a></li>
 <li>Adding more content to the module.</li>
@@ -98,13 +99,13 @@
 <hr>
 <br>
 <h3>Contributors</h3>
-<a href="https://raiderknight-mods.fandom.com/wiki/List_of_contributors_for_Remake_of_LifePlay" title="List of contributions">List of contributions made by contributors.</a>
+<br>
 <br>
 <hr>
 <br>
 <h3>Contributors Banned and/or Rejected</h3>
 <ul>
-<li>Ravenger6660 - Copy/Distribute my mods without authorisation.</li>
+<li>Ravenger6660 - Banned</li>
 </ul>
 <br>
 <hr>
