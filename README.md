@@ -3,7 +3,8 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Version: 2.0.0</p>
+<p>Free Version: 1.2.4</p>
+<p>Paid Version: 2.0.2 -- next release: 01/09/22</p>
 <br>
 <br>
 <p><strong>Rework In Progress (WIP)</strong></p>
