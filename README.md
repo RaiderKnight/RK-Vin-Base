@@ -3,13 +3,7 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Free Version: 1.2.4</p>
-<p>Paid Version: 2.0.2 -- next release: 01/09/22</p>
-<br>
-<br>
-<p><strong>Rework In Progress (WIP)</strong></p>
-<p><strong>No more available for free, for a limited time.</strong></p>
-<p><strong>Can be found here: <a href="https://www.buymeacoffee.com/raiderknight" title="BuyMeACoffee">https://www.buymeacoffee.com/raiderknight</a></strong></p>
+<p>Version: 2.0.2</p>
 <br>
 <br>
 <p><strong>What else does this project bring more?</strong></p>
@@ -30,9 +24,6 @@
 <p>In my eyes, 75% of the scenes are not complete enough or lack choice of actions or consequences ...</p>
 <br>
 <p>I made the decision to create a project better suited to my mods and to expand the LifePlay world, containing more completed/fixed scenes, more texts, more possible actions and consequences, less popup scenes, menu user with fewer elements (group actions / scenes into a single element), ...</p>
-<br>
-<p><strong>Objective of the project :</strong></p>
-<p>Creating a team of "Lone Wolf modders" without any conditions, to extend and redo the vin_Base mod to our liking.</p>
 <br>
 <p><strong>The goal is to:</strong></p>
 <p>- Keep the original story</p>
@@ -57,7 +48,7 @@
 <hr>
 <br>
 <h3>Module requirements</h3>
-<p>At least the game LifePlay 4.2.1</p>
+<p>At least the game LifePlay 5.0</p>
 <br>
 <h3>Module conflict</h3>
 <p>All other mods who are not listed below (For the moment...)</p>
@@ -101,13 +92,6 @@
 <br>
 <h3>Contributors</h3>
 <br>
-<br>
-<hr>
-<br>
-<h3>Contributors Banned and/or Rejected</h3>
-<ul>
-<li>Ravenger6660 - Banned</li>
-</ul>
 <br>
 <hr>
 <br>
