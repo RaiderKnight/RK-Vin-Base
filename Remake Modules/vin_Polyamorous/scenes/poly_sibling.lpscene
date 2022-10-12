@@ -1,0 +1,148 @@
+WHAT: all
+WHERE: home
+WHEN: 0-24
+WHO: Actor = getSpecific(Dating); Actor2 = getSpecific(Dating); If !Actor.hasRelationship(Siblings) && Actor.isSameGender(Actor2)
+OTHER: 
+
+    
+    SceneStart()
+        Douxdep = false
+        PasDou = false
+        PasDou1 = false
+        npdID = rk_VB_polySibling_npdID.getGlobal()
+        NpcBeat = rk_VB_polySibling_Fight.getGlobal()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        setBackgroundCustom(kitchen)
+        Actor.dress()
+        Actor.show()
+        Actor2.dress()
+        Actor2.show()
+        A3ID = Actor3.getID()
+        "I was in the kitchen with two of my polyamorous lovers, <Actor.name> and <Actor2.name>. We were about to put the finishing touch to our cooking and set the table for dinner when suddenly someone barged through the front door."
+        Actor3 = Actor.generatePersonTemporaryMatchRace()
+        While !Actor.isSameGender(Actor3)
+            Actor3 = Actor.generatePersonTemporaryMatchRace()
+        endwhile
+        Actor3:age => Actor:age + random(2, 6)
+        Actor3.randomizeFace()
+        Actor3.randomizeHairs()
+        Actor3.makePermanent()
+        addNpcRelationship(Siblings, Actor, Actor3)
+        Actor3.dress()
+        Actor3.show()
+        PasDou2 = false
+        Actor3:rapportwithplayer -= random(0, 10)
+        Actor3(Serene):: "<Actor.name>, let's go now. I'll protect you. You don't want to get stuck in this Stockholm Syndrome situation."
+        Actor(Annoyed):: "<Actor3.Brother_or_Sister>, how many times do I have to tell you? I'm not coerced into this arrangement. I'm really happy."
+        Actor3(Angry):: "Stop lying to yourself and wake up. How could polyamory be anything but a mental hostage situation? How could be power dynamics in the relationship ever be balanced!"
+        "Oh dear, I've heard <Actor.name> complaining about this <Actor2.brother_or_sister> of hers being against <Actor.him_or_her> being in a poly arrangement before, but I never expected <Actor3.name> to come out and put on a show here in front of everyone."
+        0:: "Ask <Actor.him_or_her> to join us for dinner"
+        1:: "Kick <Actor.name>'s <Actor3.brother_or_sister> out!"
+        
+        If 0
+            "I managed to defuse the situation and invited <Actor3.name> to at least sit down and have a chat with us over dinner."
+            "While we're having dinner, I explain to <Actor3.him_or_her> that the whole point of our polyamorous arrangement isn't so that one person can hold all the power over all others, but is the freedom to be with anyone we want."
+            "I further justify our relationship by saying how it's only natural and traditional monogamous relationships are simply social inventions. In nature, animals are polyamorous too, and we're mammals after all."
+            If Actor3.isInterestedIn(Player)
+                "After a long discussion, <Actor3.name>'s stance starts to soften, and <Actor3.he_or_she> eventually agrees to let <Actor.name> continue staying with us."
+                0:: "Push my luck and have a threesome in front of <Actor3.name>"
+                1:: "Thank <Actor3.him_or_her> for understanding"
+                
+                If 0
+                    Player(Happy):: "In fact, you're missing out on a whole lot of fun by not being polyamorous. Here, let us show you."
+                    If Actor3.isInterestedIn(Player) && isModEnabled(vin_Incest)
+                        "<Actor.name> was hesistant at first about doing it in front of <Actor.his_or_her> <Actor3.brother_or_sister> and <Actor2.name> and I eventually turned <Actor.him_or_her> on enough to go along with it."
+                        Sex(Player, Actor, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                        EndIf
+                        If random(50, 100) < Actor3:perversion && Actor3:arousal > 15
+                            Actor3(Happy):: "Oh my god, you're right. That's so hot ..."
+                            Actor3(Happy):: "Now I finally get why my <Actor.brother_or_sister> just can't get enough of your polyamorous relationship ..."
+                            Actor3(Happy):: "If you don't mind ... maybe I should join in your arrangement, if nothing else, to keep my <Actor.brother_or_sister> company ... We always did everything together since we were young."
+                            0:: "Take on <Actor3.name> as another polyamorous lover"
+                            1:: "Maybe not"
+                            
+                            If 0
+                                Player(Happy):: "Of course, you're very welcome to join our group sex."
+                                Actor(Happy):: "I'm so glad you could now see it my way, <Actor3.brother_or_sister>."
+                                "Of course, I was more than eager to have a taste of my latest lover."
+                                Sex(Player, Actor3, Actor2)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                                EndIf
+                                "And the others join in too."
+                                Sex(Player, Actor, Actor2, Actor3)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -4)
+                                EndIf
+                                
+                            EndIf
+                            exchangeContact(Actor3)
+                            Actor3.setDating()
+                        Else
+                            If Actor3:muscle > Player:muscle && Actor3.isSameGender(Player)
+                                PasDou = true
+                                PasDou2 = true
+                            Else
+                                Actor3(Disgusted):: "What the fuck? You degenerate! I was right ... The power dyanmic is all wrong. You're nothing but abusing my poor little <Actor.brother_or_sister>."
+                                Actor3(Disgusted)::"You and the rest of your brainwashed slaves have been coercing <Actor.him_or_her> into doing unspeakable things like this ..."
+                                Actor3(Disgusted):: "<Actor.name>, I'm so disappointed in you. You've completely lost your mind!"
+                                "<Actor3.name> walked away eventually. At least, <Actor3.he_or_she> seemed to have completely given up on <Actor3.his_or_her> <Actor.brother_or_sister> and should leave us be from now on."
+                            EndIf
+                            Actor3:rapportwithplayer -= 100
+                        EndIf
+                    Else
+                        If Actor3:muscle > Player:muscle && Actor3.isSameGender(Player)
+                            PasDou = true
+                            PasDou1 = true
+                        Else
+                            Actor3(Disgusted)::"Okay fuck! You're all a bunch of freaks! Little <Actor.brother_or_sister>, you just lowered my opinion of you! Ciao, assholes!."
+                        EndIf
+                        Actor3:rapportwithplayer -= 100
+                    EndIf
+                Else
+                    Player(Happy):: "I'm glad we've come to an amicable understanding in the end. We both want the same thing: for <Actor.name> to be happy."
+                EndIf
+            Else
+                Douxdep = true
+            EndIf
+        Else
+            Player(Annoyed):: "Get out of my property now or you'll be trespassing and I'll call the cops."
+            If Actor3:muscle > Player:muscle && Actor3.isSameGender(Player)
+                PasDou = true
+                PasDou1 = true
+            Else
+                Actor3(Sarcastic)::"Hey, big, you don't really scare me! Consider yourself lucky that I don't punch you in the face."
+            EndIf
+            Actor3:rapportwithplayer -= 100
+        EndIf
+        If Douxdep
+            Actor3(Sarcastic)::"Hey genius, do I look that stupid? You really think that according to your theory, I'm going to say, oh yeah, right, you're right!"
+            Actor3(Sarcastic)::"No fucking way I accept that!"
+            Actor3(Sarcastic)::"Suzie, you come where I get mad!"
+            Actor(Annoyed)::"Calm down, calm down! I'm coming!"
+            Player(Surprised)::"What are you doing??"
+            Actor(Annoyed)::"I'm going with <Actor3.him_or_her>, so <Actor3.he_or_she> won't destroy anything and won't hit anyone,... it's just to shut <Actor3.him_or_her> up..."
+            Player(Annoyed)::"Ok, fine!"
+        EndIf
+        If PasDou
+            If PasDou1
+                Actor3(Sarcastic)::"Hey, big, you don't really scare me! If you think I'm gonna fucked my <Actor.brother_or_sister> with you, you just earned yourself a couple of punches in the face!"
+            ElseIf PasDou2
+                Actor3(Disgusted):: "What the fuck? You degenerate! You're nothing but abusing my poor little <Actor.brother_or_sister>."
+                Actor3(Disgusted):: "<Actor.name>, I'm so disappointed in you. You've completely lost your mind!"
+                Actor3(Disgusted)::"You, you just earned yourself a couple of punches in the face! ..."
+            Else
+                Actor3(Sarcastic)::"Hey, big, you don't really scare me! If you think you're gonna fucked my <Actor.brother_or_sister> in front of me, you just earned yourself a couple of punches in the face!"
+            EndIf
+            rk_VB_polySibling_npdID.setGlobal(A3ID)
+            rk_VB_polySibling_Fight.setGlobal(1)
+            followUp(rk_MI_NPC_fight)
+        EndIf
+        Actor3.hide()
+    SceneEnd() // Improved by Raddeck
+    timeout(500, poly_sibling)

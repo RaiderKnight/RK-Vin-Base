@@ -1,0 +1,37 @@
+WHAT: all
+WHERE: sports_centre
+WHEN: 0 - 24
+WHO: none
+OTHER: fitness < Random(0, 100)*Random(0, 1)*Random(0, 1)  
+
+    SceneStart()
+        
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal() 
+
+        If HungerEnable > 0
+            Player.modifyActorVar(rk_VB_Hunger, -15)
+        EndIf
+        "That was a good workout, but it left me starving and I had a sudden craving for some junk food right now. Have I earned it?"
+        0:: "Yes"
+        1:: "No"
+        
+        If 0
+        
+            "I worked hard for this guilty pleasure of life. I deserved some sweet and fatty food once in a while!"
+            fitness -= Random(0, 0.5)
+            mood += Random(0, 50)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, 10)
+            EndIf
+            
+        Else
+        
+            "No way, I must stay disciplined and not get complacent with my diet."
+            mood -= Random(0, 25)
+            fitness += Random(0, 0.5)
+            
+        Endif
+    
+    SceneEnd() // Scene improved by Raddeck
+    timeout(250, justify_junk_food)

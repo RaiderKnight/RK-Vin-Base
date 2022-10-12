@@ -1,0 +1,23 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        stock_Bitcoins = Player.getActorVar(stock_Bitcoins)
+        "What do you want to do?"
+        stayInMenu = true
+        While stayInMenu
+            11:: "Show Bitcoin inventory"
+            99:: "Exit"
+
+            If  11
+                "You have <stock_Bitcoins> Bitcoin(s)"
+                "If you need more bitcoins, visit the bank!"
+                stayInMenu = false
+            Else
+                stayInMenu = false
+            EndIf
+        EndWhile
+    SceneEnd()

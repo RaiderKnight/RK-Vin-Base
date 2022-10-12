@@ -1,0 +1,294 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        clearGetList()
+
+        rk_VB_IBuyaPhone = Player.getActorVar(rk_VB_IBuyaPhone)
+        hasLivingroom = RE_has_lvingroom.getGlobal()
+        hasKitchen = RE_has_kitchen.getGlobal()
+        hasOfficeroom = RE_has_officeroom.getGlobal()
+        hasSecBedroom = RE_has_secondbedroom.getGlobal()
+        hasThirdBedroom = RE_has_thirdbedroom.getGlobal()
+        
+        LRstock_IPhone = Player.getActorVar(LRstock_IPhone)
+        MBstock_IPhone = Player.getActorVar(MBstock_IPhone)
+        Ostock_IPhone = Player.getActorVar(Ostock_IPhone)
+        SBstock_IPhone = Player.getActorVar(SBstock_IPhone)
+        SRstock_IPhone = Player.getActorVar(SRstock_IPhone)
+        TBstock_IPhone = Player.getActorVar(TBstock_IPhone)
+        Pockstock_IPhone = Player.getActorVar(Pockstock_IPhone)
+        
+        LRstock_Samsung = Player.getActorVar(LRstock_Samsung)
+        MBstock_Samsung = Player.getActorVar(MBstock_Samsung)
+        Ostock_Samsung = Player.getActorVar(Ostock_Samsung)
+        SBstock_Samsung = Player.getActorVar(SBstock_Samsung)
+        SRstock_Samsung = Player.getActorVar(SRstock_Samsung)
+        TBstock_Samsung = Player.getActorVar(TBstock_Samsung)
+        Pockstock_Samsung = Player.getActorVar(Pockstock_Samsung)
+        
+        LRstock_OnePlus = Player.getActorVar(LRstock_OnePlus)
+        MBstock_OnePlus = Player.getActorVar(MBstock_OnePlus)
+        Ostock_OnePlus = Player.getActorVar(Ostock_OnePlus)
+        SBstock_OnePlus = Player.getActorVar(SBstock_OnePlus)
+        SRstock_OnePlus = Player.getActorVar(SRstock_OnePlus)
+        TBstock_OnePlus = Player.getActorVar(TBstock_OnePlus)
+        Pockstock_OnePlus = Player.getActorVar(Pockstock_OnePlus)
+        
+        LRstock_LPGPower = Player.getActorVar(LRstock_LPGPower)
+        MBstock_LPGPower = Player.getActorVar(MBstock_LPGPower)
+        Ostock_LPGPower = Player.getActorVar(Ostock_LPGPower)
+        SBstock_LPGPower = Player.getActorVar(SBstock_LPGPower)
+        SRstock_LPGPower = Player.getActorVar(SRstock_LPGPower)
+        TBstock_LPGPower = Player.getActorVar(TBstock_LPGPower)
+        Pockstock_LPGPower = Player.getActorVar(Pockstock_LPGPower)
+        
+        stock_IPhone = Player.getActorVar(stock_IPhone)
+        stock_Samsung = Player.getActorVar(stock_Samsung)
+        stock_OnePlus = Player.getActorVar(stock_OnePlus)
+        stock_LPGPower = Player.getActorVar(stock_LPGPower)
+        Stock_phones = stock_IPhone + stock_Samsung + stock_OnePlus + stock_LPGPower
+        
+        PriceZe = Random(1250, 1350)
+        PriceZe_loc = PriceZe.convertToLocalCurrency()
+        PriceLP = Random(1350, 1450)
+        PriceLP_loc = PriceLP.convertToLocalCurrency()
+        PricePw = Random(1100, 1200)
+        PricePw_loc = PricePw.convertToLocalCurrency()
+        PricePX = Random(200, 350)
+        PricePX_loc = PricePX.convertToLocalCurrency()
+
+        If money < PricePX
+        
+            Player(Anxious)::"I am in debt. The store owner will not sell me anything."
+            
+        Else
+        
+            "What do I want to buy?"
+            0:: money > PriceZe ::"Vinfamy iPhone — <PriceZe_loc>"
+            1:: money > PriceLP ::"Galaxy LP ultra — <PriceLP_loc>"
+            2:: money > PricePw ::"Vin OnePlus Pro - <PricePw_loc>"
+            3:: money > PricePX ::"LPlay G Power - <PricePX_loc>"
+            99:: "Nothing"
+            
+            If 0
+
+                money -= PriceZe
+                Player(Happy)::"Well, I'm really happy with my purchase ...!"
+                
+                "Where I will store this phone?"
+                1::"Inside my pockets"
+                2::hasLivingroom > 0 ::"Inside my living room"
+                3::"Inside my bedroom"
+                4::hasOfficeroom > 0::"Inside my office room"
+                5::hasSecBedroom > 0::"Inside my second bedroom"
+                6::isModEnabled(rk_vin_Base) || isModEnabled(rk_Home_Inventories)::"Inside my storage room"
+                7::hasThirdBedroom > 0::"Inside my third bedroom"
+                
+                If 1
+                
+                    "Added to your pockets!"
+                    Player.modifyActorVar(Pockstock_IPhone, 1)
+                
+                ElseIf 2
+                
+                    "Added to your living room!"
+                    Player.modifyActorVar(LRstock_IPhone, 1)
+                    
+                ElseIf 3
+                
+                    "Added to your bedroom!"
+                    Player.modifyActorVar(MBstock_IPhone, 1)
+                    
+                ElseIf 4
+                
+                    "Added to your office room!"
+                    Player.modifyActorVar(Ostock_IPhone, 1)
+                    
+                ElseIf 5
+                
+                    "Added to your second bedroom!"
+                    Player.modifyActorVar(SBstock_IPhone, 1)
+                    
+                ElseIf 6
+                
+                    "Added to your storage room!"
+                    Player.modifyActorVar(SRstock_IPhone, 1)
+                    
+                ElseIf 7
+                
+                    "Added to your third bedroom!"
+                    Player.modifyActorVar(TBstock_IPhone, 1)
+                    
+                EndIf
+                mood += 3
+                Player.modifyActorVar(rk_VB_IBuyaPhone, 1)
+            
+            ElseIf 1
+
+                money -= PriceLP
+                Player(Happy)::"Well, I'm really happy with my purchase ...!"
+                
+                "Where I will store this phone?"
+                1::"Inside my pockets"
+                2::hasLivingroom > 0 ::"Inside my living room"
+                3::"Inside my bedroom"
+                4::hasOfficeroom > 0::"Inside my office room"
+                5::hasSecBedroom > 0::"Inside my second bedroom"
+                6::isModEnabled(rk_vin_Base) || isModEnabled(rk_Home_Inventories)::"Inside my storage room"
+                7::hasThirdBedroom > 0::"Inside my third bedroom"
+                
+                If 1
+                
+                    "Added to your pockets!"
+                    Player.modifyActorVar(Pockstock_Samsung, 1)
+                
+                ElseIf 2
+                
+                    "Added to your living room!"
+                    Player.modifyActorVar(LRstock_Samsung, 1)
+                    
+                ElseIf 3
+                
+                    "Added to your bedroom!"
+                    Player.modifyActorVar(MBstock_Samsung, 1)
+                    
+                ElseIf 4
+                
+                    "Added to your office room!"
+                    Player.modifyActorVar(Ostock_Samsung, 1)
+                    
+                ElseIf 5
+                
+                    "Added to your second bedroom!"
+                    Player.modifyActorVar(SBstock_Samsung, 1)
+                    
+                ElseIf 6
+                
+                    "Added to your storage room!"
+                    Player.modifyActorVar(SRstock_Samsung, 1)
+                    
+                ElseIf 7
+                
+                    "Added to your third bedroom!"
+                    Player.modifyActorVar(TBstock_Samsung, 1)
+                    
+                EndIf
+                mood += 3
+                Player.modifyActorVar(rk_VB_IBuyaPhone, 1)
+            
+            ElseIf 2
+
+                money -= PricePw
+                Player(Happy)::"Well, I'm really proud of my purchase ...!"
+                
+                "Where I will store this phone?"
+                1::"Inside my pockets"
+                2::hasLivingroom > 0 ::"Inside my living room"
+                3::"Inside my bedroom"
+                4::hasOfficeroom > 0::"Inside my office room"
+                5::hasSecBedroom > 0::"Inside my second bedroom"
+                6::isModEnabled(rk_vin_Base) || isModEnabled(rk_Home_Inventories)::"Inside my storage room"
+                7::hasThirdBedroom > 0::"Inside my third bedroom"
+                
+                If 1
+                
+                    "Added to your pockets!"
+                    Player.modifyActorVar(Pockstock_OnePlus, 1)
+                
+                ElseIf 2
+                
+                    "Added to your living room!"
+                    Player.modifyActorVar(LRstock_OnePlus, 1)
+                    
+                ElseIf 3
+                
+                    "Added to your bedroom!"
+                    Player.modifyActorVar(MBstock_OnePlus, 1)
+                    
+                ElseIf 4
+                
+                    "Added to your office room!"
+                    Player.modifyActorVar(Ostock_OnePlus, 1)
+                    
+                ElseIf 5
+                
+                    "Added to your second bedroom!"
+                    Player.modifyActorVar(SBstock_OnePlus, 1)
+                    
+                ElseIf 6
+                
+                    "Added to your storage room!"
+                    Player.modifyActorVar(SRstock_OnePlus, 1)
+                    
+                ElseIf 7
+                
+                    "Added to your third bedroom!"
+                    Player.modifyActorVar(TBstock_OnePlus, 1)
+                    
+                EndIf
+                mood += 3
+                Player.modifyActorVar(rk_VB_IBuyaPhone, 1)
+            
+            ElseIf 3
+
+                money -= PricePX
+                Player(Happy)::"Well, I'm really proud of my purchase ...!"
+                
+                "Where I will store this phone?"
+                1::"Inside my pockets"
+                2::hasLivingroom > 0 ::"Inside my living room"
+                3::"Inside my bedroom"
+                4::hasOfficeroom > 0::"Inside my office room"
+                5::hasSecBedroom > 0::"Inside my second bedroom"
+                6::isModEnabled(rk_vin_Base) || isModEnabled(rk_Home_Inventories)::"Inside my storage room"
+                7::hasThirdBedroom > 0::"Inside my third bedroom"
+                
+                If 1
+                
+                    "Added to your pockets!"
+                    Player.modifyActorVar(Pockstock_LPGPower, 1)
+                
+                ElseIf 2
+                
+                    "Added to your living room!"
+                    Player.modifyActorVar(LRstock_LPGPower, 1)
+                    
+                ElseIf 3
+                
+                    "Added to your bedroom!"
+                    Player.modifyActorVar(MBstock_LPGPower, 1)
+                    
+                ElseIf 4
+                
+                    "Added to your office room!"
+                    Player.modifyActorVar(Ostock_LPGPower, 1)
+                    
+                ElseIf 5
+                
+                    "Added to your second bedroom!"
+                    Player.modifyActorVar(SBstock_LPGPower, 1)
+                    
+                ElseIf 6
+                
+                    "Added to your storage room!"
+                    Player.modifyActorVar(SRstock_LPGPower, 1)
+                    
+                ElseIf 7
+                
+                    "Added to your third bedroom!"
+                    Player.modifyActorVar(TBstock_LPGPower, 1)
+                    
+                EndIf
+                mood += 3
+                Player.modifyActorVar(rk_VB_IBuyaPhone, 1)
+            
+            EndIf
+              
+        EndIf
+    
+    SceneEnd()

@@ -1,0 +1,64 @@
+WHAT: all
+WHERE: hospital:work
+WHEN: 8-18
+WHO: none
+OTHER: random(0, 100) > 60
+
+    SceneStart()
+        If isModEnabled(rk_Vin_Base)
+            Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+            UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+            Actor = generatePersonTemporary()
+            While !Actor.isFemale()
+                Actor = generatePersonTemporary()
+            endWhile
+            Actor:age => random(18, 30)
+            Actor.randomizeFace()
+            Actor.randomizeRace()
+            Actor.randomizeHairs()
+            Actor.dress()
+            Actor.show()
+            "A young woman comes into the hospital for a pregnancy test, which turns out negative."
+            "She gets upset and explains that her husband and she have been trying but nothing works and they really want a baby."
+            If Player.isMale() || Player.isTrans()
+                0:: perversion > 30:: "Offer to be a sperm donor, the 'traditional way'"
+                1:: "Encourage her to be more patient"
+                
+            Else
+                0:: perversion > 30:: "Offer to be a sperm donor, the 'dildo way'"
+                1:: "Encourage her to be more patient"
+            
+            EndIf
+            If 0
+                If Player.isMale() || Player.isTrans()
+                    If Actor:arousal > 25 && Actor:perversion > 50
+                        Actor.makePermanent()
+                        Actor.setWantsBabies()
+                        Actor(Flirty):: "That sounds like a good idea. As long as my husband doesn't find out, it's only the best thing to do for our marriage to finally have a child."
+                        Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                    Else
+                        Actor(Angry):: "What kind of offer is that? Do you do this to all your female patients? I want to speak to your boss, please."
+                    EndIf
+                Else
+                    If Actor:arousal > 25 && Actor:perversion > 35
+                        Actor.makePermanent()
+                        Actor.setWantsBabies()
+                        Actor(Happy):: "That sounds like a good idea. It's not like cheating my husband and it's done with a dildo, it's only the best thing to do to finally have a child."
+                        filter(Dildo)
+                        Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                    Else
+                        Actor(Angry):: "What kind of offer is that? Do you do this to all your female patients? I want to speak to your boss, please."
+                    EndIf
+                EndIf
+            EndIf
+        EndIf
+    SceneEnd()
+    timeout(200, bull_hospital_cms)

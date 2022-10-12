@@ -1,0 +1,61 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        HypnoLvL = Player.getActorVar(rk_VB_VampHypnoLvL)
+        PriceE = random(75, 100)
+        PriceE_loc = PriceE.convertToLocalCurrency()
+        PriceV = random(55, 75)
+        PriceV_loc = PriceV.convertToLocalCurrency()
+        PriceO = random(35, 55)
+        PriceO_loc = PriceO.convertToLocalCurrency()
+        PriceH = random(15, 35)
+        PriceH_loc = PriceH.convertToLocalCurrency()
+        If isModEnabled(rk_vin_Base)
+            "What do I want to buy?"
+            0:: money > PriceE ::"1 bottle of Elven Blood — <PriceE_loc>"
+            1:: money > PriceH ::"1 bottle of Human Blood — <PriceH_loc>"
+            2:: money > PriceO ::"1 bottle of Orc Blood - <PriceO_loc>"
+            3:: money > PriceV ::"1 bottle of Vampire Blood - <PriceV_loc>"
+            99:: "Nothing"
+
+            If 1
+                Player.animate(drinkbottle)
+                intelligence += random(1, 3)
+                attractiveness += random(1, 3)
+                Player(Happy)::"Oh yeah! Now I feel better, a bit more intelligent and sexy!"
+                mood += random(1, 3)
+                Player.modifyActorVar(rk_VB_VampHypnoLvL, 25)
+            ElseIf 2
+                Player.animate(drinkbottle)
+                Player(Happy)::"Oh yeah! Now I feel better!"
+                mood += random(1, 3)
+                Player.modifyActorVar(rk_VB_VampHypnoLvL, 25)
+            ElseIf 3
+                muscle += random(1, 3)
+                martial += random(1, 3)
+                Player.animate(drinkbottle)
+                Player(Happy)::"Oh yeah! Now I feel better and a bit more stronger!"
+                mood += random(1, 3)
+                Player.modifyActorVar(rk_VB_VampHypnoLvL, 25)
+            ElseIf 4
+                fitness += random(1, 3)
+                attractiveness += random(1, 3)
+                Player.animate(drinkbottle)
+                Player(Happy)::"Oh yeah! Now I feel better, a bit more fit and sexy!"
+                mood += random(1, 3)
+                Player.modifyActorVar(rk_VB_VampHypnoLvL, 25)
+            EndIf
+            HypnoLvL = Player.getActorVar(rk_VB_VampHypnoLvL)
+            If HypnoLvL > 100
+                Player.setActorVar(rk_VB_VampHypnoLvL, 100)
+            EndIf
+        EndIf
+    SceneEnd()

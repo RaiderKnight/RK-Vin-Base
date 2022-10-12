@@ -1,0 +1,116 @@
+WHAT: all, -go_to_the_bathroom
+WHERE: nightclub, bar
+WHEN: 21 - 3
+WHO: Actor = getRelative(Sibling, StepSibling, Cousin, Child, StepChild); If Random(50, 500) < Actor:interpersonal
+OTHER: none
+
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Actor.dress()
+        Actor.show(2)
+     
+        "There's a couple making out passionately a few steps away from me. Someone clearly couldn't wait until they get to the bedroom!"
+        "Oh wait ... it's my <Actor.relationship>! What the hell ..."
+        0:: "Ignore"
+        1:: "Cockblock <Actor.him_or_her>"
+        2:: !isWithCompanion()::"Hide and spy on them"
+    
+        If 0
+        
+            "I'll just look the other way then and let <Actor.him_or_her> enjoy <Actor.himself_or_herself>."
+            masochist += Random(0, 0.1)
+            perversion -= 1
+            arousal -= 1
+            
+        Elseif 1
+        
+            "I will not allow my <Actor.relationship> to go home with some random <Actor.girl_or_guy> right in front of me!"
+            "I decided to crash their passionate makeout and started a very inappropriately timed conversation with my <Actor.relationship>. Of course, having <Actor.his_or_her> <Actor.callplayer> show up suddenly makes things extremely awkward for them and kills off their mood to go any further that night." 
+            masochist -= Random(0, 0.5)
+            Actor:rapportwithplayer -= Random(0, 5)
+            perversion -= 2
+            arousal -= 2
+            
+        Elseif 2
+        
+            If Actor.isMale()
+                Actor2 = generatePersonTemporary()
+                While Actor2.isMale()
+                    Actor2 = generatePersonTemporary()  
+                Endwhile
+                Actor2.dress()
+                Actor2.show(2)
+            Else
+                Actor2 = generatePersonTemporary()
+                While !Actor2.isMale()
+                    Actor2 = generatePersonTemporary()  
+                Endwhile
+                Actor2.dress()
+                Actor2.show(2)    
+            Endif
+            
+            ChanceToBeSeen = Random(0, 10)
+            ChanceToBeSeen = ChanceToBeSeen.round()
+            Actor.show()
+            Actor2.show()
+            Actor.strip()
+            Actor2.strip()
+            
+            "Let's spy on <Actor.relationship> and figure out who <Actor.he_or_she>'s been having an affair with"
+            "I decided to hide behind a wall near the sex action to watch all the show ..."
+            arousal += 1
+            perversion += 0.25
+            
+            If ChanceToBeSeen >= 6
+            
+                "I didn't know that <Actor.he_or_she> like sex that much! Interesting...!"
+                Sex(Actor, Actor2)
+                masochist += Random(0, 0.1)
+                perversion += 2
+                arousal += 1
+                sneak += 1
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+            
+            Else
+            
+                Actor(Angry)::"What the fuck! I saw you motherfucker!"
+                "What should I do?"
+                0::"Run and get out of this place"
+                1::"Accept fate"
+                    
+                If 0
+                
+                    moveTo(street)
+                    masochist -= Random(0, 0.5)
+                    Actor:rapportwithplayer -= Random(0, 5)
+                    perversion += 1
+                    arousal += 1
+                    sneak -= 1
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                
+                Else
+                
+                    Actor(Angry)::"You are an asshole! You better not say a word about it!"
+                    masochist += Random(0, 0.5)
+                    Actor:rapportwithplayer -= Random(0, 5)
+                    perversion -= 1
+                    arousal -= 2
+                    sneak -= 2
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                
+                EndIf
+            
+            Endif
+            
+        Endif
+    
+    SceneEnd()  // Scene improved by Raddeck
+    timeout(2500, cockblocks_family)

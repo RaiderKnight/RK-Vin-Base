@@ -1,0 +1,193 @@
+WHAT: all
+WHERE: all
+WHEN: 0 - 24
+WHO: Actor = getCompanion(); If !Actor.isDating() && Actor.isInterestedIn(Player) && Player.isInterestedIn(Actor) && Actor:attractiontoplayer > 10
+OTHER: none
+
+    // While on a date with someone whose interest in you is mutual, they may bring you back to their place to hook up, only for you to discover they live in an apartment with multiple roommates. If you go ahead and get laid anyway, depending on your date's perversion, they may then invite their roommates in to share you, or you catch their roommates peeping and take the initiative yourself.
+    
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        FacebookFriend = rk_VB_FacebookFriend.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        "I'm on a date with <Actor.name>, who seems to be quite attracted to me and is trying to flirt with me."
+        0:: "Show that the attraction is mutual"
+        1:: "Put <Actor.him_or_her> off"
+        
+        If 0
+            Actor:attractiontoplayer += 3
+            "I flirted back with <Actor.name>, making clear that the attraction is mutual."
+            "Emboldened by my receptive response, <Actor.name> invited me back to <Actor.his_or_her> place. Of course, I'm not five years old, I know what will happen once we're back there."
+            0:: "Follow <Actor.him_or_her> home"
+            1:: "Slow things down"
+            2:: "Invite <Actor.him_or_her> to my home"
+            
+            If 0
+                "Why not? We both wanted the same thing ..."
+                setBackgroundCustom(livingroom)
+                "Here we are: <Actor.name> has a very spacious apartment ... too spacious, this can't be a studio. Must be a four-bedroom apartment at least."
+                Actor2 = Actor.getRelatedPerson(Roommates)
+                If !Actor2.isValid()
+                    Actor2 = generatePersonTemporary()
+                    While !Actor2.isSameGender(Actor)
+                        Actor2 = generatePersonTemporary()
+                    Endwhile
+                    Actor2:age => Actor:age + Random(-5, 5)
+                    If Actor2:age < 18
+                        Actor2:age => 18
+                    Endif
+                    Actor2.randomizeFace()
+                    Actor2.randomizeHairs()
+                    
+                    Actor2.makePermanent()
+                    addNpcRelationship(Roommates, Actor, Actor2)
+                Endif
+                Actor2.dress()
+                Actor2.show()
+                Actor2(Happy):: "Hey <Actor.name>, you're back ..."
+                
+                Actor3 = Actor.getRelatedPerson(Roommates)
+                If !Actor3.isValid()
+                    Actor3 = generatePersonTemporary()
+                    While !Actor3.isSameGender(Actor)
+                        Actor3 = generatePersonTemporary()
+                    Endwhile
+                    Actor3:age => Actor:age + Random(-5, 5)
+                    If Actor3:age < 18
+                        Actor3:age => 18
+                    Endif
+                    Actor3.randomizeFace()
+                    Actor3.randomizeHairs()
+                    
+                    Actor3.makePermanent()
+                    addNpcRelationship(Roommates, Actor, Actor3)
+                Endif
+                Actor3.dress()
+                Actor3.show()
+                Actor3(Happy):: "Where have you been? It's movie night tonight, remember?"
+                
+                Actor4 = Actor.getRelatedPerson(Roommates)
+                If !Actor4.isValid()
+                    Actor4 = generatePersonTemporary()
+                    While !Actor4.isSameGender(Actor)
+                        Actor4 = generatePersonTemporary()
+                    Endwhile
+                    Actor4:age => Actor:age + Random(-5, 5)
+                    If Actor4:age < 18
+                        Actor4:age => 18
+                    Endif
+                    Actor4.randomizeFace()
+                    Actor4.randomizeHairs()
+                    
+                    Actor4.makePermanent()
+                    addNpcRelationship(Roommates, Actor, Actor4)
+                Endif
+                Actor4.dress()
+                Actor4.show()
+                Actor4(Happy):: "Damn, you really make an effort dressing up."
+                
+                "As soon as we arrive, we were greeted by <Actor.name>'s three roommates in the living room."
+                "And I thought we were going to be alone ... I'm not entirely sure if this surprise is entirely pleasant."
+                "I then look around, the walls in this apartment are paper-thin, even if we go inside <Actor.name>'s bedroom to hook up, all <Actor.his_or_her> roommmates will no doubt still hear everything."
+                0:: "Go ahead and hook up with <Actor.name> anyway"
+                1:: "Actually, I don't feel so comfortable now ..."
+                
+                If 0
+                    "Who cares? It's not like we'll fuck right there in front of them."
+                    Player(Flirty):: "Weren't you going to show me your bedroom?"
+                    Actor(Happy):: "Oh yeah, of course. Bye, guys!"
+                    Actor2.hide()
+                    Actor3.hide()
+                    Actor4.hide()
+                    setBackground(home)
+                    "As soon as we were inside <Actor.name>'s bed, with no shit given about the roommmates being separated from us by only a thin wall, we started making out passionately and clothes started coming off"
+                    Player.strip()
+                    Actor.strip()
+                    Sex(Actor, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    "While <Actor.name> and I was going at it, out of the corner of my eye, I noticed not one, but all three of <Actor.name>'s roommates peeping at us! I knew that was going to happen."
+                    "Soon enough, <Actor.name> noticed as well."
+                    If Actor:perversion > 50
+                        Actor(Happy):: "I knew you <Actor2.guys_or_girls> wouldn't be able to stay in the living room."
+                        Actor(Curious):: "<Player.name>, would you mind being shared among some friends? Trust me, you'll not regret it. It's a once-in-a-lifetime experience."
+                        "What should I say?"
+                        0:: "Okay ..."
+                        1:: "No way"
+                        
+                        If 0
+                            perversion += 1
+                            arousal += Random(1, 5)
+                            Player(Flirty):: "Alright, I guess it's worth a try. Come in then, <Actor2.guys_or_girls> ..."
+                            If Player.isSameGender(Actor)
+                                Actor4.strip()
+                                Actor3.strip()
+                                Actor2.strip()
+                                Sex(Actor4, Player, Actor)
+                                Sex(Actor3, Actor2, Player)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -5)
+                                EndIf
+                            Else
+                                Sex(Actor4, Actor3, Actor2, Actor, Player)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -5)
+                                EndIf
+                            Endif
+                        Else
+                            Player(Sad):: "No way, that's so weird. I can't believe that even crossed your mind. What kind of perverted stuffs you and your roommates are up to?"
+                            Actor:rapportwithplayer -= 3
+                            Actor:attractiontoplayer -= 1
+                            perversion -= Random(1, 5)
+                        Endif
+                    Else
+                        Actor(Annoyed):: "Come on <Actor2.guys_or_girls>, can you give us some privacy please? We're kinda busy here ..."
+                        "How should I react to this?"
+                        0:: "Stay silent"
+                        1:: "Invite them all in instead"
+                        
+                        If 0
+                            Actor(Flirty):: "Sorry about that, my roommates can be a bit weird ... I kinda wish sometimes that I have my own place." 
+                            Actor:rapportwithplayer += 3
+                            Actor:attractiontoplayer += 1
+                        Else
+                            Player(Flirty):: "Come on, <Actor.name>, don't be so selfish. Are you just going to leave your roommates dry like that? Sharing is caring, you know ..."
+                            Player(Flirty):: "What are you <Actor2.guys_or_girls> even standing around there for? Come in and have some fun with us."
+                            perversion += random(1, 2)
+                            If Player.isSameGender(Actor)
+                                Sex(Actor4, Player)
+                                Sex(Actor3, Actor2, Player)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -5)
+                                EndIf
+                            Else
+                                Sex(Actor4, Actor3, Actor2, Actor, Player)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -5)
+                                EndIf
+                            Endif                        
+                            perversion += 2
+                        Endif
+                    Endif
+                Else
+                    Player(Sad):: "Actually, I'll leave you to that movie night with your roommmates. We'll hang out another time, okay?"
+                    "No way I was comfortable hooking up while all <Actor.his_or_her> roommates are there. Maybe next time <Actor.he_or_she> will have learned a lesson and bribe <Actor.his_or_her> roommates to stay out before having a <Player.guy_or_girl> over ..."
+                    endDate()
+                Endif
+            Elseif 2
+                rk_VB_companion_roommates.setGlobal(1)
+                followUp(invite_home)
+            Else
+                "I told <Actor.name> that I preferred to take it slow and don't feel comfortable going home with <Actor.him_or_her> just yet."
+                Actor:attractiontoplayer -= Random(1, 3)
+            Endif
+        Else
+            "I decided not to give <Actor.name> any false signal. Reading the situation, <Actor.name> went easy on the flirting."
+            Actor:attractiontoplayer -= 3
+        Endif
+    SceneEnd()
+    timeout(200, companion_roommates) // Improved by Raddeck

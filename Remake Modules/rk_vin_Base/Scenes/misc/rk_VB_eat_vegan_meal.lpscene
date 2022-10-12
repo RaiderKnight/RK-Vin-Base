@@ -1,0 +1,181 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+    
+        IBuyVegan = Player.getActorVar(rk_VB_IBuyVegan)
+    
+        If  money < -1 
+            Player(Anxious)::"Ok, no money to eat! I need to find a job !"
+        Else
+            
+            // Get current vegan meal prices for each types
+            price_HealthyCookie = 2
+            price_HealthyCookie_local = price_HealthyCookie.convertToLocalCurrency()
+            price_LentilStew = 6
+            price_LentilStew_local = price_LentilStew.convertToLocalCurrency()
+            price_CauliAlfredo = 7
+            price_CauliAlfredo_local = price_CauliAlfredo.convertToLocalCurrency()
+            price_RicePeas = 8
+            price_RicePeas_local = price_RicePeas.convertToLocalCurrency()
+            price_Edamame = 9
+            price_Edamame_local = price_Edamame.convertToLocalCurrency()
+            price_PastaAlfredo = 11
+            price_PastaAlfredo_local = price_PastaAlfredo.convertToLocalCurrency()
+            price_CrispyTofu = 13
+            price_CrispyTofu_local = price_CrispyTofu.convertToLocalCurrency()
+            price_LoMein = 16
+            price_LoMein_local = price_LoMein.convertToLocalCurrency()
+            
+            Player::"Ok, which vegan meal I'm gonna eat?"
+            0:: money >= price_HealthyCookie :: "Healthy cookie for <price_HealthyCookie_local>"
+            1:: money >= price_LentilStew:: "Winter Squash and Lentil Stew for <price_LentilStew_local>"
+            2:: money >= price_CauliAlfredo:: "Cauliflower Alfredo for <price_CauliAlfredo_local>"
+            3:: money >= price_RicePeas:: "Coconutty Rice and Peas for <price_RicePeas_local>"
+            4:: money >= price_Edamame:: "Peanutty Edamame and Noodle Salad for <price_Edamame_local>"
+            5:: money >= price_PastaAlfredo:: "Pasta with Red Pepper Alfredo for <price_PastaAlfredo_local>"
+            6:: money >= price_CrispyTofu:: "Crispy Tofu Bowl with fruits for <price_CrispyTofu_local>"
+            7:: money >= price_LoMein:: "Veggie Lo Mein for <price_LoMein_local>"
+            99:: "Bah! I'm not hungry !"
+            
+            If 0
+                mood += 1
+                energy += 2
+                fitness += 0.5
+                intelligence += 0.5
+                attractiveness += 0.05
+                money -= price_HealthyCookie
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 2)
+                EndIf
+                
+            Elseif 1
+                mood += 4
+                energy += 4
+                fitness += 1
+                intelligence += 1
+                attractiveness += 1
+                money -= price_LentilStew
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 4)
+                EndIf
+            
+            Elseif 2
+                mood += 5
+                energy += 5
+                fitness += 2
+                intelligence += 1.25
+                attractiveness += 1.5
+                money -= price_CauliAlfredo
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 5)
+                EndIf
+            
+            Elseif 3
+                mood += 6
+                energy += 6
+                fitness += 3
+                intelligence += 1.5
+                attractiveness += 2
+                money -= price_RicePeas
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 6)
+                EndIf
+            
+            Elseif 4
+                mood += 7
+                energy += 7
+                fitness += 4
+                intelligence += 1.75
+                attractiveness += 2.5
+                money -= price_Edamame
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 7)
+                EndIf
+            
+            Elseif 5
+                mood += 9
+                energy += 8
+                fitness += 5
+                intelligence += 2
+                attractiveness += 3
+                money -= price_PastaAlfredo
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 8)
+                EndIf
+            
+            Elseif 6
+                mood += 10
+                energy += 9
+                fitness += 6
+                intelligence += 2.25
+                attractiveness += 3.5
+                money -= price_CrispyTofu
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 9)
+                EndIf
+            
+            Elseif 7
+                mood += 12
+                energy += 10
+                fitness += 7
+                intelligence += 2.5
+                attractiveness += 4
+                money -= price_LoMein
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 10)
+                EndIf
+            
+            Endif
+            
+            followUp(sb_VB_weight_gain)
+            
+        Endif
+        
+    SceneEnd()

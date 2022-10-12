@@ -1,0 +1,427 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER:
+
+    SceneStart()
+        likes_watersports = Player.getActorVar(rk_VB_likes_watersports)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Bouncer = generatePersonTemporary()
+        While !Bouncer.isMale()
+            Bouncer = generatePersonTemporary()
+        EndWhile
+        Bouncer.blendPreset(bodybuilder)
+        Bouncer.hide()
+        "Which gender will I choose for the dancer?"
+        0::"Female"
+        1::"Male"
+        2::"Trans"
+        
+        If 0
+            Stripper = generatePersonTemporary()
+            While Stripper.isMale()
+                Stripper = generatePersonTemporary()
+            EndWhile
+            
+        ElseIf 1
+            Stripper = generatePersonTemporary()
+            While !Stripper.isMale()
+                Stripper = generatePersonTemporary()
+            EndWhile
+        Else
+            Stripper = generatePersonTemporary()
+            While Stripper.isTrans()
+                Stripper = generatePersonTemporary()
+            EndWhile
+        EndIf 
+        Stripper.randomizeRace()
+        Stripper.randomizeFace()
+        Stripper.randomizeHairs()
+        Stripper:age => random(18, 30)
+        Stripper:attractiveness => random(65, 100)
+        Stripper:fitness => (25, 100)
+        Stripper:perversion => random(10, 100)
+        SRandwater = random(25, 100)
+        Stripper.setActorVar(rk_VB_likes_watersports, SRandwater)
+        Stripper.moveToPerson(Player)
+        Stripper.show()
+        "Hi my name is <Stripper.name>, I am the one who will give you a private dance."
+        arousal += random(0, 30)
+        Player(Happy)::"Nice!"
+        DancePrice = 20
+        DancePriceLoc = DancePrice.convertToLocalCurrency()
+        Stripper(Flirty)::"Before I start, it's <DancePriceLoc> for a dance!"
+        DancingActor = false
+        BouncerProblem = false
+        Masturbate = false
+        Groped = false
+        "Should I pay or choose another dancer?"
+        0::"Yes"
+        1::"Choose another dancer"
+        99::"I changed my mind!"
+        
+        If 0
+            DancingActor = true
+            money -= DancePrice
+            "The dancer starts <Stripper.his_or_her> sexy show..."
+            Stripper.moveToPerson(Player)
+            Stripper.animate(dance)
+            count = 0
+            While !Stripper.isNaked() && count < 25
+                "What should I do next?"
+                0:: "Give a tip"
+                1:: "Take off one clothes"
+                2:: "Masturbate"
+                3:: "Grope <Stripper.him_or_her>"
+                4:: "Offer <Stripper.him_or_her> a drink"
+                5:: "Flirt the stripper"
+                6:: "Offer an extra for sex"
+                99:: "Stop the dance"
+                
+                If 0
+                    PDance = 2
+                    PDance1 = 5
+                    PDance2 = 10
+                    PDance3 = 50
+                    PDance4 = 100
+                    PDanceLoc = PDance.convertToLocalCurrency()
+                    PDance1Loc = PDance1.convertToLocalCurrency()
+                    PDance2Loc = PDance2.convertToLocalCurrency()
+                    PDance3Loc = PDance3.convertToLocalCurrency()
+                    PDance4Loc = PDance4.convertToLocalCurrency()
+                    
+                    "How much I should give?"
+                    0::"<PDanceLoc>"
+                    1::"<PDance1Loc>"
+                    2::"<PDance2Loc>"
+                    3::"<PDance3Loc>"
+                    4::"<PDance4Loc>"
+
+                    If 0
+                        money -= PDance
+                        "Here my lovely, continue to dance darling!"
+                        Stripper(Flirty)::"Thanks..."
+                    ElseIf 1
+                        money -= PDance1
+                        "Here my lovely, continue to dance darling!"
+                        Stripper(Flirty)::"Thanks, I appreciate..."
+                    ElseIf 2
+                        money -= PDance2
+                        "Here my lovely, continue to dance darling!"
+                        Stripper(Flirty)::"Thanks, this is generous..."
+                        Stripper:arousal += random(0, 1)
+                    ElseIf 3
+                        Stripper.stripOne()
+                        money -= PDance3
+                        "Here my lovely, continue to dance darling!"
+                        Stripper(Flirty)::"Wow, thanks..."
+                        Stripper:arousal += random(1, 2)
+                        Stripper:attractiontoplayer += random(1, 5)
+                    Else
+                        Stripper.stripOne()
+                        money -= PDance4
+                        "Here my lovely, continue to dance darling!"
+                        Stripper.stripOne()
+                        Stripper(Flirty)::"Wow, this is generous..."
+                        Stripper:arousal += random(2, 5)
+                        Stripper:attractiontoplayer += random(1, 25)
+                    EndIf
+                ElseIf 1
+                    perversion += 1
+                    Player.stripOne()
+                    If !Stripper.isInterestedIn(Player)
+                        Stripper(Sad)::"What are you doing?... I don't like it, you're gonna have problem..."
+                        BouncerProblem = true
+                        Stripper:arousal -= random(0, 2)
+                    Else
+                        Stripper.animate(dance)
+                        Stripper(Happy)::"Oh yeah baby, let's dance together..."
+                        Player.animate(dance)
+                        Stripper:arousal += random(0, 2)
+                    EndIf
+                ElseIf 2
+                    If !Stripper.isInterestedIn(Player)
+                        Stripper(Sad)::"What the fuck are you doing?... I don't like it, you're gonna have problem..."
+                        BouncerProblem = true
+                        Masturbate = true
+                        Stripper:arousal -= random(0, 2)
+                        Filter(Solo)
+                        sex(Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                    Else
+                        Stripper(Happy)::"Oh yeah baby, I make you <Player.hard_or_horny>..."
+                        Stripper:arousal += random(0, 3)
+                    EndIf
+                
+                ElseIf 3
+                    "I decided to grope the stripper..."
+                    If !Stripper.isInterestedIn(Player)
+                        Player.moveToPersonStand(Stripper, 10)
+                        Stripper(Sad)::"What the fuck are you doing?... I don't like it, you're gonna have problem..."
+                        BouncerProblem = true
+                        Groped = true
+                        Stripper:arousal -= random(0, 2)
+                    Else
+                        Stripper(Happy)::"Oh yeah baby, caress my body..."
+                        Stripper(Happy)::"I begin to make you <Player.hard_or_horny>..."
+                        Stripper:arousal += random(0, 3)
+                    EndIf
+                ElseIf 4
+                    If !Stripper.isInterestedIn(Player)
+                        Stripper(Sad)::"No thanks I'm not thirsty..."
+                    Else
+                        Random
+                            Stripper(Happy)::"Sure, bring me a Sex-On-The-Beach..."
+                            Stripper(Happy)::"Sure, bring me a Pina-Colada..."
+                            Stripper(Happy)::"Sure, bring me a Whisky..."
+                            Stripper(Happy)::"Sure, bring me a Rhum and Coke..."
+                            Stripper(Happy)::"Sure, bring me a beer..."
+                        EndRandom
+                        Stripper:arousal += random(0, 2)
+                        Stripper:intoxication += 10
+                        "I went to get a glass for <Stripper.him_or_her> and a Gin for me."
+                        "Once back, we drank our drinks and she continued <Stripper.his_or_her> dance."
+                        Player:intoxication += 10
+                        If UrgeToPeeEnable > 0
+                            Player.modifyActorVar(rk_VB_UrgeToPee, -1)
+                        EndIf
+                    EndIf
+                ElseIf 5
+                    "I decided to flirt a bit with the stripper while <Stripper.he_or_she>'s dancing..."
+                    If !Stripper.isInterestedIn(Player)
+                        Stripper:attractiontoplayer -= random(0, 1)
+                    Else
+                        Stripper:attractiontoplayer += random(0, 2)
+                        Stripper:rapportwithplayer += random(0, 2)
+                    EndIf
+                ElseIf 6
+                    If !Stripper.isInterestedIn(Player)
+                        Stripper(Sad)::"Never with my clients, sorry..."
+                        Stripper:attractiontoplayer -= random(0, 1)
+                    Else
+                        Stripper(Flirty)::"Ok, but stay silent about that..."
+                        Stripper:attractiontoplayer += random(0, 2)
+                        Stripper:rapportwithplayer += random(0, 2)
+                        Stripper:arousal += random(5, 10)
+                        SPDance = 50
+                        SPDance1 = 25
+                        SPDance2 = 200
+                        SPDanceLoc = SPDance.convertToLocalCurrency()
+                        SPDance1Loc = SPDance1.convertToLocalCurrency()
+                        SPDance2Loc = SPDance2.convertToLocalCurrency()
+                        Stripper(Flirty)::"Here are my prices darling?"
+                        0::"For a blowjob is <SPDanceLoc>"
+                        1::"For a handjob is <SPDance1Loc>"
+                        2::"For a quick fuck is <SPDance2Loc>"
+                        
+                        If 0
+                            Player.strip()
+                            Player.dressExcept(Bottom, Bottom_Under)
+                            If Player.isMale()
+                                Filter(Blowjob)
+                            Else
+                                Filter(Licking)
+                            EndIf
+                            sex(Stripper, Player)
+                            Player.dress()
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
+                        ElseIf 1
+                            Player.strip()
+                            Player.dressExcept(Bottom, Bottom_Under)
+                            If Player.isMale()
+                                Filter(Handjob)
+                            Else
+                                Filter(Fingering)
+                            EndIf
+                            sex(Stripper, Player)
+                            Player.dress()
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
+                        Else
+                            Player.strip()
+                            Stripper.strip()
+                            sex(Player, Stripper)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Player.dress()
+                        EndIf
+                        
+                    EndIf
+                Else
+                    count = 30
+                EndIf
+                Stripper(Flirty)::"Off that goes ..."
+                Stripper.stripOne()
+                Stripper:perversion += 0.25
+                perversion += 0.25
+                Stripper:arousal += random(0, 2)
+                arousal += random(0, 3)
+                Stripper.moveToPerson(Player)
+                Stripper.animate(dance)
+                count += 1  
+
+            Endwhile
+        
+            If BouncerProblem
+                BouncerFuckMe = false
+                BouncerBeatMe = false
+                Bouncer.show()
+                "All of a sudden the bouncer of the place grabs me by the arm and takes me to a separate room!"
+                If Masturbate && Groped
+                    Bouncer(Angry)::"So you're fun is to grope and masturbate in front of our dancers?"
+                    If Bouncer:arousal > 15 && Bouncer.isInterestedIn(Player) && Bouncer:perversion > 70
+                        Bouncer(Grin)::"It's illegal to do that here, but you're lucky, in this room with me it's accepted. So I'll give you two choices:"
+                        0::"Let's fuck right here!"
+                        1::"Choose to be beaten"
+                        
+                        If 0
+                            Player.strip()
+                            Bouncer.strip()
+                            sex(Player, Bouncer)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                        Else
+                            BouncerBeatMe = true
+                        EndIf
+                    Else
+                        BouncerBeatMe = true
+                    EndIf
+                ElseIf Masturbate
+                    Bouncer(Angry)::"So you're fun is to masturbate in front of our dancers?"
+                    If Bouncer:arousal > 15 && Bouncer.isInterestedIn(Player) && Bouncer:perversion > 70
+                        Bouncer(Grin)::"It's illegal to do that here, but you're lucky, in this room with me it's accepted. So I'll give you two choices:"
+                        0::"Masturbate right here!"
+                        1::"Choose to be beaten"
+                        
+                        If 0
+                            Player.strip()
+                            Player.dressExcept(Bottom, Bottom_Under)
+                            Filter(solo)
+                            sex(Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
+                            Player.dress()
+                        Else
+                            BouncerBeatMe = true
+                        EndIf
+                    Else
+                        BouncerBeatMe = true
+                    EndIf
+                ElseIf Groped
+                    Bouncer(Angry)::"So you're fun is to groped our dancers?"
+                    If Bouncer:arousal > 15 && Bouncer.isInterestedIn(Player) && Bouncer:perversion > 70
+                        Bouncer(Grin)::"It's illegal to do that here, but you're lucky, in this room with me it's accepted. So I'll give you two choices:"
+                        0::"Masturbate my <Player.cock_or_pussy>!"
+                        1::"Choose to be beaten"
+                        
+                        If 0
+                            Bouncer.strip()
+                            Bouncer.dressExcept(Bottom, Bottom_Under)
+                            If Player.isMale()
+                                Filter(Handjob)
+                            Else
+                                Filter(Fingering)
+                            EndIf
+                            sex(Player, Bouncer)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Bouncer.dress()
+                        Else
+                            BouncerBeatMe = true
+                        EndIf
+                    Else
+                        BouncerBeatMe = true
+                    EndIf
+                Else
+                    Bouncer(Angry)::"So you're fun is to strip in front our dancers?"
+                    If Bouncer:arousal > 15 && Bouncer.isInterestedIn(Player) && Bouncer:perversion > 70
+                        Bouncer(Grin)::"It's illegal to do that here, but you're lucky, in this room with me it's accepted. So I'll give you two choices:"
+                        0::"Do a striptease right here!"
+                        1::"Choose to be beaten"
+                        
+                        If 0
+                            Player.strip()
+                            Player.animate(dance)
+                            "So I danced a little in front of the bouncer and after a few minutes, he let me go without hitting me!"
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            passTime(0.25, 0.5)
+                            Player.animate()
+                            moveTo(home)
+                        Else
+                            BouncerBeatMe = true
+                        EndIf
+                    Else
+                        BouncerBeatMe = true
+                    EndIf
+                EndIf
+                If BouncerBeatMe
+                    "I didn't have time to say another words when the bouncer punched me in the face, several more punches in the stomach and finally a kick in the ass saying:"
+                    Bouncer(Angry)::"I don't want to see you here again, fucking bastard!"
+                    mood -= 30
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -25)
+                    EndIf
+                EndIf
+            EndIf
+            If DancingActor 
+                "The stripper that just gave me a lapdance seemed open to to some VIP service ..."  // Start Edit Vinfamy
+                Stripper.show()
+                Stripper.animate(dance)
+                "Should I spend some money and accept <Stripper.his_or_her> offer?"
+                0:: "Fuck the stripper"
+                1:: "A lapdance is enough"
+                
+                If 0
+                    Player.strip()
+                    Stripper.strip()
+                    Sex(Player, Stripper)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    money -= 200
+                    
+                    If random(0, 100) < 50
+                        Stripper2 = generatePersonTemporary()
+                        While !Player.isInterestedIn(Stripper2)
+                            Stripper2 = generatePersonTemporary()
+                        Endwhile
+                        Stripper2:age => random(18, 30)
+                        Stripper2:attractiveness => random(65, 100)
+                        Stripper2.randomizeFace()
+                        Stripper2.randomizeHairs()
+                        Stripper2.strip()
+                        Stripper2.show()
+                        "Just as I was fucking the stripper, another stripper who probably just got <Stripper2.his_or_her> similar VIP service offer turned down by another patron came over and started giving me some attention ..."
+                        0:: "Spend some more money for a threesome"
+                        1:: "Fucking one stripper is enough"
+
+                        If 0
+                            Sex(Player, Stripper2, Stripper)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -3)
+                            EndIf
+                            money -= 200
+                            Player.dress()
+                        EndIf
+                    EndIf
+                EndIf
+            EndIf // End Edit Vinfamy
+        ElseIf 1
+            followUp(receive_lapdance_cms)
+        EndIf 
+    SceneEnd() // Scene created by Raddeck

@@ -1,0 +1,176 @@
+WHAT: all
+WHERE: prison
+WHEN: 21-0
+WHO: none
+OTHER: none
+
+    SceneStart()
+        preferentialtreatment = Player.getActorVar(rk_VB_preferentialtreatment)
+        Actor = generatePersonTemporary()
+        Actor.dressUniform(Police)
+        Actor1 = generatePersonTemporary()
+        Actor1.dressUniform(Police)
+        Actor1:arousal => random(15, 50)
+        Actor:arousal => random(15, 50)
+        Actor.hide()
+        Actor1.hide()
+        gratuit = false
+        Mate1 = generatePersonTemporary()
+        While !Mate1.isSameGender(Player)
+            Mate1 = generatePersonTemporary()
+        EndWhile
+        Mate2 = generatePersonTemporary()
+        While !Mate2.isSameGender(Player)
+            Mate2 = generatePersonTemporary()
+        EndWhile
+        Mate3 = generatePersonTemporary()
+        While !Mate3.isSameGender(Player)
+            Mate3 = generatePersonTemporary()
+        EndWhile
+        Mate4 = generatePersonTemporary()
+        While !Mate4.isSameGender(Player)
+            Mate4 = generatePersonTemporary()
+        EndWhile
+        Mate5 = generatePersonTemporary()
+        While !Mate5.isSameGender(Player)
+            Mate5 = generatePersonTemporary()
+        EndWhile
+        echange = false
+        vend = false
+        cestBon = false
+        choixDios = random(1, 3)
+        choixDios = choixDios.round()
+        If isModEnabled(rk_vin_Base)
+            Mate1.randomizeRace()
+            Mate1.randomizeFace()
+            Mate1.randomizeHairs()
+            Mate1.blendPreset(bodybuilder)
+            Mate2.randomizeRace()
+            Mate2.randomizeFace()
+            Mate2.randomizeHairs()
+            Mate2.blendPreset(bodybuilder)
+            Mate3.randomizeRace()
+            Mate3.randomizeFace()
+            Mate3.randomizeHairs()
+            Mate3.blendPreset(bodybuilder)
+            Mate4.randomizeRace()
+            Mate4.randomizeFace()
+            Mate4.randomizeHairs()
+            Mate4.blendPreset(bodybuilder)
+            Mate5.randomizeRace()
+            Mate5.randomizeFace()
+            Mate5.randomizeHairs()
+            Mate5.blendPreset(bodybuilder)
+            Mate1.dressUniform(Prison)
+            Mate2.dressUniform(Prison)
+            Mate3.dressUniform(Prison)
+            Mate4.dressUniform(Prison)
+            Mate5.dressUniform(Prison)
+            Mate1.show(1)
+            Mate2.show(2)
+            Mate3.show(3)
+            Mate4.show(4)
+            Mate5.show(5)
+            Dice = 500
+            P1C = Dice.convertToLocalCurrency()
+            "I was woken up in the middle of my sleep. I opened my eyes and saw five <Mate1.guys_or_girls>, all prisoners, staring down on me."
+            Player(Curious)::"Hey! What is this?"
+            Mate1(Happy)::"A guard told us that we can use your services and believe me, we do need someone to help our <Mate1.dicks_or_pussies>, I'm <Mate1.name>, by the way."
+            Player(Curious)::"You all here to fuck me?"
+            Mate1(Happy)::"Yes -- <Mate1.name> replied as <Mate1.he_or_she> started to <Mate1.stroke_or_finger> <Mate1.his_or_her> <Mate1.dick_or_pussy>."
+            "What should I do?"
+            0:: "Tell them they have the wrong person"
+            1:: "Ask what they got in exchange"
+            2:: "Ask for <P1C>"
+            99:: "I'll do it for free"
+        
+            If 0
+                Mate1(Sad)::"Oh shit, sorry <Player.bro_or_sist>!"
+                Mate1.hide()
+                Mate2.hide()
+                Mate3.hide()
+                Mate4.hide()
+                Mate5.hide()
+            ElseIf 1
+                echange = true
+            ElseIf 2
+                vend = true
+            Else
+                gratuit = true
+            EndIf
+            If echange
+                stock_Montecristo = Player.getActorVar(stock_Montecristo)
+                stock_BBweed = Player.getActorVar(stock_BBweed)
+                stock_GSCweed = Player.getActorVar(stock_GSCweed)
+                stock_GGweed = Player.getActorVar(stock_GGweed)
+                Player(Happy)::"What do you have for me?"
+                If choixDios == 1
+                    Mate1(Happy)::"We got 1g of Bruce Banner, 20 cigarettes, 1 cigars and 2 alcohol bottle!"
+                ElseIf choixDios == 2
+                    Mate1(Happy)::"We got 3g of Girl Scout Cookies, 10 cigarettes, 2 cigars and one alcohol bottle!"
+                ElseIf choixDios == 3
+                    Mate1(Happy)::"We got 2g of Gorilla Glue, 15 cigarettes, 5 cigars and one alcohol bottle!"
+                EndIf
+                "What should I do?"
+                0:: "Accept"
+                1:: "Refuse"
+                
+                If 0
+                    cestBon = true
+                    If choixDios == 1
+                        stock_tobacco += 20
+                        Player.modifyActorVar(stock_BBweed, 1)
+                        Player.modifyActorVar(stock_Montecristo, 1)
+                        stock_alcohol += 2
+                    ElseIf choixDios == 2
+                        stock_tobacco += 10
+                        Player.modifyActorVar(stock_GSCweed, 3)
+                        Player.modifyActorVar(stock_Montecristo, 2)
+                        stock_alcohol += 1
+                    ElseIf choixDios == 3
+                        stock_tobacco += 15
+                        Player.modifyActorVar(stock_GGweed, 2)
+                        Player.modifyActorVar(stock_Montecristo, 5)
+                        stock_alcohol += 1
+                    EndIf
+                    Player(Happy)::"Ok thanks!"
+                Else
+                    Player(Sad)::"Sorry but that's not enough, the guard should told you...!"
+                    Mate1(Sad)::"Oh ok, sorry <Player.bro_or_sist>, maybe next time!"
+                    Mate1.hide()
+                    Mate2.hide()
+                    Mate3.hide()
+                    Mate4.hide()
+                    Mate5.hide()
+                EndIf
+            ElseIf vend
+                Mate1(Happy)::"We have the money, in fact here!"
+                money += Dice
+                cestBon = true
+            EndIf
+            If cestBon
+                perversion += 1
+                Player.strip()
+                Player(Curious)::"Here or do we go somewhere?"
+                Mate1(Happy)::"Here is fine, I guess,"
+                Mate1.strip()
+                Mate2.strip()
+                Mate3.strip()
+                Mate4.strip()
+                Mate5.strip()
+                "They undressed completely and took turns fucking me."
+                sex(Mate1, Player)
+                sex(Mate2, Player)
+                sex(Mate3, Player)
+                sex(Mate4, Player)
+                sex(Mate5, Player)
+                "When they finished with me, they went back to their cells, leaving me tired and covered with love juice but I felt truly happy."
+                Mate1.hide()
+                Mate2.hide()
+                Mate3.hide()
+                Mate4.hide()
+                Mate5.hide()
+            EndIf
+        EndIf  
+    SceneEnd()
+    timeout(1000, rk_VB_PrisonBitch)

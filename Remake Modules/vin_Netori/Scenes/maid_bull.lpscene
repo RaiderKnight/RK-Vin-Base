@@ -1,0 +1,116 @@
+WHAT: work_hourly
+WHERE: hotel
+WHEN: 0 - 24
+WHO: none
+OTHER: perversion < Random(0, 100) && masochist < 0
+
+    SceneStart()
+        Player.animate(sweep)
+        Actor = generatePersonTemporary()
+        While !Actor.isInterestedIn(Player)
+            Actor = generatePersonTemporary()
+        Endwhile
+        Actor.dress()
+        Actor.show(2)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        "While I was cleaning one of the corridors of the hotel, a person calls me in the distance, beckoning me to come and see <Actor.him_or_her>."
+        "So I approach <Actor.him_or_her> to see what <Actor.he_or_she> wants..."
+        Actor(Curious):: "Housekeeper! Are you the Housekeeper?"
+        Player.moveToPersonStand(Actor, 50)
+        Player.animate(socialize)
+        Actor.animate(socialize)
+        Actor(Happy):: "Cool, come right in!"
+        Player(Happy):: "This should only take 15 minutes."
+        Actor(Happy):: "Take your time I'm not in a hurry!"
+        Actor.hide()
+        Player.animate(sweep)
+        "I proceeded to clean the room, starting from the bathroom."
+        If Actor:arousal > 25 && Actor:perversion > 65
+            "The moment I stepped out of the bathroom to clean the rest of the room though, I was greeted by an interesting sight ..."
+            Actor.strip()
+            Actor.show(2)
+            Player(Embarrassed):: "Excuse me ... why are you naked?"
+            Player.animate()
+            Actor(Flirty):: "You know: You're such a sight to behold - I couldn't help myself. Why don't we have some fun? I'll make it extra worthwhile for you - much more so than earning lousy wages cleaning rooms ..."
+            0:: "Accept"
+            1:: "Storm off"
+            
+            If 0
+                Player(Flirty):: "Oh well, I'm kinda short on money right now ... so I guess it's your lucky day. But don't think I'm the type that does this to all guests."
+                perversion += Random(0, 1)
+                Player.strip()
+                Sex(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                CashT = Random(100, 500)
+                money += CashT
+                Actor.show(2)
+                Player.show(0)
+                Actor2 = generatePersonTemporary()
+                While !Actor2.isInterestedIn(Player)
+                    Actor2 = generatePersonTemporary()
+                Endwhile
+                Actor2.strip()
+                Actor2.show(3)
+                Actor2:arousal += Random(0, 3)
+                "Out of corner of my eye, I noticed some naked <Actor2.guy_or_girl> masturbating to us ..."
+                Actor(Flirty):: "Don't mind <Actor2.him_or_her>. It's my cuck <Actor2.husband_or_wife>. This is one of our biggest fantasies ... Thanks for fulfilling it."
+                Sex(Actor2)
+                masochist -= Random(0, 5)
+                "What should I say?"
+                0::"Tell your <Actor2.husband_or_wife> to join us!"
+                1:: "Storm off"
+                
+                If 0
+                    If Actor2:arousal > 15 && Actor2:perversion > 35
+                        Actor2(Sad)::"Sure, count me in! I'm comming!"
+                        Filter(Threesome)
+                        Sex(Actor, Player, Actor2)
+                        "I did an impeccable cleaning and give a good sex service, so the <Actor.man_or_woman> was ultra satisfied and gave me a good tip."
+                        Actor.hide()
+                        Actor2.hide()
+                    Else
+                        Actor2(Sad)::"Sorry, my kink is to only look my <Actor.husband_or_wife> getting fucked..."
+                    Endif
+                Else
+                    Actor.hide()
+                    "I stormed off from the pervert's room. Oh god, I really hate my job! Lousy money and creepy guests ..."
+                    arousal -= Random(0, 1)
+                    perversion -= Random(0, 1)
+                    Actor2.hide()
+                Endif
+                CashO = Random(50, 150)
+                CashOloc = CashO.convertToLocalCurrency()
+                "I got <CashOloc> for cleaning!"
+                money += CashO
+                mood += 0.5
+                energy -= 5
+                "I did an impeccable cleaning, the <Actor.man_or_woman> was ultra satisfied and gave me a good tip."
+                money += Random(20, 50)
+                Player.animate()
+                Actor.hide()
+            Else
+                Actor.hide()
+                "I stormed out of the pervert's room. Oh god, I really hate my job! Lousy money and creepy guests ..."
+                masochist -= Random(0, 0.5)
+                arousal -= Random(0, 1)
+                perversion -= Random(0, 1)
+            Endif
+        Else
+            CashO = Random(50, 150)
+            CashOloc = CashO.convertToLocalCurrency()
+            "I got <CashOloc> for cleaning!"
+            money += CashO
+            mood += 0.5
+            energy -= 5
+            "I did an impeccable cleaning, the <Actor.man_or_woman> was ultra satisfied and gave me a good tip."
+            money += Random(20, 50)
+            Player.animate()
+            Actor.hide()
+        Endif
+    SceneEnd() // Scene improved by Raddeck
+    timeout(500, maid_bull)

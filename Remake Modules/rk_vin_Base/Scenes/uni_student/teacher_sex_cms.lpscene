@@ -1,0 +1,63 @@
+WHAT: attend_lectures
+WHERE: university:school
+WHEN: 0-24
+WHO: Actor = getSpecific(Lecturer)
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        dressFormal()
+        Actor.dress()
+        Actor.show(2)
+        "It's every student's fantasy to fuck a lecturer but is Dr <Actor.name_last>, teaching <Actor.Major>, someone that I want to sleep with?"
+        0:: "Get close to Dr <Actor.name_last>"
+        1:: "Get out"
+        
+        If 0
+            "I decided to come up to Dr <Actor.name_last> after class and showed my interest in more advanced reading materials about the subject matter."
+            Actor(Happy):: "I think these book recommendations should keep you occupied for a while."
+            Actor(Happy)::"If you have any questions or fail to understand anything while reading these, you can come see me during my office hours and I'll be happy to help."
+            0:: "Flirt"
+            1:: "Thank you!"
+            
+            If 0
+                Actor:attractiontoplayer += 1
+                If !Actor.isInterestedIn(Player)
+                    Actor(Annoyed)::"Are you flirting with me? Don't make any illusion, I don't make out with my students ..."
+                    Actor:attractiontoplayer -= Random(0, 5)
+                    Actor:rapportwithplayer -=  Random(0, 1)
+                ElseIf Actor:attractiontoplayer > 50 && Actor:arousal > 25 && Actor:perversion > 50
+                    Actor(Flirty):: "I know what you want! I can't resist this temptation anymore. Let's fuck right here, right now."
+                    0:: "Fuck <Actor.him_or_her> on university grounds"
+                    1:: "Take <Actor.him_or_her> home first"
+                    2:: "That's going too far"
+                    
+                    If 2
+                        Player(Sad):: "Sorry, but you understand me wrong. I thought it was just some harmless flirting. I never intended this to go further than that."
+                        Actor:attractiontoplayer -= 1
+                    ElseIf 1
+                        moveTo(home)
+                        setBackground(home)
+                        Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Actor:attractiontoplayer += 1
+                        Actor:rapportwithplayer += 1
+                    Else
+                        Actor:attractiontoplayer += 1
+                        Actor:rapportwithplayer += 1
+                        perversion += 1
+                        Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                    EndIf
+                EndIf
+            EndIf
+        EndIf
+        perversion -= 1
+        arousal -= 1
+    SceneEnd() // Improved by Raddeck
+    timeout(300, teacher_sex_cms)

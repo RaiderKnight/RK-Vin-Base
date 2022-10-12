@@ -1,0 +1,364 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        stock_viagra = Player.getActorVar(rk_VB_stock_viagra)
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        UrgeToPeeCons = rk_VB_UrgeToPeeCons.getGlobal()
+        BodyFat = Player.getActorVar(BodyFat)
+
+        If energy < 2
+            "You don't have enough energy...."
+        ElseIf WHERE == prison
+        
+            "What should I do?"
+            3::"Brush my teeth"
+            5::"Groom"
+            10::"Masturbate"
+            81:: UrgeToPeeEnable > 0 ::"Go take a pee!"
+            99::"Go back"
+    
+            If 3
+                Player.show()
+                Player.animate(dental)
+                "I decided to brush my teeth..."
+                mood += 0.5
+                attractiveness += 0.03
+                energy -= 0.5
+                passTime(0.25, 0.5)
+                
+            ElseIf 5
+                Player.show()
+                Player.animate(makeup)
+                "I decided to groom..."
+                mood += 0.5
+                attractiveness += 0.01
+                energy -= 1
+                passTime(0.25, 1)
+            
+            ElseIf 10
+                Filter(Solo)
+                sex(Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+            ElseIf 81
+                Player.show()
+                Player.animate(toilet)
+                "Ah, what a relief!"
+                Player.setActorVar(rk_VB_UrgeToPee, 0)
+                mood += 3
+            EndIf
+        
+        ElseIf WHERE == bar || WHERE == biergarten || WHERE == cafe || WHERE == cinema || WHERE == hotel || WHERE == nightclub || WHERE == pub || WHERE == restaurant || WHERE == sports_centre || WHERE == toilets || WHERE == work
+            setBackground(toilets)
+            setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
+            
+            "What should I do?"
+            3::"Brush my teeth"
+            10::"Masturbate"
+            12:: stock_makeup > 0::"Put on makeup"
+            11:: stock_chineseaphrodisiac > 0.8::"Take chinese aphrodisiac"
+            14:: stock_rapedrug > 0::"Take rape drug yourself"
+            15:: stock_supplement > 0::"Take supplements"
+            17:: stock_skincare > 0::"Use skincare"
+            18::stock_viagra > 0 ::"Take a viagra pill"
+            70::"Go for a health check-up"
+            81:: UrgeToPeeEnable > 0 ::"Go take a pee!"
+            99::"Go back"
+    
+            If 3
+                Player.show()
+                Player.animate(dental)
+                "I decided to brush my teeth..."
+                mood += 0.5
+                attractiveness += 0.03
+                energy -= 0.5
+                passTime(0.25, 0.5)
+            ElseIf 10
+                followUp(masturbate)
+            ElseIf 11
+                Player.show()
+                Player.animate(drinkbottle)
+                "I decided to take chinese aphrodisiac..."
+                stock_chineseaphrodisiac -=1
+                mood +=10
+                arousal +=100
+                passTime(0.05, 0.15)
+            
+            ElseIf 12
+                Player.show()
+                Player.animate(makeup)
+                "I decided to put some makeup..."
+                stock_makeup -= 0.05
+                mood += 1
+                attractiveness += 5
+                energy -= 1
+                passTime(0.15, 0.5)
+            
+            ElseIf 14
+
+                If isModEnabled(sb_BetterPregnancy)
+                    "ATTENTION - I suggest to disable Better Pregnancy, this mod has been abandoned!"
+                    followUp(take_rapedrug)
+                
+                Else
+                
+                    followUp(sb_VB_take_rapedrug)
+                    
+                EndIf
+                
+            ElseIf 15
+                Player.show()
+                Player.animate(drinkbottle)
+                "I decided to take supplements..."
+                stock_supplement -= 1
+                fitness += 0.02
+                attractiveness += 0.01
+                intelligence += 0.01
+                passTime(0.05, 0.15)
+            
+             ElseIf 17
+                Player.show()
+                Player.animate(makeup)
+                "I decided to use skincare..."
+                stock_skincare -= 0.05
+                attractiveness += 0.025
+                mood += 1
+                energy -= 1
+                passTime(0.05, 0.15)
+            ElseIf 18
+                stock_viagra = Player.getActorVar(rk_VB_stock_viagra)
+                "You decided to take a viagra pill! Now find someone to fuck!"
+                arousal += 50
+                energy += 50
+                Player.modifyActorVar(rk_VB_stock_viagra, -1)
+                passTime(0.05, 0.15)
+            
+            ElseIf 70
+            
+                followUp(naked_with_doctor)
+            
+            ElseIf 81
+                Player.show()
+                Player.animate(toilet)
+                "Ah, what a relief!"
+                Player.setActorVar(rk_VB_UrgeToPee, 0)
+                mood += 3
+                
+            EndIf
+
+        Else
+
+            "What should I do?"
+            0::"Take a shower"
+            1::"Take a bath1"
+            2::"Brush my teeth"
+            3::"Groom"
+            4::"Check your weight"
+            5:: stock_haircare > 0::"Use haircare"
+            6:: stock_makeup > 0::"Put on makeup"
+            7:: stock_skincare > 0::"Use skincare"
+            8:: stock_supplement > 0::"Take supplements"
+            9::"Get a massage"
+            10:: !isWithCompanion()::"Get a sensual massage"
+            11::"Go for a health check-up"
+            12::"Masturbate"
+            13:: stock_chineseaphrodisiac > 0.8::"Take chinese aphrodisiac"
+            14:: stock_rapedrug > 0::"Take rape drug yourself"
+            15::stock_viagra > 0 ::"Take a viagra pill"
+            81:: UrgeToPeeEnable > 0 ::"Go take a pee!"
+            99::"Go back"
+    
+            If 0
+                setBackground(shower)
+                setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
+                Player.show()
+                Player.strip()
+                Filter(Shower)
+                "I decided to take a shower..."
+                sex(Player)
+                mood += 5
+                energy += 1
+                attractiveness += 0.05
+                karma += 0.25
+                passTime(0.35, 1)
+            
+            ElseIf 1
+                setBackground(toilets)
+                setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
+                Player.show()
+                Player.strip()
+                Filter(bathe)
+                "I decided to bathe..."
+                sex(Player)
+                mood += 5
+                energy += 1
+                attractiveness += 0.05
+                karma += 0.25
+                passTime(0.35, 1)
+            
+            ElseIf 2
+                setBackground(toilets)
+                setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
+                Player.show()
+                Player.animate(dental)
+                "I decided to brush my teeth..."
+                mood += 0.5
+                attractiveness += 0.03
+                energy -= 0.5
+                passTime(0.25, 0.5)
+            
+            ElseIf 3
+                setBackground(toilets)
+                setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
+                Player.show()
+                Player.animate(makeup)
+                "I decided to groom..."
+                mood += 0.5
+                attractiveness += 0.01
+                energy -= 1
+                passTime(0.25, 1)
+            
+            ElseIf 4
+                setBackground(toilets)
+                setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
+                Player.show()
+                XBodyFat = Player.getActorVar(BodyFat)
+                If XBodyFat == 0
+                    If Player.isMale()
+                        value = Player.getMorphValue(XY__FBMHeavy)
+                    Else
+                        value = Player.getMorphValue(Genesis8Female__FBMHeavy)
+                    Endif
+                    value = 100*value
+                    XBodyFat = 50+value
+                    Player.setActorVar(BodyFat, XBodyFat)
+                Endif
+                
+                "You get on the scales and check your weight ... "
+                "..."
+                
+                If XBodyFat < 46
+                    XBodyFat = 46
+                Endif
+                    
+                XBodyFat -= Random(0,1)
+                XBodyFat += Random(0,1)
+                
+                XLBS = XBodyFat*2.20462
+                "<XLBS> lbs / <XBodyFat> kg"
+                
+                If isWithCompanion()
+                    CCBodyFat = CurrentCompanion.getActorVar(BodyFat)
+                    If CCBodyFat == 0
+                        If CurrentCompanion.isMale()
+                            value = CurrentCompanion.getMorphValue(XY__FBMHeavy)
+                        Else
+                            value = CurrentCompanion.getMorphValue(Genesis8Female__FBMHeavy)
+                        Endif
+                        value = 100*value
+                        CCBodyFat = 50+value
+                        CurrentCompanion.setActorVar(BodyFat, CCBodyFat)
+                    Endif
+                    
+                    CurrentCompanion(Curious):: "Let me get on the scales too."
+                    CurrentCompanion():: "..."
+                    
+                    If CCBodyFat < 46
+                        CCBodyFat = 46
+                    Endif
+                
+                    CCBodyFat -= Random(0,1)
+                    CCBodyFat += Random(0,1)
+                    
+                    CCLBS = CCBodyFat*2.20462
+                    "<CCLBS> lbs / <CCBodyFat> kg"
+                Endif
+                passTime(0.5,1)
+                
+            ElseIf 5
+                setBackground(toilets)
+                setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
+                Player.show()
+                Player.animate(bathe)
+                "I decided to use haircare..."
+                stock_haircare -= 0.05
+                attractiveness += 0.025
+                mood += 1
+                energy -= 1
+                passTime(0.05, 0.15)
+            ElseIf 6
+                Player.show()
+                Player.animate(makeup)
+                "I decided to put some makeup..."
+                stock_makeup -= 0.05
+                mood += 1
+                attractiveness += 5
+                energy -= 1
+                passTime(0.15, 0.5)
+            ElseIf 7
+                Player.show()
+                Player.animate(makeup)
+                "I decided to use skincare..."
+                stock_skincare -= 0.05
+                attractiveness += 0.025
+                mood += 1
+                energy -= 1
+                passTime(0.05, 0.15)
+            ElseIf 8
+                Player.show()
+                Player.animate(drinkbottle)
+                "I decided to take supplements..."
+                stock_supplement -= 1
+                fitness += 0.02
+                attractiveness += 0.01
+                intelligence += 0.01
+                passTime(0.05, 0.15)
+            ElseIf 9
+                followUp(get_a_massage)
+            ElseIf 10
+                followUp(rk_VB_get_a_sensual_massage)
+            ElseIf 11
+                followUp(naked_with_doctor)
+            ElseIf 12
+                followUp(masturbate)
+            ElseIf 13
+                Player.show()
+                Player.animate(drinkbottle)
+                "I decided to take chinese aphrodisiac..."
+                stock_chineseaphrodisiac -=1
+                mood +=10
+                arousal +=100
+                passTime(0.05, 0.15)
+
+            ElseIf 14
+                If isModEnabled(sb_BetterPregnancy)
+                    "ATTENTION - I suggest to disable Better Pregnancy, this mod has been abandoned!"
+                    followUp(take_rapedrug)
+                Else
+                    followUp(sb_VB_take_rapedrug)
+                EndIf
+            ElseIf 15
+                stock_viagra = Player.getActorVar(rk_VB_stock_viagra)
+                "You decided to take a viagra pill! Now find someone to fuck!"
+                arousal += 50
+                energy += 50
+                Player.modifyActorVar(rk_VB_stock_viagra, -1)
+                passTime(0.05, 0.15)
+            ElseIf 81
+                setBackground(toilets)
+                setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
+                Player.show()
+                Player.animate(toilet)
+                "Ah, what a relief!"
+                Player.setActorVar(rk_VB_UrgeToPee, 0)
+                mood += 3
+            EndIf
+        EndIf
+        followUp(rk_VB_Spot_Checks)
+    SceneEnd()

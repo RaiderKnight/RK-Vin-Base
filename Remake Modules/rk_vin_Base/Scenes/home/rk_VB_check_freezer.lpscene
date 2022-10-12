@@ -1,0 +1,72 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        If isModEnabled(rk_Home_Inventories) || isModEnabled(rk_vin_Base)
+            stock_Popcycle = Player.getActorVar(stock_Popcycle)
+            stock_IcecreamCup = Player.getActorVar(stock_IcecreamCup)
+            stock_MilkShake = Player.getActorVar(stock_MilkShake)
+            stock_FrozenPie = Player.getActorVar(stock_FrozenPie)
+            stock_IceCreamCake = Player.getActorVar(stock_IceCreamCake)
+            stock_icecreampop = stock_Popcycle + stock_IcecreamCup + stock_MilkShake + stock_FrozenPie + stock_IceCreamCake
+            stock_Oysters = Player.getActorVar(stock_Oysters)
+            stock_Shrimps = Player.getActorVar(stock_Shrimps)
+            stock_Sushi = Player.getActorVar(stock_Sushi)
+            stock_Lobster = Player.getActorVar(stock_Lobster)
+            stock_Caviar = Player.getActorVar(stock_Caviar)
+            stock_seafoodprod = stock_Oysters + stock_Shrimps + stock_Sushi + stock_Lobster + stock_Caviar
+            setBackgroundCustom(kitchen)
+            freezer_inventory = stock_icecreampop + stock_seafoodprod
+            If freezer_inventory < 1 
+                Player(Anxious)::"I have nothing inside my freezer! I need to go shopping I guess!"
+            Else
+                stayInMenu = true
+                While stayInMenu
+                
+                    Player(Curious)::"Let see what I have inside my freezer."
+                    0:: stock_icecreampop > 0 ::"Check ice cream dessert inventory (<stock_icecreampop>)"
+                    10:: stock_seafoodprod > 0 ::"Check seafood inventory (<stock_seafoodprod>)"
+                    50:: stock_icecreampop > 0 ::"Eat a ice cream dessert"
+                    60:: stock_seafoodprod > 0 ::"Eat a seafood meal"
+                    99::"Nevermind, I will check later !"
+            
+                    If 0
+                        If stock_icecreampop  < 1
+                            Player(Anxious)::"Ok, I don't have any ice cream desserts! I have to go shopping !"
+                        Else
+                            0:: "<stock_Popcycle> Popcycle(s)"
+                            0:: "<stock_IcecreamCup> Ice cream cup(s)"
+                            0:: "<stock_MilkShake> Milk Shake(s)"
+                            0:: "<stock_FrozenPie> Frozen Margarita pie(s)"
+                            0:: "<stock_IceCreamCake> Ice cream cake(s)"
+                            99:: "Go back !"
+                
+                        Endif
+                    Elseif 10
+                        If stock_seafoodprod  < 1
+                            Player(Anxious)::"Ok, I don't have any seafood dishes! I have to go shopping !"
+                        Else
+                            0:: "<stock_Oysters> Oysters dish(es)"
+                            0:: "<stock_Shrimps> Shrimp dish(es)"
+                            0:: "<stock_Sushi> Sushi dish(es)"
+                            0:: "<stock_Lobster> Lobster dish(es)"
+                            0:: "<stock_Caviar> Caviar dish(es)"
+                            99:: "Go back !"
+                
+                        Endif
+                    ElseIf 50
+                        followUp(rk_VB_eat_icecreams_in)
+                        stayInMenu = false
+                    ElseIf 60
+                        followUp(rk_VB_eat_seafood_in)
+                        stayInMenu = false
+                    ElseIf 99
+                        stayInMenu = false
+                    Endif
+                EndWhile
+            Endif
+        Endif
+    SceneEnd()

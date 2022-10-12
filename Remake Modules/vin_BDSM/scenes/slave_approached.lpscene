@@ -1,0 +1,26 @@
+WHAT: all
+WHERE: all, -home, -prison
+WHEN: 0-24
+WHO: Actor = getCompanion(); If Actor:masochist > 99 && Actor.isInterestedIn(Player) && Actor.hadSex()
+OTHER:
+
+    
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Slave = Actor.getActorVar(tag_Slave)
+        If Slave <= 0
+            "My current companion has already slept with me and seems very submissive to me. Maybe I should exert my authority over <Actor.name> in a <Player.Master_or_Mistress> over slave relationship?"
+            0:: "Yes"
+            1:: "No"
+            
+            If 0
+                passOn(Actor)
+                endDate()
+                followUp(master_to_slave)
+            EndIf
+        EndIf
+    SceneEnd() // Improved by Raddeck
+    timeout(100, slave_approached)

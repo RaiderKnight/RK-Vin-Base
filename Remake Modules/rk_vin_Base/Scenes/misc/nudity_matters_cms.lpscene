@@ -1,0 +1,175 @@
+WHAT: all, -sleep_hotel, -nap_hotel, -go_to_the_bathroom, -pickpocket, -sleep, -nap
+WHERE: all, -home, -fraternity, -bathroom, -prison
+WHEN: 0 - 24
+WHO: none
+OTHER: Player.isNaked() || !Player.isEquipped(Bottom)
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Plaything = Plaything.getGlobal()
+        Actor = generatePersonTemporary()
+        While !Player.isInterestedIn(Actor)
+            Actor = generatePersonTemporary()
+        Endwhile
+        Actor:perversion => Random(50, 100)
+        Actor1 = generatePersonTemporary()
+        Actor2 = generatePersonTemporary()
+        Actor1:perversion => Random(50, 100)
+        Actor2:perversion => Random(50, 100)
+        Actor1:arousal => Random(30, 50)
+        Actor2:arousal => Random(30, 50)
+        CatchMe = false
+        FigthYes = false
+        RunYes = false
+        If Plaything == 1
+            If attractiveness > 50
+                Actor(Flirty)::"Nice body!"
+                Actor:arousal += 1
+                Actor:attractiontoplayer += Random(0, 1)
+            Else
+                Actor(Flirty)::"Damn, please go falsh another staff members!"
+                Actor:arousal -= 1
+            Endif
+        Elseif WHERE !=home && WHERE !=hotel && WHERE !=university:school && WHERE !=university:work
+            If Actor:arousal > 25 && Actor:perversion > 75 && Actor.isInterestedIn(Player)
+                Actor.dress()
+                Actor.show()
+                Actor(Flirty):: "I see you like to walk around naked. You must be open to go somewhere and get fucked?"
+                0:: "Yes"
+                1:: "No"
+            
+                If 0
+                    Actor.strip()
+                    Sex(Actor, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    Actor:attractiontoplayer += Random(0, 5)
+                Else
+                    Actor(Annoyed):: "Go get dressed if you don't want to get fucked, dick head!"
+                    Actor:attractiontoplayer -= 2
+                Endif
+            ElseIf !Actor1.isInterestedIn(Player) && !Actor2.isInterestedIn(Player) && 50 > Actor1:masochist + Actor2:masochist
+                Actor1.setActorVar(tag_Rapist, 1)
+                Actor2.setActorVar(tag_Rapist, 1)
+                Actor1.dress()
+                Actor1.show(2)
+                Actor2.dress()
+                Actor2.show(3)
+                Actor2.moveToPersonStand(Player, 50)
+                Actor2(Evil):: "Woohoo! Hey babe, what are you doing all alone naked?"
+                Actor1(Evil):: "It looks like you don't know what to do with your body, do you? Let us take care of yourself!"
+                Actor2(Evil):: "Hahaha!"
+                Actor1(Evil):: "Come with us!"
+                Player(Scared):: "Oh my god, wait...!"
+                Rapist = 0
+                Rapist += Actor1:martial
+                Rapist += Actor2:martial
+                "It looks like they're going to rape me! What should I do?"
+                0:: "Try to fight them!"
+                1:: "Try to escape!"
+                2:: "Accept your fate!"
+                
+                If 0
+                    FigthYes = true
+                Elseif 1
+                    RunYes = true
+                Else
+                    enrgy -= 25
+                    "I was outnumbered and outpowered, there was no point in fighting"
+                    Actor1.strip()
+                    Filter(Aggressive)
+                    TalkNonConsensual()
+                    SexNoAffair(Actor1, Player)
+                    Actor1.hide()
+                    Actor2.strip()
+                    Actor2.show(4)
+                    Actor2(Evil):: "Now its my turn!"
+                    Filter(Aggressive)
+                    TalkNonConsensual()
+                    SexNoAffair(Actor2, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -6)
+                    EndIf
+                    If Random(50, 120) > masochist
+                        mood -= Random(20, 40)
+                    Endif
+                Endif
+                passTime(0.5, 1.0)
+            Else
+                Actor(Shocked):: "WTF, go get dress, damn pervert!"
+                Actor:attractiontoplayer -= 5
+            Endif
+        Else
+            Actor(Shocked):: "WTF, go get dress, damn pervert!"
+            Actor:attractiontoplayer -= 5
+        Endif
+        If RunYes
+            setBackground3D(Modules/rk_vin_Base/World/gl_street1.lpworld)
+            Run = 0
+            Run += Actor1:fitness
+            Run += Actor2:fitness
+            Run /= 2
+            If Run < fitness
+                Actor1.hide()
+                Actor2.hide()
+                "I successfully ran away. Looks like I'm safe now."
+                Player(Tired):: "Uff!"
+            Else
+                CatchMe = true
+            Endif
+        Endif
+        If FigthYes
+            Player.animate(martialart)
+            Player(Furious):: "You messed with the wrong <Player.guy_or_girl>! Take this."
+            Player.moveToPersonStand(Actor1, 30)
+            Actor1(Furious):: "You dare sucker-punch me? I'll teach you a lesson."
+            Actor1.animate(martialart)
+            If Rapist < martial
+                Actor2.animate(martialart)
+                Player.moveToPersonStand(Actor1, 30)
+                Player(Furious):: "Haha!"
+                Actor1(Shocked):: "Ouch!"
+                Actor1.animate(knockedout)
+                Player.moveToPersonStand(Actor2, 30)
+                Actor2(Shocked):: "Ouch!"
+                Actor2.animate(knockedout)
+                Player(Angry):: "This will teach you a lesson!"
+                Actor1.hide()
+                Actor2.hide()
+            Else
+                CatchMe = true
+            EndIf
+        EndIf
+        If CatchMe
+            Actor2.animate(martialart)
+            Actor1.moveToPersonStand(Player, 30)
+            Player(Tired):: "Ouch!"
+            Actor1(Evil):: "Haha!"
+            Player.animate(fightlost)
+            Actor2(Evil):: "You really thought you could beat two people like that? Sucker!"
+            "Oh, no! They were able to catch me!"
+            Player(Scared):: "Nooo! Please someone help me!"
+            Actor1(Evil):: "Haha!"
+            Actor2(Evil):: "You are our toy now!"
+            Actor1.strip()
+            Filter(Aggressive)
+            TalkNonConsensual()
+            SexNoAffair(Actor1, Player)
+            Actor1.hide()
+            Actor2.strip()
+            Actor2.show(4)
+            Actor2(Evil):: "Now its my turn!"
+            Filter(Aggressive)
+            TalkNonConsensual()
+            SexNoAffair(Actor2, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -6)
+            EndIf
+            If Random(50, 120) > masochist
+                mood -= Random(20, 40)
+            Endif
+        Endif
+    SceneEnd() // Improved by Raddeck
+    timeout(100, nudity_matters_cms)

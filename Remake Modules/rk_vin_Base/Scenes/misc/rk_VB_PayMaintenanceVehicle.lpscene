@@ -1,0 +1,379 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()  
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        // Get current items inside garage
+        stock_Tesla = Player.getActorVar(stock_Tesla)
+        stock_Ferrari = Player.getActorVar(stock_Ferrari)
+        stock_Lambo = Player.getActorVar(stock_Lambo)
+        stock_Mercedez = Player.getActorVar(stock_Mercedez)
+        stock_Mazda = Player.getActorVar(stock_Mazda)
+        stock_BMW = Player.getActorVar(stock_BMW)
+        stock_Lada = Player.getActorVar(stock_Lada)
+        stock_cars = stock_Lada + stock_Mazda + stock_BMW + stock_Mercedez + stock_Tesla + stock_Ferrari + stock_Lambo
+    
+        stock_BTwin = Player.getActorVar(stock_BTwin)
+        stock_Rocky = Player.getActorVar(stock_Rocky)
+        stock_Defy = Player.getActorVar(stock_Defy)
+        stock_SystemSix = Player.getActorVar(stock_SystemSix)
+        stock_Look = Player.getActorVar(stock_Look)
+        stock_Specialized = Player.getActorVar(stock_Specialized)
+        stock_Litespeed = Player.getActorVar(stock_Litespeed)
+        stock_Trek = Player.getActorVar(stock_Trek)
+        stock_velos = stock_BTwin + stock_Rocky + stock_Defy + stock_SystemSix + stock_Look + stock_Specialized + stock_Litespeed + stock_Trek
+
+        stock_VULCAN = Player.getActorVar(stock_VULCAN)
+        stock_Ruckus = Player.getActorVar(stock_Ruckus)
+        stock_VStar = Player.getActorVar(stock_VStar)
+        stock_NC750X = Player.getActorVar(stock_NC750X)
+        stock_Husqvarna = Player.getActorVar(stock_Husqvarna)
+        stock_Ducati = Player.getActorVar(stock_Ducati)
+        stock_INDIAN = Player.getActorVar(stock_INDIAN)
+        stock_Ninja = Player.getActorVar(stock_Ninja)
+        stock_motorcycle = stock_VULCAN + stock_Ruckus + stock_VStar + stock_NC750X + stock_Husqvarna + stock_Ducati + stock_INDIAN + stock_Ninja
+        
+        motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+        velo_value = Player.getActorVar(rk_VB_Velos_Value)
+        Garage_Inventory = stock_motorcycle + stock_velos + stock_cars
+        TotalDebtVB = Player.getActorVar(rk_VB_TotalDebtVB)
+        TotalDebtVC = Player.getActorVar(rk_VB_TotalDebtVC)
+        TotalDebtVM = Player.getActorVar(rk_VB_TotalDebtVM)
+        TotalDebtAllV = TotalDebtVB + TotalDebtVC + TotalDebtVM
+        TotalDebtAllV_loc = TotalDebtAllV.convertToLocalCurrency()
+        // Bicycles maintenance fee
+        Price0B = Random(0, 5)
+        Price1B = Random(0, 10)
+        Price2B = Random(0, 15)
+        Price3B = Random(0, 20)
+        Price4B = Random(0, 25)
+        Price5B = Random(0, 30)
+        Price6B = Random(0, 40)
+        Price7B = Random(0, 50)
+        // Cars maintenance fee
+        Price0C = Random(50, 1000)
+        Price1C = Random(50, 2000)
+        Price2C = Random(50, 3000)
+        Price3C = Random(50, 4000)
+        Price4C = Random(50, 5000)
+        Price5C = Random(50, 6000)
+        Price6C = Random(50, 7000)
+        Price7C = Random(50, 8000)
+        // Motorcycles maintenance fee
+        Price0M = Random(20, 100)
+        Price1M = Random(20, 200)
+        Price2M = Random(20, 300)
+        Price3M = Random(20, 400)
+        Price4M = Random(20, 500)
+        Price5M = Random(20, 600)
+        Price6M = Random(20, 700)
+        Price7M = Random(20, 1000)
+        PayMFirstTimeVB = Player.getActorVar(rk_VB_PayMFirstTimeVB)
+        PayMFirstTimeVC = Player.getActorVar(rk_VB_PayMFirstTimeVC)
+        PayMFirstTimeVM = Player.getActorVar(rk_VB_PayMFirstTimeVM)
+        LastTimePayVB = Player.getActorVar(rk_VB_LastTimePayVB)
+        LastTimePayVC = Player.getActorVar(rk_VB_LastTimePayVC)
+        LastTimePayVM = Player.getActorVar(rk_VB_LastTimePayVM)
+        If stock_velos <= 0
+            Player.setActorVar(rk_VB_PayMFirstTimeVB, 0)
+            Player.setActorVar(rk_VB_LastTimePayVB, 0)
+        Endif
+        If stock_cars <= 0
+            Player.setActorVar(rk_VB_PayMFirstTimeVC, 0)
+            Player.setActorVar(rk_VB_LastTimePayVC, 0)
+        Endif
+        If stock_motorcycle <= 0
+            Player.setActorVar(rk_VB_PayMFirstTimeVM, 0)
+            Player.setActorVar(rk_VB_LastTimePayVM, 0)
+        Endif
+        PostponedVB = Player.getActorVar(rk_VB_PostponedVB)
+        PostponedVC = Player.getActorVar(rk_VB_PostponedVC)
+        PostponedVM = Player.getActorVar(rk_VB_PostponedVM)
+        //Set the date
+        DatPV = Player:Age*365
+        DayPassedVB = DatPV - LastTimePayVB
+        DayPassedVC = DatPV - LastTimePayVC
+        DayPassedVM = DatPV - LastTimePayVM
+        BillsToPay = false
+        If DayPassedVB >= 30
+            BillsToPay = true
+        Elseif DayPassedVC >= 30
+            BillsToPay = true
+        Elseif DayPassedVM >= 30
+            BillsToPay = true
+        Endif
+        PayBills = false
+        PayDebts = false
+        "What I should do?"
+        0:: BillsToPay ::"Pay bills"
+        1::"Pay debts (TotalDebtAllV_loc)"
+        99::"Nothing"
+        
+        If 0
+            PayBills = true
+        Else
+            PayDebts = true
+        Endif
+        If PayDebts
+            TotalDebtVB_loc = TotalDebtVB.convertToLocalCurrency()
+            TotalDebtVC_loc = TotalDebtVC.convertToLocalCurrency()
+            TotalDebtVM_loc = TotalDebtVM.convertToLocalCurrency()
+            If TotalDebtVB > 0
+                "At the moment I owe <TotalDebtVB_loc> for my bicycle(s)"
+            Elseif TotalDebtVC > 0
+                "At the moment I owe <TotalDebtVC_loc> for my car(s)"
+            Elseif TotalDebtVM > 0
+                "At the moment I owe <TotalDebtVM_loc> for my motorcycle(s)"
+            Endif
+            DebtP1 = 10
+            DebtP2 = 50
+            DebtP3 = 100
+            DebtP4 = 1000
+            DebtP1_loc = DebtP1.convertToLocalCurrency()
+            DebtP2_loc = DebtP2.convertToLocalCurrency()
+            DebtP3_loc = DebtP3.convertToLocalCurrency()
+            DebtP4_loc = DebtP4.convertToLocalCurrency()
+            
+            "Which debt I want to pay first?"
+            0::"Bicycle"
+            1::"Car"
+            2::"Motorcycle"
+            99::"I changed my mind!"
+            
+            If 0
+                "How much I want to pay?"
+                0::money >= 10 && TotalDebtVB >= 10::"Pay <DebtP1_loc>"
+                1::money >= 50 && TotalDebtVB >= 50::"Pay <DebtP2_loc>"
+                2::money >= 100 && TotalDebtVB >= 100::"Pay <DebtP3_loc>"
+                3::money >= 1000 && TotalDebtVB >= 1000::"Pay <DebtP4_loc>"
+                99::money >= TotalDebtVB::"All the debt <TotalDebtVB_loc>"
+                
+                If 0
+                    Player.modifyActorVar(rk_VB_TotalDebtVB, -10)
+                    "I decided to give only <DebtP1_loc> for now ..."
+                    money -= DebtP1
+                Elseif 1
+                    Player.modifyActorVar(rk_VB_TotalDebtVB, -50)
+                    "I decided to give only <DebtP2_loc> for now ..."
+                    money -= DebtP2
+                Elseif 2
+                    Player.modifyActorVar(rk_VB_TotalDebtVB, -100)
+                    "I decided to give only <DebtP3_loc> for now ..."
+                    money -= DebtP3
+                Elseif 3
+                    Player.modifyActorVar(rk_VB_TotalDebtVB, -100)
+                    "I decided to give only <DebtP4_loc> for now ..."
+                    money -= DebtP4
+                Else
+                    Player.setActorVar(rk_VB_TotalDebtVB, 0)
+                    "I decided to pay all my debt ..."
+                    money -= TotalDebtVB
+                Endif
+                
+            Elseif 1
+                "How much I want to pay?"
+                0::money >= 10 && TotalDebtVC >= 10::"Pay <DebtP1_loc>"
+                1::money >= 50 && TotalDebtVC >= 50::"Pay <DebtP2_loc>"
+                2::money >= 100 && TotalDebtVC >= 100::"Pay <DebtP3_loc>"
+                3::money >= 1000 && TotalDebtVC >= 1000::"Pay <DebtP4_loc>"
+                99::money >= TotalDebtVC::"All the debt <TotalDebtVC_loc>"
+                
+                If 0
+                    Player.modifyActorVar(rk_VB_TotalDebtVC, -10)
+                    "I decided to give only <DebtP1_loc> for now ..."
+                    money -= DebtP1
+                Elseif 1
+                    Player.modifyActorVar(rk_VB_TotalDebtVC, -50)
+                    "I decided to give only <DebtP2_loc> for now ..."
+                    money -= DebtP2
+                Elseif 2
+                    Player.modifyActorVar(rk_VB_TotalDebtVC, -100)
+                    "I decided to give only <DebtP3_loc> for now ..."
+                    money -= DebtP3
+                Elseif 3
+                    Player.modifyActorVar(rk_VB_TotalDebtVC, -100)
+                    "I decided to give only <DebtP4_loc> for now ..."
+                    money -= DebtP4
+                Else
+                    Player.setActorVar(rk_VB_TotalDebtVC, 0)
+                    "I decided to pay all my debt ..."
+                    money -= TotalDebtVC
+                Endif
+            Elseif 2
+                "How much I want to pay?"
+                0::money >= 10 && TotalDebtVM >= 10::"Pay <DebtP1_loc>"
+                1::money >= 50 && TotalDebtVM >= 50::"Pay <DebtP2_loc>"
+                2::money >= 100 && TotalDebtVM >= 100::"Pay <DebtP3_loc>"
+                3::money >= 1000 && TotalDebtVM >= 1000::"Pay <DebtP4_loc>"
+                99::money >= TotalDebtVM::"All the debt <TotalDebtVM_loc>"
+                
+                If 0
+                    Player.modifyActorVar(rk_VB_TotalDebtVM, -10)
+                    "I decided to give only <DebtP1_loc> for now ..."
+                    money -= DebtP1
+                Elseif 1
+                    Player.modifyActorVar(rk_VB_TotalDebtVM, -50)
+                    "I decided to give only <DebtP2_loc> for now ..."
+                    money -= DebtP2
+                Elseif 2
+                    Player.modifyActorVar(rk_VB_TotalDebtVM, -100)
+                    "I decided to give only <DebtP3_loc> for now ..."
+                    money -= DebtP3
+                Elseif 3
+                    Player.modifyActorVar(rk_VB_TotalDebtVM, -100)
+                    "I decided to give only <DebtP4_loc> for now ..."
+                    money -= DebtP4
+                Else
+                    Player.setActorVar(rk_VB_TotalDebtVM, 0)
+                    "I decided to pay all my debt ..."
+                    money -= TotalDebtVM
+                Endif
+            Endif
+        Endif
+        If PayBills && stock_velos > 0 && PayMFirstTimeVB > 0 && DayPassedVB >= 30
+            Player.setActorVar(rk_VB_LastTimePayVB, 0)
+            If stock_BTwin > 0
+                L = stock_BTwin*Price0B
+            Endif
+            If stock_Rocky > 0
+                I = stock_Rocky*Price1B
+            Endif
+            If stock_Defy > 0
+                F = stock_Defy*Price2B
+            Endif
+            If stock_SystemSix > 0
+                E = stock_SystemSix*Price3B
+            Endif
+            If stock_Look > 0
+                P = stock_Look*Price4B
+            Endif
+            If stock_Specialized > 0
+                L = stock_Specialized*Price5B
+            Endif
+            If stock_Litespeed > 0
+                A = stock_Litespeed*Price6B
+            Endif
+            If stock_Trek > 0
+                Y = stock_Trek*Price7B
+            Endif
+            LastTimePayVB = Player.getActorVar(rk_VB_LastTimePayVB)
+            TotalLP = L + I + F + E + P + L + A + Y
+            TotalLP_loc = TotalLP.convertToLocalCurrency()
+            If TotalLP > 0
+                
+                "You had to buy stuff to keep your bicycle(s) in good condition. The cost of the maintenance is <TotalLP_loc>!"
+                "They will add 5% to the total each month, if I postpone the payment ..."
+                TotalDebtVB_loc = TotalDebtVB.convertToLocalCurrency()
+                "Should I pay right now or next month?"
+                0::"Right now"
+                1::"Next month"
+                
+                If 0
+                    "I decided to pay the bill ..."
+                    money -= TotalLP
+                    Player.setActorVar(rk_VB_PostponedVB, 0)
+                Else
+                    ExtTX = TotalLP*0.05
+                    TExrtTX = TotalLP + ExtTX
+                    Player.modifyActorVar(rk_VB_TotalDebtVB, TExrtTX)
+                    "I postponed payment until next month"
+                    Player.modifyActorVar(rk_VB_PostponedVB, 1)
+                Endif
+                If TotalDebtVB > 0
+                    "Right now I owe <TotalDebtVB_loc> ..."
+                Endif
+            Endif
+            Player.setActorVar(rk_VB_LastTimePayVB, DatPV)
+
+        Endif
+
+        If PayBills && stock_cars > 0 && PayMFirstTimeVC > 0 && DayPassedVC >= 30
+            Player.setActorVar(rk_VB_LastTimePayVC, 0)
+            If stock_Lada > 0
+                RA = stock_Lada*Price0C
+            Endif
+            If stock_Mazda > 0
+                ID = stock_Mazda*Price1C
+            Endif
+            If stock_BMW > 0
+                ER = stock_BMW*Price2C
+            Endif
+            If stock_Mercedez > 0
+                KN = stock_Mercedez*Price3C
+            Endif
+            If stock_Tesla > 0
+                IG = stock_Tesla*Price4C
+            Endif
+            If stock_Ferrari > 0
+                HT = stock_Ferrari*Price5C
+            Endif
+            If stock_Lambo > 0
+                LP = stock_Lambo*Price6C
+            Endif
+            LastTimePayVC = Player.getActorVar(rk_VB_LastTimePayVC)
+            TotalLP = RA + ID + ER + KN + IG + HT + LP
+            TotalLP_loc = TotalLP.convertToLocalCurrency()
+            If TotalLP > 0
+                "You had to buy stuff to keep your car(s) in good condition. The cost of the maintenance is <TotalLP_loc>!"
+                money -= TotalLP
+            Endif
+            Player.setActorVar(rk_VB_LastTimePayVC, DatPV)
+        Endif
+        
+        If PayBills && stock_motorcycle > 0 && PayMFirstTimeVM > 0 && DayPassedVM >= 30
+            Player.setActorVar(rk_VB_LastTimePayVM, 0)
+            If stock_VULCAN > 0
+                L = stock_VULCAN*Price0M
+            Endif
+            If stock_Ruckus > 0
+                I = stock_Ruckus*Price1M
+            Endif
+            If stock_VStar > 0
+                F = stock_VStar*Price2M
+            Endif
+            If stock_NC750X > 0
+                E = stock_NC750X*Price3M
+            Endif
+            If stock_Husqvarna > 0
+                P = stock_Husqvarna*Price4M
+            Endif
+            If stock_Ducati > 0
+                L = stock_Ducati*Price5M
+            Endif
+            If stock_INDIAN > 0
+                A = stock_INDIAN*Price6M
+            Endif
+            If stock_Ninja > 0
+                Y = stock_Ninja*Price7M
+            Endif
+            LastTimePayVM = Player.getActorVar(rk_VB_LastTimePayVM)
+            TotalLP = L + I + F + E + P + L + A + Y
+            TotalLP_loc = TotalLP.convertToLocalCurrency()
+            If TotalLP > 0
+                "You had to buy stuff to keep your bike(s) in good condition. The cost of the maintenance is <TotalLP_loc>!"
+                money -= TotalLP
+            Endif
+            Player.setActorVar(rk_VB_LastTimePayVM, DatPV)
+        Endif
+        If PayMFirstTimeVB <= 0
+            Player.setActorVar(rk_VB_PayMFirstTimeVB, 1)
+            Player.setActorVar(rk_VB_LastTimePayVB, DatPV)
+        Endif
+        If PayMFirstTimeVC <= 0
+            Player.setActorVar(rk_VB_PayMFirstTimeVC, 1)
+            Player.setActorVar(rk_VB_LastTimePayVC, DatPV)
+        Endif
+        If PayMFirstTimeVM <= 0
+            Player.setActorVar(rk_VB_PayMFirstTimeVM, 1)
+            Player.setActorVar(rk_VB_LastTimePayVM, DatPV)
+        Endif
+
+    SceneEnd()
+    timeout(360, rk_VB_PayMaintenanceVehicle)

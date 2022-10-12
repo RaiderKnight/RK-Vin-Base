@@ -1,0 +1,18 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        stock_viagra = Player.getActorVar(rk_VB_stock_viagra)
+        If stock_viagra <= 0
+            "I'm out of viagra pills! I have to go to the pharmacy to get more..."
+        Else
+            "I decided to take a viagra pill!"
+            arousal += 50
+            energy += 50
+            Player.modifyActorVar(rk_VB_stock_viagra, -1)
+            passTime(0.05, 0.15)
+        EndIf
+    SceneEnd()

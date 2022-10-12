@@ -1,0 +1,121 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+    
+        IBuyICDessert = Player.getActorVar(rk_VB_IBuyICDessert)
+        
+        // Get current ice cream desserts types
+        stock_Popcycle = Player.getActorVar(stock_Popcycle)
+        stock_IcecreamCup = Player.getActorVar(stock_IcecreamCup)
+        stock_MilkShake = Player.getActorVar(stock_MilkShake)
+        stock_FrozenPie = Player.getActorVar(stock_FrozenPie)
+        stock_IceCreamCake = Player.getActorVar(stock_IceCreamCake)
+        stock_icecreampop = stock_Popcycle + stock_IcecreamCup + stock_MilkShake + stock_FrozenPie + stock_IceCreamCake
+        
+        eating = 0
+        
+        If stock_icecreampop < 0.5 
+            Player(Anxious)::"Ok, not enough ice cream desserts to satisfy my belly! I need to go shopping I guess!"
+        Else
+        
+            Player::"Ok, which ice cream dessert I'm gonna eat?"
+            0:: stock_Popcycle > 0:: "1 Popcycle"
+            1:: stock_IcecreamCup > 0:: "1 Ice cream cup"
+            2:: stock_MilkShake > 0:: "1 Milk Shake"
+            3:: stock_FrozenPie > 0:: "1 Frozen Margarita pie"
+            4:: stock_IceCreamCake > 0:: "1 Ice cream cake"
+            8:: "Bah! I'm not hungry !"
+            
+            If 0
+                Player.modifyActorVar(stock_Popcycle, -1)
+                mood += 2
+                energy += 1
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                eating += 1
+                If UrgeToPeeEnable > 0
+                    Player.modifyActorVar(rk_VB_UrgeToPee, 0.25)
+                EndIf
+                
+            Elseif 1
+                Player.modifyActorVar(stock_IcecreamCup, -1)
+                mood += 3
+                energy += 2
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 0.25)
+                EndIf
+                eating += 1
+                
+            Elseif 2
+                Player.modifyActorVar(stock_MilkShake, -1)
+                mood += 4
+                energy += 3
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 0.25)
+                EndIf
+                
+                If UrgeToPeeEnable > 0
+                    Player.modifyActorVar(rk_VB_UrgeToPee, 0.5)
+                EndIf
+                eating += 1
+                
+            Elseif 3
+                Player.modifyActorVar(stock_FrozenPie, -1)
+                mood += 5
+                energy += 4
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 0.25)
+                EndIf
+                eating += 1
+                
+            Elseif 4
+                Player.modifyActorVar(stock_IceCreamCake, -1)
+                mood += 6
+                energy += 5
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 0.25)
+                EndIf
+                eating += 1
+                
+            Endif
+            
+            If eating > 0
+                Player.modifyActorVar(rk_VB_IBuyICDessert, -1)
+            Endif
+            
+            followUp(sb_VB_weight_gain)
+            
+        Endif
+    
+    SceneEnd()

@@ -1,0 +1,56 @@
+WHAT: all
+WHERE: all
+WHEN: 0 - 24
+WHO: Actor = getCompanion(); If !Actor.isProstitute() && [!Actor.isDating() || isModEnabled(vin_NTR)]
+OTHER:
+
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        "I'm out with <Actor.name> when someone comes up to us and tries to solicit <Actor.him_or_her>, somehow mistaking <Actor.him_or_her> for a sex worker"
+        Actor2 = generatePersonTemporary()
+        Actor2.dress()
+        Actor2.show()
+        Actor2.moveToPersonStand(Actor, 100)
+        Actor2(Curious):: "How much for a night with you, baby?"
+        Actor2.hide()
+        "<Actor.He_or_She> indignantly refuses the potential client and becomes strangely silent afterwards."
+        0:: "Simply console <Actor.him_or_her>"
+        1:: "Ask what's wrong"
+        
+        If 1
+            If Actor:perversion < 50
+                "<Actor.He_or_She> simply said that <Actor.he_or_she> was still processing what had just happened."        
+            Elseif Actor:rapportwithplayer < 35 && Actor:attractiontoplayer < 35
+                "<Actor.He_or_She> said it was nothing, but you think you caught them glaring at each other. Maybe I should spoil <Actor.him_or_her> a little more..."
+            Else
+                If Actor.isDating()
+                    "<Actor.name> admits to me that <Actor.he_or_she> has been fantasizing for some time about being an escort, but that <Actor.he_or_she> is not poor enough and loves me too much to do it."
+                    Actor:arousal += 1
+                Else
+                    "<Actor.name> admits to me that <Actor.he_or_she> has fantasized about being an escort for some time, but is not brave enough and too embarrassed to do so."
+                    Actor:arousal += 1
+                Endif
+                "What should I say to <Actor.him_or_her>?"
+                0:: "Yeah, it's a bad idea"
+                1:: "Follow your desires"
+                
+                If 0
+                    Player(Sad):: "Yeah, I think it's a bad idea..."
+                Else
+                    Player(Happy):: "You should follow your destiny. Who knows, maybe I'll hire you myself one day, sexy baby!"
+                    perversion += 1
+                    Actor:perversion += 3
+                    If Actor:perversion > 50
+                        Actor.addProstitute()
+                        "Eventually, <Actor.name> decided to become a sex worker."
+                    Endif
+                Endif
+            Endif
+        Endif
+
+    SceneEnd() // Scene improved by Raddeck
+    timeout(300, ctf_jan01_cms)

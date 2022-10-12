@@ -1,0 +1,655 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+SceneStart()
+    
+    // Motorcycle Dealer
+    setBackground(motorcycle)
+    MotorcycleDealer_ID = rk_VB_MotorcycleDealer_ID.getGlobal()
+    If MotorcycleDealer.isValid()
+        MotorcycleDealerID = MotorcycleDealer.getID()
+        MotorcycleDealer_ID = MotorcycleDealerID + Random(1000, 3000)
+        MotorcycleDealer_ID = MotorcycleDealer_ID.round()
+        rk_VB_MotorcycleDealer_ID.setGlobal(MotorcycleDealer_ID)
+    Else
+        MotorcycleDealer = generatePerson()
+        MotorcycleDealer_ID = MotorcycleDealer.getID()
+        rk_VB_MotorcycleDealer_ID.setGlobal(MotorcycleDealer_ID)
+    Endif
+    PayMotorcycleWithSex = rk_VB_PayMotorcycleWithSex.getGlobal()
+    MotorcycleDealer:arousal += Random(0, 100)
+    MotorcycleDealer:perversion += Random(0, 100)
+    MotorcycleSelectedIs = rk_VB_MotorcycleSelectedIs.getGlobal()
+    MotorcycleSexLoanValue = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
+    MotorcycleDealer.dress()
+    MotorcycleDealer.show()
+        
+    stock_VULCAN = Player.getActorVar(stock_VULCAN)
+    stock_Ruckus = Player.getActorVar(stock_Ruckus)
+    stock_VStar = Player.getActorVar(stock_VStar)
+    stock_NC750X = Player.getActorVar(stock_NC750X)
+    stock_Husqvarna = Player.getActorVar(stock_Husqvarna)
+    stock_Ducati = Player.getActorVar(stock_Ducati)
+    stock_INDIAN = Player.getActorVar(stock_INDIAN)
+    stock_Ninja = Player.getActorVar(stock_Ninja)
+    
+    stock_motorcycle = stock_VULCAN + stock_Ruckus + stock_VStar + stock_NC750X + stock_Husqvarna + stock_Ducati + stock_INDIAN + stock_Ninja
+    motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value) 
+    
+    "What do I want to do?"
+    0:: stock_motorcycle == 0:: "Buy a new motorcycle"
+    1:: stock_motorcycle > 0:: "Sell my motorcycle"
+    2:: stock_motorcycle > 0:: "Trade my motorcycle for a new one"
+    10::"Try to buy a motorcycle with sex"
+    99:: "Do nothing"
+    
+    If 0
+        Price0 = Random(700, 2400)
+        Price0C = Price0.convertToLocalCurrency()
+        Price1 = Random(2500, 3500)
+        Price1C = Price1.convertToLocalCurrency()
+        Price2 = Random(4000, 5000)
+        Price2C = Price2.convertToLocalCurrency()
+        Price3 = Random(5500, 8000)
+        Price3C = Price3.convertToLocalCurrency()
+        Price4 = Random(9000, 11000)
+        Price4C = Price4.convertToLocalCurrency()
+        Price5 = Random(15000, 20000)
+        Price5C = Price5.convertToLocalCurrency()
+        Price6 = Random(28000, 35000)
+        Price6C = Price6.convertToLocalCurrency()
+        Price7 = Random(50000, 75000)
+        Price7C = Price7.convertToLocalCurrency()
+        
+        "There are many different price for motorcycle here. Honestly, living in a crowded area, a more expensive motorcycle won't really get me from A to B any faster than a cheap motorcycle ..."
+        0:: money >= Price0 :: "2018 Kawasaki VULCAN VN800 for <Price0C>"
+        1:: money >= Price1 :: "2021 Honda Ruckus for <Price1C>"
+        2:: money >= Price2 :: "2021 Yamaha V-Star 250 for <Price2C>"
+        3:: money >= Price3 :: "2019 Honda NC750X for <Price3C>"
+        4:: money >= Price4 :: "2019 Husqvarna Svartpilen 701 for <Price4C>"
+        5:: money >= Price5 :: "2020 Ducati Panigale V2 for <Price5C>"
+        6:: money >= Price6 :: "2021 INDIAN Challenger for <Price6C>"
+        7:: money >= Price7 :: "2021 Kawasaki Ninja H2R for <Price7C>"
+        8:: "Buy nothing"
+        
+        If 0
+        
+            Player.modifyActorVar(stock_VULCAN, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price0
+            mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price0)
+            
+        Elseif 1
+        
+            Player.modifyActorVar(stock_Ruckus, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price1
+            mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price1)
+            
+        Elseif 2
+        
+            Player.modifyActorVar(stock_VStar, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price2
+            mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price2)
+            
+        Elseif 3
+        
+            Player.modifyActorVar(stock_NC750X, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price3
+            mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price3)
+            
+        Elseif 4
+        
+            Player.modifyActorVar(stock_Husqvarna, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price4
+            mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price4)
+            
+        Elseif 5
+        
+            Player.modifyActorVar(stock_Ducati, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price5
+            mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price5)
+            
+        Elseif 6
+        
+            Player.modifyActorVar(stock_INDIAN, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price6
+            mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price7)
+            
+        Elseif 7
+        
+            Player.modifyActorVar(stock_Ninja, 1)
+            Player(Happy)::"1 more motorcycle inside my garage!"
+            money -= Price7
+            mood += 3
+            Player.modifyActorVar(rk_VB_motorcycle_Value, Price7)
+            
+        Endif
+        
+    Elseif 1
+        
+        Price0S = Random(500, 2000)
+        Price1S = Random(2000, 3000)
+        Price2S = Random(3500, 4000)
+        Price3S = Random(4000, 7000)
+        Price4S = Random(8000, 10000)
+        Price5S = Random(14000, 19000)
+        Price6S = Random(27000, 34000)
+        Price7S = Random(49000, 74000)
+        
+        Price0S_loc = Price0S.convertToLocalCurrency()
+        Price1S_loc = Price1S.convertToLocalCurrency()
+        Price2S_loc = Price2S.convertToLocalCurrency()
+        Price3S_loc = Price3S.convertToLocalCurrency()
+        Price4S_loc = Price4S.convertToLocalCurrency()
+        Price5S_loc = Price5S.convertToLocalCurrency()
+        Price6S_loc = Price6S.convertToLocalCurrency()
+        Price7S_loc = Price7S.convertToLocalCurrency()
+
+        Player::"It's time to sell a motorcycle!"
+        0:: stock_VULCAN >= 1::"Sell 1 Kawasaki VULCAN for <Price0S_loc> | <stock_VULCAN> in garage"
+        1:: stock_Ruckus >= 1::"Sell 1 Honda Ruckus for <Price1S_loc> | <stock_Ruckus> in garage"
+        2:: stock_VStar >= 1::"Sell 1 Yamaha V-Star for <Price2S_loc> | <stock_VStar> in garage"
+        3:: stock_NC750X >= 1::"Sell 1 Honda NC750X for <Price3S_loc> | <stock_NC750X> in garage"
+        4:: stock_Husqvarna >= 1::"Sell 1 Svartpilen 701 for <Price4S_loc> | <stock_Husqvarna> in garage"
+        5:: stock_Ducati >= 1::"Sell 1 Ducati Panigale for <Price5S_loc> | <stock_Ducati> in garage"
+        6:: stock_INDIAN >= 1::"Sell 1 INDIAN Challenger for <Price6S_loc> | <stock_INDIAN> in garage"
+        7:: stock_Ninja >= 1::"Sell 1 Ninja H2R for <Price7S_loc> | <stock_Ninja> in garage"
+        99:: "Do nothing"
+        
+        If 0
+        
+            Player.modifyActorVar(stock_VULCAN, -1)
+            Player(Happy)::"<Price0S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price0S
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price0S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
+            
+        Elseif 1
+        
+            Player.modifyActorVar(stock_Ruckus, -1)
+            Player(Happy)::"<Price1S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price1S
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price1S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
+            
+        Elseif 2
+        
+            Player.modifyActorVar(stock_VStar, -1)
+            Player(Happy)::"<Price2S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price2S
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price2S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
+            
+        Elseif 3
+        
+            Player.modifyActorVar(stock_NC750X, -1)
+            Player(Happy)::"<Price3S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price3S
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price3S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
+            
+        Elseif 4
+        
+            Player.modifyActorVar(stock_Husqvarna, -1)
+            Player(Happy)::"<Price4S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price4S
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price4S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
+            
+        Elseif 5
+        
+            Player.modifyActorVar(stock_Ducati, -1)
+            Player(Happy)::"<Price5S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price5S
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price5S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
+            
+        Elseif 6
+        
+            Player.modifyActorVar(stock_INDIAN, -1)
+            Player(Happy)::"<Price6S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price6S
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price6S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
+            
+        Elseif 7
+        
+            Player.modifyActorVar(stock_Ninja, -1)
+            Player(Happy)::"<Price7S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price7S
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            NewPrice = motorcycle_value - Price7S
+            Player.setActorVar(rk_VB_motorcycle_Value, NewPrice)
+            
+        Elseif 99
+            "I should look around first. That seems like a low-ball figure they're offering for that motorcycle. My bike worth more than that!"
+        Endif
+    
+    Elseif 2
+    
+        Price0S = Random(500, 2000)
+        Price1S = Random(2000, 3000)
+        Price2S = Random(3500, 4000)
+        Price3S = Random(4000, 7000)
+        Price4S = Random(8000, 10000)
+        Price5S = Random(14000, 19000)
+        Price6S = Random(27000, 34000)
+        Price7S = Random(49000, 74000)
+        
+        Price0S_loc = Price0S.convertToLocalCurrency()
+        Price1S_loc = Price1S.convertToLocalCurrency()
+        Price2S_loc = Price2S.convertToLocalCurrency()
+        Price3S_loc = Price3S.convertToLocalCurrency()
+        Price4S_loc = Price4S.convertToLocalCurrency()
+        Price5S_loc = Price5S.convertToLocalCurrency()
+        Price6S_loc = Price6S.convertToLocalCurrency()
+        Price7S_loc = Price7S.convertToLocalCurrency()
+        
+        Price0 = Random(700, 2400)
+        Price0C = Price0.convertToLocalCurrency()
+        Price1 = Random(2500, 3500)
+        Price1C = Price1.convertToLocalCurrency()
+        Price2 = Random(4000, 5000)
+        Price2C = Price2.convertToLocalCurrency()
+        Price3 = Random(5500, 8000)
+        Price3C = Price3.convertToLocalCurrency()
+        Price4 = Random(9000, 11000)
+        Price4C = Price4.convertToLocalCurrency()
+        Price5 = Random(15000, 20000)
+        Price5C = Price5.convertToLocalCurrency()
+        Price6 = Random(28000, 35000)
+        Price6C = Price6.convertToLocalCurrency()
+        Price7 = Random(50000, 75000)
+        Price7C = Price7.convertToLocalCurrency()
+        
+        "Let's trade one of my old motorcycle for a new one!"
+        0:: stock_VULCAN >= 1::"Trade 1 Kawasaki VULCAN | <stock_VULCAN> in garage"
+        1:: stock_Ruckus >= 1::"Trade 1 Honda Ruckus | <stock_Ruckus> in garage"
+        2:: stock_VStar >= 1::"Trade 1 Yamaha V-Star | <stock_VStar> in garage"
+        3:: stock_NC750X >= 1::"Trade 1 Honda NC750X | <stock_NC750X> in garage"
+        4:: stock_Husqvarna >= 1::"Trade 1 Svartpilen 701 | <stock_Husqvarna> in garage"
+        5:: stock_Ducati >= 1::"Trade 1 Ducati Panigale | <stock_Ducati> in garage"
+        6:: stock_INDIAN >= 1::"Trade 1 INDIAN Challenger | <stock_INDIAN> in garage"
+        7:: stock_Ninja >= 1::"Trade 1 Ninja H2R | <stock_Ninja> in garage"
+        99:: "Do nothing"
+        
+        If 0
+ 
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            TotalGain = Price0 - Price0S
+            money -= TotalGain
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
+            
+        Elseif 1
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            TotalGain = Price1 - Price1S
+            money -= TotalGain
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
+            
+        Elseif 2
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            TotalGain = Price2 - Price2S
+            money -= TotalGain
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
+            
+        Elseif 3
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            TotalGain = Price3 - Price3S
+            money -= TotalGain
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
+            
+        Elseif 4
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            TotalGain = Price4 - Price4S
+            money -= TotalGain
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
+            
+        Elseif 5
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            TotalGain = Price5 - Price5S
+            money -= TotalGain
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
+            
+        Elseif 6
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            TotalGain = Price6 - Price6S
+            money -= TotalGain
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
+            
+        Elseif 7
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            TotalGain = Price7 - Price7S
+            money -= TotalGain
+            mood += 3
+            motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+            TradePrice = motorcycle_value - TotalGain
+            Player.setActorVar(rk_VB_motorcycle_Value, TradePrice)
+            
+        Elseif 99
+            "I should look around first. That seems like a low-ball figure they're offering for that motorcycle. My bike worth more than that!"
+        Endif
+    
+    If 10
+    
+        If MotorcycleSexLoanValue > 0.5
+            MotorcycleDealer.show()
+            MotorcycleDealer.dress()
+            MotorcycleDealer.moveToPersonStand(Player, 50)
+            MotorcycleDealer(Sad)::"Sorry, but according to our books, you already owe us a debt, pay your debt, and then you can make another arrangement."
+        Else
+            MotorcycleDealer.show()
+            MotorcycleDealer.dress()
+            MotorcycleDealer.moveToPersonStand(Player, 50)
+            Player(Shy)::"Hi, humm, is it possible to buy a motorcycle in nature, if you know what I mean?"
+            If MotorcycleDealer:perversion > 50 && MotorcycleDealer:arousal > 25 && MotorcycleDealer.isInterestedIn(Player)
+                
+                MotorcycleDealer:perversion += Random(1, 2)
+                perversion += Random(1, 5)
+                MotorcycleDealer(Flirty)::"Maybe, what do you offer?"
+                Player(Surprised)::"Uh! I thought you got it! With sex!"
+                MotorcycleDealer(Flirty)::"I know that, but it's not with a fuck that you're going to be able to leave with a motorcycle for free, honey."
+                MotorcycleDealer(Grin)::"I meant, how many times can I play with your body before I give you a motorcycle for free?"
+                MotorcycleDealer.animate()
+                MotorcycleDealer(Grin)::"But first, which motorcycle do you want?"
+                MotorcycleDealer.animate(socialize)
+                
+                Price0 = Random(700, 2400)
+                Price0C = Price0.convertToLocalCurrency()
+                Price1 = Random(2500, 3500)
+                Price1C = Price1.convertToLocalCurrency()
+                Price2 = Random(4000, 5000)
+                Price2C = Price2.convertToLocalCurrency()
+                Price3 = Random(5500, 8000)
+                Price3C = Price3.convertToLocalCurrency()
+                Price4 = Random(9000, 11000)
+                Price4C = Price4.convertToLocalCurrency()
+                Price5 = Random(15000, 20000)
+                Price5C = Price5.convertToLocalCurrency()
+                Price6 = Random(28000, 35000)
+                Price6C = Price6.convertToLocalCurrency()
+                Price7 = Random(50000, 75000)
+                Price7C = Price7.convertToLocalCurrency()
+                
+                Price0 = Random(700, 2400) * ((attractiveness/2)/100)
+                Price0C = Price0.convertToLocalCurrency()
+                Price1 = Random(2500, 3500) * ((attractiveness/2)/100)
+                Price1C = Price1.convertToLocalCurrency()
+                Price2 = Random(4000, 5000) * ((attractiveness/2)/100)
+                Price2C = Price2.convertToLocalCurrency()
+                Price3 = Random(5500, 8000) * ((attractiveness/2)/100)
+                Price3C = Price3.convertToLocalCurrency()
+                Price4 = Random(9000, 11000) * ((attractiveness/2)/100)
+                Price4C = Price4.convertToLocalCurrency()
+                Price5 = Random(15000, 20000) * ((attractiveness/2)/100)
+                Price5C = Price5.convertToLocalCurrency()
+                Price6 = Random(28000, 35000) * ((attractiveness/2)/100)
+                Price6C = Price6.convertToLocalCurrency()
+                Price7 = Random(50000, 75000) * ((attractiveness/2)/100)
+                Price7C = Price7.convertToLocalCurrency()
+                
+                // Apply rebate - Result Price
+                Price0AR =  Price0 - Price0R
+                Price0CAR = Price0AR.convertToLocalCurrency()
+                Price1AR = Price1 - Price1R
+                Price1CAR = Price1AR.convertToLocalCurrency()
+                Price2AR = Price2 - Price2R
+                Price2CAR = Price2AR.convertToLocalCurrency()
+                Price3AR = Price3 - Price3R
+                Price3CAR = Price3AR.convertToLocalCurrency()
+                Price4AR = Price4 - Price4R
+                Price4CAR = Price4AR.convertToLocalCurrency()
+                Price5AR = Price5 - Price5R
+                Price5CAR = Price5AR.convertToLocalCurrency()
+                Price6AR = Price6 - Price6R
+                Price6CAR = Price6AR.convertToLocalCurrency()
+                Price7AR = Price7 - Price7R
+                Price7CAR = Price7AR.convertToLocalCurrency()
+                
+                0:: money >= Price0 :: "2018 Kawasaki VULCAN VN800 for <Price0C>"
+                1:: money >= Price1 :: "2021 Honda Ruckus for <Price1C>"
+                2:: money >= Price2 :: "2021 Yamaha V-Star 250 for <Price2C>"
+                3:: money >= Price3 :: "2019 Honda NC750X for <Price3C>"
+                4:: money >= Price4 :: "2019 Husqvarna Svartpilen 701 for <Price4C>"
+                5:: money >= Price5 :: "2020 Ducati Panigale V2 for <Price5C>"
+                6:: money >= Price6 :: "2021 INDIAN Challenger for <Price6C>"
+                7:: money >= Price7 :: "2021 Kawasaki Ninja H2R for <Price7C>"
+                
+                If 0
+                    rk_VB_MotorcycleSelectedIs.setGlobal(1)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price0AR)
+                    Motorcycle_value += Price0AR
+                ElseIf 1
+                    rk_VB_MotorcycleSelectedIs.setGlobal(2)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price1AR)
+                ElseIf 2
+                    rk_VB_MotorcycleSelectedIs.setGlobal(3)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price2AR)
+                ElseIf 3
+                    rk_VB_MotorcycleSelectedIs.setGlobal(4)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price3AR)
+                ElseIf 4
+                    rk_VB_MotorcycleSelectedIs.setGlobal(5)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price4AR)
+                ElseIf 5
+                    rk_VB_MotorcycleSelectedIs.setGlobal(6)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price5AR)
+                ElseIf 6
+                    rk_VB_MotorcycleSelectedIs.setGlobal(7)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price6AR)
+                ElseIf 7
+                    rk_VB_MotorcycleSelectedIs.setGlobal(8)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, Price7AR)
+                EndIf
+                
+                MotorcycleDealer(Grin)::"Ok, so now, how many times can I play with your body before I give you a motorcycle for free?"
+                MotorcycleDealer:masochist -= Random(2, 5)
+                SaleManRefuse = false
+                SaleManRefuse2 = false
+                "What do I offer?"
+                0::"5 fucks in exchange"
+                1::"10 fucks in exchange"
+                2::"Offer free sex until the motorcycle is paid"
+                99::"I changed my mind"
+                
+                If 0
+                    
+                    SaleManRefuse = true
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, 0)
+                    
+                ElseIf 1
+                
+                    If motorcycleSelectedIs == 1
+    
+                        rk_VB_PayMotorcycleWithSex.setGlobal(1)
+                        Player.setActorVar(rk_VB_MotorcycleSexLoanValue, 10)
+                        MotorcycleDealer(Grin)::"Good! We got a deal! Let's start right now to reduce your debt..."
+                        MotorcycleDealer(Flirty)::"Come, we gonna go somewhere more private!"
+                        setBackground3D(Modules/rk_vin_Base/World/Vim_Basement_Room.lpworld)
+                        "We strip right away and started having sex right here!"
+                        Player.strip()
+                        MotorcycleDealer.strip()
+                        sex(MotorcycleDealer, Player)
+                        Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -1)
+                        If !MotorcycleDealer.isContactExchanged()
+                            exchangeContact(MotorcycleDealer)
+                        EndIf
+                        MotorcycleSexLoanValue1 = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
+                        MotorcycleDealer.makePermanent()
+                        MotorcycleDealer(Flirty)::"That was amazing! Just a reminder, now you owe me <MotorcycleSexLoanValue1> fuck(s)! See ya!"
+                        MotorcycleDealer.hide()
+                        
+                    Else
+                        
+                        If MotorcycleSelectedIs >= 2
+                          CTXT = "crazy"
+                        Else
+                          CTXT = "serious"
+                        EndIf
+                        MotorcycleDealer(Sad)::"Are you <CTXT>?? I can see that you are worth more than a whore, but you are not a luxury escort. So, forget about it!"
+                        MotorcycleDealer(Serene)::"But for 10 fucks, I can give you the Lada?"
+                        "Do I accept?"
+                        0::"Yes"
+                        1::"No"
+                        
+                        If 0
+                    
+                            rk_VB_PayMotorcycleWithSex.setGlobal(1)
+                            Player.setActorVar(rk_VB_MotorcycleSexLoanValue, 10)
+                            MotorcycleDealer(Grin)::"Good! We got a deal! Let's start right now to reduce your debt..."
+                            MotorcycleDealer(Flirty)::"Come, we gonna go somewhere more private!"
+                            setBackground3D(Modules/rk_vin_Base/World/Vim_Basement_Room.lpworld)
+                            "We strip right away and started having sex right here!"
+                            Player.strip()
+                            MotorcycleDealer.strip()
+                            sex(MotorcycleDealer, Player)
+                            Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -1)
+                            If !MotorcycleDealer.isContactExchanged()
+                                exchangeContact(MotorcycleDealer)
+                            EndIf
+                            MotorcycleSexLoanValue1 = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
+                            MotorcycleDealer.makePermanent()
+                            rk_VB_MotorcycleSelectedIs.setGlobal(1)
+                            MotorcycleDealer(Flirty)::"That was amazing! Just a reminder, now you owe me <MotorcycleSexLoanValue1> fuck(s)! See ya!"
+                            MotorcycleDealer.hide()
+                            
+                        Else
+                        
+                            Player.setActorVar(rk_VB_MotorcycleSexLoanValue, 0)
+                            SaleManRefuse2 = true
+                            
+                        EndIf
+                    EndIf
+                    
+                Elseif 2
+                    
+                    // MyBodyValueIs = 250
+                    If !MotorcycleDealer.isContactExchanged()
+                        exchangeContact(MotorcycleDealer)
+                    EndIf
+                    MotorcycleDealer(Grin)::"Good! We got a deal! Let's start right now to reduce your debt..."
+                    MotorcycleDealer(Flirty)::"Come, we gonna go somewhere more private!"
+                    setBackground3D(Modules/rk_vin_Base/World/Vim_Basement_Room.lpworld)
+                    "We strip right away and started having sex right here!"
+                    Player.strip()
+                    MotorcycleDealer.strip()
+                    sex(MotorcycleDealer, Player)
+                    MotorcycleDealer.makePermanent()
+                    
+                    If MotorcycleSelectedIs == 1
+                        Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -250)
+                    ElseIf MotorcycleSelectedIs == 2
+                        Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -250)
+                    ElseIf MotorcycleSelectedIs == 3
+                        Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -250)
+                    ElseIf MotorcycleSelectedIs == 4
+                        Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -250)
+                    ElseIf MotorcycleSelectedIs == 5
+                        Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -250)
+                    ElseIf MotorcycleSelectedIs == 6
+                        Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -250)
+                    ElseIf MotorcycleSelectedIs == 7
+                        Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -250)
+                    ElseIf MotorcycleSelectedIs == 8
+                        Player.modifyActorVar(rk_VB_MotorcycleSexLoanValue, -250)
+                    EndIf
+                    MotorcycleSexLoanValue1 = Player.getActorVar(rk_VB_MotorcycleSexLoanValue)
+                    MotorcycleSexLoanValue1_loc = MotorcycleSexLoanValue1.convertToLocalCurrency()
+                    MotorcycleDealer(Flirty)::"That was amazing! Just a reminder, now you owe me <MotorcycleSexLoanValue1_loc>! See ya!"
+                    MotorcycleDealer.hide()
+                    
+                Else
+                
+                    "I decided to think a little bit more about it!"
+                    rk_VB_MotorcycleSelectedIs.setGlobal(0)
+                    rk_VB_MotorcycleDealer_ID.setGlobal(0)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, 0)
+                    
+                EndIf
+                
+                If SaleManRefuse
+                
+                    MotorcycleDealer(Sad)::"Get out, you are not serious! I can see that you are worth more than a whore, but you are not a luxury escort. So, forget about it!"
+                    MotorcycleDealer(Grin)::"You're losing my time, have a nice day!"
+                    rk_VB_MotorcycleSelectedIs.setGlobal(0)
+                    rk_VB_MotorcycleDealer_ID.setGlobal(0)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, 0)
+                    
+                ElseIf SaleManRefuse2
+                
+                    MotorcycleDealer(Grin)::"Get out, you're losing my time, have a nice day!"
+                    rk_VB_MotorcycleSelectedIs.setGlobal(0)
+                    rk_VB_MotorcycleDealer_ID.setGlobal(0)
+                    Player.setActorVar(rk_VB_MotorcycleSexLoanValue, 0)
+                    
+                EndIf
+            
+            Else
+            
+                MotorcycleDealer(Sad)::"Forget it my dear! I don't do that kind of deal with my clients"
+                
+            EndIf
+            
+        EndIf
+        
+    Endif
+    
+SceneEnd()

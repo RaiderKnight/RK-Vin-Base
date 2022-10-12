@@ -1,0 +1,216 @@
+WHAT: all
+WHERE: place_of_worship
+WHEN: 0 - 24
+WHO: none
+OTHER: PercentageVampires > 0 && !Player.isRace(Vampire)
+
+    SceneStart()
+        SiGPeur = false
+        JmEnFuis = false
+        stock_cheapJType = Player.getActorVar(stock_cheapJType)
+        stock_AffordableJType = Player.getActorVar(stock_AffordableJType)
+        stock_ClassyJType = Player.getActorVar(stock_ClassyJType)
+        stock_NiceJType = Player.getActorVar(stock_NiceJType)
+        stock_FashionJType = Player.getActorVar(stock_FashionJType)
+        stock_HandcraftedJType = Player.getActorVar(stock_HandcraftedJType)
+        stock_FinestJType = Player.getActorVar(stock_FinestJType)
+        stock_FirstQualityJType = Player.getActorVar(stock_FirstQualityJType)
+        draculareveil = false
+        jewel_value = Player.getActorVar(jewel_value)
+        jewel_value = stock_cheapJType + stock_AffordableJType + stock_ClassyJType + stock_NiceJType + stock_FashionJType + stock_HandcraftedJType + stock_FinestJType + stock_FirstQualityJType
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        PriceIsRight = false
+        PasVamp = false
+        Jecours = false
+        StayWVamp = false
+        mefaisPogner = false
+        "I came aross a suspicious-looking coffin ..."
+        0:: "Open it"
+        1:: "Show some respect to the dead"
+        
+        If 0
+            If random(0, 100) < 50
+                PriceIsRight = true
+                PasVamp = true
+            Else
+                "To my horror, there was someone sleeping inside the coffin."
+                "The pale skin explained the whole thing to me right away, it's a vampire. OMG!"
+                "But I can also see that there are valuables, and it also looks like there is money..."
+                If random(0, 100) > 50
+                    SiGPeur = true
+                EndIf
+                "What should I do?"
+                0:: !SiGPeur ::"Sneak away"
+                1:: !SiGPeur ::"Try to steal some items"
+                99:: "Panic and freeze"
+                
+                If 0
+                    If random(0, 100) < sneak
+                        "I managed to sneak away safely before the vampire woke up."
+                    Else
+                        draculareveil = true
+                    EndIf
+                ElseIf 1
+                    If random(0, 100) < sneak
+                        "I managed to steal some items and sneak away safely before the vampire woke up."
+                        PriceIsRight = true
+                    Else
+                        draculareveil = true
+                    EndIf
+                Else
+                    "I don't know why but I suddenly have a panic attack and I'm standing there frozen like a statue... shit!"
+                    If random(0, 100) > 50
+                        "After a while..."
+                        "I managed to come to my senses and escape safely before the vampire woke up."
+                    Else
+                        draculareveil = true
+                    EndIf
+                EndIf 
+                If draculareveil
+                    "Of course, unfortunately for me, I woke the vampire up ..."
+                    Actor = generatePersonTemporary()
+                    Actor.blendPreset(Vampire)
+                    Actor.dress()
+                    Actor.show()
+                    Actor(Curious)::"Who dares to wake me up...?"
+                    0:: "Run!"
+                    1::"Stay!"
+                    
+                    If 0
+                        Jecours = true
+                    ElseIf 1
+                        StayWVamp = true
+                    EndIf
+                    //VamBldLvL = random(10, 100)
+                    If Jecours 
+                        JmEnFuis = true
+                        Actor(Sad):: "Wait ... don't go ..."
+                        Actor(Sad):: "Please I need your help... I'm desperate ... I'm starving to death ... It's been a week since I last managed to drink blood."
+                    ElseIf StayWVamp
+                        Player(Flirty)::"Huh! It's me, I didn't mean to wake you up! I just opened your coffin out of curiosity..."
+                        Actor(Sad):: "Please can you help me... I'm desperate ... I'm starving to death ... It's been a week since I last managed to drink blood."
+                        PoseQuest = true
+                    EndIf
+                    If PoseQuest
+                        "What should I do?"
+                        0:: "Run!"
+                        1:: "Offer some blood as mercy"
+                        2:: "Demand sex in exchange for blood"
+                        
+                        If 0
+                            JmEnFuis = true
+                        ElseIf 1
+                            Player(Flirty):: "Well, if it's to save a life then I guess it's no different from a normal blood donation at the hospital"
+                            animatePair(Actor, Player, Kissing)
+                            "The vampire sucked out some of my blood, which saved <Actor.his_or_her> life, but I feel quite weakened."
+                            fitness -= 0.5
+                            attractiveness -= 0.5
+                            energy -= random(3, 5)
+                            karma += 20
+                        Else
+                            Player(Flirty):: "I can give you some blood, but in exchange, you'll have to fuck me."
+                            Actor(Annoyed):: "Alright ... I guess I have no other choice ... It's this or death."
+                            Sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -5)
+                            EndIf
+                            "After we mate..."
+                            Actor(Curious):: "Now, about our deal ..."
+                            Player(Scared):: "Sure, here's my arm! Don't be too greedy, I want to stay alive!"
+                            Actor(Grin):: "Don't worry, I won't hurt you!"
+                            animatePair(Actor, Player, Kissing)
+                            "The vampire sucked out some of my blood, which saved <Actor.his_or_her> life, but I feel quite weakened."
+                            fitness -= 0.5
+                            attractiveness -= 0.5
+                            energy -= random(3, 5)
+                        EndIf
+                    EndIf
+                EndIf
+            EndIf
+            If PriceIsRight
+                LotteryCashCoffin = random(100, 1000)
+                LotteryCashCoffin_loc = LotteryCashCoffin.convertToLocalCurrency()
+                LotteryCoffin = random(1, 3)
+                LotteryCoffin = LotteryCoffin.round()
+                LotteryCoffinItem = random(1, 5)
+                LotteryCoffinItem = LotteryCoffinItem.round()
+                LotteryCoffinItemC = random(1, 8)
+                LotteryCoffinItemC = LotteryCoffinItemC.round(
+                If LotteryCoffinItemC == 1
+                    FindBijoux = "Cheap Jewelry"
+                    Player.modifyActorVar(stock_cheapJType, LotteryCoffinItemC)
+                ElseIf LotteryCoffinItemC == 2
+                    FindBijoux = "Affordable Jewelry"
+                    Player.modifyActorVar(stock_AffordableJType, LotteryCoffinItemC)
+                ElseIf LotteryCoffinItemC == 3
+                    FindBijoux = "Classy Jewelry"
+                    Player.modifyActorVar(stock_ClassyJType, LotteryCoffinItemC)
+                ElseIf LotteryCoffinItemC == 4
+                    FindBijoux = "Nice Jewelry"
+                    Player.modifyActorVar(stock_NiceJType, LotteryCoffinItemC)
+                ElseIf LotteryCoffinItemC == 5
+                    FindBijoux = "Fashion Jewelry"
+                    Player.modifyActorVar(stock_FashionJType, LotteryCoffinItemC)
+                ElseIf LotteryCoffinItemC == 6
+                    FindBijoux = "Handcrafted Jewelry"
+                    Player.modifyActorVar(stock_HandcraftedJType, LotteryCoffinItemC)
+                ElseIf LotteryCoffinItemC == 7
+                    FindBijoux = "Finest Jewelry"
+                    Player.modifyActorVar(stock_FinestJType, LotteryCoffinItemC)
+                ElseIf LotteryCoffinItemC == 8
+                    FindBijoux = "First quality Jewelry"
+                    Player.modifyActorVar(stock_FirstQualityJType, LotteryCoffinItemC)
+                EndIf
+                If PasVamp
+                    If LotteryCoffin == 1
+                        "I found some cash (<LotteryCashCoffin_loc>). I don't understand why someone left money in that coffin."
+                        money += LotteryCashCoffin
+                    ElseIf LotteryCoffin == 2
+                        "I found some valuable items (<LotteryCoffinItem> <FindBijoux>). I don't understand why someone left valuable items in that coffin."
+                    ElseIf LotteryCoffin == 3
+                        "I found some cash (<LotteryCashCoffin_loc>) and valuable items (<LotteryCoffinItem> <FindBijoux>). I don't understand why someone left that in there."
+                        money += LotteryCashCoffin
+                    EndIf
+                    "A vampire, perhaps?"
+                Else
+                    If LotteryCoffin == 1
+                        "I found some cash (<LotteryCashCoffin_loc>)."
+                        money += LotteryCashCoffin
+                    ElseIf LotteryCoffin == 2
+                        "I found some valuable items (<LotteryCoffinItem> <FindBijoux>)."
+                    ElseIf LotteryCoffin == 3
+                        "I found some cash (<LotteryCashCoffin_loc>) and valuable items (<LotteryCoffinItem> <FindBijoux>)."
+                        money += LotteryCashCoffin
+                    EndIf
+                    If random() > 75
+                        mefaisPogner = true
+                    EndIf
+                EndIf
+            EndIf
+            If JmEnFuis
+                Player(Flirty)::"I don't care !"
+                "I ran away, the vampire must have been honest about starving to death since <Actor.he_or_she> failed miserably at catching up to me."
+                "Why should I care about a dying vampire, for lack of blood... If I give <Actor.him_or_her> any, <Actor.he_or_she>'ll kill me, forget it!"
+                If random() > 75
+                    mefaisPogner = true
+                EndIf
+            EndIf
+            If mefaisPogner
+                "I didn't manage to escape, moreover, I lay still on the ground while <Actor.he_or_she> syphoned my blood!"
+                animatePair(Actor, Player, Kissing)
+                "After a while!"
+                "Now leave, before I drain you completely, you thief!"
+                energy => 25
+                fitness -= random(3, 5)
+                attractiveness -= random(3, 5)
+                "Which I did immediately!"
+                moveTo(home)
+            EndIf
+        Else
+            "I wouldn't do something so creepy."
+        EndIf
+    SceneEnd()
+    timeout(100, vampire_coffin) // Improved by Raddeck

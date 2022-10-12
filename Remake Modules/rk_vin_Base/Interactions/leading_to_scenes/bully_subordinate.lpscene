@@ -1,0 +1,191 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        PlayIdea = false
+        scoldA = true
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        "I go out of my way to bully <Actor.name> at work, which makes me feel rather powerful in my position and makes <Actor.name> less confident and easier to control in the future."
+        FgMony = false
+        CashMony = false
+        Actor:masochist += 2
+        masochist -= 2
+        Actor2 = Actor.getRelatedPerson(Spouses, Dating)
+        If !Actor2.isValid()
+            Actor2 = generatePersonTemporary()
+            While !Actor.isInterestedIn(Actor2)
+                Actor2 = generatePersonTemporary()
+            Endwhile
+        Endif
+        If Actor2.isTemporary()
+            Actor2.makePermanent()
+            addNpcRelationship(Dating, Actor, Actor2)
+        Endif
+        If Actor:masochist > 0 && Random(0, 100) < 30 && !Actor.isAsexual()
+            setBackground(street)
+            Actor.show()
+            Actor2.dress()
+            Actor2.show()
+            "I was walking out of the office that evening. <Actor.name>, who I just bullied earlier, was heading out at the same time, being picked up by <Actor.his_or_her> <Actor2.boyfriend_or_girlfriend>."
+            Actor2(Angry):: "Is that that <Player.asshole_or_bitch> of a boss that always bullies you? You know, you tell me about <Player.him_or_her> all the time ..."
+            Actor(Annoyed):: "Yeah ... keep your voice down though ..."
+            Actor2(Angry):: "Wait here, I'll talk to <Player.him_or_her> to leave you alone."
+            Actor(Annoyed):: "<Actor2.name> ... no! Don't cause a scene please! I could lose my job"
+            Actor.hide()
+            Actor2.moveToPersonStand(Player, 100)
+            offerSC = Random(2000, 5000)
+            offerSCloc = offerSC.convertToLocalCurrency()
+            If Actor2.hadSex()
+                Actor2(Annoyed):: "Just wait in the car, please. I know this person..."
+                Actor2(Annoyed):: "Let's cut the crap and get to the point ... If I give you <offerSCloc>, would you stop bullying my <Actor.boyfriend_or_girlfriend>?"
+                0:: "Sure"
+                1:: "I have another idea"
+                2::"Forget the money, I'll go easy on <Actor2.him_or_her>"
+                99:: "Nope"
+                
+                If 0
+                    CashMony = true
+                Elseif 1
+                    PlayIdea = true
+                    perversion += 1
+                Elseif 2
+                    FgMony = true
+                    karma += 1
+                Else
+                    Player(Grin):: "Sorry, but I'm <Actor.his_or_her> boss and it's none of my employee's significant other's business how <Actor.he_or_she> is treated at work, whether I used to fuck that significant other or not."
+                    Actor2(Angry):: "You're a real <Player.asshole_or_bitch>, you know that!"
+                    Player(Wink):: "I know, that's why I'm boss!"
+                    masochist -= 2            
+                Endif
+                scoldA = false
+            Else       
+                Actor2(Angry):: "Just wait in the car, please."
+                Actor2(Angry):: "You must be my <Actor.boyfriend_or_girlfriend>'s boss <Player.name>? I think we need to talk!"
+                Player(Serene):: "What can I do for you <Actor2.sir_or_miss>?"
+                Actor2(Angry):: "You need to stop bullying <Actor.name> at work. I know <Actor.he_or_she> is a good <Actor.man_or_woman> and a hard worker who has done nothing wrong. You're just being an <Player.asshole_or_bitch>."
+                Actor2(Annoyed):: "If I give you <offerSCloc>, would you stop bullying my <Actor.boyfriend_or_girlfriend>?"
+                0:: "Sure"
+                1:: "Scold <Actor2.him_or_her>"
+                2:: "I have another idea"
+                3::"Forget the money, I'll go easy on <Actor2.him_or_her>"
+                99:: "Nope"
+                
+                If 0
+                    setBackground(hotel)
+                    "Later on, we meet in a nearby hotel so that we can fulfill our arrangement."
+                    money += offerSC
+                    Player(Grin)::"I'll go easy on your <Actor.boyfriend_or_girlfriend>..."
+                    Player(Serene):: "Fine, maybe I've been too harsh on your <Actor.boyfriend_or_girlfriend>."
+                    Actor2(Serene):: "No please, stop entirely!"
+                    Player(Serene):: "I'll do my best!"
+                    masochist += 2
+                Elseif 1
+                    Player(Grin)::"Hey douchebag! Who do you think you're talking to right now? Do you want your <Actor.boyfriend_or_girlfriend> to keep <Actor2.his_or_her> job? Just get in your car and go home..."
+                    Player(Grin):: "Sorry, but I'm <Actor.his_or_her> boss and it's none of my employee's significant other's business how <Actor.he_or_she> is treated at work."
+                    Actor2(Furious):: "You're a real <Player.asshole_or_bitch>, you know that!"
+                    Player(Wink):: "I know, that's why I'm boss!"
+                    masochist -= 2
+                Elseif 2
+                    PlayIdea = true
+                    perversion += 1
+                Elseif 3
+                    FgMony = true
+                    karma += 1
+                Else
+                    Player(Grin):: "Sorry, but I'm <Actor.his_or_her> boss and it's none of my employee's significant other's business how <Actor.he_or_she> is treated at work, whether I used to fuck that significant other or not."
+                    Actor2(Angry):: "You're a real <Player.asshole_or_bitch>, you know that!"
+                    Player(Wink):: "I know, that's why I'm boss!"
+                    masochist -= 2 
+                Endif
+            Endif
+            If CashMony
+                setBackground(hotel)
+                "Later on, we meet in a nearby hotel so that we can fulfill our arrangement."
+                money += offerSC
+                Player(Grin)::"I'll go easy on your <Actor.boyfriend_or_girlfriend>..."
+            ElseIf FgMony
+                Player(Grin)::"I'll go easy on your <Actor.boyfriend_or_girlfriend>... Keep your money!"
+            ElseIf PlayIdea
+                Player(Grin)::"I don't need your money, it's about your mouth, your hand, your body... and sex!"
+                Actor2(Annoyed):: "Okay ... fine ... But not here, not now. Let's meet in a hotel later."
+                Player(Grin)::"Bring your <Actor.boyfriend_or_girlfriend> also..."
+                Actor2(Annoyed):: "Are you sure ... Okay ... fine ... see you later??"
+                setBackground(hotel)
+                "Later on, we meet in a nearby hotel so that we can fulfill our arrangement."
+                "Once we got into the room, I told them what I wanted in return to stop!"
+                setBackground(bedroom)
+                Actor2(Curious)::"So, what's your famous idea?"
+                "What should I ask?"
+                0:: "I want to fuck you while your <Actor.boyfriend_or_girlfriend> watch"
+                1:: "I want to fuck your <Actor.boyfriend_or_girlfriend> while you watch"
+                2:: "Let's do a threesome"
+                99:: "Bah, nevermind!"
+                
+                If 0
+                    If !Actor2.isInterestedIn(Player) || attractiveness < 50
+                        Actor2(Angry)::"Are you crazy! Never in my life!"
+                        Actor2(Angry):: "You're a real <Player.asshole_or_bitch>, you know that!"
+                        Player(Wink):: "I know, that's why I'm boss!"
+                    Else
+                        Actor2(Annoyed)::"Alright! Let's do it!"
+                        Actor(Annoyed)::"Damn!"
+                        Player.strip()
+                        Actor2.strip()
+                        Actor.show()
+                        Sex(Player, Actor2)
+                        If HungerEnable > 0
+                           Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                    EndIf
+                    masochist -= 2
+                ElseIf 1
+                    If !Actor2.isInterestedIn(Player) || attractiveness < 50
+                        Actor2(Angry)::"Are you crazy! Never in my life!"
+                        Actor2(Angry):: "You're a real <Player.asshole_or_bitch>, you know that!"
+                        Player(Wink):: "I know, that's why I'm boss!"
+                    Else
+                        Actor2(Annoyed)::"Alright! Let's do it!"
+                        Actor(Annoyed)::"Damn!"
+                        Player.strip()
+                        Actor2.show()
+                        Actor.strip()
+                        Sex(Player, Actor)
+                        If HungerEnable > 0
+                           Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                    EndIf
+                    masochist -= 2
+                ElseIf 2
+                    If !Actor2.isInterestedIn(Player) || attractiveness < 50
+                        Actor2(Angry)::"Are you crazy! Never in my life!"
+                        Actor2(Angry):: "You're a real <Player.asshole_or_bitch>, you know that!"
+                        Player(Wink):: "I know, that's why I'm boss!"
+                    Else
+                        Actor2(Annoyed)::"Alright! Let's do it!"
+                        Actor(Annoyed)::"Damn!"
+                        Player.strip()
+                        Actor2.strip()
+                        Actor.strip()
+                        Sex(Actor, Player, Actor2)
+                        If HungerEnable > 0
+                           Player.modifyActorVar(rk_VB_Hunger, -3)
+                        EndIf
+                    EndIf
+                    masochist -= 2
+                Else 
+                    Player(Serene)::"Sorry for making you come here, I was in a twisted state of mind earlier. I'll take it easy on your <Actor.boyfriend_or_girlfriend>!"
+                    Actor2(Serene):: "No please, stop entirely!"
+                    Player(Serene):: "I'll do my best!"
+                    masochist += 2
+                EndIf
+            Endif
+        Endif
+        Actor2.hide()
+        Actor.hide()
+    SceneEnd() // Scene improved by: Raddeck

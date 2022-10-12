@@ -1,0 +1,71 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        IBuySeafood = Player.getActorVar(rk_VB_IBuySeafood)
+        
+        If money < -1
+            Player(Anxious)::"I am in debt. The stores will not sell me anything."
+        Else
+        
+            Player(Curious)::"There is a lot of seafood dishes here." 
+            
+            // Get current seafood types
+            price_Oysters = Random(5, 12)
+            price_Oysters_local = price_Oysters.convertToLocalCurrency()
+            price_Shrimps = Random(12, 15)
+            price_Shrimps_local = price_Shrimps.convertToLocalCurrency()
+            price_Sushi = Random(16, 18)
+            price_Sushi_local = price_Sushi.convertToLocalCurrency()
+            price_Lobster = Random(18, 30)
+            price_Lobster_local = price_Lobster.convertToLocalCurrency()
+            price_Caviar = Random(70, 120)
+            price_Caviar_local = price_Caviar.convertToLocalCurrency()
+                
+            Player(Curious)::"Which type of seafood shall I buy?"
+            0:: money >= price_Oysters ::"1 Oysters dish for <price_Oysters_local>"
+            1:: money >= price_Shrimps ::"1 Shrimps dish for <price_Shrimps_local>"
+            2:: money >= price_Sushi ::"1 Sushi dish for <price_Sushi_local>"
+            3:: money >= price_Lobster ::"1 Lobster dish for <price_Lobster_local>"
+            4:: money >= price_Caviar ::"1 Caviar dish for <price_Caviar_local>"
+            99:: "Don't buy anything"
+                   
+            If 0
+                Player.modifyActorVar(stock_Oysters, 1)
+                money -= price_Oysters
+                Player(Excited)::"1 oysters dish added to my freezer!"
+                Player.modifyActorVar(rk_VB_IBuySeafood, 1)
+                        
+            ElseIf 1
+                Player.modifyActorVar(stock_Shrimps, 1)
+                money -= price_Shrimps
+                Player(Excited)::"1 shrimps dish added to my freezer!"
+                Player.modifyActorVar(rk_VB_IBuySeafood, 1)
+                        
+            ElseIf 2
+                Player.modifyActorVar(stock_Sushi, 1)
+                money -= price_Sushi
+                Player(Excited)::"1 sushi dish added to my freezer!"
+                Player.modifyActorVar(rk_VB_IBuySeafood, 1)
+                        
+            ElseIf 3
+                Player.modifyActorVar(stock_Lobster, 1)
+                money -= price_Lobster
+                Player(Excited)::"1 lobster dish added to my freezer!"
+                Player.modifyActorVar(rk_VB_IBuySeafood, 1)
+            
+            ElseIf 4
+                Player.modifyActorVar(stock_Caviar, 1)
+                money -= price_Caviar
+                Player(Excited)::"1 caviar dish added to my freezer!"
+                Player.modifyActorVar(rk_VB_IBuySeafood, 1)
+                
+            EndIf
+            
+        EndIf
+    
+    SceneEnd()

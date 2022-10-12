@@ -1,0 +1,67 @@
+WHAT: all, -sleep, -nap, -sleep_hotel, -nap_hotel
+WHERE: all
+WHEN: 0 - 24
+WHO: Actor = getSpecific(ExDating); If Actor.isContactExchanged() && random(0, 100) < Actor:attractiontoplayer 
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Actor:: "I miss you. I was a fool to lose you."
+        "It's my ex <Actor.name> texting me. <Actor.He_or_She> is probably drunk."
+        0:: "Ignore"
+        1:: "Respond"
+        2:: "Block"
+        
+        If 0
+            "Let's just ignore the text. I don't want to give <Actor.him_or_her> any wrong signal."
+            Actor:attractiontoplayer += random(0, 1)
+        ElseIf 1
+            "Well, for everything we had together, I can't be so emotionless. <Actor.He_or_She> reached out first."
+            "What I should say?"
+            0::"Invite <Actor.him_or_her>"
+            1::"Just say that you miss <Actor.him_or_her> too"
+            2::"Just say that you're busy"
+            
+            If 0
+                "I texted back: stop hanging around and come to my place....I'm alone..."
+                perversion += 0.5
+                Actor:: "<Actor.He_or_She> texted back: you mean, for sex..."
+                "I texted back: no, to do the laundry ;). Yes I mean sex, funny <Actor.boy_or_girl>."
+                
+                If Actor.isInterestedIn(Player) && Actor:arousal > 25
+                    Actor:: "<Actor.He_or_She> texted back: All the way baby, I'm coming right away!"
+                    mood += 3
+                    "After a while"
+                    passTime(0.15, 1)
+                    Actor.show()
+                    Actor.strip()
+                    Player.strip()
+                    "<Actor.name> immediately arrived began to undress completely and like a scout and goes to start our little sex session."
+                    sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    perversion += 0.5
+                Else
+                    Actor:: "Sounds interesting, but maybe next time I'm a little busy right now. Next time you're alone or want to go out, give me a call!"
+                    mood -= 1
+                    arousal -= 1
+                    Actor:attractiontoplayer += random(0, 1)
+                    Actor:rapportwithplayer += random(0, 1)
+                EndIf
+            ElseIf 1
+                "I decided to text back: 'Miss you too ...'"
+                Actor:attractiontoplayer += random(0, 3)
+            Else
+                "I decided to text back: 'I'm busy right now, but it will be great to hang out one day. ...'"
+                Actor:attractiontoplayer += random(0, 2)
+            EndIf
+        Else
+            "I'd rather not have to deal with this emotional baggage anymore. I'll just block <Actor.him_or_her> and be done with it."
+            blockContact(Actor)
+            Actor:attractiontoplayer -= random(0, 10)
+            perversion -= 0.5
+        EndIf
+    SceneEnd() // Scene improved by Raddeck
+    timeout(200, ex_texts)

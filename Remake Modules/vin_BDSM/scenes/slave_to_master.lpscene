@@ -1,0 +1,38 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER:
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Existing = Actor.getActorVar(tag_Master)
+        If Existing > 0
+            followUp(rk_VB_Call_to_master)
+        Else
+            Actor:masochist -= 5
+            "I don't think I've been submitted by this handsome future <Actor.Master_or_Mistress>..."
+            "Should I ask <Actor.him_or_her>, if I can submit myself entirely to <Actor.his_or_her> authority?"
+            0:: "Ask <Actor.him_or_her>"
+            1:: "Not now"
+            
+            If 0
+                If Actor:masochist < 10 && Actor:perversion > 50
+                    "<Actor.name> agreed that I was worthless and should rightfully submit to <Actor.him_or_her> as <Actor.his_or_her> slave."
+                    "As a slave, I swore to obey my <Actor.Master_or_Mistress>'s every commands. In fact, satisfying all <Actor.his_or_her> needs is all that I was born for."
+                    Actor.setActorVar(tag_Master, 1)
+                    ISID = Actor.getID()
+                    rk_VB_tag_Master.setGlobal(ISID)
+                    Player.strip()
+                    Player.dressBondage(Collar)
+                    "To show <Actor.his_or_her> newly recognized ownership of me, my <Actor.Master_or_Mistress> put a collar around my neck and forbid me from ever removing it."
+                Else
+                    "Unfortunately, <Actor.name> was too respectful to treat me like a slave. Maybe I should find someone more dominant."
+                    Actor:attractiontoplayer += random(0, 2)
+                EndIf
+            EndIf
+        EndIf
+    SceneEnd() // scene improved by Raddeck

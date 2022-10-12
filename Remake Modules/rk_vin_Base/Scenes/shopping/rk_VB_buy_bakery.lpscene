@@ -1,0 +1,99 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        IBuyBakery = Player.getActorVar(rk_VB_IBuyBakery)
+        If money < -1
+            Player(Anxious)::"I am in debt. The store will not sell me anything."
+        Else
+        
+            Player(Curious)::"There is a lot of pastry and breads here." 
+            
+            // Get current pastry and breads prices for each types
+            price_Pita = Random(1, 2)
+            price_Pita_local = price_Pita.convertToLocalCurrency()
+            price_Bread = Random(2, 3)
+            price_Bread_local = price_Bread.convertToLocalCurrency()
+            price_Bagel = Random(3, 4)
+            price_Bagel_local = price_Bagel.convertToLocalCurrency()
+            price_BaltikBread = Random(4, 5)
+            price_BaltikBread_local = price_BaltikBread.convertToLocalCurrency()
+            price_ProteinCookie = Random(2, 3)
+            price_ProteinCookie_local = price_ProteinCookie.convertToLocalCurrency()
+            price_VdolkyDonut = Random(3, 4)
+            price_VdolkyDonut_local = price_VdolkyDonut.convertToLocalCurrency()
+            price_ApplePie = Random(4, 5)
+            price_ApplePie_local = price_ApplePie.convertToLocalCurrency()
+            price_RoyalCake = Random(6, 7)
+            price_RoyalCake_local = price_RoyalCake.convertToLocalCurrency()
+            
+            BuyingBakery = true
+            While BuyingBakery
+                Player(Curious)::"Which type of bread or pastry shall I buy?"
+                0:: money >= price_Pita ::"1 pita for <price_Pita_local>"
+                1:: money >= price_Bread ::"1 Nutricious bread for <price_Bread_local>"
+                2:: money >= price_Bagel ::"1 Whole grain bagel for <price_Bagel_local>"
+                3:: money >= price_BaltikBread ::"1 Baltik bread for <price_BaltikBread_local>"
+                4:: money >= price_ProteinCookie ::"1 Protein cookie for <price_ProteinCookie_local>"
+                5:: money >= price_VdolkyDonut ::"1 Vdolky donut for <price_VdolkyDonut_local>"
+                6:: money >= price_ApplePie ::"1 slice apple pie for <price_ApplePie_local>"
+                7:: money >= price_RoyalCake ::"1 piece of Royal cake for <price_RoyalCake_local>"
+                99:: "Don't buy anything"
+                       
+                If 0
+                    Player.modifyActorVar(stock_Pita, 1)
+                    money -= price_Pita
+                    Player(Excited)::"1 more pita added to my pantry!"
+                    Player.modifyActorVar(rk_VB_IBuyBakery, 1)
+                            
+                ElseIf 1
+                    Player.modifyActorVar(stock_Bread, 1)
+                    money -= price_Bread
+                    Player(Excited)::"1 more nutricious bread added to my pantry!"
+                    Player.modifyActorVar(rk_VB_IBuyBakery, 1)
+                            
+                ElseIf 2
+                    Player.modifyActorVar(stock_Bagel, 1)
+                    money -= 3
+                    Player(Excited)::"1 more bagel added to my pantry!"
+                    Player.modifyActorVar(rk_VB_IBuyBakery, 1)
+                            
+                ElseIf 3
+                    Player.modifyActorVar(stock_BaltikBread, 1)
+                    money -= 4
+                    Player(Excited)::"1 more Baltik bread added to my pantry!"
+                    Player.modifyActorVar(rk_VB_IBuyBakery, 1)
+                
+                ElseIf 4
+                    Player.modifyActorVar(stock_ProteinCookie, 1)
+                    money -= 2
+                    Player(Excited)::"1 more protein cookie added to my pantry!"
+                    Player.modifyActorVar(rk_VB_IBuyBakery, 1)
+                    
+                ElseIf 5
+                    Player.modifyActorVar(stock_VdolkyDonut, 1)
+                    money -= 5
+                    Player(Excited)::"1 more Vdolky donut added to my pantry!"
+                    Player.modifyActorVar(rk_VB_IBuyBakery, 1)
+        
+                ElseIf 6
+                    Player.modifyActorVar(stock_ApplePie, 1)
+                    money -= 10
+                    Player(Excited)::"1 slice of apple pie added to my pantry!"
+                    Player.modifyActorVar(rk_VB_IBuyBakery, 1)
+        
+                ElseIf 7
+                    Player.modifyActorVar(stock_RoyalCake, 1)
+                    money -= 25
+                    Player(Excited)::"1 piece of Royal cake added to my pantry!"
+                    Player.modifyActorVar(rk_VB_IBuyBakery, 1)
+                Else
+                    BuyingBakery = false
+                EndIf
+            EndWhile
+        EndIf
+    SceneEnd()

@@ -1,0 +1,102 @@
+WHAT: all
+WHERE: hospital:work
+WHEN: 0-24
+WHO: none
+OTHER: !Player.isAsexual()
+
+    SceneStart()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        IlAime = false
+        Actor = generatePersonTemporary()
+        Actor:attractiveness => random(50, 90)
+        Actor.dress()
+        Actor.show(2)
+        "I have to do a cancer screening on a patient."
+        "Do I ask <Actor.him_or_her> to undress completely?"
+        0:: "Yes"
+        1:: "No"
+        
+        If 0
+            perversion += 1
+            Actor(Flirty)::"Sure!"
+            Actor.strip()
+            Actor:arousal += 1
+            arousal += 1
+            TYtxt = " I think <Actor.he_or_she>'s a little too comfortable being naked in front of me."
+        EndIf
+        "I know I have to be professional, but let's say my patient has a pretty hot body, and <Actor.he_or_she>'s flirting with me.<TYtxt>"
+        "Do I touch <Actor.his_or_her> on purpose, discreetly, <Actor.his_or_her> parts?"
+        0:: "Let's try to touch ..."
+        1:: "Stay professional"
+        
+        If 0
+            If Actor.isInterestedIn(Player)
+                IlAime = true
+            Else
+                Actor(Annoyed)::"It's going to be long, I have things to do after that?"
+                "Oops, I guess <Actor.he_or_she>'s not in the mood to fuck or <Actor.he_or_she>'s just not interested in me!"
+                Player(Happy)::"No, in fact we are done, I will send you the result later today!"
+                "Once my patient's scan was complete, I told <Actor.him_or_her> I would send <Actor.him_or_her> the results later that day"
+                Actor.dress()
+                "The patient put <Actor.his_or_her> clothes back on, then I wrap it up and welcome the next patient."
+                Actor(Annoyed)::"Have a nice day!"
+                Actor:attractiontoplayer -= random(0, 3)
+            EndIf
+        EndIf
+        If IlAime
+            "During the cancer screening, I took the opportunity to touch <Actor.him_or_her> generously, let's face it, I spoiled myself. However, <Actor.he_or_she> seemed to like my 'delicate' touches and my boldness."
+            perversion += random(0, 1)
+            arousal += random(0, 1)
+            Actor:arousal += random(0, 1)
+            Actor:attractiontoplayer += random(5, 10)
+            "The examination is now done. But actually, I don't really want <Actor.him_or_her> to put <Actor.his_or_her> clothes back on... Since the beginning of the exam, <Actor.he_or_she>'s been flirting me. I just want to fuck <Actor.him_or_her> right now!"
+            "Should I ask the patient to put <Actor.his_or_her> clothes back on or ...."
+            0:: "Ask <Actor.him_or_her> to get dressed"
+            1:: "Ask <Actor.him_or_her> to get laid"
+            
+            If 0
+                "Once my patient's scan was complete, I told <Actor.him_or_her> I would send <Actor.him_or_her> the results later that day"
+                Actor.dress()
+                "The patient put <Actor.his_or_her> clothes back on, then I wrap it up and welcome the next patient."
+                Actor(Happy)::"Have a nice day!"
+                Actor:attractiontoplayer += random(0, 3)
+            Else
+                If Actor.isInterestedIn(Player) && Actor:arousal > 15
+                    Actor(Shocked):: "Here,... for real,... nice! Sure I want to!"
+                    animatePair(Player, Actor, Kissing)
+                    Player.strip()
+                    Player(Kiss):: "..."
+                    animatePair(Actor, Player, Kissing)
+                    Actor(Kiss):: "..."
+                    "In the end, we had sex on an examination bed..."
+                    Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    perversion += random(0, 0.5)
+                    Actor:attractiontoplayer += random(0, 3)
+                    Actor:attractiontoplayer += random(0, 3)
+                ElseIf Actor.isInterestedIn(Player)
+                    Actor(Flirty)::"I think you're going a little too far, Doctor. I enjoyed your subtle touches but I am not interested in sleeping with you."
+                    Actor(Flirty)::"At least not today..."
+                    Actor(Flirty)::"Have a nice day!"
+                    arousal -= random(0, 0.5)
+                    Actor:attractiontoplayer += random(0, 3)
+                    Actor:attractiontoplayer += random(0, 3)
+                Else
+                    Actor(Disgusted)::"Ew ... you are definitely not my type."
+                    Actor(Irritated)::"I think you're going a little too far, Doctor. I said nothing about your subtle touches but I am not interested in sleeping with you."
+                    Actor(Bored)::"Have a nice day!"
+                    arousal -= random(0, 0.5)
+                    Actor:attractiontoplayer -= random(0, 3)
+                    Actor:attractiontoplayer -= random(0, 3)
+                    "Fucking teaser..."
+                EndIf
+            EndIf
+        EndIf
+        Actor.hide()
+    SceneEnd() // Improved by Raddeck
+    timeout(400, patient_crush)

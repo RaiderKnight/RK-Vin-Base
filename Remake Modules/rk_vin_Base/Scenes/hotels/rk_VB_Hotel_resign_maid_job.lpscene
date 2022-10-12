@@ -1,0 +1,30 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        MaidJob = rk_VB_setHotelMaidJob.getGlobal()
+        tag_maidHotel = Player.getActorVar(rk_VB_tag_maidHotel)
+        Hotescort = Player.getActorVar(rk_VB_tag_Hotescort)
+        FirtsDJob = Player.getActorVar(rk_VB_FirtsDJobHotel)
+        If MaidJob >= 1
+            "Am I sure that I want to resign from my current job?"
+            0:: "Yes"
+            1:: "No"
+        
+            If 0
+                "This job just wasn't for me. I submitted a resignation letter to my boss."
+                "Time for a new chapter in my career."
+                rk_VB_setHotelMaidJob.setGlobal(0)
+                Player.setActorVar(rk_VB_FirtsDJobHotel, 0)
+                Player.setActorVar(rk_VB_tag_Hotescort, 0)
+                Player.setActorVar(rk_VB_tag_maidHotel, 0)
+            Else
+                "On second thought, I can't afford to give up this job."
+            Endif
+        Else
+            "I do not work here. I have to 'Ask for a job' in order to work here as an employee and resign after..."
+        Endif
+    SceneEnd()

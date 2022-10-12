@@ -1,0 +1,181 @@
+WHAT: sleep, nap
+WHERE: home
+WHEN: 0 - 4
+WHO: none
+OTHER: isAtHome() && intelligence < random(0, 100)*random(0, 1)*random(0, 1)*random(0, 1)
+
+    SceneStart()
+        DGetFuck = false
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor = generatePersonTemporary()
+        While !Player.isInterestedIn(Actor)
+            Actor = generatePersonTemporary()
+        EndWhile
+        IBuyaASys = rk_VB_IBuyaASys.getGlobal()
+        AlarmEnable = rk_VB_AlarmEnable.getGlobal()
+        DogGuardianStats = Player.getActorVar(DogGuardianStat)
+        If DogGuardianStats > 75
+            DRisk = 25
+        ElseIf DogGuardianStats > 50
+            DRisk = 20
+        ElseIf DogGuardianStats > 35
+            DRisk = 15
+        ElseIf DogGuardianStats > 25
+            DRisk = 10
+        ElseIf DogGuardianStats <= 24.8
+            DRisk = 0
+        EndIf
+        If IBuyaASys > 0
+            KRisk = 0
+            If IBuyaASys == 1
+                KRisk = 50
+            ElseIf IBuyaASys == 2
+                KRisk = 75
+            ElseIf IBuyaASys == 3
+                KRisk = 90
+            EndIf
+        EndIf
+        KidnapAttemp = random(0, 100)
+        TRisk = KRisk + DRisk
+        Actor2 = getCreature(Dog)
+        If TRisk > KidnapAttemp && AlarmEnable == 1
+            If Actor2.isValid()
+                Actor2(Angry):: "Warf, warf, warf, grrrr...!"
+            EndIf
+            "All of a sudden the alarm system starts ringing."
+            Player(Curious):: "WTF, well, let's go see what's going on!"
+            Player(Curious):: "Hum, I can't see anything!"
+            Player(Curious):: "Let's hope it was just an animal..."
+        Else
+            BurglarIsIn = true
+            fightStart = false
+            "Wait, what's that sound?"
+            If Actor2.isValid()
+                Actor2.show()
+                BurglarIsIn = false
+                If DogGuardianStats > 50 || 50 > random(1, 100)
+                    bonus = random(1, 5)
+                    "Before things get further out of control, my trusty guard dog <Actor2.name> came to my rescue."
+                    "<Actor2.name> aggressively attacked the home invader."
+                    Actor2(Angry):: "Warf, warf, warf, grrrr...!"
+                    Actor2.moveToPersonStand(Actor, 30)
+                    Actor(Pain):: "Ah! Fuck,.... Ahhhhh!"
+                    
+                    If DogGuardianStats < 70
+                        "The home invader managed to knock down my dog..."
+                        mood -= 5
+                        Actor2:energy => 25
+                        Player.modifyActorVar(DogGuardianStat, -1)
+                        DGetFuck = true
+                    Else
+                        "After a few painful bites, the thug panicked and fled." 
+                        Actor.hide() 
+                        Player(Happy):: "Oh my God, <Actor2.name>, you saved me!"
+                        Player.modifyActorVar(DogGuardianStat, bonus)
+                        If isModEnabled(vin_Bestiality) && Actor2.isInterestedIn(Player)
+                            CookieForDog = true
+                        Else
+                            Player(Happy):: "Good dog! Here some cookies and a big bowl of your best meal."
+                            Actor2(Happy):: "Wouf..."
+                            Actor2:energy += 25
+                            Actor2:rapportwithplayer += 1
+                        EndIf
+                    EndIf
+                Else
+                    fightStart = true
+                EndIf
+            EndIf
+            If isModEnabled(rk_vin_Base)
+                If BurglarIsIn || fightStart
+                    "I was awaken by the sound of steps. I slowly opened one of my eyes only to see a shadow - one of a burglar trying sneak past my bed! The thief hasn't noticed me yet."
+                    0:: "Pretend to be asleep"
+                    1:: "Ambush the thief"
+                    2:: isModEnabled(vin_VanillaPorn) && perversion > 50:: "Start masturbating"
+                
+                    If 0
+                        "The burglar is already inside and I don't want to risk being harmed. Let's just close my eyes and pretend to be asleep and let the thief take some of my properties - better them than my life."
+                        masochist += random(0, 0.5)
+                        money -= random(250, 3000)
+                        mood -= 50
+                    Else
+                        Actor.dress()
+                        Actor.show(2)
+                        masochist -= random(0, 1)
+                        
+                        If 1
+                            Player(Furious):: "It's your unlucky day, thief!"
+                            "I took the thief by surprise, jumped off my bed and tackled <Actor.him_or_her>. A wrestling match began."
+                            If martial + 10 > Actor:martial
+                                "After a brief struggle, I managed to overwhelm the burglar. I then called the cops, who quickly arrested the intruder."
+                                martial += random(0, 1)
+                                mood += random(0, 50)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
+                            Else
+                                "Unfortunately, the burglar was too strong for me and soon overcame my initial advantage of surprise and beat me up, before escaping."
+                                Actor.hide()
+                                "Badly injured, I barely managed to reach for the phone to call an ambulance for myself."
+                                Loc = findNearbyBuilding(hospital)
+                                moveTo(Loc)
+                                mood -= 100
+                                energy -= 100
+                                fitness -= random(0, 2)
+                                martial -= random(0, 5)
+                                attractiveness -= random(0, 2)
+                                "The injuries weren't life-threatening or permanent thankfully, and I made a speedy recovery in hospital. Oh well, at least in <Actor.his_or_her> hurry to escape, <Actor.he_or_she> didn't take any stolen properties with <Actor.him_or_her>."
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -5)
+                                EndIf
+                            EndIf
+                        Else
+                            perversion += random(0, 0.5)
+                            "Inspired by a recent porn I watched, I came up with a crazy idea: With my eyes still closed, I reached my hand down to my crotch and started masturbating."
+                            If Actor.isInterestedIn(Player)
+                                "The thief smirked at <Actor.his_or_her> horny victim. Thinking <Actor.he_or_she> could get away with it, <Actor.he_or_she> moved towards me and started touching me."
+                                0:: "Ambush <Actor.him_or_her>"
+                                1:: "Fuck <Actor.him_or_her>"
+                                
+                                If 0
+                                    "This is my chance! Too occupied with feeling me up, the thief never saw my knee strike coming at <Actor.his_or_her> crotch, followed by a bedroom lamp smashed on <Actor.his_or_her> head, rendering <Actor.him_or_her> unconscious. I then called the cops, who quickly arrested the intruder."
+                                    martial += random(0, 1)
+                                    mood += random(0, 50) 
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                                    EndIf
+                                Else
+                                    "I think the thief is going to get a whole lot more than some stolen money tonight!"
+                                    "Making it known that I was not asleep, just extremely horny, I reached up to kiss my intruder and the most cliche porn plot ever started playing out ..."
+                                    Sex(Actor, Player)
+                                    perversion += random(0, 1)
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    EndIf
+                                EndIf
+                            Else
+                                "Obviously confused and freaked out by what's going on and worried that I might wake up out of arousal, the thief made a speedy escape." 
+                            EndIf
+                        EndIf
+                    EndIf
+                EndIf
+            EndIf
+            If CookieForDog
+                "I can't help but notice that the fight with the home invader seemed to have brought out the animalistic instinct in <Actor2.name>. <Actor2.He_or_She> seems 'excited'." // Edit Vin
+                0:: "Reward my hero dog with sex"
+                1:: "Some dog treats are good enough rewards"
+                
+                If 0
+                    "A hero saving the damsel in distress deserves to get laid. That hero not being human shouldn't matter."
+                    Player.strip()
+                    Sex(Actor2, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                    EndIf
+                EndIf
+            EndIf
+        EndIf
+    SceneEnd() // Improved by Raddeck
+    timeout(1000, burglar)

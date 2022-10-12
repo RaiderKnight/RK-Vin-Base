@@ -1,0 +1,245 @@
+WHAT: all
+WHERE: all, -home, -prison
+WHEN: 0 - 24
+WHO: Actor2 = getCompanion(); If !Player.isSameEthnic(Actor2) && !Actor2.hasRelationship(ParentChild, ParentSiblingSiblingChild, GrandParentGrandChild) && [Actor2:rapportwithplayer > 20 || Actor2.isDating()]
+OTHER: !Player.isAsexual()
+
+    
+    SceneStart()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        setBackgroundCustom(livingroom)
+        "I was spending time with <Actor2.name> when we decided to just go chill at <Actor2.his_or_her> place."
+        "There were just the two of us watching TV in the living room when a stranger unlocked the front door and walked in."
+        Actor = Actor2.generatePersonTemporaryMatchRace()
+        While !Player.isInterestedIn(Actor)
+            Actor = Actor2.generatePersonTemporaryMatchRace()
+        Endwhile
+        Actor.makeInterested(Player)
+        Actor:age => age + random(10, 50) 
+        Actor.randomizeFace()
+        Actor.randomizeHairs()
+        Actor.makePermanent()
+        If Actor:age - Actor2:age < 18
+            addNpcRelationship(ParentSiblingSiblingChild, Actor, Actor2)
+            If Actor.isMale()
+                rela = "uncle"
+            Else
+                rela = "aunt"
+            EndIf
+        ElseIf Actor:age - Actor2:age < 40
+            addNpcRelationship(ParentChild, Actor, Actor2)
+            If Actor.isMale()
+                rela = "dad"
+            Else
+                rela = "mom"
+            EndIf    
+        Else
+            addNpcRelationship(GrandParentGrandChild, Actor, Actor2)
+            If Actor.isMale()
+                rela = "grandpa"
+            Else
+                rela = "grandma"
+            EndIf        
+        EndIf
+        If Actor.isEthnic(black) && Actor.isMale() && !isTimingOut(strt_black_m)
+            Actor.blendPreset(strt_black_m)
+        ElseIf Actor.isEthnic(black) && !Actor.isMale() && !isTimingOut(strt_black_f)
+            Actor.blendPreset(strt_black_f)
+        ElseIf Actor.isEthnic(indian) && Actor.isMale() && !isTimingOut(strt_indian_m)
+            Actor.blendPreset(strt_indian_m)
+        ElseIf Actor.isEthnic(indian) && !Actor.isMale() && !isTimingOut(strt_indian_f)
+            Actor.blendPreset(strt_indian_f)
+        ElseIf Actor.isEthnic(arab) && Actor.isMale() && !isTimingOut(strt_arab_m)
+            Actor.blendPreset(strt_arab_m)
+        ElseIf Actor.isEthnic(arab) && !Actor.isMale() && !isTimingOut(strt_arab_f)
+            Actor.blendPreset(strt_arab_f)
+        ElseIf Actor.isEthnic(latin) && Actor.isMale() && !isTimingOut(strt_latin_m)
+            Actor.blendPreset(strt_latin_m)
+        ElseIf Actor.isEthnic(latin) && !Actor.isMale() && !isTimingOut(strt_latin_f)
+            Actor.blendPreset(strt_latin_f)
+        ElseIf Actor.isEthnic(asian) && Actor.isMale() && !isTimingOut(strt_asian_m)
+            Actor.blendPreset(strt_asian_m)
+        ElseIf Actor.isEthnic(asian) && !Actor.isMale() && !isTimingOut(strt_asian_f)
+            Actor.blendPreset(strt_asian_f)
+        ElseIf Actor.isEthnic(white) && Actor.isMale() && !isTimingOut(strt_white_m)
+            Actor.blendPreset(strt_white_m)
+        ElseIf Actor.isEthnic(white) && !Actor.isMale() && !isTimingOut(strt_white_f)
+            Actor.blendPreset(strt_white_f)
+        EndIf
+        Actor.dress()
+        Actor.show()
+        Actor.moveToPersonStand(Player, 100)
+        Actor2(Happy):: "Oh, you're home. You haven't met <Player.name> yet, have you?"
+        "<Actor2.name> doesn't seem thrilled to see me for some reason ..."
+        Actor2(Happy):: "<Player.name>, this is my <rela> ..."
+        Actor(Grin):: "What are you doing? Inviting some <Player.race> <Player.guy_or_girl> over to our home!"
+        Actor(Angry):: "You only want to fuck <Actor2.name> and then dump <Actor2.him_or_her> after! This is a <Actor.race> family! No filthy <Player.race>s are allowed here!"
+        If Player.isEthnic(black) && Player.isMale() && !isTimingOut(strt_black_m)
+            Actor(Grin):: "I don't want any niggers in my house! They only bring problems!"
+        ElseIf Player.isEthnic(black) && !Player.isMale() && !isTimingOut(strt_black_f)
+            Actor(Grin):: "I don't want any niggers in my house! They only bring problems and kids!"
+        ElseIf Player.isEthnic(indian) && Player.isMale() && !isTimingOut(strt_indian_m)
+            Actor(Grin):: "I don't want any fucking Hindus in my house! They are poor and all they want is your money, plus they smell like curry."
+        ElseIf Player.isEthnic(indian) && !Player.isMale() && !isTimingOut(strt_indian_f)
+            Actor(Grin):: "I don't want any fucking Hindus in my house! They are poor and all they want is your money, plus they smell like curry."
+        ElseIf Player.isEthnic(arab) && Player.isMale() && !isTimingOut(strt_arab_m)
+            Actor(Grin):: "I don't want a fucking Arab in my house! You can't trust them, he might take you for his slave or sell you to terrorists. They don't want to assimilate into our culture!"
+        ElseIf Player.isEthnic(arab) && !Player.isMale() && !isTimingOut(strt_arab_f)
+            Actor(Grin):: "I don't want a fucking Arab in my house! I bet you she doesn't shave and she smells like sweat! They live in the past and they don't want to assimilate into our culture!"
+        ElseIf Player.isEthnic(latin) && Player.isMale() && !isTimingOut(strt_latin_m)
+            Actor(Grin):: "I don't want any chicos in my house! They only bring drugs, violence and problems!"
+        ElseIf Player.isEthnic(latin) && !Player.isMale() && !isTimingOut(strt_latin_f)
+            Actor(Grin):: "I don't want any chicas in my house! They are poor and all they want is your money and a way to enter in our country!"
+        ElseIf Player.isEthnic(asian) && Player.isMale() && !isTimingOut(strt_asian_m)
+            Actor(Grin):: "I don't want a fucking Asian in my house! These asian are invading our country, now you! They are a people who eat anything, even dogs! They are barbarians!"
+        ElseIf Player.isEthnic(asian) && !Player.isMale() && !isTimingOut(strt_asian_f)
+            Actor(Grin):: "I don't want a fucking Asian in my house! These asian are invading our country, now you! They are a people who eat anything, even dogs! They are barbarians!"
+        ElseIf Player.isEthnic(white) && Player.isMale() && !isTimingOut(strt_white_m)
+            Actor(Grin):: "I don't want any fucking whity in my house! They only bring trouble and <Player.he_or_she> will take advantage of you!"
+        ElseIf Player.isEthnic(white) && !Player.isMale() && !isTimingOut(strt_white_f)
+            Actor(Grin):: "I don't want any fucking whity in my house! They only bring trouble and <Player.he_or_she> will take advantage of you!"
+        EndIf
+        Actor.ModifyRaceFetish(Player, -200, -100)
+        "Oh wow ... I didn't expect someone open-minded like <Actor2.name> to have such a racist <rela>."
+        Actor2(Sad):: "Please, <rela>, can you please stop with your racist preaching? You're just embarassing yourself!"
+        "Angry that <Actor2.name> didn't take <Actor.his_or_her> advice about 'staying away from the <Player.race> <Player.guy_or_girl>', <Actor2.name>'s <rela> slammed the door and went into <Actor2.his_or_her> bedroom."
+        Actor.hide()
+        Actor2(Embarrassed):: "Look, <Player.name>, I'm so sorry about that. My <rela> has always been a big racist, I'm embarrassed by <Actor.him_or_her> sometimes ..."
+        Player(Sarcastic):: "It's okay ... there's always an idiot in each family."
+        Actor2(Sad):: "Not just an idiot, an hypocrite as well ..."
+        Player(Sad):: "How so?"
+        Actor2(Grin):: "Last year, <Actor.he_or_she> asked me for help with <Actor.his_or_her> laptop. Guess what <Actor.his_or_her> browser history was full of?"
+        Player(Curious):: "I don't know ... Far-right conspiracy theories?"
+        Actor2(Grin):: "Interracial porn! Specifically, <Actor.race> <Actor.man_or_woman> with <Player.race> <Player.man_or_woman>!"
+        Player(Curious):: "Ha So your <rela> probably doesn't hate <Player.race> <Player.men_or_women> if <Actor.he_or_she> secretly likes to watch them naked, or <Actor.he_or_she>'s jealous of you because <Actor.he_or_she> doesn't have one..."
+        Actor2(Grin):: "I guess so!"
+        If isModEnabled(rk_vin_Base)
+            0:: "Fuck <Actor2.name> in <Actor2.his_or_her> bedroom"
+            1:: !Actor2.isDating() || OpenRelationship():: "Go seduce <Actor2.name>'s <rela>"
+            99:: "Do nothing"
+            
+            If 0
+                Player(Grin):: "Let's go fuck in your room!"
+                If Actor2.isInterestedIn(Player) && Actor2:arousal > 15 && Actor2:perversion > 35
+                    Actor2(Grin):: "Good idea, I can't wait to see <Actor.his_or_her> face when <Actor.he_or_she> hears us fucking right here."
+                    perversion += 1
+                    Actor2:perversion += 1
+                    Random
+                        setBackground3D(Modules/rk_vin_Base/World/rk_VB_Bedroom2.lpworld)
+                        setBackground3D(Modules/rk_vin_Base/World/rk_VB_pinkroom.lpworld)
+                        setBackground3D(Modules/rk_vin_Base/World/rk_VB_redroom.lpworld)
+                    EndRandom
+                    Actor2.strip()
+                    Player.strip()
+                    Sex(Player, Actor2)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    If random(0, 100) > 50
+                        Actor.show()
+                        If !Actor.isInterestedIn(Player)
+                            Actor(Angry):: "What the fuck! <Actor2.name>, how could you pollute our family home by laying with that <Player.race> <Player.bastard_or_bitch> here?"
+                            Actor2(Serene):: "Oh really, <rela>. Is that what you really think? Because your browser history full of interracial porn involving '<Player.race> <Player.bastards_or_bitches>' would suggest otherwise ..."
+                            Actor2(Serene):: "Are you jealous, or it's because you would like to be in my shoes right now?"
+                            Actor(Angry):: "If you would have watched the videos, you would have seen that it's '<Player.race> <Player.bastards_or_bitches>' are sex slaves every time, because that is what they deserve."
+                            Actor(Angry):: "Now you! Get out of my house!"
+                            "I did not persist and went home!"
+                            moveTo(Home)
+                            setBackground(home)
+                        ElseIf Actor:perversion > 50 && Actor2:perversion > 50 && isModEnabled(vin_Incest)
+                            Actor:arousal += random(15, 20)
+                            Actor(Angry):: "What the fuck!"
+                            Actor2(Angry):: "What? What the fuck! What is your problem! What do you want? Get out!"
+                            Actor(Embarrassed):: "I heard you fuck and you made me want to come join you, if you're willing to forgive me!"
+                            Actor2(Serene):: "Maybe if you stopped spewing racist nonsense once in a while!"
+                            Actor(Embarrassed):: "Okay, I'm sorry, I'm jealous!"
+                            Actor2(Serene):: "Well then come join us, you big baby!"
+                            Sex(Actor, Player, Actor2)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -3)
+                            EndIf
+                        Else
+                            Actor(Angry):: "What the fuck! <Actor2.name>, how could you pollute our family home by laying with that <Player.race> <Player.bastard_or_bitch> here?"
+                            Actor2(Serene):: "Oh really, <rela>. Is that what you really think? Because your browser history full of interracial porn involving '<Player.race> <Player.bastards_or_bitches>' would suggest otherwise ..."
+                            Actor2(Serene):: "Are you jealous, or it's because you would like to be in my shoes right now?"
+                            Actor(Angry):: "If you would have watched the videos, you would have seen that it's '<Player.race> <Player.bastards_or_bitches>' are sex slaves every time, because that is what they deserve."
+                            Actor(Angry):: "Now you! Get out of my house!"
+                            "I did not persist and went home!"
+                            "But just before I left, Joe grabbed me by the arm and said:"
+                            Actor(Flirty)::"Here is my phone number! Call me when you're bored!"
+                            Actor(Flirty)::"Forget what I said earlier, it was some kind of an apology for having you just to myself!"
+                            Player(Flirty)::"Ok thanks, no problem!"
+                            exchangeContact(Actor)
+                            moveTo(Home)
+                            setBackground(home)
+                        EndIf
+                    Else
+                        "It's like <Actor.he_or_she> didn't hear us fuck or <Actor.he_or_she> just doesn't care!"
+                    EndIf
+                Else
+                    Actor2(Sad)::"Not a good idea! Besides, I'm not really in the mood to fuck!"
+                    Actor2(Sad):: "And I think that would go too far. <Actor.He_or_She> is still my <rela> after all!"
+                EndIf
+                
+            ElseIf 1
+                Player(Grin:: "Wait here, <Actor2.name>, I have an idea. I need to talk to your <rela> alone, a few minutes."
+                Actor2(Sad)::"Ok, I'll wait!"
+                Actor2.hide()
+                setBackground3D(Modules/rk_vin_Base/World/rk_VB_Bedroom2.lpworld)
+                Actor.show()
+                Actor.strip()
+                "I walked into <Actor.name>'s room without knocking. Unsurprisingly, immediately after saying some outrageous stuff about <Player.race>. Who I see masturbating to an interracial porn movie where the lead actor is a <Player.race>."
+                Filter(Solo)
+                Sex(Actor)
+                Actor(Embarrassed):: "Get out of here? Why are you here?"
+                Actor(Embarrassed):: "It's not what you think... I was doing some research and I clicked on an ad by mistake and it brought me to this site."
+                Player(Grin):::: "Yeah, right... I caught you in the act... Since when does a movie start around the middle!"
+                Actor(Embarrassed)::"Okay, what is it you want?"
+                Player(Flirty)::"Well, since you fantasize about white people, would you like to live your dream, by fucking me right on your bed!"
+                "I started taking off my clothes"
+                Player.strip()
+                If !Actor.isInterestedIn(Player)
+                    Actor(Angry):: "What are you doing? You disgusting <Player.race> <Player.manwhore_or_whore>! You think a good honest <Actor.race> <Actor.man_or_woman> would be tempted by this shameless display of yours?"
+                    Actor(Angry):: "Get out of my house! Pervert!"
+                    "I did not persist and went home!"
+                    moveTo(Home)
+                    setBackground(home)
+                Else
+                    Actor.strip()
+                    Actor(Flirty):: "Oh no ... I can't resist anymore?"
+                    Filter(Solo)
+                    Sex(Actor)
+                    Actor(Flirty):: "Please, I beg you, all I've ever wanted is, one night with a <Player.handsome_or_beautiful> <Player.race> <Player.man_or_woman> like you ... I've been rejected so many times ..."
+                    "What should I do next?"
+                    0:: "Laugh at <Actor.him_or_her>"
+                    1:: "Fuck <Actor.him_or_her>"
+                    
+                    If 0
+                        "Seeing <Actor2.name>'s <rela> pathetic display, I continued to laugh and mock <Actor2.him_or_her>, before walking out victoriously leaving with another well-deserved rejection for <Actor.him_or_her> to endure."
+                        "Of course, <Actor2.name> heard my taunts, so I think <Actor.he_or_she>'ll keep quiet for a while."
+                        Actor:rapportwithplayer -= random(0, 15)
+                        Actor:attractiontoplayer -= random(0, 5)
+                    Else
+                        "This was definitely not part of the original plan ... I was supposed to just tease <Actor.him_or_her> ... not actually fuck <Actor.him_or_her>! I'm not sure <Actor.name> would be thrilled to know what we do."
+                        "Is it sympathy? Or maybe I'm just really turned on by racist speech? Or, I simply just want to fuck!"
+                        Sex(Actor, Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Actor:rapportwithplayer += random(0, 15)
+                        Actor:attractiontoplayer += random(0, 5)
+                    EndIf
+                EndIf
+            Else
+                Actor2(Sad)::"Maybe we'd better go to your place after all!"
+                Player(Sad)::"You're right, let's go!"
+                moveTo(Home)
+                setBackground(home)
+            EndIf
+            Actor.hide()
+        EndIf
+    SceneEnd()
+    timeout(200, companion_racist_family) // Scene redone by Raddeck

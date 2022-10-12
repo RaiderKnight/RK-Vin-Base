@@ -1,0 +1,189 @@
+WHAT: all
+WHERE: home
+WHEN: 8 - 20
+WHO: Actor = getSpecific(Landlord); If Actor:perversion > 80 && Actor.isInterestedIn(Player)
+OTHER: isAtHome()
+
+    SceneStart()
+        Rent = getRent()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Actor2 = getSpecific(Dating)
+        Actor.dress()
+        Actor.show()
+        nomorehouse = false
+        FullSex = false
+        NoIntAct = false
+        If money < Rent
+            "When the landlord comes to collect the rent today, I can see that I don't have enough money to pay my rent! What should I tell <Actor.him_or_her>?"
+            0::"Offer a <Actor.blowjob_or_cunilingus>!"
+            1::"Offer to sleep with <Actor.him_or_her>!"
+            2::"Tell <Actor.him_or_her> the truth!"
+            
+            If 0
+                If !Actor.isMale()
+                    Actor(Grin)::"Seriously, you really think a licking is going to cover your rent. You are dreaming my dear! Not interested."
+                Else
+                    Actor(Grin)::"Seriously, you really think a blowjob is going to cover your rent. You are dreaming my dear! Not interested."
+                EndIf
+                If Actor:perversion > 50 && Actor:arousal > 15
+                    Actor(Flirty)::"However, a good complete fuck will do the trick this time!"
+                    "What should I say?"
+                    0::"Okay ..."
+                    1::"Fuck it!"
+                    
+                    If 0
+                        HaveSexWithLandlord = true
+                        FullSex = true
+                    Else
+                        nomorehouse = true
+                    EndIf
+                Else
+                    nomorehouse = true
+                    NoIntAct = true
+                EndIf
+            ElseIf 1
+                If Actor:perversion > 50 && Actor:arousal > 15
+                    perversion += 1
+                    HaveSexWithLandlord = true
+                    Actor(Flirty)::"Now we are talking! Absolutely open to your offer!"
+                Else
+                    Actor(Sad)::"Sorry but not interrested!"
+                    Actor:perversion += 1
+                    Actor:arousal += 1
+                    nomorehouse = true
+                EndIf
+            Else
+                Player(Sad)::"I don't know how to tell you this but I don't have enough money this month to pay the rent!"
+                If Actor:perversion > 50 && Actor:arousal > 15
+                    Actor(Flirty)::"No problem, you can pay me with sex, a good complete fuck will do the trick this time!"
+                    "What should I say?"
+                    0::"Okay ..."
+                    1::"Fuck it!"
+                    
+                    If 0
+                        HaveSexWithLandlord = true
+                        FullSex = true
+                    Else
+                        nomorehouse = true
+                    EndIf
+                Else
+                    Actor(Grin)::"So by the same token, I don't know how to tell you this but you're going to have to pack your stuff and go!"
+                    Player(Sad)::"O.K what I'm supposed to do now?"
+                    Actor(Sad)::"Pack your stuff and get the fuck out of my building!"
+                    Actor(Grin)::"OR, I give you one more chance to pay me with sex, a good complete fuck will do the trick!"
+                EndIf
+                "What should I say?"
+                0::"Okay ..."
+                1::"Fuck it, I'm leaving!"
+                
+                If 0
+                    HaveSexWithLandlord = true
+                    FullSex = true
+                Else
+                    nomorehouse = true
+                EndIf
+            EndIf
+            If nomorehouse
+                nomorehouseEnd = false
+                If NoIntAct
+                    Actor(Sad)::"No problem but you can't stay for free!"
+                    Player(Sad)::"O.K what I'm supposed to do now?"
+                    Actor(Sad)::"Pack your stuff and get the fuck out of my building!"
+                    Actor(Grin)::"OR, I give you one more chance with a complet fuck!"
+                    "What should I say?"
+                    0::"Okay ..."
+                    1::"Fuck it, I'm leaving!"
+                
+                    If 0
+                        HaveSexWithLandlord = true
+                        FullSex = true
+                    Else
+                        nomorehouseEnd = true
+                    EndIf
+                EndIf
+                If nomorehouseEnd
+                    "Not good, I'm homeless now!"
+                    loseHome()
+                    "I need to find a way to get more money..."
+                EndIf
+            EndIf
+            If HaveSexWithLandlord
+                If FullSex
+                    Actor(Happy)::"So, first, I want to see you naked!"
+                    "So I started to undress,... at the same time, the landlord started to strip too, at my pace..."
+                    Actor.strip()
+                    Player.strip()
+                    Actor(Happy)::"Now, I want you to play with my <Actor.dick_or_pussy>!"
+                    "So I grad <Actor.his_or_her> <Actor.dick_or_pussy> and started to masturbate <Actor.him_or_her>..."
+                    Filter(handjob)
+                    sex(Player, Actor)
+                    Actor(Happy)::"Good, now I want you to suck my <Actor.dick_or_pussy> and I will suck your <Player.dick_or_pussy> at the same time!"
+                    "So I lay down and <Actor.he_or_she> got on top of me, <Actor.his_or_her> <Actor.dick_or_vagina> in my face ready to be <Actor.sucked_or_licked> dry."
+                    Filter(Licking)
+                    sex(Player, Actor)
+                    Actor(Happy)::"Good, now let's fuck!"
+                    sex(Player, Actor)
+                    "That was awkward but at least I have paid my rent... Now I need to find more money!"
+                    If Player.isMale() && Actor.isMale()
+                        "I need to take a shower, I got sperm everywhere and my ass needs water..."
+                    ElseIf Player.isMale() && !Actor.isMale()
+                        "My dick is on fire, I need to take a shower to cool down a bit!"
+                    ElseIf Player.isFemale() && !Actor.isMale()
+                        "I need to take a shower, I got pussy juice everywhere and my ass needs water..."
+                    ElseIf Player.isFemale() && Actor.isMale()
+                        "I need to take a shower, I got sperm everywhere and my ass needs water..."
+                    EndIf
+                    attractiveness -= 10
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -10)
+                    EndIf
+                Else
+                    perversion += 1
+                    arousal -= 1
+                    Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    "That was awkward but at least I have paid my rent... Now I need to find more money!"
+                EndIf
+            EndIf
+        
+        Else
+            "When the landlord comes in to collect the rent today, the pervert offers a big discount if I sleep with <Actor2.him_or_her> ..."
+            0:: "Okay ..."
+            1:: Actor2.isValid() && Actor.isInterestedIn(Actor2):: "Offer <Actor2.name> instead"
+            2:: "No way"
+            
+            If 2
+            
+                "What kind of offer is that?"
+                Player(Wink)::"I prefer to pay cash!"
+                money -= Rent
+                
+            Else
+                
+                If 0
+                    Rent -= 500
+                    Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    "That was awkward..."
+                    money -= Rent
+                    
+                Else
+                    perversion += 1
+                    Rent -= 500
+                    Sex(Actor, Actor2)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    "That was awkward..."
+                    money -= Rent
+                Endif
+            Endif
+        Endif
+        
+    SceneEnd() // Improved by Raddeck
+    timeout(1000, cms_ica_sep05)

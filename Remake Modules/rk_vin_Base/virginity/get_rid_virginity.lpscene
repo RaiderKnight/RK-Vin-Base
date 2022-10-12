@@ -1,0 +1,401 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+
+    SceneStart()
+        Prixphoto = random(100, 250)
+        Prixphotol = Prixphoto.convertToLocalCurrency()
+        Step = rk_VB_virgin_step.getGlobal()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        MoyePho = rk_VB_TempMoyePho.getGlobal()
+        Allonsfourre = false
+        SetAgePL = Player:age
+        SetDPL = SetAgePL*365
+        SetBlackListGRV = Player.getActorVar(rk_VB_SetBlackListGRV)
+        TopBlackListGRV = Player.getActorVar(rk_VB_TopBlackListGRV)
+        If Player.isVirgin()
+            "I'm still a virgin ..."
+            0:: "And I'm proud of it!"
+            1:: "And I'm getting sick of it!"
+            2:: isWithCompanion() && CurrentCompanion.isValid() ::"Ask companion to help you out!"
+        
+            If 0
+                "And it's completely by choice. I will continue to save myself for someone special."
+                AmNotVirgin => 0
+            ElseIf 1
+                "To be honest, I just can't wait to get over this stupid hurdle, get rid of my virginity and live my life as confidently as the rest of my peers. But who would be a good candidate to be my first?"
+                0:: "Someone I know"
+                1:: "Random hookup"
+                2:: "Call a hooker"
+                7:: "Auction off my virginity" 
+                99:: "Let's think about this some more"
+            
+                If 0
+                    "Of course, I would be most comfortable having my first time with a friend that I can trust."
+                    selectNPC()
+                    Actor = getSelectedNPC()
+                    If Actor:rapportwithplayer > 20 && Actor:attractiontoplayer > 5 && Actor:perversion > 30 && !Actor.isVirgin()
+                        Actor.dress()
+                        Actor.show()
+                        "Needless to say, the opportunity to pop someone's cherry doesn't come up too often in someone's lifetime so <Actor.name> jumped at the opportunity."
+                        Sex(Player, Actor)
+                        AmNotVirgin => 1
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                    Else
+                        "Unfortunatly, <Actor.name> turned down my offer ..."
+                    EndIf
+                ElseIf 1
+                    "A stranger is the smartest choice - no strings attached - no future troubles."
+                    "I put up an ad on Craiglist offering up my virginity for free and I feel like I broke the internet. So many responses!"
+                    Actor = generatePersonTemporary()
+                    While !Player.isInterestedIn(Actor)
+                        Actor = generatePersonTemporary()
+                    Endwhile
+                    SecondScreen(Actor)
+                    Actor.dress()
+                    Actor.show()
+                    "Most are weirdos, mind you, but <Actor.name> seems like the candidate least likely be a psycho murderer."
+                    0:: "Hook up with <Actor.him_or_her>"
+                    1:: "Let's think about this some more"
+                
+                    If 0
+                        SecondScreen()
+                        Sex(Player, Actor)
+                        AmNotVirgin => 1
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                    EndIf
+                ElseIf 2
+                   followUp(call_a_hooker)
+                ElseIf 3
+                    If SetBlackListGRV > TopBlackListGRV
+                        Player.setActorVar(rk_VB_SetBlackListGRV, 0)
+                        Player.setActorVar(rk_VB_TopBlackListGRV, 0)
+                        rk_VB_EmailCountGRV = Player.getActorVar(rk_VB_EmailCountGRV)
+                        PendGRV = true
+                        While PendGRV
+                            If Step == 0
+                                "I hear virginity is highly prized"
+                                "I could save it for marriage, for someone special, but since I can't find a <Player.boyfriend_or_girlfriend> it could be an easy solution and who knows maybe <Player.she_or_he> will want to keep me for life."
+                                "Having decided to auction off my virginity, the first step is to get a letter from a gynecologist to certify that I'm is still virgin."
+                                0::"Obtain the letter now"
+                                99::"Maybe later"
+                                
+                                If 0
+                                    setBackground(doctor)
+                                    Player.strip()
+                                    "Since I'm genuinely a virgin, it didn't take long or much effort for the doctor to confirm my virginity."
+                                    rk_VB_virgin_step.setGlobal(1)
+                                Else
+                                    PendGRV = false
+                                EndIf
+                            ElseIf Step == 1
+                                "Good I got the letter, now!"
+                                "The next step in getting rid of my virginity is to take beautiful pictures in a professional studio to encourage bidders."
+                                "The price for a photoshoot is <Prixphotol>"
+                                "What should I do?"
+                                0::"Pay for professionnal photoshoot"
+                                1::"Try with your personnal pictures"
+                                99::"Maybe later"
+                                
+                                If 0
+                                    money -= Prixphoto
+                                    setBackground(photo)
+                                    "Unlike all other types of photoshoots, mine took place fully clothed and as innocently as possible. After all, it's that innocence that bidders are looking for."
+                                    "Now that I've got it all set up, I need to manage to find an auction house that secretly handles this type of virginity auction."
+                                    rk_VB_virgin_step.setGlobal(2)
+                                    stock_photo += 5
+                                ElseIf 1
+                                    "I'll try it with my personal photos and see what the results are. I can't afford a photoshoot!"
+                                    rk_VB_TempMoyePho.setGlobal(1)
+                                    rk_VB_virgin_step.setGlobal(2)
+                                    stock_photo -= 5
+                                Else
+                                    PendGRV = false
+                                EndIf
+                            ElseIf Step == 2
+                                If isModEnabled(rk_vin_Base)
+                                    "Now that I've got it all set up, I need to manage to find an auction house that secretly handles this type of virginity auction."
+                                    "What should I do?"
+                                    0::"Find an auction house"
+                                    99::"Maybe later"
+                                    
+                                    If 0
+                                        ETChercheMaison = random(0, 100)
+                                        If ETChercheMaison > 50
+                                            "Good! I managed to find an auction house!"
+                                            rk_VB_virgin_step.setGlobal(3)
+                                            "I should be getting offers pretty quickly now..."
+                                        Else
+                                            "Well I didn't managed to find an auction house"
+                                        EndIf
+                                    Else
+                                        PendGRV = false
+                                    EndIf
+                                EndIf
+                            ElseIf Step == 3
+                                TempMoyePho = rk_VB_TempMoyePho.getGlobal()
+                                "Let's see if I got any offers!"
+                                If TempMoyePho == 1
+                                    If random(0, 100) > 50
+                                        EmailNbr = random(0, 3)
+                                    Else
+                                        EmailNbr = 0
+                                    EndIf
+                                Else
+                                    EmailNbr = random(0, 3)
+                                EndIf
+                                EmailNbr = EmailNbr.round()
+                                Player.modifyActorVar(rk_VB_EmailCountGRV, EmailNbr)
+                                ChckAuc = true
+                                While ChckAuc
+                                    If !Player.isMale()
+                                        Biden = generatePersonTemporary()
+                                        While !Biden.isMale()
+                                            Biden = generatePersonTemporary()
+                                        EndWhile
+                                    Else
+                                        Biden = generatePersonTemporary()
+                                        While Biden.isMale()
+                                            Biden = generatePersonTemporary()
+                                        EndWhile
+                                    EndIf
+                                    If !Player.isMale()
+                                        Biden1 = generatePersonTemporary()
+                                        While !Biden1.isMale()
+                                            Biden1 = generatePersonTemporary()
+                                        EndWhile
+                                    Else
+                                        Biden1 = generatePersonTemporary()
+                                        While Biden1.isMale()
+                                            Biden1 = generatePersonTemporary()
+                                        EndWhile
+                                    EndIf
+                                    If !Player.isMale()
+                                        Biden2 = generatePersonTemporary()
+                                        While !Biden2.isMale()
+                                            Biden2 = generatePersonTemporary()
+                                        EndWhile
+                                    Else
+                                        Biden2 = generatePersonTemporary()
+                                        While Biden2.isMale()
+                                            Biden2 = generatePersonTemporary()
+                                        EndWhile
+                                    EndIf
+                                    Biden:age => random(18, 50)
+                                    Biden:attractiveness => random(25, 100)
+                                    Biden.randomizeFace()
+                                    Biden.randomizeHairs()
+                                    Biden.dress()
+                                    Biden.hide()
+                                    Biden1:age => random(18, 50)
+                                    Biden1:attractiveness => random(25, 100)
+                                    Biden1.randomizeFace()
+                                    Biden1.randomizeHairs()
+                                    Biden1.dress()
+                                    Biden1.hide()
+                                    Biden2:age => random(18, 50)
+                                    Biden2:attractiveness => random(25, 100)
+                                    Biden2.randomizeFace()
+                                    Biden2.randomizeHairs()
+                                    Biden2.dress()
+                                    Biden2.hide()
+                                    "My virgin aunction account show that <EmailNbr> bidder put a bid for the privilege of deflowering me."
+                                    If EmailNbr > 0
+                                        "Let's see the offers I've received!"
+                                        MajNbr = EmailNbr
+                                        ChkProfile = true
+                                        TrouveDev = false
+                                        "Let's see the first offer!"
+                                        PrixAuc = random(100000, 263000)
+                                        PrixAuc1 = random(100000, 200000)
+                                        PrixAuc2 = random(50000, 100000)
+                                        Prixpl = PrixAuc.convertToLocalCurrency()
+                                        Prixpl1 = PrixAuc1.convertToLocalCurrency()
+                                        Prixpl2 = PrixAuc2.convertToLocalCurrency()
+                                        While ChkProfile && MajNbr > 0
+                                            If MajNbr >= 1
+                                                "Let's see the other offer!"
+                                                TrouveDev = true
+                                            Else
+                                                "No more profile"
+                                                ChckAuc = false
+                                                MajNbr = 0
+                                                ChkProfile = false
+                                            EndIf
+                                            If TrouveDev
+                                                MajNbr -= 1
+                                                secondScreen(Biden)
+                                                Biden.show()
+                                                "<Biden.His_or_Her> name is <Biden.name> <Biden.name_last> and <Biden.he_or_she> offers me <Prixpl> to deflowering me"
+                                                "Based on <Biden.his_or_her> appearance, what should I do?"
+                                                secondScreen()
+                                                0:: "Accept the bid"
+                                                1:: MajNbr >= 1:: "Check the other profile (<MajNbr>)"
+                                                2:: "Wait for a better bid"
+                                                99:: "Change my mind about selling off my virginity altogether"
+                                                
+                                                If 0
+                                                    "I have decided to accept the offer. The rich <Biden.man_or_woman> who will have the honor of deflowering me is called <Biden.name> <Biden.name_last>."
+                                                    Allonsfourre = true
+                                                    rk_VB_ChoiceDevGTV.setGlobal(1)
+                                                ElseIf 1
+                                                    If profile2
+                                                        "The second offer!"
+                                                        secondScreen(Biden1)
+                                                        Biden1.show()
+                                                        "<Biden1.His_or_Her> name is <Biden1.name> <Biden1.name_last> and <Biden1.he_or_she> offers me <Prixpl1> to deflowering me"
+                                                        "Based on <Biden1.his_or_her> appearance, what should I do?"
+                                                        secondScreen()
+                                                        0:: "Accept the bid"
+                                                        1:: "Refuse the bid"
+                                                        
+                                                        If 0
+                                                            "I have decided to accept the offer. The rich <Biden1.man_or_woman> who will have the honor of deflowering me is called <Biden1.name> <Biden1.name_last>."
+                                                            Allonsfourre = true
+                                                            rk_VB_ChoiceDevGTV.setGlobal(2)
+                                                        EndIf
+                                                        MajNbr -= 1
+                                                    EndIf
+                                                    If profile3
+                                                        "The third offer!"
+                                                        secondScreen(Biden2)
+                                                        Biden2.show()
+                                                        "<Biden2.His_or_Her> name is <Biden2.name> <Biden2.name_last> and <Biden2.he_or_she> offers me <Prixpl2> to deflowering me"
+                                                        "Based on <Biden2.his_or_her> appearance, what should I do?"
+                                                        secondScreen()
+                                                        0:: "Accept the bid"
+                                                        1:: "Refuse the bid"
+                                                        
+                                                        If 0
+                                                            "I have decided to accept the offer. The rich <Biden2.man_or_woman> who will have the honor of deflowering me is called <Biden2.name> <Biden2.name_last>."
+                                                            Allonsfourre = true
+                                                            rk_VB_ChoiceDevGTV.setGlobal(3)
+                                                        EndIf
+                                                        MajNbr -= 1
+                                                    EndIf
+                                                    If !Allonsfourre
+                                                        "No more profile"
+                                                    EndIf
+                                                    ChkProfile = false
+                                                ElseIf 2
+                                                    "I think I can still get more out of it than that! Let's wait for a better offer."
+                                                    ChkProfile = false
+                                                    ChckAuc = false
+                                                Else
+                                                    SetBlackListGRV = Player.getActorVar(rk_VB_SetBlackListGRV)
+                                                    TopBlackListGRV = Player.getActorVar(rk_VB_TopBlackListGRV)
+                                                    EmailCount = Player.getActorVar(rk_VB_EmailCountGRV)
+                                                    EmailCountloc = EmailCount.convertToLocalCurrency()
+                                                    "The auction house was very upset that I chickened out and demanded that I reimburse them for all costs."
+                                                    "$1 per profile seen... So, I have to pay <EmailCountloc> ... the bastards!"
+                                                    money -= EmailCount
+                                                    SetDPLPlus = SetDPL + random(3, 5)
+                                                    "They also blacklisted me for a while and warned others in their industry, so it would be difficult for me to put my virginity back up for auction in the near future."
+                                                    Player.setActorVar(rk_VB_SetBlackListGRV, SetDPL)
+                                                    Player.setActorVar(rk_VB_TopBlackListGRV, SetDPLPlus)
+                                                    "I had no choice but to pay back their fees, even if it means going into debt, but at least I managed to save my virginity for someone more special, rather than for a transaction, no matter how lucrative." 
+                                                    ChkProfile = false
+                                                    ChckAuc = false
+                                                EndIf
+                                                If isModEnabled(rk_vin_Base)
+                                                    If Allonsfourre
+                                                        ChoiceBid = rk_VB_ChoiceDevGTV.getGlobal()
+                                                        passTime(0.15, 0.5)
+                                                        If ChoiceBid == 1
+                                                            Actor69 = Biden
+                                                        ElseIf ChoiceBid == 2
+                                                            Actor69 = Biden1
+                                                        ElseIf ChoiceBid == 3
+                                                            Actor69 = Biden2
+                                                        EndIf
+                                                        "So we made an appointment at a hotel not far from here..."
+                                                        "Being so rich to win the auction, of course, <Actor69.he_or_she> booked us a luxurious stay at one of the best hotels in the world to make sure my first time was truly magical."
+                                                        Random
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/0.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/1.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/2.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/3.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/4.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/5.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/6.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/7.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/8.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/9.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/10.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/11.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/12.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/13.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/14.lpworld)
+                                                            setBackground3D(Modules/vin_Base/Bedrooms/15.lpworld)
+                                                        EndRandom
+                                                        "Once arrived at <Actor69.his_or_her> suite, <Actor69.he_or_she> was waiting for me naked, ready to fuck."
+                                                        "So I undressed too and we started our little sex game..."
+                                                        Player.strip()
+                                                        If ChoiceBid == 1
+                                                            Biden.strip()
+                                                            Biden.show()
+                                                            Sex(Player, Biden)
+                                                            money += Prixpl
+                                                        ElseIf ChoiceBid == 2
+                                                            Biden1.strip()
+                                                            Biden1.show()
+                                                            Sex(Player, Biden1)
+                                                            money += Prixpl1
+                                                        ElseIf ChoiceBid == 3
+                                                            Biden2.strip()
+                                                            Biden2.show()
+                                                            Sex(Player, Biden2)
+                                                            money += Prixpl2
+                                                        EndIf
+                                                        If HungerEnable > 0
+                                                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                                                        EndIf
+                                                        rk_VB_ChoiceDevGTV.setGlobal(0)
+                                                        Player.setActorVar(rk_VB_EmailCountGRV, 0)
+                                                        "It was cool but definitely not the same as with a real lover, I'm pretty sure!"
+                                                        mood += random(3, 5)
+                                                    EndIf
+                                                EndIf
+                                            EndIf
+                                        EndWhile
+                                    Else
+                                        "I haven't received any offers yet!"
+                                        ChckAuc = false
+                                    EndIf
+                                EndWhile
+                            EndIf
+                            Step = rk_VB_virgin_step.getGlobal()
+                            MoyePho = rk_VB_TempMoyePho.getGlobal()
+                            passTime(0.15, 0.5)
+                        EndWhile
+                    Else
+                        "Your account is still blacklisted, come back another day!"
+                    EndIf
+                EndIf
+            Else
+                CurrentCompanion.dress()
+                CurrentCompanion.show()
+                "Needless to say, the opportunity to get deflowered by <CurrentCompanion.name> is about to happen..."
+                Sex(Player, CurrentCompanion)
+                AmNotVirgin => 1
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            EndIf
+        Else
+            "You're not virgin anymore"
+            AmNotVirgin => 1
+            SceneEnd()
+        EndIf
+    SceneEnd() // Scene improved by Raddeck
+    //timeout(200, get_rid_virginity)

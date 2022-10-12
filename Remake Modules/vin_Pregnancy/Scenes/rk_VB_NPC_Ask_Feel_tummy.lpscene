@@ -1,0 +1,371 @@
+WHAT: all
+WHERE: all, -prison
+WHEN: 0-24
+WHO: Actor = getPerson(true); Actor2 = getSpecific(Dating); If [Actor.isInterestedIn(Player) && !Actor.isMale() && Actor.isPregnant()] || [!Actor2.isMale() && Actor2.isPregnant()]
+OTHER: isModEnabled(vin_Pregnancy)
+
+    SceneStart()
+        Actor.moveToPersonStand(Player, 50)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        If Actor2.isValid()
+            Actor2.show()
+            Actor2(Curious)::"Hey, baby! Would you caress my belly? I want you to feel our baby!"
+            "What I should answer?"
+            0::"Sure!"
+            1::"I'm busy!"
+            
+            If 0
+                Actor2:attractiontoplayer += Random(0, 1)
+                Actor2:rapportwithplayer += Random(0, 1)
+                Actor2:mood += Random(0, 1)
+                animatePair(Player, Actor2, Hugging)
+                If perversion > 50
+                    "While I'm touching her, doest it turn me so on that I want want to..."
+                    0::"Ask if I can listen from her vagina hole"
+                    1::"Fingering her pussy"
+                    2::"Suck on her breasts"
+                    3::"Licking her pussy"
+                    99::"Do nothing"
+                    
+                    If 0
+                        arousal += 1
+                        perversion += 1
+                        Player(Curious)::"Hey, baby! Can I listen from your vagina hole? I'm curious!"
+                        animatePair(Player, Actor2, LickPussy)
+                        If Actor2:arousal > 25
+                            Actor2(Happy)::"You're funny, you could try!"
+                            If !Player.isFemale()
+                                Actor2(Flirty)::"Instead of looking my pussy, put your cock inside!"
+                            Else
+                                Actor2(Flirty)::"Instead of looking my pussy, lick it!"
+                                Filter(LickPussy)
+                            EndIf
+                            Player(Happy)::"Sure!"
+                            Player.strip()
+                            Actor2.strip()
+                            sex(Player, Actor2)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Actor2:attractiontoplayer += Random(0, 1)
+                            Actor2:rapportwithplayer += Random(0, 1)
+                        Else
+                            Actor2(Annoyed)::"Not now!"
+                        EndIf
+                    ElseIf 1
+                        arousal += 1
+                        perversion += 1
+                        "I take advantage of this moment to slip a finger between her legs and start to caress her clit..."
+                        animatePair(Player, Actor2, FingerPussy)
+                        If Actor2:arousal > 25
+                            If !Player.isFemale()
+                                Actor2(Flirty)::"Instead of using your fingers, use your cock!"
+                            Else
+                                Actor2(Flirty)::"Instead of using your fingers, use your tongue!"
+                                Filter(LickPussy)
+                            EndIf
+                            Player(Happy)::"Sure!"
+                            Player.strip()
+                            Actor2.strip()
+                            sex(Player, Actor2)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Actor2:attractiontoplayer += Random(0, 1)
+                            Actor2:rapportwithplayer += Random(0, 1)
+                        Else
+                            Actor2(Annoyed)::"Not now!"
+                        EndIf
+                    ElseIf 2
+                        arousal += 1
+                        perversion += 1
+                        "I take advantage of this moment to grab her tits and start to suck them..."
+                        animatePair(Player, Actor2, Kissing)
+                        If Actor2:arousal > 25
+                            If !Player.isFemale()
+                                Actor2(Flirty)::"Instead of grabbing and sucking my tits, put your cock between!"
+                                Filter(Boobjob)
+                            Else
+                                Actor2(Flirty)::"Instead of grabbing and sucking my tits, let's fuck!"
+                            EndIf
+                            Player(Happy)::"Sure!"
+                            Player.strip()
+                            Actor2.strip()
+                            Filter(Boobjob)
+                            sex(Player, Actor2)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Actor2:attractiontoplayer += Random(0, 1)
+                            Actor2:rapportwithplayer += Random(0, 1)
+                        Else
+                            Actor2(Annoyed)::"Not now!"
+                        EndIf
+                    ElseIf 3
+                        arousal += 1
+                        perversion += 1
+                        "I take advantage of this moment to take off her panties and start to lick her pussy..."
+                        animatePair(Player, Actor2, LickPussy)
+                        If Actor2:arousal > 25
+                            If !Player.isFemale()
+                                Actor2(Flirty)::"Instead of licking my pussy, put your cock inside!"
+                            Else
+                                Actor2(Flirty)::"Instead of licking my pussy, let's fuck!"
+                            EndIf
+                            Player(Happy)::"Sure!"
+                            Player.strip()
+                            Actor2.strip()
+                            sex(Player, Actor2)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Actor2:attractiontoplayer += Random(0, 1)
+                            Actor2:rapportwithplayer += Random(0, 1)
+                        Else
+                            Actor2(Annoyed)::"Not now!"
+                        EndIf
+                    EndIf
+                EndIf
+            Else
+                Player(Sad)::"Sorry babe! I'm really busy right now!"
+                Actor2:rapportwithplayer += Random(-1, 1)
+            EndIf
+        Else
+            Actor(Curious)::"Hey, <Player.name>! Would you want to touch my belly? I want you to feel my baby!"
+            "What I should answer?"
+            0::"Sure!"
+            1::"I'm busy!"
+
+            If 0
+                Actor:attractiontoplayer += Random(0, 1)
+                Actor:rapportwithplayer += Random(0, 1)
+                Actor:mood += Random(0, 1)
+                animatePair(Player, Actor, Hugging)
+                If perversion > 50
+                    "While I'm touching her, doest it turn me so on that I want want to..."
+                    0::"Ask if I can listen from her vagina hole"
+                    1::"Fingering her pussy"
+                    2::"Suck on her breasts"
+                    3::"Licking her pussy"
+                    99::"Do nothing"
+                    
+                    If 0
+                        arousal += 1
+                        perversion += 1
+                        Player(Curious)::"Can I listen from your vagina hole? I'm curious!"
+                        If Actor.isInterestedIn(Player) && Actor:arousal > 25 && Actor:perversion > 50
+                            Actor(Happy)::"You're funny, you could try!"
+                            animatePair(Player, Actor, LickPussy)
+                            If !Player.isFemale()
+                                Actor(Flirty)::"Instead of looking my pussy, put your cock inside!"
+                            Else
+                                Actor(Flirty)::"Instead of looking my pussy, lick it!"
+                                Filter(LickPussy)
+                            EndIf
+                            Player(Happy)::"Sure!"
+                            Player.strip()
+                            Actor.strip()
+                            sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Actor:attractiontoplayer += Random(0, 1)
+                            Actor:rapportwithplayer += Random(0, 1)
+                        ElseIf Actor.isInterestedIn(Player) && Actor:arousal > 25
+                            Actor(Happy)::"You're funny, you could try!"
+                            animatePair(Player, Actor, LickPussy)
+                            Actor(Annoyed)::"What are you doing? Not here!"
+                            Actor:attractiontoplayer += Random(0, 1)
+                            Actor:rapportwithplayer += Random(0, 1)
+                            Actor:arousal += 1
+                            If !Actor.isContactExchanged()
+                                "<Actor.namee> suggested that we exchange contacts. Shall I?"
+                                0:: "Yes"
+                                1:: "No"
+                                
+                                If 0
+                                    exchangeContact(Actor)
+                                    "We exchanged numbers and parted ways."
+                                    Actor(Happy)::"Sorry but I have to go!"
+                                Else
+                                    Actor(Annoyed)::"Sorry but I have to go!"
+                                EndIf
+                            EndIf
+                        Else
+                            Actor(Angry)::"Hey, you fucking pervert! WTF are you doing?"
+                            If !isAtHome()
+                                Actor(Angry)::"Somebody call the police, <Player.he_or_she>'s stalking me!"
+                                Actor:attractiontoplayer += Random(0, 1)
+                                Actor:rapportwithplayer += Random(0, 1)
+                                followUp(rk_VB_SexAssault_Arrest)
+                            Else
+                                Actor(Angry)::"That's not cool! I'm leaving!"
+                            EndIf
+                            Actor.hide()
+                        EndIf
+                    ElseIf 1
+                        arousal += 1
+                        perversion += 1
+                        "I take advantage of this moment to slip a finger between her legs and start to caress her clit..."
+                        animatePair(Player, Actor, FingerPussy)
+                        If Actor.isInterestedIn(Player) && Actor:arousal > 25 && Actor:perversion > 50
+                            If !Player.isFemale()
+                                Actor(Flirty)::"Instead of using your fingers, use your cock!"
+                            Else
+                                Actor(Flirty)::"Instead of using your fingers, use your tongue!"
+                                Filter(LickPussy)
+                            EndIf
+                            Player(Happy)::"Sure!"
+                            Player.strip()
+                            Actor.strip()
+                            sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Actor:attractiontoplayer += Random(0, 1)
+                            Actor:rapportwithplayer += Random(0, 1)
+                        ElseIf Actor.isInterestedIn(Player) && Actor:arousal > 25
+                            Actor(Annoyed)::"What are you doing? Not here!"
+                            Actor(Annoyed)::"Sorry but I have to go!"
+                            Actor:attractiontoplayer += Random(0, 1)
+                            Actor:rapportwithplayer += Random(0, 1)
+                            Actor:arousal += 1
+                            If !Actor.isContactExchanged()
+                                "<Actor.namee> suggested that we exchange contacts. Shall I?"
+                                0:: "Yes"
+                                1:: "No"
+                                
+                                If 0
+                                    exchangeContact(Actor)
+                                    "We exchanged numbers and parted ways."
+                                    Actor(Happy)::"Sorry but I have to go!"
+                                Else
+                                    Actor(Annoyed)::"Sorry but I have to go!"
+                                EndIf
+                            EndIf
+                        Else
+                            Actor(Angry)::"Hey, you fucking pervert! WTF are you doing?"
+                            If !isAtHome()
+                                Actor(Angry)::"Somebody call the police, <Player.he_or_she> tried to touch my vagina!"
+                                Actor:attractiontoplayer += Random(0, 1)
+                                Actor:rapportwithplayer += Random(0, 1)
+                                followUp(rk_VB_SexAssault_Arrest)
+                            Else
+                                Actor(Angry)::"That's not cool! I'm leaving!"
+                            EndIf
+                            Actor.hide()
+                        EndIf
+                    ElseIf 2
+                        arousal += 1
+                        perversion += 1
+                        "I take advantage of this moment to grab her tits and start to suck them..."
+                        animatePair(Player, Actor, Kissing)
+                        If Actor.isInterestedIn(Player) && Actor:arousal > 25 && Actor:perversion > 50
+                            If !Player.isFemale()
+                                Actor(Flirty)::"Instead of grabbing and sucking my tits, put your cock between!"
+                                Filter(Boobjob)
+                            Else
+                                Actor(Flirty)::"Instead of grabbing and sucking my tits, let's fuck!"
+                            EndIf
+                            Player(Happy)::"Sure!"
+                            Player.strip()
+                            Actor.strip()
+                            sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Actor:attractiontoplayer += Random(0, 1)
+                            Actor:rapportwithplayer += Random(0, 1)
+                        ElseIf Actor.isInterestedIn(Player) && Actor:arousal > 25
+                            Actor(Annoyed)::"What are you doing? Not here!"
+                            Actor(Annoyed)::"Sorry but I have to go!"
+                            Actor:attractiontoplayer += Random(0, 1)
+                            Actor:rapportwithplayer += Random(0, 1)
+                            Actor:arousal += 1
+                            If !Actor.isContactExchanged()
+                                "<Actor.namee> suggested that we exchange contacts. Shall I?"
+                                0:: "Yes"
+                                1:: "No"
+                                
+                                If 0
+                                    exchangeContact(Actor)
+                                    "We exchanged numbers and parted ways."
+                                    Actor(Happy)::"Sorry but I have to go!"
+                                Else
+                                    Actor(Annoyed)::"Sorry but I have to go!"
+                                EndIf
+                            EndIf
+                        Else
+                            Actor(Angry)::"Hey, you fucking pervert! WTF are you doing?"
+                            If !isAtHome()
+                                Actor(Angry)::"Somebody call the police, <Player.he_or_she> touched my tits!"
+                                Actor:attractiontoplayer += Random(0, 1)
+                                Actor:rapportwithplayer += Random(0, 1)
+                                followUp(rk_VB_SexAssault_Arrest)
+                            Else
+                                Actor(Angry)::"That's not cool! I'm leaving!"
+                            EndIf
+                            Actor.hide()
+                        EndIf
+                    ElseIf 3
+                        arousal += 1
+                        perversion += 1
+                        "I take advantage of this moment to take off her panties and start to lick her pussy..."
+                        animatePair(Player, Actor, LickPussy)
+                        If Actor.isInterestedIn(Player) && Actor:arousal > 25 && Actor:perversion > 50
+                            If !Player.isFemale()
+                                Actor(Flirty)::"Instead of licking my pussy, put your cock inside!"
+                            Else
+                                Actor(Flirty)::"Instead of licking my pussy, let's fuck!"
+                            EndIf
+                            Player(Happy)::"Sure!"
+                            Player.strip()
+                            Actor.strip()
+                            sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Actor:attractiontoplayer += Random(0, 1)
+                            Actor:rapportwithplayer += Random(0, 1)
+                        ElseIf Actor.isInterestedIn(Player) && Actor:arousal > 25
+                            Actor(Annoyed)::"What are you doing? Not here!"
+                            Actor(Annoyed)::"Sorry but I have to go!"
+                            Actor:attractiontoplayer += Random(0, 1)
+                            Actor:rapportwithplayer += Random(0, 1)
+                            Actor:arousal += 1
+                            If !Actor.isContactExchanged()
+                                "<Actor.namee> suggested that we exchange contacts. Shall I?"
+                                0:: "Yes"
+                                1:: "No"
+                                
+                                If 0
+                                    exchangeContact(Actor)
+                                    "We exchanged numbers and parted ways."
+                                    Actor(Happy)::"Sorry but I have to go!"
+                                Else
+                                    Actor(Annoyed)::"Sorry but I have to go!"
+                                EndIf
+                            EndIf
+                        Else
+                            Actor(Angry)::"Hey, you fucking pervert! WTF are you doing?"
+                            If !isAtHome()
+                                Actor(Angry)::"Somebody call the police, <Player.he_or_she>'s trying to rape me!"
+                                Actor:attractiontoplayer += Random(0, 1)
+                                Actor:rapportwithplayer += Random(0, 1)
+                                followUp(rk_VB_SexAssault_Arrest)
+                            Else
+                                Actor(Angry)::"That's not cool! I'm leaving!"
+                            EndIf
+                            Actor.hide()
+                        EndIf
+                    EndIf
+                EndIf
+            Else
+                Player(Sad)::"Sorry <Actor.name>! I'm really busy right now!"
+                Actor:rapportwithplayer += Random(-1, 1)
+            EndIf
+        EndIf
+    SceneEnd()

@@ -1,0 +1,82 @@
+WHAT: all
+WHERE: sports_centre
+WHEN: 0 - 24
+WHO: none
+OTHER: none 
+
+    SceneStart()
+
+        "There is so much information around about supplements and each source is saying a different thing. Should I try to do my own research and come up with my own supplement plan, or should I go for the easy but expensive option of all-in-one powders and pills?"
+        0:: money > 500 ::"Do my own research"
+        2:: "Ask someone around"
+        1:: money > 1000 ::"Go for all-in-one solutions"
+        99::"Do nothing!"
+        
+        If 0
+        
+            BadInfos = Random(1, 100)
+            BadInfos = BadInfos.round()
+            money -= Random(100, 500)
+            If intelligence >= 50
+            
+                "My research allowed me to make and tailor a perfect supplement plan for my body, budget and goals. The results were very noticeable."
+                fitness *= Random(1, 1.1)
+                muscle *= Random(1, 1.1)
+                intelligence += Random(0, 1)
+            
+            
+            Elseif BadInfos >= 85
+            
+                "Unfortunately, all information sources and the supplements I bought was in fact, a real scam."
+                fitness -= Random(1, 15)
+                muscle -= Random(1, 15)
+                "The supplements also gave me bad effects on my muscles and my fitness shape!"
+                mood -= 15
+                
+            Else
+            
+                "Unfortunately, I was soon overwhelmed by all the conflicting information sources and the supplements I bought didn't yield any noticeable results."
+                mood -= 3
+                
+            Endif
+            
+        Elseif 2
+            
+            Actor = generatePersonTemporary()
+            Actor.hide()
+            BadInfos = Actor:intelligence
+            BadInfos = BadInfos.round()
+            If BadInfos <= 45
+            
+                "Unfortunately, all information sources and the supplements I bought was in fact, a real scam."
+                fitness -= Random(1, 15)
+                muscle -= Random(1, 15)
+                "The supplements also gave me bad effects on my muscles and my fitness shape!"
+                mood -= 15
+                    
+            Elseif intelligence >= 50
+            
+                "My research allowed me to make and tailor a perfect supplement plan for my body, budget and goals. The results were very noticeable."
+                fitness *= Random(1, 1.1)
+                muscle *= Random(1, 1.1)
+                intelligence += Random(0, 1)
+                
+            Else
+            
+                "Unfortunately, I was soon overwhelmed by all the conflicting information sources and the supplements I bought didn't yield any noticeable results."
+                mood -= 3
+                
+            Endif
+
+        Else
+        
+            money -= Random(200, 1000)
+            "All these mainstream products really hurt my wallet but they did do a decent job."
+            fitness *= Random(1, 1.05)
+            muscle *= Random(1, 1.05)
+            mood += 3
+            
+        Endif
+
+    SceneEnd() // Scene improved by Raddeck
+    // timeout(2000, workout_supplement)

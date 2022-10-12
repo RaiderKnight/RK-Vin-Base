@@ -1,0 +1,441 @@
+WHAT: all
+WHERE: home
+WHEN: 0 - 24
+WHO: Dating = getSpecific(Dating); If Random(0, 5000) < Dating:perversion - 2*Dating:attractiontoplayer
+OTHER: isAtDatingHome() && [!isModEnabled(vin_Polyamorous) || !openRelationship()] 
+
+    SceneStart()
+        Jealousy = Player.getActorVar(rk_VB_Jealousy) // My general jealousy
+        JealousTowardIDA = Actor.getActorVar(rk_VB_PlayerJealousTowardIDA)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        If DatingHasHome()
+            "I'm paying a surprise visit to my <Dating.boyfriend_or_girlfriend> today. I'm sure <Dating.he_or_she> will be glad when <Dating.he_or_she> sees me."
+        Endif
+        "Wait, what's that sound? Someone is ... moaning?"
+        Player.hide()
+        DatingAffair = generatePersonTemporary()
+        While !Dating.isInterestedIn(DatingAffair) 
+            DatingAffair = generatePersonTemporary()
+        Endwhile
+        DatingAffair.dress()
+        Dating.dress()
+        DatingAffair.strip()
+        Dating.strip()
+        If Dating:perversion > Random(50, 100)
+            DatingAffair2 = generatePersonTemporary()
+            While !Dating.isInterestedIn(DatingAffair2) 
+                DatingAffair2 = generatePersonTemporary()
+            Endwhile
+            DatingAffair2.strip()
+            Sex(Dating, DatingAffair, DatingAffair2)
+        Else
+            Sex(Dating, DatingAffair)
+        Endif
+        Player.show(0)
+        Dating.show(2)
+        DatingAffair.show(3)
+        "Oh no! My <Dating.boyfriend_or_girlfriend> is cheating on me! I don't know how to feel about this ..."
+        0:: "I'm heartbroken"
+        1:: "I'm turned on"
+        2:: "Explode in rage"
+    
+        If 0
+            "That <Dating.bastard_or_bitch> betrayed my trust for <Dating.him_or_her> and it broke my heart."
+            cuckold = false
+            Dating:rapportwithplayer -= Random(2, 4)
+            mood -= Random(50, 80)
+            Jadd = Random(2, 4)
+            Dating.modifyActorVar(rk_VB_PlayerJealousTowardIDA, Jadd) // My jealousy toward ID stats
+        Elseif 1
+            "I felt strangely aroused by the image of my <Dating.boyfriend_or_girlfriend> being with another <DatingAffair.man_or_woman>."
+            perversion += Random(0, 0.5)
+            arousal += Random(0, 0.5)
+            cuckold = true
+        Else
+            "That <Dating.bastard_or_bitch> betrayed my trust for <Dating.him_or_her>, it broke my heart and I'm fucking pissed off!"
+            cuckold = false
+            mood -= Random(50, 100)
+            Dating:rapportwithplayer -= Random(4, 10)
+        Endif
+        "What should I do?"
+        0:: "Stay silent"
+        1:: "Catch <Dating.him_or_her> red-handed"
+        2::"Let them finish and scold <Dating.him_or_her>"
+
+        If 0
+            "I decided to take no action. I quietly left and <Dating.name> never found out that I caught <Dating.him_or_her> in the act."
+            masochist += 1
+            moveTo(home)
+        Elseif 1
+            cathHem = true
+        Else
+            WaitFor = true
+        Endif
+        If cathHem || WaitFor
+            "I made my presence known to the pair of adulterers ..."
+            Player(Angry)::"WTF is going on here!"
+            Dating(Scared)::"Oh shit!"
+            Dating(Shocked):: "<Player.name>? Oh no ... Please, let me explain. This isn't what it looks like ..."
+            If DatingAffair2.isValid()
+                "All of a sudden, without us realizing it, the other who was also fucking my <Dating.boyfriend_or_girlfriend>, just secretly ran away..."
+                DatingAffair2.hide()
+            Endif
+            "<Dating.name> went on to make plenty of excuses for the affair, none of which were particularly convincing."
+            0:: "Dump <Dating.his_or_her> ass"
+            1:: "Forgive <Dating.him_or_her>"
+            2:: cuckold:: "Admit I enjoyed watching"
+            3:: isModEnabled(vin_BDSM) && masochist < 0 ::"Give them a lesson"
+            4:: "Kill both of them!"
+            
+            If 0
+                Player(Angry):: "Do you take me for a fool? Our relationship is over, you cheating <Dating.asshole_or_whore>. Bye!"            
+                If isPlayerMarried()
+                    Player(Sad):: "Also, I'm afraid to say this marriage isn't working anymore..."
+                    "And just like that, I divorced that cheating <Dating.boyfriend_or_girlfriend> of mine ..."
+                    mood => 0
+                    Divorce()
+                    LoseDating()
+                    If Player.isDominantSex(Dating) && money > 10000
+                        "Unfortunately for me, the court awarded half of my hard-earned fortune to <Dating.name> ... What a disaster of a marriage that was ..."
+                        money -= money*0.5
+                    Endif        
+                Else
+                    "And just like that, we broke up. A <Dating.boyfriend_or_girlfriend> like that was good riddance!"
+                    LoseDating()
+                    mood -= 50
+                Endif
+                blockContact(Dating)
+                masochist -= 5
+            Elseif 1
+                Player(Sad):: "I guess after everything we've been through, you deserve a final chance, but you must cut all contacts with <DatingAffair.him_or_her> ..."
+                "I decided to forgive <Dating.him_or_her> and tried to save this relationship. I don't know if this trust is misplaced or not ..."
+                Dating:attractiontoplayer += Random(0, 30)
+                masochist += 1
+            Elseif 2
+                Player(Flirty):: "I must admit ... I kinda enjoyed watching that ..."
+                arousal += Random(0, 0.5)
+                perversion += Random(0, 0.5)
+                Dating(Flirty):: "Oh, you did? You naughty <Player.boy_or_girl>! Come here, babe, I still have enough energy for another round!"
+                "Clearly embarrassed by the whole situation, my <Dating.boyfriend_or_girlfriend>'s <DatingAffair.lover_or_mistress> is hurriedly getting the hell out of the apartment."
+                "What I should say?"
+                0:: "Ok, but your friend have to leave"
+                1:: "Ok, but your friend have to watch"
+                2:: "Let's have a threesome with your friend"
+                99:: "Let <DatingAffair.him_or_her> leave"
+                
+                If 0
+                    DatingAffair.hide()
+                    Player.strip()
+                    Sex(Player, Dating)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    Dating.show(2)
+                    Player(Flirty):: "Wow, that was amazing, baby. I guess I could forgive you then if every night is like this ..."
+                    Dating(Flirty):: "Oh baby, you're the best!"
+                ElseIf 1
+                    DatingAffair.show()
+                    Player.strip()
+                    Sex(Player, Dating)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    If DatingAffair.isInterestedIn(Player)
+                        DatingAffair:arousal += 5
+                    EndIf
+                    If DatingAffair:arousal > 25
+                        DatingAffair.strip()
+                        DatingAffair.show()
+                        DatingAffair(Flirty)::"Can I join?"
+                        "What I should say?"
+                        0:: "Yes"
+                        1:: "No"
+                        
+                        If 0
+                            Sex(Dating, Player, DatingAffair)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -3)
+                            EndIf
+                            DatingAffair:rapportwithplayer += Random(0, 4)
+                        EndIf
+                        DatingAffair.show(4)
+                        DatingAffair:rapportwithplayer += Random(0, 1)
+                    EndIf
+                    Dating.show(2)
+                    Player(Flirty):: "Wow, that was amazing, baby. I guess I could forgive you then if every night is like this ..."
+                    Dating(Flirty):: "Oh baby, you're the best!"
+                    Dating:attractiontoplayer += Random(0, 5)
+                    Dating:rapportwithplayer += Random(0, 5)
+                ElseIf 2
+                    Player(Flirty):: "<Dating.name>, you know what? I can forgive you if we can have a threesome with your fuck toy there right now ..."
+                    Dating(Flirty):: "Wow, darling, you're full of surprises!"
+                    Sex(Dating, Player, DatingAffair)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                    EndIf
+                   perversion += Random(0, 1)
+                ElseIf 99
+                    "All of a sudden, without us realizing it, <DatingAffair.he_or_she> secretly ran away..."
+                    DatingAffair.hide()
+                Endif
+            Elseif 3
+                DatingAffair.show()
+                Dating.setNoRedress(true)
+                DatingAffair.setNoRedress(true)
+                Player(Angry)::"You my friend you stay here..."
+                DatingAffair(Scared)::"I'm leaving right away!"
+                Player(Evil)::"Nope! You stay here... I'm here to extend the fun my little cub..."
+                Player(Evil)::"Now you will all shut your mouth and you will listen <Player.uncle_or_nanny> <Player.name_last>, because we gonna play a game..."
+                Player(Evil)::"And you darling, you gonna play with us too!"
+                Dating(Scared)::"Ok!"
+                Player(Wink)::"We will play a John Asks, if I don't say John Asks before asking to do an action, so if you move you will be punished..."
+                Player(Grin)::"But, if you don't move when I say John Asks, you will also be punished... and I'll film it all!"
+                If Dating:masochist < masochist
+                    Dating(Angry)::"Are you fucking crazy, we are not gonna play your stupid game... Enough is enough!"
+                    If isPlayerMarried()
+                        "And just like that, I divorced that cheating <Dating.boyfriend_or_girlfriend> of mine ..."
+                        mood => 0
+                        Divorce()
+                        LoseDating()
+                        If Player.isDominantSex(Dating) && money > 10000
+                            "Unfortunately for me, the court awarded half of my hard-earned fortune to <Dating.name> ... What a disaster of a marriage that was ..."
+                            money -= money*0.5
+                        Endif        
+                    Else
+                        "And just like that, we broke up. A <Dating.boyfriend_or_girlfriend> like that was good riddance!"
+                        LoseDating()
+                        mood -= 50
+                    Endif
+                    blockContact(Dating)
+                    Dating.setNoRedress(false)
+                    DatingAffair.setNoRedress(false)
+                    Dating.hide()
+                    DatingAffair.hide()
+                Else
+                    Player.setNoRedress(true)
+                    Player(Wink)::"Ok, let's start this game my horny rabbits..."
+                    masochist -= Random(1, 5)
+                    turndone = 0
+                    sexcount = 0
+                    gametakeplace = true
+                    While gametakeplace && [turndone < 10 || sexcount < 5]
+                        ohboy = false
+                        bdone = false
+                        bdone1 = false
+                        datingfucked = false
+                        datingFfucked = false
+                        GNPCmove = false
+                        GNPCmoveF = false
+                        "What should I say?"
+                        0::"Say to dating: I'm asking you to..."
+                        1::"Say to dating: John ask you to..."
+                        2::"Say to DatingAffair: I'm asking you to..."
+                        3::"Say to DatingAffair: John ask you to..."
+                        99::"Stop playing!"
+                        
+                        If 0
+                            If Random(0, 100) > 60
+                                "<Dating.name> didn't move..."
+                            Else
+                                datingfucked = true
+                                GNPCmove = true
+                            EndIf
+                        Elseif 1
+                            If Random(0, 100) > 60
+                                "<Dating.name> didn't moved when I say John ask..."
+                                datingfucked = true
+                            Else
+                                bdone = true
+                            EndIf
+                        Elseif 2
+                            If Random(0, 100) > 60
+                                "<DatingAffair.name> didn't move..."
+                            Else
+                                datingFfucked = true
+                                GNPCmoveF = true
+                            EndIf
+                        Elseif 3
+                            If Random(0, 100) > 60
+                                "<DatingAffair.name> didn't moved when I say John ask..."
+                                datingFfucked = true
+                            Else
+                                bdone1 = true
+                            EndIf
+                        Else
+                           Player(Wink)::"Ok, I'm done with you both!"
+                           gametakeplace = false
+                           turndone += 10
+                           Dating.setNoRedress(false)
+                           DatingAffair.setNoRedress(false)
+                           Player.setNoRedress(false)
+                        EndIf
+                        If datingfucked
+                            If GNPCmove
+                                Player(Grin)::"<Dating.name> you moved when I didn't say John ask..."
+                                bdone1 = true
+                            Else
+                                If Random(0, 100) > 60
+                                    "<Dating.name> didn't moved when I say John ask..."
+                                    bdone1 = true
+                                EndIf
+                            Endif
+                        EndIf
+                        If datingFfucked
+                            If GNPCmoveF
+                                Player(Grin)::"<DatingAffair.name> you moved when I didn't say John ask..."
+                                bdone = true
+                            Else
+                                If Random(0, 100) > 60
+                                    "<DatingAffair.name> didn't moved when I say John ask..."
+                                    bdone = true
+                                EndIf
+                            Endif
+                        EndIf
+                        If bdone || bdone1
+                            "What punishment will I give?"
+                            0::"to be fucked by me!"
+                            1::"to do a threesome!"
+                            2::"to masturbate in front of us!"
+                            3::"to fuck my <Dating.boyfriend_or_girlfriend> in front of me!"
+                            
+                            If 0
+                                If random(0, 100) > 85 && isModEnabled(vin_NonConsensual) && sexcount > 3
+                                    ohboy = true
+                                Else
+                                    If bdone
+                                        sexNoAffair(Player, Dating)
+                                    Else
+                                        sexNoAffair(Player, DatingAffair)
+                                    EndIf
+                                EndIf
+                            ElseIf 1
+                                If random(0, 100) > 85 && isModEnabled(vin_NonConsensual) && sexcount > 3
+                                    ohboy = true
+                                Else
+                                    sexNoAffair(Dating, Player, DatingAffair)
+                                EndIf
+                            Elseif 2
+                                If random(0, 100) > 85 && isModEnabled(vin_NonConsensual) && sexcount > 3
+                                    ohboy = true
+                                Else
+                                    If bdone
+                                        Filter(solo)
+                                        sexNoAffair(Dating)
+                                    Else
+                                        Filter(solo)
+                                        sexNoAffair(DatingAffair)
+                                    EndIf
+                                EndIf
+                            Else
+                                If random(0, 100) > 85 && isModEnabled(vin_NonConsensual) && sexcount > 3
+                                    ohboy = true
+                                Else
+                                    sexNoAffair(Dating, DatingAffair)
+                                EndIf
+                            EndIf
+                            sexcount += 1
+                        EndIf
+                        If ohboy
+                            If bdone1
+                                DatingAffair(Shocked)::"No way, I won't do it!"
+                                Player(Grin)::"Well, you don't want to get involved! You dared to stuff my <Dating.boyfriend_or_girlfriend> so you will play my game and do what I ask!"
+                                txtdatf = "<DatingAffair.name>"
+                                txtdatf1 = "<Dating.name>"
+                            ElseIf bdone
+                                Dating(Shocked)::"No way, I won't do it!"
+                                Player(Grin)::"Okay, you don't want to get involved! You dared to get stuffed by another so you'll play my game and do what I ask!"
+                                txtdatf = "<Dating.name>"
+                                txtdatf1 = "<DatingAffair.name>"
+                            EndIf
+                            "What punishment will I give to <txtdatf>?"
+                            0::"Now I'm going to fuck you real hard"
+                            1::"Now I'm going to fuck you both real hard"
+                            2::"I want to see you pee on <txtdatf1>"
+                            3::"Now I'm going to piss on you"
+                            
+                            If 0
+                                If !Player.isMale()
+                                    Filter(AggressiveFM)
+                                Else
+                                    Filter(Aggressive)
+                                EndIf
+                                If bdone
+                                    Dating(Shocked)::"Damn, ok..."
+                                    sexNoAffair(Player, Dating)
+                                ElseIf bdone1
+                                    DatingAffair(Shocked)::"Damn, ok..."
+                                    sexNoAffair(Player, DatingAffair)
+                                EndIf
+                            ElseIf 1
+                                If !Player.isMale()
+                                    Filter(AggressiveFM)
+                                Else
+                                    Filter(Aggressive)
+                                EndIf
+                                sexNoAffair(Dating, Player, DatingAffair)
+                            ElseIf 2
+                                If bdone
+                                    Dating(Shocked)::"Damn, ok..."
+                                    Filter(Watersports)
+                                    sexNoAffair(Dating, DatingAffair)
+                                ElseIf bdone1
+                                    DatingAffair(Shocked)::"Damn, ok..."
+                                    Filter(Watersports)
+                                    sexNoAffair(DatingAffair, Dating)
+                                EndIf
+                            ElseIf 3
+                                If bdone
+                                    Dating(Shocked)::"Damn, ok..."
+                                    Filter(Watersports)
+                                    sexNoAffair(Player, Dating)
+                                ElseIf bdone1
+                                    DatingAffair(Shocked)::"Damn, ok..."
+                                    Filter(Watersports)
+                                    sexNoAffair(Player, DatingAffair)
+                                EndIf
+                            EndIf
+                        EndIf
+                        turndone += 1
+                    EndWhile
+                    If turndone > 9
+                        Player(Wink)::"Ok, I'm done with you both!"
+                        Dating.setNoRedress(false)
+                        DatingAffair.setNoRedress(false)
+                        Player.setNoRedress(false)
+                    Endif
+                Endif
+            Else
+                "I don't care about the consequences. I'm not getting humiliated like this without getting revenge."
+                Player.animate(gun)
+                Player.moveToPerson(Dating)
+                Player(Furious):: "Die, <Dating.scum_or_slut>!"
+                "Pow!"
+                Dating.hide()
+                faceEachOther(DatingAffair, Player)
+                Player(Furious):: "You fucked my <Dating.boyfriend_or_girlfriend>! Die!"
+                "Pow!"
+                If DatingAffair2.isValid()
+                    DatingAffair2(Crying)::"Haaaaa! Haaaaa!"
+                    Player(Furious):: "You also fucked my <Dating.boyfriend_or_girlfriend>! Die!"
+                    "Pow!"
+                EndIf
+                DatingAffair.hide()
+                Dating.deletePerson()
+                DatingAffair.deletePerson()
+                "The deed is done. I got my revenge in the form of a double murder ..."
+                If DatingAffair2.isValid()
+                    DatingAffair2(Crying)::"Haaaaa! Haaaaa!"
+                    Player(Furious):: "You also fucked my <Dating.boyfriend_or_girlfriend>! Die!"
+                    "Pow!"
+                    Player.modifyActorVar(rk_VB_KillCount, 2)
+                Else
+                    Player.modifyActorVar(rk_VB_KillCount, 1)
+                EndIf // One more will be added on the next scene
+                followUp(rk_VB_Murder_Arrest)
+            Endif
+        Endif
+        timeout(500, dating_cheating)
+    SceneEnd() // Scene improved by Raddeck

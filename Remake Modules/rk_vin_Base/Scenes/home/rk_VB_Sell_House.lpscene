@@ -1,0 +1,106 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+
+        FinalHousePrice = Player.getActorVar(rk_VB_FinalHousePrice)
+        If FinalHousePrice > 0
+            "Am I really sure I want to sell my house?"
+            0::"Yes"
+            1::"No"
+            
+            If 0
+                "I decided to sell my house!"
+                NotBuying = false
+                TryToSellHouse = true
+                While TryToSellHouse
+                    MSSnum = random(1,10) // Chance
+                    MSSnum = MSSnum.round()
+                    If MSSnum > 6
+                        Client = generatePersonTemporary()
+                        Client.randomizeFace()
+                        Client.randomizeHairs()
+                        Client.randomizeRace()
+                        MinPrice = FinalHousePrice - random(5000, 25000)
+                        MaxiPrice = FinalHousePrice*0.2
+                        MaxPrice = FinalHousePrice + MaxiPrice
+                        FOffersFinal = random(MinPrice, MaxPrice) 
+                        FOffersFinal_loc = FOffersFinal.convertToLocalCurrency()
+                        Client.dress()
+                        Client.show()
+                        "A client named <Client.name> is interested in buying the house and <Client.he_or_she> offers <FOffersFinal_loc>!"
+                        "Do you accept <Client.his_or_her> offer?"
+                        0::"Yes"
+                        1::"No"
+                        
+                        If 0
+                            If Client:arousal > 15 && Client:perversion > 50 && Client.isInterestedIn(Player)
+                                Client(Flirty)::"By the way, would you be willing to lower your price if I let you fuck me!"
+                                "Do you accept this offer?"
+                                0::"Yes"
+                                1::"No"
+                                
+                                If 0
+                                    "How much do you want to lower your price?"
+                                    0::"500"
+                                    1::"1000"
+                                    2::"5000"
+                                    3::"10000"
+                                    4::"25000"
+                                    
+                                    If 0
+                                        TempFOffersFinal = FOffersFinal - 500
+                                    ElseIf 1
+                                        TempFOffersFinal = FOffersFinal - 1000
+                                    ElseIf 2
+                                        TempFOffersFinal = FOffersFinal - 5000
+                                    ElseIf 3
+                                        TempFOffersFinal = FOffersFinal - 10000
+                                    ElseIf 4
+                                        TempFOffersFinal = FOffersFinal - 25000
+                                    EndIf
+                                    TempFOffersFinal_loc = TempFOffersFinal.convertToLocalCurrency()
+                                    "In order to respect my contract, we undressed completely naked and immediately got down to business..."
+                                    perversion += 1
+                                    Player.strip()
+                                    Client.strip()
+                                    sex(Client, Player)
+                                    "Good! A happy and satisfied customer! I finally sold the house for <TempFOffersFinal_loc>!"
+                                    money += TempFOffersFinal
+                                    loseHome()
+                                Else
+                                    NotBuying = false
+                                EndIf
+                            Else
+                                NotBuying = false
+                            EndIf
+                            If NotBuying
+                                Client(Shy)::"That's okay, I was just trying to get an easy discount... well here's your money as agreed."
+                                loseHome()
+                                money += FOffersFinal
+                            EndIf
+                            Player.setActorVar(rk_VB_FinalHousePrice, 0)
+                            "I finally managed to sell my house! Now I have to find another one or go rent an apartment in the area..."
+                            mood += 5
+                        Else
+                            "The offer is too low for me to accept!"
+                            mood -= 1
+                            TryToSellHouse = false
+                        EndIf
+                    Else
+                        "Well, no one is interested in buying my house!"
+                        mood -= 2
+                        TryToSellHouse = false
+                    EndIf
+                    passTime(1, 4)
+                EndWhile
+            Else
+                "I decided to not sell my house right now!"
+            EndIf
+        Else
+            "You didn't own a house!"
+        EndIf
+    SceneEnd() // Scene made by Raddeck

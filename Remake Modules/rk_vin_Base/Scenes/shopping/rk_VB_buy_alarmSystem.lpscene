@@ -1,0 +1,118 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        clearGetList()
+        IBuyaASys = rk_VB_IBuyaASys.getGlobal()
+        IBuyaASysLP = rk_VB_IBuyaASys_LP.getGlobal()
+        price_sys1 = random(2000, 4000)
+        price_sys1_local = price_sys1.convertToLocalCurrency()
+        price_sys2 = random(4000, 6000)
+        price_sys2_local = price_sys2.convertToLocalCurrency()
+        price_sys3 = random(10000, 15000)
+        price_sys3_local = price_sys3.convertToLocalCurrency()
+        newPrice1 = price_sys2 - IBuyaASysLP
+        newPrice2 = price_sys3 - IBuyaASysLP
+        newPrice12 = newPrice1.convertToLocalCurrency()
+        newPrice13 = newPrice2.convertToLocalCurrency()
+        Continuer = false
+        If isModEnabled(rk_vin_Base)
+            If money < 0
+                Player(Anxious)::"I am in debt. The store will not sell me any alarm system."
+            ElseIf IBuyaASys > 0
+                If IBuyaASys == 1
+                    alarmT = "the cheapest"
+                ElseIf IBuyaASys == 2
+                    alarmT = "an average"
+                ElseIf IBuyaASys == 3
+                    alarmT = "the best"
+                EndIf
+                "I currently have <alarmT> alarm system. What I would like to do?"
+                1:: IBuyaASys == 1 && money >= newPrice1:: "Switch for the Popular alarm systems for <newPrice12> (75%)"
+                2:: [IBuyaASys == 1 || IBuyaASys == 2] && money >= newPrice2:: "Switch for the First quality alarm systems for <newPrice13> (90%)"
+                3:: "I want to dowgrade my alarm system"
+                99:: "Do nothing!"
+                
+                If 0
+                    rk_VB_IBuyaASys_LP.setGlobal(price_sys2)
+                    "The popular alarm systems have been installed to my house."
+                    money -= newPrice1
+                    rk_VB_IBuyaASys.setGlobal(2)
+                    mood += 3
+                ElseIf 2
+                    rk_VB_IBuyaASys_LP.setGlobal(price_sys3)
+                    "The first quality alarm systems have been installed to my house."
+                    money -= newPrice2
+                    rk_VB_IBuyaASys.setGlobal(3)
+                    mood += 3
+                Else
+                    Price = 0
+                    Pricel = Price.convertToLocalCurrency()
+                    If IBuyaASys == 1
+                        "I currently have the cheapest alarm system on the market, there is no model even cheaper!"
+                    ElseIf IBuyaASys == 2
+                        "I currently have an average quality alarm system."
+                        "Do I want to downgrade to the cheapest model?"
+                        0::"Cheap alarm systems for <Pricel> (50%)"
+                        99:: "Do nothing"
+                        
+                        If 0
+                            rk_VB_IBuyaASys_LP.setGlobal(price_sys1)
+                            "The cheap alarm systems have been installed to my house."
+                            rk_VB_IBuyaASys.setGlobal(1)
+                            mood += 3
+                        EndIf
+                    ElseIf IBuyaASys == 3
+                        "I currently have the best quality alarm system on the market. Note, that by downgrading your alarm system, I'll lose money. No refund is offered!"
+                        "I want to downgrade to which model?"
+                        0::"Cheap alarm systems for <Pricel> (50%)"
+                        1::"Popular alarm systems for <Pricel> (75%)"
+                        99:: "Do nothing"
+                        
+                        If 0
+                            rk_VB_IBuyaASys_LP.setGlobal(price_sys1)
+                            "The cheap alarm systems have been installed to my house."
+                            rk_VB_IBuyaASys.setGlobal(1)
+                            mood += 3
+                        Else
+                            rk_VB_IBuyaASys_LP.setGlobal(price_sys2)
+                            "The popular alarm systems have been installed to my house."
+                            rk_VB_IBuyaASys.setGlobal(2)
+                            mood += 3
+                        EndIf
+                    EndIf
+                EndIf
+            Else
+                PreciseModify()
+                "Which alarm systems I should buy?"
+                "They offer three different alarm systems for my home. Honestly, I will take my time to chose the right one!"
+                0:: money >= price_sys1:: "Cheap alarm systems for <price_sys1_local> (50%)"
+                1:: money >= price_sys2:: "Popular alarm systems for <price_sys2_local> (75%)"
+                2:: money >= price_sys3:: "First quality alarm systems for <price_sys3_local> (90%)"
+                99:: "Buy nothing"
+            
+                If 0
+                    rk_VB_IBuyaASys_LP.setGlobal(price_sys1)
+                    "The cheap alarm systems have been installed to my house."
+                    money -= price_sys1
+                    rk_VB_IBuyaASys.setGlobal(1)
+                    mood += 3
+                ElseIf 1
+                    rk_VB_IBuyaASys_LP.setGlobal(price_sys2)
+                    "The popular alarm systems have been installed to my house."
+                    money -= price_sys2
+                    rk_VB_IBuyaASys.setGlobal(2)
+                    mood += 3
+                ElseIf 2
+                    rk_VB_IBuyaASys_LP.setGlobal(price_sys3)
+                    "The first quality alarm systems have been installed to my house."
+                    money -= price_sys3
+                    rk_VB_IBuyaASys.setGlobal(3)
+                    mood += 3
+                EndIf
+            EndIf
+        EndIf
+    SceneEnd()

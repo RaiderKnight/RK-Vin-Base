@@ -1,0 +1,101 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        MastuCVids = rk_VB_setCallerVids.getGlobal()
+        tag_RKCVID = Actor.getActorVar(tag_RKCVID)
+        If HungerEnable > 0 && Hunger < 9
+            "You need to eat something... You don't have enough energy!"
+        ElseIf energy < 9
+            "You don't have enough energy...."
+        Else
+            "Let's check my explicite contact's videos..."
+            SearChA  = true
+            While SearChA
+                selectNPC(tag_RKCVID)
+                Actor = getSelectedNPC()
+                //chooseContact()
+                //Actor = getSpecific(chooseContact)
+                RKCVID = Actor.getActorVar(tag_RKCVID)
+                watchingA = true
+                While watchingA 
+                    If RKCVID == 1
+                        If Actor.isValid() && Actor.isMale() || Actor.isTrans()
+                            Player.hide()
+                            Actor.strip()
+                            Actor.show()
+                            "What should I look about <Actor.him_or_her>?"
+                            0::"Masturbation Videos"
+                            2::"Fleshlight Videos"
+                            99::"Done watching"
+                            
+                            If 0
+                                Filter(Handjob)
+                                sex(Actor)
+                            ElseIf 2
+                                Filter(Fleshlight)
+                                sex(Actor)
+                            Else
+                                watchingA = false
+                            EndIf
+                        Else
+                            Player.hide()
+                            Actor.strip()
+                            Actor.show()
+                            "What should I look about <Actor.him_or_her>?"
+                            0::"Masturbation Videos"
+                            1::"Dildo Videos"
+                            99::"Done watching"
+                            
+                            If 0
+                                Filter(Fingering)
+                                sex(Actor)
+                            ElseIf 1
+                                Filter(Dildo)
+                                sex(Actor)
+                            ElseIf 2
+                                Filter(Vibrator)
+                                sex(Actor) 
+                            Else 
+                                watchingA = false
+                            EndIf
+                        EndIf
+                        If watchingA
+                            "Should I masturbate?"
+                            0::"Yes"
+                            1::"No"
+                            
+                            If 0
+                                Player.show()
+                                "So I started to masturbate slowly while watching <Actor.his_or_her> video..."
+                                Filter(Solo)
+                                sex(Player)
+                                perversion += random(0, 0.25)
+                                arousal += random(0, 1)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
+                            EndIf
+                        EndIf
+                    Else
+                        "I can't find any videos of <Actor.him_or_her>...."
+                        watchingA = false
+                    EndIf
+                EndWhile
+                "Should I check another contact's?"
+                0::"Yes"
+                1::"No"
+                
+                If 1
+                    SearChA  = false
+                EndIf
+            EndWhile
+        EndIf
+    SceneEnd()

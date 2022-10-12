@@ -1,0 +1,268 @@
+WHAT: all
+WHERE: university:school, university:work
+WHEN: 0-24
+WHO: 
+OTHER: !isWithCompanion() && 70 < random(0, 100) && EnrollDegree > 0
+
+    SceneStart()
+        
+        Actor = generatePersonTemporary()
+        Actor.makeInterested(Player)
+        setBackground(art)
+        rk_money_value = Player.getActorVar(rk_money_value)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor:arousal => random(25, 50)
+        Actor:age => random(18, 22)
+        Actor.show()
+        Actor.dress()
+        "I'm happy to find a job as curator of the small university museum." 
+        "It usually manned by two university students during the summer and this summer my companion is going to be a young <Actor.Frenchman_or_Frenchgirl> named <Actor.name>."
+        "<Actor.He_or_She> is very handsome and quite polite, at least until halfway through the first morning, then <Actor.he_or_she> showed and said..."
+        Actor(Flirty)::"I hope you don’t mind but I masturbate every day it’s a sort of ritual."
+        "What I should say about this?"
+        0::"Be outraged"
+        1::"Compliment"
+        
+        If 0
+            Player(Annoyed)::"I really don’t think you should say that in front of the people – or even saying those things,..."
+            arousal -= 1
+            perversion -= 1
+            Actor:rapportwithplayer -= random(0, 1)
+            Actor:attractiontoplayer += random(0, 1)
+        Else
+            Player(Wink)::"Good to know!"
+            arousal += 1
+            perversion += 1
+        EndIf
+        
+        Actor(Flirty)::"Sorry, but I like to get things out in the open,..."
+        Actor(Flirty)::"I just wanted you to know that I'd like to use the bathroom for about 15 minutes at least..."
+        
+        "What I should say about this?"
+        0::"Be outraged"
+        1::"Compliment"
+            
+        If 0
+            Player(Annoyed)::"Do as you wish – just don’t tell me about it!"
+            arousal -= 1
+            perversion -= 1
+        Else
+            Player(Flirty)::"Do as you wish – have fun!"
+            arousal += 1
+        EndIf
+        Actor.hide()
+        "Once <Actor.he_or_she> entered the restroom, after closing the door,..."
+        "What I should do?"
+        0::"Listen through the door"
+        1::"Do nothing"
+        
+        If 0
+            "I decided to go nearby to listen through the door."
+            "I couldn’t hear much until <Actor.he_or_she> came and then <Actor.he_or_she> let out a bit of a groan..."
+            Actor.show()
+            Actor.strip()
+            Actor.dressExcept(Bottom, Outerwear, Bottom_Under)
+            Filter(solo)
+            sex(Actor)
+            Actor.hide()
+            "The idea of <Actor.him_or_her> jerking <Actor.himself_or_herself> off excited me and made my <Player.pants_or_panties> wet."
+            If arousal > 25
+                If !Player.isMale()
+                    "That's too much! I stripped and fingered my pussy and I came about the same time as <Actor.he_or_she> did."
+                Else                
+                    "That's too much! I stripped and began to rubbed my cock and I came about the same time as <Actor.he_or_she> did."
+                Endif
+                Player.strip()
+                Player.dressExcept(Bottom, Outerwear, Bottom_Under)
+                Filter(solo)
+                sex(Player)
+                arousal -= 5
+                Player.dress()
+                If HungerEnable > 0
+                    Player.setActorVar(rk_VB_Hunger, -1)
+                EndIf
+            Endif
+            "I quickly moved away before <Actor.he_or_she> came out."
+        Else
+            "The idea of <Actor.him_or_her> jerking <Actor.himself_or_herself> off, disgust me."
+            arousal -= 1
+            perversion -= 1
+        EndIf 
+        "<Actor.name> finally comes out of the bathroom..."
+        Actor.dress()
+        Actor.show()
+        passTime(0.15, 0.25)
+        "After a few minutes... <Actor.name> comes back to me and asks"
+        Actor.moveToPersonStand(Player, 50)
+        Actor(Flirty)::"Do you masturbate sometime?"
+        "What I should say about this?"
+        0::"Be outraged"
+        1::"Be honest"
+        
+        If 0
+            Player(Shocked)::"WTF! That’s not your business,..."
+            arousal -= 1
+            perversion -= 1
+            Actor(Flirty)::"I'm sorry to have offended you, to make up for it I have a little gift for you that I bought two days ago..."
+            Actor:rapportwithplayer -= random(0, 1)
+            Actor:attractiontoplayer += random(0, 1)
+        Else
+            Player(Flirty)::"Like everyone else, I believe,... Why?"
+            arousal += 1
+            perversion += 1
+            Actor(Flirty)::"Because I have a little gift for you that I bought two days ago..."
+            Actor:arousal += 1
+            Actor:perversion += 1
+            Actor:rapportwithplayer += random(0, 1)
+            Actor:attractiontoplayer += random(0, 1)
+        EndIf
+        
+        "<Actor.His_or_Her> hands dived into <Actor.his_or_her> backpack and <Actor.he_or_she> pulls out a small <Player.fleshlight_or_vibrator>."
+        Actor(Flirty)::"<Player.Men_or_Women> say this is a very good one, it drives them crazy."
+        
+        "What I should say about this?"
+        0::"Be outraged"
+        1::"Accept the gift"
+        
+        If 0
+            Player(Shocked)::"WTF! I don’t want your gift,..." 
+            "<Actor.He_or_She> puts it on the table and leaves it there without saying a word and walks away."
+            Actor.moveToPersonStand(Player, 150)
+            "So grab it right away before someone notice it!"
+            arousal += 1
+            perversion -= 1
+        Else
+            "<Actor.He_or_She> puts it on the table and leaves it there without saying a word and walks away."
+            Actor.moveToPersonStand(Player, 150)
+            "So grab it right away before someone notice it!"
+            arousal += 1
+            perversion += 1
+        EndIf
+        Actor.hide()
+        "It's time to close the museum, I'm doing a last tour to make sure there's nobody left inside..."
+        "Should I try <Actor.his_or_her> gift?"
+        0::"Yes"
+        1::"No"
+        
+        If 0
+            perversion += 1
+            "Well everything is locked! I decide to stay a while and give my gift a try before leaving the building."
+            setBackground(toilets)
+            setBackground3D(Modules/rk_vin_Base/World/bathroom___vin01.lpworld)
+            If !Player.isMale()
+                "So I head to the bathroom, sit on the seat, take off my panties and start sliding the dildo into my pussy."
+                Player.strip()
+                Player.dressExcept(Bottom, Outerwear, Bottom_Under)
+                Filter(vibrator)
+                sex(Player)
+                If HungerEnable > 0
+                    Player.setActorVar(rk_VB_Hunger, -1)
+                EndIf
+                "It was good, even before I turned it on, but when it started to vibrate, it was mind-blowing. It didn't take long for my pussy lips to start quivering, then made me let out a muffled scream as I went into an absolutely wonderful orgasm."
+                Player.dress()
+            Else
+                "So I head to the bathroom, sit on the seat, take off my pants, lift down my boxer and start strocking my cock with this fleshlight."
+                Player.strip()
+                Player.dressExcept(Bottom, Outerwear, Bottom_Under)
+                Filter(Fleshlight)
+                sex(Player)
+                If HungerEnable > 0
+                    Player.setActorVar(rk_VB_Hunger, -1)
+                EndIf
+                "It was good, even before I turned it on, but when it started the automatic suck, it was mind-blowing. It didn't take long for my balls to start shaking, then made me let out a muffled scream as I went into an absolutely wonderful orgasm."
+                Player.dress()
+            EndIf
+            setBackground(art)
+            "Once finished, I put my clothes back on and head for the exit of the museum, but all of a sudden I get accosted by <Actor.name>."
+            ITryGift = true
+        Else
+            "So, I head for the exit of the museum, but all of a sudden I get accosted by <Actor.name>."
+        EndIf
+        Actor.show()
+        Actor(Flirty)::"I think you forgot I was still here"
+        Player(Flirty)::"It seems so..."
+        Actor(Flirty)::"Did you try it?"
+        "What I should say about this?"
+        0::"Be outraged"
+        1::ITryGift::"Be honest"
+        
+        If 0
+            Player(Annoyed)::"You know what, you're really a pain in the ass, get out!"
+            arousal -= 1
+            perversion -= 1
+            Actor(Sad)::"Ok, I stop bothering you, have a nice evening!"
+            Actor.hide()
+        Else   
+            Player(Flirty)::"Maybe,.."
+            arousal += 1
+            perversion += 1
+            Actor(Flirty)::"And?"
+            Player(Flirty)::"And what?"
+            Actor(Flirty)::"Did you like it?"
+            Player(Flirty)::"It was OK!"
+            Player(Flirty)::"Bah, perhaps even better than OK!"
+            Actor(Flirty)::"We are alone, we could play together with your new gift?"
+            "Do I accept the offer?"
+            0::"Yes"
+            1::"No"
+            
+            If 0
+                "I thought that sounded a bit kinky at first but then I agreed."
+                Player(Flirty)::"Sure!"
+                Actor(Flirty)::"Would you mind to take off your T-shirt?"
+                Actor(Flirty)::"Having a look at your <Player.chest_or_tits> will turn me on for sure."
+                Player(Flirty)::"Sure!"
+                Player.strip()
+                Player.dressExcept(Top, Top_Under, Outerwear)
+                Actor.strip()
+                Actor.dressExcept(Top, Top_Under, Outerwear)
+                "<Actor.He_or_She> do the same and ..." 
+                "<Actor.He_or_She> dropped to <Actor.his_or_her> knees in the front of me and started <Player.licking_or_sucking> my tits..."
+                Player(Kiss)::"..."
+                animatePair(Actor, Player, Kissing)
+                Actor(Kiss)::"..."
+                "After a few minutes, we decide to take off our clothes!"
+                Player.strip()
+                Actor.strip()
+                "Then <Actor.he_or_she> slipped the device over <Actor.his_or_her> <Actor.cock_or_pussy> and <Actor.he_or_she> shoved the <Player.fleshlight_or_vibrator> up my <Player.cock_or_pussy>."
+                If !Actor.isMale()
+                    "As we went through every functions we both got more and more excited. I came first which made <Actor.him_or_her> speed up the process and then <Actor.he_or_she> yelled when <Actor.he_or_she> came."
+                Else
+                    "As we went through every functions we both got more and more excited. I came first which made <Actor.him_or_her> speed up the process and then <Actor.he_or_she> yelled when <Actor.he_or_she> shot his load."
+                EndIf
+                If !Player.isMale()
+                    Filter(vibrator)
+                    sex(Actor, Player)
+                Else
+                    Filter(Fleshlight)
+                    sex(Actor, Player)
+                EndIf
+                "Still tingling from the effects of the <Player.fleshlight_or_vibrator> I had a strong desire to fuck..."
+                "So we lay down on the carpet and we immediately started to fuck!"
+                sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.setActorVar(rk_VB_Hunger, -2)
+                EndIf
+                Player.dress()
+                Actor.dress()
+                "After fucking, we both got dressed and went our separate ways."
+                "As far as I was concerned that summer was far too short. I still uses the <Player.fleshlight_or_vibrator> <Actor.he_or_she> bought me and thinks of <Actor.him_or_her> while I'm pleasuring myself."
+                Actor.hide()
+            Else
+               Player(Sad)::"Sorry but I'm too tired to fuck, maybe another time!"
+               Actor(Sad)::"Ok fine! Have a nice evening!"
+               Actor.hide()
+               "As far as I was concerned that summer was far too short..."
+            EndIf
+        EndIf
+        PriceC = random(150, 300)
+        PriceC_loc = PriceC.convertToLocalCurrency()
+        "The university gave me <PriceC_loc> for my day's work at the museum..."
+        money += PriceC
+        mood += 2
+        energy -= 10
+    SceneEnd()
+    timeout(1000, rk_VB_University_Museum)

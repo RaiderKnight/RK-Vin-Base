@@ -1,0 +1,149 @@
+WHAT: all
+WHERE: home
+WHEN: 8-22
+WHO: Actor = getSpecific(Dating); If Actor:age < 25 && Actor:perversion > 50 && Actor.isInterestedInMen()
+OTHER: money < 2000 && Player.isFemale()
+
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor.dress()
+        Actor.show()
+        Actor2 = getPerson(tag_datingsugardaddy)
+        If Actor2.isValid()
+            secondScreen(Actor2)
+            Actor2.show()
+            "Mr <Actor2.name> <Actor2.name_last>, a successful businessman, is currently my <Actor.boyfriend_or_girlfriend>'s sugardaddy."
+            "He asked <Actor.name> to go on a paid date tonight. No doubt they will end up in his luxurious penthouse for the night."
+            0:: "Let my <Actor.boyfriend_or_girlfriend> go on a date with <Actor.his_or_her> sugardaddy"
+            1:: "End to this arrangement"
+            
+            If 0
+                Player.hide()
+                secondScreen()
+                Actor2.dress()
+                Random
+                    setBackground(restaurant)
+                    setBackground(hotel)
+                    setBackground(nightclub)
+                    setBackground(bar)
+                    setBackground(cafe)
+                    setBackground(beauty)
+                endRandom
+                Actor2.show()
+                "<Actor.name>'s sugardaddy, took <Actor.him_or_her> with his luxurious company car to a fancy restaurant, then invited <Actor.him_or_her> to finish the evening in his penthouse on the top floor. Which <Actor.he_or_she> gladly accepted..."
+                setBackground(home)
+                If Random(0, 100) < 50
+                    Actor3 = generatePersonTemporary()
+                    While !Actor3.isMale()
+                        Actor3 = generatePersonTemporary()
+                    Endwhile
+                    Actor3:age => Random(30, 60)
+                    If Actor3:age < Actor:age
+                        Actor3:age => Actor:age + Random(5, 20)
+                    Endif
+                    Actor3.makeInterested(Actor)
+                    Actor3.randomizeFace()
+                    Actor3.randomizeHairs()
+                    Actor3.show()
+                    Actor3.strip()
+                    "Once they arrived inside, a man who invests in <Actor3.his_or_her> sugardaddy's business, was already waiting naked for them in the room. It seems that <Actor.name> tonight will serve as a celebratory gift for an important business deal."
+                    Actor2.strip()
+                    Actor.strip()
+                    Sex(Actor2, Actor, Actor3)
+                Else
+                    "Once they arrived inside, the rich man was able to enjoy his expensive toy tonight. With what he paid <Actor.him_or_her> tonight, he deserved it..."
+                    Actor2.strip()
+                    Actor.strip()
+                    Sex(Actor2, Actor)
+                Endif
+                money += Random(100, 300)
+                "Once their little naughty night was over, <Actor.his_or_her> sugardaddy decides to give <Actor.him_or_her> a generous amount of money for having a great night, enough for <Actor.him_or_her> to share some of it with me. Just a matter of closing my eyes on that evening, I guess."
+            Else
+                "Our financial situation has improved enough that <Actor.name> doesn't need to keep doing this."
+                Actor2.setActorVar(tag_datingsugardaddy, 0)
+                Actor:mood += 5
+                Actor:rapportwithplayer += 5
+            Endif
+        Else
+            "My <Actor.boyfriend_or_girlfriend> <Actor.name> wants to talk to me about something. It sounds very serious."
+            Actor.moveToPersonStand(Player)
+            Actor(Sad):: "Baby, our financial situation has been getting worse and worse lately. At this rate, we'll soon run out of money for food and probably lose our rent."
+            Player(Sad):: "I know, honey, but I'm doing my best to make money..."
+            Actor(Serene):: "I know you are, babe. But what I'm trying to say is that maybe I can help too, but maybe that's too far-fetched."
+            Player(Curious)::"No, go ahead, I'm listening?"
+            Actor(Serene):: "I have a friend of mine who is married, he too with his wife, had money problems to the point of being almost homeless, but now they are living very well and making a good living, I could say... you know what their trick was?"
+            Player(Curious)::"No go ahead? Doing surveys on the internet?"
+            Actor(Happy):: "No, they decided to go on a dating site to find a rich sugardaddy since her wife wasn't too keen on the idea of a sugarmummy."
+            Player(Curious)::"Ok... So?"
+            Actor(Wink):: "His wife is totally fine with it. All he has to do is go to a fancy place with a rich old man and get fucked at the end of the date, then get a ride home with his sugardaddy."
+            Actor(Happy):: "Every time my friend comes home with money and gifts given by his sugardaddy."
+            Actor(Happy):: "So, I thought maybe we could try this alternative? What do you think?"
+            "What I should say?"
+            0::"Yeah, anyway we have no choice!"
+            1::"Let's find other solutions instead"
+            
+            If 0
+                Player(Annoyed):: "I guess that's something I could handle to get us out of this financial situation."
+                Player(Annoyed):: "I don't have any other options right now anyway, so if we're both willing, it's not cheating. And I don't see you dating an old man long-term."
+                "I had to rationalize this whole idea in my head and eventually convinced myself that letting my <Actor.boyfriend_or_girlfriend> have a sugardaddy was a good idea."
+                Actor(Happy)::"Cool, I'm searching right now!"
+                passTime(1, 3)
+                "My <Actor.boyfriend_or_girlfriend> finally managed to find a sugardaddy on the internet..."
+                SearchSM = true
+                count = 0
+                While SearchSM && count < 5
+                    If count > 1
+                        "My <Actor.boyfriend_or_girlfriend> find an another sugardaddy..."
+                    Endif
+                    "The sugardaddy, is an older gentleman named Mrs. <Actor2.name> <Actor2.name_last>, who is also a successful businessman well known in town."
+                    "My <Actor.boyfriend_or_girlfriend> invites him home so I can give <Actor.him_or_her> my opinion... My <Actor.boyfriend_or_girlfriend> told the man that <Actor.he_or_she> lived with <Actor.his_or_her> <Player.brother_or_sister>....."
+                    "The gentleman finally arrives..."
+                    Actor2 = generatePersonTemporary()
+                    While !Actor2.isMale()
+                        Actor2 = generatePersonTemporary()
+                    Endwhile
+                    Actor2:age => Random(30, 70)
+                    If Actor2:age < Actor:age
+                        Actor2:age => Actor:age + Random(5, 20)
+                    Endif
+                    Actor2.makeInterested(Actor)
+                    Actor2.randomizeFace()
+                    Actor2.randomizeHairs()
+                    secondScreen(Actor2)
+                    Actor2.show()
+                    Actor2(Happy):: "Hey hi, it was a long ride... now here!"
+                    "My <Actor.boyfriend_or_girlfriend> whispers in my ear..."
+                    Actor(Curious):: "So what do you think of him?"
+                    "What I should say?"
+                    0:: "Yeah, good choice!"
+                    1:: "Not with him, he is ugly!"
+                    
+                    If 0
+                        SearchSM = false
+                        Actor2.makePermanent()
+                        Actor2.setActorVar(tag_datingsugardaddy, 1)
+                        "Soon, my <Actor.boyfriend_or_girlfriend> will be going on hot dates with <Actor.his_or_her> new sugardaddy. Something tells me this may not have been the best idea."
+                    Else
+                        Player(Grin)::"Seriously no, get another man!"
+                        Actor2.delete()
+                        SearchSM = false
+                        Actor(Annoyed)::"Ok fine!"
+                    Endif
+                    count += 1
+                    If count > 5
+                        "We didn't manage to find a sugardaddy, so we really need to find a solution quickly..."
+                        SearchSM = true
+                    Endif
+                EndWhile
+            Else
+                Player(Grin):: "We'll get through this, one way or another, honey. I won't let things get so bad that you have to sell your body."
+                "Ok, now that I refused <Actor.his_or_her> idea, I really have to find a way to make some cash quickly, because <Actor.he_or_she>'s right, we're going to lose everything soon..."
+                timeout(500, rk_VB_dating_sugardaddy)
+            Endif
+        Endif
+    SceneEnd() // Scene improved by Raddeck
+    timeout(100, rk_VB_dating_sugardaddy)

@@ -1,0 +1,88 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: 
+
+    Hunger = Player.getActorVar(rk_VB_Hunger)
+    DieHungerEnable = rk_VB_DieHungerEnable.getGlobal()
+    HungerEnable = rk_VB_EnableHunger.getGlobal()
+    UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+    UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+    UrgeToPeeCons = rk_VB_UrgeToPeeCons.getGlobal()
+    rk_VB_bomb_threat_cms = rk_VB_bomb_threat_cms.getGlobal()
+    rk_VB_bomb_threat_home = rk_VB_bomb_threat_home.getGlobal()
+    While Friend.isValid()
+        ActArrestTagF = Friend.getActorVar(rk_VB_ActArrestTagF)
+    EndWhile
+    Friend = getPerson(rk_VB_ActArrestTagF)
+    MeToF = Friend.getActorVar(rk_VB_MeToF)
+    FPrison = Friend.getActorVar(tag_FPrison)
+    Fsentence = Friend.getActorVar(rk_VB_ActSentence)
+    Friendsentence = Friend.getActorVar(rk_VB_Sentence)
+    While Dating.isValid()
+        ActArrestTagD = Dating.getActorVar(rk_VB_ActArrestTagD)
+    EndWhile
+    Dating = getPerson(rk_VB_ActArrestTagD)
+    MeToD = Dating.getActorVar(rk_VB_MeToD)
+    DPrison = Dating.getActorVar(tag_DPrison)
+    Dsentence = Dating.getActorVar(rk_VB_ActSentence)
+    Datingsentence = Dating.getActorVar(rk_VB_Sentence)
+    While Relative.isValid()
+        ActArrestTagR = Relative.getActorVar(rk_VB_ActArrestTagR)
+    EndWhile
+    Relative = getPerson(rk_VB_ActArrestTagR)
+    MeToR = Relative.getActorVar(rk_VB_MeToR)
+    RPrison = Relative.getActorVar(tag_RPrison)
+    Rsentence = Relative.getActorVar(rk_VB_ActSentence)
+    Relativesentence = Relative.getActorVar(rk_VB_Sentence) 
+    If HungerEnable > 0 
+        If Hunger <= 0
+            rk_VB_DieHungerEnable.setGlobal(1)
+            followUp(rk_VB_Spot_Checks_Result)
+        Else
+            Player.modifyActorVar(rk_VB_Hunger, -0.05)
+        EndIf
+    EndIf
+    If NeedToPeeEnable > 0 
+        If UrgeToPee >= 90
+            rk_VB_UrgeToPeeCons.setGlobal(1)
+            followUp(rk_VB_Spot_Checks_Result)
+        Else
+            Player.modifyActorVar(rk_VB_UrgeToPee, 0.05)
+        EndIf
+    EndIf
+    If Datingsentence >= 0.2
+        TodayDatingAge = Dating:age
+        TodayDateChangeD =  TodayDatingAge - Dsentence
+        ResultCDD = Datingsentence - TodayDateChangeD
+        Dating.setActorVar(rk_VB_Sentence, ResultCDD)
+    ElseIf Datingsentence <= 0.1
+        followUp(rk_VB_Spot_Checks_Result)
+    EndIf
+    If Friendsentence >= 0.2
+        TodayFriendAge = Friend:age
+        TodayDateChangeF =  TodayFriendAge - Fsentence
+        ResultCDF = Friendsentence - TodayDateChangeF
+        Friend.setActorVar(rk_VB_Sentence, ResultCDF)
+    ElseIf Friendsentence <= 0.1
+        followUp(rk_VB_Spot_Checks_Result)
+    EndIf
+    If Relativesentence >= 0.2
+        TodayRelativeAge = Relative:age
+        TodayDateChangeR =  TodayRelativeAge - Rsentence
+        ResultCDR = Relativesentence - TodayDateChangeR
+        Relative.setActorVar(rk_VB_Sentence, ResultCDR)
+    ElseIf Relativesentence <= 0.1
+        followUp(rk_VB_Spot_Checks_Result)
+    EndIf
+    If !Player.isVirgin()
+        AmNotVirgin => 1
+    EndIf
+    If rk_VB_bomb_threat_cms == 1 && isAtHome()
+        followUp(rk_VB_Spot_Checks_Result)
+    EndIf
+    If rk_VB_bomb_threat_home == 1 && !isAtHome()
+        followUp(rk_VB_Spot_Checks_Result)
+    EndIf
+    

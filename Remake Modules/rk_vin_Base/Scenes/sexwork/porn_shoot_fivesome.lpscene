@@ -1,0 +1,206 @@
+WHAT: all
+WHERE: all, -work
+WHEN: 8 - 18
+WHO: none
+OTHER: random(1, 300) < pornfame
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Dice = random(750, 3000)
+        P1C = Dice.convertToLocalCurrency(true)
+        P2 = Dice/2
+        P2C = P2.convertToLocalCurrency(true)
+        P3 = Dice/3
+        P3C = P3.convertToLocalCurrency(true)
+        
+        MarchePas = false
+        Choice1 = Dice*2
+        Choice1lo = Choice1.convertToLocalCurrency(true)
+        Choice2 = Dice + P2
+        Choice2lo = Choice2.convertToLocalCurrency(true)
+        Choice3 = Dice + P3
+        Choice3lo = Choice3.convertToLocalCurrency(true)
+        MarcheOk = false
+        If random(0, 100) < 50
+            "A porn director wants to book me for a reverse gangbang scene."
+            If Player.isMale()
+                Actor = generatePersonTemporary()
+                While Actor.isMale()
+                    Actor = generatePersonTemporary()  
+                Endwhile
+                Actor.dress()
+                Actor.show(2)
+            Else
+                Actor = generatePersonTemporary()
+                While !Actor.isMale()
+                    Actor = generatePersonTemporary()  
+                Endwhile
+                Actor.dress()
+                Actor.show(2)    
+            EndIf
+            
+            Actor2 = generatePersonTemporary()
+            While Actor2.isMale()
+                Actor2 = generatePersonTemporary()
+            Endwhile
+            Actor2.dress()
+            Actor2.show(3)
+    
+            Actor3 = generatePersonTemporary()
+            While Actor3.isMale()
+                Actor3 = generatePersonTemporary()
+            Endwhile
+            Actor3.dress()
+            Actor3.show(4)
+    
+            Actor4 = generatePersonTemporary()
+            While Actor4.isMale()
+                Actor4 = generatePersonTemporary()
+            Endwhile
+            Actor4.dress()
+            Actor4.show(5)
+        Else
+            "A porn director wants to book me for a gangbang scene."
+            If Player.isMale()
+                Actor = generatePersonTemporary()
+                While Actor.isMale()
+                    Actor = generatePersonTemporary()  
+                Endwhile
+                Actor.dress()
+                Actor.show(2)
+            Else
+                Actor = generatePersonTemporary()
+                While !Actor.isMale()
+                    Actor = generatePersonTemporary()  
+                Endwhile
+                Actor.dress()
+                Actor.show(2)    
+            EndIf
+            
+            Actor2 = generatePersonTemporary()
+            While !Actor2.isMale()
+                Actor2 = generatePersonTemporary()
+            Endwhile
+            Actor2.dress()
+            Actor2.show(3)
+    
+            Actor3 = generatePersonTemporary()
+            While !Actor3.isMale()
+                Actor3 = generatePersonTemporary()
+            Endwhile
+            Actor3.dress()
+            Actor3.show(4)
+    
+            Actor4 = generatePersonTemporary()
+            While !Actor4.isMale()
+                Actor4 = generatePersonTemporary()
+            Endwhile
+            Actor4.dress()
+            Actor4.show(5)    
+        EndIf
+        If isModEnabled(rk_vin_Base)
+            "My co-stars would be <Actor.name>, <Actor2.name>, <Actor3.name> and <Actor4.name> ..."
+            0:: "Turn down the offer"
+            1:: "Accept the offer (<P1C>)"
+            2:: "Rip the director off (<Choice1lo>)"
+            3:: "Offer a fair price (<P2C>)"
+            4:: "Give the director a bargain (<Choice3lo>)"
+            
+            If 0
+                Player(Sad):: "Sorry, but I have a holiday planned on the day of the shoot ..."
+            ElseIf 1
+                If random(0, 100) < choice*pornfame
+                    money += Dice
+                Else
+                    MarchePas = true
+                    MarcheOk = true
+                EndIf
+            ElseIf 2
+                If random(0, 100) < choice*pornfame
+                    money += Choice1
+                    MarcheOk = true
+                Else
+                    MarchePas = true
+                EndIf
+            ElseIf 3
+                If random(0, 100) < choice*pornfame
+                    money += Choice2
+                    MarcheOk = true
+                Else
+                    MarchePas = true
+                EndIf
+            ElseIf 4
+                If random(0, 100) < choice*pornfame
+                    money += Choice3
+                    MarcheOk = true
+                Else
+                    MarchePas = true
+                EndIf
+            EndIf
+        EndIf
+        If MarcheOk
+            "The porn director accepted my demands and soon enough we were meeting at the shoot location that we agreed on."
+            Random
+                setBackground(home)
+                setBackground(bar)
+                setBackground(hairdresser)
+                setBackground(cafe)
+                setBackground(clothes)
+                setBackground(dentist)
+                setBackground(doctor)
+                setBackground(hotel)
+                setBackground(laundry)
+                setBackground(marketplace)
+                setBackground(musical_instrument)
+                setBackground(nightclub)
+                setBackground(work)
+                setBackground(place_of_worship)
+                setBackground(police)
+                setBackground(prison)
+                setBackground(pub)
+                setBackground(restaurant)
+                setBackground(shoes)
+                setBackground(sports_centre)
+                setBackground(supermarket)
+                setBackground(theatre)
+                setBackground(toilets)
+            EndRandom
+            Sex(Player, Actor, Actor2, Actor3, Actor4)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -5)
+            EndIf
+            pornfame += 0.6
+            perversion += 0.35
+        EndIf
+        If MarchePas
+            "No way, that's way above the market rate for this type of shoots! You have too high an opinion of yourself, honey. You should ask the other pornstars how much they charge."
+            0:: "Say nothing"
+            1:: "Cheap motherfucker!"
+            
+            If 1
+                If random(0, 100) < 30
+                    "The director got pissed off and tried to hit me"
+                    If random(0, 100) < martial
+                        "Unfortunately for him, I was no pushover and gave him a good spanking."
+                        "As things would have it, our little incident went viral in the porn industry media and somehow made me even more popular. I guess no publicity is bad publicity. Besides, other directors will have to think twice now before trying to bully me in the future."
+                        pornfame += 2
+                    Else
+                        "I tried to stand my ground but ..."
+                        "Unfortunately for me, he was a powerful man and I got quite seriously hurt."
+                        "As things would have it, our little incident went viral in the porn industry media and somehow made me a butt of jokes. No doubt this would affect my future prospects with other directors."
+                        pornfame -= 2                
+                    EndIf
+                ElseIf random(0, 100) < 50
+                    "How dare you? You'll never work for this studio again!"
+                    pornfame -= 1
+                Else
+                    "Fine, I changed my mind. Let's try negotiating again ..."
+                    followUp(porn_shoot_fivesome)
+                EndIf
+            EndIf
+        EndIf
+    SceneEnd() // Improved by Raddeck
+    timeout(196, porn_shoot_fivesome)

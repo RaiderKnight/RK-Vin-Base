@@ -1,0 +1,2139 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        // Get current sex produts
+        stock_DildoCheap = Player.getActorVar(stock_DildoCheap)
+        stock_DildoQuality = Player.getActorVar(stock_DildoQuality)
+        stock_DildoLuxe = Player.getActorVar(stock_DildoLuxe)
+        stock_DildoFinest = Player.getActorVar(stock_DildoFinest)
+            
+        stock_DildoType = stock_DildoCheap + stock_DildoQuality + stock_DildoLuxe + stock_DildoFinest
+            
+        stock_FleshlightPilot = Player.getActorVar(stock_FleshlightPilot)
+        stock_FleshlightGripIce = Player.getActorVar(stock_FleshlightGripIce)
+        stock_FleshlightTenga = Player.getActorVar(stock_FleshlightTenga)
+        stock_FleshLightJack = Player.getActorVar(stock_FleshLightJack)
+            
+        stock_FleshlightType = stock_FleshLightJack + stock_FleshlightTenga + stock_FleshlightGripIce + stock_FleshlightPilot
+            
+        stock_AnalPlugBVibe = Player.getActorVar(stock_AnalPlugBVibe)
+        stock_AnalPlugTrainer = Player.getActorVar(stock_AnalPlugTrainer)
+        stock_AnalPlugUnbound = Player.getActorVar(stock_AnalPlugUnbound)
+        stock_AnalPlugTango = Player.getActorVar(stock_AnalPlugTango)
+                
+        stock_AnalPlugType = stock_AnalPlugBVibe + stock_AnalPlugTrainer + stock_AnalPlugUnbound + stock_AnalPlugTango
+        
+        stock_LubeJOH2O = Player.getActorVar(stock_LubeJOH2O)
+        stock_LubeCoconut = Player.getActorVar(stock_LubeCoconut)
+        stock_LubeSilicone = Player.getActorVar(stock_LubeSilicone)
+        stock_LubeForia = Player.getActorVar(stock_LubeForia)
+                
+        stock_LubricantType = stock_LubeJOH2O + stock_LubeCoconut + stock_LubeSilicone + stock_LubeForia + stock_LubeForia
+            
+        stock_SexDollInflatable = Player.getActorVar(stock_SexDollInflatable)
+        stock_SexDollClassic = Player.getActorVar(stock_SexDollClassic)
+        stock_SexDollTPE = Player.getActorVar(stock_SexDollTPE)
+        stock_SexDollRobot = Player.getActorVar(stock_SexDollRobot)
+                
+        stock_SexDollType = stock_SexDollInflatable + stock_SexDollClassic + stock_SexDollTPE + stock_SexDollRobot
+            
+        stock_LotionHoneydew = Player.getActorVar(stock_LotionHoneydew)
+        stock_LotionRedFlower = Player.getActorVar(stock_LotionRedFlower)
+        stock_LotionNaturale = Player.getActorVar(stock_LotionNaturale)
+        stock_LotionTHC = Player.getActorVar(stock_LotionTHC)
+
+        stock_MassageLotionType = stock_LotionHoneydew + stock_LotionRedFlower + stock_LotionNaturale + stock_LotionTHC
+        
+        stock_MasturbatorPocket = Player.getActorVar(stock_MasturbatorPocket)
+        stock_MasturbatorBubble = Player.getActorVar(stock_MasturbatorBubble)
+        stock_MasturbatorMega = Player.getActorVar(stock_MasturbatorMega)
+        stock_Lovebotz = Player.getActorVar(stock_Lovebotz)
+        
+        stock_MasturbatorType = stock_MasturbatorPocket + stock_MasturbatorBubble + stock_MasturbatorMega + stock_Lovebotz
+            
+        AdultToyBox_inventory = stock_MasturbatorType + stock_MassageLotionType + stock_SexDollType + stock_LubricantType + stock_AnalPlugType + stock_FleshlightType + stock_DildoType
+           
+        SheFemale = player.isFemale()
+        HisMale = player.isMale()
+        
+        IBuySextoy = Player.getActorVar(rk_VB_IBuySextoy)
+
+        If AdultToyBox_inventory < 0 
+            Player(Anxious)::"I got nothing inside my adult toy box!"
+        
+        Else
+
+            Player(Curious)::"Which type of toy or lotion I want to play with?"
+            0:: stock_DildoType > 0::"<stock_DildoType> Dildo(s) available"
+            1:: stock_FleshlightType > 0::"<stock_FleshlightType> Fleshlight(s) available"
+            2:: stock_AnalPlugType > 0::"<stock_AnalPlugType> Anal Plug(s) available"
+            3:: stock_LubricantType > 0::"<stock_LubricantType> Lubricant(s) available"
+            4:: stock_SexDollType > 0::"<stock_SexDollType> Sex Doll(s) available"
+            5:: stock_MassageLotionType > 0::"<stock_MassageLotionType> Massage Lotion(s) available"
+            6:: stock_MasturbatorType > 0::"<stock_MasturbatorType> Masturbator(s) available"
+            99::"Nevermind, later !"
+
+            If 0 
+        
+                If stock_DildoType < 0
+                    Player(Anxious)::"Ok, I don't have any dildo to play with! I have to go shopping!"
+                    
+                Else
+        
+                    Player(Curious)::"Which one I will use?"
+                    1:: stock_DildoCheap > 0::"Play with Leda Dildo"
+                    2:: stock_DildoQuality > 0::"Play with Lelo Inez Gold Dildo"
+                    3:: stock_DildoLuxe > 0::"Play with Venetian Casanova Dildo"
+                    4:: stock_DildoFinest > 0::"Play with Pearl Royale Dildo"
+                    99:: "I change my mind!"
+
+                    If 1
+                        
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with Leda Dildo and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with Leda Dildo and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with Leda Dildo and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with Leda Dildo and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            
+                            If 1
+                                Player.modifyActorVar(stock_DildoCheap, -0.009)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Player.modifyActorVar(stock_DildoCheap, -0.009)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.25
+                                energy -= 8.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_DildoCheap, -0.009)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.5
+                                energy -= 8
+                                fitness += 0.003
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_DildoCheap, -0.009)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.75
+                                energy -= 7.5
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_DildoCheap, -0.01)
+                                mood += 2
+                                energy -= 10
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+                            
+                        If stock_DildoCheap <= 0
+                            Player.setActorVar(stock_DildoCheap, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 2
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                            
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with Lelo Inez Gold Dildo and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with Lelo Inez Gold Dildo and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with Lelo Inez Gold Dildo and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with Lelo Inez Gold Dildo and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_DildoQuality, -0.007)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.15
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                    
+                            ElseIf 2
+                                Player.modifyActorVar(stock_DildoQuality, -0.007)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.35
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_DildoQuality, -0.007)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.55
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_DildoQuality, -0.007)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.8
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_DildoQuality, -0.006)
+                                mood += 2.15
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+                            
+                        If stock_DildoQuality <= 0
+                            Player.setActorVar(stock_DildoQuality, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 3
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                            
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with Venetian Casanova and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with Venetian Casanova and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with Venetian Casanova and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with Venetian Casanova and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_DildoLuxe, -0.005)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.25
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                    
+                            ElseIf 2
+                                Player.modifyActorVar(stock_DildoLuxe, -0.005)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.45
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_DildoLuxe, -0.005)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.65
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.0029
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_DildoLuxe, -0.005)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.85
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_DildoLuxe, -0.006)
+                                mood += 2.25
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+                            
+                        If stock_DildoLuxe <= 0
+                            Player.setActorVar(stock_DildoLuxe, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 4
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                    
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with Pearl Royale Dildo and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with Pearl Royale Dildo and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with Pearl Royale Dildo and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with Pearl Royale Dildo and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_DildoFinest, -0.0045)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.55
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                    
+                            ElseIf 2
+                                Player.modifyActorVar(stock_DildoFinest, -0.0045)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.65
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_DildoFinest, -0.0045)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.85
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.0029
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_DildoFinest, -0.0045)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 3
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_DildoFinest, -0.005)
+                                mood += 2.35
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Dildo)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+
+                        Endif
+
+                        If stock_DildoFinest <= 0
+                            Player.setActorVar(stock_DildoFinest, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                        
+                    Endif                       
+                Endif     
+                
+            ElseIf 1
+        
+                If stock_FleshlightType < 0
+                    Player(Anxious)::"Ok, I don't have any fleshlight to play with! I have to go shopping!" 
+                Else
+        
+                    1:: HisMale && stock_FleshlightPilot > 0::"Play with Fleshlight Flight: Pilot"
+                    2:: HisMale && stock_FleshlightGripIce > 0::"Play with Fleshlight Fleshskins Grip Ice"
+                    3:: HisMale && stock_FleshlightTenga > 0::"Play with Tenga 3D Module"
+                    4:: SheFemale && stock_FleshLightJack > 0::"Play with Fleshlight Girls & Fleshjack Boys"
+                    99:: "Go back !"
+                    
+                    If 1
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with Flight: Pilot and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with Flight: Pilot and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with Flight: Pilot and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with Flight: Pilot and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_FleshlightPilot, -0.009)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Player.modifyActorVar(stock_FleshlightPilot, -0.009)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.25
+                                energy -= 8.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_FleshlightPilot, -0.009)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.5
+                                energy -= 8
+                                fitness += 0.003
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_FleshlightPilot, -0.009)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.75
+                                energy -= 7.5
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_FleshlightPilot, -0.01)
+                                mood += 2
+                                energy -= 10
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+
+                        If stock_FleshlightPilot <= 0
+                            Player.setActorVar(stock_FleshlightPilot, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 2
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with my Fleshskins Grip Ice and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with my Fleshskins Grip Ice and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with my Fleshskins Grip Ice and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with my Fleshskins Grip Ice and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_FleshlightGripIce, -0.007)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.15
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Player.modifyActorVar(stock_FleshlightGripIce, -0.007)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.35
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_FleshlightGripIce, -0.007)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.55
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_FleshlightGripIce, -0.007)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.8
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_FleshlightGripIce, -0.006)
+                                mood += 2.15
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+
+                        If stock_FleshlightGripIce <= 0
+                            Player.setActorVar(stock_FleshlightGripIce, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 3
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with my Tenga 3D and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with my Tenga 3D and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with my Tenga 3D and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with my Tenga 3D and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_FleshlightTenga, -0.005)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.25
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            ElseIf 2
+                                Player.modifyActorVar(stock_FleshlightTenga, -0.005)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.45
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_FleshlightTenga, -0.005)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.65
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.0029
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_FleshlightTenga, -0.005)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.85
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_FleshlightTenga, -0.006)
+                                mood += 2.25
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+
+                        If stock_FleshlightTenga <= 0
+                            Player.setActorVar(stock_FleshlightGripIce, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 4
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                    
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with fleshlight Girls&Boys and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with fleshlight Girls&Boys and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with fleshlight Girls&Boys and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with fleshlight Girls&Boys and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_FleshLightJack, -0.0045)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.55
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Player.modifyActorVar(stock_FleshLightJack, -0.0045)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.65
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_FleshLightJack, -0.0045)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.85
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.0029
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_FleshLightJack, -0.0045)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 3
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_FleshLightJack, -0.005)
+                                mood += 2.35
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+
+                        If stock_FleshLightJack <= 0
+                            Player.setActorVar(stock_FleshLightJack, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    Endif
+
+                Endif
+                
+            ElseIf 2
+        
+                If stock_AnalPlugType < 0
+                    Player(Anxious)::"Ok, I don't have any butt plug to play with! I have to go shopping!"
+                Else
+        
+                    1:: stock_AnalPlugTrainer > 0::"Play with my Doc Johnson Naughty Trainer Set"
+                    2:: stock_AnalPlugTango > 0::"Play with my Tango Butt Plug"
+                    3:: stock_AnalPlugUnbound > 0::"Play with my Unbound Shimmy"
+                    4:: stock_AnalPlugBVibe > 0::"Play with my b-Vibe Vibrating Rimming Butt Plug"
+                    99:: "Go back !"
+                    
+                    If 1
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with my Naughty Trainer Set and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with my Naughty Trainer Set and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with my Naughty Trainer Set and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with my Naughty Trainer Set and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_AnalPlugTrainer, -0.009)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Player.modifyActorVar(stock_AnalPlugTrainer, -0.009)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.25
+                                energy -= 8.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_AnalPlugTrainer, -0.009)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.5
+                                energy -= 8
+                                fitness += 0.003
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_AnalPlugTrainer, -0.009)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.75
+                                energy -= 7.5
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_AnalPlugTrainer, -0.01)
+                                mood += 2
+                                energy -= 10
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+
+                        If stock_AnalPlugTrainer <= 0
+                            Player.setActorVar(stock_AnalPlugTrainer, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 2
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with my Tango Butt Plug and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with my Tango Butt Plug and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with my Tango Butt Plug and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with my Tango Butt Plug and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_AnalPlugTango, -0.007)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.15
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Player.modifyActorVar(stock_AnalPlugTango, -0.007)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.35
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_AnalPlugTango, -0.007)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.55
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_AnalPlugTango, -0.007)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.8
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_AnalPlugTango, -0.006)
+                                mood += 2.15
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+
+                        If stock_AnalPlugTango <= 0
+                            Player.setActorVar(stock_AnalPlugTango, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 3
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with my Unbound Shimmy and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with my Unbound Shimmy and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with my Unbound Shimmy and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with my Unbound Shimmy and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_AnalPlugUnbound, -0.005)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.25
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Player.modifyActorVar(stock_AnalPlugUnbound, -0.005)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.45
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_AnalPlugUnbound, -0.005)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.65
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.0029
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_AnalPlugUnbound, -0.005)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.85
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_AnalPlugUnbound, -0.006)
+                                mood += 2.25
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+
+                        If stock_AnalPlugUnbound <= 0
+                            Player.setActorVar(stock_AnalPlugUnbound, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 4
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with my Rimming Butt Plug and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with my Rimming Butt Plug and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with my Rimming Butt Plug and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with my Rimming Butt Plug and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_AnalPlugBVibe, -0.0045)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.55
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Player.modifyActorVar(stock_AnalPlugBVibe, -0.0045)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.65
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_AnalPlugBVibe, -0.0045)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.85
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.0029
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_AnalPlugBVibe, -0.0045)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 3
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_AnalPlugBVibe, -0.005)
+                                mood += 2.35
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(Anal)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+
+                        If stock_AnalPlugBVibe <= 0
+                            Player.setActorVar(stock_AnalPlugBVibe, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    Endif
+
+                Endif
+            
+            ElseIf 3
+        
+                If stock_LubricantType < 0
+                    Player(Anxious)::"Ok, I don't have any lubricant! I have to go shopping!"
+                Else
+        
+                    1:: stock_LubeJOH2O > 0::"Rub yourself with 0.15 of bottle of JO H2O Succulent Watermelon"
+                    2:: stock_LubeCoconut > 0::"Rub yourself with 0.15 of bottle of Coconut Love Oil"
+                    3:: stock_LubeSilicone > 0::"Rub yourself with 0.15 of bottle of Gun Oil Silicone"
+                    4:: stock_LubeForia > 0::"Rub yourself with 0.15 of bottle of Foria Awaken"
+                    99:: "Without its better!"
+
+                        
+                    If 1
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player.modifyActorVar(stock_LubeJOH2O, -0.15)
+                        mood += 2
+                        energy -= 9
+                        fitness += 0.005
+                        attractiveness += 0.002
+                        Player.strip()
+                        filter(solo)
+                        Sex(Player)
+                        passTime(0.25, 0.5)
+
+                        If stock_LubeJOH2O <= 0
+                            Player.setActorVar(stock_LubeJOH2O, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                        
+                    ElseIf 2
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player.modifyActorVar(stock_LubeCoconut, -0.15)
+                        mood += 2.25
+                        energy -= 8.5
+                        fitness += 0.004
+                        attractiveness += 0.002
+                        Player.strip()
+                        filter(solo)
+                        Sex(Player)
+                        passTime(0.25, 0.5)
+
+                        If stock_LubeCoconut <= 0
+                            Player.setActorVar(stock_LubeCoconut, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                            
+                    ElseIf 3
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player.modifyActorVar(stock_LubeSilicone, -0.15)
+                        mood += 2.5
+                        energy -= 8
+                        fitness += 0.003
+                        attractiveness += 0.002
+                        Player.strip()
+                        filter(solo)
+                        Sex(Player)
+                        passTime(0.25, 0.5)
+
+                        If stock_LubeSilicone <= 0
+                            Player.setActorVar(stock_LubeSilicone, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                            
+                    ElseIf 4
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player.modifyActorVar(stock_LubeForia, -0.15)
+                        mood += 2.75
+                        energy -= 7.5
+                        fitness += 0.002
+                        attractiveness += 0.002
+                        Player.strip()
+                        filter(solo)
+                        Sex(Player)
+                        passTime(0.25, 0.5)
+
+                        If stock_LubeForia <= 0
+                            Player.setActorVar(stock_LubeForia, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                        
+                    ElseIf 99
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        mood += 2
+                        energy -= 10
+                        fitness += 0.005
+                        attractiveness += 0.002
+                        Player.strip()
+                        filter(solo)
+                        Sex(Player)
+                        passTime(0.25, 0.5)
+
+                    Endif
+                    
+                Endif
+            
+            ElseIf 4
+        
+                If stock_SexDollType < 0
+                    Player(Anxious)::"Ok, I don't have any sell doll to play with! I have to go shopping or use my hand instead!"
+                Else
+                    
+                    Actor = generatePersonTemporary()
+                    Actor:mood => 95
+                    Actor:arousal => 50
+                    Actor:perversion => 75
+                    Actor:attractiontoplayer => 95
+                    Actor:rapportwithplayer => 95
+                    Actor.hide()
+                    Player(Curious)::"Which sex doll gender I'm gonna fuck?"
+                    0::"Female"
+                    1::"Male"
+                    
+                    If 1
+                        While !Actor.isMale()
+                            Actor = generatePersonTemporary()
+                        EndWhile
+                    Else
+                        While Actor.isMale()
+                            Actor = generatePersonTemporary()
+                        EndWhile
+                    EndIf
+                    
+                    Player(Curious)::"Which sex doll I'm gonna fuck?"
+                    1:: stock_SexDollInflatable > 0::"Play with my Inflatable Sex Doll"
+                    2:: stock_SexDollClassic > 0::"Play with my Classic Tan Sex Doll"
+                    3:: stock_SexDollTPE > 0::"Play with my Most Lifelike TPE Sex Doll"
+                    4:: stock_SexDollRobot > 0::"Play with my Lifelike AI Sex Robot"
+                    99:: "Go back !"
+                    
+                    If 1
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"My Inflatable Sex Doll and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"My Inflatable Sex Doll and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"My Inflatable Sex Doll and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"My Inflatable Sex Doll and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollInflatable, -0.009)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollInflatable, -0.009)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.25
+                                energy -= 8.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollInflatable, -0.009)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.5
+                                energy -= 8
+                                fitness += 0.003
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollInflatable, -0.009)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.75
+                                energy -= 7.5
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollInflatable, -0.01)
+                                mood += 2
+                                energy -= 10
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+
+                        If stock_SexDollInflatable <= 0
+                            Player.setActorVar(stock_SexDollInflatable, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 2
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"My Classic Tan Sex Doll and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"My Classic Tan Sex Doll and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"My Classic Tan Sex Doll and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"My Classic Tan Sex Doll and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollClassic, -0.007)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.15
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollClassic, -0.007)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.35
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollClassic, -0.007)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.55
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollClassic, -0.007)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.8
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollClassic, -0.006)
+                                mood += 2.15
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+
+                        If stock_SexDollClassic <= 0
+                            Player.setActorVar(stock_SexDollClassic, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 3
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"My TPE Sex Doll and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"My TPE Sex Doll and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"My TPE Sex Doll and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"My TPE Sex Doll and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollTPE, -0.005)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.25
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollTPE, -0.005)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.45
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollTPE, -0.005)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.65
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.0029
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollTPE, -0.005)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.85
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollTPE, -0.006)
+                                mood += 2.25
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+
+                        If stock_SexDollTPE <= 0
+                            Player.setActorVar(stock_SexDollTPE, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 4
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                    
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"My AI Sex Robot and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"My AI Sex Robot and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"My AI Sex Robot and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"My AI Sex Robot and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollRobot, -0.0045)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.55
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollRobot, -0.0045)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.65
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollRobot, -0.0045)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.85
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.0029
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollRobot, -0.0045)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 3
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Actor.show()
+                                Player.modifyActorVar(stock_SexDollRobot, -0.005)
+                                mood += 2.35
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Actor.strip()
+                                
+                                SexNoAffair(Actor, Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+
+                        If stock_SexDollRobot <= 0
+                            Player.setActorVar(stock_SexDollRobot, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    Endif
+
+                Endif
+                
+            ElseIf 5
+        
+                If stock_MassageLotionType < 0
+                    Player(Anxious)::"Ok, I don't have any massage lotion! I have to go shopping!"
+                Else
+        
+                    1:: stock_LotionHoneydew > 0::"Rub yourself with 0.25 of bottle of honeydew confectionary delights massage oil"
+                    2:: stock_LotionRedFlower > 0::"Rub yourself with 0.25 of bottle of red flower massage lotion"
+                    3:: stock_LotionNaturale > 0::"Rub yourself with 0.25 of bottle of naturale massage oil"
+                    4:: stock_LotionTHC > 0::"Rub yourself with 0.25 of bottle of high thc formula massage lotion"
+                    99:: "Go back !"
+                    
+                    If 1
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player.modifyActorVar(stock_LotionHoneydew, -0.15)
+                        mood += 2
+                        energy -= 9
+                        fitness += 0.005
+                        attractiveness += 0.002
+                        Player.strip()
+                        filter(solo)
+                        Sex(Player)
+                        passTime(0.25, 0.5)
+
+                        If stock_LotionHoneydew <= 0
+                            Player.setActorVar(stock_LotionHoneydew, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                        
+                    ElseIf 2
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player.modifyActorVar(stock_LotionRedFlower, -0.15)
+                        mood += 2.25
+                        energy -= 8.5
+                        fitness += 0.004
+                        attractiveness += 0.002
+                        Player.strip()
+                        filter(solo)
+                        Sex(Player)
+                        passTime(0.25, 0.5)
+
+                        If stock_LotionRedFlower <= 0
+                            Player.setActorVar(stock_LotionRedFlower, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                            
+                    ElseIf 3
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player.modifyActorVar(stock_LotionNaturale, -0.15)
+                        mood += 2.5
+                        energy -= 8
+                        fitness += 0.003
+                        attractiveness += 0.002
+                        Player.strip()
+                        filter(solo)
+                        Sex(Player)
+                        passTime(0.25, 0.5)
+
+                        If stock_LotionNaturale <= 0
+                            Player.setActorVar(stock_LotionNaturale, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                            
+                    ElseIf 4
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player.modifyActorVar(stock_LotionTHC, -0.15)
+                        mood += 2.75
+                        energy -= 7.5
+                        fitness += 0.002
+                        attractiveness += 0.002
+                        Player.strip()
+                        filter(solo)
+                        Sex(Player)
+                        passTime(0.25, 0.5)
+
+                        If stock_LotionTHC <= 0
+                            Player.setActorVar(stock_LotionTHC, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                        
+                    ElseIf 99
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        mood += 2
+                        energy -= 10
+                        fitness += 0.005
+                        attractiveness += 0.002
+                        Player.strip()
+                        filter(solo)
+                        Sex(Player)
+                        passTime(0.25, 0.5)
+                                
+                    Endif
+
+                Endif
+                
+            ElseIf 6
+        
+                If stock_MasturbatorType < 0
+                    Player(Anxious)::"Ok, I don't have any masturbator to play with! I have to go shopping!"
+                Else
+        
+                    1:: stock_MasturbatorPocket > 0::"Play with my pocket masturbator"
+                    2:: stock_MasturbatorBubble > 0::"Play with my bubble butt realistic masturbator"
+                    3:: stock_MasturbatorMega > 0::"Play with my mega masturbator"
+                    4:: stock_Lovebotz > 0::"Play with my Lovebotz axis multi-angle sex machine"
+                    99:: "Go back !"
+                    
+                    If 1
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with pocket masturbator and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with pocket masturbator and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with pocket masturbator and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with pocket masturbator and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_MasturbatorPocket, -0.009)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Player.modifyActorVar(stock_MasturbatorPocket, -0.009)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.25
+                                energy -= 8.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_MasturbatorPocket, -0.009)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.5
+                                energy -= 8
+                                fitness += 0.003
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_MasturbatorPocket, -0.009)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.75
+                                energy -= 7.5
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_MasturbatorPocket, -0.01)
+                                mood += 2
+                                energy -= 10
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif  
+
+                        If stock_MasturbatorPocket <= 0
+                            Player.setActorVar(stock_MasturbatorPocket, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 2
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with my Bubble Butt and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with my Bubble Butt and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with my Bubble Butt and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with my Bubble Butt and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_MasturbatorBubble, -0.007)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.15
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Player.modifyActorVar(stock_MasturbatorBubble, -0.007)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.35
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_MasturbatorBubble, -0.007)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.55
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_MasturbatorBubble, -0.007)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.8
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_MasturbatorBubble, -0.006)
+                                mood += 2.15
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif 
+
+                        If stock_MasturbatorBubble <= 0
+                            Player.setActorVar(stock_MasturbatorBubble, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 3
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                        
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with Mega Masturbator and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with Mega Masturbator and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with Mega Masturbator and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with Mega Masturbator and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_MasturbatorMega, -0.005)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.25
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Player.modifyActorVar(stock_MasturbatorMega, -0.005)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.45
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_MasturbatorMega, -0.005)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.65
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.0029
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_MasturbatorMega, -0.005)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 2.85
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_MasturbatorMega, -0.006)
+                                mood += 2.25
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                Filter(vibrator)
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+
+                        If stock_MasturbatorMega <= 0
+                            Player.setActorVar(stock_MasturbatorMega, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    ElseIf 4
+                    
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                    
+                        Player(Excited)::"Do I want lubrication before or is it better without?"
+                        1:: stock_LubeJOH2O > 0::"Play with my Lovebotz and JO H2O Watermelon"
+                        2:: stock_LubeCoconut > 0::"Play with my Lovebotz and Coconut Love Oil"
+                        3:: stock_LubeSilicone > 0::"Play with my Lovebotz and Gun Oil Silicone"
+                        4:: stock_LubeForia > 0::"Play with my Lovebotz and Foria Awaken"
+                        99:: "Without its better"
+                        
+                        If stock_LubricantType < 0
+                            Player(Anxious)::"Damn!, I don't have any lubricant to put on my toy!"
+                        Else
+                            If 1
+                                Player.modifyActorVar(stock_Lovebotz, -0.0045)
+                                Player.modifyActorVar(stock_LubeJOH2O, -0.05)
+                                mood += 2.55
+                                energy -= 7.75
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            ElseIf 2
+                                Player.modifyActorVar(stock_Lovebotz, -0.0045)
+                                Player.modifyActorVar(stock_LubeCoconut, -0.05)
+                                mood += 2.65
+                                energy -= 7.5
+                                fitness += 0.004
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 3
+                                Player.modifyActorVar(stock_Lovebotz, -0.0045)
+                                Player.modifyActorVar(stock_LubeSilicone, -0.05)
+                                mood += 2.85
+                                energy -= 7.25
+                                fitness += 0.003
+                                attractiveness += 0.0029
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                            
+                            ElseIf 4
+                                Player.modifyActorVar(stock_Lovebotz, -0.0045)
+                                Player.modifyActorVar(stock_LubeForia, -0.05)
+                                mood += 3
+                                energy -= 7.15
+                                fitness += 0.002
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                        
+                            ElseIf 99
+                                Player.modifyActorVar(stock_Lovebotz, -0.005)
+                                mood += 2.35
+                                energy -= 9
+                                fitness += 0.005
+                                attractiveness += 0.002
+                                Player.strip()
+                                
+                                Sex(Player)
+                                passTime(0.25, 0.5)
+                                
+                            Endif
+                        
+                        Endif
+
+                        If stock_Lovebotz <= 0
+                            Player.setActorVar(stock_Lovebotz, 0)
+                            Player.modifyActorVar(rk_VB_IBuySextoy, -1)
+                        EndIf
+                    
+                    Endif
+                
+                Endif
+
+            Endif
+
+        Endif
+    SceneEnd()

@@ -1,0 +1,667 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        
+        PoliceMan = generatePersonTemporary()
+        PoliceMan2 = generatePersonTemporary()
+        
+        If Player.isFemale() && !Player.isGay() || Player.isMale()
+        
+            While !PoliceMan.isMale() || PoliceMan.isTrans()
+                PoliceMan = generatePersonTemporary()
+                PoliceMan.randomizeHairs()
+                PoliceMan.randomizeFace()
+            EndWhile
+            PoliceMan.randomizeHairs()
+            PoliceMan.randomizeFace()
+            
+            While !PoliceMan2.isMale() || PoliceMan2.isTrans()
+                PoliceMan2 = generatePersonTemporary()
+            EndWhile
+            PoliceMan2.randomizeHairs()
+            PoliceMan2.randomizeFace()
+            
+        ElseIf Player.isMale() && !Player.isGay() || Player.isFemale()
+        
+            While !PoliceMan.isMale() || PoliceMan.isTrans()
+                PoliceMan = generatePersonTemporary()
+            EndWhile
+            PoliceMan.randomizeHairs()
+            PoliceMan.randomizeFace()
+            
+            While !PoliceMan2.isMale() || PoliceMan2.isTrans()
+                PoliceMan2 = generatePersonTemporary()
+            EndWhile
+            PoliceMan2.randomizeHairs()
+            PoliceMan2.randomizeFace()
+            
+        Else
+        
+            PoliceMan.randomizeHairs()
+            PoliceMan.randomizeFace()
+            PoliceMan2.randomizeHairs()
+            PoliceMan2.randomizeFace()
+            
+        EndIf
+        
+        PoliceMan.SetJob(Police)
+        PoliceMan2.SetJob(Police)
+        PoliceMan.dressUniform(police)
+        PoliceMan2.dressUniform(police)
+        setBackground(police)
+        PoliceMan.show(2)
+        PoliceMan2.show(4)
+        PoliceMan.moveToPersonStand(Player, 50)
+        PoliceMan2.moveToPersonStand(Player, 90)
+        PoliceMan.moveToPersonStand(Player, 50)
+        PoliceMan(Serene)::"Hi! How can I help you?"
+        faceEachOther(Player, PoliceMan)
+        Player(Serene)::"Hi! I'm here to visit a prisoner!"
+        PoliceMan(Serene)::"Ok! Which prisoner?"
+        0::"Visit a friend"
+        1::"Visit a relative"
+        2::"The horniest prisoner"
+        99::"Nothing!"
+        
+        If 0
+
+            selectNPC(FPrison)
+            Friend = getSelectedNPC()
+            ActArrestTagF = Friend.getActorVar(rk_VB_ActArrestTagF)
+            Fsentence = Friend.getActorVar(rk_VB_ActSentence)
+            Friendsentence = Friend.getActorVar(rk_VB_Sentence)
+            FPrison = Friend.getActorVar(tag_FPrison)
+            
+            If Friend.isValid()
+            
+                If Friendsentence <= 0
+                
+                    PoliceMan(Sad)::"Sorry <Player.mister_or_miss>, but my computer show me that no one with that name has been imprisoned!"
+                    PoliceMan(Sad)::"Is there anything else I can do for you?"
+                    Player(Sad)::"No thanks!"
+                    SceneEnd()
+                
+                Elseif FPrison <= 0
+                
+                    PoliceMan(Sad)::"Sorry <Player.mister_or_miss>, but my computer show me <Friend.his_or_her> files and <Friend.he_or_she> has not been imprisoned again!"
+                    PoliceMan(Sad)::"Is there anything else I can do for you?"
+                    Player(Sad)::"No thanks!"
+                    SceneEnd()
+                    
+                Else
+                
+                    PoliceMan(Serene)::"Ok, you want to see prisoner <Friend.name>, cell <ActArrestTagF> - <Fsentence>, Follow us!"
+                    
+                Endif
+                
+            Else
+            
+                PoliceMan(Sad)::"Sorry <Player.mister_or_miss>, but my computer show me that no one with that name has been imprisoned!"
+                PoliceMan(Sad)::"Is there anything else I can do for you?"
+                Player(Sad)::"No thanks!"
+                SceneEnd()
+                
+            Endif
+            
+            Friend.hide()
+            PoliceMan.hide()
+            PoliceMan2.moveToPersonStand(Player, 50)
+            PoliceMan2(Serene)::"First of all, I have to do a body search on you. Follow me!"
+            "We enter the search room and then <PoliceMan2.he_or_she> said ..."
+            setBackground(toilets)
+            setBackground3D(Modules/rk_vin_Base/World/rk_VB_SearchRoom.lpworld)
+            "Stay calm and don't move, I will start my search ...!"
+            
+            If PoliceMan2.isInterestedIn(Player) && PoliceMan2:arousal > 25 && PoliceMan2:perversion > 75 && PoliceMan2:masochist < Player:masochist
+                
+                PoliceMan2(Serene)::"Please take off your clothes ..."
+                Player.strip()
+                PoliceMan2.moveToPersonStand(Player, 50)
+                "The policeman is not only searching me, <PoliceMan2.he_or_she> is admiring my genitals."
+                "Fucking pervert ..."
+                PoliceMan2(Serene)::"Ok, ok, we got a situation here my friend ..."
+                PoliceMan2(Serene)::"I have suspicions against you so you'll have to satisfy my <PoliceMan2.cock_or_pussy> before you see your friend ... "
+                "What I should do?"
+                0::"Accept"
+                1::"Refuse"
+                
+                If 0
+                    Player(Happy)::"Sure, ride on!"
+                    PoliceMan2.strip()
+                    Player.strip()
+                    SexNoAffair(PoliceMan2, Player)
+                    PoliceMan2.dressUniform(police)
+                    Player.dress()
+                    PoliceMan2(Serene)::"Ok, you're good to go!"
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    PoliceMan2(Serene)::"That was awesome, ..."
+                    
+                Else
+                
+                    Random
+                        Player(Happy):: "Sorry, but I don't feel like I know you well enough to fuck with you."
+                        Player(Happy):: "It's gonna be a no, I'm afraid. Another day perhaps."
+                        Player(Irritated):: "Sorry, but I don't normally fuck with someone I've just met."
+                    EndRandom
+                    PoliceMan2(Serene)::"Ok, so you're not good to go! Get out of here!"
+                    SceneEnd()
+                    
+                Endif
+                
+            Elseif PoliceMan2.isInterestedIn(Player) && PoliceMan2:arousal > 25 && PoliceMan2:perversion > 65
+                
+                PoliceMan2(Serene)::"Please take off your clothes ..."
+                Player.strip()
+                PoliceMan2.moveToPersonStand(Player, 50)
+                "The policeman is not only searching me, <PoliceMan2.he_or_she> is admiring my genitals."
+                "Fucking pervert ..."
+                PoliceMan2(Serene)::"Btw, if you're interested, we can fuck right here, no one will see!"
+                "What I should do?"
+                0::"Accept"
+                1::"Refuse"
+                
+                If 0
+                    Player(Happy)::"Sure, ride on!"
+                    PoliceMan2.strip()
+                    Player.strip()
+                    SexNoAffair(PoliceMan2, Player)
+                    PoliceMan2.dressUniform(police)
+                    Player.dress()
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    PoliceMan2(Serene)::"That was awesome, ..."
+                    
+                Else
+                
+                    Random
+                        Player(Happy):: "Sorry, but I don't feel like I know you well enough to fuck with you."
+                        Player(Happy):: "It's gonna be a no, I'm afraid. Another day perhaps."
+                        Player(Irritated):: "Sorry, but I don't normally fuck with someone I've just met."
+                    EndRandom
+                    
+                Endif
+                PoliceMan2(Serene)::"Ok, you're good to go!"
+                
+            Elseif PoliceMan2.isInterestedIn(Player) && PoliceMan2:arousal > 25 && PoliceMan2:perversion > 50
+                
+                PoliceMan2(Serene)::"Please take off your clothes ..."
+                Player.strip()
+                PoliceMan2.moveToPersonStand(Player, 50)
+                "The policeman is not only searching me, <PoliceMan2.he_or_she> is admiring my genitals."
+                "Fucking pervert ..."
+                PoliceMan2(Serene)::"Ok, you're good to go!"
+                
+            Elseif PoliceMan2.isInterestedIn(Player) && Player:attractiveness > 50
+                
+                PoliceMan2(Serene)::"Do you think we could trade our numbers. We could hang out together someday..."
+                "What I should do?"
+                0::"Accept"
+                1::"Refuse"
+                
+                If 0
+                    Player(Happy)::"Sure!"
+                    "I happily accepted. We exchanged numbers ..."
+                    PoliceMan2.makePermanent()
+                    exchangeContact(PoliceMan2)
+
+                Else
+                
+                    Random
+                        Player(Happy):: "Sorry, but I don't feel like I know you well enough to share such personal information just yet."
+                        Player(Happy):: "It's gonna be a no, I'm afraid. Another day perhaps."
+                        Player(Irritated):: "Sorry, but I don't normally exchange numbers with someone I've just met."
+                    EndRandom
+                    
+                Endif
+                PoliceMan2(Serene)::"Ok, you're good to go!"
+                
+            Else
+            
+                PoliceMan2(Serene)::"Ok, you're good to go!"
+                
+            Endif
+            
+            "Then <PoliceMan2.he_or_she> escorted me to <Friend.name>'s cell"
+            followUp(rk_VB_Visit_Prisoner_F)
+            
+        Elseif 1
+        
+            selectNPC(RPrison)
+            Relative = getSelectedNPC()
+            ActArrestTagR = Relative.getActorVar(rk_VB_ActArrestTagR)
+            ActSentence = Relative.getActorVar(rk_VB_ActSentence)
+            Relativesentence = Relative.getActorVar(rk_VB_Sentence)
+            RPrison = Relative.getActorVar(tag_RPrison)
+            
+            If Relative.isValid()
+            
+                If Relativesentence <= 0
+                
+                    PoliceMan(Sad)::"Sorry <Player.mister_or_miss>, my computer show me that a certain <Relative.name> <Relative.name_last> has been released few days ago!"
+                    PoliceMan(Sad)::"Is there anything else I can do for you?"
+                    Player(Sad)::"No thanks!"
+                    SceneEnd()
+                
+                Elseif RPrison <= 0
+
+                    PoliceMan(Sad)::"Sorry <Player.mister_or_miss>, but my computer show me <Relative.his_or_her> files and <Relative.he_or_she> has not been imprisoned again!"
+                    PoliceMan(Sad)::"Is there anything else I can do for you?"
+                    Player(Sad)::"No thanks!"
+                    SceneEnd()
+                
+                Else
+                
+                    PoliceMan(Serene)::"Ok, you want to see prisoner <Relative.name>, cell <ActArrestTagR> - <ActSentence>, Follow us!"
+                    
+                Endif
+                
+            Else
+            
+                PoliceMan(Sad)::"Sorry <Player.mister_or_miss>, but my computer show me that no one with that name has been imprisoned!"
+                PoliceMan(Sad)::"Is there anything else I can do for you?"
+                Player(Sad)::"No thanks!"
+                SceneEnd()
+                
+            Endif
+            
+            PoliceMan2.hide()
+            PoliceMan.moveToPersonStand(Player, 50)
+            PoliceMan(Serene)::"First of all, I have to do a body search on you. Follow me!"
+            "We enter the toilets and then <PoliceMan.he_or_she> said ..."
+            setBackground(toilets)
+            setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
+            "Stay calm and don't move, I will start my search ...!"
+            If PoliceMan.isInterestedIn(Player) && PoliceMan:arousal > 25 && PoliceMan:perversion > 75 && PoliceMan:masochist < Player:masochist
+                
+                PoliceMan(Serene)::"Please take off your clothes ..."
+                Player.strip()
+                PoliceMan.moveToPersonStand(Player, 50)
+                "The policeman is not only searching me, <PoliceMan.he_or_she> is admiring my genitals."
+                "Fucking pervert ..."
+                PoliceMan(Serene)::"Ok, ok, we got a situation here my friend ..."
+                PoliceMan(Serene)::"I have suspicions against you so you'll have to satisfy my <PoliceMan.cock_or_pussy> before you see your relative ..."
+                "What I should do?"
+                0::"Accept"
+                1::"Refuse"
+                
+                If 0
+                
+                    Player(Happy)::"Sure, ride on!"
+                    PoliceMan.strip()
+                    Player.strip()
+                    SexNoAffair(PoliceMan, Player)
+                    PoliceMan.dressUniform(police)
+                    Player.dress()
+                    PoliceMan(Serene)::"Ok, you're good to go!"
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    PoliceMan(Serene)::"That was awesome, ..."
+                    
+                Else
+                
+                    Random
+                        Player(Happy):: "Sorry, but I don't feel like I know you well enough to fuck with you."
+                        Player(Happy):: "It's gonna be a no, I'm afraid. Another day perhaps."
+                        Player(Irritated):: "Sorry, but I don't normally fuck with someone I've just met."
+                    EndRandom
+                    PoliceMan(Serene)::"Ok, so you're not good to go! Get out of here!"
+                    SceneEnd()
+                    
+                Endif
+                
+            Elseif PoliceMan.isInterestedIn(Player) && PoliceMan:arousal > 25 && PoliceMan:perversion > 65
+                
+                PoliceMan(Serene)::"Please take off your clothes ..."
+                Player.strip()
+                PoliceMan.moveToPersonStand(Player, 50)
+                "The policeman is not only searching me, <PoliceMan.he_or_she> is admiring my genitals."
+                "Fucking pervert ..."
+                PoliceMan(Serene)::"Btw, if you're interested, we can fuck right here, no one will see!"
+                "What I should do?"
+                0::"Accept"
+                1::"Refuse"
+                
+                If 0
+                    Player(Happy)::"Sure, ride on!"
+                    PoliceMan.strip()
+                    Player.strip()
+                    SexNoAffair(PoliceMan, Player)
+                    PoliceMan.dressUniform(police)
+                    Player.dress()
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    PoliceMan(Serene)::"That was awesome, ..."
+                    
+                Else
+                
+                    Random
+                        Player(Happy):: "Sorry, but I don't feel like I know you well enough to fuck with you."
+                        Player(Happy):: "It's gonna be a no, I'm afraid. Another day perhaps."
+                        Player(Irritated):: "Sorry, but I don't normally fuck with someone I've just met."
+                    EndRandom
+                    
+                Endif
+                PoliceMan(Serene)::"Ok, you're good to go!"
+            
+            Elseif PoliceMan.isInterestedIn(Player) && PoliceMan:arousal > 25 && PoliceMan:perversion > 50
+                
+                PoliceMan(Serene)::"Please take off your clothes ..."
+                Player.strip()
+                PoliceMan.moveToPersonStand(Player, 50)
+                "The policeman is not only searching me, <PoliceMan.he_or_she> is admiring my genitals."
+                "Fucking pervert ..."
+                PoliceMan(Serene)::"Ok, you're good to go!"
+            
+            Elseif PoliceMan.isInterestedIn(Player) && Player:attractiveness > 50
+                
+                PoliceMan(Serene)::"Do you think we could trade our numbers. We could hang out together someday..."
+                "What I should do?"
+                0::"Accept"
+                1::"Refuse"
+                
+                If 0
+                    Player(Happy)::"Sure!"
+                    "I happily accepted. We exchanged numbers ..."
+                    PoliceMan.makePermanent()
+                    exchangeContact(PoliceMan)
+
+                Else
+                
+                    Random
+                        Player(Happy):: "Sorry, but I don't feel like I know you well enough to share such personal information just yet."
+                        Player(Happy):: "It's gonna be a no, I'm afraid. Another day perhaps."
+                        Player(Irritated):: "Sorry, but I don't normally exchange numbers with someone I've just met."
+                    EndRandom
+                    
+                Endif
+                PoliceMan(Serene)::"Ok, you're good to go!"
+                
+            Else
+            
+                PoliceMan(Serene)::"Ok, you're good to go!"
+                
+            Endif
+            
+            "Then <PoliceMan.he_or_she> escorted me to <Relative.name>'s cell"
+            followUp(rk_VB_Visit_Prisoner_R)
+            
+        Elseif 2
+        
+            wantMale = false
+            PoliceMan(Grin)::"You want to satisfy a female or a male?"
+            "What's my choice?"
+            0::"Female"
+            1::"Male"
+            
+            MateRandom = generatePersonTemporary()
+            If 0
+                wantMale = false
+            Else
+                wantMale = true
+            EndIf
+            
+            If wantMale
+                While [ !MateRandom.isMale() ] || [ MateRandom.isTrans() ]
+                    MateRandom = generatePersonTemporary()
+                EndWhile
+            Else
+                While [ MateRandom.isMale() ] || [ MateRandom.isTrans() ]
+                    MateRandom = generatePersonTemporary()
+                EndWhile
+            EndIf
+                        
+            MateRandom:rapportwithplayer => Random(50, 100)
+            MateRandom:sentence => Random(39, 3800)
+            MateRandom.hide()
+            MateRandom.makePermanent()
+            PoliceMan(Grin)::"So it will be <MateRandom.name>, we always catch <MateRandom.him_or_her> naked or fucking with <MateRandom.his_or_her> cell mates."
+            MateRandom.setActorVar(tag_FKPrison, 1)
+            ActID = MateRandom.getID()
+            MateRandom.setActorVar(rk_VB_ActArrestTagFK, ActID)
+            MateRandom.setActorVar(rk_VB_MeToFK, ActID)
+            PoliceMan2:arousal += Random(0, 1)
+            PoliceMan:arousal += Random(0, 1)
+            PoliceMan2.show()
+            PoliceMan2.moveToPersonStand(Player, 50)
+            PoliceMan2(Serene)::"First of all, I have to do a body search on you. Follow me!"
+            "We enter the toilets and then <PoliceMan2.he_or_she> said ..."
+            setBackground(toilets)
+            setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
+            "Stay calm and don't move, I will start my search ...!"
+            PoliceMan.show()
+            
+            If PoliceMan.isInterestedIn(Player) && PoliceMan:arousal > 25 && PoliceMan:perversion > 75 && PoliceMan:masochist < Player:masochist
+                
+                PoliceMan(Serene)::"Please take off your clothes ..."
+                Player.strip()
+                PoliceMan.moveToPersonStand(Player, 50)
+                "The policeman is not only searching me, <PoliceMan.he_or_she> is admiring my genitals."
+                "Fucking pervert ..."
+                PoliceMan(Serene)::"Ok, ok, we got a situation here my friend ..."
+                PoliceMan(Serene)::"I have suspicions against you so you'll have to satisfy us before you see your client ..."
+                "What I should do?"
+                0::"Accept"
+                1::"Refuse"
+                
+                If 0
+                
+                    Player(Happy)::"Sure, ride on!"
+                    If PoliceMan2.isInterestedIn(Player)
+                    
+                        PoliceMan.strip()
+                        Player.strip()
+                        PoliceMan2.strip()
+                        SexNoAffair(PoliceMan, Player, PoliceMan2)
+                        PoliceMan.dressUniform(police)
+                        PoliceMan2.dressUniform(police)
+                        Player.dress()
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                        EndIf
+
+                        TipGiven = Random(100, 300)
+                        TipGiven_loc = TipGiven.convertToLocalCurrency()
+                        DoIGotIt = Random(1, 10)
+                        
+                        If DoIGotIt > 5 && Player:attractiveness > 50
+                        
+                            PoliceMan2(Serene)::"That was awesome, so me and my friend decided to give you a tip! Here's <TipGiven_loc>!"
+                            money += TipGiven
+                            
+                        Endif
+                        PoliceMan(Serene)::"Ok, you're good to go!"
+                        
+                    Else
+                    
+                        PoliceMan2(Sad)::"Bah! I'm not in the mood today! I will watch you play instead!"
+                        PoliceMan.strip()
+                        Player.strip()
+                        SexNoAffair(PoliceMan, Player)
+                        PoliceMan.dressUniform(police)
+                        Player.dress()
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        PoliceMan2:arousal += Random(1, 10)
+                        PoliceMan2:perversion += Random(1, 3)
+                        TipGiven = Random(50, 200)
+                        TipGiven_loc = TipGiven.convertToLocalCurrency()
+                        DoIGotIt = Random(1, 10)
+                        
+                        If DoIGotIt > 5 && Player:attractiveness > 50
+                        
+                            PoliceMan(Serene)::"That was awesome, so I decided to give you a tip! Here's <TipGiven_loc>!"
+                            money += TipGiven
+                            
+                        Endif
+                        "I ask the other police ..."
+                        Player(Flirty)::"Still have energy for you if you want a taste ..."
+                        
+                        If PoliceMan2.isInterestedInMen() && PoliceMan2:arousal > 25
+                        
+                            PoliceMan2(Sad)::"Ok! Why not after all!"
+                            PoliceMan2.strip()
+                            Player.strip()
+                            SexNoAffair(PoliceMan2, Player)
+                            PoliceMan2.dressUniform(police)
+                            Player.dress()
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            
+                            PoliceMan:arousal += Random(1, 10)
+                            PoliceMan:perversion += Random(1, 3)
+                            
+                            TipGiven = Random(50, 200)
+                            TipGiven_loc = TipGiven.convertToLocalCurrency()
+                            DoIGotIt = Random(1, 10)
+                        
+                            If DoIGotIt > 5 && Player:attractiveness > 50
+                        
+                                PoliceMan2(Serene)::"That was awesome, so I decided to give you a tip! Here's <TipGiven_loc>!"
+                                money += TipGiven
+                            
+                            Endif
+                        
+                        Else
+                        
+                            PoliceMan2(Sad)::"No thanks!"
+                            
+                        Endif
+                        PoliceMan(Serene)::"Ok, you're good to go!"
+                        
+                    Endif
+                    
+                Else
+                
+                    Random
+                        Player(Happy):: "Sorry, but I don't feel like I know you both well enough to fuck with you."
+                        Player(Happy):: "It's gonna be a no, I'm afraid. Another day when you got some cash ..."
+                        Player(Irritated):: "Sorry, but I don't normally fuck for free."
+                    EndRandom
+                    PoliceMan(Serene)::"Ok, so you're not good to go! Get out of here!"
+                    MateRandom.DeletePerson()
+                    MateRandom.setActorVar(rk_VB_MeToFK, 0)
+                    MateRandom.setActorVar(tag_FKPrison, 0)
+                    MateRandom.setActorVar(rk_VB_ActArrestTagFK, 0)
+                    SceneEnd()
+                    
+                Endif
+                
+            Elseif PoliceMan2.isInterestedIn(Player) && PoliceMan.isInterestedIn(Player) && PoliceMan2:arousal > 25 && PoliceMan:perversion > 65
+                
+                PoliceMan(Serene)::"Please take off your clothes ..."
+                Player.strip()
+                PoliceMan:arousal += 5
+                PoliceMan2:perversion += 5
+                PoliceMan.moveToPersonStand(Player, 50)
+                PoliceMan.moveToPersonStand(Player, 30)
+                "The police are not only searching me, they are admiring my genitals."
+                "Fucking perverts ..."
+                PoliceMan:arousal += 5
+                PoliceMan2:perversion += 5
+                PoliceMan(Serene)::"Btw, if you're interested, we are willing to give pay you cash in exchange of sex! What is your price?"
+                Player.dress()
+                "What I should answer?"
+                0::"Accept"
+                1::"Not interested"
+                
+                If 0
+                    
+                    MyPrice = Random(300, 500)
+                    MyPrice_loc = MyPrice.convertToLocalCurrency()
+                    Player(Happy):: "Okay, it will be <MyPrice_loc> for you both!"
+                    
+                    If 50 > Random(0, 100)
+                        PoliceMan2(Happy)::"No problem baby, we got the money, here!"
+                        money += MyPrice
+                        
+                        "So we stripped and started making out ..."
+                        PoliceMan.strip()
+                        Player.strip()
+                        PoliceMan2.strip()
+                        SexNoAffair(PoliceMan, Player, PoliceMan2)
+                        PoliceMan.dressUniform(police)
+                        PoliceMan2.dressUniform(police)
+                        Player.dress()
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                        EndIf
+                        PoliceMan2(Serene)::"That was awesome, ..."
+                        PoliceMan(Serene)::"Hope to see you again on your next visit ..."
+                    
+                    Else
+                    
+                        PoliceMan2(Happy)::"Are you crazy! That's too expensive! Forget it little whore!"
+                        
+                    Endif
+                
+                Else
+                
+                    Random
+                        Player(Happy):: "It's gonna be a no, I'm afraid. Another day perhaps."
+                        Player(Irritated):: "Sorry, but I don't normally fuck with cops."
+                    EndRandom
+                    
+                Endif
+                PoliceMan(Serene)::"Ok, you're good to go!"
+                
+            Elseif PoliceMan.isInterestedIn(Player) && PoliceMan:arousal > 25 && PoliceMan:perversion > 50
+                
+                PoliceMan(Serene)::"Please take off your clothes ..."
+                Player.strip()
+                PoliceMan.moveToPersonStand(Player, 50)
+                "The policeman is not only searching me, <PoliceMan.he_or_she> is admiring my genitals."
+                "Fucking pervert ..."
+                PoliceMan(Serene)::"Ok, you're good to go!"
+                
+            Elseif PoliceMan2.isInterestedIn(Player) && Player:attractiveness > 50
+                
+                PoliceMan2(Serene)::"Do you think we could trade our numbers. We could hang out together someday..."
+                "What I should do?"
+                0::"Accept"
+                1::"Refuse"
+                
+                If 0
+                    Player(Happy)::"Sure!"
+                    "I happily accepted. We exchanged numbers ..."
+                    PoliceMan2.makePermanent()
+                    exchangeContact(PoliceMan2)
+
+                Else
+                
+                    Random
+                        Player(Happy):: "Sorry, but I don't feel like I know you well enough."
+                        Player(Happy):: "It's gonna be a no, I'm afraid. Another day perhaps."
+                        Player(Irritated):: "Sorry, but I don't normally exchange numbers with cops."
+                    EndRandom
+                    
+                Endif
+                PoliceMan2(Serene)::"Ok, you're good to go!"
+                
+            Else
+            
+                PoliceMan2(Serene)::"Ok, you're good to go!"
+                
+            Endif
+            
+            "Then they escorted me to <MateRandom.name>'s cell"
+            followUp(rk_VB_Visit_Prisoner_FK)
+            
+        Endif
+    
+    SceneEnd()

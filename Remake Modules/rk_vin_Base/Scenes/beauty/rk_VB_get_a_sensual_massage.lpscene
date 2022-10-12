@@ -1,0 +1,165 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        If isWithCompanion()
+            Player(Happy)::"Sorry babe but I have to go somewhere, I'll be back soon!"
+            endDate()
+        EndIf
+        If money < 160
+            "You don't have enough money to get a sensual massage!"
+        Else
+            setBackground3D(Modules/rk_vin_Base/World/DoctorsRoom00.lpworld)
+            Actor1 = generatePersonTemporary()
+            Actor1.dress()
+            Actor1.show(2)
+            Perversion += 1
+            If WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != sports_centre && WHERE != beauty
+                "I decided to go for a sensual massage today to release some stress. I was greeted by <Actor1.name>."
+            Else
+                "I decided to get a massage to release some stress. I was greeted by <Actor.name>."
+            EndIf
+            "<Actor1.name> asks me what kind of masseur do I prefer?"
+            0::"Female"
+            1::"Male"
+
+            If 1
+                Actor = generatePersonTemporary()
+                While !Actor.isMale()
+                    Actor = generatePersonTemporary()
+                EndWhile
+            Else
+                Actor = generatePersonTemporary()
+                While Actor.isMale()
+                    Actor = generatePersonTemporary()
+                EndWhile
+            EndIf
+            Actor.dress()
+            Actor.show(2)
+            Actor.moveToPersonStand(Player, 50)
+            "The <Actor.masseur_or_masseuse> in question arrives and introduces <Actor.himself_or_herself>."
+            Actor(Flirty)::"Hi, my name is <Actor.name>, I'll be your <Actor.masseur_or_masseuse> today, We're going to room 33, this way..."
+            PriceSMassage = 150
+            PriceSMassage_Loc  = PriceSMassage.convertToLocalCurrency()
+            Actor(Flirty)::"The price for the massage is <PriceSMassage_Loc>"
+            "What should I do?"
+            0::"Pay"
+            99::"Leave"
+            
+            If 0
+                "I pay <PriceSMassage_Loc> for the massage and head to room 33."
+                money -= PriceSMassage
+                setBackground(brothel)
+                setBackground3D(Modules/rk_vin_Base/World/Massage.lpworld)
+                Actor.dress()
+                Actor.show(2)
+                "Once arrived, I stripped down and lied on my back and wait."
+                Player.strip()
+                "<Actor.name> asks me if I want <Actor.him_or_her> to do the massage completely naked"
+                0::"Yes, completely naked"
+                1::"Just bottom"
+                2::"Just top"
+                3::"Stay dressed"
+                
+                If 0
+                
+                    Actor.strip()
+                    Perversion += 0.5
+                ElseIf 1
+                    Actor.strip()
+                    Actor.dressExcept(Outerwear, Bottom, Foot, Headwear, Eyewear, Bottom_Under)
+                    Perversion += 0.5
+                ElseIf 2
+                    Actor.strip()
+                    Actor.dressExcept(Outerwear, Top, Headwear, Eyewear, Top_Under)
+                    Perversion += 0.25
+                EndIf
+                "<Actor.name> asks me what kind of surprise I would like to have after the massage?"
+                0:: "Blowjob"
+                1:: "Handjob"
+                2:: "Arousal massage"
+                    
+                If 0
+                
+                    "<Actor.name> quickly started <Actor.his_or_her> sensual massage and began massaging my body with oil which gives me hot sensations ... "
+                    "After a while, <Actor.he_or_she> finishes the job with a blowjob!"
+                    
+                    If Player.isFemale()
+                        Filter(Licking)
+                    Else
+                        Filter(Blowjob)
+                    EndIf
+                    sex(Actor, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                ElseIf 1
+                    "<Actor.name> quickly started <Actor.his_or_her> sensual massage and began massaging my body with oil which gives me hot sensations ... "
+                    "After a while, <Actor.he_or_she> finishes the job with a handjob!"
+                    If Player.isFemale()
+                        Filter(Fingering)
+                    Else
+                        Filter(Handjob)
+                    EndIf
+                    sex(Actor, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                ElseIf 2
+                    "<Actor.name> quickly started <Actor.his_or_her> sensual massage and began massaging my body with oil which gives me hot sensations ... "
+                    "After a while <Actor.he_or_she> started rubbing <Actor.his_or_her> body against my body until I had some sort of orgasm, then <Actor.he_or_she> stopped abruptly!"
+                    Actor(Happy)::"The goal of this massage is to turn you on like a rabbit, it increases your libido. So hurry to get home, otherwise you might want to get fucked by the first comer ..."
+                    arousal += 50
+                EndIf
+                "<Actor.name> was thoroughly professional and I enjoyed a very relaxing massage."
+                mood += 3
+                energy += 5
+                attractiveness += 1
+                "Before I leave, do I ask for an extra (sex)?"
+                1:: "Yes"
+                2:: "No"
+                
+                If 1
+                    PriceSMassage = 150
+                    PriceSMassage_Loc  = PriceSMassage.convertToLocalCurrency()
+                    Actor(Flirty)::"The price for the an extra is <PriceSMassage_Loc>"
+                    "What should I do?"
+                    0::"Pay"
+                    99::"Leave"
+                    
+                    If 0
+                        Perversion += 1
+                        money -= 150
+                        Actor.strip()
+                        Player.strip()
+                        "We stripped and started to make out!"
+                        sex(Actor, Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                    EndIf
+                EndIf
+                "Before I leave, do I ask <Actor.name>'s phone number?"
+                1:: "Yes"
+                2:: "No"  
+
+                If 1
+                    If Actor.isInterestedIn(Player)
+                        Actor(Happy):: "Of course, I'd love to exchange numbers."
+                        exchangeContact(Actor)
+                        Actor:attractiontoplayer += Random(0, 3)
+                        Actor:rapportwithplayer += Random(0, 3)
+                    Else
+                        Actor(Sad):: "Sorry, but I don't normally exchange numbers with clients."
+                    EndIf
+                EndIf
+            EndIf
+        EndIf
+    SceneEnd() // Scene created by Raddeck

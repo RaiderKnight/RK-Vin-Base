@@ -1,0 +1,246 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: 
+
+    SceneStart()
+        TempDebtVB = Player.getActorVar(rk_VB_TempDebtVB)
+        TempDebtVC = Player.getActorVar(rk_VB_TempDebtVC)
+        TempDebtVM = Player.getActorVar(rk_VB_TempDebtVM)
+        TotalSentences = Player.getActorVar(rk_VB_TotalSentences)
+        AgeP = Player:Age
+        TotalDebtVB = Player.getActorVar(rk_VB_TotalDebtVB)
+        TotalDebtVC = Player.getActorVar(rk_VB_TotalDebtVC)
+        TotalDebtVM = Player.getActorVar(rk_VB_TotalDebtVM)
+        TotalDebtAllV = TotalDebtVB + TotalDebtVC + TotalDebtVM
+        TotalDebtVB_loc = TotalDebtVB.convertToLocalCurrency()
+        TotalDebtVC_loc = TotalDebtVC.convertToLocalCurrency()
+        TotalDebtVM_loc = TotalDebtVM.convertToLocalCurrency()
+        TotalDebtAllV_loc = TotalDebtAllV.convertToLocalCurrency()
+        HalfDebtVB = TotalDebtVB/2
+        HalfDebtVB_loc = HalfDebtVB.convertToLocalCurrency()
+        HalfDebtVC = TotalDebtVC/2
+        HalfDebtVC_loc = HalfDebtVC.convertToLocalCurrency()
+        HalfDebtVM = TotalDebtVM/2
+        HalfDebtVM_loc = HalfDebtVM.convertToLocalCurrency()
+        HalfDebt = TotalDebtAllV/2
+        HalfDebt_loc = HalfDebt.convertToLocalCurrency()
+        PostponedVB = Player.getActorVar(rk_VB_PostponedVB)
+        PostponedVC = Player.getActorVar(rk_VB_PostponedVC)
+        PostponedVM = Player.getActorVar(rk_VB_PostponedVM)
+        WarningDeptDateVB = Player.getActorVar(rk_VB_WarningDeptDateVB)
+        WarningDeptDateVC = Player.getActorVar(rk_VB_WarningDeptDateVC)
+        WarningDeptDateVM = Player.getActorVar(rk_VB_WarningDeptDateVM)
+        PPP = true
+        Agent1 = generatePersonTemporary()
+        Agent1.hide()
+        "I decide to call the Government Revenue Agency, to pay my bill ..."
+        Player.animate(call)
+        "I actually owe <TotalDebtAllV_loc> to the Government Revenue Agency."
+        "Which bill I want to pay?"
+        0::TotalDebtVB > 0 ::"Bicycle bill"
+        1::TotalDebtVC > 0 ::"Car bill"
+        2::TotalDebtVM > 0 ::"Motorcycle bill"
+        3::money > TotalDebtAllV && TotalDebtAllV > 0 ::"All bills"
+        99::"I changed my mind!"
+        
+        If 0
+            ResultVB = TempDebtVB - TotalDebtVB
+            ResultTVB = TempDebtVB/2
+            If ResultVB >= ResultTVB
+                Player.setActorVar(rk_VB_PostponedVB, 0)
+            Endif
+            If PostponedVB > 12
+                PPP = false
+            Endif
+            Price1 = 10
+            Price2 = 100
+            Price3 = 1000
+            Price4 = 10000
+            Price1_loc = Price1.convertToLocalCurrency()
+            Price2_loc = Price2.convertToLocalCurrency()
+            Price3_loc = Price3.convertToLocalCurrency()
+            Price4_loc = Price4.convertToLocalCurrency()
+            "How much I want to send?"
+            0::money > Price1 && TotalDebtVB > 10 && PPP ::"<Price1_loc>"
+            1::money > Price2 && TotalDebtVB > 100 && PPP ::"<Price2_loc>"
+            2::money > Price3 && TotalDebtVB > 1000 && PPP ::"<Price3_loc>"
+            3::money > Price4 && TotalDebtVB > 10000 && PPP ::"<Price4_loc>"
+            9::money > HalfDebtVB && PostponedVB > 12::"Minimum payment <HalfDebtVB_loc>"
+            10::money > TotalDebtVB && TotalDebtVB > 0 ::"Pay all the bill"
+            
+            If 0
+                Player.modifyActorVar(rk_VB_TotalDebtVB, -10)
+                money -= Price1
+                "I decided to send only <Price1_loc> ..."
+            Elseif 1
+                Player.modifyActorVar(rk_VB_TotalDebtVB, -100)
+                money -= Price2
+                "I decided to send only <Price2_loc> ..."
+            Elseif 2
+                Player.modifyActorVar(rk_VB_TotalDebtVB, -1000)
+                money -= Price3
+                "I decided to send <Price3_loc> ..."
+            Elseif 3
+                Player.modifyActorVar(rk_VB_TotalDebtVB, -10000)
+                money -= Price4
+                "I decided to send <Price4_loc> ..."
+            Elseif 9
+                ResultVB = TotalDebtVB - HalfDebtVB
+                Player.setActorVar(rk_VB_TotalDebtVB, ResultVB)
+                money -= HalfDebtVB
+                "I decided to send only <HalfDebtVB_loc> ..."
+                If PostponedVB > 0
+                    Player.setActorVar(rk_VB_PostponedVB, 0)
+                    Player.setActorVar(rk_VB_WarningDeptDateVB, 0)
+                Endif
+            Elseif 10
+                Player.setActorVar(rk_VB_TotalDebtVB, 0)
+                money -= TotalDebtVB
+                "I decided to pay all the bill ..."
+                If PostponedVB > 0
+                    Player.setActorVar(rk_VB_PostponedVB, 0)
+                    Player.setActorVar(rk_VB_WarningDeptDateVB, 0)
+                    Player.setActorVar(rk_VB_TempDebtVB, 0)
+                Endif
+            Endif
+        Elseif 1
+            ResultVC = TempDebtVC - TotalDebtVC
+            ResultTVC = TempDebtVC/2
+            If ResultVC >= ResultTVC
+                Player.setActorVar(rk_VB_PostponedVC, 0)
+            Endif
+            If PostponedVC > 12
+                PPP = false
+            Endif
+            Price1 = 10
+            Price2 = 100
+            Price3 = 1000
+            Price4 = 10000
+            Price1_loc = Price1.convertToLocalCurrency()
+            Price2_loc = Price2.convertToLocalCurrency()
+            Price3_loc = Price3.convertToLocalCurrency()
+            Price4_loc = Price4.convertToLocalCurrency()
+            "How much I want to send?"
+            0::money > Price1 && TotalDebtVC > 10 && PPP ::"<Price1_loc>"
+            1::money > Price2 && TotalDebtVC > 100 && PPP ::"<Price2_loc>"
+            2::money > Price3 && TotalDebtVC > 1000 && PPP ::"<Price3_loc>"
+            3::money > Price4 && TotalDebtVC > 10000 && PPP ::"<Price4_loc>"
+            9::money > HalfDebtVC && PostponedVC > 12::"Minimum payment <HalfDebtVC_loc>"
+            10::money > TotalDebtVC && TotalDebtVC > 0::"Pay all the bill"
+            
+            If 0
+                Player.modifyActorVar(rk_VB_TotalDebtVC, -10)
+                money -= Price1
+                "I decided to send only <Price1_loc> ..."
+            Elseif 1
+                Player.modifyActorVar(rk_VB_TotalDebtVC, -100)
+                money -= Price2
+                "I decided to send only <Price2_loc> ..."
+            Elseif 2
+                Player.modifyActorVar(rk_VB_TotalDebtVC, -1000)
+                money -= Price3
+                "I decided to send <Price3_loc> ..."
+            Elseif 3
+                Player.modifyActorVar(rk_VB_TotalDebtVC, -10000)
+                money -= Price4
+                "I decided to send <Price4_loc> ..."
+            Elseif 9
+                ResultVC = TotalDebtVC - HalfDebtVC
+                Player.setActorVar(rk_VB_TotalDebtVC, ResultVC)
+                money -= HalfDebtVC
+                "I decided to send only <HalfDebtVC_loc> ..."
+                If PostponedVC > 0
+                    Player.setActorVar(rk_VB_PostponedVC, 0)
+                    Player.setActorVar(rk_VB_WarningDeptDateVC, 0)
+                Endif
+            Elseif 10
+                Player.setActorVar(rk_VB_TotalDebtVC, 0)
+                money -= TotalDebtVC
+                "I decided to pay all the bill ..."
+                If PostponedVC > 0
+                    Player.setActorVar(rk_VB_PostponedVC, 0)
+                    Player.setActorVar(rk_VB_WarningDeptDateVC, 0)
+                    Player.setActorVar(rk_VB_TempDebtVC, 0)
+                Endif
+            Endif
+        Elseif 2
+            ResultVM = TempDebtVM - TotalDebtVM
+            ResultTVM = TempDebtVM/2
+            If ResultVM >= ResultTVM
+                Player.setActorVar(rk_VB_PostponedVM, 0)
+            Endif
+            If PostponedVM > 12
+                PPP = false
+            Endif
+            Price1 = 10
+            Price2 = 100
+            Price3 = 1000
+            Price4 = 10000
+            Price1_loc = Price1.convertToLocalCurrency()
+            Price2_loc = Price2.convertToLocalCurrency()
+            Price3_loc = Price3.convertToLocalCurrency()
+            Price4_loc = Price4.convertToLocalCurrency()
+            "How much I want to send?"
+            0::money > Price1 && TotalDebtVM > 10 && PPP ::"<Price1_loc>"
+            1::money > Price2 && TotalDebtVM > 100 && PPP ::"<Price2_loc>"
+            2::money > Price3 && TotalDebtVM > 1000 && PPP ::"<Price3_loc>"
+            3::money > Price4 && TotalDebtVM > 10000 && PPP ::"<Price4_loc>"
+            9::money > HalfDebtVM && PostponedVM > 12::"Minimum payment <HalfDebtVM_loc>"
+            10::money > TotalDebtVM && TotalDebtVM > 0 ::"Pay all the bill"
+            
+            If 0
+                Player.modifyActorVar(rk_VB_TotalDebtVM, -10)
+                money -= Price1
+                "I decided to send only <Price1_loc> ..."
+            Elseif 1
+                Player.modifyActorVar(rk_VB_TotalDebtVM, -100)
+                money -= Price2
+                "I decided to send only <Price2_loc> ..."
+            Elseif 2
+                Player.modifyActorVar(rk_VB_TotalDebtVM, -1000)
+                money -= Price3
+                "I decided to send <Price3_loc> ..."
+            Elseif 3
+                Player.modifyActorVar(rk_VB_TotalDebtVM, -10000)
+                money -= Price4
+                "I decided to send <Price4_loc> ..."
+            Elseif 9
+                ResultVM = TotalDebtVM - HalfDebtVM
+                Player.setActorVar(rk_VB_TotalDebtVM, ResultVM)
+                money -= HalfDebtVM
+                "I decided to send only <HalfDebtVM_loc> ..."
+                If PostponedVM > 0
+                    Player.setActorVar(rk_VB_PostponedVM, 0)
+                    Player.setActorVar(rk_VB_WarningDeptDateVM, 0)
+                Endif
+            Elseif 10
+                Player.setActorVar(rk_VB_TotalDebtVM, 0)
+                money -= TotalDebtVM
+                "I decided to pay all the bill ..."
+                If PostponedVM > 0
+                    Player.setActorVar(rk_VB_PostponedVM, 0)
+                    Player.setActorVar(rk_VB_WarningDeptDateVM, 0)
+                    Player.setActorVar(rk_VB_TempDebtVM, 0)
+                Endif
+            Endif
+        Elseif 3
+            money -= TotalDebtAllV
+            Player.setActorVar(rk_VB_TotalDebtVB, 0)
+            Player.setActorVar(rk_VB_TotalDebtVC, 0)
+            Player.setActorVar(rk_VB_TotalDebtVM, 0)
+            "I decided to pay all the bills ..."
+            Player.setActorVar(rk_VB_PostponedVB, 0)
+            Player.setActorVar(rk_VB_PostponedVC, 0)
+            Player.setActorVar(rk_VB_PostponedVM, 0)
+            Player.setActorVar(rk_VB_WarningDeptDateVB, 0)
+            Player.setActorVar(rk_VB_WarningDeptDateVC, 0)
+            Player.setActorVar(rk_VB_WarningDeptDateVM, 0)
+            "<TotalDebtAllV_loc> less in my pockets ... "
+            Player.setActorVar(rk_VB_TempDebtVB, 0)
+            Player.setActorVar(rk_VB_TempDebtVC, 0)
+            Player.setActorVar(rk_VB_TempDebtVM, 0)
+        Endif
+        Player.animate()
+    SceneEnd()

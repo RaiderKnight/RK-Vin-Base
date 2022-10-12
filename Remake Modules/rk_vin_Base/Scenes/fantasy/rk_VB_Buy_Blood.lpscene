@@ -1,0 +1,113 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        clearGetList()
+        rk_VB_IBuyBlood = Player.getActorVar(rk_VB_IBuyBlood)
+        HBloodInv = Player.getActorVar(rk_VB_Hum_BloodInv)
+        OBloodInv = Player.getActorVar(rk_VB_Orc_BloodInv)
+        EBloodInv = Player.getActorVar(rk_VB_Elf_BloodInv)
+        VBloodInv = Player.getActorVar(rk_VB_Vam_BloodInv)
+        HBloodInvP = Player.getActorVar(rk_VB_Hum_BloodInv_Poc)
+        OBloodInvP = Player.getActorVar(rk_VB_Orc_BloodInv_Poc)
+        EBloodInvP = Player.getActorVar(rk_VB_Elf_BloodInv_Poc)
+        VBloodInvP = Player.getActorVar(rk_VB_Vam_BloodInv_Poc)
+        TotBloodInvP = HBloodInvP + OBloodInvP + EBloodInvP + VBloodInvP
+        TotBloodInv = HBloodInv + OBloodInv + EBloodInv + VBloodInv
+        PriceE = random(70, 100)
+        PriceE_loc = PriceE.convertToLocalCurrency()
+        PriceV = random(50, 70)
+        PriceV_loc = PriceV.convertToLocalCurrency()
+        PriceO = random(30, 50)
+        PriceO_loc = PriceO.convertToLocalCurrency()
+        PriceH = random(10, 30)
+        PriceH_loc = PriceH.convertToLocalCurrency()
+        If money < PriceH
+            Player(Anxious)::"I am in debt. The store owner will not sell me anything."
+        Else
+            PendAchSang = true
+            While PendAchSang
+                If isModEnabled(rk_vin_Base)
+                    "What do I want to buy?"
+                    0:: money > PriceE ::"1 bottle of Elven Blood — <PriceE_loc>"
+                    1:: money > PriceH ::"1 bottle of Human Blood — <PriceH_loc>"
+                    2:: money > PriceO ::"1 bottle of Orc Blood - <PriceO_loc>"
+                    3:: money > PriceV ::"1 bottle of Vampire Blood - <PriceV_loc>"
+                    99:: "Nothing"
+
+                    If 0
+                        money -= PriceE
+                        Player(Happy)::"Well, I'm really happy with my purchase ...!"
+                        "Where I will store this elven blood?"
+                        1:: TotBloodInvP <= 3.8 ::"Inside my pockets"
+                        2::"Inside my blood stash"
+                        
+                        If 1
+                            "Added to your pockets!"
+                            Player.modifyActorVar(rk_VB_Elf_BloodInv_Poc, 1)
+                        ElseIf 2
+                            "Added to your blood stash!"
+                            Player.modifyActorVar(rk_VB_Elf_BloodInv, 1)
+                        EndIf
+                        mood += 3
+                        Player.modifyActorVar(rk_VB_IBuyBlood, 1)
+                    ElseIf 1
+                        money -= PriceH
+                        Player(Happy)::"Well, I'm really happy with my purchase ...!"
+                        "Where I will store this human blood?"
+                        1:: TotBloodInvP <= 3.8 ::"Inside my pockets"
+                        2::"Inside my blood stash"
+                        
+                        If 1
+                            "Added to your pockets!"
+                            Player.modifyActorVar(rk_VB_Hum_BloodInv_Poc, 1)
+                        ElseIf 2
+                            "Added to your blood stash!"
+                            Player.modifyActorVar(rk_VB_Hum_BloodInv, 1)
+                        EndIf
+                        mood += 3
+                        Player.modifyActorVar(rk_VB_IBuyBlood, 1)
+                    
+                    ElseIf 2
+                        money -= PriceO
+                        Player(Happy)::"Well, I'm really happy with my purchase ...!"
+                        "Where I will store this orc blood?"
+                        1:: TotBloodInvP <= 3.8 ::"Inside my pockets"
+                        2::"Inside my blood stash"
+                        
+                        If 1
+                            "Added to your pockets!"
+                            Player.modifyActorVar(rk_VB_Orc_BloodInv_Poc, 1)
+                        ElseIf 2
+                            "Added to your blood stash!"
+                            Player.modifyActorVar(rk_VB_Orc_BloodInv, 1)
+                        EndIf
+                        mood += 3
+                        Player.modifyActorVar(rk_VB_IBuyBlood, 1)
+                    
+                    ElseIf 3
+                        money -= PriceV
+                        Player(Happy)::"Well, I'm really happy with my purchase ...!"
+                        "Where I will store this vampire blood?"
+                        1:: TotBloodInvP <= 3.8 ::"Inside my pockets"
+                        2::"Inside my blood stash"
+                        
+                        If 1
+                            "Added to your pockets!"
+                            Player.modifyActorVar(rk_VB_Vam_BloodInv_Poc, 1)
+                        ElseIf 2
+                            "Added to your blood stash!"
+                            Player.modifyActorVar(rk_VB_Vam_BloodInv, 1)
+                        EndIf
+                        mood += 3
+                        Player.modifyActorVar(rk_VB_IBuyBlood, 1)
+                    Else
+                        PendAchSang = false
+                    EndIf
+                EndIf
+            EndWhile 
+        EndIf
+    SceneEnd()

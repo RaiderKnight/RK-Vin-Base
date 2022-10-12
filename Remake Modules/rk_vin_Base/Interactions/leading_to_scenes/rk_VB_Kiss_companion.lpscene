@@ -1,0 +1,99 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        incestlegalized = rk_VB_incestlegalized.getGlobal()
+        Actor = getRelative(Parent)
+        "I grab <Actor.name> by the hips and start kissing <Actor.him_or_her> and take the opportunity to caressing <Actor.his_or_her> <Actor.cock_or_pussy>..."
+        AnimatePair(Player, Actor, Kissing)
+        Player(Kiss):: "..."
+        AnimatePair(Player, Actor, Kissing)
+        Actor(Kiss):: "..."
+        If Actor.isValid() && Actor:incest > 0
+            PeopleSaw = false
+            ChanceToGetCaugh = Random(1, 50)
+            ChanceToGetCaughW = Random(1, 10)
+            ChanceToGetCaugh = ChanceToGetCaugh.round()
+            ChanceToGetCaughW = ChanceToGetCaughW.round()
+            If Actor:incest > 30 && Actor:arousal > 25 && Actor:perversion > 50 && Actor:intelligence > 50 && [WHERE != home || WHERE != prison || WHERE != fraternity]
+                Actor(Grin)::"Don't you think it's a bit risky to do that here?"
+                Actor(Flirty)::"Let's go somewhere more private, I want to make love right now..."
+                Player(Happy)::"Let's go to my place..."
+                moveTo(home)
+            ElseIf Actor:incest > 30 && Actor:arousal > 25 && Actor:perversion > 50
+                "We strip right away and started having sex right here!"
+                If incestlegalized == 0 && ChanceToGetCaughW < 6 && [WHERE != home || WHERE != prison || WHERE != fraternity]
+                    PeopleSaw = true
+                EndIf
+                Actor.strip()
+                Actor.show()
+                Player.strip()
+                Actor.strip()
+                Player.show()
+                Actor.show()
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            Else Actor:incest > 30 && Actor:intelligence > 50 && [WHERE != home || WHERE != prison || WHERE != fraternity]
+                Actor(Grin)::"Don't you think it's a bit risky to do that here?"
+                Actor(Flirty)::"Let's go somewhere more private, I want to make love right now..."
+                Player(Happy)::"Let's go to my place..."
+                moveTo(home)
+            Else
+                Actor:attractiontoplayer += Random(0, 2)
+                Actor:arousal += Random(0, 2)
+                If incestlegalized == 0 && ChanceToGetCaugh < 30 && [WHERE != home || WHERE != prison || WHERE != fraternity]
+                    PeopleSaw = true
+                EndIf
+            EndIf
+            If PeopleSaw && ChanceToGetCaughW < 6
+                followUp(rk_VB_incest_indecency)
+            EndIf
+        ElseIf CurrentCompanion.isDating() || Random(20, 75) < CurrentCompanion:attractiontoplayer + CurrentCompanion:perversion
+            "I grab <CurrentCompanion.name> by the hips and start kissing <CurrentCompanion.him_or_her> and take the opportunity to caressing <CurrentCompanion.his_or_her> <CurrentCompanion.cock_or_pussy>..."
+            AnimatePair(Player, CurrentCompanion, Kissing)
+            Player(Kiss):: "..."
+            AnimatePair(Player, CurrentCompanion, Kissing)
+            CurrentCompanion(Kiss):: "..."
+            CurrentCompanion:attractiontoplayer += Random(0, 2)
+            CurrentCompanion:arousal += Random(0, 2)
+        ElseIf CurrentCompanion.isDating() && CurrentCompanion:arousal > 25 && CurrentCompanion:perversion > 50 || CurrentCompanion:arousal > 25 && Random(20, 75) < CurrentCompanion:attractiontoplayer + CurrentCompanion:perversion
+            "I grab <CurrentCompanion.name> by the hips and start kissing <CurrentCompanion.him_or_her> and take the opportunity to caressing <CurrentCompanion.his_or_her> <CurrentCompanion.cock_or_pussy>..."
+            AnimatePair(Player, CurrentCompanion, Kissing)
+            Player(Kiss):: "..."
+            AnimatePair(Player, CurrentCompanion, Kissing)
+            CurrentCompanion(Kiss):: "..."
+            CurrentCompanion(Flirty):: "Uh, can you give more than a kiss?"
+            "What do I say?"
+            0::"Sure"
+            1::"Later"
+            
+            If 0
+                "We strip right away and started having sex right here!"
+                CurrentCompanion.strip()
+                CurrentCompanion.show()
+                Player.strip()
+                CurrentCompanion.strip()
+                Player.show()
+                CurrentCompanion.show()
+                Sex(Player, CurrentCompanion)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            EndIf
+        Else
+            CurrentCompanion(Lazy)::"Just a small kiss..."
+            AnimatePair(Player, CurrentCompanion, Kissing)
+            Player(Kiss):: "..."
+            CurrentCompanion(Kiss):: "..."
+            CurrentCompanion:attractiontoplayer += Random(0, 1)
+        EndIf
+    SceneEnd()

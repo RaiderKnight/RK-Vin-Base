@@ -1,0 +1,64 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    sceneStart()
+        setBackground(place_of_worship)
+        If isModEnabled(rk_vin_Base) || isModEnabled(rk_Sex_Guru)
+            NoMNoD = false
+            If Player:money < 1
+                NoMNoD = true
+            Else
+                IGiveFirstTime = Player.getActorVar(IGiveFirstTime)
+                Hunger = Player.getActorVar(rk_VB_Hunger)
+                HungerEnable = rk_VB_EnableHunger.getGlobal()
+                UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+                UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+                GiveDonToChurch = Player.getActorVar(rk_VB_GiveDonToChurch)
+                Master = generatePersonTemporary()
+                While !Master.isMale()
+                    Master = generatePersonTemporary()
+                Endwhile
+                Master.dress(Priest-Robe_1)
+                Price1 = 1
+                Price2 = 5
+                Price3 = 10
+                Price1loc = Price1.convertToLocalCurrency()
+                Price2loc = Price2.convertToLocalCurrency()
+                Price3loc = Price3.convertToLocalCurrency()
+                "How much money I am willing to give?"
+                0::money > 1::"<Price1loc>"
+                1::money > 5::"<Price2loc>"
+                2::money > 10::"<Price3loc>"
+                99::"Leave"
+                
+                If 0
+                    "I decided to give only <Price1loc>"
+                    money -= 1
+                    Player.modifyActorVar(rk_VB_GiveDonToChurch, 1)
+                ElseIf 1
+                    "I decided to give <Price2loc>"
+                    money -= 5
+                    Player.modifyActorVar(rk_VB_GiveDonToChurch, 5)
+                Else
+                    "I decided to give <Price3loc>"
+                    money -= 10
+                    Player.modifyActorVar(rk_VB_GiveDonToChurch, 10)
+                EndIf
+                Master.show()
+                Master.moveToPersonStand(Player, 50)
+                faceEachOther(Player, Master)
+                Master(Happy)::"Thank you dear child for your donation, it will be well invested!"
+            EndIf
+            If IGive
+                SetDayDons = Player:age*365
+                Player.setActorVar(IGiveFirstTime, SetDayDons)
+            EndIf
+            If NoMNoD
+                "Damn, I don't have enough money..."
+            EndIf
+            Master.hide()
+        EndIf
+    sceneEnd()

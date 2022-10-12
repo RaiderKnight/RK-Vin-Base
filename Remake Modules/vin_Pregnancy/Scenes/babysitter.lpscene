@@ -1,0 +1,461 @@
+WHAT: all
+WHERE: home
+WHEN: 6 - 22
+WHO: Actor2 = getAnyRelative(Child); If Actor2:age < 14
+OTHER:
+
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor = getPerson(tag_babysitter)
+        If Actor.isValid()
+            setBackgroundCustom(livingroom)
+            money -= 30
+            "I had some business to attend to today so I called the babysitter <Actor.name> over to take care of <Actor2.name>"
+            If random(0, 100) < 20 && isModEnabled(vin_Bestiality)
+                Actor4 = getCreature(Dog)
+                While !Actor.isInterestedIn(Actor4) && Actor4.isValid()
+                    Actor4 = getCreature(Dog)
+                Endwhile    
+            EndIf
+            
+            If !Actor4.isValid()
+                Actor4 = getSpecific(Dating)
+            EndIf
+            "I was lucky to get there earlier than expected" // Edit Raddeck
+            If Actor4.isValid() && Actor4.isCreature() && isModEnabled(vin_Bestiality) // Edit Raddeck
+                Player(Curious):: "What the fuck!"
+                setBackground(home)
+                Actor.show()
+                Actor4.show()
+                Sex(Actor, Actor4)
+                Actor.strip()
+                "The babysitter is having bestiality sex with my pet dog <Actor4.name>!"
+                0:: "Get angry and fire the babysitter on the spot"
+                1:: "Join them for some fun"
+                2:: "Keep quiet and ignore"
+                
+                If 0
+                    Actor.setActorVar(tag_babysitter, 0)
+                    "I promptly fired the misbehaving babysitter. How dares <Actor.he_or_she> abuse my pet?"
+                ElseIf 1
+                    Player(Flirty):: "I see you've discovered the pleasure of bestiality as well. I knew there was something special about you. That's why I hired you."
+                    Player(Flirty):: "But, if you want to play with my pet, you will have to play with me also." // Edit Raddeck
+                    Actor(Flirty):: "No problem..." // Edit Raddeck
+                    Player.strip() // Edit Raddeck
+                    Sex(Player, Actor, Actor4)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                    EndIf
+                EndIf      
+            ElseIf random(0, 100) < 25
+                Player(Curious):: "What the fuck!"
+                setBackground(home)
+                Actor.show()
+                Filter(Solo)
+                Sex(Actor)
+                Actor.strip() // Edit Raddeck
+                "The babysitter is watching porn and masturbating while my kid is asleep"
+                0:: "Ignore it"
+                1:: "Threaten to fire <Actor.him_or_her>"
+                
+                If 1
+                    Player(Curious)::"What the fuck are you doing?" // Edit Raddeck
+                    Actor(Shy):: "Please, don't fire me. I need the money for college. I'll do anything you want!"
+                    Player(Curious)::"Anything?" // Edit Raddeck
+                    Actor(Flirty):: "Anything..." // Edit Raddeck
+                    "What should I do?" // Edit Raddeck
+                    0:: "Demand sex"
+                    1:: "Fire the babysitter"
+                    2:: "Forgive"
+                    
+                    If 0
+                        // Start Edit Raddeck
+                        Player(Flirty)::"If it's about sex..."
+                        Actor(Serene):: "Okay ... I really need this job so ... Besides, I'm kinda horny ..." // Edit Vin
+                        "What should I ask?"
+                        0::"A blowjob"
+                        1::"A handjob"
+                        2::"A fuck"
+                        3::"Ask <Actor.him_or_her> to masturbate in front of you"
+                        
+                        If 0
+                            If Player.isMale()
+                                "We got undressed and then got down on <Actor.his_or_her> knees in front of me, grabbed my penis and started sucking it like an ice cream cone."
+                                Filter(Blowjob)
+                            Else
+                                "We got undressed and then got down on <Actor.his_or_her> knees in front of me, grabbed my ass and started licking my clit like an ice cream cone about to leak."
+                                Filter(Licking)
+                            EndIf
+                            Player.strip()
+                            Actor.strip()
+                            Sex(Actor, Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Player.dress()
+                            Actor.dress()
+                        ElseIf 1
+                            If Player.isMale()
+                                "We got undressed and then <Actor.he_or_she> grabbed my cock and started to masturbating it like a pro."
+                                Filter(Handjob)
+                            Else
+                                "We got undressed and then <Actor.he_or_she> grabbed my pussy gently and started to fingering it like a pro."
+                                Filter(Fingering)
+                            EndIf
+                            Player.strip()
+                            Actor.strip()
+                            Sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Player.dress()
+                            Actor.dress()
+                        ElseIf 2
+                            "We got undressed and then we started to fuck..."
+                            Player.strip()
+                            Actor.strip()
+                            Sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Player.dress()
+                            Actor.dress()
+                        Else
+                            If Player.isMale()
+                                "He got undressed and then he grabbed his cock and started to masturbating himself like a pro."
+                                Filter(Handjob)
+                            Else
+                                "She got undressed and then she grabbed her pussy gently and started to fingering herself like a pro."
+                                Filter(Fingering)
+                            EndIf
+                            Actor.strip()
+                            Sex(Actor)
+                            Actor.dress()
+                        EndIf
+                        perversion += 1
+                        Actor:attractiontoplayer += random(0, 2)
+                        Actor:perversion += random(0, 2)
+                    ElseIf 1
+                        Player(Sad)::"Sorry, but I have no choice but to fire you!"
+                        Player(Grin)::"Thank you for everything, now leave!" 
+                        Actor(Sad)::"Ok, don't get mad, I'm leaving!"
+                        Actor.setActorVar(tag_babysitter, 0) // Edit Vin
+                        "I promptly fired the misbehaving babysitter." // Edit Vin
+                        mood -= random(0, 5)
+                    Else
+                        Player(Grin)::"Humm, humm, sorry to bother you but I just arrived..."
+                        perversion += 1
+                        arousal += 1 
+                        Actor:attractiontoplayer += random(0, 2) 
+                        Actor:perversion += random(0, 2) 
+                        Actor(Shy)::"Oh fuck, so sorry sir, it won't happen again!"
+                        Actor(Shy)::"I'll get dressed right away..."
+                        Actor.dress()
+                    EndIf
+                    //End edit Raddeck
+                EndIf
+            ElseIf random(0, 100) < 33
+                Actor3 = generatePersonTemporary()
+                While !Actor.isInterestedIn(Actor3)
+                    Actor3 = generatePersonTemporary()
+                Endwhile
+                Actor3.makeInterested(Actor)
+                Actor3:age => random(18, 23)
+                Actor3.randomizeFace()
+                Actor3.randomizeHairs()
+                Player(Curious):: "What the fuck!"
+                setBackground(home)
+                Actor.show()
+                Actor3.show()
+                Sex(Actor3, Actor)
+                Actor.strip()
+                Actor3.strip()
+                "The babysitter has a lover over and bangs <Actor3.him_or_her> while my kid sleeps!"
+                0:: "Ignore it"
+                1:: "Threaten to fire <Actor.him_or_her>"
+                
+                If 1
+                    ActorAngry = false // Edit Raddeck
+                    ActorAngry1 = false // Edit Raddeck
+                    ActorAngry2 = false // Edit Raddeck
+                    ActorAngry3 = false // Edit Raddeck
+                    Player(Curious)::"What the fuck are you doing in my bed?" // Edit Raddeck
+                    Actor(Shy):: "Please, don't fire me. I need the money for college. I'll do anything you want!"
+                    // Start edit Raddeck
+                    If !Actor3.isInterestedIn(Player)
+                        Actor3(Angry)::"What? What do mean...???"
+                    EndIf
+                    Actor(Flirty):: "Shut up let me talk to <Player.him_or_her>..."
+                    Player(Curious)::"So you willing to do anything?"
+                    Actor(Flirty):: "Anything..."
+                    "What should I do?"
+                    // End edit Raddeck
+                    0:: "Demand sex"
+                    1:: "Demand sex with <Actor.his_or_her> <Actor3.boyfriend_or_girlfriend>"
+                    2:: "Demand a threesome"
+                    3:: "Fire the babysitter"
+                    4:: "Forgive"
+                    
+                    If 0
+                        // Start Edit Raddeck
+                        Player(Flirty)::"If it's about sex with you..."
+                        Actor(Flirty):: "Okay ... I really need this job so ... Besides, I'm kinda horny ..." // Edit Vin
+                        If !Actor3.isInterestedIn(Player)
+                            Actor3(Angry)::"Are telling me you gonna sleep with <Player.him_or_her>...???"
+                            ActorAngry = true
+                            ActorAngry1 = true
+                        Else
+                            "So we undressed and then started doing sex..."
+                            Actor.strip()
+                            Player.strip()
+                            Sex(Player, Actor) // Edit Vin
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Actor.dress()
+                            Player.dress()
+                        EndIf
+                    ElseIf 1
+                        Player(Flirty)::"If it's about sex with your friend..."
+                        Actor(Flirty):: "Okay ... I really need this job so ... I guess we have no other choice ..." // Edit Vin
+                        If !Actor3.isInterestedIn(Player)
+                            Actor3(Angry)::"Are telling me you want me to sleep with <Player.him_or_her>...???"
+                            ActorAngry = true
+                            ActorAngry2 = true
+                        Else
+                            "So we undressed and then started doing sex..."
+                            Actor3.strip()
+                            Player.strip()
+                            Sex(Player, Actor3) // Edit Vin
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Actor3.dress()
+                            Player.dress()
+                        EndIf
+                    ElseIf 2
+                        Player(Flirty)::"If it's about a threesome..."
+                        Actor(Flirty):: "Okay ... I really need this job so ... I guess we have no other choice ..." // Edit Vin
+                        If !Actor3.isInterestedIn(Player)
+                            Actor3(Angry)::"Are telling me you want me to sleep with <Player.him_or_her>...???"
+                            ActorAngry = true
+                            ActroAngry3 = true
+                        Else
+                            "So we undressed and then started doing sex all together..."
+                            Actor.strip()
+                            Actor3.strip()
+                            Player.strip()
+                            Sex(Player, Actor3, Actor) // Edit Vin
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -3)
+                            EndIf
+                            Actor.dress()
+                            Actor3.dress()
+                            Player.dress()
+                        EndIf
+                    ElseIf 3
+                        Player(Sad)::"Sorry, but I have no choice but to fire you!"
+                        Player(Grin)::"Thank you for everything, now leave!" 
+                        Actor(Sad)::"Ok, don't get mad, I'm leaving!"
+                        Actor.setActorVar(tag_babysitter, 0) // Edit Vin
+                        "I promptly fired the misbehaving babysitter." // Edit Vin
+                        mood -= random(0, 5)
+                    Else
+                        Player(Grin)::"Humm, humm, sorry to bother you guys but I just arrived..."
+                        perversion += 1
+                        arousal += 1 
+                        Actor:attractiontoplayer += random(0, 2) 
+                        Actor:perversion += random(0, 2) 
+                        Actor(Shy)::"Oh fuck, so sorry sir, it won't happen again!"
+                        Actor(Shy)::"We'll get dressed right away..."
+                        Actor.dress()
+                        Actor3.dress()
+                    EndIf
+                    
+                    If ActorAngry
+                        Actor(Shocked)::"Why not! It's only sex! I will lose my job if I don't..."
+                        Actor3(Angry)::"Fuck it! No way! I don't care..."
+                        Actor3(Angry)::"It's me or <Player.him_or_her>?"
+                        babysitterchoice = random(0, 100) + Actor:perversion + Actor:arousal
+                        Actor3out = false
+                        If babysitterchoice > 150
+                            Actor(Flirty)::"Like you said, fuck it! I don't want to lose my job so I will fuck with <Player.him_or_her>..."
+                            A3arousalperv = Actor3:perversion + Actor3:arousal
+                            If A3arousalperv > 50
+                                Actor3(Flirty)::"Okay fine, I will join..."
+                                Actor3:perversion += 1
+                                Actor3:arousal += 1
+                                Actor3out = true
+                            Else
+                                Actor3(Angry)::"I'm leaving, bye!"
+                                Actor3out = false
+                                Actor3.hide()
+                            EndIf
+                            If ActorAngry1
+                                If Actor3out
+                                    Actor3.show()
+                                    Actor3(Flirty)::"I want to watch..."
+                                EndIf
+                                "So we undressed and then started doing sex..."
+                                Actor.strip()
+                                Player.strip()
+                                Sex(Player, Actor) // Edit Vin
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                Actor.dress()
+                                Player.dress()
+                            ElseIf ActorAngry2 && Actor3out
+                                "So we undressed and then started doing sex..."
+                                Actor3.strip()
+                                Player.strip()
+                                Sex(Player, Actor3) // Edit Vin
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                Actor3.dress()
+                                Player.dress()
+                            ElseIf ActorAngry3 && Actor3out
+                                "So we undressed and then started doing sex all together..."
+                                Actor.strip()
+                                Actor3.strip()
+                                Player.strip()
+                                Sex(Player, Actor3, Actor) // Edit Vin
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                                EndIf
+                                Actor.dress()
+                                Actor3.dress()
+                                Player.dress()
+                            EndIf
+                        Else
+                            Actor(Sad)::"You are right, why break up our relationship for this job!"
+                            Player(Sad)::"If so, sorry to tell you that, but I have no choice but to fire you!"
+                            Player(Grin)::"Thank you for everything, I will ask you both to leave!"
+                            Actor(Sad)::"Ok, don't get mad, we leaving!"
+                            Actor.setActorVar(tag_babysitter, 0) // Edit Vin
+                            "I promptly fired the misbehaving babysitter." // Edit Vin
+                            mood -= random(0, 5)
+                        EndIf
+                    EndIf
+                Else
+                    Player(Grin)::"Humm, humm, sorry to bother you guys but I just arrived..."
+                    perversion += 1
+                    arousal += 1 
+                    Actor:attractiontoplayer += random(0, 2) 
+                    Actor:perversion += random(0, 2) 
+                    Actor(Shy)::"Oh fuck, so sorry sir, it won't happen again!"
+                    Actor(Shy)::"We'll get dressed right away..."
+                    Actor.dress()
+                    Actor3.dress()
+                    //End edit Raddeck
+                EndIf
+            ElseIf random(0, 100) < 50 && Actor4.isValid() && Actor4.isInterestedIn(Actor) && Actor.isInterestedIn(Actor4) && [OpenRelationship() || Actor4:perversion > 70 || Actor4:attractiontoplayer < 0]
+                Player:: "What the fuck!"
+                setBackground(home)
+                Actor.show()
+                Actor4.show()
+                Sex(Actor, Actor4)
+                "My <Actor4.boyfriend_or_girlfriend> is banging the babysitter!"
+                0:: "Get angry and fire the babysitter on the spot"
+                1:: "Join them for some fun"
+                2:: "Surprise them and ignore"
+                
+                If 0
+                    Player(Angry)::"I have no choice but to fire you!" // Edit Raddeck
+                    Player(Angry)::"Thank you for everything, now leave!"  // Edit Raddeck
+                    Actor(Sad)::"Ok, don't get mad, I'm leaving!" // Edit Raddeck
+                    Actor.setActorVar(tag_babysitter, 0)
+                    "I promptly fired the misbehaving babysitter."
+                    "I'll deal with my <Actor4.boyfriend_or_girlfriend> later ..."
+                    mood -= random(0, 5) // Edit Raddeck
+                ElseIf 1
+                    Player(Flirty):: "Having fun with the babysitter without me, are you?"
+                    Actor4(Flirty):: "Why don't you come join us instead of standing there watching and complaining?"
+                    Actor3(Flirty):: "Yeah, what are you waiting for?" // Edit Raddeck
+                    Player.strip()
+                    Actor3.strip()
+                    Actor4.strip()
+                    Sex(Player, Actor, Actor4)
+                    //Star edit Raddeck
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                    EndIf
+                    Player.dress()
+                    Actor3.dress()
+                    Actor4.dress()
+                Else
+                    Player(Grin)::"Humm, humm, sorry to bother you guys but I just arrived..."
+                    perversion += 1
+                    arousal += 1 
+                    Actor3:attractiontoplayer += random(0, 2) 
+                    Actor3:perversion += random(0, 2) 
+                    Actor(Shy)::"Oh fuck, so sorry sir, it won't happen again!"
+                    Actor(Shy)::"We'll get dressed right away..."
+                    Actor.dress()
+                    Actor4.dress()
+                    Actor4(Curious)::"Hi honey, you got here early..."
+                    //End edit Raddeck
+                EndIf
+            Else
+                "I went back to see the sitter if <Actor.he_or_she> was doing <Actor.his_or_her> job correctly."
+                "And or as usual, <Actor.he_or_she> is doing <Actor.his_or_her> job right." // Edit Raddeck
+                mood += 3 // Edit Raddeck
+            EndIf
+        Else
+            "My <Actor2.son_or_daughter> is only <Actor2:age> and needs a babysitter. I should hire one."
+            0:: "Look for a babysitter"
+            1:: "Let's put this off for a while"
+            
+            If 0
+                Actor = generatePersonTemporary()
+                babysitAccept = false
+                "I want a babysitter who is about?"
+                0::"Between 18 to 23"
+                1::"Between 24 to 33"
+                2::"Between 34 to 43"
+                3::"Between 44 to 70"
+                99::"I changed my mind"
+                
+                If 0
+                    Actor:age => random(18, 23)
+                    babysitAccept = true
+                ElseIf 1
+                    Actor:age => random(24, 33)
+                    babysitAccept = true
+                ElseIf 2
+                    Actor:age => random(34, 43)
+                    babysitAccept = true
+                ElseIf 3
+                    Actor:age => random(44, 70)
+                    babysitAccept = true
+                EndIf
+                If babysitAccept
+                    Actor.randomizeFace()
+                    Actor.randomizeHairs()
+                    Actor.makeInterested(Player)
+                    secondScreen(Actor)
+                    Actor.show()
+                    "<Actor.name> applied to be the babysitter for <Actor2.name>."
+                    0:: "Hire <Actor.him_or_her>"
+                    1:: "Try another time for a better candidate"
+                    
+                    If 0
+                        Actor.makePermanent()
+                        Actor.setActorVar(tag_babysitter, 1)
+                        "<Actor.name> is now <Actor2.name>'s babysitter. <Actor.He_or_She> will be at my home whenever I need."
+                        If !Actor.isContactExchanged()
+                            exchangeContact(Actor)
+                        EndIf
+                    EndIf
+                EndIf
+            Else
+                timeout(500, babysitter)
+            EndIf
+        EndIf
+    SceneEnd() // Improved by Raddeck
+    timeout(100, babysitter)

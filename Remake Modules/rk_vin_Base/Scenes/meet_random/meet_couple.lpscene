@@ -1,0 +1,48 @@
+WHAT: all
+WHERE: all, -home, -fraternity, -prison
+WHEN: 7-19
+WHO: none
+OTHER: random(0, 300) < interpersonal || [ [WHAT == socialize || WHERE == nightclub] && random(0, 100) < interpersonal] || [isWithCompanion() && random(0, 200) < CurrentCompanion:interpersonal] || [WHERE == home && random(0, 2000) < interpersonal]
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Actor = generatePersonTemporary()
+        Actor2 = generatePersonTemporary()
+        Actor.dress()
+        Actor2.dress()
+        Actor.show()
+        Actor2.show()
+        "Just by chance, I came across a couple, <Actor.name> and <Actor2.name>. Seems like decent people."
+        0:: "Exchange numbers"
+        1:: "Maybe not"
+        
+        If 0
+            "We exchanged contacts. It would be good to get to know them better."
+            Actor.makeInterested(Actor2)
+            Actor2.makeInterested(Actor)
+            If Actor.isInterestedIn(Player) && Actor:attractiontoplayer < 0
+                Actor:attractiontoplayer => random(0, 50)
+            EndIf
+            If Actor2.isInterestedIn(Player) && Actor2:attractiontoplayer < 0
+                Actor2:attractiontoplayer => random(0, 50)
+            EndIf
+            Actor.makePermanent()
+            Actor2.makePermanent()
+            exchangeContact(Actor)
+            exchangeContact(Actor2)
+            If random(0, 100) < Actor:age + Actor2:age
+                addNpcRelationship(Spouses, Actor, Actor2)
+                "They seem to be in a happy marriage."
+            Else
+                addNpcRelationship(Dating, Actor, Actor2)
+                "They seem to be in a happy relationship"
+            EndIf
+            If isModEnabled(vin_Polyamorous) && random(100, 200) < Actor:perversion + Actor2:perversion
+                addNpcRelationship(Dating, Actor, Actor2)
+                addNpcRelationship(Poly, Actor, Actor2)
+                "I can't help but notice there's something unusual and very ... open about how they act as a couple though. My guts feeling tells me that they're probably polyamorous."            
+            EndIf
+        EndIf
+    SceneEnd() // Improved by Raddeck
+    timeout(450, meet_couple)

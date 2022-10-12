@@ -1,0 +1,947 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        clearGetList()
+        hasLivingroom = RE_has_lvingroom.getGlobal()
+        hasKitchen = RE_has_kitchen.getGlobal()
+        hasOfficeroom = RE_has_officeroom.getGlobal()
+        hasSecBedroom = RE_has_secondbedroom.getGlobal()
+        hasThirdBedroom = RE_has_thirdbedroom.getGlobal()
+        rk_VB_Stock_Bedlinenset = Player.getActorVar(rk_VB_Stock_Bedlinenset)
+        rk_VB_Stock_Diningtablechairs = Player.getActorVar(rk_VB_Stock_Diningtablechairs)
+        rk_VB_Stock_Wardrobe = Player.getActorVar(rk_VB_Stock_Wardrobe)
+        rk_VB_Stock_Homeofficedeskchair = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair)
+        rk_VB_Stock_Coffeetablesofa = Player.getActorVar(rk_VB_Stock_Coffeetablesofa)
+        rk_VB_Stock_Pooltable = Player.getActorVar(rk_VB_Stock_Pooltable)
+        rk_VB_Stock_Decorations = Player.getActorVar(rk_VB_Stock_Decorations)
+        rk_VB_Stock_Bedlinenset1 = Player.getActorVar(rk_VB_Stock_Bedlinenset1)
+        rk_VB_Stock_Diningtablechairs1 = Player.getActorVar(rk_VB_Stock_Diningtablechairs1)
+        rk_VB_Stock_Wardrobe1 = Player.getActorVar(rk_VB_Stock_Wardrobe1)
+        rk_VB_Stock_Homeofficedeskchair1 = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair1)
+        rk_VB_Stock_Coffeetablesofa1 = Player.getActorVar(rk_VB_Stock_Coffeetablesofa1)
+        rk_VB_Stock_Pooltable1 = Player.getActorVar(rk_VB_Stock_Pooltable1)
+        rk_VB_Stock_Decorations1 = Player.getActorVar(rk_VB_Stock_Decorations1)
+        rk_VB_Stock_Bedlinenset2 = Player.getActorVar(rk_VB_Stock_Bedlinenset2)
+        rk_VB_Stock_Diningtablechairs2 = Player.getActorVar(rk_VB_Stock_Diningtablechairs2)
+        rk_VB_Stock_Wardrobe2 = Player.getActorVar(rk_VB_Stock_Wardrobe2)
+        rk_VB_Stock_Homeofficedeskchair2 = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair2)
+        rk_VB_Stock_Coffeetablesofa2 = Player.getActorVar(rk_VB_Stock_Coffeetablesofa2)
+        rk_VB_Stock_Pooltable2 = Player.getActorVar(rk_VB_Stock_Pooltable2)
+        rk_VB_Stock_Decorations2 = Player.getActorVar(rk_VB_Stock_Decorations2)
+        rk_VB_Stock_Diningtablechairs_K = Player.getActorVar(rk_VB_Stock_Diningtablechairs_K)
+        rk_VB_Stock_Wardrobe_K = Player.getActorVar(rk_VB_Stock_Wardrobe_K)
+        rk_VB_Stock_Decorations_K = Player.getActorVar(rk_VB_Stock_Decorations_K)
+        rk_VB_Stock_Diningtablechairs1_K = Player.getActorVar(rk_VB_Stock_Diningtablechairs1_K)
+        rk_VB_Stock_Wardrobe1_K = Player.getActorVar(rk_VB_Stock_Wardrobe1_K)
+        rk_VB_Stock_Decorations1_K = Player.getActorVar(rk_VB_Stock_Decorations1_K)
+        rk_VB_Stock_Diningtablechairs2_K = Player.getActorVar(rk_VB_Stock_Diningtablechairs2_K)
+        rk_VB_Stock_Wardrobe2_K = Player.getActorVar(rk_VB_Stock_Wardrobe2_K)
+        rk_VB_Stock_Decorations2_K = Player.getActorVar(rk_VB_Stock_Decorations2_K)
+        rk_VB_Stock_Wardrobe_O = Player.getActorVar(rk_VB_Stock_Wardrobe_O)
+        rk_VB_Stock_Homeofficedeskchair_O = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair_O)
+        rk_VB_Stock_Coffeetablesofa_O = Player.getActorVar(rk_VB_Stock_Coffeetablesofa_O)
+        rk_VB_Stock_Pooltable_O = Player.getActorVar(rk_VB_Stock_Pooltable_O)
+        rk_VB_Stock_Decorations_O = Player.getActorVar(rk_VB_Stock_Decorations_O)
+        rk_VB_Stock_Wardrobe1_O = Player.getActorVar(rk_VB_Stock_Wardrobe1_O)
+        rk_VB_Stock_Homeofficedeskchair1_O = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair1_O)
+        rk_VB_Stock_Coffeetablesofa1_O = Player.getActorVar(rk_VB_Stock_Coffeetablesofa1_O)
+        rk_VB_Stock_Pooltable1_O = Player.getActorVar(rk_VB_Stock_Pooltable1_O)
+        rk_VB_Stock_Decorations1_O = Player.getActorVar(rk_VB_Stock_Decorations1_O)
+        rk_VB_Stock_Wardrobe2_O = Player.getActorVar(rk_VB_Stock_Wardrobe2_O)
+        rk_VB_Stock_Homeofficedeskchair2_O = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair2_O)
+        rk_VB_Stock_Coffeetablesofa2_O = Player.getActorVar(rk_VB_Stock_Coffeetablesofa2_O)
+        rk_VB_Stock_Pooltable2_O = Player.getActorVar(rk_VB_Stock_Pooltable2_O)
+        rk_VB_Stock_Decorations2_O = Player.getActorVar(rk_VB_Stock_Decorations2_O)
+        rk_VB_Stock_Bedlinenset_MB = Player.getActorVar(rk_VB_Stock_Bedlinenset_MB)
+        rk_VB_Stock_Diningtablechairs_MB = Player.getActorVar(rk_VB_Stock_Diningtablechairs_MB)
+        rk_VB_Stock_Wardrobe_MB = Player.getActorVar(rk_VB_Stock_Wardrobe_MB)
+        rk_VB_Stock_Homeofficedeskchair_MB = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair_MB)
+        rk_VB_Stock_Coffeetablesofa_MB = Player.getActorVar(rk_VB_Stock_Coffeetablesofa_MB)
+        rk_VB_Stock_Pooltable_MB = Player.getActorVar(rk_VB_Stock_Pooltable_MB)
+        rk_VB_Stock_Decorations_MB = Player.getActorVar(rk_VB_Stock_Decorations_MB)
+        rk_VB_Stock_Bedlinenset1_MB = Player.getActorVar(rk_VB_Stock_Bedlinenset1_MB)
+        rk_VB_Stock_Diningtablechairs1_MB = Player.getActorVar(rk_VB_Stock_Diningtablechairs1_MB)
+        rk_VB_Stock_Wardrobe1_MB = Player.getActorVar(rk_VB_Stock_Wardrobe1_MB)
+        rk_VB_Stock_Homeofficedeskchair1_MB = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair1_MB)
+        rk_VB_Stock_Coffeetablesofa1_MB = Player.getActorVar(rk_VB_Stock_Coffeetablesofa1_MB)
+        rk_VB_Stock_Pooltable1_MB = Player.getActorVar(rk_VB_Stock_Pooltable1_MB)
+        rk_VB_Stock_Decorations1_MB = Player.getActorVar(rk_VB_Stock_Decorations1_MB)
+        rk_VB_Stock_Bedlinenset2_MB = Player.getActorVar(rk_VB_Stock_Bedlinenset2_MB)
+        rk_VB_Stock_Diningtablechairs2_MB = Player.getActorVar(rk_VB_Stock_Diningtablechairs2_MB)
+        rk_VB_Stock_Wardrobe2_MB = Player.getActorVar(rk_VB_Stock_Wardrobe2_MB)
+        rk_VB_Stock_Homeofficedeskchair2_MB = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair2_MB)
+        rk_VB_Stock_Coffeetablesofa2_MB = Player.getActorVar(rk_VB_Stock_Coffeetablesofa2_MB)
+        rk_VB_Stock_Pooltable2_MB = Player.getActorVar(rk_VB_Stock_Pooltable2_MB)
+        rk_VB_Stock_Decorations2_MB = Player.getActorVar(rk_VB_Stock_Decorations2_MB)
+        rk_VB_Stock_Bedlinenset_SB = Player.getActorVar(rk_VB_Stock_Bedlinenset_SB)
+        rk_VB_Stock_Wardrobe_SB = Player.getActorVar(rk_VB_Stock_Wardrobe_SB)
+        rk_VB_Stock_Homeofficedeskchair_SB = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair_SB)
+        rk_VB_Stock_Coffeetablesofa_SB = Player.getActorVar(rk_VB_Stock_Coffeetablesofa_SB)
+        rk_VB_Stock_Pooltable_SB = Player.getActorVar(rk_VB_Stock_Pooltable_SB)
+        rk_VB_Stock_Decorations_SB = Player.getActorVar(rk_VB_Stock_Decorations_SB)
+        rk_VB_Stock_Bedlinenset1_SB = Player.getActorVar(rk_VB_Stock_Bedlinenset1_SB)
+        rk_VB_Stock_Wardrobe1_SB = Player.getActorVar(rk_VB_Stock_Wardrobe1_SB)
+        rk_VB_Stock_Homeofficedeskchair1_SB = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair1_SB)
+        rk_VB_Stock_Coffeetablesofa1_SB = Player.getActorVar(rk_VB_Stock_Coffeetablesofa1_SB)
+        rk_VB_Stock_Pooltable1_SB = Player.getActorVar(rk_VB_Stock_Pooltable1_SB)
+        rk_VB_Stock_Decorations1_SB = Player.getActorVar(rk_VB_Stock_Decorations1_SB)
+        rk_VB_Stock_Bedlinenset2_SB = Player.getActorVar(rk_VB_Stock_Bedlinenset2_SB)
+        rk_VB_Stock_Wardrobe2_SB = Player.getActorVar(rk_VB_Stock_Wardrobe2_SB)
+        rk_VB_Stock_Homeofficedeskchair2_SB = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair2_SB)
+        rk_VB_Stock_Coffeetablesofa2_SB = Player.getActorVar(rk_VB_Stock_Coffeetablesofa2_SB)
+        rk_VB_Stock_Pooltable2_SB = Player.getActorVar(rk_VB_Stock_Pooltable2_SB)
+        rk_VB_Stock_Decorations2_SB = Player.getActorVar(rk_VB_Stock_Decorations2_SB)
+        rk_VB_Stock_Bedlinenset_TB = Player.getActorVar(rk_VB_Stock_Bedlinenset_TB)
+        rk_VB_Stock_Wardrobe_TB = Player.getActorVar(rk_VB_Stock_Wardrobe_TB)
+        rk_VB_Stock_Homeofficedeskchair_TB = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair_TB)
+        rk_VB_Stock_Coffeetablesofa_TB = Player.getActorVar(rk_VB_Stock_Coffeetablesofa_TB)
+        rk_VB_Stock_Pooltable_TB = Player.getActorVar(rk_VB_Stock_Pooltable_TB)
+        rk_VB_Stock_Decorations_TB = Player.getActorVar(rk_VB_Stock_Decorations_TB)
+        rk_VB_Stock_Bedlinenset1_TB = Player.getActorVar(rk_VB_Stock_Bedlinenset1_TB)
+        rk_VB_Stock_Wardrobe1_TB = Player.getActorVar(rk_VB_Stock_Wardrobe1_TB)
+        rk_VB_Stock_Homeofficedeskchair1_TB = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair1_TB)
+        rk_VB_Stock_Coffeetablesofa1_TB = Player.getActorVar(rk_VB_Stock_Coffeetablesofa1_TB)
+        rk_VB_Stock_Pooltable1_TB = Player.getActorVar(rk_VB_Stock_Pooltable1_TB)
+        rk_VB_Stock_Decorations1_TB = Player.getActorVar(rk_VB_Stock_Decorations1_TB)
+        rk_VB_Stock_Bedlinenset2_TB = Player.getActorVar(rk_VB_Stock_Bedlinenset2_TB)
+        rk_VB_Stock_Wardrobe2_TB = Player.getActorVar(rk_VB_Stock_Wardrobe2_TB)
+        rk_VB_Stock_Homeofficedeskchair2_TB = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair2_TB)
+        rk_VB_Stock_Coffeetablesofa2_TB = Player.getActorVar(rk_VB_Stock_Coffeetablesofa2_TB)
+        rk_VB_Stock_Pooltable2_TB = Player.getActorVar(rk_VB_Stock_Pooltable2_TB)
+        rk_VB_Stock_Decorations2_TB = Player.getActorVar(rk_VB_Stock_Decorations2_TB)
+        rk_VB_Stock_Bedlinenset_SR = Player.getActorVar(rk_VB_Stock_Bedlinenset_SR)
+        rk_VB_Stock_Diningtablechairs_SR = Player.getActorVar(rk_VB_Stock_Diningtablechairs_SR)
+        rk_VB_Stock_Wardrobe_SR = Player.getActorVar(rk_VB_Stock_Wardrobe_SR)
+        rk_VB_Stock_Homeofficedeskchair_SR = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair_SR)
+        rk_VB_Stock_Coffeetablesofa_SR = Player.getActorVar(rk_VB_Stock_Coffeetablesofa_SR)
+        rk_VB_Stock_Pooltable_SR = Player.getActorVar(rk_VB_Stock_Pooltable_SR)
+        rk_VB_Stock_Decorations_SR = Player.getActorVar(rk_VB_Stock_Decorations_SR)
+        rk_VB_Stock_Bedlinenset1_SR = Player.getActorVar(rk_VB_Stock_Bedlinenset1_SR)
+        rk_VB_Stock_Diningtablechairs1_SR = Player.getActorVar(rk_VB_Stock_Diningtablechairs1_SR)
+        rk_VB_Stock_Wardrobe1_SR = Player.getActorVar(rk_VB_Stock_Wardrobe1_SR)
+        rk_VB_Stock_Homeofficedeskchair1_SR = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair1_SR)
+        rk_VB_Stock_Coffeetablesofa1_SR = Player.getActorVar(rk_VB_Stock_Coffeetablesofa1_SR)
+        rk_VB_Stock_Pooltable1_SR = Player.getActorVar(rk_VB_Stock_Pooltable1_SR)
+        rk_VB_Stock_Decorations1_SR = Player.getActorVar(rk_VB_Stock_Decorations1_SR)
+        rk_VB_Stock_Bedlinenset2_SR = Player.getActorVar(rk_VB_Stock_Bedlinenset2_SR)
+        rk_VB_Stock_Diningtablechairs2_SR = Player.getActorVar(rk_VB_Stock_Diningtablechairs2_SR)
+        rk_VB_Stock_Wardrobe2_SR = Player.getActorVar(rk_VB_Stock_Wardrobe2_SR)
+        rk_VB_Stock_Homeofficedeskchair2_SR = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair2_SR)
+        rk_VB_Stock_Coffeetablesofa2_SR = Player.getActorVar(rk_VB_Stock_Coffeetablesofa2_SR)
+        rk_VB_Stock_Pooltable2_SR = Player.getActorVar(rk_VB_Stock_Pooltable2_SR)
+        rk_VB_Stock_Decorations2_SR = Player.getActorVar(rk_VB_Stock_Decorations2_SR)
+        rk_VB_Stock_Wardrobe_LR = Player.getActorVar(rk_VB_Stock_Wardrobe_LR)
+        rk_VB_Stock_Homeofficedeskchair_LR = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair_LR)
+        rk_VB_Stock_Coffeetablesofa_LR = Player.getActorVar(rk_VB_Stock_Coffeetablesofa_LR)
+        rk_VB_Stock_Pooltable_LR = Player.getActorVar(rk_VB_Stock_Pooltable_LR)
+        rk_VB_Stock_Decorations_LR = Player.getActorVar(rk_VB_Stock_Decorations_LR)
+        rk_VB_Stock_Wardrobe1_LR = Player.getActorVar(rk_VB_Stock_Wardrobe1_LR)
+        rk_VB_Stock_Homeofficedeskchair1_LR = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair1_LR)
+        rk_VB_Stock_Coffeetablesofa1_LR = Player.getActorVar(rk_VB_Stock_Coffeetablesofa1_LR)
+        rk_VB_Stock_Pooltable1_LR = Player.getActorVar(rk_VB_Stock_Pooltable1_LR)
+        rk_VB_Stock_Decorations1_LR = Player.getActorVar(rk_VB_Stock_Decorations1_LR)
+        rk_VB_Stock_Wardrobe2_LR = Player.getActorVar(rk_VB_Stock_Wardrobe2_LR)
+        rk_VB_Stock_Homeofficedeskchair2_LR = Player.getActorVar(rk_VB_Stock_Homeofficedeskchair2_LR)
+        rk_VB_Stock_Coffeetablesofa2_LR = Player.getActorVar(rk_VB_Stock_Coffeetablesofa2_LR)
+        rk_VB_Stock_Pooltable2_LR = Player.getActorVar(rk_VB_Stock_Pooltable2_LR)
+        rk_VB_Stock_Decorations2_LR = Player.getActorVar(rk_VB_Stock_Decorations2_LR)
+        IBuyBedlinenset = Player.getActorVar(rk_VB_IBuyBedlinenset)
+        IBuyDiningtablechairs = Player.getActorVar(rk_VB_IBuyDiningtablechairs)
+        IBuyWardrobe = Player.getActorVar(rk_VB_IBuyWardrobe)
+        IBuyOfficedeskchair = Player.getActorVar(rk_VB_IBuyOfficedeskchair)
+        IBuyCoffeetablesofa = Player.getActorVar(rk_VB_IBuyCoffeetablesofa)
+        IBuyPooltable = Player.getActorVar(rk_VB_IBuyPooltable)
+        IBuyDecorations = Player.getActorVar(rk_VB_IBuyDecorations)
+        PreciseModify()
+        choice = 1
+        While choice > 0
+            Actor60 = generatePersonTemporary()
+            Actor60.dress()
+            Actor60.hide()
+            Surp = random(0, 100)
+            "What do I want to buy?"
+            0:: "Nothing"
+            1:: "Bed and linen set"
+            2:: "Dining table and chairs"
+            3:: "Wardrobe"
+            4:: "Home office desk and chair"
+            5:: "Coffee table & sofa"
+            6:: "Pool table"
+            7:: "Decorations"
+        
+            If 0
+                "I've got enough home furniture for my home for now."
+            ElseIf 1
+                Price = 150*CostofLiving*random(0.8, 1.2)
+                Price1 = Price*random(1.5, 2.5)
+                Price2 = Price*random(4, 10)
+                PriceConvertered = Price.convertToLocalCurrency()
+                Price1Convertered = Price1.convertToLocalCurrency()
+                Price2Convertered = Price2.convertToLocalCurrency()
+                "There are so many options. Which bed and linen set should I go for?"
+                0:: "Budget product for <PriceConvertered>"
+                1:: "Mid-range product for <Price1Convertered>"
+                2:: "State-of-the-art product for <Price2Convertered>"
+                3:: "None"
+                
+                If 3
+                    "On second thought, I have better use for my money."
+                    If Surp > 50 && Actor60.isInterestedIn(Player) && Actor60:arousal > 15 && Actor60:perversion > 35
+                        Actor60.show()
+                        Actor60.moveToPersonStand(Player, 40)
+                        faceEachOther(Actor60, Player)
+                        Actor60(Flirty)::"Hi, I see that you are undecided on our selection of beds and sheets."
+                        Actor60(Flirty)::"If you wish, we have a room in the back, especially to test the efficiency of the springs and the softness of the sheets?"
+                        "What should I say?"
+                        0::"Yes, why not!"
+                        1::"No thanks, it's okay!"
+                        
+                        If 0
+                            Actor60(Flirty)::"Follow me..."
+                            Random
+                                setBackground3D(Modules/rk_vin_Base/World/rk_VB_Bedroom2.lpworld)
+                                setBackground3D(Modules/rk_vin_Base/World/rk_VB_pinkroom.lpworld)
+                                setBackground3D(Modules/rk_vin_Base/World/rk_VB_redroom.lpworld)
+                            EndRandom
+                            "Once in the room, we undressed and started to test the bed and the sheets"
+                            Player.strip()
+                            Actor60.strip()
+                            sex(Actor60, Player)
+                            Actor60(Flirty)::"So, it was a good quality bed or not?"
+                            Player(Flirty)::"Yeah, but I'm not sure yet!"
+                            Actor60(Flirty)::"Fine, take your time, I let you choose quietly..."
+                            choice = 0
+                            Actor60.hide()
+                            SceneEnd()
+                        Else
+                            Actor60(Flirty)::"As you wish, I let you choose quietly..."
+                            Actor60.hide()
+                        EndIf
+                    EndIf
+                Else
+                    "This should fit in with my needs and budget."
+                    If 0
+                        furniture_value += Price
+                        money -= Price
+                        "Where I will store this bed and linen set?"
+                        3::"Inside my bedroom"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Bedlinenset_MB, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Bedlinenset_SM, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Bedlinenset_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Bedlinenset_TB, 1)
+                        EndIf
+                    ElseIf 1
+                        furniture_value += Price1
+                        money -= Price1
+                        "Where I will store this bed and linen set?"
+                        3::"Inside my bedroom"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Bedlinenset1_MB, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Bedlinenset1_SM, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Bedlinenset1_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Bedlinenset1_TB, 1)
+                        EndIf
+                    Else
+                        furniture_value += Price2
+                        money -= Price2
+                        "Where I will store this bed and linen set?"
+                        3::"Inside my bedroom"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Bedlinenset2_MB, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Bedlinenset2_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Bedlinenset2_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Bedlinenset2_TB, 1)
+                        EndIf
+                    EndIf
+                    Player.modifyActorVar(rk_VB_IBuyBedlinenset, 1)
+                EndIf
+                choice = 14
+            ElseIf 2
+                Price = 150*CostofLiving*random(0.8, 1.2)
+                Price1 = Price*random(1.5, 2.5)
+                Price2 = Price*random(4, 10)
+                PriceConvertered = Price.convertToLocalCurrency()
+                Price1Convertered = Price1.convertToLocalCurrency()
+                Price2Convertered = Price2.convertToLocalCurrency()
+                "There are so many options. Which Dining table and chairs should I go for?"
+                0:: "Budget product for <PriceConvertered>"
+                1:: "Mid-range product for <Price1Convertered>"
+                2:: "State-of-the-art product for <Price2Convertered>"
+                3:: "None"
+                
+                If 3
+                    "On second thought, I have better use for my money."
+                Else
+                    "This should fit in with my needs and budget."
+                    If 0
+                        furniture_value += Price
+                        money -= Price
+                
+                        "Where I will store this Dining table and chairs?"
+                        1::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasKitchen > 0::"Inside my kitchen"
+                        3::"Inside my bedroom"
+                        6::"Inside my storage room"
+                        
+                        If 1
+                            "Added to your kitchen!"
+                            Player.modifyActorVar(rk_VB_Stock_Diningtablechairs_K, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Diningtablechairs_MB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Diningtablechairs_SR, 1)
+                        EndIf
+                    ElseIf 1
+                        furniture_value += Price1
+                        money -= Price1
+                        "Where I will store this Dining table and chairs?"
+                        1::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasKitchen > 0::"Inside my kitchen"
+                        3::"Inside my bedroom"
+                        6::"Inside my storage room"
+                        
+                        If 1
+                            "Added to your kitchen!"
+                            Player.modifyActorVar(rk_VB_Stock_Diningtablechairs1_K, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Diningtablechairs1_MB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Diningtablechairs1_SR, 1)
+                        EndIf
+                    Else
+                        furniture_value += Price2
+                        money -= Price2
+                        "Where I will store this Dining table and chairs?"
+                        1::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasKitchen > 0::"Inside my kitchen"
+                        3::"Inside my bedroom"
+                        6::"Inside my storage room"
+                        
+                        If 1
+                            "Added to your kitchen!"
+                            Player.modifyActorVar(rk_VB_Stock_Diningtablechairs2_K, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Diningtablechairs2_MB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Diningtablechairs2_SR, 1)
+                        EndIf
+                    EndIf
+                    Player.modifyActorVar(rk_VB_IBuyDiningtablechairs, 1)
+                EndIf
+                choice = 14
+            ElseIf 3
+                Price = 75*CostofLiving*random(0.8, 1.2)
+                Price1 = Price*random(1.5, 2.5)
+                Price2 = Price*random(4, 10)
+                PriceConvertered = Price.convertToLocalCurrency()
+                Price1Convertered = Price1.convertToLocalCurrency()
+                Price2Convertered = Price2.convertToLocalCurrency()
+                "There are so many options. Which Wardrobe should I go for?"
+                0:: "Budget product for <PriceConvertered>"
+                1:: "Mid-range product for <Price1Convertered>"
+                2:: "State-of-the-art product for <Price2Convertered>"
+                3:: "None"
+                
+                If 3
+                    "On second thought, I have better use for my money."
+                Else
+                    "This should fit in with my needs and budget."
+                    If 0
+                        furniture_value += Price
+                        money -= Price
+                
+                        "Where I will store this Wardrobe?"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe_TB, 1)
+                        EndIf
+                    ElseIf 1
+                        furniture_value += Price1
+                        money -= Price1
+                        "Where I will store this Wardrobe?"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe1_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe1_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe1_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe1_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe1_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe1_TB, 1)
+                        EndIf
+                    Else
+                        furniture_value += Price2
+                        money -= Price2
+                        "Where I will store this Wardrobe?"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe2_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe2_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe2_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe2_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe2_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Wardrobe2_TB, 1)
+                        EndIf
+                    EndIf
+                    Player.modifyActorVar(rk_VB_IBuyWardrobe, 1)
+                EndIf
+                choice = 14
+            ElseIf 4
+                Price = 300*CostofLiving*random(0.8, 1.2)
+                Price1 = Price*random(1.5, 2.5)
+                Price2 = Price*random(4, 10)
+                PriceConvertered = Price.convertToLocalCurrency()
+                Price1Convertered = Price1.convertToLocalCurrency()
+                Price2Convertered = Price2.convertToLocalCurrency()
+                "There are so many options. Which home office desk and chair should I go for?"
+                0:: "Budget product for <PriceConvertered>"
+                1:: "Mid-range product for <Price1Convertered>"
+                2:: "State-of-the-art product for <Price2Convertered>"
+                3:: "None"
+                
+                If 3
+                    "On second thought, I have better use for my money."
+                Else
+                    "This should fit in with my needs and budget."
+                    If 0
+                        furniture_value += Price
+                        money -= Price
+                        "Where I will store this home office desk and chair?"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair_TB, 1)
+                        EndIf
+                    ElseIf 1
+                        furniture_value += Price1
+                        money -= Price1
+                        "Where I will store this home office desk and chair?"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair1_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair1_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair1_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair1_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair1_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair1_TB, 1)
+                        EndIf
+                    Else
+                        furniture_value += Price2
+                        money -= Price2
+                        "Where I will store this home office desk and chair?"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair2_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair2_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair2_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair2_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair2_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Homeofficedeskchair2_TB, 1)
+                        EndIf
+                    EndIf
+                    Player.modifyActorVar(rk_VB_IBuyOfficedeskchair, 1)
+                EndIf
+                choice = 14
+            ElseIf 5
+                Price = 50*CostofLiving*random(0.8, 1.2)
+                Price1 = Price*random(1.5, 2.5)
+                Price2 = Price*random(4, 10)
+                PriceConvertered = Price.convertToLocalCurrency()
+                Price1Convertered = Price1.convertToLocalCurrency()
+                Price2Convertered = Price2.convertToLocalCurrency()
+                "There are so many options. Which Coffee table & sofa should I go for?"
+                0:: "Budget product for <PriceConvertered>"
+                1:: "Mid-range product for <Price1Convertered>"
+                2:: "State-of-the-art product for <Price2Convertered>"
+                3:: "None"
+                
+                If 3
+                    "On second thought, I have better use for my money."
+                Else
+                    "This should fit in with my needs and budget."
+                    If 0
+                        furniture_value += Price
+                        money -= Price
+                        "Where I will store this Coffee table & sofa ?"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa_TB, 1)
+                        EndIf
+                    ElseIf 1
+                        furniture_value += Price1
+                        money -= Price1
+                        "Where I will store this Coffee table & sofa?"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa1_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa1_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa1_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa1_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa1_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa1_TB, 1)
+                        EndIf
+                    Else
+                        furniture_value += Price2
+                        money -= Price2
+                        "Where I will store this Oven and stoves ?"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa2_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa2_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa2_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa2_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa2_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Coffeetablesofa2_TB, 1)
+                        EndIf
+                    EndIf
+                    Player.modifyActorVar(rk_VB_IBuyCoffeetablesofa, 1)
+                EndIf
+                choice = 14
+            ElseIf 6
+                Price = 675*CostofLiving*random(0.8, 1.2)
+                Price1 = Price*random(1.5, 2.5)
+                Price2 = Price*random(4, 10)
+                PriceConvertered = Price.convertToLocalCurrency()
+                Price1Convertered = Price1.convertToLocalCurrency()
+                Price2Convertered = Price2.convertToLocalCurrency()
+                "There are so many options. Which pool table should I go for?"
+                0:: "Budget product for <PriceConvertered>"
+                1:: "Mid-range product for <Price1Convertered>"
+                2:: "State-of-the-art product for <Price2Convertered>"
+                3:: "None"
+                
+                If 3
+                    "On second thought, I have better use for my money."
+                Else
+                    "This should fit in with my needs and budget."
+                    If 0
+                        furniture_value += Price
+                        money -= Price
+                        "Where I will store this pool table?"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable_TB, 1)
+                        EndIf
+                    ElseIf 1
+                        furniture_value += Price1
+                        money -= Price1
+                        "Where I will store this pool table?"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable1_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable1_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable1_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable1_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable1_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable1_TB, 1)
+                        EndIf
+                    Else
+                        furniture_value += Price2
+                        money -= Price2
+                        "Where I will store this pool table?"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable2_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable2_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable2_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable2_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable2_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Pooltable2_TB, 1)
+                        EndIf
+                    EndIf
+                    Player.modifyActorVar(rk_VB_IBuyPooltable, 1)
+                EndIf
+                choice = 14
+            ElseIf 7
+                Price = 25*CostofLiving*random(0.8, 1.2)
+                Price1 = Price*random(1.5, 2.5)
+                Price2 = Price*random(4, 10)
+                PriceConvertered = Price.convertToLocalCurrency(false)
+                Price1Convertered = Price1.convertToLocalCurrency(false)
+                Price2Convertered = Price2.convertToLocalCurrency(false)
+                "There are so many options. Which decorations should I go for?"
+                0:: "Budget product for <PriceConvertered>"
+                1:: "Mid-range product for <Price1Convertered>"
+                2:: "State-of-the-art product for <Price2Convertered>"
+                3:: "None"
+                
+                If 3
+                    "On second thought, I have better use for my money."
+                Else
+                    "This should fit in with my needs and budget."
+                    If 0
+                        furniture_value += Price
+                        money -= Price
+                        "Where I will store this decorations?"
+                        1::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasKitchen > 0::"Inside my kitchen"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 1
+                            "Added to your kitchen!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations_K, 1)
+                        ElseIf 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations_TB, 1)
+                        EndIf
+                    ElseIf 1
+                        furniture_value += Price1
+                        money -= Price1
+                        "Where I will store this decorations?"
+                        1::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasKitchen > 0::"Inside my kitchen"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 1
+                            "Added to your kitchen!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations1_K, 1)
+                        ElseIf 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations1_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations1_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations1_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations1_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations1_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations1_TB, 1)
+                        EndIf
+                    Else
+                        furniture_value += Price2
+                        money -= Price2
+                        "Where I will store this decorations?"
+                        1::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasKitchen > 0::"Inside my kitchen"
+                        2::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasLivingroom > 0 ::"Inside my living room"
+                        3::"Inside my bedroom"
+                        4::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasOfficeroom > 0::"Inside my office room"
+                        5::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasSecBedroom > 0::"Inside my second bedroom"
+                        6::"Inside my storage room"
+                        7::[isModEnabled(nn_HomeExpander) || isModEnabled(nn_VB_HomeExpander)] && hasThirdBedroom > 0::"Inside my third bedroom"
+                        
+                        If 1
+                            "Added to your kitchen!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations2_K, 1)
+                        ElseIf 2
+                            "Added to your living room!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations2_LR, 1)
+                        ElseIf 3
+                            "Added to your bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations2_MB, 1)
+                        ElseIf 4
+                            "Added to your office room!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations2_O, 1)
+                        ElseIf 5
+                            "Added to your second bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations2_SB, 1)
+                        ElseIf 6
+                            "Added to your storage room!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations2_SR, 1)
+                        ElseIf 7
+                            "Added to your third bedroom!"
+                            Player.modifyActorVar(rk_VB_Stock_Decorations2_TB, 1)
+                        EndIf
+                    EndIf
+                    Player.modifyActorVar(rk_VB_IBuyDecorations, 1)
+                EndIf
+                choice = 14
+            EndIf
+        Endwhile
+    SceneEnd() // Improved by Raddeck

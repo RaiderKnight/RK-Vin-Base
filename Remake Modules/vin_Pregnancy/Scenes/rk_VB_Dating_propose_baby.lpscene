@@ -1,0 +1,82 @@
+WHAT: all
+WHERE: all
+WHEN: 0 - 24
+WHO: Actor = getSpecific(Dating); If Actor.isDating() && !Actor.isPregnant()
+OTHER: isWithCompanion() && random(0, 100) > 75
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        NeVeutPas = false
+        proposeb = rk_VB_propose_baby.getGlobal()
+        Actor(Curious):: "Baby, maybe it's time we should start trying for a baby?"
+        If isModEnabled(rk_vin_Base)
+            If !Player.isMale() && [Actor.isMale() || Actor.isTrans()]
+                If money < 5000
+                    Player(Sad):: "Sorry honey, but I don't have enough money to support this child!"
+                    Player(Sad)::"I'd better start making some money before thinking about having a child."
+                    Actor(Sad):: "I guess you're right!"
+                    NeVeutPas = true
+                ElseIf !PlayerHasHome()
+                    Player(Sad):: "Sorry honey, but I don't have enough money to rent a house!"
+                    Player(Sad)::"I'd better start looking for a house before thinking about having a child."
+                    Actor(Sad):: "I guess you're right!"
+                    NeVeutPas = true
+                ElseIf Actor:age <= 21
+                    Player(Sad):: "I'm too young babe, isn't it a bit too soon for that? I'm not sure I'm ready for the reponsibility right now."
+                    NeVeutPas = true
+                ElseIf Actor:attractiontoplayer > 40
+                    Player(Happy):: "Oh baby, I've been thinking the same thing ... Yes, let's have a baby together."
+                    Actor:attractiontoplayer += random(0, 3)
+                    Actor:rapportwithplayer += random(0, 3)
+                    Player.strip()
+                    Actor.strip()
+                    Sex(Player, Actor)
+                    If random(0, 100) > 60
+                        Actor.impregnate(Player)
+                    EndIf
+                Else
+                    Player(Sad):: "Sorry babe but I'm not in the mood for that!"
+                EndIf
+                Actor.setWantsBabies()
+            ElseIf !Actor.isMale() && [Player.isMale() || Player.isTrans()]
+                If money < 5000
+                    Player(Sad):: "Sorry honey, but I don't have enough money to support this child!"
+                    Player(Sad)::"I'd better start making some money before thinking about having a child."
+                    Actor(Sad):: "I guess you're right!"
+                    NeVeutPas = true
+                ElseIf !PlayerHasHome()
+                    Player(Sad):: "Sorry honey, but I don't have enough money to rent a house!"
+                    Player(Sad)::"I'd better start looking for a house before thinking about having a child."
+                    Actor(Sad):: "I guess you're right!"
+                    NeVeutPas = true
+                ElseIf Actor:age <= 21
+                    Player(Sad):: "I'm too young babe, isn't it a bit too soon for that? I'm not sure I'm ready for the reponsibility right now."
+                    NeVeutPas = true
+                ElseIf Actor:attractiontoplayer > 40
+                    Player(Happy):: "Oh baby, I've been thinking the same thing ... Yes, let's have a baby together."
+                    Actor:attractiontoplayer += random(0, 3)
+                    Actor:rapportwithplayer += random(0, 3)
+                    Player.strip()
+                    Actor.strip()
+                    Sex(Player, Actor)
+                    If random(0, 100) > 60
+                        Actor.impregnate(Player)
+                    EndIf
+                Else
+                    Player(Sad):: "Sorry babe but I'm not in the mood for that!"
+                EndIf
+                Player.setWantsBabies()    
+            Else
+                "Sorry but you have no lover!"
+            EndIf
+        EndIf
+        If NeVeutPas
+            " haven't been able to convince <Actor.name> to try for a baby yet. I'm not giving up though and plan to try again later."
+            Actor.hide()
+            rk_VB_propose_baby.setGlobal(1)
+        EndIf
+    SceneEnd()  // Scene created/improved by Raddeck
+    timeout(500, rk_VB_Dating_propose_baby)

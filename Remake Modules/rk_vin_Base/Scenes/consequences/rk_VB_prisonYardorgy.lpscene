@@ -1,0 +1,157 @@
+WHAT: all
+WHERE: prison
+WHEN: 6 - 18
+WHO: none
+OTHER: none
+
+    SceneStart()
+        // Based on LadyDaisy story - Rewriting/coding by Raddeck
+        allonsy = false
+        caConti = false
+        preferentialtreatment = Player.getActorVar(rk_VB_preferentialtreatment)
+        MID = rk_VB_mateidPris.getGlobal()
+        taginmate = Player.getActorVar(rk_VB_taginmate)
+        Actor = generatePersonTemporary()
+        Actor.dressUniform(Police)
+        Actor1 = generatePersonTemporary()
+        Actor1.dressUniform(Police)
+        Actor1:arousal => random(15, 50)
+        Actor:arousal => random(15, 50)
+        Actor.hide()
+        Actor1.hide()
+        Mate1 = generatePersonTemporary()
+        While !Mate1.isSameGender(Player)
+            Mate1 = generatePersonTemporary()
+        EndWhile
+        Mate2 = generatePersonTemporary()
+        While !Mate2.isSameGender(Player)
+            Mate2 = generatePersonTemporary()
+        EndWhile
+        Mate3 = generatePersonTemporary()
+        While !Mate3.isSameGender(Player)
+            Mate3 = generatePersonTemporary()
+        EndWhile
+        Mate4 = generatePersonTemporary()
+        While !Mate4.isSameGender(Player)
+            Mate4 = generatePersonTemporary()
+        EndWhile
+        Mate5 = generatePersonTemporary()
+        While !Mate5.isSameGender(Player)
+            Mate5 = generatePersonTemporary()
+        EndWhile
+        Mate5.randomizeRace()
+        Mate5.randomizeFace()
+        Mate5.randomizeHairs()
+        Mate1.randomizeRace()
+        Mate1.randomizeFace()
+        Mate1.randomizeHairs()
+        Mate1.blendPreset(bodybuilder)
+        Mate2.randomizeRace()
+        Mate2.randomizeFace()
+        Mate2.randomizeHairs()
+        Mate3.randomizeRace()
+        Mate3.randomizeFace()
+        Mate3.randomizeHairs()
+        Mate4.randomizeRace()
+        Mate4.randomizeFace()
+        Mate4.randomizeHairs()
+        Mate4.blendPreset(bodybuilder)
+        Mate1.dressUniform(Prison)
+        Mate2.dressUniform(Prison)
+        Mate3.dressUniform(Prison)
+        Mate4.dressUniform(Prison)
+        Player.dressUniform(Prison)
+        Mate5.dressUniform(Prison)
+        Mate5.show(1)
+        Mate1.show(2)
+        Mate2.show(3)
+        Mate3.show(4)
+        Mate4.show(5)
+        If isModEnabled(rk_vin_Base)
+            setBackground3D(Modules/rk_vin_Base/World/rk_VB_smallPark.lpworld)
+            "One day I was in the prison yard, hanging out waiting for a fight or something. There's almost always something weird going on!"
+            "A <Mate1.guy_or_girl>  came up next to me."
+            Mate1.moveToPersonStand(Player, 50)
+            Mate1(Happy)::"Hey yo! What's up!"
+            Player(Serene)::"I'm fine!"
+            Mate1(Happy)::"Don't worry, I'm not looking for any trouble, I just want to tell you that me and another inmate, decided to start an orgy."
+            Player(Curious)::"Okay, where?"
+            Mate1(Happy)::"Right here to freak out the guards!"
+            Player(Curious)::"You think others will want to join your orgy?"
+            Mate1(Happy)::"Sure, I know all the guys in the yard except you, and I know they're all nymphomaniacs!"
+            "Should I join them?"
+            0::"Yes"
+            1::"No"
+            
+            If 0
+                Player(Happy)::"I can't wait to see the guards' faces when they catch us in the act!"
+                Mate1(Happy)::"Okay, I'm going to go warn my friend and we'll start the dance..."
+                allonsy = true
+            Else
+                Player(Happy)::"Are you crazy, not here, we will be caught by the guards, that's for sure!"
+                Mate1(Sad)::"Well, it's up to you! But if you want to fuck, you should take what comes!"
+                perversion -= random(0, 1)
+                Player(Happy)::"Noted!"
+                "Do I changed my mind?"
+                0::"Ok, let' fuck!"
+                1::"No"
+                
+                If 0
+                    Mate1(Happy)::"Okay, I'm going to go warn my friend and we'll start the dance..."
+                    allonsy = true
+                Else
+                    arousal -= random(0, 1)
+                    perversion -= random(0, 1)
+                    Player(Happy)::"Noted!"
+                EndIf
+            EndIf
+            caConti = true
+        EndIf 
+        If caConti
+            Mate1.moveToPersonStand(Mate2, 30)
+            "While they were speaking a bit loudly, they decided to start right there. They started kissing loudly and grabbing each other."
+            animatePair(Mate1, Mate2, Kissing)
+            "They weren't wearing much as in other environments so they were able to feel easily. This got the others' attention, one coming over."
+            Mate2.strip()
+            Mate3(Flirty)::"Can I have a kiss too?"
+            Mate1.strip()
+            Mate1(Happy)::"Sure, come here lovely beast!"
+            Mate3.strip()
+            sex(Mate1, Mate2, Mate3)
+            If allonsy
+                "I looked and more prisoners were joining. More uniforms were piling up on the floor. I guess, it's time for me to join them!"
+                Player.strip()
+                sex(Mate1, Mate2, Player, Mate3)
+                Mate4.strip()
+                Mate5.strip()
+                Mate4(Flirty)::"Wait, we are coming too?"
+                Mate1(Happy)::"Sure, anyway I need to take a break!"
+                sex(Mate2, Player, Mate3, Mate4, Mate5)
+            Else
+                Mate5.strip()
+                "I looked and more prisoners were joining. More uniforms were piling up on the floor!"
+                sex(Mate1, Mate2, Mate3, Mate5)
+                Mate4.strip()
+                Mate4(Flirty)::"Wait, I'm coming too?"
+                Mate1(Happy)::"Sure!"
+                sex(Mate2, Mate1, Mate3, Mate4, Mate5)
+            EndIf
+            Actor.show()
+            Actor1.show()
+            Actor(Shocked)::"STOP!!"
+            Actor1(Shocked)::"What's going on here?"
+            "No one said anything for a bit, as they felt it was obvious what was going on."
+            Actor(Shocked)::"Well, who started it?"
+            "As solidarity between inmates, no one said anything."
+            Actor(Serene)::"Alright! Go back to your cells everyone!"
+            "The guards escorts each of us to our cells..."
+            Actor.hide()
+            Actor1.hide()
+            Mate5.hide()
+            Mate1.hide()
+            Mate2.hide()
+            Mate3.hide()
+            Mate4.hide()
+        EndIf
+    SceneEnd()
+    timeout(1000, rk_VB_prisonYardorgy)

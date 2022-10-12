@@ -1,0 +1,79 @@
+WHAT: all, -go_to_the_bathroom
+WHERE: bar, pub
+WHEN: 0-24
+WHO: none
+OTHER: intoxication < 90 && Random(0, 500) < intoxication
+
+    SceneStart()
+    
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor = generatePerson()
+        Actor.dress()
+        Actor.show(2)
+        
+        "<Actor.name> approached me and challenged me to a drinking duel."
+        0:: "Yes"
+        1:: "No"
+        
+        If 0    
+            Price1 = 10 // Start edit by Raddeck
+            Price2 = 25
+            Price3 = 50
+            Price4 = 100
+            Price1L = Price1.convertToLocalCurrency()
+            Price2L = Price2.convertToLocalCurrency()
+            Price3L = Price3.convertToLocalCurrency()
+            Price4L = Price4.convertToLocalCurrency()
+            Drunk = false
+            Actor(Happy)::"How much you bet, I'll bet the same?"
+            0::"<Price1L>"
+            1::"<Price2L>"
+            2::"<Price3L>"
+            3::"<Price4L>"
+            99::"Forget it!"
+            
+            If 0
+                TotalBet = Price1*2
+            Elseif 1
+                TotalBet = Price2*2
+            Elseif 2
+                TotalBet = Price3*2
+            Elseif 3
+                TotalBet = Price4*2
+            Else
+                SceneEnd()
+            EndIf
+            TotalBetL = TotalBet.convertToLocalCurrency()
+            Actor(Happy)::"Ok, so the prize pool is <TotalBetL>!"
+            "So we started our drinking competition..."
+            // End edit by Raddeck
+            While !Drunk
+                "<Actor.name> downed <Actor.his_or_her> drink."
+                "I downed mine"
+                Actor:intoxication += Random(0, 15)
+                Player:intoxication += Random(0, 15)
+                If UrgeToPeeEnable > 0
+                    Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                EndIf
+                
+                If Actor:intoxication >= 100
+                    "<Actor.name> seemed out of it now. I won the duel!"
+                    Actor(Sad)::"Ok, that's it, you win!" // Edit Raddeck
+                    money += TotalBet
+                    Drunk = true
+                    mood += random(1, 3) // Edit Raddeck
+                Elseif intoxication >= 100
+                    "That's enough. I can't stomach another drink now. I lost the duel!"
+                    Player(Sad)::"Ok, that's it, you win!" // Edit Raddeck
+                    money -= TotalBet
+                    Drunk = true
+                    mood -= random(1, 3) // Edit Raddeck
+                Endif
+            Endwhile
+        Else
+            "I'm a mature enough person to know better than engaging in drinking games like that."
+        Endif
+    
+    SceneEnd() // Improved by Raddeck
+    timeout(200, binge_drinking)

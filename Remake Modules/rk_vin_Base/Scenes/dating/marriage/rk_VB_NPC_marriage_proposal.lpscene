@@ -1,0 +1,61 @@
+WHAT: all, -go_to_the_bathroom
+WHERE: all, -toilets, -PC, -office
+WHEN: 0-24
+WHO: Companion = getCompanion(); If CurrentCompanion.isDating() && CurrentCompanion:attractiontoplayer > Random(65, 100) && CurrentCompanion:rapportwithplayer > Random(50, 100)
+OTHER: !isPlayerMarried()
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        CEngaged = false
+        NPCisEngaged = rk_VB_isEngaged.getGlobal()
+        Pressure = CurrentCompanion.getActorVar(tag_pressure)
+        If Pressure > 0
+            "Under the pressure from <CurrentCompanion.name>'s family, we soon got engaged."
+            CEngaged = true
+            CurrentCompanion.setActorVar(tag_pressure, 0)
+        Else
+            setBackground(restaurant)
+            CurrentCompanion.show(2)
+            CurrentCompanion(Anxious):: "Baby, I have something really important to tell you ..."
+            "<CurrentCompanion.name> has taken me to a fancy restaurant but been acting rather weirdly today, as if he had something important to say to me all day."
+            Player(Curious):: "Of course, darling. What is it?"
+                
+            If CurrentCompanion:interpersonal > Random(0, 30)
+                CurrentCompanion(Happy):: "You know, although we haven't been in a relationship with each other for too long, I am totally in love with you and I know you feel the same ..."
+                CurrentCompanion(Happy):: "I would love nothing more than to take our relationship to the next level and be able to call you my <Player.husband_or_wife>."
+                CurrentCompanion(Happy):: "<Player.name>, will you marry me?"
+                Player(Surprised):: "<CurrentCompanion.name>! I ..."
+                0:: "Agree to marry <CurrentCompanion.name>"
+                1:: "Reject <CurrentCompanion.him_or_her>"
+                    
+                If 0
+                    Player(Happy):: "Yes! Yes! Of course, I'll be your <Player.husband_or_wife>! I'd love nothing more than spending the rest of my life with you."
+                    CEngaged = true
+                    rk_VB_isEngaged.setGlobal(1)
+                    mood += 100
+                    "So we embraced and kissed, treasuring our first moment as an engaged couple."
+
+                    Sex(Player, CurrentCompanion)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                Else
+                    Player(Surprised):: "<CurrentCompanion.name> ... I love you too ... but I'm not quite ready for marriage yet. In fact, we're not ready for that."
+                    mood -= 30
+                    "It was a difficult conversation to have. We're still a couple, although this rejection has put some serious doubt on the strength of our relationship."
+                    CurrentCompanion:attractiontoplayer -= Random(0, 40)
+                EndIf
+            Else
+                CurrentCompanion(Scared):: "I ... I ... Actually, can you believe it? I completely forgot what I wanted to say. Nevermind me!"
+                "And so <CurrentCompanion.name> went back to acting weird for the rest of the day ..."
+            EndIf
+            NPCisEngaged = rk_VB_isEngaged.getGlobal()
+            If CEngaged || NPCisEngaged > 0
+                followUp(rk_VB_bachelor_Party)
+            EndIf
+        EndIf
+    SceneEnd() // Scene edited by Raddeck
+    timeout(800, rk_VB_NPC_marriage_proposal)

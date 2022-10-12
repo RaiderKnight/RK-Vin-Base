@@ -1,0 +1,94 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        
+        setBackground3D(Modules/rk_vin_Base/World/rk_VB_Garage.lpworld)
+        stock_Tesla = Player.getActorVar(stock_Tesla)
+        stock_Ferrari = Player.getActorVar(stock_Ferrari)
+        stock_Lambo = Player.getActorVar(stock_Lambo)
+        stock_Mercedez = Player.getActorVar(stock_Mercedez)
+        stock_Mazda = Player.getActorVar(stock_Mazda)
+        stock_BMW = Player.getActorVar(stock_BMW)
+        stock_Lada = Player.getActorVar(stock_Lada)
+        stock_cars = stock_Lada + stock_Mazda + stock_BMW + stock_Mercedez + stock_Tesla + stock_Ferrari + stock_Lambo
+    
+        stock_BTwin = Player.getActorVar(stock_BTwin)
+        stock_Rocky = Player.getActorVar(stock_Rocky)
+        stock_Defy = Player.getActorVar(stock_Defy)
+        stock_SystemSix = Player.getActorVar(stock_SystemSix)
+        stock_Look = Player.getActorVar(stock_Look)
+        stock_Specialized = Player.getActorVar(stock_Specialized)
+        stock_Litespeed = Player.getActorVar(stock_Litespeed)
+        stock_Trek = Player.getActorVar(stock_Trek)
+        stock_velos = stock_BTwin + stock_Rocky + stock_Defy + stock_SystemSix + stock_Look + stock_Specialized + stock_Litespeed + stock_Trek
+
+        stock_VULCAN = Player.getActorVar(stock_VULCAN)
+        stock_Ruckus = Player.getActorVar(stock_Ruckus)
+        stock_VStar = Player.getActorVar(stock_VStar)
+        stock_NC750X = Player.getActorVar(stock_NC750X)
+        stock_Husqvarna = Player.getActorVar(stock_Husqvarna)
+        stock_Ducati = Player.getActorVar(stock_Ducati)
+        stock_INDIAN = Player.getActorVar(stock_INDIAN)
+        stock_Ninja = Player.getActorVar(stock_Ninja)
+        stock_motorcycle = stock_VULCAN + stock_Ruckus + stock_VStar + stock_NC750X + stock_Husqvarna + stock_Ducati + stock_INDIAN + stock_Ninja
+        
+        motorcycle_value = Player.getActorVar(rk_VB_motorcycle_Value)
+        velo_value = Player.getActorVar(rk_VB_Velos_Value)
+        Garage_Inventory = stock_motorcycle + stock_velos + stock_cars
+        If Garage_Inventory < 0
+            Player(Anxious)::"I got nothing inside my garage!"
+        Else
+            "What should I check?"
+            0:: "Bicycle inventory"
+            1:: "Car inventory"
+            2:: "Motorcycle inventory"
+            99:: "Go back!"
+            
+            If 0
+                0::"************ Bicycles **************"
+                0::"Actual bicycles value: <velo_value>"
+                0::"BTwin Ultra 920 | <stock_BTwin> in garage"
+                0::"Rocky Mountain Solo | <stock_Rocky> in garage"
+                0::"Giant Defy Advanced | <stock_Defy> in garage"
+                0::"Cannondale SystemSix | <stock_SystemSix> in garage"
+                0::"Look 795 Blade RS | <stock_Look> in garage"
+                0::"Specialized LEVO | <stock_Specialized> in garage"
+                0::"Litespeed Blade | <stock_Litespeed> in garage"
+                0::"Trek Madone7 | <stock_Trek> in garage"
+                99:: "Go back !"
+                
+            ElseIf 1
+            
+                0::"************ Cars **************"
+                0::"Actual cars value: <car_value>"
+                0:: "Lada <stock_Lada>"
+                0:: "Mazda <stock_Mazda>"
+                0:: "BMW <stock_BMW>"
+                0:: "Mercedez <stock_Mercedez>"
+                0:: "Tesla <stock_Tesla>"
+                0:: "Ferrari <stock_Ferrari>"
+                0:: "Lamborghini <stock_Lambo>"
+                99:: "Go back!"
+            
+            ElseIf 2
+            
+                0::"*********** Motorcycles ************"
+                0::"Actual motorcycles value: <motorcycle_value>"
+                0::"Kawasaki VULCAN | <stock_VULCAN> in garage"
+                0::"Honda Ruckus | <stock_Ruckus> in garage"
+                0::"Yamaha V-Star | <stock_VStar> in garage"
+                0::"Honda NC750X | <stock_NC750X> in garage"
+                0::"Svartpilen 701 | <stock_Husqvarna> in garage"
+                0::"Ducati Panigale | <stock_Ducati> in garage"
+                0::"INDIAN Challenger | <stock_INDIAN> in garage"
+                0::"Ninja H2R | <stock_Ninja> in garage"
+                99:: "Go back!"
+                
+            Endif
+        Endif
+    
+    SceneEnd()

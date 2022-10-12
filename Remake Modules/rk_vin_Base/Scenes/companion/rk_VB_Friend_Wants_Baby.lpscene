@@ -1,0 +1,365 @@
+WHAT: all 
+WHERE: all
+WHEN: 0 - 20
+WHO: Actor = getPerson(true); Actor2 = getSpecific(Dating); if Actor.WantsBabies() && Actor.isInterestedIn(Player) && !Actor.isMale() && Actor.isOnPeriod() && !Actor.isPregnant() && Actor:perversion > 50
+OTHER: Player.isMale() && isModEnabled(vin_Pregnancy)
+
+    SceneStart()
+        A2getfck = false
+        goigtoA2fck = false
+        ImAloneBG = false
+        ImWithBFGF = false
+        toolowA2 = false
+        ContinPass = false
+        goingtoA2 = false
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        WefckA2 = false
+        RefuseA2 = false
+        WeAreGay = false
+        Actor:energy += 50
+        Actor:arousal += 15
+        "I receive a call from <Actor.name>..."
+        "Should I answer to my phone?"
+        0::"Yes"
+        1::"No"
+        
+        If 1
+            "I decided not to answer my phone, I'm busy right now!"
+        Else
+            secondScreen(Actor)
+            Actor:attractiontoplayer += Random(0, 1)
+            Player.animate(call)
+            Actor.animate(call)
+            Player(Happy)::"Hey, hi <Actor.name>! What's up?"
+            Actor(Excited)::"Hi <Player.name>! Uhh! I'd like to meet you, it's important!"
+            Player(Curious)::"Okay? Is everything ok?"
+            Actor(Happy)::"Yeah, it's just... I want to ask you a favor but, I'd rather ask you face to face."
+            If isWithCompanion() && Actor2.isvalid()
+                Actor2.dress()
+                Actor2.show()
+                Player(Sad)::"But I'm with my <Actor2.boyfriend_or_girlfriend>?"
+                If Actor2.isMale() 
+                    Actor(Excited)::"That's even better!"
+                    Player(Curious)::"So, come on, we are waiting for you!"
+                    ImWithBFGF = true
+                    ContinPass = true
+                Elseif !Actor2.isMale()
+                    Actor(Flirty)::"I prefer to see you alone..."
+                    Player(Curious)::"Okay, I'll ask my <Actor2.boyfriend_or_girlfriend>??"
+                    Player(Curious)::"Hey honey I have to go away for an hour or two, <Actor.name> wants me to do <Actor.him_or_her> a favor!"
+                    If Actor2:masochist < masochist || !Actor2.isInterestedIn(Actor)
+                        Actor2(Curious):: "What kind of favor?"
+                        Player(Curious):: "I don't know, I didn't ask her ...."
+                        Actor2(Curious):: "Ah! Make it quick!"
+                        Actor2:attractiontoplayer += Random(-1, 1)
+                        Actor2:mood += Random(-1, 1)
+                    Else
+                        Actor2(Curious):: "Ah! Ok no problem, make it quick!"
+                        Actor2:mood += Random(-1, 1)
+                    EndIf
+                    goingtoA2 = true
+                EndIf
+                Actor:attractiontoplayer += Random(0, 5)
+            Else
+                Player(Curious)::"Ok so, come on, I'm waiting for you!"
+                ImAloneBG = true
+                ContinPass = true
+            EndIf
+            secondScreen()
+            Player.animate()
+            Actor.animate()
+            Actor2.hide()
+            If ContinPass
+                Actor:attractiontoplayer += Random(5, 15)
+                "After a while she finally arrives..."
+                setBackground(home)
+                Actor.dress()
+                Actor.show()
+                Player(Curious)::"Hello, come in, make yourself at home!"
+                If ImWithBFGF
+                    Actor2.dress()
+                    Actor2.show()
+                    Actor.makeInterested(Actor2)
+                    Player(Curious)::"What kind of service do you want us to do for you?"
+                    Actor(Flirty)::"Well, you're going to think I'm weird but I have a big problem!"
+                    Player(Curious)::"Okay, we are listening?"
+                    Actor(Flirty)::"Well, I want a baby but I don't want the father that goes with it, so I thought you might want to make me a child..."
+                    Player(Happy)::"But we are gay! So!"
+                    Actor(Flirty)::"It doesn't matter, I just want a baby!"
+                    Actor2(Shocked)::"..."
+                    Actor(Flirty)::"I'm willing to pay you if I have to or make you sign a paper that you reject the child."
+                    If Actor2.isInterestedIn(Actor) && Actor2:perversion > 15
+                        Actor2(Flirty)::"Of course my baby we can do that for you!"
+                        Actor(Flirty)::"Cool! You are both so nice to me!"
+                        Actor2(Flirty)::"What do you think about her offer?"
+                        0::"Sure, we'll do it for free!"
+                        1::"How much are you willing to give us?"
+                        99::"Refuse"
+                        
+                        If 8
+                            Player(Flirty)::"Get ready to have your vagina filled, two to fill, I don't see how you can't be pregnant!"
+                            Actor(Flirty)::"That's exactly what I want! Fill me up to the rim!"
+                            Actor(Flirty)::"Let's get undressed and fuck now!"
+                            Player(Flirty)::"Yeah sure!"
+                            Actor.strip()
+                            Player.strip()
+                            Actor2.strip()
+                            Actor:arousal += 5
+                            WefckA2 = true
+                        Elseif 1
+                            CashA2 = Random(1000, 10000)
+                            CashA2loc = CashA2.convertToLocalCurrency()
+                            Actor(Flirty)::"I'm willing to give you <CashA2loc> to make me a child now!"
+                            "Should I accept her offer?"
+                            If money < 5000 && CashA2 > 5000
+                                Actor2(Flirty)::"Babe, it's only a fuck, there is no love an she give us <CashA2loc>! Think twice!"
+                            Endif
+                            0::"I accept"
+                            99::"I refuse"
+                            
+                            If 0
+                                Player(Flirty)::"Get ready to have your vagina filled, two to fill, I don't see how you can't be pregnant!"
+                                Actor(Flirty)::"That's exactly what I want! Fill me up to the rim!"
+                                money += CashA2
+                                Actor(Flirty)::"Here's the money! And let's get undressed and fuck now!"
+                                Player(Flirty)::"Yeah sure!"
+                                Actor.strip()
+                                Player.strip()
+                                Actor2.strip()
+                                Actor:arousal += 5
+                                WefckA2 = true
+                            Else
+                                toolowA2 = true
+                                RefuseA2 = true
+                            EndIf
+                        Else
+                            Player(Grin)::"Are you kidding? Forget it babe!"
+                            RefuseA2 = true
+                            WeAreGay = true
+                        EndIf
+                    Else
+                        Actor2(Grin)::"Are you kidding? Forget it babe!"
+                        RefuseA2 = true
+                        WeAreGay = true
+                    EndIf
+                    
+                EndIf
+                If ImAloneBG
+                    goigtoA2fck = true
+                EndIf
+            EndIf
+            If WefckA2
+                WeFuckHerA = true
+                Actor(Flirty)::"Fuck me hard boys, I want a baby!"
+                weFuck1 = false
+                weFuck2 = false
+                counter1 = 0
+                counter2 = 0
+                While WeFuckHerA
+                    If !weFuckA21
+                        sex(Actor2, Actor)
+                        Actor:fertility_npc += 5
+                        Actor:attractiontoplayer += Random(0, 1)
+                        Actor:rapportwithplayer += Random(0, 1)
+                        counter1 += 1
+                        If counter1 >= 2
+                            weFuckA21 = true
+                        Endif
+                    Endif
+                    If !weFuckA22
+                        sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Actor:fertility_npc += 5
+                        Actor:attractiontoplayer += Random(0, 1)
+                        Actor:rapportwithplayer += Random(0, 1)
+                        counter2 += 1
+                        If counter2 >= 2
+                            weFuckA22 = true
+                        Endif
+                    Endif
+                    If weFuckA21 && weFuckA22 || Actor:arousal > 5
+                        Actor(Flirty)::"Fuck me again, I want more!"
+                        "Should we continue?"
+                        0::counter1 <= 1 || counter2 <= 1 :: "Yes"
+                        1::"No"
+                        
+                        If 0
+                            Player(Flirty)::"Let's do a threesome!"
+                            sex(Actor2, Actor, Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -3)
+                            EndIf
+                            Actor:attractiontoplayer += Random(0, 2)
+                            Actor:rapportwithplayer += Random(0, 2)
+                            Actor:fertility_npc += 10
+                            Player(Sad)::"Okay, that's enough! Our balls are hurting right now!"
+                            Actor(Sad)::"No problem, I'll leave you both alone, I'm going back home!"
+                        Else
+                            WeFuckHerA = false
+                            Player(Sad)::"Okay, that's enough! Our balls are hurting right now!"
+                            Actor(Sad)::"No problem, I'll leave you both alone, I'm going back home!"
+                            Actor(Sad)::"Bye!"
+                            Actor:arousal => 0
+                            Actor:attractiontoplayer -= Random(0, 5)
+                            Actor:rapportwithplayer -= Random(0, 5)
+                        EndIf
+                        Actor.hide()
+                    EndIf
+                EndWhile
+            EndIf
+            If goingtoA2
+                "After a while I finally arrives at her place..."
+                setBackground(bedroom)
+                Actor.dress()
+                Actor.show()
+                goigtoA2fck = true
+                Actor(Flirty)::"Hello, come in, make yourself at home!"
+            EndIf
+            If goigtoA2fck
+                Player(Curious)::"What kind of service do you want me to do for you?"
+                Actor(Flirty)::"Well, you're going to think I'm weird but I have a big problem!"
+                Player(Curious)::"Okay, I'm listening?"
+                Actor(Flirty)::"Well, I want a baby but I don't want the father that goes with it, so I thought you might want to make me a baby..."
+                Player(Shocked)::"..."
+                Actor(Flirty)::"I'm willing to pay you if I have to or make you sign a paper that you reject the child."
+                "What should I say?"
+                0::"Sure, I'll do it for free!"
+                1::"How much are you willing to give me?"
+                99::"Refuse"
+                
+                If 0
+                    perversion += 1
+                    Actor:arousal += 5
+                    Actor(Flirty)::"So let's get undressed and fuck now!"
+                    Actor.strip()
+                    Player.strip()
+                    sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    Actor:fertility_npc += 5
+                    While Actor:arousal > 5
+                        Actor(Flirty)::"Fuck me again, I want more!"
+                        "Should I continue?"
+                        0::"Yes"
+                        1::"No"
+                        
+                        If 0
+                            Player(Flirty)::"Okay!"
+                            Actor.strip()
+                            Player.strip()
+                            sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Actor:attractiontoplayer += Random(0, 1)
+                            Actor:rapportwithplayer += Random(0, 1)
+                            Actor:fertility_npc += 5
+                            A2getfck = true
+                        Else
+                            Player(Sad)::"Okay, that's enough! My balls are hurting me right now!"
+                            If !Player.isAtHome()
+                                Actor(Sad)::"Oh well! If that so, you can leave now!"
+                            Else
+                                Actor(Sad)::"Oh well! If that so, I'll leave!"
+                            EndIf
+                            Player(Flirty)::"Okay, I didn't want to hurt you!"
+                            Actor(Sad)::"Bye!"
+                            Actor:arousal => 0
+                            Actor:attractiontoplayer -= Random(0, 5)
+                            Actor:rapportwithplayer -= Random(0, 5)
+                        EndIf
+                    EndWhile
+                    If !Player.isAtHome()
+                        "So I decided to go back home..."
+                        moveTo(home)
+                    EndIf
+                    Actor.hide()
+                ElseIf 1
+                    CashA2 = Random(1000, 10000)
+                    CashA2loc = CashA2.convertToLocalCurrency()
+                    Actor(Flirty)::"I'm willing to give you <CashA2loc> to make me a child now!"
+                    "Should I accept her offer?"
+                    0::"Yes"
+                    1::"No"
+                    
+                    If 0
+                        money += CashA2
+                        Actor(Flirty)::"Here's the money! And let's get undressed and fuck now!"
+                        Player(Flirty)::"Yeah sure!"
+                        Actor.strip()
+                        Player.strip()
+                        sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        While Actor:arousal > 5
+                            Actor(Flirty)::"Fuck me again, I want more!"
+                            "Should I continue?"
+                            0::"Yes"
+                            1::"No"
+                            
+                            If 0
+                                Player(Flirty)::"Okay!"
+                                Actor.strip()
+                                Player.strip()
+                                sex(Player, Actor)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                Actor:attractiontoplayer += Random(0, 1)
+                                Actor:rapportwithplayer += Random(0, 1)
+                                Actor:fertility_npc += 5
+                                A2getfck = true
+                            Else
+                                Player(Sad)::"Okay, that's enough! My balls are hurting me right now!"
+                                If !Player.isAtHome()
+                                    Actor(Sad)::"Oh well! If that so, you can leave now!"
+                                Else
+                                    Actor(Sad)::"Oh well! If that so, I'll leave!"
+                                EndIf
+                                Player(Flirty)::"Okay, I didn't want to hurt you!"
+                                Actor(Sad)::"Bye!"
+                                Actor:arousal => 0
+                                Actor:attractiontoplayer -= Random(0, 5)
+                                Actor:rapportwithplayer -= Random(0, 5)
+                            EndIf
+                        EndWhile
+                        If !Player.isAtHome()
+                            "So I decided to go back home..."
+                            moveTo(home)
+                        EndIf
+                    Else
+                        toolowA2 = true
+                        RefuseA2 = true
+                    EndIf
+                Else
+                    RefuseA2 = true
+                EndIf
+            EndIf
+            If RefuseA2
+                If toolowA2
+                    Player(Sad)::"Sorry <Actor.name> but your offer is too low and no offense, but you are not my type!"
+                Elseif WeAreGay
+                    Player(Sad)::"Sorry <Actor.name> but your not our type!"
+                Else
+                    Player(Sad)::"Sorry <Actor.name> but I am not interested in your offer! No offense, but you are not my type!"
+                EndIf
+                Actor(Sad)::"Ok, that's fine, I get it!"
+                Actor:arousal -= Random(0, 5)
+                Actor:attractiontoplayer -= Random(0, 5)
+                Actor:rapportwithplayer -= Random(0, 5)
+            EndIf
+            If A2getfck && Actor.isPregnant()
+                "<Actor.name> got Pregnant."
+                Actor:mood += Random(5, 15)
+            Endif
+        EndIf
+    SceneEnd()
+    timeoutActor(1500, rk_VB_Friend_Wants_Baby, Actor)
+    timeout(400, rk_VB_Friend_Wants_Baby)

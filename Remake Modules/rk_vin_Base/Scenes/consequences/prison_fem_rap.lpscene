@@ -1,0 +1,46 @@
+WHAT: all
+WHERE: prison
+WHEN: 0 - 24
+WHO: none
+OTHER: Random(0, 100) < perversion && !Player.isMale()
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor = generatePersonTemporary()
+        While Actor.isMale()
+            Actor = generatePersonTemporary()
+        Endwhile
+        Actor.show(2)
+        Actor.dressUniform(Prison)
+        Player(Scared)::"WTF, you came from where, I never heard you entered?"
+        Actor(Evil):: "Sut up! I'm horny, let's fuck, bitch!"
+        Player(Scared)::"What??"
+        Actor(Evil):: "I said Sut up! Spread your legs, I want to lick your pussy!"
+        "Then she grabbed me from behind, her tits was already hard ..."
+        0:: "Struggle"
+        1:: "Accept your fate"
+        
+        If 0 && Actor:martial < martial
+            Actor(Pain):: "Ah!"
+            Player(Angry):: "That should teach you!"
+        Else
+            "The element of surprise was too great. I was overwhelmed before I could even react to the assault."
+            Actor.strip()
+            Player(Crying):: "No! Please stop ... I beg you ... Somebody help ..."
+            "My cries for help went unheard in the dark prison cell and I had no choice but endure it all."
+            Player.strip()
+            Filter(Aggressive)
+            TalkNonConsensual()
+            SexNoAffair(Actor, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -3)
+            EndIf
+            Actor.setActorVar(tag_Rapist, 1)
+            Actor.hide()
+            "Despite the horrible incident that happened, I didn't have the guts to report the crime to the warden. I figure they'll just laugh at my face. Here in a prison, rape is the language of power."
+        Endif
+    SceneEnd()
+    timeout(300, prison_fem_rap)

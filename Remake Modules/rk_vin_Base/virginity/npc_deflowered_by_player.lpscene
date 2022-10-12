@@ -1,0 +1,66 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor = getSpecific(PassedOn)
+        Actor.dress()
+        Actor.show()
+        Actor.moveToPerson(Player)
+        Actor(Embarrassed):: "<Player.name>, I have something important to tell you ..."
+        Player(Surprised):: "<Actor.name>, what is it?"
+        Actor(Embarrassed):: "That was my first time doing sex with someone ... You're my first ..."
+        0:: "I'm so happy!"
+        1:: "There's a first time for everything ..."
+        2:: "No wonder you were so shit at it!"
+    
+        If 0
+            If [Player:arousal > 15 && Actor:attractiontoplayer > 10] || [Player:perversion > 50 && Actor:attractiontoplayer > 10] // Edit Raddeck
+                Player(Happy):: "Oh, <Player.name>, you have no idea how happy I am to hear that ..."
+                Player(Happy):: "I feel like the luckiest <Actor.man_or_woman> alive to be your first ..."
+                Actor(Flirty):: "Oh, <Actor.name>, you will forever be special in my heart ..."
+                Actor:attractiontoplayer += 50
+                Player(Happy):: "If you tell me that it's because you liked the experience ..."
+                Player(Flirty)::"Do you want to do it again?"
+                If Actor:arousal > 15 && Actor.isInterestedIn(Player)
+                    Actor(Flirty)::"Yeah sure!"
+                    "We undress right away and start to caress each other sensually"
+                    Sex(Player, Actor)
+                    Actor(Happy):: "That is always amazing with you!"
+                    Actor:attractiontoplayer += 5
+                    Actor:rapportwithplayer += 5
+                    passTime(1, 2.50)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                Else
+                    Actor(Flirty)::"Later, not now...!"
+                EndIf
+            Else
+                Player(Surprised):: "Oh, <Actor.name>, you have no idea how happy I am to hear that ..."
+                mood += 1
+                Player(Happy):: "I feel like the luckiest <Player.man_or_woman> alive to be your first ..."
+                Player(Flirty):: "I hope I managed to make it feel as special to you as it was to me."
+                Actor:attractiontoplayer += 50
+                Actor(Happy):: "Oh, <Player.name>, you will forever be special in my heart ..."
+                Actor:rapportwithplayer += random(2, 10) // Edit Raddeck
+            EndIf
+        ElseIf 1
+        
+            Player(Surprised):: "Oh really? There's a first time for everything, I suppose."
+            "<Actor.name> doesn't look too happy with my carefree response to such a personal revelation. Maybe <Actor.he_or_she> is regretting giving up <Actor.his_or_her> virginity to me already."
+            Actor:attractiontoplayer -= random(0, 3) // Edit Raddeck
+            Actor:rapportwithplayer -= random(0, 3) // Edit Raddeck
+        Else
+            Player(Serene):: "And it showed! You were like a dead fish the whole time! You clearly need more practice!"
+            "<Actor.name> is visibly upset with my insulting response to such a personal revelation. Maybe <Actor.he_or_she> is regretting giving up <Actor.his_or_her> virginity to me already."
+            Actor:attractiontoplayer -= 5 // Edit Raddeck
+            Actor:rapportwithplayer -= 5 // Edit Raddeck
+        EndIf
+    SceneEnd() // Scene improved by Raddeck

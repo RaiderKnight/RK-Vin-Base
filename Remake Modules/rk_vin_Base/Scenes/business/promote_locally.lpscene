@@ -1,0 +1,21 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Change = random(0, 1)
+        If Change > 0
+            ModifyReputation(Change)
+            "My business's reputation in the local community increased a bit."
+            mood += 1
+        Else
+            Change = random(-0.1, -1)
+            "My promo didn't go well! A total fail!"
+            "My business's reputation in the local community decreased a bit."
+            ModifyReputation(Change)
+            mood -= 1
+        EndIf
+    SceneEnd()
+    timeout(2, promote_locally) // Scene improved by Raddeck

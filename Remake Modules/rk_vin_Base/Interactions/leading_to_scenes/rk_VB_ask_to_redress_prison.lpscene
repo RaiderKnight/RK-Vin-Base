@@ -1,0 +1,63 @@
+WHAT: none
+WHERE: home
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        If Actor:perversion > 50 && Actor:arousal > 35
+        
+            Random
+
+                Actor(Sad)::"I want to stay naked, I'm so horny...!"
+                Actor(Sad)::"I want to stay naked, if somebody in here can fuck my ass...!"
+                Actor(Sad)::"It's so hot in here, I want to stay naked...!"
+
+            EndRandom
+
+        ElseIf Actor.isInterestedIn(Player)
+
+            Actor(Sad)::"Ok, but I remind you that it was you who asked me to undress, I thought we would have fun, it looks like no ... you're boring!"
+            "What do I say to <Actor.him_or_her>?"
+            0::"Ok horny <Actor.boy_or_girl>, let's play..."
+            1::"I just wanted to see you naked"
+            2::"Say nothing"
+            
+            If 0
+            
+                "We strip right away and started having sex right here, no shame!"
+                Actor.strip()
+                Actor.show()
+                Player.strip()
+                Player.show()
+                Sex(Player, Actor)
+                Actor:rapportwithplayer += 1
+                Actor:attractiontoplayer += 1
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            ElseIf 1
+
+                Random
+                    "Can you tell me why you asked me to undress if you don't want sex. Ah, nevermind!"
+                    "Damn, you wanted me to get caught by the skrews. Why you asked me to undress, if you don't want to fuck?"
+                    "Ok, what was the point to undress, next time I may not be tempted."
+                    "What's the deal, you wanted me to get caught by the guards. Not funny!"
+                EndRandom
+
+            ElseIf 2
+            
+                Player(Sad)::"Sorry <Actor.bro_or_miss>, I ... I have no excuses! Next time I promise ..."
+                Actor(Sad)::"Oh well..."
+                Actor:rapportwithplayer -= 0.5
+                Actor:attractiontoplayer -= 0.5
+            EndIf
+        Else
+            Actor.show()
+            Actor(Sad)::"Ok, I will...!"
+            Actor.setNoRedress(false)
+            Actor.dress()
+            Actor.show()
+        EndIf
+    SceneEnd()

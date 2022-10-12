@@ -1,0 +1,243 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER: none
+
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        PoliceMan = generatePersonTemporary()
+        Actor1 = generatePersonTemporary()
+        PublicIndCount = Player.getActorVar(rk_VB_PublicIndCount)
+        TotalSentences = Player.getActorVar(rk_VB_TotalSentences)
+        Player.modifyActorVar(rk_VB_PublicIndCount, 1)
+        "That was rather risky doing that in public. I hope there weren't any cops around or someone called them!"
+        If sneak <= Random(50, 100)
+            PoliceMan.dressUniform(Police)
+            PoliceMan.show(2)
+            Actor1.dressUniform(Police)
+            Actor1.show(4)
+            "Sure enough, the cops promptly arrived at the scene."
+            PoliceMan(Furious)::"'Hands in the air, now! You're under arrest of public indecency'"
+            0:: "Run"
+            1:: "Surrender"
+        
+            If 0
+                setBackground3D(Modules/rk_vin_Base/World/gl_street1.lpworld)
+                If fitness > Random(0, 30)
+                    "I managed to lose the cops. Phew, that was close."
+                    sneak += 1
+                    mood += 2
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -10)
+                    EndIf
+                    moveTo(home)
+                    
+                Else
+                    PoliceMan.dressUniform(Police)
+                    PoliceMan.show(2)
+                    Actor1.dressUniform(Police)
+                    Actor1.show(4)
+                    PoliceMan(Furious)::"'Hands in the air, now! Hey you stop'"
+                    Player(Angry):: "You're not taking me alive."
+                    0:: "Run"
+                    1:: "Surrender"
+                
+                    If 0
+                        If fitness > Random(0, 30)
+                            Actor1.hide()
+                            PoliceMan.hide()
+                            setBackground(street)
+                            "I managed to lose the cops. Phew, that was close."
+                            sneak += 1
+                            mood += 2
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -10)
+                            EndIf
+                            moveTo(home)
+                        Else
+                        
+                            setBackground(street)
+                            Player(Angry):: "You're not taking me alive."
+                            copfired = 0
+                            While copfired < 5
+                                If copfired > 0
+                                    PoliceMan(Angry)::"HEY YOU I ASKED YOU TO STOP!"
+                                EndIf
+                                "Pow!"
+                                Player.hide()
+                    
+                                "A cop fired <PoliceMan.his_or_her> gun..."
+                                If fitness > Random(0, 30)
+                
+                                    "I managed to dodge the shot. Phew, that was close."
+                                    sneak += 1
+                                    mood += 1
+                                    copfired += 1
+                        
+                                ElseIf copfired >= 5
+                                    Actor1.hide()
+                                    PoliceMan.hide()
+                                    "I managed to lose the cops. Phew, that was close."
+                                    sneak += 3
+                                    mood += 2
+                                    copfired = 6
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -10)
+                                    EndIf
+                            
+                                Else
+                                    "The cop fired <PoliceMan.his_or_her> gun. It was a perfect shot ..."
+                                    followUp(death)
+                                EndIf
+                            EndWhile
+                        EndIf
+                    Else
+                        Player.animate(fightlost)
+                        Player(Scared):: "Please, don't shoot!"
+                        "I put my hands up and surrendered to the overwhelming number of cops."
+                        sentence += Random(150, 300)
+                        AddSent = Player:sentence
+                        Player.modifyActorVar(rk_VB_TotalSentences, AddSent)
+                        If PoliceMan:arousal > 25 && PoliceMan:perversion > 75 && Actor1:arousal > 25 && Actor1:perversion > 75 && PoliceMan:masochist < 0 && Actor1:masochist < 0
+                        
+                            "As we drive towards the police station, the police tell me ..."
+                            PoliceMan(Grin)::"We have to make a little detour before taking you to the station."
+                            Player(Anxious)::"Oh it's good I guess!"
+                            "And they look at each other with a suspicious smile ..."
+                            "After a while they take a dirt road and we enter the forest, after a few kilometers they stopped the car and asked me to get out, which I did."
+                            PoliceMan.show()
+                            Actor1.show()
+                            "I'm handcuffed, I think I know what their intentions are ... They undress ..."
+                            "One of the policemen approaches me and puts a stocking in my mouth, while the other takes off all my clothes."
+                            "I can scream, but with a stocking in my mouth, there is absolutely no point in resisting ... "
+                            "My scream for help went unheard in the dark forest and I had no choice but endure it all."
+                            
+                            roundtofuck = true
+                            roundtoGetfucked = 0
+                            While roundtofuck
+                                
+                                If roundtoGetfucked == 3
+                                
+                                    roundtofuck = false
+                                
+                                ElseIf roundtoGetfucked == 0
+                                
+                                    Filter(Aggressive)
+                                    TalkNonConsensual()
+                                    SexNoAffair(Actor1, Player)
+                                    roundtoGetfucked += 1
+                                
+                                ElseIf roundtoGetfucked == 1
+                                
+                                    Filter(Aggressive)
+                                    TalkNonConsensual()
+                                    SexNoAffair(PoliceMan, Player)
+                                    roundtoGetfucked += 1
+                                
+                                ElseIf roundtoGetfucked == 2
+                                
+                                    Filter(Aggressive)
+                                    TalkNonConsensual()
+                                    SexNoAffair(Actor1, Player, PoliceMan)
+                                    roundtoGetfucked += 1
+                                    roundtofuck = false
+                                    
+                                EndIf
+                            
+                            EndWhile
+                            
+                            "After raping me, they told me to shut my mouth about that or it will happen again in prison .... "
+                            mood => 0
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -20)
+                            EndIf
+                        
+                        EndIf
+                        followUp(imprisoned)
+                        
+                    EndIf 
+
+                EndIf
+                
+            Else
+                setBackground3D(Modules/rk_vin_Base/World/gl_street1.lpworld)
+                Player.animate(fightlost)
+                Player(Scared):: "Please, don't shoot!"
+                "I put my hands up and surrendered to the overwhelming number of cops."
+                sneak -= 5
+                mood -= 5
+                sentence += Random(10, 30)
+                AddSent = Player:sentence
+                Player.modifyActorVar(rk_VB_TotalSentences, AddSent)
+                If PoliceMan:arousal > 25 && PoliceMan:perversion > 75 && Actor1:arousal > 25 && Actor1:perversion > 75 && PoliceMan:masochist < 0 && Actor1:masochist < 0
+                        
+                    "As we drive towards the police station, the police tell me ..."
+                    PoliceMan(Grin)::"We have to make a little detour before taking you to the station."
+                    Player(Anxious)::"Oh it's good I guess!"
+                    "And they look at each other with a suspicious smile ..."
+                    "After a while they take a dirt road and we enter the forest, after a few kilometers they stopped the car and asked me to get out, which I did."
+                    PoliceMan.show()
+                    Actor1.show()
+                    "I'm handcuffed, I think I know what their intentions are ... They undress ..."
+                    "One of the policemen approaches me and puts a stocking in my mouth, while the other takes off all my clothes."
+                    "I can scream, but with a stocking in my mouth, there is absolutely no point in resisting ... "
+                    "My scream for help went unheard in the dark forest and I had no choice but endure it all."
+                            
+                    roundtofuck = true
+                    roundtoGetfucked = 0
+                    While roundtofuck
+                                
+                        If roundtoGetfucked == 3
+                                
+                            roundtofuck = false
+                                
+                        ElseIf roundtoGetfucked == 0
+                                
+                            Filter(Aggressive)
+                            TalkNonConsensual()
+                            SexNoAffair(Actor1, Player)
+                            roundtoGetfucked += 1
+                                
+                        ElseIf roundtoGetfucked == 1
+                                
+                            Filter(Aggressive)
+                            TalkNonConsensual()
+                            SexNoAffair(PoliceMan, Player)
+                            roundtoGetfucked += 1
+                                
+                        ElseIf roundtoGetfucked == 2
+                                
+                            Filter(Aggressive)
+                            TalkNonConsensual()
+                            SexNoAffair(Actor1, Player, PoliceMan)
+                            roundtoGetfucked += 1
+                            roundtofuck = false
+                                    
+                        EndIf
+                            
+                    EndWhile
+                            
+                    "After raping me, they told me to shut my mouth about that or it will happen again in prison .... "
+                    mood => 0
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -20)
+                    EndIf
+                EndIf
+                followUp(imprisoned)
+            EndIf
+        Else
+            setBackground3D(Modules/rk_vin_Base/World/gl_street1.lpworld)
+            Actor1.hide()
+            PoliceMan.hide()
+            "I managed to lose the cops. Phew, that was close."
+            sneak += 1
+            mood += 2
+            energy -= 10
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -10)
+            EndIf
+        EndIf
+    SceneEnd() // Scene improved by Raddeck

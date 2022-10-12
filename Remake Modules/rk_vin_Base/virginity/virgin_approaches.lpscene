@@ -1,0 +1,64 @@
+WHAT: all
+WHERE: all
+WHEN: 0 - 24
+WHO: Actor = getCompanion(); If Actor.isVirgin() && Actor:rapportwithplayer > 50 && !Actor.isDating() && !Actor.hasRelationship(Spouses, Dating)
+OTHER: !Player.isVirgin()
+
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Actor2 = getSpecific(Dating)
+        "<Actor.name> and I are good friends, enough that <Actor.he_or_she> has become very comfortable with personal revelations recently ..."
+        "The biggest reveal is of course that <Actor.he_or_she> is still a virgin!"
+        Actor(Sad):: "To be honest, I'm getting sick of it, <Player.name>? I just wanted to get that first time over and done with."
+        Actor(Curious):: "Do you know any volunteers that might be able to 'help'?"
+        Player(Curious)::"What do you mean?"
+        Actor(Happy):: "Duh! I mean volunteers who want to deflower me!"
+        0:: "Me!"
+        1:: Actor2.isValid() && Actor2.isInterestedIn(Actor):: "My <Actor2.boyfriend_or_girlfriend> <Actor2.name>"
+        2:: "You should wait"
+    
+        If 0
+            If Actor.isInterestedIn(Player)
+                Actor(Happy):: "You! I didn't dare ask you, but it is clear that I said yes!"
+                Actor(Happy):: "Please don't go too hard! In fact, go slowly please!"
+                Player(Flirty):: "Don't worry, I'll take it easy, your <Actor.dick_or_vagina> and your ass won't be traumatized!"
+                "We undress right away and start to caress each other sensually"
+                Sex(Player, Actor)
+                Actor(Happy):: "That was amazing, thanks!"
+                Actor:masochist -= 1
+                Actor:attractiontoplayer += 5
+                Actor:rapportwithplayer += 5
+                passTime(1, 2.50)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                
+            Else
+                Actor(Happy):: "You! Uh, you're not really my style, don't be offended!"
+            EndIf
+        
+        ElseIf 1
+    
+            If Actor.isInterestedIn(Actor2)
+                
+                Actor(Happy):: "<Actor2.name>! I didn't dare ask you to do it with your <Actor2.boyfriend_or_girlfriend>, but it is clear that I said yes!"
+                Actor(Happy):: "Please <Actor2.name> don't go too hard! In fact, go slowly please!"
+                Actor2(Flirty):: "Don't worry, I'll take it easy, your <Actor2.dick_or_vagina> and your ass won't be traumatized!"
+                "They undress right away and start to caress each other sensually"
+                Sex(Actor2, Actor)
+                Actor:masochist -= 1
+                passTime(1, 1.50)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            Else
+                Actor(Happy):: "<Actor2.name>! Uh, <Actor2.he_or_she> is not really my style, don't be offended!"
+            EndIf
+        Else
+            "I told <Actor.name> that is better to wait and shouldn't lose <Actor.his_or_her> virginity to someone not special."
+        EndIf
+    SceneEnd() // Scene improved by Raddeck
+    timeout(600, virgin_approaches)

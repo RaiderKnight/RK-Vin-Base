@@ -1,0 +1,22 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        If Actor:perversion > 50 && Actor:arousal > 35
+            Actor(Sad)::"Not now, I want to stay naked, I'm so horny...!"
+        Else
+            Actor.show()
+            Actor(Sad)::"Ok, I will...!"
+            Actor.setNoRedress(false)
+            Actor.dress()
+            Actor.show()
+            Actor(Sad)::"Are you happy now..."
+        EndIf
+    SceneEnd()

@@ -1,0 +1,153 @@
+WHAT: all
+WHERE: home
+WHEN: 0 - 24
+WHO: Actor = getSpecific(Dating); If !Actor.isSameEthnic(Player)
+OTHER: isAtHome() && random(0, 100) > 65
+
+    SceneStart()
+        If isModEnabled(rk_vin_Base)
+            Actor.dress()
+            Actor.hide()
+            Actor2 = Actor.generatePersonMatchRace()
+            While !Player.isInterestedIn(Actor2)
+                Actor2 = Actor.generatePersonMatchRace()
+            EndWhile
+            Actor2:age => Actor:age
+            Actor2:age += random(-10, 10)
+            Actor2:arousal => random(25, 50)
+            Actor2:perversion => random(35, 75)
+            If Actor2:age < 18
+                Actor2:age => 18
+            EndIf
+            Actor2.randomizeFace()
+            Actor2.randomizeHairs()
+            Actor2.makePermanent()
+            Actor2.hide()
+            If Actor2.isMale()
+                Actor99 = generatePersonTemporary()
+                While Actor99.isMale()
+                    Actor99 = generatePersonTemporary()
+                Endwhile
+            Else
+                Actor99 = generatePersonTemporary()
+                While !Actor99.isMale()
+                    Actor99 = generatePersonTemporary()
+                Endwhile
+            EndIf
+            Actor99.hide()
+            addNpcRelationship(Siblings, Actor, Actor2)
+            Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+            UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        EndIf
+        "While I was at home hanging around, I get a call!"
+        secondScreen(Actor)
+        Player.animate(call)
+        Actor.animate(call)
+        Actor.show()
+        Actor(Embarrassed)::"Hi, babe! Sorry to bother you but I would like you to do a favor?"
+        Player(Curious)::"Sure, honey! You look worried!"
+        Actor(Serene)::"Well actually, my <Actor2.brother_or_sister>'s <Actor99.boyfriend_or_girlfriend> dumped <Actor2.him_or_her> and I told <Actor2.him_or_her> to come to my house until I get home from work."
+        Player(Curious)::"What do you want me to help with?"
+        Actor(Serene)::"Well, you know my <Actor2.brother_or_sister>, <Actor2.he_or_she>'s a thief and <Actor2.he_or_she>'s probably going through my stuff so can you go to my house to prevent <Actor2.him_or_her> from going through it..."
+        Player(Curious)::"Sure honey, just because I love you!"
+        Actor(Happy)::"Cool you are a sweetheart!"
+        Player(Curious)::"I understand, ... see you later!"
+        Actor(Serene)::"Just to finish, as a matter of fact, when I get home, I have to look for a new apartment for <Actor2.him_or_her>."
+        Actor.hide()
+        secondScreen()
+        Player.animate()
+        Actor.animate()
+        moveTo(home_dating)
+        "So I went to my girlfriend's house not far from here..."
+        "Once I arrived, <Actor2.his_or_her> <Actor2.brother_or_sister> was indeed there, waiting for my <Actor.boyfriend_or_girlfriend>."
+        Actor2.dress()
+        Actor2.show()
+        Actor2.moveToPersonStand(Player, 50)
+        Actor2(Flirty)::"Oh hi! I guess you are my <Actor.brother_or_sister>'s <Player.boyfriend_or_girlfriend>."
+        Player(Happy)::"Glad to see you!"
+        "After a while..."
+        passTime(0.15, 0.5)
+        "Our conversation started friendly as expected, but soon took a turn ..."
+        Actor2(Flirty)::"I don't know if I should say this but, my <Actor.brother_or_sister> is really lucky to be dating you?"
+        Player(Happy)::"Thanks, but why?"
+        Actor2(Flirty)::"It's because, <Player.men_or_women> of your ethnicity make me fantasize!"
+        Player(Happy)::"Ok?... I don't know what to answer..."
+        If Player.isEthnic(black) && Player.isMale() && !isTimingOut(strt_black_m)
+            Actor2(Flirty):: "When I see men like you, I can't help but fantasize, about how you all supposedly have big dicks and what it would be like to have this monster between my legs."
+        ElseIf Player.isEthnic(black) && !Player.isMale() && !isTimingOut(strt_black_f)
+            Actor2(Flirty):: "When I see women like you, I can't help but fantasize about the color of your skin making your curves bold, slimming and flattering, while your scent enhances my desires."
+        ElseIf Player.isEthnic(indian) && Player.isMale() && !isTimingOut(strt_indian_m)
+            Actor2(Flirty):: "When I see men like you, I can't help but fantasize about seeing you naked with your turban fucking me like Shiva would or any of your gods."
+        ElseIf Player.isEthnic(indian) && !Player.isMale() && !isTimingOut(strt_indian_f)
+            Actor2(Flirty):: "When I see women like you, I can't help but dream of seeing you naked but dressed in a transparent ancestral dress and doing all the positions of the Kamasutra... together!"   
+        ElseIf Player.isEthnic(arab) && Player.isMale() && !isTimingOut(strt_arab_m)
+            Actor2(Flirty):: "When I see men like you, I find that the men of your ethnicity have a severe attitude, but I am sure that in bed you are animals of sex and nice as a lamb."
+            If Actor2(Flirty).isMale()
+                Actor2(Flirty):: "And also the fact that homosexuality is a forbidden fruit in your culture excite me even more."
+            Else
+                Actor2(Flirty):: "Some of you have more than one woman, so you must be able to fuck several times..."
+            EndIf
+        ElseIf Player.isEthnic(arab) && !Player.isMale() && !isTimingOut(strt_arab_f)
+            Actor2(Flirty):: "When I see women like you, I can't help but fantasize about your Persian eyes and your veiled body because supposedly you are the most beautiful women in the world! And I confirm by looking at you!"
+            If !Actor2(Flirty).isMale()
+                Actor2(Flirty):: "And also the fact that homosexuality is a forbidden fruit in your culture excite me even more."
+            EndIf   
+        ElseIf Player.isEthnic(latin) && Player.isMale() && !isTimingOut(strt_latin_m)
+            Actor2(Flirty):: "When I see men like you, I can't help but fantasize when I hear you speak, you have such a romantic and sensual voice that I'm curious to know if it's the same in bed!"
+        ElseIf Player.isEthnic(latin) && !Player.isMale() && !isTimingOut(strt_latin_f)
+            Actor2(Flirty):: "When I see women like you, I can't help but fantasize when I hear you speak, you have such a romantic and sensual voice!"
+            Actor2(Flirty)::"Besides being great dancers. I would love nothing more than to dance with you all night."
+        ElseIf Player.isEthnic(asian) && Player.isMale() && !isTimingOut(strt_asian_m)
+            Actor2(Flirty):: "When I see men like you, I can't help but fantasize about your slim, cute, young features. Your eyes are so mesmerizing and you are always well dressed!"
+            Actor2(Flirty):: "Also, I hear you guys are good fucks!"
+        ElseIf Player.isEthnic(asian) && !Player.isMale() && !isTimingOut(strt_asian_f)
+            Actor2(Flirty):: "When I see women like you, I can't help but fantasize about your sparkling eyes and your silky skin that makes me want to caress you every time. But I hold back!"
+            Actor2(Flirty):: "Same thing about the way you dress. It almost chic and sexy every time, and I can imagine you in a light outfit."
+        ElseIf Player.isEthnic(white) && Player.isMale() && !isTimingOut(strt_white_m)
+            Actor2(Flirty):: "When I see men like you, I can't help but fantasize about your white skin and the fact that you are very open mind about sex."
+        ElseIf Player.isEthnic(white) && !Player.isMale() && !isTimingOut(strt_white_f)
+            Actor2(Flirty):: "When I see women like you, I can't help but fantasize about your white skin and the fact that you are very open mind about sex."
+        EndIf
+        "Hmm, looks like <Actor2.his_or_her> <Actor2.brother_or_sister> wants to fuck me unless I'm wrong, either way, it's clear <Actor2.he_or_she>'s fanstasizing about my ethnicity."
+        0:: "Seduce <Actor2.him_or_her>"
+        1:: "Change the topic of conversation"
+        
+        If 0
+            perversion += 1
+            Player(Flirty):: "As you seem to want to eat me alive, I volunteer to make you taste the flavors of my country and thus allow you to realize your fantasy..."
+            Actor2(Flirty)::"Oh yes baby, it is yes, without hesitation my beautiful!"
+            Actor2.strip()
+            Player(Flirty)::"Anyway your <Actor.brother_or_sister> will arrive only in an hour or two..."
+            Actor2(Flirty)::"I don't care about <Actor2.him_or_her>, come on show me your beautiful body!"
+            Player.strip()
+            "We undressed and started to caress each other sensually..."
+            Sex(Player, Actor2)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -2)
+            EndIf
+            Player.dress()
+            Actor2.dress()
+            Actor2(Sad)::"Wow that was very cool! Don't tell my <Actor.brother_or_sister> about this.... ok?"
+            Player(Serene)::"Don't worry about it!"
+            Actor2:rapportwithplayer += random(5, 10)
+            Actor2:attractiontoplayer += random(5, 10)
+        Else
+            Player(Annoyed)::"Okay, I think we're going to change the subject because I'm a little uncomfortable!"
+            Actor2(Sad)::"Alright, sorry! Don't tell my <Actor.brother_or_sister> about this.... ok?"
+            Player(Serene)::"Don't worry about it!"
+            Actor2:rapportwithplayer += random(1, 3)
+            Actor2:attractiontoplayer += random(1, 3)
+        EndIf
+        "And suddenly, the door of the house opened...."
+        Actor.show()
+        Actor.animate(socialize)
+        Actor(Happy)::"Hi everyone, I've arrived...."
+        Actor(Happy)::"Thanks honey, you can stay or go, I have to go look at houses with <Actor2.name> before it's too late....."
+        Actor(Happy)::"Come on <Actor2.name>, let's go!"
+        Actor2(Happy)::"Bye <Player.name>, see you next time!"
+        "Finally, I decide to go back to my house..."
+        moveTo(home)
+    SceneEnd() // Created by Raddeck
+    timeout(200, rk_VB_ir_sibling_cms)

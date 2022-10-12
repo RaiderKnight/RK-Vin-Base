@@ -1,0 +1,109 @@
+WHAT: all
+WHERE: sports_centre
+WHEN: 8-17
+WHO: Actor = getSpecific(Dating); If Actor:perversion > 45
+OTHER: Player:perversion > 45
+
+    // Summery: You and your girlfriend/wife go to the gym together. At the shower you notice a strange hole connected to the shower next to you. Accidental sexy begins.
+    
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor.strip()
+        Actor.show()
+        Player.strip()
+        "While you and your <Actor.boyfriend_or_girlfriend> are cleaning off at the gym showers you notice a hole in the wall connecting the shower you are in to the one next door."
+        0:: "You decide to dare your <Actor.boyfriend_or_girlfriend> to put their <Actor.ass_or_pussy> against the hole."
+        1:: "You decide to dare your <Actor.boyfriend_or_girlfriend> to put their mouth against the hole."
+        99:: "You ignored the hole and decided to fool around with your <Actor.boyfriend_or_girlfriend> instead."
+
+        If 0
+            "The <Actor.boyfriend_or_girlfriend> pushes <Actor.himself_or_herself> against the hole aligning <Actor.his_or_her> <Actor.ass_or_pussy> hole with it. Then while <Actor.he_or_she> is pressed against it <Actor.he_or_she> is suddenly pentrated by a dick through it. <Actor.He_or_She> begins to push <Actor.himself_or_herself> off the wall ..."
+            0:: "You tell <Actor.him_or_her> that is hot and to keep going."
+            1:: "You help <Actor.him_or_her> move away."
+            
+            If 0
+                Actor.strip()
+                Actor2 = generatePersonTemporary()
+                While !Actor2.isMale()
+                    Actor2 = generatePersonTemporary()
+                Endwhile
+                Actor2.hide()
+                Actor2.strip()
+                Filter(Anal)
+                Sex(Actor2, Actor)
+                "Should I try too?"
+                0::"Yes"
+                1::"No"
+                
+                If 0
+                    Filter(Anal)
+                    Sex(Actor2, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                Endif
+                
+                "Should I invite him on our side?"
+                0::"Yes"
+                1::"No"
+                
+                If 0
+                    FuckHim = true
+                Endif
+            Endif
+        Elseif 1
+            "The <Actor.boyfriend_or_girlfriend> pushes <Actor.himself_or_herself> against the hole aligning <Actor.his_or_her> mouth with it. Then while <Actor.he_or_she> is pressed against it <Actor.he_or_she> suddenly receive a dick through it. <Actor.He_or_She> begins to push <Actor.himself_or_herself> off the wall ..."
+            0:: "You tell <Actor.him_or_her> that is hot and keep sucking."
+            1:: "You help <Actor.him_or_her> move away."
+                
+            If 0
+                Actor.strip()
+                Actor2 = generatePersonTemporary()
+                While !Actor2.isMale()
+                    Actor2 = generatePersonTemporary()
+                Endwhile
+                Actor2.hide()
+                Actor2.strip()
+                Filter(Blowjob)
+                Sex(Actor2, Actor)
+                "Should I try too?"
+                0::"Yes"
+                1::"No"
+                
+                If 0
+                    Filter(Blowjob)
+                    Sex(Actor2, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                Endif
+                
+                "Should I invite him on our side?"
+                0::"Yes"
+                1::"No"
+                
+                If 0
+                    FuckHim = true
+                Endif
+            Endif
+            
+        Else
+            "After we finished washing up, since we are alone in the room, we decided to fuck right before leaving..."
+            Sex(Player, Actor)
+        Endif
+        
+        If FuckHim
+            Actor2.show()
+            "We invited him to come for a threesome, he didn't refuse, he came right away..."
+            Sex(Player, Actor2, Actor)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -3)
+            EndIf
+        Endif
+        
+    SceneEnd() // Scene improved by Raddeck
+    timeout(180, sr_fso_gym_showerdare1_cms)

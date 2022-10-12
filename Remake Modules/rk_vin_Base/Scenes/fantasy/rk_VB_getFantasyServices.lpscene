@@ -1,0 +1,809 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        NouvAmi = false
+        Dating = getSpecific(Dating)
+        If Dating.isValid()
+            Dating.show()
+        EndIf
+        If isWithCompanion()
+            // CurrentCompanion.show()
+            // For the moment
+            Dating = CurrentCompanion
+        EndIf
+        Actor22 = getCompanionCreature()
+        If Actor22.isValid() && Actor22.isCreatureType(Dog)
+            Actor22.hide()
+        EndIf
+        saRaceEst1 = false
+        saRaceEst2 = false
+        saRaceEst3 = false
+        saRaceEst4 = false
+        If Actor88.isValid()
+            Actor88.show()
+            Player(Flirty)::"Hi, would you be interested in fucking hookers with me?"
+            If !Actor88.isInterestedIn(Player)
+                Actor88(Shocked)::"Are you sick! Besides you are not my type..."
+                Actor88:rapportwithplayer -= random(0, 10)
+                Actor88:attractiontoplayer -= random(0, 10)
+                SceneEnd()
+            ElseIf Actor88.isInterestedIn(Player) || Actor88:arousal < 14
+                Actor88(Flirty)::"I would like to, but I have already a lover."
+                Actor88:rapportwithplayer += random(0, 1)
+                Actor88:attractiontoplayer += random(0, 1)
+                SceneEnd()
+            ElseIf Actor88.isInterestedIn(Player) && Actor88:arousal < 14 && Actor88:perversion < 50
+                Actor88(Flirty)::"I would like to, but I'm really not in the mood..."
+                Actor88:rapportwithplayer += random(0, 1)
+                Actor88:attractiontoplayer += random(0, 2)
+                SceneEnd()
+            Else
+                Actor88(Flirty)::"Well, yes, offered for free by a handsome <Player.guy_or_girl> like you, why not!"
+                Actor88:rapportwithplayer += random(0.5, 1)
+                Actor88:attractiontoplayer += random(1, 3)
+                NouvAmi = true
+            EndIf
+        EndIf
+        If WHERE == home && Actor22.isValid() && Actor22.isCreatureType(Dog) && isModEnabled(vin_Bestiality)
+            beastEnabl = true
+        EndIf
+        MonPPU = false
+        MonPPD = false
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        femaOui = false
+        mascOui = false
+        conti = false
+        conti3 = false
+        Agency = generatePersonTemporary()
+        Agency.hide()
+        Noway = false
+        NowayDecu = false
+        If isModEnabled(rk_vin_Base)
+            conti6 = false
+            conti7 = true
+            tranOui = false
+            DitNon = false
+            PartipourUn = false
+            PartipourDeux = false
+            ChercheCul = true
+            paiePoDat = false
+            paiePoDeu = false
+            paiePoMoe = false
+            paiePoDatA = false
+            paiePoDeuA = false
+            // paiePoDeuAA = false
+            paiePoMoeA = false
+            ChoixH = random(1, 3)
+            ChoixH = ChoixH.round()
+            While ChercheCul
+                If conti3
+                    "What should I choose?"
+                    0::"A woman"
+                    1::"A man"
+                    2::"A trans"
+                    99::"I changed my mind"
+                    
+                    If 0
+                        GtxtC = "woman"
+                        femaOui = true
+                    ElseIf 1
+                        GtxtC = "man"
+                        mascOui = true
+                    ElseIf 2
+                        GtxtC = "trans"
+                        tranOui = true
+                    Else
+                        ChercheCul = false
+                        Noway = true
+                    EndIf
+                    
+                    If WHERE == brothel
+                        "There are a lot of escorts hanging out here, so it will be easy to find what I am looking for!"
+                    ElseIf WHERE == stripclub
+                        "After looking around, I found a stripper willing to fuck that is within my budget."  
+                    Else
+                        "I did some search on the internet and found hookers that does outcalls and is within my budget."            
+                    EndIf
+                    "What type of race do you have a preference for?"
+                    0::"Elf <GtxtC>"
+                    1::"Orc <GtxtC>"
+                    2::"Vampire <GtxtC>"
+                    99::"I don't care!"
+                    
+                    If 0
+                        saRaceEst1 = true
+                    ElseIf 1
+                        saRaceEst2 = true
+                    ElseIf 2
+                        saRaceEst3 = true
+                    Else
+                        saRaceEst4 = true
+                    EndIf
+                    "How many hookers do you want?"
+                    0::"2 hookers"
+                    1::"3 hookers"
+                    2::"4 hookers"
+                    99::"I don't care!"
+                    
+                    If 0
+                        jveux2 = true
+                    ElseIf 1
+                        jveux3 = true
+                    ElseIf 2
+                        jveux4 = true
+                    Else
+                        If ChoixH == 1
+                            jveux2 = true
+                        ElseIf ChoixH == 2
+                            jveux3 = true
+                        ElseIf ChoixH == 3
+                            jveux4 = true
+                        EndIf
+                    EndIf
+                    If femaOui
+                        If jveux2
+                            Actor = generatePersonTemporary()
+                            While Actor.isMale()
+                                Actor = generatePersonTemporary()
+                            EndWhile
+                            Actor.dressUniform(sexwork)
+                            
+                            Actor1 = generatePersonTemporary()
+                            While Actor1.isMale()
+                                Actor1 = generatePersonTemporary()
+                            EndWhile
+                            Actor1.dressUniform(sexwork)
+                        ElseIf jveux3
+                            Actor = generatePersonTemporary()
+                            While Actor.isMale()
+                                Actor = generatePersonTemporary()
+                            EndWhile
+                            Actor.dressUniform(sexwork)
+                            
+                            Actor1 = generatePersonTemporary()
+                            While Actor1.isMale()
+                                Actor1 = generatePersonTemporary()
+                            EndWhile
+                            Actor1.dressUniform(sexwork)
+                            
+                            Actor2 = generatePersonTemporary()
+                            While Actor2.isMale()
+                                Actor2 = generatePersonTemporary()
+                            EndWhile
+                            Actor2.dressUniform(sexwork)
+                        ElseIf jveux4
+                            Actor = generatePersonTemporary()
+                            While Actor.isMale()
+                                Actor = generatePersonTemporary()
+                            EndWhile
+                            Actor.dressUniform(sexwork)
+                            
+                            Actor1 = generatePersonTemporary()
+                            While Actor1.isMale()
+                                Actor1 = generatePersonTemporary()
+                            EndWhile
+                            Actor1.dressUniform(sexwork)
+                            
+                            Actor2 = generatePersonTemporary()
+                            While Actor2.isMale()
+                                Actor2 = generatePersonTemporary()
+                            EndWhile
+                            Actor2.dressUniform(sexwork)
+                            
+                            Actor3 = generatePersonTemporary()
+                            While Actor3.isMale()
+                                Actor3 = generatePersonTemporary()
+                            EndWhile
+                            Actor3.dressUniform(sexwork)
+                        EndIf
+                    ElseIf mascOui
+                        If jveux2
+                            Actor = generatePersonTemporary()
+                            While !Actor.isMale()
+                                Actor = generatePersonTemporary()
+                            EndWhile
+                            Actor.dress()
+                            
+                            Actor1 = generatePersonTemporary()
+                            While !Actor1.isMale()
+                                Actor1 = generatePersonTemporary()
+                            EndWhile
+                            Actor1.dress()
+                        ElseIf jveux3
+                            Actor = generatePersonTemporary()
+                            While !Actor.isMale()
+                                Actor = generatePersonTemporary()
+                            EndWhile
+                            Actor.dress()
+                            
+                            Actor1 = generatePersonTemporary()
+                            While !Actor1.isMale()
+                                Actor1 = generatePersonTemporary()
+                            EndWhile
+                            Actor1.dress()
+                            
+                            Actor2 = generatePersonTemporary()
+                            While !Actor2.isMale()
+                                Actor2 = generatePersonTemporary()
+                            EndWhile
+                            Actor2.dress()
+                        ElseIf jveux4
+                            Actor = generatePersonTemporary()
+                            While !Actor.isMale()
+                                Actor = generatePersonTemporary()
+                            EndWhile
+                            Actor.dress()
+                            
+                            Actor1 = generatePersonTemporary()
+                            While !Actor1.isMale()
+                                Actor1 = generatePersonTemporary()
+                            EndWhile
+                            Actor1.dress()
+                            
+                            Actor2 = generatePersonTemporary()
+                            While !Actor2.isMale()
+                                Actor2 = generatePersonTemporary()
+                            EndWhile
+                            Actor2.dress()
+                            
+                            Actor3 = generatePersonTemporary()
+                            While !Actor3.isMale()
+                                Actor3 = generatePersonTemporary()
+                            EndWhile
+                            Actor3.dress()
+                        EndIf
+                    ElseIf tranOui
+                        If jveux2
+                            Actor = generatePersonTemporary()
+                            While !Actor.isTrans()
+                                Actor = generatePersonTemporary()
+                            EndWhile
+                            Actor.dress()
+                            
+                            Actor1 = generatePersonTemporary()
+                            While !Actor1.isTrans()
+                                Actor1 = generatePersonTemporary()
+                            EndWhile
+                            Actor1.dress()
+                        ElseIf jveux3
+                            Actor = generatePersonTemporary()
+                            While !Actor.isTrans()
+                                Actor = generatePersonTemporary()
+                            EndWhile
+                            Actor.dress()
+                            
+                            Actor1 = generatePersonTemporary()
+                            While !Actor1.isTrans()
+                                Actor1 = generatePersonTemporary()
+                            EndWhile
+                            Actor1.dress()
+                            
+                            Actor2 = generatePersonTemporary()
+                            While !Actor2.isTrans()
+                                Actor2 = generatePersonTemporary()
+                            EndWhile
+                            Actor2.dress()
+                        ElseIf jveux4
+                            Actor = generatePersonTemporary()
+                            While !Actor.isTrans()
+                                Actor = generatePersonTemporary()
+                            EndWhile
+                            Actor.dress()
+                            
+                            Actor1 = generatePersonTemporary()
+                            While !Actor1.isTrans()
+                                Actor1 = generatePersonTemporary()
+                            EndWhile
+                            Actor1.dress()
+                            
+                            Actor2 = generatePersonTemporary()
+                            While !Actor2.isTrans()
+                                Actor2 = generatePersonTemporary()
+                            EndWhile
+                            Actor2.dress()
+                            
+                            Actor3 = generatePersonTemporary()
+                            While !Actor3.isTrans()
+                                Actor3 = generatePersonTemporary()
+                            EndWhile
+                            Actor3.dress()
+                        EndIf
+                        
+                    EndIf
+                    If saRaceEst1
+                        Actor.blendPreset(Elf)
+                        Actor1.blendPreset(Elf)
+                        Actor2.blendPreset(Elf)
+                        Actor3.blendPreset(Elf)
+                    ElseIf saRaceEst2
+                        Actor.blendPreset(Orc)
+                        Actor1.blendPreset(Orc)
+                        Actor2.blendPreset(Orc)
+                        Actor3.blendPreset(Orc)
+                    ElseIf saRaceEst3
+                        Actor.blendPreset(Vampire)
+                        Actor1.blendPreset(Vampire)
+                        Actor2.blendPreset(Vampire)
+                        Actor3.blendPreset(Vampire)
+                    ElseIf saRaceEst4
+                        Random
+                            Actor.blendPreset(Elf)
+                            Actor.blendPreset(Orc)
+                            Actor.blendPreset(Vampire)
+                        EndRandom
+                        Random
+                            Actor1.blendPreset(Elf)
+                            Actor1.blendPreset(Orc)
+                            Actor1.blendPreset(Vampire)
+                        EndRandom
+                        Random
+                            Actor2.blendPreset(Elf)
+                            Actor2.blendPreset(Orc)
+                            Actor2.blendPreset(Vampire)
+                        EndRandom
+                        Random
+                            Actor3.blendPreset(Elf)
+                            Actor3.blendPreset(Orc)
+                            Actor3.blendPreset(Vampire)
+                        EndRandom
+                    EndIf
+                    cestcool = false
+                    cestcoolD = false
+                    If Actor88.isValid()
+                        cestcool = true
+                        "I am searching for escorts with my friend <Actor88.name>, what are my intentions?"
+                        0::"To pay <Actor88.him_or_her> hookers and watch"
+                        1::"To fuck hookers with <Actor88.him_or_her>"
+                        2::"To fuck hookers in front of <Actor88.him_or_her>"
+                        
+                        //3::Dating.isValid()::"To fuck a hooker with <Actor88.him_or_her> and my <Dating.boyfriend_or_girlfriend>"
+                        
+                        If 0
+                            paiePoDatA = true
+                        ElseIf 1
+                            paiePoDeuA = true
+                        ElseIf 2
+                            paiePoMoeA = true
+                            // Else
+                            // paiePoDeuAA = true
+                            // cestcool = true
+                        EndIf
+                        If paiePoDatA
+                            MonPPU = true
+                        ElseIf paiePoDeuA
+                            MonPPD = true
+                        ElseIf paiePoMoeA
+                            MonPPU = true
+                            // ElseIf paiePoDeuAA
+                            // MonPPDA = true
+                        EndIf
+                    EndIf
+                    If !cestcool && Dating.isValid() && !Actor88.isValid()
+                        cestcoolD = true
+                        "I am looking for escorts in the presence of my <Dating.boyfriend_or_girlfriend>, what are my intentions?"
+                        0::"To pay <Dating.him_or_her> hookers and watch"
+                        1::"To fuck hookers with <Dating.him_or_her>"
+                        2::"To fuck hookers in front of <Dating.him_or_her>"
+                        
+                        If 0
+                            paiePoDat = true
+                        ElseIf 1
+                            paiePoDeu = true
+                        Else
+                            paiePoMoe = true
+                        EndIf
+                        If paiePoDat || paiePoDeu
+                            If Dating:perversion > 50 || [Dating.isInterestedIn(Player) && Dating:rapportwithplayer > 30] || OpenRelationship() || [Dating.isInterestedIn(Player) && Dating:arousal > 15] || Dating:incest > 50
+                                Dating(Flirty):: "Alright, let's have some fun."
+                                Dating:rapportwithplayer += random(0, 1)
+                                Dating:attractiontoplayer += random(0, 1)
+                                MonPPD = true
+                            ElseIf Dating:arousal < 50 || [Dating.isInterestedIn(Player) && Dating:rapportwithplayer > 15] || Dating:incest < 50
+                                Dating(Curious)::"Ok, that's what you were looking at, no, not today, I'm not in the mood to fuck!"
+                                MonPPU = true
+                            Else
+                                Dating(Curious)::"Ok, that's what you were looking at, not really interested!"
+                                MonPPU = true
+                            EndIf
+                        EndIf
+                        If MonPPU
+                            "<Dating.He_or_She> is really not interested, do I still check for an escort?"
+                            0::"Yes"
+                            1::"No"
+                            
+                            If 1
+                                sceneEnd()
+                            EndIf
+                        EndIf
+                        If paiePoDat
+                            MonPPU = true
+                        ElseIf paiePoDeu
+                            MonPPD = true
+                        ElseIf paiePoMoe
+                            MonPPU = true
+                        EndIf
+                    EndIf
+                    If jveux2
+                        combien = 2
+                    ElseIf jveux3
+                        combien = 3
+                    ElseIf jveux4
+                        combien = 4
+                    EndIf
+                    If Actor2.isValid()
+                        If Actor:attractiveness > 90
+                            BeastP2 = random(450, 750)*combien
+                        ElseIf Actor:attractiveness > 70
+                            BeastP2 = random(250, 500)*combien
+                        ElseIf Actor:attractiveness > 50
+                            BeastP2 = random(150, 250)*combien
+                        Else
+                            BeastP2 = random(35, 50)*combien
+                        EndIf
+                        BeastPl2 = BeastP2.convertToLocalCurrency()
+                        BeastP3 = BeastP2 + random(150, 150)
+                        BeastPl3 = BeastP3.convertToLocalCurrency()
+                    EndIf
+                    If MonPPD
+                        If Actor:attractiveness > 90
+                            BeastP = random(100, 250)*1.5
+                            BeastP9 = BeastP*combien
+                        ElseIf Actor:attractiveness > 70
+                            BeastP = random(60, 100)*1.5
+                            BeastP9 = BeastP*combien
+                        ElseIf Actor:attractiveness > 50
+                            BeastP = random(50, 75)*1.5
+                            BeastP9 = BeastP*combien
+                        Else
+                            BeastP = random(45, 50)*1.5
+                            BeastP9 = BeastP*combien
+                        EndIf
+                        BeastPl9 = BeastP9.convertToLocalCurrency()
+                    Else
+                        If Actor:attractiveness > 90
+                            BeastP = random(100, 250)*combien
+                        ElseIf Actor:attractiveness > 70
+                            BeastP = random(50, 100)*combien
+                        ElseIf Actor:attractiveness > 50
+                            BeastP = random(50, 75)*combien
+                        Else
+                            BeastP = random(45, 50)*combien
+                        EndIf   
+                        BeastPl = BeastP.convertToLocalCurrency()
+                    EndIf
+                    Actor:age => random(18, 35)
+                    Actor.randomizeHairs()
+                    Actor.randomizeFace()
+                    Actor1:age => random(18, 35)
+                    Actor1.randomizeHairs()
+                    Actor1.randomizeFace()
+                    Actor2:age => random(18, 35)
+                    Actor2.randomizeHairs()
+                    Actor2.randomizeFace()
+                    Actor3:age => random(18, 35)
+                    Actor3.randomizeHairs()
+                    Actor3.randomizeFace()
+                    conti = true
+                    Actor.hide()
+                    Actor1.hide()
+                    Actor2.hide()
+                    Actor3.hide()
+                EndIf
+                If conti
+                    secondScreen(Actor)
+                    If jveux2
+                        Actor.show(4)
+                        Actor1.show(1)
+                    ElseIf jveux3
+                        Actor.show(4)
+                        Actor1.show(1)
+                        Actor2.show(2)
+                    ElseIf jveux4
+                        Actor.show(4)
+                        Actor1.show(1)
+                        Actor2.show(2)
+                        Actor3.show(3)
+                    EndIf
+                    If MonPPD
+                        "These hookers charges <BeastPl9> for their private services"
+                    Else
+                        "These hookers charges <BeastPl> for their private services"
+                    EndIf
+                    "Should I arrange to have sex with them?"
+                    0:: money > BeastP9 ::"Yes"
+                    1:: "Too expensive"
+                    2:: "Check another"
+                    
+                    If 0
+                        conti6 = true
+                        If MonPPD
+                            money -= BeastP9
+                        Else
+                            money -= BeastP
+                        EndIf
+                    ElseIf 1
+                        NowayDecu = true
+                        ChercheCul = false
+                    EndIf
+                    Actor.hide()
+                    secondScreen()
+                EndIf
+            EndWhile
+            If conti6
+                Actor.show()
+                If WHERE == brothel
+                    Random
+                        setBackground3D(Modules/vin_Base/Bedrooms/0.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/1.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/2.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/3.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/4.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/5.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/6.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/7.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/8.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/9.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/10.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/11.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/12.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/13.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/14.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/15.lpworld)
+                    EndRandom
+                    "The hookers guided me into one of the brothel's bedrooms and we got it on right away."
+                Else
+                    "In no time at all, the hookers arrived and we got it on immediately."
+                EndIf
+                Actor.strip()
+                If paiePoDat
+                    Dating.strip()
+                    If jveux2
+                        Sex(Dating, Actor, Actor1)
+                    ElseIf jveux3
+                        Sex(Dating, Actor, Actor1, Actor2)
+                    ElseIf jveux4
+                        Sex(Dating, Actor, Actor1, Actor2, Actor3)
+                    EndIf
+                ElseIf paiePoDeu
+                    Dating.strip()
+                    Player.strip()
+                    If jveux2
+                        Sex(Dating, Actor, Player, Actor1)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -4)
+                        EndIf
+                    ElseIf jveux3
+                        Sex(Dating, Actor, Player, Actor1, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -5)
+                        EndIf
+                    ElseIf jveux4
+                        Sex(Dating, Actor, Actor3)
+                        sex(Player, Actor1, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -4)
+                        EndIf
+                    EndIf
+                ElseIf paiePoMoe
+                    Player.strip()
+                    If jveux2
+                        Sex(Player, Actor, Actor1)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                        EndIf
+                    ElseIf jveux3
+                        Sex(Player, Actor, Actor1, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -4)
+                        EndIf
+                    ElseIf jveux4
+                        Sex(Player, Actor, Actor1, Actor2, Actor3)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -5)
+                        EndIf
+                    EndIf
+                ElseIf paiePoDatA
+                    Actor88.strip()
+                    Actor88(Shocked)::"What?? You don't join us?"
+                    Player(Happy)::"I prefer watching...!"
+                    Actor88(Happy)::"Ok?? Thanks for the gift!"
+                    If jveux2
+                        Sex(Actor88, Actor, Actor1)
+                    ElseIf jveux3
+                        Sex(Actor88, Actor, Actor1, Actor2)
+                    ElseIf jveux4
+                        Sex(Actor88, Actor, Actor1, Actor2, Actor3)
+                    EndIf
+                ElseIf paiePoDeuA
+                    Player.strip()
+                    Actor88.strip()
+                    If jveux2
+                        Sex(Actor88, Actor, Player, Actor1)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -4)
+                        EndIf
+                    ElseIf jveux3
+                        Sex(Actor88, Actor, Player, Actor1, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -5)
+                        EndIf
+                    ElseIf jveux4
+                        Sex(Actor88, Actor, Actor3)
+                        sex(Player, Actor1, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -4)
+                        EndIf
+                    EndIf
+                ElseIf paiePoMoeA
+                    Player.strip()
+                    Player(Evil)::"Idiot, you thought I would pay you a whore! In fact, you'll be content to watch me fuck her like a bull in heat!"
+                    Actor88(Shocked)::"What?? Fuck you!"
+                    Player(Grin)::"Shut up and watch the free show!"
+                    If jveux2
+                        Sex(Player, Actor, Actor1)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                        EndIf
+                    ElseIf jveux3
+                        Sex(Player, Actor, Actor1, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -4)
+                        EndIf
+                    ElseIf jveux4
+                        Sex(Player, Actor, Actor1, Actor2, Actor3)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -5)
+                        EndIf
+                    EndIf
+                    masochist -= random(1, 3)
+                Else
+                    Player.strip()
+                    If jveux2
+                        Sex(Player, Actor, Actor1)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                        EndIf
+                    ElseIf jveux3
+                        Sex(Player, Actor, Actor1, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -4)
+                        EndIf
+                    ElseIf jveux4
+                        Sex(Player, Actor, Actor1, Actor2, Actor3)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -5)
+                        EndIf
+                    EndIf
+                EndIf
+                perversion += random(0, 0.5)
+                AmNotVirgin => 1
+                If beastEnabl
+                    If jveux2
+                        combien = 2
+                    ElseIf jveux3
+                        combien = 3
+                    ElseIf jveux4
+                        combien = 4
+                    EndIf
+                    If jveux2
+                        GertTxt = "a foursome"
+                    ElseIf jveux3
+                        GertTxt = "a fivesome"
+                    ElseIf jveux4
+                        GertTxt = "an orgy"
+                    EndIf
+                    Actor22.show()
+                    "Too occupied at fucking the prostitutes, I didn't notice that our intense love making session has got my pet dog <Actor22.name> all excited."
+                    "It's clear that <Actor22.he_or_she> got horny from watching us and wants a piece of the action. Unless satisfied, <Actor22.he_or_she> will spend the night barking and won't let me sleep, I'm sure."
+                    "What should I do?"
+                    0:: "Relieve <Actor22.name> myself"
+                    1:: "Pay the hookers extra to do it"
+                    2:: "Pay the hookers to have <GertTxt>"
+                    3:: "Do nothing"
+                
+                    If 0
+                        "I paid the hookers and left for another clients. Good service that was!"
+                        Actor.hide()
+                        Sex(Player, Actor22)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                    ElseIf 1
+                        If !Actor.isInterestedIn(Actor22)
+                            DitNon = true
+                        Else
+                            PartipourUn = true
+                        EndIf
+                    ElseIf 2
+                        If !Actor.isInterestedIn(Actor22)
+                            DitNon = true
+                        Else
+                            PartipourDeux = true
+                        EndIf
+                    EndIf
+                Else
+                    "I paid the hookers and they left for another clients. Good service that was!"
+                EndIf
+            EndIf
+            If PartipourUn
+                "The hookers charge <BeastPl2> for an extras!"
+                "What should I do?"
+                0::money > BeastP2 :: "Accept"
+                1:: "Refuse"
+                
+                If 1
+                    conti7 = true
+                    money -= BeastP2
+                Else
+                    NowayDecu = true
+                EndIf
+            EndIf
+            If PartipourDeux
+                "The hookers charge <BeastPl3> for an extras!"
+                "What should I do?"
+                0::money > BeastP3 :: "Accept"
+                1:: "Refuse"
+                
+                If 1
+                    conti7 = true
+                    money -= BeastP3
+                Else
+                    NowayDecu = true
+                EndIf
+            EndIf
+            If conti7
+                If PartipourUn
+                    Actor(Flirty):: "Why not, always love easy cash!"
+                    If jveux2
+                        Sex(Actor22, Actor, Actor1)
+                    ElseIf jveux3
+                        Sex(Actor22, Actor, Actor1, Actor2)
+                    ElseIf jveux4
+                        Sex(Actor22, Actor, Actor3, Actor1, Actor2)
+                    EndIf
+                EndIf
+                If PartipourDeux
+                    Actor(Flirty):: "Why not, always love easy cash!"
+                    If jveux2
+                        Sex(Actor22, Actor, Player, Actor1)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -4)
+                        EndIf
+                    ElseIf jveux3
+                        Sex(Actor22, Actor, Player, Actor1, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -5)
+                        EndIf
+                    ElseIf jveux4
+                        Sex(Actor22, Actor, Actor3)
+                        sex(Player, Actor1, Actor2)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -4)
+                        EndIf
+                    EndIf
+                EndIf
+                "I paid the hookers and they left for another clients. Good service that was!"
+            EndIf
+            If DitNon
+                If Actor.isInterestedIn(Player)
+                    Actor(Shocked)::"Are you crazy, I don't offer that kind of service!"
+                Else
+                    Actor(Flirty)::"I don't offer this kind of service but there are other agencies for that!"
+                EndIf
+                "I paid the hookers and they left for another clients. It was a good service anyway!"
+                Actor.hide()
+            EndIf
+            If Noway
+                SceneEnd()
+            ElseIf NowayDecu
+                "No way. I'm not so desperate that I have to pay to get laid."
+            EndIf
+        EndIf
+    SceneEnd() // Created by Raddeck

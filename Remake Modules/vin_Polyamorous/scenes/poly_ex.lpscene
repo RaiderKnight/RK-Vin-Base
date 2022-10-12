@@ -1,0 +1,61 @@
+WHAT: all
+WHERE: all
+WHEN: 0-24
+WHO: Actor = getSpecific(ExDating)
+OTHER: OpenRelationship() || !Player.isDating()
+
+    // An ex suddenly invites you over and reveals they're now in a poly relationship and want you to be part of it.
+    
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor.dress()
+        secondScreen(Actor)
+        Actor.show()
+        "My ex <Actor.name> is calling me. Well, that's certainly unusual ..."
+        "To make things even more weird, <Actor.he_or_she> invites me over for dinner with <Actor.him_or_her> and the new <Player.man_or_woman> in <Actor.his_or_her> life."
+        "Maybe it's a trap for the new <Player.man_or_woman> to beat me up or something?"
+        0:: "Agree to the dinner"
+        1:: "That would be awkward"
+        
+        If 0
+            secondScreen()
+            setBackgroundCustom(kitchen)
+            Actor2 = generatePersonTemporary()
+            While !Actor2.isSameGender(Player)
+                Actor2 = generatePersonTemporary()
+            EndWhile
+            Actor.show()
+            Actor2.makePermanent()
+            Actor2.dress()
+            Actor2.show()
+            addNpcRelationship(Dating, Actor, Actor2)
+            addNpcRelationship(Poly, Actor, Actor2)
+            "There, I was introduced to <Actor.name>'s new <Actor2.boyfriend_or_girlfriend> <Actor2.name>, who seems alright. Is my ex trying to get me jealous or something?"
+            Player(Happy):: "I'm not going to lie, I wasn't expecting an invitation from you today."
+            Actor(Happy):: "Let me explain ..."
+            "<Actor.name> proceeds to explain that <Actor.name> and <Actor2.name> has agreed from the start of their relationship that their past relationship failures all came down to the fact that neither of them were suitable for monogamous commitments."
+            "As such, their relationship is open and polyamorous, and they didn't think of anyone else but me to fuck with..."
+            "Should I fuck with them?"
+            0:: "Agree to date and fuck with them"
+            1:: "Too weird for me, sorry"
+            
+            If 0
+                Actor2(Happy):: "We're so glad you accept. Let us celebrate."
+                Actor(Wink):: "It looks like we're back together as a couple, I'm so glad!"
+                Sex(Player, Actor2, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -5)
+                EndIf
+                Actor.setDating()
+                exchangeContact(Actor)
+                exchangeContact(Actor2)
+            Else
+                Actor:attractiontoplayer -= random(0, 1)
+                Actor:rapportwithplayer -= random(0, 1)
+            EndIf
+        EndIf
+    SceneEnd() // Improved by Raddeck
+    timeout(1000, poly_ex)

@@ -1,0 +1,267 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    sceneStart()
+        Master = generatePersonTemporary()
+        While !Master.isMale()
+            Master = generatePersonTemporary()
+        Endwhile
+        Master.hide()
+        Master.setNoRedress(true)
+        If isModEnabled(rk_vin_Base) || isModEnabled(rk_Sex_Guru)
+            GetFckByC = false
+            IGiveFirstTime = Player.getActorVar(IGiveFirstTime)
+            GiveDonToChurch = Player.getActorVar(rk_VB_GiveDonToChurch)
+            OkPass = false
+            TSA = Player:age*365
+            TSAN = Player:age*365 + 7
+            TSAW = Player:age*365 + 30
+            TimesGiveMTP = Player.getActorVar(rk_VB_TimesGiveMTP)
+            TimerCDon = Player.getActorVar(rk_VB_TimerCDon)
+            PackDonChurch = rk_VB_PackDonChurch.getGlobal()
+            If TimesGiveMTP <= 0
+                OkPass = true
+            ElseIf TSA >= TSAN && PackDonChurch == 1
+                OkPass = true
+            ElseIf TSA >= TSAW && PackDonChurch == 2
+                OkPass = true
+            EndIf
+            If OkPass
+                Hunger = Player.getActorVar(rk_VB_Hunger)
+                HungerEnable = rk_VB_EnableHunger.getGlobal()
+                UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+                UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+                Vege = false
+                setBackground(place_of_worship)
+                Master.show()
+                Master.moveToPersonStand(Player, 50)
+                faceEachOther(Player, Master)
+                Master(Happy)::"Greetings my child, what can I do for you today?"    
+                0:: "I'm here to get some food, but..."
+                99:: "Leave right away, wrong place!"
+                
+                If 0
+                    Master(Happy)::"Okay, but first you have to take off your clothes because here we pray naked!"
+                    0:: "Accept"
+                    99:: "Leave right away, wrong place!"
+                    
+                    If 0
+                        Player.setNoRedress(true)
+                        rk_VB_PackDonChurch.setGlobal(0)
+                        Player.setActorVar(rk_VB_TimerCDon, 0)
+                        TimerCDon = Player.getActorVar(rk_VB_TimerCDon)
+                        Player(Shy)::"I'm here to get foods, I have money problem these days..."
+                        Master(Happy)::"No problem. I'm here to listen and helps... Are you vegeterian or not?"
+                        "What I should say?"
+                        0::"Yes I am"
+                        1::"I'm not"
+                        
+                        If 0
+                            Vege = true
+                        EndIf
+                        Master(Happy)::"Good! Now, how long do you want food for?"
+                        "What should I choose?"
+                        0::"For 1 week"
+                        1::"For 1 month"
+                        99::"Leave"
+                        
+                        If 0
+                            rk_VB_PackDonChurch.setGlobal(1)
+                            Player(Happy)::"For one week, I think that will be enough!"
+                            Master(Happy)::"Well, here's all your food!"
+                            Player.setActorVar(rk_VB_TimerCDon, TSA)
+                            Player.modifyActorVar(rk_VB_TimesGiveMTP, 1)
+                            If Vege
+                                Player.modifyActorVar(stock_HealthyCookie, 2)
+                                Player(Excited)::"2 healthy cookie added to my refrigerator!"
+                                Player.modifyActorVar(stock_LentilStew, 2)
+                                Player(Excited)::"2 winter squash and lentil stew added to my refrigerator!"
+                                Player.modifyActorVar(stock_CauliAlfredo, 1)
+                                Player(Excited)::"1 cauliflower Alfredo added to my refrigerator!"
+                                Player.modifyActorVar(stock_RicePeas, 2)
+                                Player(Excited)::"2 coconutty rice and peas added to my refrigerator!"
+                                Player.modifyActorVar(stock_Edamame, 1)
+                                Player(Excited)::"1 peanutty Edamame and noodle salad added to my refrigerator!"
+                                Player.modifyActorVar(stock_PastaAlfredo, 2)
+                                Player(Excited)::"2 pasta with red pepper Alfredo added to my refrigerator!"
+                                Player.modifyActorVar(stock_CrispyTofu, 2)
+                                Player(Excited)::"2 crispy Tofu Bowl added to my refrigerator!"
+                                Player.modifyActorVar(stock_LoMein, 2)
+                                Player(Excited)::"2 veggie Lo Mein added to my refrigerator!"
+                                stock_coffee +7
+                                Player(Excited)::"7 coffee added to my pantry!"
+                                stock_juice +14
+                                Player(Excited)::"14 juice added to my refrigerator!"
+                                stock_soda +7
+                                Player(Excited)::"7 soda added to my refrigerator!"
+                                stock_tea +7
+                                Player(Excited)::"7 tea added to my pantry!"
+                                Player.modifyActorVar(stock_Bread, 1)
+                                Player(Excited)::"1 more nutricious bread added to my pantry!"
+                            Else
+                                Player.modifyActorVar(stock_HealthyCookie, 2)
+                                Player(Excited)::"2 healthy cookie added to my refrigerator!"
+                                Player.modifyActorVar(stock_Cheesesteak, 2)
+                                Player(Excited)::"2 Philly Cheesesteak added to my refrigerator!"
+                                Player.modifyActorVar(stock_Chicken, 2)
+                                Player(Excited)::"2 Chicken schnitzel added to my refrigerator!"
+                                Player.modifyActorVar(stock_SaltNPepper, 1)
+                                Player(Excited)::"1 Salt-and-Pepper Steak added to my refrigerator!"
+                                Player.modifyActorVar(stock_WrappedPork, 2)
+                                Player(Excited)::"2 Bacon-Wrapped Pork added to my refrigerator!"
+                                Player.modifyActorVar(stock_ChickenKebabs, 2)
+                                Player(Excited)::"2 Chicken Kebabs added to my refrigerator!"
+                                Player.modifyActorVar(stock_ChineseBeef, 2)
+                                Player(Excited)::"2 Chinese Beef & Broccoli added to my refrigerator!"
+                                Player.modifyActorVar(stock_SurfNTurf, 1)
+                                Player(Excited)::"1 Surf 'n Turf added to my refrigerator!"
+                                stock_coffee +7
+                                Player(Excited)::"7 coffee added to my pantry!"
+                                stock_juice +14
+                                Player(Excited)::"14 juice added to my refrigerator!"
+                                stock_soda +7
+                                Player(Excited)::"7 soda added to my refrigerator!"
+                                stock_tea +7
+                                Player(Excited)::"7 tea added to my pantry!"
+                                Player.modifyActorVar(stock_Bread, 1)
+                                Player(Excited)::"1 more nutricious bread added to my pantry!"
+                            EndIf
+                            Player(Happy)::"Wow thank you priest!"
+                            Master(Happy)::"You're welcome!"
+                            mood += 5
+                        ElseIf 1
+                            rk_VB_PackDonChurch.setGlobal(2)
+                            Player(Happy)::"For one month, that will help me a lots!"
+                            Master(Happy)::"Well, here's all your food!"
+                            Player.setActorVar(rk_VB_TimerCDon, TSA)
+                            Player.modifyActorVar(rk_VB_TimesGiveMTP, 1)
+                            If Vege
+                                Player.modifyActorVar(stock_HealthyCookie, 5)
+                                Player(Excited)::"5 healthy cookie added to my refrigerator!"
+                                Player.modifyActorVar(stock_LentilStew, 4)
+                                Player(Excited)::"4 winter squash and lentil stew added to my refrigerator!"
+                                Player.modifyActorVar(stock_CauliAlfredo, 3)
+                                Player(Excited)::"3 cauliflower Alfredo added to my refrigerator!"
+                                Player.modifyActorVar(stock_RicePeas, 4)
+                                Player(Excited)::"4 coconutty rice and peas added to my refrigerator!"
+                                Player.modifyActorVar(stock_Edamame, 3)
+                                Player(Excited)::"3 peanutty Edamame and noodle salad added to my refrigerator!"
+                                Player.modifyActorVar(stock_PastaAlfredo, 3)
+                                Player(Excited)::"3 pasta with red pepper Alfredo added to my refrigerator!"
+                                Player.modifyActorVar(stock_CrispyTofu, 4)
+                                Player(Excited)::"4 crispy Tofu Bowl added to my refrigerator!"
+                                Player.modifyActorVar(stock_LoMein, 4)
+                                Player(Excited)::"4 veggie Lo Mein added to my refrigerator!"
+                                stock_coffee +7
+                                Player(Excited)::"30 coffee added to my pantry!"
+                                stock_juice +14
+                                Player(Excited)::"60 juice added to my refrigerator!"
+                                stock_soda +7
+                                Player(Excited)::"30 soda added to my refrigerator!"
+                                stock_tea +7
+                                Player(Excited)::"30 tea added to my pantry!"
+                                Player.modifyActorVar(stock_Bread, 4)
+                                Player(Excited)::"4 more nutricious bread added to my pantry!"
+                            Else
+                                Player.modifyActorVar(stock_HealthyCookie, 5)
+                                Player(Excited)::"5 healthy cookie added to my refrigerator!"
+                                Player.modifyActorVar(stock_Cheesesteak, 1)
+                                Player(Excited)::"4 Philly Cheesesteak added to my refrigerator!"
+                                Player.modifyActorVar(stock_Chicken, 1)
+                                Player(Excited)::"4 Chicken schnitzel added to my refrigerator!"
+                                Player.modifyActorVar(stock_SaltNPepper, 1)
+                                Player(Excited)::"4 Salt-and-Pepper Steak added to my refrigerator!"
+                                Player.modifyActorVar(stock_WrappedPork, 1)
+                                Player(Excited)::"3 Bacon-Wrapped Pork added to my refrigerator!"
+                                Player.modifyActorVar(stock_ChickenKebabs, 1)
+                                Player(Excited)::"4 Chicken Kebabs added to my refrigerator!"
+                                Player.modifyActorVar(stock_ChineseBeef, 1)
+                                Player(Excited)::"4 Chinese Beef & Broccoli added to my refrigerator!"
+                                Player.modifyActorVar(stock_SurfNTurf, 1)
+                                Player(Excited)::"2 Surf 'n Turf added to my refrigerator!"
+                                stock_coffee +7
+                                Player(Excited)::"30 coffee added to my pantry!"
+                                stock_juice +14
+                                Player(Excited)::"60 juice added to my refrigerator!"
+                                stock_soda +7
+                                Player(Excited)::"30 soda added to my refrigerator!"
+                                stock_tea +7
+                                Player(Excited)::"30 tea added to my pantry!"
+                                Player.modifyActorVar(stock_Bread, 4)
+                                Player(Excited)::"4 more nutricious bread added to my pantry!"
+                            EndIf
+                            Player(Happy)::"Wow thank you priest!"
+                            Master(Happy)::"You're welcome!"
+                            mood += 5
+                            "Okay, let's get this stuff home..."
+                            moveTo(home)
+                        EndIf
+                        If money < 1000
+                            Master.moveToPersonStand(Player, 50)
+                            faceEachOther(Player, Master)
+                            CashP = Random(50, 200)
+                            CashPloc = CashP.convertToLocalCurrency()
+                            Master(Happy)::"Suddenly, the priest digs in his pocket and gives me <CashPloc>, Forgive me God!"
+                            Player(Happy)::"Wow thank you priest!"
+                            money += CashP
+                            Master(Happy)::"Make good use of it...!"
+                            Player(Happy)::"I really appreciate it!"
+                            If Master.isInterestedIn(Player) && Master:arousal > 15 && Master:perversion > 50
+                                GetFckByC = true
+                            EndIf
+                        EndIf
+                        passTime(0.5, 1)
+                    EndIf
+                Else
+                    Player(Happy)::"In fact, I was just leaving!"
+                    Master(Happy)::"Ah well, in that case I wish you a nice day!"
+                EndIf
+            EndIf
+            DoIGive = TSA - IGiveFirstTime
+            If GiveDonToChurch < DoIGive
+                Master(Happy)::"According to my reports, you don't donate much to our churches, the next time you need help, maybe one of our priests will refuse to serve you..."
+                Player(Happy)::"Don't worry I will!"
+            EndIf
+            If GetFckByC || [Master.isInterestedIn(Player) && Master:arousal > 15 && Master:perversion > 50]
+                Master.moveToPersonStand(Player, 50)
+                faceEachOther(Player, Master)
+                Master(Flirty)::"Hey before you leave! If you are interested, I can give you cash in exchange for sex?"
+                0:: "Say yes"
+                1:: "Say no thanks!"
+               
+                If 0
+                    perversion += 1
+                    Master(Flirty)::"Let's go somewhere more private"
+                    setBackground(bedroom)
+                    Master:rapportwithplayer += random(0, 2)
+                    Master:attractiontoplayer += random(0, 2)
+                    "We decided to go in the dark alley to get more privacy..."
+                    Player.strip()
+                    Master.strip()
+                    sex(Player, Master)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                    money += BonusP
+                Else
+                    Player(Sad)::"Sorry, I'm not in the mood to have sex with a priest!"
+                Endif
+            EndIf
+            If !OkPass
+                If PackDonChurch == 1
+                    Master(Sad)::"Sorry, but I can't give you any more food."
+                    NotNowYet = TSAN - TSA
+                    Master(Wink)::"I gave you a week's worth of food, so come back in <NotNowYet> days..."
+                ElseIf PackDonChurch == 2
+                    Master(Sad)::"Sorry, but I can't give you any more food."
+                    NotNowYet = TSAW - TSA
+                    Master(Wink)::"I gave you a month's worth of food, so come back in <NotNowYet> days..."
+                EndIf
+            Else
+                Player.setNoRedress(false)
+            EndIf
+        EndIf
+    sceneEnd() // Improved by Raddeck

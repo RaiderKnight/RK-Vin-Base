@@ -1,0 +1,113 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+    
+        IBuyICDessert = Player.getActorVar(rk_VB_IBuyICDessert)
+        
+        If  money < -1 
+            Player(Anxious)::"Ok, no money to eat! I need to find a job I guess... !"
+        Else
+            
+            // Get current ice cream desserts prices for each types
+            price_Popcycle = Random(1.5, 3)
+            price_Popcycle_local = price_Popcycle.convertToLocalCurrency()
+            price_IcecreamCup = Random(3.5, 5)
+            price_IcecreamCup_local = price_IcecreamCup.convertToLocalCurrency()
+            price_MilkShake = Random(5, 6)
+            price_MilkShake_local = price_MilkShake.convertToLocalCurrency()
+            price_FrozenPie = Random(6, 7)
+            price_FrozenPie_local = price_FrozenPie.convertToLocalCurrency()
+            price_IceCreamCake = Random(7, 8)
+            price_IceCreamCake_local = price_IceCreamCake.convertToLocalCurrency()
+    
+    
+            Player::"Which type of ice cream dessert I will eat?"
+            0:: money >= price_Popcycle ::"1 Popcycle for <price_Popcycle_local>"
+            1:: money >= price_IcecreamCup ::"1 Ice cream cup for <price_IcecreamCup_local>"
+            2:: money >= price_MilkShake ::"1 Milk Shake for <price_MilkShake_local>"
+            3:: money >= price_FrozenPie ::"1 Frozen Margarita pie for <price_FrozenPie_local>"
+            4:: money >= price_IceCreamCake ::"1 Ice cream cake for <price_IceCreamCake_local>"
+            8:: "Bah! I'm not hungry !"
+            
+            If 0
+                mood += 2
+                energy += 1
+                money -= price_Popcycle
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If UrgeToPeeEnable > 0
+                    Player.modifyActorVar(rk_VB_UrgeToPee, 0.25)
+                EndIf
+            Elseif 1
+                mood += 3
+                energy += 2
+                money -= price_IcecreamCup
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 0.25)
+                EndIf
+                
+            Elseif 2
+                mood += 4
+                energy += 3
+                money -= price_MilkShake
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 0.25)
+                EndIf
+                
+                If UrgeToPeeEnable > 0
+                    Player.modifyActorVar(rk_VB_UrgeToPee, 0.5)
+                EndIf
+                
+            Elseif 3
+                mood += 5
+                energy += 4
+                money -= price_FrozenPie
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 0.25)
+                EndIf
+                
+            Elseif 4
+                mood += 6
+                energy += 5
+                money -= price_IceCreamCake
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.15, 0.25)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 0.25)
+                EndIf
+                
+            Endif
+
+        Endif
+        
+    SceneEnd()

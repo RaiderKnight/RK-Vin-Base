@@ -1,0 +1,116 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        If money < -1
+            Player(Anxious)::"I am in debt. The stores will not sell me anything."
+        Else
+        
+            Player(Curious)::"There is a lot of candies here."
+            IBuyCandy = Player.getActorVar(rk_VB_IBuyCandy)
+            
+            // Get current candy prices for each types
+            price_PopRocks = Random(0.5, 1)
+            price_PopRocks_local = price_PopRocks.convertToLocalCurrency()
+            price_CottonCandy = Random(1, 2)
+            price_CottonCandy_local = price_CottonCandy.convertToLocalCurrency()
+            price_BigBallHickey = Random(1, 2)
+            price_BigBallHickey_local = price_BigBallHickey.convertToLocalCurrency()
+            price_SweetTarts = Random(1, 2)
+            price_SweetTarts_local = price_SweetTarts.convertToLocalCurrency()
+            price_GummiBears = Random(2, 3)
+            price_GummiBears_local = price_GummiBears.convertToLocalCurrency()
+            price_Smarties = Random(2.5, 3.5)
+            price_Smarties_local = price_Smarties.convertToLocalCurrency()
+            price_JollyRanchers = Random(3, 3.5)
+            price_JollyRanchers_local = price_JollyRanchers.convertToLocalCurrency()
+            price_PeanutCups = Random(3.5, 4)
+            price_PeanutCups_local = price_PeanutCups.convertToLocalCurrency()
+            price_Licorice = Random(4, 4.5)
+            price_Licorice_local = price_Licorice.convertToLocalCurrency()
+            price_PowerBar = Random(4.5, 6)
+            price_PowerBar_local = price_PowerBar.convertToLocalCurrency()
+                
+            Player(Curious)::"Which type of candy shall I buy?"
+            0:: money > price_PopRocks ::"1 box of Pop Rocks for <price_PopRocks_local>"
+            1:: money > price_CottonCandy ::"1 Cotton Candy for <price_CottonCandy_local>"
+            2:: money > price_GummiBears ::"1 pack of Gummi Bears for <price_GummiBears_local>"
+            3:: money > price_Smarties ::"1 box of Smarties for <price_Smarties_local>"
+            4:: money > price_JollyRanchers ::"1 pack of Jolly Ranchers for <price_JollyRanchers_local>"
+            5:: money > price_PeanutCups ::"1 pack of Peanut Butter Cups for <price_PeanutCups_local>"
+            6:: money > price_Licorice ::"1 pack of Licorices for <price_Licorice_local>"
+            7:: money > price_PowerBar ::"1 power bar for <price_PowerBar_local>"
+            8:: money > price_BigBallHickey ::"1 Big ball Lollypop for <price_BigBallHickey_local>"
+            9:: money > price_SweetTarts ::"1 pack of Sweet Tarts <price_SweetTarts_local>"
+            99:: "Don't buy anything"
+                   
+            If 0
+                Player.modifyActorVar(stock_PopRocks, 1)
+                money -= price_PopRocks
+                Player(Excited)::"1 Pop Rocks box added to my pockets!"
+                Player.modifyActorVar(rk_VB_IBuyCandy, 1)
+                        
+            ElseIf 1
+                Player.modifyActorVar(stock_CottonCandy, 1)
+                money -= price_CottonCandy
+                Player(Excited)::"1 Cotton Candy added to my pockets!"
+                Player.modifyActorVar(rk_VB_IBuyCandy, 1)
+                        
+            ElseIf 2
+                Player.modifyActorVar(stock_GummiBears, 1)
+                money -= price_GummiBears
+                Player(Excited)::"1 pack Gummi Bears added to my pockets!"
+                Player.modifyActorVar(rk_VB_IBuyCandy, 1)
+                        
+            ElseIf 3
+                Player.modifyActorVar(stock_Smarties, 1)
+                money -= price_Smarties
+                Player(Excited)::"1 box of Smarties added to my pockets!"
+                Player.modifyActorVar(rk_VB_IBuyCandy, 1)
+            
+            ElseIf 4
+                Player.modifyActorVar(stock_JollyRanchers, 1)
+                money -= price_JollyRanchers
+                Player(Excited)::"1 pack of Jolly Ranchers added to my pockets!"
+                Player.modifyActorVar(rk_VB_IBuyCandy, 1)
+                
+            ElseIf 5
+                Player.modifyActorVar(stock_PeanutCups, 1)
+                money -= price_PeanutCups
+                Player(Excited)::"1 pack of Peanut Butter Cups added to my pockets!"
+                Player.modifyActorVar(rk_VB_IBuyCandy, 1)
+    
+            ElseIf 6
+                Player.modifyActorVar(stock_Licorice, 1)
+                money -= price_Licorice
+                Player(Excited)::"1 pack of Licorices added to my pockets!"
+                Player.modifyActorVar(rk_VB_IBuyCandy, 1)
+    
+            ElseIf 7
+                Player.modifyActorVar(stock_PowerBar, 1)
+                money -= price_PowerBar
+                Player(Excited)::"1 power bar added to my pockets!"
+                Player.modifyActorVar(rk_VB_IBuyCandy, 1)
+            
+            ElseIf 8
+                Player.modifyActorVar(stock_BigBallHickey, 1)
+                money -= price_BigBallHickey
+                Player(Excited)::"1 Big ball Lollypop added to my pockets!"
+                Player.modifyActorVar(rk_VB_IBuyCandy, 1)
+                
+            ElseIf 9
+            
+                Player.modifyActorVar(stock_SweetTarts, 1)
+                money -= price_SweetTarts
+                Player(Excited)::"1 pack of Sweet Tarts added to my pockets!"
+                Player.modifyActorVar(rk_VB_IBuyCandy, 1)
+       
+            EndIf
+            
+        EndIf
+    
+    SceneEnd()

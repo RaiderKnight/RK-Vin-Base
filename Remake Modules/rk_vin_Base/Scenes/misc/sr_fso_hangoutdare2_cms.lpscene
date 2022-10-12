@@ -1,0 +1,375 @@
+WHAT: rk_VB_Visit_Internet, rk_VB_Use_Computer, -sleep, -nap
+WHERE: home
+WHEN: 8 - 22
+WHO: Actor = getSpecific(Dating)
+OTHER: Random(35, 100) < perversion && isModEnabled(vin_NTR) && isWithCompanion()
+
+
+    // Summery - player asks their gf/wife to put on a show at a hangout, a few choices are there.
+    
+    SceneStart()
+
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor.dress()
+        Actor.show()
+        Actor7 = getPerson(true)
+        If Actor7.isValid() && Actor7.isInterestedIn(Actor) && Actor7:rapportwithplayer > 20
+            Actor7.dress()
+            Actor7.hide()
+        Endif
+        Actor6 = getPerson(true)
+        If Actor6.isValid() && Actor6.isInterestedIn(Actor) && Actor6:rapportwithplayer > 20
+            Actor6.dress()
+            Actor6.hide()
+        Endif
+        Actor5 = getPerson(true)
+        If Actor5.isValid() && Actor5.isInterestedIn(Actor) && Actor5:rapportwithplayer > 20
+            Actor5.dress()
+            Actor5.hide()
+        Endif
+        Actor3 = getPerson(true)
+        If Actor3.isValid() && Actor3.isInterestedIn(Actor) && Actor3:rapportwithplayer > 20
+            Actor3.dress()
+            Actor3.hide()
+        Endif
+        Actor4 = getPerson(true)
+        If Actor4.isValid() && Actor4.isInterestedIn(Actor) && Actor4:rapportwithplayer > 20
+            Actor4.dress()
+            Actor4.hide()
+        Endif
+        
+        Actor7G = generatePersonTemporary()
+        While Actor7G.isSameGender(Actor) && !Actor7G.isInterestedIn(Actor)
+            Actor7G = generatePersonTemporary()
+        Endwhile
+        Actor7G.dress()
+        Actor7G.hide()
+        
+        Actor6G = generatePersonTemporary()
+        While Actor6G.isSameGender(Actor) && !Actor6G.isInterestedIn(Actor)
+            Actor6G = generatePersonTemporary()
+        Endwhile
+        Actor6G.dress()
+        Actor6G.hide()
+        
+        Actor5G = generatePersonTemporary()
+        While Actor5G.isSameGender(Actor) && !Actor5G.isInterestedIn(Actor)
+            Actor5G = generatePersonTemporary()
+        Endwhile
+        Actor5G.dress()
+        Actor5G.hide()
+        
+        Actor3G = generatePersonTemporary()
+        While Actor3G.isSameGender(Actor) && !Actor3G.isInterestedIn(Actor)
+                Actor3G = generatePersonTemporary()
+        Endwhile
+        Actor3G.dress()
+        Actor3G.hide()
+        
+        Actor4G = generatePersonTemporary()
+        While Actor4G.isSameGender(Actor) && !Actor4G.isInterestedIn(Actor)
+            Actor4G = generatePersonTemporary()
+        Endwhile
+        Actor4G.dress()
+        Actor4G.hide()
+        
+        "I was looking at some dares on a website that I could give to my lover and found one that peaked my interest."
+        Actor2 = getCreature(Dog)
+        ActorLD = random(0, 100)
+        Player(Curious)::"Hey babe would you be willing to do a challenge?"
+        If Actor:arousal > 15 && Actor:perversion > 50
+            Actor(Flirty):: "Oh naughty! Well we are at home...Ok. What I have to do?"
+            LetsPlay = true
+        Else
+            Actor(Sad)::"Not really feeling like playing that now!"
+        Endif
+        
+        If LetsPlay
+            "What I should ask?"
+            0:: Actor2.isValid() && isModEnabled(vin_Bestiality):: "Let the dog 'accidently' getting onto you."
+            1:: Actor7.isValid()::"Inviting my friends and flash them"
+            2:: Actor7.isValid()::"Inviting my friends and have sex with them while I watch" 
+            3:: Actor7.isValid()::"Inviting your friends and flash them"
+            4:: Actor7.isValid()::"Inviting your friends and have sex with them while I watch" 
+            99:: "I changed my mind!"
+
+            If 0
+                Player(Serene):: "The challenge is to wear a <Actor.towel_or_skirt> without underwear and then let the dog 'accidently' getting onto you!" 
+                If ActorLD > 50
+                    Actor:: "You are really naughty! Damn...Ok. I'll do it!"
+                    Actor2.show()
+                    Actor.strip()
+                    animatePair(Actor2, Actor, Doggy)
+                    "A little later, when my <Actor.boyfriend_or_girlfriend> bent down to pick up something <Actor.he_or_she> accidentally dropped, my dog jumped on <Actor.him_or_her>!"
+                    Actor:: "Oh shit! That's weird but I like it!"
+                    Sex(Actor2, Actor)
+                Else
+                    Actor(Sad):: "Oh god! No fucking way!"
+                    Actor:mood -= 5
+                    Actor:perversion += 1
+                EndIf
+            Elseif 1
+                // It was inviting some friends over and then having my lover flash them.
+                Player(Serene):: "The challenge is to strip naked, then I invite some of my friends and you show off to them?"
+                If ActorLD > 50
+                    Actor.strip()
+                    Actor(Flirty):: "But your friends can't touch me!"
+                    Player(Flirty)::"Only if you want!"
+                    setBackgroundCustom(livingroom)
+                    Actor3.show()
+                    Actor4.show()
+                    Actor5.show()
+                    Actor6.show()
+                    Actor7.show()
+                    Actor7:arousal += 25
+                    "After my friends arrived they noticed mym nude lover and couldn't help but ask how I managed to get <Actor.him_or_her> to do that. To which <Actor.he_or_she> responded it is a secret!" 
+                    "The little session with friends finally ends but suddenly one of my friends asks me if <Actor7.he_or_she> can fuck with my <Actor.boyfriend_or_girlfriend>."
+                    0:: "Yes"
+                    1:: "No"
+                    
+                    If 0
+                        Actor3.hide()
+                        Actor4.hide()
+                        Actor5.hide()
+                        Actor6.hide()
+                        If Actor.isInterestedIn(Actor7)
+                            Actor7.strip()
+                            Sex(Actor7, Actor)
+                            "<Actor7.name> did have a lots of fun with my <Actor.boyfriend_or_girlfriend>."
+                            "What a fun night."
+                        Else
+                            Actor(Sad):: "Oh god! No way!"
+                        Endif
+                    Endif
+                Else
+                    Actor(Sad):: "Oh god! No way!"
+                Endif
+            Elseif 2
+                // It was setting up my girl to have sex with a few male friends of hers while I watched.
+                Player(Serene):: "The challenge is to strip naked, then I invite some of my friends and you get fucked by those interested?"
+                If ActorLD > 50
+                    Actor.strip()
+                    Actor:: "Well...Ok, but no orgy..."
+                    Player:: "Trust me no orgy!"
+                    Actor3.show()
+                    Actor4.show()
+                    Actor5.show()
+                    Actor6.show()
+                    Actor7.show()
+                    Actor3:arousal += random(0, 25)
+                    Actor4:arousal += random(0, 25)
+                    Actor5:arousal += random(0, 25)
+                    Actor6:arousal += random(0, 25)
+                    Actor7:arousal += random(0, 25)
+                    "My friends arrive and ask me one last time if I still agree."
+                    0:: "Yes go for it. But <Actor.he_or_she> has to be agree!"
+                    1:: "Actually I changed my mind."
+                    
+                    If 0
+                        FuckDone1 = false
+                        FuckDone2 = false
+                        FuckDone3 = false
+                        FuckDone4 = false
+                        FuckDone5 = false
+                        GettingF = true
+                        count = 0
+                        While GettingF && !FuckDone && count < 5
+                            If !FuckDone1 && Actor.isInterestedIn(Actor7)
+                                Actor7.strip()
+                                Sex(Actor7, Actor)
+                                "<Actor7.name> did have a lots of fun with my <Actor.boyfriend_or_girlfriend>."
+                                "What a fun night."
+                                FuckDone1 = true
+                                Actor7.hide()
+                            ElseIf !FuckDone2 && Actor.isInterestedIn(Actor6)
+                                Actor6.strip()
+                                Sex(Actor6, Actor)
+                                "<Actor6.name> did have a lots of fun with my <Actor.boyfriend_or_girlfriend>."
+                                "What a fun night."
+                                FuckDone2 = true
+                                Actor6.hide()
+                            ElseIf !FuckDone3 && Actor.isInterestedIn(Actor5)
+                                Actor5.strip()
+                                Sex(Actor5, Actor)
+                                "<Actor5.name> did have a lots of fun with my <Actor.boyfriend_or_girlfriend>."
+                                "What a fun night."
+                                FuckDone3 = true
+                                Actor5.hide()
+                            ElseIf !FuckDone4 && Actor.isInterestedIn(Actor4)
+                                Actor4.strip()
+                                Sex(Actor4, Actor)
+                                "<Actor4.name> did have a lots of fun with my <Actor.boyfriend_or_girlfriend>."
+                                "What a fun night."
+                                FuckDone4 = true
+                                Actor4.hide()
+                            ElseIf !FuckDone5 && Actor.isInterestedIn(Actor3)
+                                Actor3.strip()
+                                Sex(Actor3, Actor)
+                                "<Actor3.name> did have a lots of fun with my <Actor.boyfriend_or_girlfriend>."
+                                "What a fun night."
+                                FuckDone5 = true
+                                Actor3.hide()
+                            Else
+                                Actor3.hide()
+                                Actor4.hide()
+                                Actor5.hide()
+                                Actor6.hide()
+                                Actor7.hide()
+                                Actor(Sad):: "Huum! I changed my mind, my libido is too low...!"
+                                "Do I check if it's true?"
+                                0::"Yes"
+                                1::"No"
+                                
+                                If 0
+                                    Player(Wink):: "Let me see!"
+                                    Player.strip()
+                                    Sex(Player, Actor)
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    EndIf
+                                Endif
+                                count += 5
+                            Endif
+                            count += 1
+                        EndWhile
+                    Endif
+            Elseif 3
+                // It was inviting some friends over and then having my lover flash them.
+                Player(Serene):: "The challenge is to strip naked, then you invite some of your friends and you show off to them?"
+                If ActorLD > 50
+                    Actor.strip()
+                    Player(Flirty):: "Your friends can touch you only if you want!"
+                    Actor(Flirty):: "We,ll see!"
+                    setBackgroundCustom(livingroom)
+                    Actor3G.show()
+                    Actor4G.show()
+                    Actor5G.show()
+                    Actor6G.show()
+                    Actor7G.show()
+                    Actor7G:arousal += 25
+                    "After <Actor.his_or_her> friends arrived they noticed my nude lover and couldn't help but ask how I managed to get <Actor.him_or_her> to do that. To which <Actor.he_or_she> responded it is a secret!" 
+                    "The little session <Actor.his_or_her> friends finally ends but suddenly one of <Actor.his_or_her> friends asks me if <Actor7G.he_or_she> can fuck with my <Actor.boyfriend_or_girlfriend>."
+                    0:: "Yes"
+                    1:: "No"
+                    
+                    If 0
+                        Actor3G.hide()
+                        Actor4G.hide()
+                        Actor5G.hide()
+                        Actor6G.hide()
+                        If Actor.isInterestedIn(Actor7G)
+                            Actor7G.strip()
+                            Sex(Actor7G, Actor)
+                            "<Actor7G.name> did have a lots of fun with my <Actor.boyfriend_or_girlfriend>."
+                            "What a fun night."
+                        Else
+                            Actor:: "Oh god! No way!"
+                        Endif
+                    Endif
+                Else
+                    Actor:: "Oh god! No way!"
+                Endif
+            Elseif 4
+                // It was setting up my girl to have sex with a few male friends of hers while I watched.
+                Player(Serene):: "The challenge is to strip naked, then you invite some of your friends and you get fucked by those interested?"
+                If ActorLD > 50
+                    Actor.strip()
+                    Actor:: "Well... not sure they will like but ok!..."
+                    Player:: "Don't worry!"
+                    Actor3G.show()
+                    Actor4G.show()
+                    Actor5G.show()
+                    Actor6G.show()
+                    Actor7G.show()
+                    Actor3G:arousal += random(0, 25)
+                    Actor4G:arousal += random(0, 25)
+                    Actor5G:arousal += random(0, 25)
+                    Actor6G:arousal += random(0, 25)
+                    Actor7G:arousal += random(0, 25)
+                    "<Actor.His_or_Her> friends arrive and ask me one last time if I still agree."
+                    0:: "Yes go for it. But <Actor.he_or_she> has to be agree!"
+                    1:: "Actually I changed my mind."
+                    
+                    If 0
+                        FuckDone1 = false
+                        FuckDone2 = false
+                        FuckDone3 = false
+                        FuckDone4 = false
+                        FuckDone5 = false
+                        GettingF = true
+                        count = 0
+                        While GettingF && count < 5
+                            If !FuckDone1 && Actor.isInterestedIn(Actor7G)
+                                Actor7G.strip()
+                                Sex(Actor7G, Actor)
+                                "<Actor7G.name> did have a lots of fun with my <Actor.boyfriend_or_girlfriend>."
+                                "What a fun night."
+                                FuckDone1 = true
+                            ElseIf !FuckDone2 && Actor.isInterestedIn(Actor6G)
+                                Actor6G.strip()
+                                Sex(Actor6G, Actor)
+                                "<Actor6G.name> did have a lots of fun with my <Actor.boyfriend_or_girlfriend>."
+                                "What a fun night."
+                                FuckDone2 = true
+                            ElseIf !FuckDone3 && Actor.isInterestedIn(Actor5G)
+                                Actor5G.strip()
+                                Sex(Actor5G, Actor)
+                                "<Actor5G.name> did have a lots of fun with my <Actor.boyfriend_or_girlfriend>."
+                                "What a fun night."
+                                FuckDone3 = true
+                            ElseIf !FuckDone4 && Actor.isInterestedIn(Actor4G)
+                                Actor4G.strip()
+                                Sex(Actor4G, Actor)
+                                "<Actor4G.name> did have a lots of fun with my <Actor.boyfriend_or_girlfriend>."
+                                "What a fun night."
+                                FuckDone4 = true
+                            ElseIf !FuckDone5 && Actor.isInterestedIn(Actor3G)
+                                Actor3G.strip()
+                                Sex(Actor3G, Actor)
+                                "<Actor3G.name> did have a lots of fun with my <Actor.boyfriend_or_girlfriend>."
+                                "What a fun night."
+                                FuckDone5 = true
+                            Else
+                                Actor3G.hide()
+                                Actor4G.hide()
+                                Actor5G.hide()
+                                Actor6G.hide()
+                                Actor7G.hide()
+                                Actor(Sad):: "Huum! I changed my mind, my libido is too low...!"
+                                "Do I check if it's true?"
+                                0::"Yes"
+                                1::"No"
+                                
+                                If 0
+                                    Player(Wink):: "Let me see!"
+                                    Player.strip()
+                                    Sex(Player, Actor)
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    EndIf
+                                Endif
+                                count += 5
+                            Endif
+                            count += 1
+                        EndWhile
+                    Endif
+                Else
+                    Actor(Disgusted):: "Oh god! No way!"
+                Endif
+            Endif
+            Actor3.delete()
+            Actor4.delete()
+            Actor5.delete()
+            Actor6.delete()
+            Actor7.delete()
+            Actor3G.delete()
+            Actor4G.delete()
+            Actor5G.delete()
+            Actor6G.delete()
+            Actor7G.delete()
+        Endif
+    SceneEnd()
+    timeout(174, sr_fso_hangoutdare2_cms) // Scene improved by Raddeck

@@ -1,0 +1,130 @@
+WHAT: all
+WHERE: home
+WHEN: 0-24
+WHO: Actor = getSpecific(Dating); If !Actor.isGay()
+OTHER: 
+
+    SceneStart()
+        TrouveRien = false
+        cherchami = true
+        If isModEnabled(rk_Vin_Base)
+            Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+            UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+            Actor.dress()
+            Actor.show()
+            "My <Actor.boyfriend_or_girlfriend> recently admitted to me that since <Actor.his_or_her> teenage years, <Actor.he_or_she> had always been curious about what it's like to be with a <Actor.man_or_woman>, but never had the guts to go through with it."
+            0:: "Pick a <Actor.gay_or_lesbian> lover with <Actor.name>"
+            1:: "Some fantasies should remain fantasies"
+            
+            If 0
+                "I told <Actor.him_or_her> that not only did I not mind <Actor.his_or_her> bi-curiousity, but I was more than happy to find <Actor.him_or_her> an experienced <Actor.man_or_woman> for <Actor.him_or_her> to experiment with."
+                "Who should it be? Must be openly into <Actor.men_or_women> and either good rapport, high perversion or had past sexual experience with me." 
+                While cherchami
+                    "Let see who is willing ..."
+                    selectNpc()
+                    Actor2 = getSelectedNpc()
+                    
+                    If Actor.isFemale() && Actor2.isFemale() && Actor2.isValid()
+                        "<Actor2.name> might be a good candidate .."
+                        If Actor2.isInterestedIn(Actor) && [Actor2:rapportwithplayer > 35 || Actor2:perversion > 65 || Actor2.hadSex()]
+                            "Fortunately, <Actor2.name> was delighted to accept our invitation. After all, why would she say no? I'm literally inviting <Actor2.him_or_her> to fuck my <Actor.boyfriend_or_girlfriend>!"
+                            Actor2.dress()
+                            Actor2.show()
+                            "A few days later, <Actor2.name> came to our place with a single purpose: to fulfill <Actor.name>'s lesbian curiousities."
+                            Sex(Actor2, Actor)
+                            
+                            Actor2.hide()
+                            Player(Curious):: "Baby, did you enjoy it?"
+                            Actor(Happy):: "Thank you for arranging everything, baby. You're the best <Player.boyfriend_or_girlfriend> in the world, honestly!"
+                            Actor:attractiontoplayer += random(0, 5)
+                            If random(0, 100) < Actor2:perversion
+                                Actor(Happy)::"I loved it, baby. Every moment of it. The orgasms were intense. I think I might actually be bisexual."
+                                Actor.makeInterested(Actor2)
+                            Else
+                                Actor(Happy)::"I kinda liked it, but it was quite awkward at times. I definitely prefer you as a lover, baby. Maybe I'm not that into girls after all."
+                            EndIf
+                            "Afterwards, we ended the night with good old heterosexual couple intercourse. Of course this time we were much more into it, having just either watched or experienced some hot lesbian sex as a foreplay."
+                            Sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            If Actor2.isInterestedIn(Actor) && OpenRelationship() && isModEnabled(vin_Polyamorous) && !Actor2.hasRelationship(Spouses, Dating)
+                                "Should I accept <Actor2.name> into our polyamourous relationship circle?"
+                                0::"Yes"
+                                1::"No"
+                                
+                                If 0
+                                    "Since we're in an open and polyamourous relationship, <Actor.name> stayed in touch wih <Actor2.name> and eventually started dating her as well in addition to me"
+                                    addNpcRelationship(Dating, Actor, Actor2)
+                                Else
+                                    "Since we are in an open, polyamorous relationship, Joe has kept in touch with us and admitted him into our polyamorous circle..."
+                                    exchangeContact(Actor2)
+                                EndIf
+                            EndIf
+                        Else
+                            "Unfortunately though, <Actor2.name> declined my offer."
+                        EndIf
+                    ElseIf Actor.isMale() && Actor2.isMale() && Actor2.isValid() 
+                        "<Actor2.name> might be a good candidate .."
+                        If Actor2.isInterestedIn(Actor) && [Actor2:rapportwithplayer > 35 || Actor2:perversion > 65 || Actor2.hadSex()]
+                            "Fortunately, <Actor2.name> was delighted to accept our invitation. After all, why would he say no? I'm literally inviting <Actor2.him_or_her> to fuck my <Actor.boyfriend_or_girlfriend>!"
+                            Actor2.dress()
+                            Actor2.show()
+                            "A few days later, <Actor2.name> came to our place with a single purpose: to fulfill <Actor.name>'s gay curiousities."
+                            Sex(Actor2, Actor)
+                            
+                            Actor2.hide()
+                            Player(Curious):: "Baby, did you enjoy it?"
+                            Actor(Happy):: "Thank you for arranging everything, baby. You're the best <Player.boyfriend_or_girlfriend> in the world, honestly!"
+                            Actor:attractiontoplayer += random(0, 5)
+                            If random(0, 100) < Actor2:perversion
+                                Actor(Happy)::"I loved it, baby. Every moment of it. The orgasms were intense. I think I might actually be bisexual."
+                                Actor.makeInterested(Actor2)
+                            Else
+                                Actor(Happy)::"I kinda liked it, but it was quite awkward at times. I definitely prefer you as a lover, baby. Maybe I'm not that into guys after all."
+                            EndIf
+                            "Afterwards, we ended the night with good old heterosexual couple intercourse. Of course this time we were much more into it, having just either watched or experienced some hot gay sex as a foreplay."
+                            Sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            If Actor2.isInterestedIn(Actor) && OpenRelationship() && isModEnabled(vin_Polyamorous) && !Actor2.hasRelationship(Spouses, Dating)
+                                "Should I accept <Actor2.name> into our polyamourous relationship circle?"
+                                0::"Yes"
+                                1::"No"
+                                
+                                If 0
+                                    "Since we're in an open and polyamourous relationship, <Actor.name> stayed in touch wih <Actor2.name> and eventually started dating her as well in addition to me"
+                                    addNpcRelationship(Dating, Actor, Actor2)
+                                Else
+                                    "Since we are in an open, polyamorous relationship, Joe has kept in touch with us and admitted him into our polyamorous circle..."
+                                    exchangeContact(Actor2)
+                                EndIf
+                            EndIf
+                        Else
+                            "Unfortunately though, <Actor2.name> declined my offer."
+                        EndIf
+                    EndIf
+                    "I coudn't think of any <Actor2.gay_or_lesbian> or bisexual <Actor2.men_or_women> who would be a good candidate."
+                    "Do I keep searching?"
+                    0::"Yes"
+                    1::"No"
+                    
+                    If 1
+                        cherchami = false
+                        TrouveRien = true
+                    EndIf
+                EndWhile
+                If TrouveRien
+                    "I coudn't think of any <Actor2.gay_or_lesbian> or bisexual <Actor2.men_or_women> who would be a good candidate."
+                    "Let's think about this some other time."
+                EndIf
+            Else
+                Player(Sad):: "Some fantasies should just remain fantasies, honey."
+                Actor(Sad):: "Maybe ..."
+            EndIf
+        EndIf
+    SceneEnd() // Scene improved by Raddeck
+    timeout(200, dating_bicurious)

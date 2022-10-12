@@ -1,0 +1,106 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    // At a nightclub or bar, an attractive guy or girl seduces you and takes you back to their place (if you're with your SO, they invite you back for a threesome), only to turn out to be a tentacle monster in disguise
+    
+    SceneStart()
+        Wetdream = false
+        "As I sleep, I begin to have a nightmare..."
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        "I was at the bar when a hot stranger approached me. I must say I'm flattered ..."
+        Actor = generatePersonTemporary()
+        While !Player.isInterestedIn(Actor)
+            Actor = generatePersonTemporary()
+        Endwhile
+        Actor:age => Random(18, 28)
+        Actor:attractiveness => Random(85, 100)
+        Actor.randomizeFace()
+        Actor.randomizeHairs()
+        Actor.dress()
+        Actor.show()
+        "<Actor.He_or_She> introduced <Actor.himself_or_herself> as <Actor.name>. Not only is <Actor.he_or_she> incredibly <Actor.handsome_or_beautiful> but <Actor.he_or_she> is very confident and charming as well. We hit off instantly."
+        Actor:: "What do you say that we get out of here and back to my place?"
+        If isWithCompanion()
+            Actor:: "Your <CurrentCompanion.boyfriend_or_girlfriend> is invited too of course. The more the merrier."
+            CurrentCompanion:: "I'm down for a threesome, babe!"
+        Endif
+        0:: "Follow <Actor.name> home"
+        1:: "I barely know <Actor.him_or_her>!"
+        
+        If 0
+            setBackground(home)
+            "Soon we ended up in <Actor.name>'s bedroom, and I started making out with <Actor.him_or_her>! Things are very getting heated."
+            animatePair(Player, Actor, Kissing)
+            Player:: "Wait ... something isn't right"
+            Actor.hide()
+            Actor.delete()
+            Actor = generateCreatureTemporary(Tentacles)
+            Actor.show()
+            "Suddenly, <Actor.handsome_or_beautiful> stranger started ... melting into some sort of terrible creature full of tentacles."
+            "Before I could react, I was knocked down to the ground by one of such tentacles."
+            Player.animate(fightlost)
+            Player:: "Don't hurt me, I surrender!"
+            If !Player.isMale()
+                "Soon, the tentacles wrap around me and prevent me from escaping ..."
+                "Before long, some of the tentacles were penetrating my holes and soon I was overcome with pleasure to even resist anymore."
+                Sex(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            Else
+                "To my shock, the tentacle monster pays me no further interest and instead focuses on my <CurrentCompanion.boyfriend_or_girlfriend> <CurrentCompanion.name>."
+                "Soon, the tentacles wrap around <CurrentCompanion.name> and prevent <CurrentCompanion.him_or_her> from escaping ..."
+                CurrentCompanion:: "Ahhhhhhhhhhhhhhhhhh"
+                "Before long, some of the tentacles were penetrating <CurrentCompanion.his_or_her> holes and soon <CurrentCompanion.he_or_she> was overcome with pleasure to even resist anymore."
+                "I had no choice but watch"
+                Sex(Actor, CurrentCompanion)
+            Endif
+            Wetdream = true
+            arousal += Random(1, 25)
+        Endif
+        If Wetdream
+            Bonus = Random(25, 70)
+            If Player:arousal > Bonus
+                "Damn, this ultra erotic dream makes me want to masturbate ..."
+                Player.strip()
+                Filter(solo)
+                sex(Player)
+                arousal -= Random(5, 25)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+            Else
+                If Random(0, 100) > 50
+                    If Player.isMale()
+                        "Damn, I came in my panty because of this ultra erotic dream ..."
+                        arousal -= Random(25, 50)
+                    Else
+                        "Damn, I wetted my panty because of this ultra erotic dream ..."
+                        arousal -= Random(25, 50)
+                    Endif
+                    "Should I take a shower?"
+                    0::"Yes"
+                    1::"No"
+                    
+                    If 0
+                        followUp(rk_VB_Personal_Care)
+                    Else
+                        If Player.isMale()
+                            "I decided to go back to sleep with my panty full of cum ..."
+                            perversion += 1
+                        Else
+                            "I decided to go back to sleep with my panty all wet ..."
+                            perversion += 1
+                        Endif
+                    Endif
+                Endif
+            Endif
+        Endif
+    SceneEnd() // Scene improved by Raddeck
+    // timeout(200, tentacles_disguise)

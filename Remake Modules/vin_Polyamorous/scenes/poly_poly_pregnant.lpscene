@@ -1,0 +1,107 @@
+WHAT: all
+WHERE: home
+WHEN: 0-24
+WHO: Actor = getSpecific(Dating); Actor2 = Actor.getRelatedPerson(Poly); Actor3 = getSpecific(Dating); If !Actor.isPregnant() || !Actor2.isPregnant()
+OTHER: isModEnabled(vin_Pregnancy)
+
+    // - Your poly partner reveals they're trying for a baby with their other partner. You can encourage them, or put an end to it and suggest that they or their partner (depending on who can actually get pregnant) gets impregnated by you or another poly partner of yours instead.
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor.dress()
+        "<Actor.name> just admitted to me that <Actor.he_or_she> and <Actor.his_or_her> other <Actor2.boyfriend_or_girlfriend> <Actor2.name> has been trying for a baby."
+        If Player.isMale()
+            0:: "Encourage them"
+            1:: [!Actor.isMale() && Player.isMale()] || [Actor.isMale() && !Player.isMale()] :: "You and I should try for a baby instead"
+            2:: [!Actor2.isMale() && Player.isMale()] || [!Actor.isMale() && Player.isMale()] :: "<Actor2.name> and I should try for a baby instead"
+            3:: [Actor.isMale() && !Actor3.isMale()] || [!Actor.isMale() && Actor3.isMale()] :: "You and <Actor3.name> should try for a baby instead"
+            4:: [Actor2.isMale() && !Actor3.isMale()] || [!Actor2.isMale() && Actor3.isMale()] :: "<Actor2.name> and <Actor3.name> should try for a baby instead"
+            5:: !Actor2.isMale() && !Actor3.isMale() && Player.isMale() :: "We should try together for a baby instead"
+            99:: "Discourage them altogether"
+            
+        Else
+            0:: "Encourage them"
+            1:: [!Actor.isMale() && Player.isMale()] || [Actor.isMale() && !Player.isMale()] :: "You and I should try for a baby instead"
+            2:: [!Actor2.isMale() && Player.isMale()] || [!Actor.isMale() && Player.isMale()] :: "<Actor2.name> and I should try for a baby instead"
+            3:: [Actor.isMale() && !Actor3.isMale()] || [!Actor.isMale() && Actor3.isMale()] :: "You and <Actor3.name> should try for a baby instead"
+            4:: [Actor2.isMale() && !Actor3.isMale()] || [!Actor2.isMale() && Actor3.isMale()] :: "<Actor2.name> and <Actor3.name> should try for a baby instead"
+            5:: Actor2.isMale() && Actor3.isMale() && !Player.isMale()] :: "We should try together for a baby instead"
+            99:: "Discourage them altogether"
+        
+        EndIf
+        
+        If 99
+            Player(Happy):: "Trust me, having a child is a lot of work. You two aren't ready for it."
+            Player(Happy):: "Also, be prepared to be woken up often during the night!"
+        Else
+            "We all agreed that would be the best arrangement both for our current situation and the child's future."
+            If 0
+                A1 = Actor
+                A2 = Actor2
+            ElseIf 1
+                A1 = Actor
+                A2 = Player
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf        
+            ElseIf 2
+                A1 = Actor2
+                A2 = Player
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            ElseIf 3
+                A1 = Actor
+                A2 = Actor3        
+            ElseIf 4
+                A1 = Actor2
+                A2 = Actor3 
+            Else
+                A1 = Actor2
+                A2 = Actor3
+                A3 = Player
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+            EndIf
+            trois = false
+            DeuTroi = false
+            If !A1.isMale() && A2.isMale()
+                Preg = A1
+                Impreg = A2
+            ElseIf !A2.isMale() && A1.isMale()
+                Preg = A2
+                Impreg = A1
+            ElseIf !A2.isMale() && !A1.isMale() && A3.isMale()
+                Preg = A2
+                Preg1 = A1
+                Impreg = A3
+                Preg1.setWantsBabies(true)
+                trois = true
+            ElseIf A1.isMale() && A2.isMale() && !A3.isMale()
+                Preg = A3
+                Impreg = A2
+                Impreg1 = A1
+                DeuTroi = true
+            Else
+                Preg = A2
+                Impreg = A1        
+            EndIf
+            Preg.setWantsBabies(true)
+            Preg.show()
+            Impreg.show()
+            If trois
+                Sex(Preg, Impreg, Preg1)
+            ElseIf DeuTroi
+                Sex(Preg, Impreg, Impreg1)
+            Else
+                Sex(Impreg, Preg)
+            EndIf
+            Preg.impregnate(Impreg)
+            "I have a funny feeling a baby was conceived that night"
+        EndIf
+    SceneEnd() // Improved by Raddeck
+    timeout(500, poly_poly_pregnant)

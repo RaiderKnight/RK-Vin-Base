@@ -1,0 +1,90 @@
+WHAT: all
+WHERE: prison
+WHEN: 0-24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        "Judging from the sounds of moaning, the inmate in the cell next door is having some sexy alone time."
+        0:: "Peep"
+        1:: "No big deal"
+    
+        If 0
+            "Thankfully, there's a tiny hole between the cells that gives me great view of what's going on."
+            Actor = generatePersonTemporary()
+            If !Player.isMale()
+                While Actor.isMale()
+                    Actor = generatePersonTemporary()
+                Endwhile
+            Else
+                While !Actor.isMale()
+                    Actor = generatePersonTemporary()
+                Endwhile
+            Endif
+            Filter(Solo)
+            sex(Actor)
+            Actor.show(2)
+            Player.show(0)
+            arousal += 1
+            perversion += 1
+            "<Actor.He_or_She> must be feeling lonely ... To be fair, so am I ..."
+            If Player.isMale()
+                0:: "Offer <Actor.him_or_her> a show"
+                1:: "Ask <Actor.him_or_her> to slide his cock through the wall"
+                2:: "Slide my slide cock through the wall."
+                99:: "Nah"
+                
+                If 0
+                    "I found the right opportunity to make <Actor.him_or_her> a show."
+                    If Actor.isInterestedIn(Player)
+                        "Eventually, <Actor.he_or_she> looked..."
+                        perversion += 1
+                        Filter(Solo)
+                        sex(Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                    Else
+                        "<Actor.He_or_She> doesn't liked the show I guess, <Actor.he_or_she> was looking elsewhere!"
+                        mood -= 1
+                    Endif
+                Elseif 1
+                    Filter(Blowjob)
+                    sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                Elseif 2
+                    Filter(Blowjob)
+                    sex(Actor, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                Endif
+            Else
+                0:: "Offer <Actor.him_or_her> a show"
+                1:: "Nah"
+                
+                If 0
+                    "I found the right opportunity to make <Actor.him_or_her> a show."
+                    If Actor.isInterestedIn(Player)
+                        "Eventually, <Actor.he_or_she> looked..."
+                        perversion += 1
+                        Filter(Solo)
+                        sex(Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                        EndIf
+                    Else
+                        "<Actor.He_or_She> doesn't liked the show I guess, <Actor.he_or_she> was looking elsewhere!"
+                        mood -= 1
+                    Endif
+                Endif
+            Endif
+        Endif
+    SceneEnd()
+    timeout(300, prison_sex) // scene improved by Raddeck

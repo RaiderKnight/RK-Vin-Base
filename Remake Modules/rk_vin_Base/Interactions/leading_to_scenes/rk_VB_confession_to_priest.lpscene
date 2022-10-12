@@ -1,0 +1,155 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    sceneStart()
+        If isModEnabled(rk_vin_Base)
+            Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+            UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+            Master = generatePersonTemporary()
+            While !Master.isMale()
+                Master = generatePersonTemporary()
+            Endwhile
+            setBackground(place_of_worship)
+            Master.dress(Priest-Robe_1)
+            Master.show()
+            Master.moveToPersonStand(Player, 50)
+            faceEachOther(Player, Master)
+            Master(Happy)::"Greetings my child, what would you like to confess today?"    
+            0:: "Confess"
+            99:: "Leave"
+            
+            If 0
+                bus = false
+                mas = false
+                inc = false
+                kar = false
+                mon = false
+                per = false
+                soc = false
+                confessingSins = true
+                While confessingSins
+                    "What I should confess?"
+                    0:: !bus && business_reputation < 50 ::"My business reputation problem"
+                    1:: !mas && masochist < 0::"My control freak problem"
+                    2::isModEnabled(vin_Incest) && !inc && incest > 30 ::"My incest problem"
+                    3:: !kar && karma > 30::"My bad karma"
+                    4:: !mon && money < 2000::"My money problem"
+                    5:: !per && perversion > 30::"My perversions problem"
+                    6:: !soc && interpersonal < 50::"My sociability problem"
+                    99::"Nevermind I'm not ready!"
+                    
+                    If 0
+                        bus = true
+                        Player(Sad)::"My business is not going very well, I have trouble with my employees,...!"
+                        Master(Happy)::"By the hand of God, I give you courage, more esteem and inspiration for your future campaigns..."
+                        Player(Happy)::"Amen!"
+                        business_reputation += random(5, 15)
+                        mood += 3
+                    ElseIf 1
+                        mas = true
+                        Player(Sad)::"I have a big problem of obsessiveness towards my close relations, I like to control everything, can you help me?"
+                        Master(Happy)::"By the hand of God, I reduce your masochistic side and free you from your hatred..."
+                        Player(Happy)::"Amen!"
+                        masochist += random(5, 15)
+                        mood += 3
+                    ElseIf 2
+                        inc = true
+                        Player(Sad)::"I have a big problem of weird sex with my relatives, I like to control everything, can you help me?"
+                        Master(Happy)::"By the hand of God, I reduce your masochistic side and free you from your hatred..."
+                        Player(Happy)::"Amen!"
+                        incest -= random(5, 15)
+                        mood += 3
+                    ElseIf 3
+                        kar = true
+                        Player(Sad)::"All I do these days is shit! I'm making nothing but mistakes, a pain in the ass!"
+                        Master(Happy)::"By the hand of God, I give you happiness, more esteem and reduce your discomfort..."
+                        Player(Happy)::"Amen!"
+                        karma -= random(5, 15)
+                        mood += random(5, 10)
+                    ElseIf 4
+                        mon = true
+                        CashP = Random(50, 100)
+                        BonusP = Random(100, 200)
+                        CashPloc = CashP.convertToLocalCurrency()
+                        BonusPloc = BonusP.convertToLocalCurrency()
+                        Random
+                            txtRel = "Jesus"
+                            txtRel = "God"
+                            txtRel = "Allah"
+                            txtRel = "Buddha"
+                        endRandom
+                        Player(Happy)::"I have a big money problem lately, I can't pay some of my bills, can you help me?"
+                        If Master.isInterestedIn(Player) && Master:arousal > 15 && Master:perversion > 50
+                            Master.moveToPersonStand(Player, 50)
+                            faceEachOther(Player, Master)
+                            Master(Happy)::"<txtRel> had forbidden his disciples to bargain in a temple, but as you are pitiful to me..."
+                            Master(Happy)::"The priest digs in his pocket and gives me <CashPloc>, Forgive me God!"
+                            Player(Happy)::"Wow thank you priest!"
+                            Master(Happy)::"Make good use of it...!"
+                            money += CashP
+                            Master(Flirty)::"Hey! If you are interested, I can give you more cash in exchange for sex?"
+                            0:: "Say yes"
+                            1:: "Say no thanks!"
+                           
+                            If 0
+                                perversion += 1
+                                Master(Flirty)::"Let's go somewhere more private"
+                                setBackground(bedroom)
+                                Master:rapportwithplayer += random(0, 2)
+                                Master:attractiontoplayer += random(0, 2)
+                                "We decided to go in the dark alley to get more privacy..."
+                                Player.strip()
+                                Master.strip()
+                                sex(Player, Master)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                money += BonusP
+                            Else
+                                Player(Sad)::"Sorry, I'm not in the mood to have sex with a priest!"
+                            Endif
+                        Elseif Master.isInterestedIn(Player)
+                            Master(Happy)::"<txtRel> had forbidden his disciples to bargain in a temple, but as you are pitiful to me..."
+                            Master(Happy)::"The priest digs in his pocket and gives me <CashPloc>, Forgive me God!"
+                            Player(Happy)::"Wow thank you priest!"
+                            money += CashP
+                        Else
+                            Master(Happy)::"<txtRel> had forbidden his disciples to bargain in a temple, same thing here my child!"
+                        Endif
+                        Player(Happy)::"Amen!"
+                        money += random(50, 100)
+                        mood += 3
+                    ElseIf 5
+                        per = true
+                        Player(Sad)::"I have a big problem of perversion! I want to fuck or watch porn all the time, can you help me?"
+                        Master(Happy)::"By God's hand, I reduce your perversion problem and free you from your desire to fuck for a while."
+                        Player(Happy)::"Amen!"
+                        perversion -= random(5, 15)
+                        arousal => 0
+                        mood += 3
+                    ElseIf 6
+                        soc = true
+                        Player(Sad)::"I have a hard time fitting in with a group or just approaching someone to talk."
+                        Master(Happy)::"By the hand of God, I give you courage, more esteem and reduce your shyness."
+                        Player(Happy)::"Amen!"
+                        interpersonal += random(5, 15)
+                        mood += 3
+                    Else
+                        Master(Happy)::"Don't worry, just come another day!"
+                        Player(Sad)::"I think I'll leave!"
+                        Master(Happy)::"Ah well, in that case I wish you a nice day!"
+                        confessingSins = false
+                    Endif
+                EndWhile
+            Else
+                Player(Happy)::"In fact, I was just leaving!"
+                Master(Happy)::"Ah well, in that case I wish you a nice day!"
+            Endif
+        EndIf
+        passTime(0.5, 1)
+    sceneEnd() // Improved by Raddeck

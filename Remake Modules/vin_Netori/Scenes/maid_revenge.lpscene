@@ -1,0 +1,164 @@
+WHAT: work_hourly
+WHERE: hotel
+WHEN: 0 - 24
+WHO: none
+OTHER: Random(0, 400) < attractiveness && perversion < Random(0, 100) && masochist < 0
+
+    SceneStart()
+        Player.animate(sweep)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        "Damn it! Just as I was about to finish my shift, an angry customer went to me to complain about their dirty room and demanded we clean it again."
+        Actor = generatePersonTemporary()
+        While !Actor.isInterestedIn(Player)
+            Actor = generatePersonTemporary()
+        Endwhile
+        Actor2= generatePersonTemporary()
+        While !Actor2.isSameGender(Actor)
+            Actor2 = generatePersonTemporary()
+        Endwhile
+        addNpcRelationship(Dating, Actor, Actor2)
+        Actor.dress()
+        Actor.show(2)
+        "So I approach <Actor.him_or_her> to see what <Actor.he_or_she> wants..."
+        Actor2(Curious):: "Housekeeper! Are you the Housekeeper?"
+        Player(Happy)::"Yes, what can I do for you <Actor.sir_or_miss>?"
+        Actor(Serene):: "I need my room cleaned! Like I said to your manager..."
+        Player(Happy)::"Sure!"
+        Player.moveToPersonStand(Actor, 50)
+        Player.animate(socialize)
+        Actor.animate(socialize)
+        Actor2(Happy):: "Cool, come right in! Sorry, my <Player.husband_or_wife> is difficult sometimes."
+        Player(Happy):: "This should only take 15 minutes."
+        Actor2(Happy):: "Take your time I'm not in a hurry!"
+        Actor2.hide()
+        Actor.hide()
+        Player.animate(sweep)
+        "I proceeded to clean the room, starting from the bathroom."
+        If Actor:arousal > 25 && Actor:perversion > 75 && Actor2:arousal > 25 && Actor2:perversion > 75
+            Player.animate()
+            "The moment I stepped out of the bathroom to clean the rest of the room though, I was greeted by an interesting sight ..."
+            Actor.strip()
+            Actor2.strip()
+            Sex(Actor2, Actor)
+            Player(Embarrassed):: "Excuse me! You could have waited until I was done!"
+            Actor2(Flirty):: "Well now you're done, so come join us!"
+            "What should I do?"
+            0:: "Accept"
+            1:: "Storm off"
+                
+            If 0
+                Player(Flirty):: "Oh well, let's do some overtime..."
+                "Yeah, the customer is king ... but karma is a bitch!"
+                perversion += Random(0, 2)
+                Player.strip()
+                Sex(Actor2, Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+                masochist -= Random(0, 5)
+                CashO = Random(50, 150)
+                CashOloc = CashO.convertToLocalCurrency()
+                "I got <CashOloc> for cleaning!"
+                money += CashO
+                mood += 0.5
+                energy -= 5
+                "I did an impeccable cleaning, the <Actor2.man_or_woman> was ultra satisfied and gave me a good tip."
+                money += Random(150, 300)
+                Player.animate()
+                Actor.hide()
+                Actor2.hide()
+            Else
+                Actor.hide()
+                Actor2.hide()
+                "I stormed out of the room. What a weird couple ..."
+                masochist -= Random(0, 0.5)
+            Endif
+        Elseif Actor2:arousal > 25 && Actor2:perversion > 75
+            Player.animate()
+            "The moment I stepped out of the bathroom to clean the rest of the room though, I was greeted by an interesting sight ..."
+            Actor2.strip()
+            Actor2.show(2)
+            Player(Embarrassed):: "Excuse me ... why are you naked?"
+            Actor2(Flirty):: "You know: You're such a sight to behold - I couldn't help myself. Why don't we have some fun?"
+            Actor2(Flirty):: "My <Player.husband_or_wife> will be out for a while, and <Player.he_or_she> never gets <Player.hard_or_wet> anymore anyway. Blaming <Player.his_or_her> low sex drive on the dirty hotel room won't change that ..."
+            0:: "Accept"
+            1:: "Storm off"
+                
+            If 0
+                Player(Flirty):: "Oh well, thanks to your annoying <Player.husband_or_wife>'s complaints, I'm having to work overtime. Might as well make the most of it ..."
+                "Yeah, the customer is king ... but karma is a bitch!"
+                perversion += Random(0, 1)
+                Player.strip()
+                Sex(Actor2, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                masochist -= Random(0, 5)
+                CashO = Random(50, 150)
+                CashOloc = CashO.convertToLocalCurrency()
+                "I got <CashOloc> for cleaning!"
+                money += CashO
+                mood += 0.5
+                energy -= 5
+                "I did an impeccable cleaning, the <Actor2.man_or_woman> was ultra satisfied and gave me a good tip."
+                money += Random(100, 150)
+                Player.animate()
+                Actor2.hide()
+            Else
+                Actor2.hide()
+                "I stormed out of the room. What a weird couple ..."
+                masochist -= Random(0, 0.5)
+            Endif
+        Elseif Actor:arousal > 25 && Actor:perversion > 75
+            Player.animate()
+            "The moment I stepped out of the bathroom to clean the rest of the room though, I was greeted by an interesting sight ..."
+            Actor.strip()
+            Actor.show(2)
+            Player(Embarrassed):: "Excuse me ... why are you naked?"
+            Actor(Flirty):: "You know: You're such a sight to behold - I couldn't help myself. Why don't we have some fun?"
+            Actor(Flirty):: "My <Player.husband_or_wife> will be out for a while, and <Player.he_or_she> never gets <Player.hard_or_wet> anymore anyway. Blaming <Player.his_or_her> low sex drive on the dirty hotel room won't change that ..."
+            0:: "Accept"
+            1:: "Storm off"
+                
+            If 0
+                Player(Flirty):: "Oh well, thanks to your annoying <Player.husband_or_wife>'s complaints, I'm having to work overtime. Might as well make the most of it ..."
+                "Yeah, the customer is king ... but karma is a bitch!"
+                perversion += Random(0, 1)
+                Player.strip()
+                Sex(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                masochist -= Random(0, 5)
+                CashO = Random(50, 150)
+                CashOloc = CashO.convertToLocalCurrency()
+                "I got <CashOloc> for cleaning!"
+                money += CashO
+                mood += 0.5
+                energy -= 5
+                "I did an impeccable cleaning, the <Actor.man_or_woman> was ultra satisfied and gave me a good tip."
+                money += Random(100, 150)
+                Player.animate()
+                Actor.hide()
+            Else
+                Actor.hide()
+                "I stormed out of the room. What a weird couple ..."
+                masochist -= Random(0, 0.5)
+            Endif
+        Else
+            CashO = Random(50, 150)
+            CashOloc = CashO.convertToLocalCurrency()
+            "I got <CashOloc> for cleaning!"
+            money += CashO
+            mood += 0.5
+            energy -= 5
+            "I did an impeccable cleaning, the <Actor.man_or_woman> was ultra satisfied and gave me a good tip."
+            money += Random(20, 50)
+            Player.animate()
+            Actor.hide()
+        Endif
+    SceneEnd() // Scene improved by Raddeck
+    timeout(500, maid_revenge)

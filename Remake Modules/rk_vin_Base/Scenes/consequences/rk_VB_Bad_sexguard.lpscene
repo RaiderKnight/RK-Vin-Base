@@ -1,0 +1,104 @@
+WHAT: masturbate
+WHERE: prison
+WHEN: 0-24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        preferentialtreatment = Player.getActorVar(rk_VB_preferentialtreatment)
+        Actor = generatePersonTemporary()
+        Actor.dressUniform(Police)
+        Actor1 = generatePersonTemporary()
+        Actor1.dressUniform(Police)
+        Actor1:arousal => random(35, 50)
+        Actor:arousal => random(35, 50)
+        Actor1:perversion => random(70, 100)
+        Actor:perversion => random(70, 100)
+        Actor.hide()
+        Actor1.hide()
+        Player.strip()
+        Player.setNoRedress(true)
+        If isModEnabled(rk_vin_Base)
+            If preferentialtreatment < 61
+                Actor.Show()
+                Actor(Curious)::"<Player.name>, is that your name?" 
+                Player(Curious)::"Ye- Yes, <Actor.sir_or_madam>?"
+                Actor(Evil)::"Stand!"
+                Player(Curious)::"Okay, I'll just put on some clothes!"
+                Actor(Evil)::"Leave your clothes where they are, come here right now!"
+                Player(Curious)::"Yes, <Actor.sir_or_madam>?"
+                Player.moveToPersonStand(Actor, 40)
+                Actor(Evil)::"If you don't want the attention of the rest of the inmates, you'll come closer!"
+                "I nodded and approached where <Actor.he_or_she> stood on the other side of the bars, but a foot away."
+                Actor(Evil)::"Bring your hands closer!"
+                If !Player.isMale()
+                    "<Actor.He_or_She> pulled me roughly forward, pulling my body back against the bars as <Actor.he_or_she> slid <Actor.his_or_her> fingers into my vagina."
+                    "<Actor.He_or_She> smiled slowly, smelling my sweet juices. I felt my pussy react, my round ass muscles tensing as <Actor.he_or_she> watched me, savoring my intimate scent."
+                Else
+                    "<Actor.He_or_She> grabs my penis and pulls me roughly forward, bringing my body back against the bars as <Actor.he_or_she> continues to masturbate me."
+                    "<Actor.He_or_She> smiled slowly, smelling <Actor.his_or_her> hand. I felt my cock react, my round ass muscles tensing as <Actor.he_or_she> watched me, savoring my intimate scent."
+                EndIf
+                Actor(Evil)::"You know that's against the rules! Masturbation is frowned upon"
+                If !Actor.isMale()
+                    Actor(Evil)::"You haven't even been in here that long, and you already need pussy that bad, huh?"
+                    Actor(Evil)::"Answer me, slut. You need pussy pretty badly, don't you? Just dying to feel a hot pussy again, aren't you?"
+                Else
+                    Actor(Evil)::"You haven't even been in here that long, and you already need cock that bad, huh?"
+                    Actor(Evil)::"Answer me, slut. You need cock pretty badly, don't you? Just dying to feel a hot cock again, aren't you?"
+                EndIf
+                "I swallowed, looking up at <Actor.him_or_her>, then down, feeling the metal bars against my body as I squirmed a little, not knowing how to respond as <Actor.he_or_she> maintained <Actor.his_or_her> grip on my <Actor.dick_or_hands>."
+                "<Actor.He_or_She> smiled, seeing my tongue peek out of my mouth, nervously wetting my lips."
+                Actor(Evil)::"You look like you like to squirm. Rub your niples against these bars!"
+                "I slowly rubbed myself against them, embarrassed as <Actor.he_or_she> watched..."
+                Actor(Evil)::"Mhmm, you be a good slut, and I'll let you have it!" 
+                Actor(Evil)::"After all, it's either that or you get punished. And I'd hate to see a pretty little thing like you get punished..." 
+                "<Actor.He_or_She> looked both ways to be sure no other guards were around, then <Actor.he_or_she> entered my cell and closed the door behind <Actor.him_or_her>!"
+                Actor(Evil)::"Kneel down!"
+                Actor.strip()
+                "I looked up at <Actor.him_or_her>. The look in <Actor.his_or_her> eye made any indecision on my part disappear as I quickly knelt."
+                Actor(Evil)::"Don't pretend you don't know what to do! Mastubate it!"
+                If !Actor.isMale()
+                    Filter(Fingering)
+                Else
+                    Filter(Handjob)
+                EndIf
+                sex(Player, Actor)
+                Actor:energy += random(25, 50)
+                Actor:arousal += random(25, 50)
+                Actor(Evil)::"Mmm, this is gonna be fun!"
+                If !Actor.isMale()
+                    Actor(Evil)::"Fuck me!"
+                    sex(Player, Actor)
+                    Actor(Evil)::"Now clean all your mess, lick my pussy!"
+                    Filter(LickPussy)
+                    sex(Player, Actor)
+                Else
+                    If !Player.isMale()
+                        sex(Actor, Player)
+                    EndIf
+                    Actor(Evil)::"Now turn around!"
+                    Player(Curious)::"Sir??"
+                    Actor(Evil)::"I said, turn around!"
+                    Filter(Anal)
+                    sex(Actor, Player)
+                    Actor(Evil)::"Now suck it!"
+                    Filter(Blowjob)
+                    sex(Player, Actor)
+                EndIf
+                Actor(Evil)::"Guess you won't have a hard time going to sleep now!"
+                Actor(Evil)::"But be sure I'll check on you again in case insomnia causes you to break the rules again!"
+                "<Actor.He_or_She> turned on <Actor.his_or_her> heel and left me staggering back to my cot, with <Actor.his_or_her> taste still on my lips."
+                mood -= random(0, 10)
+            Else
+                Actor.Show()
+                Actor(Curious)::"Everything fine here?"
+                Player(Happy)::"All fine, thanks!"
+                Actor(Happy)::"Good, have a nice day!"
+                mood += random(0, 2)
+            EndIf
+        EndIf
+        Actor.hide()
+        Actor1.hide()
+        Player.setNoRedress(false)
+    SceneEnd()
+    timeout(500, rk_VB_Bad_sexguard)

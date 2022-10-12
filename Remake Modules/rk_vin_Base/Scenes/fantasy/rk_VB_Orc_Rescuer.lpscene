@@ -1,0 +1,66 @@
+WHAT: all
+WHERE: all, -home, -prison
+WHEN: 0-24
+WHO: none
+OTHER: PercentageOrcs > 0 && !Player.isRace(Orc)
+
+    
+    SceneStart()
+        If isModEnabled(rk_vin_Base)
+            Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+            UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+            "I was just going about my business as usual when someone caught my eye." 
+            Actor = generatePersonTemporary()
+            While !Player.isInterestedIn(Actor)
+                Actor = generatePersonTemporary()
+            endWhile
+            Actor:age => Random(18, 29)
+            Actor:attractiveness => Random(80, 100)
+            Actor.randomizeFace()
+            Actor.randomizeHairs()
+            Actor.blendPreset(Orc)
+            Actor.dress()
+            Actor.show()
+            Actor.moveToPersonStand(Player, 40)
+            Player.animate(martialart)
+            "It's an orc! Thankfully, I managed to react in time. I'm now trying to desperately fight off my attacker."
+            Actor.animate(martialart)
+            "As luck would have it, another strong orc appeared out of nowhere. I was freaked out for a moment, thinking it was an accomplice."
+            Actor2 = generatePersonTemporary()
+            While !Player.isInterestedIn(Actor2)
+                Actor2 = generatePersonTemporary()
+            endWhile
+            Actor2.makeInterested(Player)
+            Actor2.blendPreset(Orc)
+            Actor2.dress()
+            Actor2.show()
+            "Turns out, this stranger attacked my attacker instead and helped me. Overwhelmed by <Actor2.his_or_her> strength, my attacker turned and ran away."
+            Actor(Angry)::"You traitor, the Orc Council will be informed of your treachery!"
+            Actor2(Serene):: "It's people like you who give us a bad name! We must attack the bad guys, not the good citizens..."
+            Actor.hide()
+            Actor.animate()
+            Actor2.animate()
+            Actor2(Serene):: "Damn stupid orc!"
+            "My rescuer introduces <Actor2.himself_or_herself> as <Actor2.name>. <Actor2.He_or_She> doesn't hide the fact that <Actor2.he_or_she>'s an orc, but soon reassures me that <Actor2.he_or_she>'s not a bad and really likes human."
+            "<Actor2.name> does seem very well-adjusted and charming even. Soon enough, <Actor2.he_or_she> asks me out on a date and promises to show me how good they can be with people they likes."
+            0:: "Go on a date with <Actor2.him_or_her>"
+            1:: "Exchange numbers for another time"
+            2:: "Reject <Actor2.him_or_her>"
+            
+            If 0
+                Actor2.makePermanent()
+                exchangeContact(Actor2)
+                endDate()
+                Actor2.startDate()
+            ElseIf 1
+                "<Actor2.name> seems interesting, but let's not rush it."
+                Actor2.makePermanent()
+                exchangeContact(Actor2)
+            Else
+                Player(Happy):: "Thank you for your help today. But I'm already with someone."
+            EndIf
+        EndIf
+    SceneEnd() // Improved by Raddeck
+    timeout(300, rk_VB_Orc_Rescuer)

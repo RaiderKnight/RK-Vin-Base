@@ -1,0 +1,708 @@
+WHAT: none
+WHERE: none
+WHEN: 10 - 22
+WHO: none
+OTHER: !isWithCompanion() && random(0, 100) > 85 && isModEnabled(rk_vin_Base)
+    
+    SceneStart()
+        vaenpris = false
+        partiportres = false
+        sucePol = false
+        DanslaMerde = false
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        PublicIndCount = Player.getActorVar(rk_VB_PublicIndCount)
+        TotalSentences = Player.getActorVar(rk_VB_TotalSentences)
+        policeman = generatePerson()
+        policeman2 = generatePerson()
+        policeman2.makeInterested(policeman)
+        policeman2.hide()
+        policeman.hide()
+        policeman.dressUniform(Police)
+        policeman2.dressUniform(Police)
+        HornyPol = false
+        contHistoirePol = false
+        nonpassortirPol = false
+        nonpassortirPol2 = false
+        joueavecmoi = false
+        jaiechangecont = false
+        allezfourrons = false
+        allonsfourrer = false
+        patemfoure = false
+        "Someone rings the bell, ... Shall I go see who it is?"
+        0::"Yes"
+        1::"I don't care!"
+        
+        If 0
+            If isModEnabled(rk_vin_Base)
+                policeman.show()
+                policeman.animate(socialize)
+                "You open the door and discover a beautiful <policeman.policeman_or_policewoman> dressed in <policeman.his_or_her> uniform."
+                Player(Curious)::"Uh, can I help you?"
+                If Player.isNaked() || [[!Player.isEquipped(Bottom_Under) && !Player.isEquipped(Bottom)] || [!Player.isEquipped(Top_Under) && !Player.isEquipped(Top)]] && !Player.isEquipped(Outerwear)
+                    policeman(Flirty)::"Well, well, well, I think I knocked at the right door!"
+                    Player(Curious)::"What do you mean?"
+                    If policeman.isInterestedIn(Player) && policeman:perversion > 50 && policeman:arousal > 15 || policeman:perversion > 70
+                        policeman(Flirty)::"Well, someone who welcomes me completely naked, for me, it's an invitation to fuck, right?"
+                        HornyPol = true
+                        policeman:perversion += 1
+                        policeman:arousal += 3
+                    ElseIf policeman.isInterestedIn(Player) && policeman:perversion > 35 && policeman:arousal > 15
+                        policeman(Flirty)::"Well maybe I'm wrong but, someone who welcomes me completely naked, for me, it's an invitation?"
+                        HornyPol = true
+                        policeman:perversion += 1
+                        policeman:arousal += 3
+                    ElseIf policeman.isInterestedIn(Player)
+                        trouvbeau = Player:attractiveness
+                        StuVrai = random(0, 100)
+                        StuVrai = StuVrai.round()
+                        OnVerra = trouvbeau + StuVrai
+                        If OnVerra > 100
+                            policeman(Annoyed)::"Damn..."
+                            policeman(Annoyed)::"<Player.Sir_or_Miss>, please go get dressed, you're naked!"
+                            policeman:arousal += 1
+                            HornyPol = true
+                        Else
+                            policeman(Furious)::"WTF, you sex-crazed pervert, you are under arrest for indecency in front of a police officer."
+                            policeman:arousal -= 15
+                            vaenpris = true
+                        EndIf
+                    Else
+                        policeman(Furious)::"WTF, you sex-crazed pervert, you are under arrest for indecency in front of a police officer."
+                        policeman:arousal -= 15
+                        vaenpris = true
+                    EndIf
+                Else 
+                    policeman(Happy)::"Hello <Playe.sir_or_madam>, sorry to bother you but I'm going door to door to sell the Police calendar to support a charity"
+                    "Each end of the year, it's the time when <policeman.policeman_or_policewoman> go from house to house to sell calendars and the money goes to a charity!"
+                    contHistoirePol = true
+                EndIf
+                If HornyPol
+                    "What should I answer or do?"
+                    1::"Get dress"
+                    2::"I'm a naturist, so I'll stay naked!"
+                    3::"If you want to play with it, come in!"
+                    
+                    If 1
+                        Player(Scared)::"Oh shit, I didn't know I was completely naked. I'm very sorry officer... I'll get dressed right away"
+                        If [policeman:perversion > 50 && policeman:arousal > 15] || policeman:perversion > 70
+                            policeman(Angry)::"No stay here <Player.sir_or_miss>! Did you know that I can arrest you for indecency in front of a police officer?"
+                            Player(Scared)::"Uh, yeah but ..."
+                            policeman(Sarcastic)::"Too late! If you don't want me to arrest you, you'll have to <policeman.suck_or_lick> my <policeman.cock_or_pussy>, my <policeman.rod_or_clit> is hot and it needs a mouth like yours to cool down."
+                            "What should I say or do?"
+                            0::"Sure! I'd love to!"
+                            1::"I guess I have no choice!"
+                            2::"Fuck off, are you crazy!"
+                            
+                            If 0
+                                perversion += 1
+                                sucePol = true
+                            ElseIf 1
+                                sucePol = true
+                            Else
+                                policeman(Furious)::"Then I have no choice but to arrest you for indecency in front of a police officer..."
+                                policeman.moveToPerson(Player)
+                                policeman(Furious)::"GET DOWNNN! You are under arrest for indecency in front of a police officer!"
+                                Player(Scared)::"Are serious..."
+                                policeman(Furious)::"Oh yeah perv, GET DOWNNN AND SHUT UP!"
+                                If policeman:perversion > 70 && policeman2:perversion > 70 && isModEnabled(vin_NonConsensual)
+                                    DanslaMerde = true 
+                                Else
+                                    vaenpris = true
+                                EndIf
+                            EndIf
+                        ElseIf policeman:perversion > 35 && policeman:arousal > 15
+                            policeman(Happy)::"No stay here <Player.sir_or_miss>! Did you know that I can arrest you for indecency in front of a police officer?"
+                            Player(Scared)::"Uh, yeah but ..."
+                            policeman(Happy)::"Don't worry I like what I see so..."
+                            "What should I say?"
+                            1::"Nothing"
+                            2::"If you want to play with it, come in!"
+                            
+                            If 1
+                                contHistoirePol = true
+                            Else
+                                joueavecmoi = true
+                            EndIf
+                        Else
+                            Player.dress()
+                            contHistoirePol = true
+                        EndIf
+                    ElseIf 2
+                        Player(Annoyed)::"Sorry, as far as I know I have the right to do what I want at home, I am a naturist so I like being naked."
+                        If [policeman:perversion > 50 && policeman:arousal > 15] || policeman:perversion > 70
+                            policeman(Happy)::"You are right <Player.sir_or_miss>, anyway you look nice and I like what I see so...!"
+                            policeman.moveToPerson(Player)
+                            policeman(Happy)::"You smell good too!"
+                            "What should I say?"
+                            1::"Nothing"
+                            2::"If you want to play with it, come in!"
+                            
+                            If 1
+                                contHistoirePol = true
+                            Else
+                                joueavecmoi = true
+                            EndIf
+                        ElseIf policeman:perversion > 35 && policeman:arousal > 15
+                            policeman(Annoyed)::"You are right <Player.sir_or_miss>, but only inside your house, we don't open the door completely naked."
+                            policeman(Happy)::"For today I'll pretend I didn't see anything, anyway I like to watch you like this!"
+                            "What should I say?"
+                            1::"Nothing"
+                            2::"If you want to play with it, come in!"
+                            
+                            If 1
+                                contHistoirePol = true
+                            Else
+                                joueavecmoi = true
+                            EndIf
+                        Else
+                            policeman(Annoyed)::"You are right <Player.sir_or_miss>, but only inside your house, we don't open the door completely naked."
+                            policeman(Annoyed)::"So, please <Player.sir_or_miss> go get dressed!"
+                            "What should I answer or do?"
+                            1::"Get dress"
+                            2::"No I'll stay naked!"
+                            
+                            If 1
+                                Player(Sad)::"Ok, Whatever!"
+                                Player.dress()
+                                contHistoirePol = true
+                            Else
+                                policeman(Furious)::"Then I have no choice but to arrest you for indecency in front of a police officer..."
+                                policeman.moveToPerson(Player)
+                                policeman(Furious)::"GET DOWNNN! You are under arrest for indecency in front of a police officer!"
+                                Player(Scared)::"Are serious..."
+                                policeman(Furious)::"Oh yeah perv, GET DOWNNN AND SHUT UP!"
+                                If policeman:perversion > 70 && policeman2:perversion > 70 && isModEnabled(vin_NonConsensual)
+                                    DanslaMerde = true 
+                                Else
+                                    vaenpris = true
+                                EndIf
+                            EndIf
+                        EndIf
+                    ElseIf 3
+                        If [policeman:perversion > 50 && policeman:arousal > 15] || policeman:perversion > 70
+                            joueavecmoi = true
+                        ElseIf policeman:perversion > 35 && policeman:arousal > 15
+                            joueavecmoi = true
+                        Else
+                            policeman(Furious)::"Okay, that's enough, I have no choice but to arrest you for indecency in front of a police officer..."
+                            Player(Annoyed)::"Are serious..."
+                            policeman.moveToPersonStand(Player, 50)
+                            policeman(Furious)::"GET DOWNNN! You are under arrest for indecency in front of a police officer!"
+                            policeman.moveToPerson(Player)
+                            Player(Scared)::"Are serious..."
+                            policeman(Furious)::"Oh yeah perv, GET DOWNNN AND SHUT UP!"
+                            If policeman:perversion > 70 && policeman2:perversion > 70 && isModEnabled(vin_NonConsensual)
+                                DanslaMerde = true 
+                            Else
+                                vaenpris = true
+                            EndIf
+                        EndIf
+                    EndIf
+                EndIf
+                
+                If joueavecmoi
+                    GTuLeTemps = random(0, 100)
+                    GTuLeTemps = GTuLeTemps.round()
+                    If GTuLeTemps > 50 && isModEnabled(rk_vin_Base)
+                        policeman(Happy)::"Sure, I think I have time for this little extra, my co-worker across the street won't notice a thing!"
+                        policeman:arousal += 1
+                        policeman.strip()
+                        "The policeman undresses at once, seeing <policeman.him_or_her> doing it, I hasten to undress too and we start to caress each other..."
+                        Player.strip()
+                        If policeman.isMale()
+                            sex(policeman, Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                        Else
+                            sex(Player, policeman)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                        EndIf
+                        policeman.dressUniform(Police)
+                        contHistoirePol = true
+                    Else
+                        policeman(Sad)::"I would love to, but my co-worker is across the street and he might worry if I'm gone too long."
+                        policeman(Happy)::"But, you could leave me your number, so we could meet on another more favorable day."
+                        policeman:arousal += 1
+                        "Should I exchange my phone number with <policeman.him_or_her>?"
+                        0::"Yes"
+                        1::"Yes and ask <policeman.him_or_her> to ask <policeman2.his_or_her> colleague to join us."
+                        88::"No"
+                        
+                        If 0
+                            Player(Happy):: "Of course, I'd love to exchange numbers."
+                            exchangeContact(policeman)
+                            policeman:attractiontoPlayer += random(0, 3)
+                            policeman:rapportwithplayer += random(0, 3)
+                            contHistoirePol = true
+                        ElseIf 1
+                            If Player.isMale()
+                                If policeman.isInterestedIn(policeman2) && policeman2.isInterestedInMen()
+                                    "Good idea, anyway, I know that my colleague has an eye on me, <policeman2.he_or_she> will accept it for sure!"
+                                    partiportres = true
+                                ElseIf policeman.isInterestedIn(policeman2) && !policeman2.isInterestedInMen()
+                                    "Not a good idea, my colleague is not gay, <policeman2.he_or_she> will refuse for sure!"
+                                    contHistoirePol = true
+                                Else
+                                    "Not a good idea, my colleague will refuse for sure!"
+                                    contHistoirePol = true
+                                EndIf
+                            Else
+                                If policeman.isInterestedIn(policeman2) && [policeman2.isInterestedInWomen() || policeman2.isInterestedInTrans()]
+                                    "Good idea, anyway, I know that my colleague has an eye on me, <policeman2.he_or_she> will accept it for sure!"
+                                    partiportres = true
+                                ElseIf policeman.isInterestedIn(policeman2) && !policeman2.isInterestedInWomen()
+                                    "Not a good idea, my colleague is not gay, <policeman2.he_or_she> will refuse for sure!"
+                                ElseIf policeman.isInterestedIn(policeman2) && !policeman2.isInterestedInTrans()
+                                    "Not a good idea, my colleague don't like trans so, <policeman2.he_or_she> will refuse for sure!"
+                                    contHistoirePol = true
+                                Else
+                                    "Not a good idea, my colleague will refuse for sure!"
+                                    contHistoirePol = true
+                                EndIf
+                            EndIf
+                        Else
+                            Player(Happy):: "Of course, I'd love to exchange numbers."
+                            "Just to please <policeman.him_or_her> I accept <policeman.his_or_her> number but throw it in the garbage right away. I don't intend to hang out with a police..."
+                            policeman:attractiontoPlayer += random(0, 3)
+                            policeman:rapportwithplayer += random(0, 3)
+                            contHistoirePol = true
+                            nonpassortirPol = true
+                        EndIf
+                    EndIf
+                EndIf
+                
+                If sucePol
+                    policeman(Happy)::"Good <Player.boy_or_girl>!"
+                    policeman.strip()
+                    policeman.dressExcept(Bottom, Bottom_Under)
+                    If policeman.isMale() && isModEnabled(rk_vin_Base)
+                        Filter(Blowjob)
+                    ElseIf policeman.isFemale()
+                        Filter(LickPussy)
+                    Else   
+                        Filter(Blowjob)
+                    EndIf   
+                    sex(Player, policeman)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    policeman.dressUniform(Police)
+                    If Player.isMale()
+                        policeman(Happy)::"Hum, you know how to use your mouth, you're a blowjob god, I love it!"
+                        policeman:arousal += 3
+                    Else
+                        policeman(Happy)::"Hmm, you know how to use your mouth, you're a real slut, I love it!"
+                        policeman:arousal += 3
+                    EndIf 
+                    "What should I say?"
+                    1::"Nothing"
+                    2::"Do you want to see my fucking skills?"
+                    
+                    If 1
+                        Player(Happy)::"..."
+                        contHistoirePol = true
+                    Else
+                        GTuLeTemps = random(0, 100)
+                        GTuLeTemps = GTuLeTemps.round()
+                        If GTuLeTemps > 50 && isModEnabled(rk_vin_Base)
+                            policeman(Happy)::"Sure, I think I have time for this little extra, my co-worker across the street won't notice a thing!"
+                            policeman:arousal += 1
+                            policeman.strip()
+                            "The policeman undresses at once, seeing <policeman.him_or_her> doing it, I hasten to undress too and we start to caress each other..."
+                            Player.strip()
+                            If policeman.isMale()
+                                sex(policeman, Player)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                            Else
+                                sex(Player, policeman)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                            EndIf
+                            policeman.dressUniform(Police)
+                            contHistoirePol = true
+                        Else
+                            policeman(Sad)::"I would love to, but my co-worker is across the street and he might worry if I'm gone too long."
+                            policeman(Happy)::"But, you could leave me your number, so we could meet on another more favorable day."
+                            policeman:arousal += 1
+                            "Should I exchange my phone number with <policeman.him_or_her>?"
+                            0::"Yes"
+                            1::"Yes and ask <policeman.him_or_her> to ask <policeman2.his_or_her> colleague to join us."
+                            88::"No"
+                            
+                            If 0
+                                Player(Happy):: "Of course, I'd love to exchange numbers."
+                                exchangeContact(policeman)
+                                policeman:attractiontoPlayer += random(0, 3)
+                                policeman:rapportwithplayer += random(0, 3)
+                                contHistoirePol = true
+                            ElseIf 1
+                                If Player.isMale()
+                                    If policeman.isInterestedIn(policeman2) && policeman2.isInterestedInMen()
+                                        "Good idea, anyway, I know that my colleague has an eye on me, <policeman2.he_or_she> will accept it for sure!"
+                                        partiportres = true
+                                    ElseIf policeman.isInterestedIn(policeman2) && !policeman2.isInterestedInMen()
+                                        "Not a good idea, my colleague is not gay, <policeman2.he_or_she> will refuse for sure!"
+                                        contHistoirePol = true
+                                    Else
+                                        "Not a good idea, my colleague will refuse for sure!"
+                                        contHistoirePol = true
+                                    EndIf
+                                Else
+                                    If policeman.isInterestedIn(policeman2) && [policeman2.isInterestedInWomen() || policeman2.isInterestedInTrans()]
+                                        "Good idea, anyway, I know that my colleague has an eye on me, <policeman2.he_or_she> will accept it for sure!"
+                                        partiportres = true
+                                    ElseIf policeman.isInterestedIn(policeman2) && !policeman2.isInterestedInWomen()
+                                        "Not a good idea, my colleague is not gay, <policeman2.he_or_she> will refuse for sure!"
+                                    ElseIf policeman.isInterestedIn(policeman2) && !policeman2.isInterestedInTrans()
+                                        "Not a good idea, my colleague don't like trans so, <policeman2.he_or_she> will refuse for sure!"
+                                        contHistoirePol = true
+                                    Else
+                                        "Not a good idea, my colleague will refuse for sure!"
+                                        contHistoirePol = true
+                                    EndIf
+                                EndIf
+                            Else
+                                Player(Happy):: "Of course, I'd love to exchange numbers."
+                                "Just to please <policeman.him_or_her> I accept <policeman.his_or_her> number but throw it in the garbage right away. I don't intend to hang out with a police..."
+                                policeman:attractiontoPlayer += random(0, 3)
+                                policeman:rapportwithplayer += random(0, 3)
+                                contHistoirePol = true
+                                nonpassortirPol = true
+                            EndIf
+                        EndIf
+                    EndIf
+                EndIf
+                
+                If DanslaMerde
+                    If isModEnabled(rk_vin_Base)
+                        "I got down on the ground, the policeman put the handcuffs on me and threw me into <policeman.his_or_her> car."
+                        "Then <policeman.he_or_she> calls <policeman2.his_or_her> colleague to take me to the police station..."
+                        "As we drive towards the police station, the police tell me ..."
+                        policeman(Grin)::"We have to make a little detour before taking you to the station."
+                        Player(Anxious)::"Oh it's good I guess!"
+                        "And they look at each other with a suspicious smile ..."
+                        "After a while they take a dirt road and we enter the forest, after a few kilometers they stopped the car and asked me to get out, which I did."
+                        policeman.show()
+                        policeman2.show()
+                        "I'm handcuffed, I think I know what their intentions are ... They undress ..."
+                        "One of the policemen approaches me and puts a stocking in my mouth, while the other takes off all my clothes."
+                        "I can scream, but with a stocking in my mouth, there is absolutely no point in resisting ... "
+                        "My scream for help went unheard in the dark forest and I had no choice but endure it all."
+                        roundtofuck = true
+                        roundtoGetfucked = 0
+                        While roundtofuck
+                            If roundtoGetfucked == 3
+                                roundtofuck = false
+                            ElseIf roundtoGetfucked == 0
+                                Filter(Aggressive)
+                                TalkNonConsensual()
+                                SexNoAffair(policeman2, Player)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                                EndIf
+                                roundtoGetfucked += 1
+                            ElseIf roundtoGetfucked == 1
+                                Filter(Aggressive)
+                                TalkNonConsensual()
+                                SexNoAffair(policeman, Player)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                                EndIf
+                                roundtoGetfucked += 1
+                            ElseIf roundtoGetfucked == 2
+                                Filter(Aggressive)
+                                TalkNonConsensual()
+                                SexNoAffair(policeman2, Player, policeman)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -4)
+                                EndIf
+                                roundtoGetfucked += 1
+                                roundtofuck = false
+                            EndIf
+                        EndWhile
+                        "After raping me, they told me to shut my mouth about that or it will happen again in prison .... "
+                        mood => 0
+                        arousal => 0
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -20)
+                        EndIf
+                    EndIf
+                    Player.modifyActorVar(rk_VB_PublicIndCount, 1)
+                    followUp(imprisoned)
+                    SceneEnd()
+                EndIf
+                
+                If partiportres
+                    "The policeman calls <policeman2.his_or_her> colleague so that <policeman2.he_or_she> comes to join us, <policeman2.he_or_she> came at once!"
+                    policeman2(Happy)::"Hey hello <Player.sir_or_madam>, so I was told that you want to give us a luxury break."
+                    policeman.strip()
+                    policeman(Happy)::"Undress yourself we don't have much time!"
+                    policeman2.strip()
+                    "The policeman undresses, seeing them doing, I hasten to undress too and we begin to caress each other..."
+                    Player.strip()
+                    sex(policeman, Player, policeman2)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
+                    EndIf
+                    policeman.dressUniform(Police)
+                    policeman2.dressUniform(Police)
+                    policeman(Happy)::"That was good! Thanks for this luxury break!"
+                    Player(Happy)::"No problem!"
+                    policeman2(Happy)::"Yes, I really enjoyed it, do you think we could exchange numbers to meet another time?"
+                    "Should I exchange my phone number with <policeman2.him_or_her>?"
+                    0::"Yes"
+                    88::"No"
+                    
+                    If 0
+                        Player(Happy):: "Of course, I'd love to exchange numbers."
+                        exchangeContact(policeman)
+                        policeman:attractiontoPlayer += random(0, 3)
+                        policeman:rapportwithplayer += random(0, 3)
+                    Else
+                        Player(Happy):: "Of course, I'd love to exchange numbers."
+                        "Just to please <policeman2.him_or_her> I accept <policeman2.his_or_her> number but throw it in the garbage right away. I don't intend to hang out with a police..."
+                        policeman:attractiontoPlayer += random(0, 3)
+                        policeman:rapportwithplayer += random(0, 3)
+                        nonpassortirPol2 = true
+                    EndIf
+                    contHistoirePol = true
+                EndIf
+
+                If contHistoirePol
+                    Player.animate(socialize)
+                    "After several minutes of chatting and showing me <policeman.his_or_her> calendar, <policeman.he_or_she> tells me..."
+                    policeman(Happy)::"So, are you interested in buying a calendar?"
+                    calen = random(5, 10)
+                    calen_loc = calen.convertToLocalCurrency()
+                    "What should I do?"
+                    0::"Buy one calendar -<calen_loc>"
+                    1::"Ask if the police officers inside are naked"
+                    2::"Invite inside"
+                    3::"Not interested!"
+                    
+                    If 0
+                        money -= calen
+                        "So I bought a calendar that I will never use... at least I am supporting a charity!"
+                        policeman(Happy)::"Thank you very much! Have a nice day!"
+                        jaiechangecont = true
+                    ElseIf 1
+                        If [policeman.isInterestedIn(Player) && policeman:perversion > 50 && policeman:arousal > 15] || policeman:perversion > 70
+                            policeman(Flirty)::"No, why? Would you have liked that?"
+                            policeman(Flirty)::"I can't offer you a nude calendar but we can have fun together, just to give you a taste!"
+                            "What should I answer?"
+                            0::"Well, yes!"
+                            3::"I was joking!"
+                            
+                            If 0
+                                allezfourrons = true
+                            Else
+                                policeman(Flirty)::"It's unfortunate because I find you attractive, we could have fucked!"
+                                "What should I say?"
+                                0::"Nothing!"
+                                3::"Let's do it!"
+                                
+                                If 0
+                                    policeman(Happy)::"Thank you! Have a nice day!"
+                                    "The policeman then left to visit the neighbor..."
+                                    jaiechangecont = true
+                                Else
+                                    allezfourrons = true
+                                EndIf
+                            EndIf
+                        ElseIf policeman.isInterestedIn(Player) && policeman:perversion > 35 && policeman:arousal > 15
+                            Polhorny = random(0, 100)
+                            Polhorny = Polhorny.round()
+                            If Polhorny > 50 && isModEnabled(rk_vin_Base)
+                                policeman(Flirty)::"No, why? Would you have liked that?"
+                                policeman(Flirty)::"I can't offer you a nude calendar but we can have fun together, just to give you a taste!"
+                                "What should I answer?"
+                                0::"Well, yes!"
+                                3::"I was joking!"
+                                
+                                If 0
+                                    allezfourrons = true
+                                Else
+                                    policeman(Sad)::"Alright then..."
+                                    "Should I buy a calendar?"
+                                    0::"Yes"
+                                    88::"No"
+                                    
+                                    If 0
+                                        money -= calen
+                                        "So I bought a calendar that I will never use... at least I am supporting a charity!"
+                                        policeman(Happy)::"Thank you very much! Have a nice day!"
+                                        jaiechangecont = true
+                                    EndIf
+                                    policeman(Happy)::"Thank you! Have a nice day!"
+                                    "The policeman then left to visit the neighbor..."
+                                    jaiechangecont = true
+                                EndIf
+                            Else
+                                patemfoure = true
+                            EndIf  
+                        Else
+                            patemfoure = true
+                        EndIf
+                    ElseIf 2
+                        "You fall in love with <policeman.him_or_her> and offer <policeman.him_or_her> to come inside." 
+                        If [policeman.isInterestedIn(Player) && policeman:perversion > 35 && policeman:arousal > 15] || policeman:perversion > 70
+                            policeman(Flirty)::"Sure, how can I say no to beautiful <Player.guy_or_girl> like you!"
+                            "From this moment on, the game of seduction begins and you will do everything to get what you want."
+                            followUp(invite_home)
+                        ElseIf policeman.isInterestedIn(Player)
+                            policeman(Flirty)::"Sure, why not!"
+                            "From this moment on, the game of seduction begins and you will do everything to get what you want."
+                            followUp(invite_home)
+                        Else
+                            policeman(Sad)::"Sorry, but I'm not allowed to flirt with civilians while on duty, but thanks for the invite!"
+                            jaiechangecont = true
+                        EndIf
+                    Else
+                        "The policeman then left to visit the neighbor..."
+                        jaiechangecont = true
+                    EndIf
+                EndIf
+                
+                If patemfoure
+                    If !partiportres || !joueavecmoi
+                        policeman(Annoyed)::"You're not the first one to tell me that! No, really not, no nudity! Just to remind you that this is for charity, <Player.sir_or_ma'am>"
+                        Player(Annoyed)::"Alright, sorry officer!"
+                    Else
+                        policeman(Happy)::"No, really not, no nudity! That this is for charity, so..."
+                        Player(Happy)::"Alright, officer!"
+                    EndIf
+                    "Should I buy a calendar?"
+                    0::"Yes"
+                    88::"No"
+                    
+                    If 0
+                        money -= calen
+                        "So I bought a calendar that I will never use... at least I am supporting a charity!"
+                        policeman(Happy)::"Thank you very much! Have a nice day!"
+                        jaiechangecont = true
+                    EndIf
+                    policeman(Happy)::"Thank you! Have a nice day!"
+                    "The policeman then left to visit the neighbor..."
+                    jaiechangecont = true
+                EndIf
+                
+                If allonsfourrer
+                    policeman(Flirty)::"No, why? Would you have liked that?"
+                    policeman(Flirty)::"I can't offer you a nude calendar but we can have fun together, just to give you a taste!"
+                    "What should I answer?"
+                    0::"Well, yes!"
+                    3::"I was joking!"
+                    
+                    If 0
+                        allezfourrons = true
+                    Else
+                        policeman(Flirty)::"It's unfortunate because I find you attractive, we could have fucked!"
+                        "What should I say?"
+                        0::"Nothing!"
+                        3::"Let's do it!"
+                        
+                        If 0
+                            policeman(Happy)::"Thank you! Have a nice day!"
+                            "The policeman then left to visit the neighbor..."
+                            jaiechangecont = true
+                        Else
+                            allezfourrons = true
+                        EndIf
+                    EndIf
+                EndIf
+                
+                If allezfourrons
+                    If policeman.isInterestedIn(Player) && policeman:perversion > 35 && policeman:arousal > 15
+                        "<policeman.He_or_She> closes the door, undresses and throws <policeman.himself_or_herself> on me."
+                        policeman.strip()
+                        Player(Surprised)::"What the ..."
+                        policeman(Flirty)::"Shut up or I'll arrest you for obstruction!"
+                        Player(Happy)::"Sure officer ..."
+                        "The policeman undresses at once, seeing <policeman.him_or_her> doing it, I hasten to undress too and we start to caress each other..."
+                        Player.strip()
+                        biendanstete = random(0, 100)
+                        biendanstete = biendanstete.round()
+                        If biendanstete > 50
+                            Filter(Aggressive)
+                        EndIf
+                        sex(policeman, Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        policeman.dressUniform(Police)
+                        policeman(Happy)::"That was a good fuck!"
+                    Else
+                        "<policeman.He_or_She> closes the door, undresses and throws <policeman.himself_or_herself> on me."
+                        policeman.strip()
+                        "The policeman undresses at once, seeing <policeman.him_or_her> doing it, I hasten to undress too and we start to caress each other..."
+                        Player.strip()
+                        sex(policeman, Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        policeman.dressUniform(Police)
+                        policeman(Happy)::"That was a good fuck!"
+                    EndIf
+                    jaiechangecont = true
+                EndIf
+
+                If jaiechangecont
+                    If !policeman.isContactExchanged()
+                        "Before <policeman.he_or_she> leave, should I ask <policeman.him_or_her> for <policeman.his_or_her> phone number?"
+                        0::"Yes"
+                        1::"No"
+                        
+                        If 0
+                            If policeman.isInterestedIn(Player)
+                                policeman(Happy):: "Of course, I'd love to exchange numbers."
+                                exchangeContact(policeman)
+                                policeman:attractiontoPlayer += random(0, 3)
+                                policeman:rapportwithplayer += random(0, 3)
+                            Else
+                                policeman(Sad)::"Sorry, but I don't normally exchange numbers with civilian."
+                            EndIf
+                        EndIf
+                    Else
+                        "I just remembered that I already have <policeman.his_or_her> number!"
+                    EndIf
+                    policeman(Happy)::"Have a nice day!"
+                    "The policeman then left to visit the neighbor..."
+                    policeman:attractiontoPlayer += random(0, 1)
+                    policeman:rapportwithplayer += random(0, 1)
+                    policeman.hide()
+                EndIf
+                If vaenpris
+                    policeman.moveToPerson(Player)
+                    Player.modifyActorVar(rk_VB_PublicIndCount, 1)
+                    followUp(imprisoned)
+                    SceneEnd()
+                EndIf
+            Else
+                "Damn man that's not cool! Use the real stuff not imitation!"
+                mood += 100
+                masochist -= 50
+                arousal => 0
+                followUp(imprisoned)
+            EndIf
+            passTime(0.5, 1)
+        Else
+            "I decided not to go see who was banging on the door..."
+        EndIf
+        If nonpassortirPol 
+            policeman.deletePerson()
+        ElseIf nonpassortirPol2
+            policeman2.deletePerson()
+        EndIf
+        policeman.hide()
+        policeman2.hide()
+    SceneEnd()
+    timeout(3000, rk_VB_Police_Calend)

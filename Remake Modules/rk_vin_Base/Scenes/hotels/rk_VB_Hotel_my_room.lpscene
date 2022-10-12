@@ -1,0 +1,110 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        
+        RoomVisitChoice = rk_VB_RoomVisitChoice.getGlobal()
+        ResetTrueA = false
+        HotGotoR = false
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        RentHotelRoom = rk_VB_RentHotelRoom.getGlobal()
+        GetRoom = Player.getActorVar(rk_VB_TempGetADeals)
+        HotelRentlastday = Player.getActorVar(rk_VB_setHotelRentlastday)
+        tag_HLandlord = Landlord.getActorVar(rk_VB_tag_HLandlord)
+        If isModEnabled(rk_vin_Base)
+            MaPC = Player:age*365
+            If HotelRentlastday <= 0
+                HotelRentdayP = HotelRentlastday + MaPC
+            Else
+                HotelRentdayP = HotelRentlastday + 1
+            EndIf
+            DPMaPC = MaPC + 1
+            If RentHotelRoom == 1 && DPMaPC >= HotelRentdayP
+                ResetTrueA = true
+            ElseIf RentHotelRoom == 0 && DPMaPC <= HotelRentdayP
+                ResetTrueA = true
+            EndIf
+            If ResetTrueA            
+                rk_VB_RentHotelRoom.setGlobal(0)
+                Player.setActorVar(rk_VB_TempGetADeals, 0)
+                Player.setActorVar(rk_VB_setHotelRentlastday, 0)
+                Landlord.setActorVar(rk_VB_tag_HLandlord, 0)
+                rk_VB_RoomVisitChoice.setGlobal(0)
+            EndIf
+            "I decided to go to my room...."
+            If RentHotelRoom == 0
+                "I didn't rent any room, or my room is not available anymore, I have to rent for another day..."
+            Else
+                HotGotoR = true
+            Endif
+            If HotGotoR
+                continueStoryH = true
+                If Random(0, 100) > 75
+                    continueStoryH = false
+                    followUp(rk_VB_Catch_maid_steals)
+                Endif
+                If continueStoryH
+                    setBackground(hotel)
+                    If RoomVisitChoice == 1
+                        setBackground3D(Modules/vin_Base/Bedrooms/0.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 2
+                        setBackground3D(Modules/vin_Base/Bedrooms/1.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 3
+                        setBackground3D(Modules/vin_Base/Bedrooms/2.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 4
+                        setBackground3D(Modules/vin_Base/Bedrooms/3.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 5
+                        setBackground3D(Modules/vin_Base/Bedrooms/4.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 6
+                        setBackground3D(Modules/vin_Base/Bedrooms/5.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 7
+                        setBackground3D(Modules/vin_Base/Bedrooms/6.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 8
+                        setBackground3D(Modules/vin_Base/Bedrooms/7.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 9
+                        setBackground3D(Modules/vin_Base/Bedrooms/8.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 10
+                        setBackground3D(Modules/vin_Base/Bedrooms/9.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 11
+                        setBackground3D(Modules/vin_Base/Bedrooms/10.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 12
+                        setBackground3D(Modules/vin_Base/Bedrooms/11.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 13
+                        setBackground3D(Modules/vin_Base/Bedrooms/12.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 14
+                        setBackground3D(Modules/vin_Base/Bedrooms/13.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 15
+                        setBackground3D(Modules/vin_Base/Bedrooms/14.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 16
+                        setBackground3D(Modules/vin_Base/Bedrooms/15.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 17
+                        setBackground3D(Modules/rk_vin_Base/World/Vim_RoofApartment.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 18
+                        setBackground3D(Modules/rk_vin_Base/World/Vim_RoofOfficeBedroom.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 19
+                        setBackground3D(Modules/rk_vin_Base/World/DoctorBedroom.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 20
+                        setBackground3D(Modules/rk_vin_Base/World/DoctorSonBedroom.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 21
+                        setBackground3D(Modules/rk_vin_Base/World/DoctorsRoom00.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 22
+                        setBackground3D(Modules/rk_vin_Base/World/rk_VB_Bedroom1.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 23
+                        setBackground3D(Modules/rk_vin_Base/World/Vim_Basement_Room.lpworld, true, true)
+                    ElseIf RoomVisitChoice == 24
+                        setBackground3D(Modules/rk_vin_Base/World/Vim_OneRoomApartment.lpworld, true, true)
+                    EndIf
+                    //hangInRoom = true
+                    //While hangInRoom
+                    "..."   
+                    //EndWhile
+                Endif
+            Endif
+        Endif
+    SceneEnd()

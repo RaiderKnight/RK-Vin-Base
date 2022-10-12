@@ -1,0 +1,31 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Dating = getSpecific(Dating)
+        If isModEnabled(rk_vin_Base)
+            "What I should suggest to <Dating.name>?"
+            0:: "Propose having a baby"
+            1:: isModEnabled(vin_NTR) ::"To arrange a swinger party"
+            4:: isModEnabled(vin_NTR) ::"Having a fully body nude massage at home while I film"
+            5:: isModEnabled(vin_Polyamorous) && OpenRelationship() ::"Suggests fucking another poly lover"
+            99::"I changed my mind"
+
+            If 0
+                followUp(propose_baby)
+            ElseIf 1
+                followUp(swinger_party)
+            ElseIf 4
+                followUp(sr_fso_netorasemassage_cms)
+            ElseIf 5
+                followUp(poly_fucks_poly)
+            EndIf
+        EndIf
+    SceneEnd() // Scene created by Raddeck

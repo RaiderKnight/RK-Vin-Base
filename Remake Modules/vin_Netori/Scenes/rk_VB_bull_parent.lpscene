@@ -1,0 +1,171 @@
+WHAT: all
+WHERE: home
+WHEN: 0 - 24
+WHO: Actor = getRelative(Parent, StepParent); Actor2 = getRelative(Parent, StepParent);
+OTHER: 
+
+
+    SceneStart()
+        Prix = 1000
+        Prixl = Prix.convertToLocalCurrency()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor.dress()
+        Actor.show()
+        Actor2.dress()
+        Actor2.hide()
+        If isModEnabled(rk_vin_Base)
+            If [Actor.isMale() && Actor2.isMale()] || [!Actor.isMale() && !Actor2.isMale()]
+                TxtBP = "father"
+                GTxtBP = "second father"
+                Esco = generatePersonTemporary()
+                While !Esco.isMale()
+                    Esco = generatePersonTemporary()
+                EndWhile
+                Esco:attractiontoplayer => random(30, 80)
+                Esco:attractiveness => random(60, 80)
+                Random
+                    Esco.blendPreset(twenties)
+                    Esco.blendPreset(thirties)
+                EndRandom
+                Esco.randomizeRace()
+                Esco.randomizeHairs()
+                Esco.randomizeFace()
+            ElseIf [!Actor.isMale() && !Actor2.isMale()] && [!Actor.isMale() && Actor2.isMale()]
+                TxtBP = "mother"
+                GTxtBP = "second mother"
+                Esco = generatePersonTemporary()
+                While Esco.isMale()
+                    Esco = generatePersonTemporary()
+                EndWhile
+                Esco:attractiontoplayer => random(30, 80)
+                Esco:attractiveness => random(60, 80)
+                Random
+                    Esco.blendPreset(twenties)
+                    Esco.blendPreset(thirties)
+                EndRandom
+                Esco.randomizeRace()
+                Esco.randomizeHairs()
+                Esco.randomizeFace()
+            EndIf
+            Esco.hide()
+            Esco.hide()
+            "My parents have been having some marital issues not long time ago ..."
+            "My <Actor.relationship> finally admitted to me that <Actor.he_or_she> is no longer as vigorous in bed at <Actor.his_or_her> age as <Actor.he_or_she> used to in <Actor.his_or_her> youth, while <Actor2.name> still has high sex urges."
+            "This has caused some insecurities and embarrassments for both."
+            "Is there anything I can do for my  <Actor.relationship>?"
+            If isModEnabled(vin_Incest)
+                0:: "Offer my service for <Actor2.his_or_her> sex urges"
+                1:: "Pay an escort for my <Actor.relationship>"
+                2:: "Pay an escort for my <Actor2.relationship>"
+                3:: money > Prix:: "Paying for them to stay in a luxury hotel (<Prixl>)"
+                99:: "Nothing I can do"
+            
+            Else
+                1:: "Pay an escort for my <Actor.relationship>"
+                2:: "Pay an escort for my <Actor2.relationship>"
+                3:: money > Prix:: "Paying for them to stay in a luxury hotel (<Prixl>)"
+                99:: "Nothing I can do"
+            
+            EndIf
+            
+            If 0
+                Actor(Happy)::"I don't know if this will help your <Actor2.relationship>, but I accept your offer!"
+                Actor2.strip()
+                Actor2.show()
+                "And soon enough, I was fucking my <Actor2.relationship> while my <Actor.relationship> watches."
+                Sex(Player, Actor2)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            ElseIf 1
+                If Actor:perversion < 50 && Actor:arousal < 10
+                    Actor(Sad)::"Uh, I can't even walk around naked in the house when no one is there. I'm almost become asexual..."
+                    Actor(Happy)::"Thanks for the offer though!"
+                    Actor:rapportwithplayer += random(0, 1)
+                Else
+                    Actor(Happy)::"I don't know if this will help me, but I accept your offer!"
+                    Actor:rapportwithplayer += random(0, 2)
+                    "So I call an agency, make the deal and leave as soon as I see the escort arrive..."
+                    Player.hide()
+                    "In the meantime..."
+                    Random
+                        setBackground3D(Modules/vin_Base/Bedrooms/0.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/1.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/2.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/3.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/4.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/5.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/6.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/7.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/8.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/9.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/10.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/11.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/12.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/13.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/14.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/15.lpworld)
+                    EndRandom
+                    Esco.show()
+                    Actor(Flirty)::"Hi baby!"
+                    Esco(Flirty)::"So, this <Esco.gentleman_or_lady> needs a little revitalization..."
+                    Actor.strip()
+                    Actor(Flirty)::"It doesn't matter if it doesn't work, I have a mouth and hands,... it's been a long time since I've seen a beautiful body."
+                    Esco.strip()
+                    Esco(Flirty)::"Leave it to the professional, I'll take care of everything ..."
+                    sex(Esco, Actor)
+                EndIf
+            ElseIf 2
+                If Actor:perversion < 50 && Actor:arousal < 10
+                    Actor(Sad)::"Uh, your <Actor2.relationship> can't even walk around naked in the same house when no one is there. <Actor2.He_or_She> is almost asexual..."
+                    Actor(Happy)::"Thanks for the offer though!"
+                    Actor:rapportwithplayer += random(0, 1)
+                Else
+                    Actor(Happy)::"I don't know if this will help your <Actor2.relationship>, but I accept your offer!"
+                    Actor:rapportwithplayer += random(0, 2)
+                    "So I call an agency, make the deal and leave as soon as I see the escort arrive..."
+                    Player.hide()
+                    "In the meantime..."
+                    Random
+                        setBackground3D(Modules/vin_Base/Bedrooms/0.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/1.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/2.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/3.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/4.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/5.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/6.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/7.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/8.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/9.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/10.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/11.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/12.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/13.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/14.lpworld)
+                        setBackground3D(Modules/vin_Base/Bedrooms/15.lpworld)
+                    EndRandom
+                    Esco.show()
+                    Actor2.show()
+                    Actor2(Flirty)::"Hi baby!"
+                    Esco(Flirty)::"So, this <Esco.gentleman_or_lady> needs a little revitalization..."
+                    Actor2.strip()
+                    Actor2(Flirty)::"It doesn't matter if it doesn't work, I have a mouth and hands,... it's been a long time since I've seen a beautiful body."
+                    Esco.strip()
+                    Esco(Flirty)::"Leave it to the professional, I'll take care of everything ..."
+                    sex(Esco, Actor2)
+            ElseIf 3
+                Actor2.show()
+                Actor(Happy)::"I don't know if this will help us, but we accept your offer!"
+                Actor:rapportwithplayer += random(0, 3)
+                Actor2:rapportwithplayer += random(0, 3)
+                interpersonal += random(0, 2)
+                money -= Prix
+            Else
+                "I suppose every couple living together for that long will start having issues with different needs at different ages."
+            EndIf
+        EndIf
+    SceneEnd() //Improved by Raddeck
+    timeout(500, rk_VB_bull_parent)

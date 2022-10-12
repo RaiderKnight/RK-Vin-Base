@@ -1,0 +1,245 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+SceneStart()
+
+    personal_Calendars = Player.getActorVar(rk_VB_personal_Calendars_InStock)
+    SoloShootings_Calendars = Player.getActorVar(rk_VB_SoloShootings_Calendars_InStock)
+    AmateurShootings_Calendars = Player.getActorVar(rk_VB_AmateurShootings_Calendars_InStock)
+    ThreesomeShootings_Calendars = Player.getActorVar(rk_VB_ThreesomeShootings_Calendars_InStock)
+    GangBangShootings_Calendars = Player.getActorVar(rk_VB_GangBangShootings_Calendars_InStock)
+    RevGangBangShootings_Calendars = Player.getActorVar(rk_VB_RevGangBangShootings_Calendars_InStock)
+    LesbianShootings_Calendars = Player.getActorVar(rk_VB_LesbianShootings_Calendars_InStock)
+    GayShootings_Calendars = Player.getActorVar(rk_VB_GayShootings_Calendars_InStock)
+    regular_Calendars = Player.getActorVar(rk_VB_regular_Calendars_InStock)
+    
+    Soldpersonal_Calendars = Player.getActorVar(rk_VB_personal_Calendars_Sold)
+    SoldSoloShootings_Calendars = Player.getActorVar(rk_VB_SoloShootings_Calendars_Sold)
+    SoldAmateurShootings_Calendars = Player.getActorVar(rk_VB_AmateurShootings_Calendars_Sold)
+    SoldThreesomeShootings_Calendars = Player.getActorVar(rk_VB_ThreesomeShootings_Calendars_Sold)
+    SoldGangBangShootings_Calendars = Player.getActorVar(rk_VB_GangBangShootings_Calendars_Sold)
+    SoldRevGangBangShootings_Calendars = Player.getActorVar(rk_VB_RevGangBangShootings_Calendars_Sold)
+    SoldLesbianShootings_Calendars = Player.getActorVar(rk_VB_LesbianShootings_Calendars_Sold)
+    SoldGayShootings_Calendars = Player.getActorVar(rk_VB_GayShootings_Calendars_Sold)
+    Soldregular_Calendars = Player.getActorVar(rk_VB_regular_Calendars_Sold)
+    
+    If !isModEnabled(nn_PornEmpire)
+        "You need to enable Porn Empire mod from NickNo, to be able to sell calendars..."
+    Else
+        "You need at least 50 items of the same types to be able to sell something!"
+        
+        stayInMenu = true
+        While stayInMenu
+            
+            Price_soloC = random(15, 20)
+            Price_AmateurC = random(15, 20)
+            Price_ThreesomeC = random(15, 20)
+            Price_GangBangC = random(15, 20)
+            Price_RevGangBangC = random(15, 20)
+            Price_LesbianC = random(15, 20)
+            Price_GayC = random(15, 20)
+            Price_reg = random(15, 20)
+            Price_perso = random(15, 20)
+            Price_soloC_Loc = Price_soloC.convertToLocalCurrency()
+            Price_AmateurC_Loc = Price_AmateurC.convertToLocalCurrency()
+            Price_ThreesomeC_Loc = Price_ThreesomeC.convertToLocalCurrency()
+            Price_GangBangC_Loc = Price_GangBangC.convertToLocalCurrency()
+            Price_RevGangBangC_Loc = Price_RevGangBangC.convertToLocalCurrency()
+            Price_LesbianC_Loc = Price_LesbianC.convertToLocalCurrency()
+            Price_GayC_Loc = Price_GayC.convertToLocalCurrency()
+            Price_reg_Loc = Price_reg.convertToLocalCurrency()
+            Price_perso_Loc = Price_perso.convertToLocalCurrency()
+            
+            "What type of calendars I want to sell?"
+            0:: SoloShootings_Calendars > 50 ::"Solo Shootings calendars <SoloShootings_Calendars> in stock"
+            1:: AmateurShootings_Calendars > 50 ::"Amateur Shootings calendars <AmateurShootings_Calendars> in stock"
+            2:: ThreesomeShootings_Calendars > 50 ::"Threesome Shootings calendars <ThreesomeShootings_Calendars> in stock"
+            3:: GangBangShootings_Calendars > 50 ::"GangBang Shootings calendars <GangBangShootings_Calendars> in stock"
+            4:: RevGangBangShootings_Calendars > 50 ::"RevGangBang Shootings calendars <RevGangBangShootings_Calendars> in stock"
+            5:: LesbianShootings_Calendars > 50 ::"Lesbian Shootings calendars <LesbianShootings_Calendars> in stock"
+            6:: GayShootings_Calendars > 50 ::"Gay Shootings calendars <GayShootings_Calendars> in stock"
+            7:: personal_Calendars > 50 ::"Personal pics calendars <personal_Calendars> in stock"
+            8:: regular_Calendars > 50 ::"Regular pics calendars <regular_Calendars> in stock"
+            99::"Go back"
+            
+            If 0
+        
+                MSSnum = random(1,20)  // number of product
+                Price_soloC = MSSnum * random(6,7)  // total price
+                Price_soloC_Loc = Price_soloC.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling Solo Shootings calendars."
+                        
+                countPrice_soloC = SoloShootings_Calendars - MSSnum
+                Player.setActorVar(rk_VB_SoloShootings_Calendars_InStock, countPrice_soloC)
+
+                passTime(2,4)
+                energy -= random(5,10)
+                money += Price_soloC
+                Player.modifyActorVar(rk_VB_SoloShootings_Calendars_Sold, MSSnum)
+                "You were able to sell <MSSnum> solo Shootings calendar(s) for a total in revenue: <Price_soloC_Loc>. <countPrice_soloC> remain in stock."
+
+            ElseIf 1
+        
+                MSSnum = random(1,20)  // number of product
+                Price_AmateurC = MSSnum * random(6,7)  // total price
+                Price_AmateurC_Loc = Price_AmateurC.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling Amateur Shootings calendars."
+                        
+                countAmateurC = AmateurShootings_Calendars - MSSnum
+                Player.setActorVar(rk_VB_AmateurShootings_Calendars_InStock, countAmateurC)
+
+                passTime(2,4)
+                energy -= random(5,10)
+                money += Price_AmateurC
+                Player.modifyActorVar(rk_VB_AmateurShootings_Calendars_Sold, MSSnum)
+                "You were able to sell <MSSnum> Amateur Shootings calendar(s) for a total in revenue: <Price_AmateurC_Loc>. <countAmateurC> remain in stock."
+
+            ElseIf 2
+        
+                MSSnum = random(1,20)  // number of product
+                Price_ThreesomeC = MSSnum * random(6,7)  // total price
+                Price_ThreesomeC_Loc = Price_ThreesomeC.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling Threesome Shootings calendars."
+                        
+                countThreesomeC = ThreesomeShootings_Calendars - MSSnum
+                Player.setActorVar(rk_VB_ThreesomeShootings_Calendars_InStock, countThreesomeC)
+
+                passTime(2,4)
+                energy -= random(5,10)
+                money += Price_ThreesomeC
+                Player.modifyActorVar(rk_VB_ThreesomeShootings_Calendars_Sold, MSSnum)
+                "You were able to sell <MSSnum> Threesome Shootings calendar(s) for a total in revenue: <Price_ThreesomeC_Loc>. <countThreesomeC> remain in stock."
+
+            ElseIf 3
+        
+                MSSnum = random(1,20)  // number of product
+                Price_GangBangC = MSSnum * random(6,7)  // total price
+                Price_GangBangC_Loc = Price_GangBangC.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling GangBang Shootings calendars."
+                        
+                countGangBangC = GangBangShootings_Calendars - MSSnum
+                Player.setActorVar(rk_VB_GangBangShootings_Calendars_InStock, countGangBangC)
+
+                passTime(2,4)
+                energy -= random(5,10)
+                money += Price_GangBangC
+                Player.modifyActorVar(rk_VB_GangBangShootings_Calendars_Sold, MSSnum)
+                "You were able to sell <MSSnum> GangBang Shootings calendar(s) for a total in revenue: <Price_GangBangC_Loc>. <countGangBangC> remain in stock."
+
+            ElseIf 4
+        
+                MSSnum = random(1,20)  // number of product
+                Price_RevGangBangC = MSSnum * random(6,7)  // total price
+                Price_RevGangBangC_Loc = Price_RevGangBangC.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling RevGangBang Shootings calendars."
+                        
+                countRevGangBangC = RevGangBangShootings_Calendars - MSSnum
+                Player.setActorVar(rk_VB_RevGangBangShootings_Calendars_InStock, countRevGangBangC)
+
+                passTime(2,4)
+                energy -= random(5,10)
+                money += Price_RevGangBangC
+                Player.modifyActorVar(rk_VB_RevGangBangShootings_Calendars_Sold, MSSnum)
+                "You were able to sell <MSSnum> RevGangBang Shootings calendar(s) for a total in revenue: <Price_RevGangBangC_Loc>. <countRevGangBangC> remain in stock."
+
+            ElseIf 5
+        
+                MSSnum = random(1,20)  // number of product
+                Price_LesbianC = MSSnum * random(6,7)  // total price
+                Price_LesbianC_Loc = Price_LesbianC.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling Lesbian Shootings calendars."
+                        
+                countLesbianC = LesbianShootings_Calendars - MSSnum
+                Player.setActorVar(rk_VB_LesbianShootings_Calendars_InStock, countLesbianC)
+
+                passTime(2,4)
+                energy -= random(5,10)
+                money += Price_LesbianC
+                Player.modifyActorVar(rk_VB_LesbianShootings_Calendars_Sold, MSSnum)
+                "You were able to sell <MSSnum> Lesbian Shootings calendar(s) for a total in revenue: <Price_LesbianC_Loc>. <countLesbianC> remain in stock."
+
+            ElseIf 6
+        
+                MSSnum = random(1,20)  // number of product
+                Price_GayC = MSSnum * random(6,7)  // total price
+                Price_GayC_Loc = Price_GayC.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling Gay Shootings calendars."
+                        
+                countGayC = GayShootings_Calendars - MSSnum
+                Player.setActorVar(rk_VB_GayShootings_Calendars_InStock, countGayC)
+
+                passTime(2,4)
+                energy -= random(5,10)
+                money += Price_GayC
+                Player.modifyActorVar(rk_VB_GayShootings_Calendars_Sold, MSSnum)
+                "You were able to sell <MSSnum> Gay Shootings calendar(s) for a total in revenue: <Price_GayC_Loc>. <countGayC> remain in stock."
+            
+            ElseIf 7
+        
+                If attractiveness < 50 || pornfame < 50
+                    MSSnum = random(1,2)  // number of product
+                ElseIf attractiveness < 60 || pornfame < 60
+                    MSSnum = random(1,5)  // number of product
+                ElseIf attractiveness < 70 || pornfame < 70
+                    MSSnum = random(1,10)  // number of product
+                ElseIf attractiveness > 70.8 || pornfame > 70.8
+                    MSSnum = random(1,20)  // number of product
+                EndIf
+                Price_perso = MSSnum * random(4,5)  // total price
+                Price_perso_Loc = Price_perso.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling your calendars."
+                        
+                countMeC = personal_Calendars - MSSnum
+                Player.setActorVar(rk_VB_personal_Calendars_InStock, countMeC)
+
+                passTime(2,4)
+                energy -= random(5,10)
+                money += Price_perso
+                Player.modifyActorVar(rk_VB_personal_Calendars_Sold, MSSnum)
+                "You were able to sell <MSSnum> calendar(s) of yourself for a total in revenue: <Price_perso_Loc>. <countMeC> remain in stock."
+            
+            ElseIf 8
+        
+                If attractiveness < 50 || pornfame < 50
+                    MSSnum = random(1,2)  // number of product
+                ElseIf attractiveness < 60 || pornfame < 60
+                    MSSnum = random(1,5)  // number of product
+                ElseIf attractiveness < 70 || pornfame < 70
+                    MSSnum = random(1,10)  // number of product
+                ElseIf attractiveness > 70.8 || pornfame > 70.8
+                    MSSnum = random(1,20)  // number of product
+                EndIf
+                Price_reg = MSSnum * random(4,5)  // total price
+                Price_reg_Loc = Price_reg.convertToLocalCurrency()  // total price local
+                        
+                "You spend some hours selling your calendars."
+                        
+                countMeC = personal_Calendars - MSSnum
+                Player.setActorVar(rk_VB_regular_Calendars_InStock, countMeC)
+
+                passTime(2,4)
+                energy -= random(5,10)
+                money += Price_reg
+                Player.modifyActorVar(rk_VB_regular_Calendars_Sold, MSSnum)
+                "You were able to sell <MSSnum> regular calendar(s) for a total in revenue: <Price_reg_Loc>. <countMeC> remain in stock."
+            
+            Else
+            
+                stayInMenu = false
+
+            EndIf
+            
+        EndWhile
+    EndIf
+SceneEnd()

@@ -1,0 +1,63 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        "=== EXTRA PLAYER STATS ==="
+        RobberyCount = Player.getActorVar(rk_VB_RobberyCount)
+        Boss_Sucker = Player.getActorVar(rk_VB_Boss_Sucker) // Get Boss_Sucker value
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        KillCount = Player.getActorVar(rk_VB_KillCount) // as murderer
+        RubCWAPITM = Player.getActorVar(RubCWAPITM)
+        IncestCount = Player.getActorVar(rk_VB_IncestCount)
+        PublicIndCount = Player.getActorVar(rk_VB_PublicIndCount)
+        BestiCount = Player.getActorVar(rk_VB_BestiCount)
+        RapeCount = Player.getActorVar(rk_VB_RapeCount)
+        ProstCount = Player.getActorVar(rk_VB_ProstCount)
+        SexAssaultCount = Player.getActorVar(rk_VB_SexAssaultCount)
+        If HungerEnable > 0
+            If Hunger > 100
+                Totalpoopenergy = Hunger - 100
+                "You have reached the maximum level for hunger, maximum is 100. All excess food have been poop away... and transformed into energy..."
+                Player.setActorVar(rk_VB_Hunger, 100)
+                energy += Totalpoopenergy
+            ElseIf Hunger < 10
+                "Just don't forget to eat, your hunger level is very low..."
+            EndIf
+        EndIf
+        If KillCount > 120
+            KillCountTXT = "You are a serial killer!"
+        ElseIf KillCount > 20
+            KillCountTXT = "You are a killer!"
+        ElseIf KillCount > 0 && KillCount < 19.9
+            KillCountTXT = "You are a murderer!"
+        Else
+            KillCountTXT = "You are a good citizen!"
+        EndIf
+        
+        0:: HungerEnable > 0 ::"Your hunger level is <Hunger>/100"
+        0:: UrgeToPeeEnable > 0 ::"Your urge to go pee is <UrgeToPee>/100"
+        0::"Your brown nose level is: <Boss_Sucker>/100"
+        0::"You have <RubCWAPITM> Rubber chicken with a pulley"
+        1::"Check your criminal record"
+        99::"Back to the game!"
+        
+        If 1
+            0::"<KillCountTXT>"
+            0::"You murdered <KillCount> person(s)"
+            0::"You have been caught doing sexual assault <SexAssaultCount> time(s)"
+            0::"You have been caught doing bestiality <BestiCount> time(s)"
+            0::"You have been caught doing incest <IncestCount> time(s)"
+            0::"You have been caught doing prostitution <ProstCount> time(s)"
+            0::"You have been caught doing public indecency <PublicIndCount> time(s)"
+            0::"You have been caught stealing <RobberyCount> time(s)"
+            0::"You have raped <RapeCount> person(s)"
+            99::"Back to the game!"
+
+        EndIf
+    SceneEnd()

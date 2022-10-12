@@ -1,0 +1,168 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        stock_PopRocks = Player.getActorVar(stock_PopRocks)
+        stock_CottonCandy = Player.getActorVar(stock_CottonCandy)
+        stock_GummiBears = Player.getActorVar(stock_GummiBears)
+        stock_Smarties = Player.getActorVar(stock_Smarties)
+        stock_JollyRanchers = Player.getActorVar(stock_JollyRanchers)
+        stock_PeanutCups = Player.getActorVar(stock_PeanutCups)
+        stock_Licorice = Player.getActorVar(stock_Licorice)
+        stock_PowerBar = Player.getActorVar(stock_PowerBar)
+        stock_BigBallHickey = Player.getActorVar(stock_BigBallHickey)
+        stock_SweetTarts  = Player.getActorVar(stock_SweetTarts)
+    
+        stock_confectioneryprod = stock_PopRocks + stock_CottonCandy + stock_GummiBears + stock_Smarties + stock_JollyRanchers + stock_PeanutCups + stock_Licorice + stock_PowerBar + stock_BigBallHickey + stock_SweetTarts
+        
+        IBuyCandy = Player.getActorVar(rk_VB_IBuyCandy)
+        
+        eating = 0
+        
+        If stock_confectioneryprod < 0.5 
+            Player(Anxious)::"Ok, no candy to eat! I will suck my thumb instead !"
+        Else
+    
+            Player::"Ok, which candy I'm gonna eat?"
+            0:: stock_PopRocks > 0:: "1 box of Pop Rocks"
+            1:: stock_CottonCandy > 0:: "1 Cotton Candy"
+            2:: stock_GummiBears > 0:: "1 pack of Gummi Bears"
+            3:: stock_Smarties > 0:: "1 box of Smarties"
+            4:: stock_JollyRanchers > 0:: "1 pack of Jolly Ranchers"
+            5:: stock_PeanutCups > 0:: "1 pack of Peanut Butter Cups"
+            6:: stock_Licorice > 0:: "1 pack of Licorices"
+            7:: stock_PowerBar > 0:: "1 power bar"
+            8:: stock_BigBallHickey > 0::"1 Lollypop"
+            9:: stock_SweetTarts > 0 ::"1 pack of Sweet Tarts"
+            99:: "Bah! I'm not hungry !"
+            
+            If 0
+                Player.modifyActorVar(stock_PopRocks, -1)
+                mood += 2
+                energy += 2
+                interpersonal -= 1
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.05, 0.15)
+                eating += 1
+    
+            Elseif 1
+                Player.modifyActorVar(stock_CottonCandy, -1)
+                mood += 3
+                energy += 3
+                interpersonal -= 1
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.05, 0.15)
+                eating += 1
+    
+            Elseif 2
+                Player.modifyActorVar(stock_GummiBears, -1)
+                mood += 2
+                energy += 1
+                interpersonal += 0.25
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.05, 0.15)
+                eating += 1
+    
+            Elseif 3
+                Player.modifyActorVar(stock_Smarties, -1)
+                mood += 1
+                energy += 2
+                interpersonal += 1
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.05, 0.15)
+                eating += 1
+    
+            Elseif 4
+                Player.modifyActorVar(stock_JollyRanchers, -1)
+                mood += 2
+                energy += 3
+                interpersonal += 0.5
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.05, 0.15)
+                eating += 1
+    
+            Elseif 5
+                Player.modifyActorVar(stock_PeanutCups, -1)
+                mood += 3
+                energy += 4
+                interpersonal -= 2
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.05, 0.15)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 0.25)
+                EndIf
+                eating += 1
+    
+            Elseif 6
+                Player.modifyActorVar(stock_Licorice, -1)
+                mood += 2
+                energy += 1
+                interpersonal += 0.5
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.05, 0.15)
+                eating += 1
+            
+            Elseif 7
+                Player.modifyActorVar(stock_PowerBar, -1)
+                mood += 3
+                energy += 5
+                interpersonal += 1
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.05, 0.15)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 0.5)
+                EndIf
+                eating += 1
+                
+            ElseIf 8
+                Player.modifyActorVar(stock_BigBallHickey, -1)
+                mood += 2
+                energy += 2
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.05, 0.15)
+                eating += 1
+                
+            Elseif 9
+                Player.modifyActorVar(stock_SweetTarts, -1)
+                mood += 1
+                energy += 2
+                interpersonal += 1
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.05, 0.15)
+                eating += 1
+            
+            Endif
+            
+            If eating > 0
+                Player.modifyActorVar(rk_VB_IBuyCandy, -1)
+            Endif
+            
+        Endif
+        
+    SceneEnd()

@@ -1,0 +1,174 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+
+        While Friend.isValid()
+            ActArrestTagF = Friend.getActorVar(rk_VB_ActArrestTagF)
+        EndWhile
+        Friend = getPerson(rk_VB_ActArrestTagF)
+        MeToF = Friend.getActorVar(rk_VB_MeToF)
+        FPrison = Friend.getActorVar(tag_FPrison)
+        Fsentence = Friend.getActorVar(rk_VB_ActSentence)
+
+        setBackground(prison)
+        Friend.show()
+        Friend.dressPrisoner()
+        "We arrived at <Friend.name>'s cell ..."
+        
+        If MeToF == ActArrestTagF
+
+            Friend(Happy)::"Cool, <Player.name> you come visiting me!"
+            
+            choice = -1    
+            ate = false
+            hadSex = false
+            hadSex1 = false
+            LeavePrison = true
+            
+            While choice < 5
+                Kissed = false
+                "What I want to do with <Friend.name>?"
+                0:: "Chat"
+                1:: !ate ::"Eat something together"
+                2:: !hadSex || !hadSex1 :: "Have sex"
+                4:: !hadSex || !hadSex1 :: "Kiss <Friend.him_or_her>"
+                5:: LeavePrison:: "Politely leave"
+                
+                If 5
+                
+                    "We said goodbye and went our ways."
+                    If HungerEnable > 0
+            
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                
+                    EndIf
+                    
+                Else
+                    
+                    If 0
+                    
+                        "We simply sat and chat for a while ..."
+                        mood += 1
+                        Friend:attractiontoplayer += 1
+                        Friend:rapportwithplayer += 1
+                        passTime(0.1, 0.2)
+                        
+                    Elseif 1
+                    
+                        "We made some quick snacks and enjoyed them together ..."
+                        ate = true
+                        If HungerEnable > 0
+            
+                            Player.modifyActorVar(rk_VB_Hunger, 5)
+                
+                        EndIf
+                        
+                        Friend:attractiontoplayer += 1
+                        Friend:rapportwithplayer += 1
+                        mood += 1
+                        stock_snack -= 1
+                        energy += 5
+                        passTime(0.2, 0.4)
+                        
+                    Elseif 2
+                    
+                        If Friend:arousal > 15
+                        
+                            hadSex1 = true
+                            
+                        Else
+                        
+                            "<Friend.name> is not interested!"
+                            hadSex1 = false
+                            mood -= 1
+                            
+                        Endif
+                        
+                    Elseif 4
+                    
+                        Kissed = true
+                        
+                    Endif
+                    
+                    If Kissed || [Friend.isInterestedIn(Player) && !hadSex && Friend:attractiontoplayer > Random(0, 200)]
+                        AnimatePair(Player, Friend, Kissing)
+                        Player(Kiss):: "..."
+                        Friend(Kiss):: "..."
+                        
+                        If Dating
+                        
+                            "We kissed. It started slow but soon became more passionate. It was obvious what we both wanted ..."
+                        
+                        Else
+                        
+                            "We had a kiss, an awkward one at first, but soon moving towards a more passionate direction."
+                        
+                        Endif
+                        
+                        "Should I let this escalate further?"
+                        0:: "Make out"
+                        1:: "Stop"
+                    
+                        If 0
+                            
+                            If Friend.isDating() || [Friend.isInterestedIn(Player) && [Friend.IsDominantSex(Player) || Friend:attractiontoplayer + Friend:perversion > Random(50, 200) || Friend:intoxication > 80]]
+                                
+                                "Our kiss got more and more steamy and soon we were making out, our hands all over each other."
+                                
+                                If TfGame() && Friend.isMale()
+                                    "I'm a man trapped inside a woman's body. I don't think I'm gay, but here I am, about to fuck with a male."
+                                Endif
+                                
+                                hadSex = true
+                                Player:perversion += Random(0, 1)
+                                Sex(Player, Friend)
+                                Friend.show(2)
+                                "The sex was amazing. We put our clothes back on afterwards and continued our date."
+                                If HungerEnable > 0
+            
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                
+                                EndIf
+                                passTime(0.2, 0.5)
+                                
+                            Else
+                            
+                                "Unfortunately for me, <Friend.name> didn't seem interested in letting things escalate any further and pulled away."
+                                
+                            Endif
+                            
+                        Else
+                        
+                            "I decided to stop it there and not go any further."
+                            
+                        Endif
+                        
+                    Elseif Random(0, 100) < 20
+                        
+                        "Unfortunately for me, <Friend.name> tell me to leave ..."
+                        choice = 5            
+                    
+                    Endif
+                    
+                    If hadSex1
+                    
+                        "We stripped and started to fuck ..."
+                        sex(Friend, Player)
+                    
+                    Endif
+                    
+                Endif
+                
+            EndWhile
+            
+        Else
+        
+            "NOT IMPLEMENTED YET!"
+        
+        Endif
+
+    SceneEnd()

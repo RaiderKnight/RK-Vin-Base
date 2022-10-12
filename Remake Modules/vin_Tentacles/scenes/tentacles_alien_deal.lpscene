@@ -1,0 +1,110 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER:
+
+    //  An alien with tentacles offers you a deal: he's on a mission to populate the Earth with their race's genes and offers to give you extra attractiveness or fitness for every woman you bring him to
+    SceneStart()
+        Wetdream = false
+        "As I sleep, I begin to have a nightmare..."
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Deal = Player.getActorVar(tag_TentaclesDeal)
+        
+        If Deal == 0
+            "I was alone in my home when suddenly a tentacle monster appeared!"
+            Actor = generateCreatureTemporary(Tentacles)
+            Actor.show()
+            "Before I could run, the monster stopped me by suddenly speaking in my own language."
+            Actor:: "Calm down ... I won't hurt you ... I just want to talk"
+            Player:: "You can speak!?"
+            Actor:: "Of course, I can. The people from my planet can all learn a new language in an hour."
+            Actor:: "I'm from a far more advanced civilization than Earth, I'm here on a mission from my people - to populate the Earth with our race's genes."
+            Actor:: "In order to do so, I need to mate with fresh women, but you see, in this form, I can't exactly go approach women like you can."
+            Actor:: "So, be my ally, each time you bring me to a new woman, I'll grant you beauty and health that none of your planet's stupid plastic surgeries and workout regimes could give you!"
+            0:: "Make the deal with the alien"
+            1:: "Turn the alien down"
+            
+            If 0
+                Player:: "Okay, I'll do it."
+                Actor:: "Good ... now who's the fist woman you'll bring me to"
+                Player.setActorVar(tag_TentaclesDeal, 1)
+                followUp(tentacles_alien_deal)
+            Else
+                Actor:: "Fine ... I'll find another willing ally elsewhere. You'll regret missing out on this opportunity, stupid human."
+            Endif
+        Else
+            "I've made a deal with an alien tentacle monster and promise to bring him to women I know for the promise of beauty and health."
+            Actor = generateCreatureTemporary(Tentacles)
+            Actor.show()
+            Actor:: "Who will you bring me to this time? Remember, I need to breed with fresh woman"
+            "Which woman should I offer to the tentacle alien next?"
+            selectNPC()
+            Actor2 = getSelectedNPC()
+            
+            Bred = Actor2.getActorVar(tag_TentaclesDeal)
+            If Bred == 0 && !Actor2.isMale()
+                "I pretended to invite <Actor2.name> over to my place for a Netflix movie night."
+                
+                If Actor2.hadSex() || Actor2:perversion > 50 || Actor2:attractiontoplayer > 30 || Actor2:rapportwithplayer > 40
+                    Actor2.setActorVar(tag_TentaclesDeal, 1)
+                    Actor2.dress()
+                    Actor2.show()
+                    "Not suspecting a thing, <Actor2.name> accepted my offer to come hang out, only to be ambushed by the tentacle alien as soon as <Actor2.he_or_she> was inside."
+                    "Soon, the tentacles wrap around <Actor2.name> and prevent <Actor2.him_or_her> from escaping ..."
+                    Actor2:: "Ahhhhhhhhhhhhhhhhhh"
+                    "Before long, some of the tentacles were penetrating <Actor2.his_or_her> holes and soon <Actor2.he_or_she> was overcome with pleasure to even resist anymore."
+                    Sex(Actor, Actor2)
+                    "The tentacles rewarded with some beauty and health for providing it with the latest victim to breed. To poor <Actor2.name>, I pretended that I didn't know my home was invaded by a tentacle monster and was helpless the whole time it attacked <Actor2.him_or_her>. Thankfully, <Actor2.he_or_she> largely believed my excuse and didn't call my cops - not that they would believe a report about sexual assault by an alien" 
+                Else
+                    "Unfortunately, <Actor2.name> turned down my invitation."
+                Endif
+            Else
+                Actor:: "That's not fresh meat ... Come back to me once you've found a suitable target."
+            Endif
+            Wetdream = true
+            arousal += Random(1, 25)
+        Endif
+        If Wetdream
+            Bonus = Random(25, 70)
+            If Player:arousal > Bonus
+                "Damn, this ultra erotic dream makes me want to masturbate ..."
+                Player.strip()
+                Filter(solo)
+                sex(Player)
+                arousal -= Random(5, 25)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+            Else
+                If Random(0, 100) > 50
+                    If Player.isMale()
+                        "Damn, I came in my panty because of this ultra erotic dream ..."
+                        arousal -= Random(25, 50)
+                    Else
+                        "Damn, I wetted my panty because of this ultra erotic dream ..."
+                        arousal -= Random(25, 50)
+                    Endif
+                    "Should I take a shower?"
+                    0::"Yes"
+                    1::"No"
+                    
+                    If 0
+                        followUp(rk_VB_Personal_Care)
+                    Else
+                        If Player.isMale()
+                            "I decided to go back to sleep with my panty full of cum ..."
+                            perversion += 1
+                        Else
+                            "I decided to go back to sleep with my panty all wet ..."
+                            perversion += 1
+                        Endif
+                    Endif
+                Endif
+            Endif
+        Endif
+    SceneEnd() // Scene improved by Raddeck
+    // timeout(100, tentacles_alien_deal)

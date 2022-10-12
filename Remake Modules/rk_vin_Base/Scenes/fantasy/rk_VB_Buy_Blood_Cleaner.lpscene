@@ -1,0 +1,137 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        clearGetList()
+        BloodCleaner = Player.getActorVar(rk_VB_BloodCleaner)
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        PriceBLD = random(12000, 25000)
+        PriceBLD_loc = PriceBLD.convertToLocalCurrency()
+        PriceBLD1 = PriceBLD*5
+        EscPriceBLD1 = PriceBLD*0.25
+        TPriceBLD1 = PriceBLD1 - EscPriceBLD1
+        PriceBLD1_loc = TPriceBLD1.convertToLocalCurrency()
+        PriceBLD2 = PriceBLD*10
+        EscPriceBLD2 = PriceBLD2*0.35
+        TPriceBLD2 = PriceBLD2 - EscPriceBLD2
+        PriceBLD2_loc = TPriceBLD2.convertToLocalCurrency()
+        tropChere = false
+        If isModEnabled(rk_vin_Base)
+            If random(0, 100) > 95
+                Actor = generatePersonTemporary()
+            ElseIf[Player.isMale() && !Player.isGay()] || [!Player.isMale() && Player.isGay()] || [Player.isTrans() && Player.isInterestedInWomen()]
+                Actor = generatePersonTemporary()
+                While Actor.isMale()
+                    Actor = generatePersonTemporary()
+                Endwhile
+            ElseIf [!Player.isMale() && !Player.isGay()] || [Player.isMale() && Player.isGay()] || [Player.isTrans() && Player.isInterestedInMen()]
+                Actor = generatePersonTemporary()
+                While !Actor.isMale()
+                    Actor = generatePersonTemporary()
+                Endwhile
+            Else
+                Actor = generatePersonTemporary()
+            EndIf
+            Actor.dress()
+            Actor.hide()
+            "This potion costs more in a place like this than going to the doctor, but I don't have the same opportunities..."
+            Actor(Happy)::"Hi, I see you are interested in our Blood Cleaner product."
+            Player(Happy)::"Yeah, bad things happen sometimes!"
+            Actor(Happy)::"Just to let you know that if you buy a pack of 5 or 10, you will get a discount."
+            Actor.show()
+            JachetPotio = true
+            While JachetPotio
+                "How many bottle I should buy?"
+                0:: money > PriceBLD :: "1 bottle (<PriceBLD_loc>)"
+                1:: money > TPriceBLD1 :: "5 bottles (<PriceBLD1_loc>)"
+                2:: money > TPriceBLD2 :: "10 bottles (<PriceBLD2_loc>)"
+                90:: "Damn, too expensive today!"
+                99:: "Go back!"
+                
+                If 0
+                    "1 bottle of Blood Cleaner have been added to your pockets!"
+                    Player.getActorVar(rk_VB_BloodCleaner, 1)
+                    money -= PriceBLD
+                ElseIf 1
+                    "1 bottle of Blood Cleaner have been added to your pockets!"
+                    Player.getActorVar(rk_VB_BloodCleaner, 5)
+                    money -= TPriceBLD1
+                ElseIf 2
+                    "1 bottle of Blood Cleaner have been added to your pockets!"
+                    Player.getActorVar(rk_VB_BloodCleaner, 10)
+                    money -= TPriceBLD2
+                ElseIf 90
+                    tropChere = true
+                Else
+                    JachetPotio = false
+                EndIf
+            EndWhile
+        EndIf
+        If isModEnabled(rk_vin_Base)
+            If tropChere
+                SiJeSuis = 0
+                SiJeSuis += Player:fitness
+                SiJeSuis += Player:attractiveness
+                SiJeSuis += Player:pornfame
+                Player(Sad)::"Sorry but your prices are a bit expensive today!"
+                If Player:attractiveness > 65 || Player:pornfame > 65
+                    "Well, you know what? You're so beautiful that I'm willing to give you a bottle if you'll have sex with me!"
+                    "What should I do?"
+                    0::"Accept <Player.his_or_her> offer"
+                    1::"Refuse <Player.his_or_her> offer"
+                    
+                    If 0
+                        Actor(Flirty)::"Follow me, there's a back room, we'll be more private!"
+                        setBackground3D(Modules/rk_vin_Base/World/Vim_OneRoomApartment.lpworld)
+                        "As soon as we arrived in the room, we undressed without further delay and started to fuck together"
+                        Actor.strip()
+                        Player.strip()
+                        sex(Actor, Player)
+                        Player(Curious)::"So, about our deal?"
+                        Actor(Happy)::"Yeah sure here we go!"
+                        Player.getActorVar(rk_VB_BloodCleaner, 1)
+                        mood += random(1, 3)
+                    Else
+                        Player(Sad)::"Okay I think I'll go somewhere else!"
+                        Actor(Serene)::"Have a nice day <Player.sir_or_madam>!"
+                        mood -= 1
+                    EndIf
+                ElseIf SiJeSuis > 150 && Actor.isInterestedIn(Player)
+                    "Well, you know what? You're so beautiful that I'm willing to sell you a bottle at half the price, if you agree to sleep with me!"
+                    "What should I do?"
+                    0::"Accept <Player.his_or_her> offer"
+                    1::"Refuse <Player.his_or_her> offer"
+                    
+                    If 0
+                        Actor(Flirty)::"Follow me, there's a back room, we'll be more private!"
+                        setBackground3D(Modules/rk_vin_Base/World/Vim_OneRoomApartment.lpworld)
+                        "As soon as we arrived in the room, we undressed without further delay and started to fuck together"
+                        Actor.strip()
+                        Player.strip()
+                        sex(Actor, Player)
+                        SPriceBLD = PriceBLD/2
+                        Player(Curious)::"So, about our deal?"
+                        Actor(Happy)::"Yeah sure here we go!"
+                        Player.getActorVar(rk_VB_BloodCleaner, 1)
+                        money -= SPriceBLD
+                        mood += random(1, 3)
+                    Else
+                        Player(Sad)::"Okay I think I'll go somewhere else!"
+                        Actor(Serene)::"Have a nice day <Player.sir_or_madam>!"
+                        mood -= 1
+                    EndIf
+                Else
+                    Actor(Serene)::"I can't help it, I don't set the prices!"
+                    Player(Happy)::"Don't be sorry, I am aware of that.... Have a nice day!"
+                    Actor(Serene)::"Have a nice day <Player.sir_or_madam>!"
+                EndIf
+            EndIf
+        EndIf
+        Actor.hide()
+    SceneEnd()

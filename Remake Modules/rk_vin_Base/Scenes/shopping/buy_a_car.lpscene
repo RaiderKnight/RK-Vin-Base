@@ -1,0 +1,581 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+SceneStart()
+    
+    setBackground(car)
+    CarDealer_ID = rk_VB_CarDealer_ID.getGlobal()
+    If CarDealer.isValid()
+        CarDealerID = CarDealer.getID()
+        CarDealer_ID = CarDealerID + Random(1000, 3000)
+        CarDealer_ID = CarDealer_ID.round()
+        rk_VB_CarDealer_ID.setGlobal(CarDealer_ID)
+    Else
+        CarDealer = generatePerson()
+        CarDealer_ID = CarDealer.getID()
+        rk_VB_CarDealer_ID.setGlobal(CarDealer_ID)
+    Endif
+    CarDealer.show()
+    CarDealer.dress()
+    CarDealer:arousal += Random(0, 100)
+    CarDealer:perversion += Random(0, 100)
+    CarSelectedIs = rk_VB_CarSelectedIs.getGlobal()
+    PayCarWithSex = rk_VB_PayCarWithSex.getGlobal()
+    CarSexLoanValue = Player.getActorVar(rk_VB_CarSexLoanValue)
+    stock_Tesla = Player.getActorVar(stock_Tesla)
+    stock_Ferrari = Player.getActorVar(stock_Ferrari)
+    stock_Lambo = Player.getActorVar(stock_Lambo)
+    stock_Mercedez = Player.getActorVar(stock_Mercedez)
+    stock_Mazda = Player.getActorVar(stock_Mazda)
+    stock_BMW = Player.getActorVar(stock_BMW)
+    stock_Lada = Player.getActorVar(stock_Lada)
+    
+    stock_cars = stock_Lada + stock_Mazda + stock_BMW + stock_Mercedez + stock_Tesla + stock_Ferrari + stock_Lambo
+    
+    "What do I want to do?"
+    0:: stock_cars == 0:: "Buy a new car"
+    1:: stock_cars > 0:: "Sell a car"
+    2:: stock_cars > 0:: "Trade a car for a new one"
+    10::"Try to buy a car with sex"
+    99:: "Do nothing"
+    
+    If 0
+    
+        Price0 = Random(7000, 18000)
+        Price0C = Price0.convertToLocalCurrency()
+        Price1 = Random(15000, 35000)
+        Price1C = Price1.convertToLocalCurrency()
+        Price2 = Random(30000, 55000)
+        Price2C = Price2.convertToLocalCurrency()
+        Price3 = Random(60000, 80000)
+        Price3C = Price3.convertToLocalCurrency()
+        Price4 = Random(80000, 250000)
+        Price4C = Price4.convertToLocalCurrency()
+        Price5 = Random(300000, 650000)
+        Price5C = Price5.convertToLocalCurrency()
+        Price6 = Random(400000, 850000)
+        Price6C = Price6.convertToLocalCurrency()
+        
+        "There are many different price for car here. Honestly, living in a crowded area, a more expensive car won't really get me from A to B any faster than a cheap car ..."
+        0:: money >= Price0 :: "Lada for <Price0C>"
+        1:: money >= Price1 :: "Mazda for <Price1C>"
+        2:: money >= Price2 :: "BMW for <Price2C>"
+        3:: money >= Price3 :: "Mercedez for <Price3C>"
+        4:: money >= Price4 :: "Tesla for <Price4C>"
+        5:: money >= Price5 :: "Ferrari for <Price5C>"
+        6:: money >= Price6 :: "Lamborghini for <Price6C>"
+        99:: "Buy nothing"
+        
+        If 0
+        
+            Player.modifyActorVar(stock_Lada, 1)
+            Player(Happy)::"1 more car inside my garage!"
+            money -= Price0
+            car_value += Price0
+            mood += 3
+            
+        Elseif 1
+        
+            Player.modifyActorVar(stock_Mazda, 1)
+            Player(Happy)::"1 more car inside my garage!"
+            money -= Price1
+            car_value += Price1
+            mood += 3
+            
+        Elseif 2
+        
+            Player.modifyActorVar(stock_BMW, 1)
+            Player(Happy)::"1 more car inside my garage!"
+            money -= Price2
+            car_value += Price2
+            mood += 3
+            
+        Elseif 3
+        
+            Player.modifyActorVar(stock_Mercedez, 1)
+            Player(Happy)::"1 more car inside my garage!"
+            money -= Price3
+            car_value += Price3
+            mood += 3
+            
+        Elseif 4
+        
+            Player.modifyActorVar(stock_Tesla, 1)
+            Player(Happy)::"1 more car inside my garage!"
+            money -= Price4
+            car_value += Price4
+            mood += 3
+            
+        Elseif 5
+        
+            Player.modifyActorVar(stock_Ferrari, 1)
+            Player(Happy)::"1 more car inside my garage!"
+            money -= Price5
+            car_value += Price5
+            mood += 3
+            
+        Elseif 6
+        
+            Player.modifyActorVar(stock_Lambo, 1)
+            Player(Happy)::"1 more car inside my garage!"
+            money -= Price6
+            car_value += Price6
+            mood += 3
+
+        Endif
+        
+    Elseif 1
+        
+        Price0S = Random(700, 8000)
+        Price1S = Random(10000, 15000)
+        Price2S = Random(20000, 45000)
+        Price3S = Random(40000, 80000)
+        Price4S = Random(60000, 150000)
+        Price5S = Random(200000, 550000)
+        Price6S = Random(300000, 750000)
+        
+        Price0S_loc = Price0S.convertToLocalCurrency()
+        Price1S_loc = Price1S.convertToLocalCurrency()
+        Price2S_loc = Price2S.convertToLocalCurrency()
+        Price3S_loc = Price3S.convertToLocalCurrency()
+        Price4S_loc = Price4S.convertToLocalCurrency()
+        Price5S_loc = Price5S.convertToLocalCurrency()
+        Price6S_loc = Price6S.convertToLocalCurrency()
+
+        Player::"It's time to sell a car!"
+        0:: stock_Lada >= 1::"Sell 1 Lada for <Price0S_loc> | <stock_Lada> in garage"
+        1:: stock_Mazda >= 1::"Sell 1 Mazda for <Price1S_loc> | <stock_Mazda> in garage"
+        2:: stock_BMW >= 1::"Sell 1 BMW for <Price2S_loc> | <stock_BMW> in garage"
+        3:: stock_Mercedez >= 1::"Sell 1 Mercedez for <Price3S_loc> | <stock_Mercedez> in garage"
+        4:: stock_Tesla >= 1::"Sell 1 Tesla for <Price4S_loc> | <stock_Tesla> in garage"
+        5:: stock_Ferrari >= 1::"Sell 1 Ferrari for <Price5S_loc> | <stock_Ferrari> in garage"
+        6:: stock_Lambo >= 1::"Sell 1 Lamborghini for <Price6S_loc> | <stock_Lambo> in garage"
+        99:: "Do nothing"
+        
+        If 0
+        
+            Player.modifyActorVar(stock_Lada, -1)
+            Player(Happy)::"<Price0S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price0S
+            car_value -= Price0S
+            mood += 3
+            
+        Elseif 1
+        
+            Player.modifyActorVar(stock_Mazda, -1)
+            Player(Happy)::"<Price1S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price1S
+            car_value -= Price1S
+            mood += 3
+            
+        Elseif 2
+        
+            Player.modifyActorVar(stock_BMW, -1)
+            Player(Happy)::"<Price2S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price2S
+            car_value -= Price2S
+            mood += 3
+            
+        Elseif 3
+        
+            Player.modifyActorVar(stock_Mercedez, -1)
+            Player(Happy)::"<Price3S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price3S
+            car_value -= Price3S
+            mood += 3
+            
+        Elseif 4
+        
+            Player.modifyActorVar(stock_Tesla, -1)
+            Player(Happy)::"<Price4S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price4S
+            car_value -= Price4S
+            mood += 3
+            
+        Elseif 5
+        
+            Player.modifyActorVar(stock_Ferrari, -1)
+            Player(Happy)::"<Price5S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price5S
+            car_value -= Price5S
+            mood += 3
+            
+        Elseif 6
+        
+            Player.modifyActorVar(stock_Lambo, -1)
+            Player(Happy)::"<Price6S_loc> inside my pockets and more spaces inside my garage!"
+            money += Price6S
+            car_value -= Price6S
+            mood += 3
+            
+        Elseif 99
+            "I should look around first. That seems like a low-ball figure they're offering for that car. My car worth more than that!"
+        Endif
+    
+    Elseif 2
+        
+        Price0S = Random(700, 8000)
+        Price1S = Random(10000, 15000)
+        Price2S = Random(20000, 45000)
+        Price3S = Random(40000, 80000)
+        Price4S = Random(60000, 150000)
+        Price5S = Random(200000, 550000)
+        Price6S = Random(300000, 750000)
+        
+        Price0S_loc = Price0S.convertToLocalCurrency()
+        Price1S_loc = Price1S.convertToLocalCurrency()
+        Price2S_loc = Price2S.convertToLocalCurrency()
+        Price3S_loc = Price3S.convertToLocalCurrency()
+        Price4S_loc = Price4S.convertToLocalCurrency()
+        Price5S_loc = Price5S.convertToLocalCurrency()
+        Price6S_loc = Price6S.convertToLocalCurrency()
+        
+        Price0 = Random(7000, 18000)
+        Price0C = Price0.convertToLocalCurrency()
+        Price1 = Random(15000, 35000)
+        Price1C = Price1.convertToLocalCurrency()
+        Price2 = Random(30000, 55000)
+        Price2C = Price2.convertToLocalCurrency()
+        Price3 = Random(60000, 80000)
+        Price3C = Price3.convertToLocalCurrency()
+        Price4 = Random(80000, 250000)
+        Price4C = Price4.convertToLocalCurrency()
+        Price5 = Random(300000, 650000)
+        Price5C = Price5.convertToLocalCurrency()
+        Price6 = Random(400000, 850000)
+        Price6C = Price6.convertToLocalCurrency()
+
+        Player::"Let's trade one of my old car for a new one!"
+        0:: stock_Lada >= 1::"Trade 1 Lada | <stock_Lada> in garage"
+        1:: stock_Mazda >= 1::"Trade 1 Mazda | <stock_Mazda> in garage"
+        2:: stock_BMW >= 1::"Trade 1 BMW | <stock_BMW> in garage"
+        3:: stock_Mercedez >= 1::"Trade 1 Mercedez | <stock_Mercedez> in garage"
+        4:: stock_Tesla >= 1::"Trade 1 Tesla | <stock_Tesla> in garage"
+        5:: stock_Ferrari >= 1::"Trade 1 Ferrari | <stock_Ferrari> in garage"
+        6:: stock_Lambo >= 1::"Trade 1 Lamborghini | <stock_Lambo> in garage"
+        99:: "Do nothing"
+        
+        If 0
+ 
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price0 - Price0S
+            TotalPrice = Price0 - Price0S
+            TotalValue = car_value + TotalPrice
+            car_value => TotalValue
+            mood += 3
+            
+        Elseif 1
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price1 - Price1S
+            TotalPrice = Price1 - Price1S
+            TotalValue = car_value + TotalPrice
+            car_value => TotalValue
+            mood += 3
+            
+        Elseif 2
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price2 - Price2S
+            TotalPrice = Price2 - Price2S
+            TotalValue = car_value + TotalPrice
+            car_value => TotalValue
+            mood += 3
+            
+        Elseif 3
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price3 - Price3S
+            TotalPrice = Price3 - Price3S
+            TotalValue = car_value + TotalPrice
+            car_value => TotalValue
+            mood += 3
+            
+        Elseif 4
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price4 - Price4S
+            TotalPrice = Price4 - Price4S
+            TotalValue = car_value + TotalPrice
+            car_value => TotalValue
+            mood += 3
+            
+        Elseif 5
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price5 - Price5S
+            TotalPrice = Price5 - Price5S
+            TotalValue = car_value + TotalPrice
+            car_value => TotalValue
+            mood += 3
+            
+        Elseif 6
+
+            Player(Happy)::"That's a fair offer I suppose. It's time to say goodbye to that old faithful travel companion then ..."
+            money -= Price6 - Price6S
+            TotalPrice = Price6 - Price6S
+            TotalValue = car_value + TotalPrice
+            car_value => TotalValue
+            mood += 3
+            
+        Elseif 99
+        
+            "I should look around first. That seems like a low-ball figure they're offering for that car. My car worth more than that!"
+            
+        Endif
+    
+    If 10
+    
+        If CarSexLoanValue > 0.5
+            CarDealer.show()
+            CarDealer.dress()
+            CarDealer.moveToPersonStand(Player, 50)
+            CarDealer(Sad)::"Sorry, but according to our books, you already owe us a debt, pay your debt, and then you can make another arrangement."
+        Else
+            CarDealer.show()
+            CarDealer.dress()
+            CarDealer.moveToPersonStand(Player, 50)
+            Player(Shy)::"Hi, humm, is it possible to buy a car in nature, if you know what I mean?"
+            If CarDealer:perversion > 50 && CarDealer:arousal > 25 && CarDealer.isInterestedIn(Player)
+                
+                CarDealer:perversion += Random(1, 2)
+                perversion += Random(1, 5)
+                CarDealer(Flirty)::"Maybe, what do you offer?"
+                Player(Surprised)::"Uh! I thought you got it! With sex!"
+                CarDealer(Flirty)::"I know that, but it's not with a fuck that you're going to be able to leave with a car for free, honey."
+                CarDealer(Grin)::"I meant, how many times can I play with your body before I give you a car for free?"
+                CarDealer.animate()
+                CarDealer(Grin)::"But first, which car do you want?"
+                CarDealer.animate(socialize)
+                
+                Price0 = Random(7000, 18000)
+                Price0C = Price0.convertToLocalCurrency()
+                Price1 = Random(15000, 35000)
+                Price1C = Price1.convertToLocalCurrency()
+                Price2 = Random(30000, 55000)
+                Price2C = Price2.convertToLocalCurrency()
+                Price3 = Random(60000, 80000)
+                Price3C = Price3.convertToLocalCurrency()
+                Price4 = Random(80000, 250000)
+                Price4C = Price4.convertToLocalCurrency()
+                Price5 = Random(300000, 650000)
+                Price5C = Price5.convertToLocalCurrency()
+                Price6 = Random(400000, 850000)
+                Price6C = Price6.convertToLocalCurrency()
+                
+                Price0R = Random(7000, 18000) * ((attractiveness/2)/100)
+                Price0CR = Price0R.convertToLocalCurrency()
+                Price1R = Random(15000, 35000) * ((attractiveness/2)/100)
+                Price1CR = Price1R.convertToLocalCurrency()
+                Price2R = Random(30000, 55000) * ((attractiveness/2)/100)
+                Price2CR = Price2R.convertToLocalCurrency()
+                Price3R = Random(60000, 80000) * ((attractiveness/2)/100)
+                Price3CR = Price3R.convertToLocalCurrency()
+                Price4R = Random(80000, 250000) * ((attractiveness/2)/100)
+                Price4CR = Price4R.convertToLocalCurrency()
+                Price5R = Random(300000, 650000) * ((attractiveness/2)/100)
+                Price5CR = Price5R.convertToLocalCurrency()
+                Price6R = Random(400000, 850000) * ((attractiveness/2)/100)
+                Price6CR = Price6R.convertToLocalCurrency()
+
+                // Apply rebate - Result Price
+                Price0AR =  Price0 - Price0R
+                Price0CAR = Price0AR.convertToLocalCurrency()
+                Price1AR = Price1 - Price1R
+                Price1CAR = Price1AR.convertToLocalCurrency()
+                Price2AR = Price2 - Price2R
+                Price2CAR = Price2AR.convertToLocalCurrency()
+                Price3AR = Price3 - Price3R
+                Price3CAR = Price3AR.convertToLocalCurrency()
+                Price4AR = Price4 - Price4R
+                Price4CAR = Price4AR.convertToLocalCurrency()
+                Price5AR = Price5 - Price5R
+                Price5CAR = Price5AR.convertToLocalCurrency()
+                Price6AR = Price6 - Price6R
+                Price6CAR = Price6AR.convertToLocalCurrency()
+                
+                0:: "Lada for <Price0C>"
+                1:: "Mazda for <Price1C>"
+                2:: "BMW for <Price2C>"
+                3:: "Mercedez for <Price3C>"
+                4:: "Tesla for <Price4C>"
+                5:: "Ferrari for <Price5C>"
+                6:: "Lamborghini for <Price6C>"
+                
+                If 0
+                    rk_VB_CarSelectedIs.setGlobal(1)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, Price0AR)
+                ElseIf 1
+                    rk_VB_CarSelectedIs.setGlobal(2)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, Price1AR)
+                ElseIf 2
+                    rk_VB_CarSelectedIs.setGlobal(3)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, Price2AR)
+                ElseIf 3
+                    rk_VB_CarSelectedIs.setGlobal(4)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, Price3AR)
+                ElseIf 4
+                    rk_VB_CarSelectedIs.setGlobal(5)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, Price4AR)
+                ElseIf 5
+                    rk_VB_CarSelectedIs.setGlobal(6)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, Price5AR)
+                ElseIf 6
+                    rk_VB_CarSelectedIs.setGlobal(7)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, Price6AR)
+                EndIf
+                
+                CarDealer(Grin)::"Ok, so now, how many times can I play with your body before I give you a car for free?"
+                CarDealer:masochist -= Random(2, 5)
+                SaleManRefuse = false
+                SaleManRefuse2 = false
+                "What do I offer?"
+                0::"20 fucks in exchange"
+                1::"50 fucks in exchange"
+                2::"Offer free sex until the car is paid"
+                99::"I changed my mind"
+                
+                If 0
+                    
+                    SaleManRefuse = true
+                    Player.setActorVar(rk_VB_CarSexLoanValue, 0)
+                    
+                ElseIf 1
+                
+                    If CarSelectedIs == 1
+    
+                        rk_VB_PayCarWithSex.setGlobal(1)
+                        Player.setActorVar(rk_VB_CarSexLoanValue, 50)
+                        CarDealer(Grin)::"Good! We got a deal! Let's start right now to reduce your debt..."
+                        CarDealer(Flirty)::"Come, we gonna go somewhere more private!"
+                        setBackground3D(Modules/rk_vin_Base/World/Vim_Basement_Room.lpworld)
+                        "We strip right away and started having sex right here!"
+                        Player.strip()
+                        CarDealer.strip()
+                        sex(CarDealer, Player)
+                        Player.modifyActorVar(rk_VB_CarSexLoanValue, -1)
+                        If !CarDealer.isContactExchanged()
+                            exchangeContact(CarDealer)
+                        EndIf
+                        CarSexLoanValue1 = Player.getActorVar(rk_VB_CarSexLoanValue)
+                        CarDealer.makePermanent()
+                        CarDealer(Flirty)::"That was amazing! Just a reminder, now you owe me <CarSexLoanValue1> fuck(s)! See ya!"
+                        CarDealer.hide()
+                        
+                    Else
+                        
+                        If CarSelectedIs >= 2
+                          CTXT = "crazy"
+                        Else
+                          CTXT = "serious"
+                        EndIf
+                        CarDealer(Sad)::"Are you <CTXT>?? I can see that you are worth more than a whore, but you are not a luxury escort. So, forget about it!"
+                        CarDealer(Serene)::"But for 50 fucks, I can give you the Lada?"
+                        "Do I accept?"
+                        0::"Yes"
+                        1::"No"
+                        
+                        If 0
+                    
+                            rk_VB_PayCarWithSex.setGlobal(1)
+                            Player.setActorVar(rk_VB_CarSexLoanValue, 50)
+                            CarDealer(Grin)::"Good! We got a deal! Let's start right now to reduce your debt..."
+                            CarDealer(Flirty)::"Come, we gonna go somewhere more private!"
+                            setBackground3D(Modules/rk_vin_Base/World/Vim_Basement_Room.lpworld)
+                            "We strip right away and started having sex right here!"
+                            Player.strip()
+                            CarDealer.strip()
+                            sex(CarDealer, Player)
+                            Player.modifyActorVar(rk_VB_CarSexLoanValue, -1)
+                            If !CarDealer.isContactExchanged()
+                                exchangeContact(CarDealer)
+                            EndIf
+                            CarSexLoanValue1 = Player.getActorVar(rk_VB_CarSexLoanValue)
+                            CarDealer.makePermanent()
+                            rk_VB_CarSelectedIs.setGlobal(1)
+                            CarDealer(Flirty)::"That was amazing! Just a reminder, now you owe me <CarSexLoanValue1> fuck(s)! See ya!"
+                            CarDealer.hide()
+                            
+                        Else
+                        
+                            Player.setActorVar(rk_VB_CarSexLoanValue, 0)
+                            SaleManRefuse2 = true
+                            
+                        EndIf
+                    EndIf
+                    
+                Elseif 2
+                    
+                    // MyBodyValueIs = 250
+                    If !CarDealer.isContactExchanged()
+                        exchangeContact(CarDealer)
+                    EndIf
+                    CarDealer(Grin)::"Good! We got a deal! Let's start right now to reduce your debt..."
+                    CarDealer(Flirty)::"Come, we gonna go somewhere more private!"
+                    setBackground3D(Modules/rk_vin_Base/World/Vim_Basement_Room.lpworld)
+                    "We strip right away and started having sex right here!"
+                    Player.strip()
+                    CarDealer.strip()
+                    sex(CarDealer, Player)
+                    CarDealer.makePermanent()
+                    
+                    If CarSelectedIs == 1
+                        Player.modifyActorVar(rk_VB_CarSexLoanValue, -250)
+                    ElseIf CarSelectedIs == 2
+                        Player.modifyActorVar(rk_VB_CarSexLoanValue, -250)
+                    ElseIf CarSelectedIs == 3
+                        Player.modifyActorVar(rk_VB_CarSexLoanValue, -250)
+                    ElseIf CarSelectedIs == 4
+                        Player.modifyActorVar(rk_VB_CarSexLoanValue, -250)
+                    ElseIf CarSelectedIs == 5
+                        Player.modifyActorVar(rk_VB_CarSexLoanValue, -250)
+                    ElseIf CarSelectedIs == 6
+                        Player.modifyActorVar(rk_VB_CarSexLoanValue, -250)
+                    ElseIf CarSelectedIs == 7
+                        Player.modifyActorVar(rk_VB_CarSexLoanValue, -250)
+                    EndIf
+                    CarSexLoanValue1 = Player.getActorVar(rk_VB_CarSexLoanValue)
+                    CarSexLoanValue1_loc = CarSexLoanValue1.convertToLocalCurrency()
+                    CarDealer(Flirty)::"That was amazing! Just a reminder, now you owe me <CarSexLoanValue1_loc>! See ya!"
+                    CarDealer.hide()
+                    
+                Else
+                
+                    "I decided to think a little bit more about it!"
+                    rk_VB_CarSelectedIs.setGlobal(0)
+                    rk_VB_CarDealer_ID.setGlobal(0)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, 0)
+                    
+                EndIf
+                
+                If SaleManRefuse
+                
+                    CarDealer(Sad)::"Get out, you are not serious! I can see that you are worth more than a whore, but you are not a luxury escort. So, forget about it!"
+                    CarDealer(Grin)::"You're losing my time, have a nice day!"
+                    rk_VB_CarSelectedIs.setGlobal(0)
+                    rk_VB_CarDealer_ID.setGlobal(0)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, 0)
+                    
+                ElseIf SaleManRefuse2
+                
+                    CarDealer(Grin)::"Get out, you're losing my time, have a nice day!"
+                    rk_VB_CarSelectedIs.setGlobal(0)
+                    rk_VB_CarDealer_ID.setGlobal(0)
+                    Player.setActorVar(rk_VB_CarSexLoanValue, 0)
+                    
+                EndIf
+            
+            Else
+            
+                CarDealer(Sad)::"Forget it my dear! I don't do that kind of deal with my clients"
+                
+            EndIf
+            
+        EndIf
+        
+    Endif
+    
+SceneEnd() // Improved by Raddeck

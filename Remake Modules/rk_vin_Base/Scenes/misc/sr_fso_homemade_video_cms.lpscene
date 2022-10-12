@@ -1,0 +1,327 @@
+WHAT: all, -sleep, -nap
+WHERE: home
+WHEN: 8 - 22
+WHO: Actor = getSpecific(Dating)
+OTHER: isModEnabled(vin_NTR) && isModEnabled(vin_NonConsensual) && isModEnabled(vin_Incest)
+ 
+    SceneStart()
+        personal_vids = Player.getActorVar(rk_VB_personal_vids)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        AWilling = false
+        IImpressNPC = false
+        DealADone = false
+        Actor2 = Actor.getRelatedPerson(ParentSiblingSiblingChild)
+        If !Actor2.isValid()
+            Actor2 = Actor.generatePersonTemporaryMatchRace()
+            While !Actor2.isMale()
+                Actor2 = Actor.generatePersonTemporaryMatchRace()
+            Endwhile
+            Actor2:perversion => Random(55, 100)
+            Actor2:age => Actor:age + Random(15, 30)
+            Actor2.randomizeFace()
+            Actor2.randomizeHairs()
+            addNpcRelationship(ParentSiblingSiblingChild, Actor2, Actor) // <-- Not sure about this, instead is: addNpcRelationship(Siblings, Actor2, Actor)
+            Actor2.makePermanent()
+        Endif
+        Actor2.hide()
+        Actor2.makeInterested(Player)
+        If !Actor2.isContactExchanged()
+            exchangeContact(Actor2)
+        Endif
+        If !Actor2.isMale()
+            "I learned my <Actor.boyfriend_or_girlfriend>'s perverted aunt is coming over today and <Actor.he_or_she>'ll bring a lunch for the three of us. Maybe I should get something to happen..."
+            "<Actor.His_or_Her> aunt is so perverse that she fucks everything that moves!"
+        Else
+            "I learned my <Actor.boyfriend_or_girlfriend>'s perverted uncle is coming over today and <Actor.he_or_she>'ll bring a lunch for the three of us. Maybe I should get something to happen..."
+            "<Actor.His_or_Her> uncle is so perverse that he fucks everything that moves!"
+        Endif
+        "If I do this right I might even get to make a video of something hot. Or perhaps even more crazy thing!"
+        setBackgroundCustom(kitchen)
+        Actor2.dress()
+        Actor2.show()
+        Actor.dress()
+        Actor.show()
+        Actor.animate(eat)
+        Actor2.animate(eat)
+        Player.animate(eat)
+        "Once <Actor.his_or_her> <Actor2.uncle_or_aunt> arrived, we all got together to eat in the living room..."
+        "When dinner was over and we were all ready to extend the evening..."
+        "What I should do next?"
+        0::"Flash <Actor2.him_or_her>"
+        1::"Ask my <Actor.boyfriend_or_girlfriend> to flash <Actor.his_or_her> <Actor2.uncle_or_aunt>"
+        2::"Ask <Actor2.him_or_her> if <Actor2.he_or_she> would pay to watch me, on the sly, fuck <Actor.name>"
+        3::"Make a pact with <Actor.his_or_her> <Actor2.uncle_or_aunt> to let <Actor2.him_or_her> fuck my <Actor.boyfriend_or_girlfriend>"
+        4::"Spike their drinks and watch them fuck"
+        5::"Spike their drinks and fuck with them"
+        99::"Let's do nothing crazy!"
+        
+        If 0
+            Player.animate()
+            If Player.isEquipped(Bottom)
+                Player.dressExcept(Outerwear, Bottom)
+            Elseif Player.isEquipped(Bottom_Under)
+                Player.dressExcept(Outerwear, Bottom, Bottom_Under)
+            Elseif Player.isEquipped(Top)
+                Player.dressExcept(Outerwear, Top)
+            Elseif Player.isEquipped(Bottom_Under)
+                Player.dressExcept(Outerwear, Top, Top_Under)
+            Else
+                Player.dressExcept(Outerwear, Bottom, Bottom_Under)
+            Endif
+            "I decided to flash <Actor.his_or_her> <Actor2.uncle_or_aunt> to see what will happen! And filmed the whole thing on the sly!"
+            "I positioned myself in front of <Actor.him_or_her> and began to chat with <Actor.him_or_her> while making sure to clearly show <Actor.him_or_her> my <Player.dick_or_pussy>!"
+            perversion += 1
+            arousal += 1
+            If Actor2:arousal > 15
+                Actor2(Flirty)::"I think I'm going to come around more often! I like what I see!"
+                Actor2:perversion += 1
+                Actor2:arousal += 1
+                "<Actor2.He_or_She> can't believe we are as kinky as <Actor2.he_or_she> is..."
+                IImpressNPC = true
+            Else
+                Actor2(Annoyed)::"Hey, I didn't come here to see your <Player.dick_or_pussy>, please hide this from me!"
+                Actor2:perversion -= 1
+                Actor2:arousal += 1
+                "I didn't managed to impress <Actor2.him_or_her>!"
+            Endif
+            VideoDone = Random(1, 5)
+            VideoDone = VideoDone.round()
+            If IImpressNPC
+                Player.modifyActorVar(rk_VB_personal_vids, VideoDone)
+                "<VideoDone> videos added to my personal video collection!"
+            Else
+                Player.modifyActorVar(rk_VB_personal_vids, 1)
+                "1 video added to my personal video collection!"
+            Endif
+        Elseif 1
+            perversion += 1
+            arousal += 1
+            "I decided to ask my <Actor.boyfriend_or_girlfriend> if <Actor.he_or_she>'s willing to flash <Actor.his_or_her> <Actor2.uncle_or_aunt> to see what will happen!"
+            "And told my <Actor.boyfriend_or_girlfriend> that I will filmed the whole thing on the sly!"
+            If !Actor.isMale()
+                Player(Curious)::"Hey honey are you willing to wear a dress or a skirt without panties while your <Actor2.uncle_or_aunt> is visiting."
+            Else
+                Player(Curious)::"Hey honey are you willing to wear only panties or something that will show off your dick while your <Actor2.uncle_or_aunt> is visiting."
+            Endif
+            If Actor:arousal > 15 && Actor:perversion > 50 && Actor.isInterestedIn(Actor2)
+                Actor(Happy):: "I'm willing! But are you sure? Maybe not the best idea with my perv <Actor2.uncle_or_aunt>!"
+                Player(Happy)::"Cool!"
+                Player(Happy)::"I know, but the idea of my <Actor.boyfriend_or_girlfriend> flashing <Actor.his_or_her> <Actor2.uncle_or_aunt> is pretty exciting!"
+                Actor(Happy):: "That will be funny for sure!"
+                Actor:perversion += 1
+                Actor:arousal += 1
+                AWilling = true
+            Else
+                Actor(Sad)::"Are you crazy, never in a hundred years! Not in front of my <Actor2.uncle_or_aunt>!"
+                Player(Grin)::"Don't worry! I was joking!"
+            Endif
+        Elseif 2
+            setBackgroundCustom(kitchen)
+            Player.moveToPersonStand(Actor2, 50)
+            "When dinner was over and we were all getting ready for bed, I explained my plan to <Actor.his_or_her> <Actor2.uncle_or_aunt>."
+            If Actor2:arousal > 15 && Actor2.isInterestedIn(Actor)
+                Actor:perversion += 1
+                Actor:arousal += 1
+                DealADone = true
+                CashDeal = Random(50, 100)
+                CashDealloc = CashDeal.convertToLocalCurrency()
+                "<Actor2.He_or_She> quickly agreed to pay <CashDealloc> to see <Actor.him_or_her> naked and get plastered. And filmed the whole thing on the sly!"
+                money += CashDeal
+            Else
+                "<Actor2.He_or_She> was quickly overcome with disgust and tells me..."
+                Actor2(Sad)::"Are you sick, never in a hundred years! I'm not interested to see that!"
+                Player(Grin)::"Don't worry! I was joking!"
+                Actor2:rapportwithplayer -= Random(1, 5)
+                Actor2:attractiontoplayer -= Random(1, 5)
+            Endif
+        Elseif 3
+            setBackgroundCustom(livingroom)
+            Actor2.dress()
+            Actor2.show()
+            Actor.animate(drinkglass)
+            Player.animate(drinkglass)
+            Actor2.animate(drinkglass)
+            CashDeal = Random(100, 200)
+            CashDealloc = CashDeal.convertToLocalCurrency()
+            "While we drink alcohol, I take the opportunity to explain my plan to <Actor.his_or_her> <Actor2.uncle_or_aunt>..."
+            If Actor2:arousal > 15 && Actor2.isInterestedIn(Actor)
+                "<Actor2.He_or_She> quickly agreed to pay <CashDealloc> to fuck my <Actor.boyfriend_or_girlfriend>. And be filmed on the sly at the same time!"
+                "While we are drinking alcohol, I take the opportunity to put an aphrodisiac mixture inside my <Actor.boyfriend_or_girlfriend> drink, to let <Actor.his_or_her> <Actor2.uncle_or_aunt> fuck <Actor.him_or_her>!"
+                Actor:arousal => 75
+                Actor:intoxication => 75
+                "After few minutes, my <Actor.boyfriend_or_girlfriend> started to undress my <Actor.himself_or_herself>..."
+                Player.hide()
+                Actor.strip()
+                Actor.animate()
+                Player.animate(camera)
+                Actor2.animate()
+                Actor.moveToPersonStand(Actor2)
+                "Then <Actor.he_or_she> grab <Actor.his_or_her> <Actor2.uncle_or_aunt> and begin to rub <Actor.himself_or_herself> on <Actor2.him_or_her>..."
+                Actor2:arousal += 2
+                Actor2.strip()
+                "<Actor.His_or_Her> <Actor2.uncle_or_aunt> stripped and finally ends with a hot fuck!"
+                sex(Actor2, Actor)
+                VideoDone = Random(1, 5)
+                VideoDone = VideoDone.round()
+                Player.modifyActorVar(rk_VB_personal_vids, VideoDone)
+                "<VideoDone> videos added to my personal video collection!"
+                Player.show()
+                Player.animate()
+                If Actor2:arousal > 15
+                    personal_vids = Player.getActorVar(rk_VB_personal_vids)
+                    "<Actor.His_or_Her> <Actor2.uncle_or_aunt> uncle beckons me to come join <Actor.him_or_her> for a threesome"
+                    "What should I do?"
+                    0::"Accept"
+                    1::"Refuse"
+                    
+                    If 0
+                        sex(Actor2, Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                        EndIf
+                        VideoDone = Random(1, 5)
+                        VideoDone = VideoDone.round()
+                        Player.modifyActorVar(rk_VB_personal_vids, VideoDone)
+                    Else
+                        "I decided to ignore <Actor.his_or_her> proposal!"
+                    Endif
+                Endif
+            Else
+                "<Actor2.He_or_She> was quickly overcome with disgust and tells me..."
+                Actor2(Sad)::"Are you sick, never in a hundred years! I'm not interested to see that!"
+                Player(Grin)::"Don't worry! I was joking!"
+                Actor2:rapportwithplayer -= Random(1, 5)
+                Actor2:attractiontoplayer -= Random(1, 5)
+            Endif
+        Elseif 4
+            setBackgroundCustom(livingroom)
+            Actor2.dress()
+            Actor2.show()
+            Actor.animate(drinkglass)
+            Player.animate(drinkglass)
+            Actor2.animate(drinkglass)
+            "While we are drinking alcohol, I take the opportunity to put an aphrodisiac mixture inside my <Actor.boyfriend_or_girlfriend> and <Actor.his_or_her> <Actor2.uncle_or_aunt> drimks, to watch them fuck together!"
+            Actor:arousal => 75
+            Actor:intoxication => 75
+            Actor2:arousal => 75
+            Actor2:intoxication => 75
+            "After few minutes, my <Actor.boyfriend_or_girlfriend> and <Actor.his_or_her> <Actor2.uncle_or_aunt> started to undress..."
+            Actor.animate()
+            Player.animate(camera)
+            Actor2.animate()
+            Actor.strip()
+            Actor2.strip()
+            "And they start to sensually caress each other until they make love!..."
+            sex(Actor2, Actor)
+            arousal += 3
+            "Since they are frozen on this drug, do I join them for a second round?"
+            0::"Yes"
+            1::"No"
+            
+            If 0
+                Player.animate()
+                sex(Actor2, Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+            Endif
+            VideoDone = Random(3, 7)
+            VideoDone = VideoDone.round()
+            Player.modifyActorVar(rk_VB_personal_vids, VideoDone)
+            "<VideoDone> videos added to my personal video collection!"
+        Elseif 5
+            setBackgroundCustom(livingroom)
+            Actor2.dress()
+            Actor2.show()
+            Actor.animate(drinkglass)
+            Player.animate(drinkglass)
+            Actor2.animate(drinkglass)
+            "While we are drinking alcohol, I take the opportunity to put an aphrodisiac mixture inside my <Actor.boyfriend_or_girlfriend> and <Actor.his_or_her> <Actor2.uncle_or_aunt> drimks, to let me fuck them!"
+            Actor:arousal => 75
+            Actor:intoxication => 75
+            Actor2:arousal => 75
+            Actor2:intoxication => 75
+            "After few minutes, my <Actor.boyfriend_or_girlfriend> and <Actor.his_or_her> <Actor2.uncle_or_aunt> started to undress..."
+            Actor.animate()
+            Player.animate()
+            Actor2.animate()
+            Actor.strip()
+            Actor2.strip()
+            "And they start to sensually caress each other until they make love! So I joined them right away..."
+            Player.strip()
+            sex(Actor2, Player, Actor)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -3)
+            EndIf
+            VideoDone = Random(3, 5)
+            VideoDone = VideoDone.round()
+            Player.modifyActorVar(rk_VB_personal_vids, VideoDone)
+            "<VideoDone> videos added to my personal video collection!"
+        Endif
+        If AWilling
+            Actor:perversion += 1
+            Actor:arousal += 1
+            If Actor2:arousal > 15
+                Actor2(Flirty)::"I think I'm going to come around more often! I like what I see!"
+                Actor2:perversion += 1
+                Actor2:arousal += 1
+                "<Actor2.He_or_She> can't believe we are as kinky as <Actor2.he_or_she> is..."
+                IImpressNPC = true
+            Else
+                Actor2(Annoyed)::"Hey, I didn't come here to see your <Actor.dick_or_pussy>, please hide this from me!"
+                Actor2:perversion -= 1
+                Actor2:arousal += 1
+                "<Actor.name> didn't managed to impress <Actor.his_or_her> <Actor2.uncle_or_aunt>!"
+            Endif
+            VideoDone = Random(1, 5)
+            VideoDone = VideoDone.round()
+            If IImpressNPC
+                Player.modifyActorVar(rk_VB_personal_vids, VideoDone)
+                "<VideoDone> videos added to my personal video collection!"
+            Else
+                Player.modifyActorVar(rk_VB_personal_vids, 1)
+                "1 video added to my personal video collection!"
+            Endif
+        Endif
+        If DealADone
+            Actor2.hide()
+            Actor2:arousal += 2
+            Actor2:perversion += 1
+            setBackground(home)
+            Sex(Player, Actor)
+            Actor2:arousal += Random(1, 5)
+            "After we had sex, I remembered that we have a blindfold that I could use on <Actor.him_or_her> and I let <Actor.his_or_her> <Actor2.uncle_or_aunt> fuck with <Actor.him_or_her>..."
+            0:: "Nah, I love showing <Actor.him_or_her> off but let not cross the line."
+            1:: "This is a great idea!"
+            
+            If 1
+                If Actor2:arousal > 15 && Actor2.isInterestedIn(Actor)
+                    Actor2.show()
+                    Actor.dressBondage(Blindfold)
+                    "My <Actor.boyfriend_or_girlfriend> is blind folded and getting fucked by <Actor.his_or_her> <Actor2.uncle_or_aunt> while I'm filming the whole thing."
+                    Actor2.strip()
+                    Sex(Actor2, Actor)
+                    VideoDone = Random(1, 5)
+                    VideoDone = VideoDone.round()
+                    Player.modifyActorVar(rk_VB_personal_vids, VideoDone)
+                    "<VideoDone> videos added to my personal video collection!"
+                    Actor2.hide()
+                    "My <Actor.boyfriend_or_girlfriend> didn't realize anything!"
+                    karma -= Random(0, 1)
+                    personal_vids = Player.getActorVar(rk_VB_personal_vids)
+                Else
+                    "<Actor.His_or_Her> <Actor2.uncle_or_aunt> ignored my risky proposal!"
+                Endif
+            Endif
+            VideoDone = Random(1, 5)
+            VideoDone = VideoDone.round()
+            Player.modifyActorVar(rk_VB_personal_vids, VideoDone)
+            "<VideoDone> videos added to my personal video collection!"
+        Endif
+        "After that famous night, <Actor.his_or_her> <Actor2.uncle_or_aunt> went home!"
+        Actor2.hide()
+    SceneEnd() // Scene improved by Raddeck
+    timeout(180, sr_fso_homemade_video_cms)

@@ -1,0 +1,181 @@
+WHAT: all
+WHERE: Police:work, all, -home, -prison
+WHEN: 0-24
+WHO: 
+OTHER: !isWithCompanion() && 70 < random(0, 100) && Player.isJob(Police)
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor = generatePersonTemporary()
+        Actor:age => random(40, 65)
+        tag_Police = Player.getActorVar(tag_Police)
+        "Today, I decided to visit <Actor.name> to get some info about a murder about <Actor.his_or_her> friend..."
+        setBackground(street)
+        "I was there smoking my pipe like a modern-day Sherlock Holmes. Waiting for <Actor.name> to open the door! <Actor.He_or_She>'s an old retired cop who became a prostitute, <Actor.he_or_she> usually offers info on some criminals..."
+        "<Actor.name> finally opens <Actor.his_or_her> door, I ask <Actor.him_or_her>..."
+        Actor.show()
+        Actor.dress()
+        Player.moveToPersonStand(Actor, 50)
+        faceEachOther(Player, Actor)
+        Player(Curious)::"I’m looking into the death of a friend of yours,"
+        Player(Curious)::"Bethy Chalders has been murdered."
+        Actor(Annoyed)::"Everybody has heard about that – a very nasty business."
+        Player(Curious)::"Do you know who might have done it?"
+        Actor(Annoyed)::"It could be anybody she was in a high-risk occupation."
+        Player(Curious)::"Did anybody have it in for her?"
+        Actor(Annoyed)::"Is that a double entendre?"
+        Player(Curious)::"You know what I mean."
+        Actor(Annoyed)::"Look in this business you fuck strangers every day, sure some are regulars but the others could as easily be Jack the Ripper or Santa Claus."
+        Player(Angry)::"Did she have any enemies among the other girls?"
+        Actor(Annoyed)::"Nothing as far as I know."
+        Player(Angry)::"You don’t know fucking much do you?"
+        Actor(Grin)::"I might know something but it will cost you."
+        Player(Curious)::"Come on – you do this to me all the time and sometimes the information isn’t worth shit."
+        Actor(Grin)::"I told you who killed the pimp down of 5th Street didn’t I?"
+        Player(Annoyed)::"Yes you did,"
+        Actor(Grin)::"So you know the deal <Player.name>, you give me a <Actor.blowjob_or_cunnilingus> and I tell you all I know."
+        "I shook my head..." 
+        Player(Annoyed)::"How is it that other officers pay their informants fifty bucks a pop and you make me lick your <Actor.dick_or_cunt>."
+        Actor(Grin)::"Because you blabbed on me when I made a little mistake. I’d been a good cop up to that point but that didn’t seem to matter to you and I lost my job."
+        Player(Annoyed)::"Fucking a prisoner in <Actor.his_or_her> cell was not a little mistake and you can’t blame me for you ending up selling meat."
+        If !Actor.isMale()
+            Actor(Grin)::"I can <Player.name> and that's why I'd like to rub your face in it..."
+        Else
+            Actor(Grin)::"I can <Player.name> and that's why I'd like to have your mouth on it..."
+        EndIf
+        Actor(Grin)::"...no pun intended."
+        "What I should do?"
+        0::"Accept"
+        1::"Refuse"
+        
+        If 0
+            "<Actor.name> invites me into <Actor.his_or_her> home..."
+            setBackground(bedroom)
+            arousal += 1
+            perversion += 1
+            Player.moveToPersonStand(Actor, 50)
+            faceEachOther(Player, Actor)
+            Player(Flirty)::"OK take off your gear – this information better be worth it."
+            Actor(Flirty)::"What’s a matter with you – some people would give the right arm to lick my <Actor.dick_or_pussy>,..."
+            Actor.strip()
+            Player(Flirty)::"I just don't intend to pay to fuck you - but if you offer it for free I'm in."
+            Actor(Flirty)::"OK, OK – just this once – but after you’ve eaten me out."
+            Actor:rapportwithplayer += random(0, 1)
+            Actor:attractiontoplayer += random(0, 1)
+            "Lying on the bed, <Actor.his_or_her> smooth white thighs open for business, I knelt on the floor and pulled on <Actor.his_or_her> legs to bring <Actor.his_or_her> <Actor.dick_or_pussy> to my mouth,..."
+            "Then began to lick <Actor.him_or_her>, just above <Actor.his_or_her> <Actor.balls_or_anus>, all the way to <Actor.his_or_her> <Actor.cap_or_clit>, with great licks, like an overexcited dog."
+            If !Actor.isMale()
+                Filter(Licking)
+            Else   
+                Filter(Blowjob)
+            EndIf
+            sex(Player, Actor)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+            Actor(Flirty)::"Holy fuck – I’m cumming,"
+            Player.moveToPersonStand(Actor, 50)
+            faceEachOther(Player, Actor)
+            Player.strip()
+            If Player.isMale() && !Actor.isMale()
+                "When that was all over she played with my balls, sucked my dick and then lay back as I plunged my cock into her wet crack and pounded her as if my stripes depended on it."
+                sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                "When my cum surged up my pipe it just kept coming and coming until my balls began to look like two dried prunes."
+                "When I withdrawn my dripping dick we both sat naked on the bed and <Actor.name> gave me some information I didn’t expect."
+            ElseIf Player.isMale() && Actor.isMale()
+                "When that was all over he played with my balls, sucked my dick and then lay back as I plunged my cock into his tight ass hole and pounded him as if my stripes depended on it"
+                sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                "When my cum surged up my pipe it just kept coming and coming until my balls began to look like two dried prunes."
+                "When I withdrawn my dripping dick we both sat naked on the bed and <Actor.name> gave me some information I didn’t expect."
+            ElseIf !Player.isMale() && Actor.isMale()
+                "When that was all over he played with my clit, sucked my tits and then lay back as he plunged his face into my wet crack and licked me until I got an orgasm."
+                sex(Actor, Player)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                "When his cum surged up his pipe it just kept coming and coming until his balls began to look like two dried prunes."
+                "When he withdrawn his dripping dick we both sat naked on the bed and <Actor.name> gave me some information I didn’t expect."
+            ElseIf !Player.isMale() && !Actor.isMale()
+                "When that was all over she played with my clit, sucked my tits and then lay back as I plunged my face into her wet crack and licked her until she got an orgasm."
+                sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+                "When her juice surged up her vagina it just kept coming and coming ..."
+                "When we stopped licking our pussies we both sat naked on the bed and <Actor.name> gave me some information I didn’t expect."
+            EndIf
+            If isModEnabled(rk_vin_Base)
+                Player.moveToPersonStand(Actor, 50)
+                faceEachOther(Player, Actor)
+                Actor(Grin)::"You don’t need the names of Beth’s associates <Player.name> – I did it," 
+                Actor(Grin)::"I shot the bitch. You know – I would have trusted her with my life but she discovered my bank details and drained my account – twenty thousand fucking dollars."
+                Player(Shocked)::"God – I hate to do this <Actor.name> but I’ll have to arrest you."
+                Actor(Grin)::"I don’t care <Player.name>…you see… I’m dying anyway."
+                Player(Shocked)::"Holy shit! what are you dying of?"
+                Actor(Grin)::"A rare strain of Syphilis <Player.name> and there’s no known cure."
+                Player(Shocked)::"What! Holy shit! So, you just give me this disease, asshole?"
+                Actor.hide()
+                
+                0:: "See a doctor"
+                1:: "Accept my fate"
+                
+                If 0
+                    setBackground(hospital)
+                    Player(Crying):: "No ....."
+                    PriceSTD = random(25000, 50000)
+                    PriceSTD_loc = PriceSTD.convertToLocalCurrency()
+                    Bluffing = random(0, 100)
+                    "<Actor.name> was arrested immediately and will have to spend the rest of <Actor.his_or_her> life in jail..."
+                    Actor.DeletePerson()
+                    If Bluffing > 50
+                        "Oh no, after some extensive testing, it's official: I've been diagnosed with a common sexually transmitted disease ... I guess the unprotected intercourses I've been having finally lead to consequences."
+                        "This STD, while never fatal, will have a drastic impact on my level of fitness and energy throughout the day. I will also look like crap after a few years."
+                        0:: "Accept my fate"
+                        1:: "Get cured by the world's best doctor (consume ~50 karma)"
+                        2:: money >= PriceSTD ::"Get cured by the world's best doctor (pay <PriceSTD_loc>)"
+                    
+                        If 0
+                            contractSTD()
+                        ElseIf 2
+                            money -= PriceSTD
+                        Else
+                            karma -= 50
+                        EndIf
+                    Else
+                        "After some extensive testing, it's official: I've not been diagnosed with a common sexually transmitted disease ..."
+                    EndIf
+                Else
+                    "<Actor.name> was arrested immediately and will have to spend the rest of <Actor.his_or_her> life in jail..."
+                    Actor.DeletePerson()
+                    contractSTD()
+                EndIf
+            Else
+                contractSTD()
+                "<Actor.name> was arrested immediately and will have to spend the rest of <Actor.his_or_her> life in jail..."
+                money -= 5000
+                sceneEndLoadLastSave()
+            EndIf
+        Else
+            arousal -= 1
+            perversion -= 1
+            Player.moveToPersonStand(Actor, 50)
+            faceEachOther(Player, Actor)
+            Actor(Flirty)::"What’s a matter with you – some people would give the right arm to lick my <Actor.dick_or_pussy>,..."
+            Player(Flirty)::"I just don't intend to pay to fuck you or getting sick..."
+            Actor(Grin)::"Fuck off! Get out!"
+            "Just like that, <Actor.name> asked me to leave! Which I did right away!"
+            Actor.hide()
+            Actor:rapportwithplayer -= random(0, 2)
+            Actor:attractiontoplayer += random(0, 2)
+        EndIf
+    SceneEnd()
+    timeout(500, rk_VB_Bethy_Chalders)

@@ -1,0 +1,60 @@
+WHAT: all
+WHERE: all
+WHEN: 0-24
+WHO: Actor = getSpecific(Dating)
+OTHER: random(0, 100) > 65
+
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Actor.dress()
+        Actor.show()
+        Actor.moveToPersonStand(Player, 50)
+        Actor(Curious):: "Hey babe, would you be willing to go on vacation with me, right now, seems to me that we are due to go on vacation..."
+        0:: "Of course my love!"
+        1:: "No, sorry I'm too busy!"
+
+        If 0
+            Actor(Happy)::"Cool, get your stuff ready, we're going south!"
+            Actor:mood += 5
+            Actor:arousal += 5
+            "I'm going to pack now and then make sure our house is safe before we leave on our trip...."
+            "<Actor.name> decided to take me to an island not too far from here...."
+            setBackground(street)
+            "We are on our way to the local airport. Since <Actor.he_or_she> had already purchased tickets for both of us, we were able to get on the plane quickly and flew to <Actor.his_or_her> island paradise for some fun in the sun."
+            passTime(0.5, 2)
+            setBackground(hotel)
+            "Once we arrived on the island, which is completely beautiful, we immediately took our luggage to our hotel room and went to the beach..."
+            passTime(0.5, 2)
+            "After a while we went back to our hotel room ..."
+            Player(Happy):: "Thanks for showing me this island! It's really a relaxing place and being alone with you, I feel relaxed."
+            Actor(Happy):: "Anytime, sweetheart! You know, you're not the only one with secrets..."
+            Player(Happy):: "I can see that!"
+            Actor(Flirty):: "I'm also happy to spend time with you and I knew you wanted to go to the beach for a while."
+            mood += 50
+            Player(Flirty):: "You're so nice, ..."
+            animatePair(Player, Actor, Kissing)
+            "We enjoyed a few days on the island before returning to the city and starting our routines again..."
+            moveTo(home)
+            setBackgroundCustom(livingroom)
+            Player(Happy):: "It was an amazing vacation, I can't wait for us to go back together again or for you to show me another island!"
+            Actor(Happy):: "Thank you, my love! You can count on me!"
+            mood += 50
+            Actor:mood += 50
+            Actor:rapportwithplayer += 5
+            Actor:attractiontoplayer += 5
+        Else
+            Player(Sad)::"Sorry, I'm overwhelmed with work. I won't be able to take a vacation for a while, sorry my love."
+            If Actor:masochist > masochist
+                Actor(Sad):: "Okay then, I'll go alone because I need a vacation..."
+                "<Actor.name> leave right away to the aeroport and flew to <Actor.his_or_her> island paradise for some fun in the sun."
+                Actor.hide()
+            Else
+                Actor(Sad):: "Okay fine, maybe later then..."
+            Endif
+        Endif
+    SceneEnd() // Scene improved by Raddeck
+    timeout(400, sr_fso_cutedate_cms)

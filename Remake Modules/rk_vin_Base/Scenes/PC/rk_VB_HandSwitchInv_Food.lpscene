@@ -1,0 +1,172 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        SettingChoiceSwitchFood = rk_VB_SettingChoiceSwitchFood.getGlobal()
+        IBuyBakery = Player.getActorVar(rk_VB_IBuyBakery)
+        IBuyCandy = Player.getActorVar(rk_VB_IBuyCandy)
+        IBuyPopcorn = Player.getActorVar(rk_VB_IBuyPopcorn)
+        IBuyICDessert = Player.getActorVar(rk_VB_IBuyICDessert)
+        IBuyMeat = Player.getActorVar(rk_VB_IBuyMeat)
+        IBuySeafood = Player.getActorVar(rk_VB_IBuySeafood)
+        IBuyVegan = Player.getActorVar(rk_VB_IBuyVegan)
+        
+        stock_HealthyCookie = Player.getActorVar(stock_HealthyCookie)
+        stock_LentilStew = Player.getActorVar(stock_LentilStew)
+        stock_CauliAlfredo = Player.getActorVar(stock_CauliAlfredo)
+        stock_RicePeas = Player.getActorVar(stock_RicePeas)
+        stock_Edamame = Player.getActorVar(stock_Edamame)
+        stock_PastaAlfredo = Player.getActorVar(stock_PastaAlfredo)
+        stock_CrispyTofu = Player.getActorVar(stock_CrispyTofu)
+        stock_LoMein = Player.getActorVar(stock_LoMein)
+        stock_veganmeal = stock_HealthyCookie + stock_LentilStew + stock_CauliAlfredo + stock_RicePeas + stock_Edamame + stock_PastaAlfredo + stock_CrispyTofu + stock_LoMein
+        
+        stock_Oysters = Player.getActorVar(stock_Oysters)
+        stock_Shrimps = Player.getActorVar(stock_Shrimps)
+        stock_Sushi = Player.getActorVar(stock_Sushi)
+        stock_Lobster = Player.getActorVar(stock_Lobster)
+        stock_Caviar = Player.getActorVar(stock_Caviar)
+        stock_seafoodprod = stock_Oysters + stock_Shrimps + stock_Sushi + stock_Lobster + stock_Caviar
+        
+        stock_Jerkey = Player.getActorVar(stock_Jerkey)
+        stock_Cheesesteak = Player.getActorVar(stock_Cheesesteak)
+        stock_Chicken = Player.getActorVar(stock_Chicken)
+        stock_SaltNPepper = Player.getActorVar(stock_SaltNPepper)
+        stock_WrappedPork = Player.getActorVar(stock_WrappedPork)
+        stock_ChickenKebabs = Player.getActorVar(stock_ChickenKebabs)
+        stock_ChineseBeef = Player.getActorVar(stock_ChineseBeef)
+        stock_SurfNTurf = Player.getActorVar(stock_SurfNTurf)
+        stock_meatprod = stock_Jerkey + stock_Cheesesteak + stock_Chicken + stock_SaltNPepper + stock_WrappedPork + stock_ChickenKebabs + stock_ChineseBeef + stock_SurfNTurf
+        
+        stock_Popcycle = Player.getActorVar(stock_Popcycle)
+        stock_IcecreamCup = Player.getActorVar(stock_IcecreamCup)
+        stock_MilkShake = Player.getActorVar(stock_MilkShake)
+        stock_FrozenPie = Player.getActorVar(stock_FrozenPie)
+        stock_IceCreamCake = Player.getActorVar(stock_IceCreamCake)
+        stock_icecreampop = stock_Popcycle + stock_IcecreamCup + stock_MilkShake + stock_FrozenPie + stock_IceCreamCake
+        
+        stock_Pita = Player.getActorVar(stock_Pita)
+        stock_Bread = Player.getActorVar(stock_Bread)
+        stock_Bagel = Player.getActorVar(stock_Bagel)
+        stock_BaltikBread = Player.getActorVar(stock_BaltikBread)
+        stock_ProteinCookie = Player.getActorVar(stock_ProteinCookie)
+        stock_VdolkyDonut = Player.getActorVar(stock_VdolkyDonut)
+        stock_ApplePie = Player.getActorVar(stock_ApplePie)
+        stock_RoyalCake = Player.getActorVar(stock_RoyalCake)
+        stock_bakery = stock_Pita + stock_Bread + stock_Bagel + stock_BaltikBread + stock_ProteinCookie + stock_VdolkyDonut + stock_ApplePie + stock_RoyalCake
+        
+        stock_PopRocks = Player.getActorVar(stock_PopRocks)
+        stock_CottonCandy = Player.getActorVar(stock_CottonCandy)
+        stock_GummiBears = Player.getActorVar(stock_GummiBears)
+        stock_Smarties = Player.getActorVar(stock_Smarties)
+        stock_JollyRanchers = Player.getActorVar(stock_JollyRanchers)
+        stock_PeanutCups = Player.getActorVar(stock_PeanutCups)
+        stock_Licorice = Player.getActorVar(stock_Licorice)
+        stock_PowerBar = Player.getActorVar(stock_PowerBar)
+        stock_BigBallHickey = Player.getActorVar(stock_BigBallHickey)
+        stock_SweetTarts  = Player.getActorVar(stock_SweetTarts)
+        stock_confectioneryprod = stock_PopRocks + stock_CottonCandy + stock_GummiBears + stock_Smarties + stock_JollyRanchers + stock_PeanutCups + stock_Licorice + stock_PowerBar + stock_BigBallHickey + stock_SweetTarts
+        
+        stock_PlainPopcorn = Player.getActorVar(stock_PlainPopcorn)
+        stock_ButterPopcorn = Player.getActorVar(stock_ButterPopcorn)
+        stock_PopcornMix = Player.getActorVar(stock_PopcornMix)
+        stock_HealthyPopcorn = Player.getActorVar(stock_HealthyPopcorn)
+        stock_popcorn = stock_PlainPopcorn + stock_ButterPopcorn + stock_PopcornMix + stock_HealthyPopcorn
+        
+        If SettingChoiceSwitchS == 1
+            If stock_bakery <= 0 || IBuyBakery < 0
+            
+                "You don't have any bakery to eat...!"
+            
+            ElseIf stock_bakery > 0
+
+                "You own <stock_bakery> pastries"
+                Player.setActorVar(rk_VB_IBuyBakery, stock_bakery)
+               "Now fixed!"
+            
+            EndIf
+            
+        ElseIf SettingChoiceSwitchS == 2
+            If stock_confectioneryprod <= 0 || IBuyCandy < 0
+            
+                "You don't have any candy to eat...!"
+            
+            ElseIf stock_confectioneryprod > 0
+
+                "You own <stock_confectioneryprod> candies"
+                Player.setActorVar(rk_VB_IBuyCandy, stock_confectioneryprod)
+               "Now fixed!"
+            
+            EndIf
+            
+        ElseIf SettingChoiceSwitchS == 3
+            If stock_icecreampop <= 0 || IBuyICDessert < 0
+            
+                "You don't have any Ice cream desserts to eat...!"
+            
+            ElseIf stock_icecreampop > 0
+
+                "You own <stock_icecreampop> Ice cream desserts"
+                Player.setActorVar(rk_VB_IBuyICDessert, stock_icecreampop)
+               "Now fixed!"
+            
+            EndIf
+            
+        ElseIf SettingChoiceSwitchS == 4
+            If stock_meatprod <= 0 || IBuyMeat < 0
+            
+                "You don't have any Meat meals to eat...!"
+            
+            ElseIf stock_meatprod > 0
+
+                "You own <stock_meatprod> Meat meals"
+                Player.setActorVar(rk_VB_IBuyMeat, stock_meatprod)
+               "Now fixed!"
+            
+            EndIf
+            
+        ElseIf SettingChoiceSwitchS == 5
+            If stock_popcorn <= 0 || IBuyPopcorn < 0
+            
+                "You don't have any popcorn to eat...!"
+            
+            ElseIf stock_popcorn > 0
+
+                "You own <stock_popcorn> popcorn"
+                Player.setActorVar(rk_VB_IBuyPopcorn, stock_popcorn)
+               "Now fixed!"
+            
+            EndIf
+
+        ElseIf SettingChoiceSwitchS == 6
+            If stock_seafoodprod <= 0 || IBuySeafood < 0
+            
+                "You don't have any seafood to eat...!"
+            
+            ElseIf stock_seafoodprod > 0
+
+                "You own <stock_seafoodprod> seafood meal(s)"
+                Player.setActorVar(rk_VB_IBuySeafood, stock_seafoodprod)
+               "Now fixed!"
+            
+            EndIf
+        ElseIf SettingChoiceSwitchS == 7
+            If stock_veganmeal <= 0 || IBuyVegan < 0
+            
+                "You don't have any vegan meal to eat...!"
+            
+            ElseIf stock_veganmeal > 0
+
+                "You own <stock_veganmeal> vegan meal(s)"
+                Player.setActorVar(rk_VB_IBuyVegan, stock_veganmeal)
+               "Now fixed!"
+            
+            EndIf
+            
+        EndIf
+        
+    SceneEnd()

@@ -1,0 +1,291 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        clearGetList()
+        
+        IBuyaComputer = Player.getActorVar(rk_VB_IBuyaComputer)
+        hasLivingroom = RE_has_lvingroom.getGlobal()
+        hasKitchen = RE_has_kitchen.getGlobal()
+        hasOfficeroom = RE_has_officeroom.getGlobal()
+        hasSecBedroom = RE_has_secondbedroom.getGlobal()
+        hasThirdBedroom = RE_has_thirdbedroom.getGlobal()
+        
+        Kstock_ZellVostro = Player.getActorVar(Kstock_ZellVostro)
+        LRstock_ZellVostro = Player.getActorVar(LRstock_ZellVostro)
+        MBstock_ZellVostro = Player.getActorVar(MBstock_ZellVostro)
+        Ostock_ZellVostro = Player.getActorVar(Ostock_ZellVostro)
+        SBstock_ZellVostro = Player.getActorVar(SBstock_ZellVostro)
+        SRstock_ZellVostro = Player.getActorVar(SRstock_ZellVostro)
+        TBstock_ZellVostro = Player.getActorVar(TBstock_ZellVostro)
+
+        Kstock_LPPavilion = Player.getActorVar(Kstock_LPPavilion)
+        LRstock_LPPavilion = Player.getActorVar(LRstock_LPPavilion)
+        MBstock_LPPavilion = Player.getActorVar(MBstock_LPPavilion)
+        Ostock_LPPavilion = Player.getActorVar(Ostock_LPPavilion)
+        SBstock_LPPavilion = Player.getActorVar(SBstock_LPPavilion)
+        SRstock_LPPavilion = Player.getActorVar(SRstock_LPPavilion)
+        TBstock_LPPavilion = Player.getActorVar(TBstock_LPPavilion)
+
+        Kstock_LPware = Player.getActorVar(Kstock_LPware)
+        LRstock_LPware = Player.getActorVar(LRstock_LPware)
+        MBstock_LPware = Player.getActorVar(MBstock_LPware)
+        Ostock_LPware = Player.getActorVar(Ostock_LPware)
+        SBstock_LPware = Player.getActorVar(SBstock_LPware)
+        SRstock_LPware = Player.getActorVar(SRstock_LPware)
+        TBstock_LPware = Player.getActorVar(TBstock_LPware)
+
+        Kstock_LPX = Player.getActorVar(Kstock_LPX)
+        LRstock_LPX = Player.getActorVar(LRstock_LPX)
+        MBstock_LPX = Player.getActorVar(MBstock_LPX)
+        Ostock_LPX = Player.getActorVar(Ostock_LPX)
+        SBstock_LPX = Player.getActorVar(SBstock_LPX)
+        SRstock_LPX = Player.getActorVar(SRstock_LPX)
+        TBstock_LPX = Player.getActorVar(TBstock_LPX)
+        
+        stock_ZellVostro = Player.getActorVar(stock_ZellVostro)
+        stock_LPPavilion = Player.getActorVar(stock_LPPavilion)
+        stock_LPware = Player.getActorVar(stock_LPware)
+        stock_LPX = Player.getActorVar(stock_LPX)
+        
+        stock_Computer = stock_ZellVostro + stock_LPPavilion + stock_LPware + stock_LPX
+        
+        PriceZe = Random(600, 750)
+        PriceZe_loc = PriceZe.convertToLocalCurrency()
+        PriceLP = Random(900, 980)
+        PriceLP_loc = PriceLP.convertToLocalCurrency()
+        PricePw = Random(1750, 1900)
+        PricePw_loc = PricePw.convertToLocalCurrency()
+        PricePX = Random(2850, 3100)
+        PricePX_loc = PricePX.convertToLocalCurrency()
+
+        If money < PriceZe
+        
+            Player(Anxious)::"I am in debt. The store owner will not sell me anything." 
+            
+        Else
+        
+            "What do I want to buy?"
+            0::money >= PriceZe:: "Compact desktop Zell Vostro — <PriceZe_loc>"
+            1::money >= PriceLP:: "LP Pavilion All-in-One — <PriceLP_loc>"
+            2::money >= PricePw:: "LPware Aurora R12 Gaming Desktop - <PricePw_loc>"
+            3::money >= PricePX:: "LPX RA Ryzen Battlebox ultimate - <PricePX_loc>"
+            99:: "Nothing"
+            
+            If 0
+
+                money -= PriceZe
+                Player(Happy)::"Well, I'm really happy with my purchase ...!"
+                
+                "Where I will store this computer?"
+                1::hasKitchen > 0::"Inside my kitchen"
+                2::hasLivingroom > 0 ::"Inside my living room"
+                3::"Inside my bedroom"
+                4::hasOfficeroom > 0::"Inside my office room"
+                5::hasSecBedroom > 0::"Inside my second bedroom"
+                6::isModEnabled(rk_vin_Base) || isModEnabled(rk_Home_Inventories) ::"Inside my storage room"
+                7::hasThirdBedroom > 0::"Inside my third bedroom"
+                
+                If 1
+                
+                    "Added to your kitchen!"
+                    Player.modifyActorVar(Kstock_ZellVostro, 1)
+                
+                ElseIf 2
+                
+                    "Added to your living room!"
+                    Player.modifyActorVar(LRstock_ZellVostro, 1)
+                    
+                ElseIf 3
+                
+                    "Added to your bedroom!"
+                    Player.modifyActorVar(MBstock_ZellVostro, 1)
+                    
+                ElseIf 4
+                
+                    "Added to your office room!"
+                    Player.modifyActorVar(Ostock_ZellVostro, 1)
+                    
+                ElseIf 5
+                
+                    "Added to your second bedroom!"
+                    Player.modifyActorVar(SBstock_ZellVostro, 1)
+                    
+                ElseIf 6
+                
+                    "Added to your storage room!"
+                    Player.modifyActorVar(SRstock_ZellVostro, 1)
+                    
+                ElseIf 7
+                
+                    "Added to your third bedroom!"
+                    Player.modifyActorVar(TBstock_ZellVostro, 1)
+                    
+                EndIf
+                Player.modifyActorVar(rk_VB_IBuyaComputer, 1)
+            
+            ElseIf 1
+            
+                money -= PriceLP
+                Player(Happy)::"Well, I'm really proud of my purchase ...!"
+                
+                "Where I will store this computer?"
+                1::hasKitchen > 0::"Inside my kitchen"
+                2::hasLivingroom > 0 ::"Inside my living room"
+                3::"Inside my bedroom"
+                4::hasOfficeroom > 0::"Inside my office room"
+                5::hasSecBedroom > 0::"Inside my second bedroom"
+                6::isModEnabled(rk_vin_Base) || isModEnabled(rk_Home_Inventories) ::"Inside my storage room"
+                7::hasThirdBedroom > 0::"Inside my third bedroom"
+                
+                If 1
+                
+                    "Added to your kitchen!"
+                    Player.modifyActorVar(Kstock_LPPavilion, 1)
+                
+                ElseIf 2
+                
+                    "Added to your living room!"
+                    Player.modifyActorVar(LRstock_LPPavilion, 1)
+                    
+                ElseIf 3
+                
+                    "Added to your bedroom!"
+                    Player.modifyActorVar(MBstock_LPPavilion, 1)
+                    
+                ElseIf 4
+                
+                    "Added to your office room!"
+                    Player.modifyActorVar(Ostock_LPPavilion, 1)
+                    
+                ElseIf 5
+                
+                    "Added to your second bedroom!"
+                    Player.modifyActorVar(SBstock_LPPavilion, 1)
+                    
+                ElseIf 6
+                
+                    "Added to your storage room!"
+                    Player.modifyActorVar(SRstock_LPPavilion, 1)
+                    
+                ElseIf 7
+                
+                    "Added to your third bedroom!"
+                    Player.modifyActorVar(TBstock_LPPavilion, 1)
+                    
+                EndIf
+                Player.modifyActorVar(rk_VB_IBuyaComputer, 1)
+            
+            ElseIf 2
+            
+                money -= PricePw
+                Player(Happy)::"Good computer for playing games and for dev developpements..."
+                
+                "Where I will store this computer?"
+                1::hasKitchen > 0::"Inside my kitchen"
+                2::hasLivingroom > 0 ::"Inside my living room"
+                3::"Inside my bedroom"
+                4::hasOfficeroom > 0::"Inside my office room"
+                5::hasSecBedroom > 0::"Inside my second bedroom"
+                6::isModEnabled(rk_vin_Base) || isModEnabled(rk_Home_Inventories) ::"Inside my storage room"
+                7::hasThirdBedroom > 0::"Inside my third bedroom"
+                
+                If 1
+                
+                    "Added to your kitchen!"
+                    Player.modifyActorVar(Kstock_LPware, 1)
+                
+                ElseIf 2
+                
+                    "Added to your living room!"
+                    Player.modifyActorVar(LRstock_LPware, 1)
+                    
+                ElseIf 3
+                
+                    "Added to your bedroom!"
+                    Player.modifyActorVar(MBstock_LPware, 1)
+                    
+                ElseIf 4
+                
+                    "Added to your office room!"
+                    Player.modifyActorVar(Ostock_LPware, 1)
+                    
+                ElseIf 5
+                
+                    "Added to your second bedroom!"
+                    Player.modifyActorVar(SBstock_LPware, 1)
+                    
+                ElseIf 6
+                
+                    "Added to your storage room!"
+                    Player.modifyActorVar(SRstock_LPware, 1)
+                    
+                ElseIf 7
+                
+                    "Added to your third bedroom!"
+                    Player.modifyActorVar(TBstock_LPware, 1)
+                    
+                EndIf
+                Player.modifyActorVar(rk_VB_IBuyaComputer, 1)
+            
+            ElseIf 3
+            
+                money -= PricePX
+                Player(Happy)::"The best for playing demanding games!"
+                
+                "Where I will store this computer?"
+                1::hasKitchen > 0::"Inside my kitchen"
+                2::hasLivingroom > 0 ::"Inside my living room"
+                3::"Inside my bedroom"
+                4::hasOfficeroom > 0::"Inside my office room"
+                5::hasSecBedroom > 0::"Inside my second bedroom"
+                6::isModEnabled(rk_vin_Base) || isModEnabled(rk_Home_Inventories) ::"Inside my storage room"
+                7::hasThirdBedroom > 0::"Inside my third bedroom"
+                
+                If 1
+                
+                    "Added to your kitchen!"
+                    Player.modifyActorVar(Kstock_LPX, 1)
+                
+                ElseIf 2
+                
+                    "Added to your living room!"
+                    Player.modifyActorVar(LRstock_LPX, 1)
+                    
+                ElseIf 3
+                
+                    "Added to your bedroom!"
+                    Player.modifyActorVar(MBstock_LPX, 1)
+                    
+                ElseIf 4
+                
+                    "Added to your office room!"
+                    Player.modifyActorVar(Ostock_LPX, 1)
+                    
+                ElseIf 5
+                
+                    "Added to your second bedroom!"
+                    Player.modifyActorVar(SBstock_LPX, 1)
+                    
+                ElseIf 6
+                
+                    "Added to your storage room!"
+                    Player.modifyActorVar(SRstock_LPX, 1)
+                    
+                ElseIf 7
+                
+                    "Added to your third bedroom!"
+                    Player.modifyActorVar(TBstock_LPX, 1)
+                    
+                EndIf
+                Player.modifyActorVar(rk_VB_IBuyaComputer, 1)
+            
+            EndIf
+
+        EndIf
+    
+    SceneEnd()

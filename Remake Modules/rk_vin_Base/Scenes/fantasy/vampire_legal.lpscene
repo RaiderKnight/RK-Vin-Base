@@ -1,0 +1,60 @@
+WHAT: all
+WHERE: all, -home, -prison
+WHEN: 0-24
+WHO: none
+OTHER: PercentageVampires > 0 && !Player.isRace(Vampire)
+
+    SceneStart()
+        If isModEnabled(rk_vin_Base)
+            UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+            UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+            Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            "I was just going about my business as usual when suddenly a pale figure appeared from the shadows to make a dash for my neck." 
+            Actor = generatePersonTemporary()
+            Actor.blendPreset(Vampire)
+            Actor.dress()
+            Actor.show()
+            Actor.moveToPersonStand(Player, 40)
+            Player.animate(martialart)
+            "It's a vampire! Thankfully, I managed to react in time. I'm now trying to desperately fight off my vampire attacker."
+            Actor.animate(martialart)
+            "As luck would have it, another pale figure appeared out of nowhere. I was freaked out for a moment, thinking it was an accomplice."
+            Actor2 = generatePersonTemporary()
+            While !Player.isInterestedIn(Actor2)
+                Actor2 = generatePersonTemporary()
+            EndWhile
+            Actor2.makeInterested(Player)
+            Actor2.blendPreset(Vampire)
+            Actor2.dress()
+            Actor2.show()
+            Actor2.moveToPersonStand(Actor, 40)
+            Actor2.animate(martialart)
+            "To my surprise, this stranger attacked my attacker instead and helped me. Overwhelmed by <Actor2.his_or_her> strength, my attacker turned and ran away."
+            Actor(Angry)::"You traitor, the High Council will be informed of your treachery!"
+            Actor2(Serene):: "It's people like you who give us a bad name! We must attack the bad guys, not the good citizens..."
+            Actor.animate()
+            Actor2.animate()
+            Actor.hide()
+            "My rescuer introduces <Actor2.himself_or_herself> as <Actor2.name>. <Actor2.He_or_She> doesn't hide the fact that <Actor2.he_or_she>'s a blood-sucking vampire, but soon reassures me that <Actor2.he_or_she>'s part of a growing number of law-abiding vampires who only feed on animal blood obtained from butcher's shops."
+            "While animal blood is inferior in quality, <Actor2.name> believes it's the most ethical solution to their community's dilemma of surviving while acting as a well-adjusted member of society."
+            "<Actor2.name> does seem very well-adjusted and charming even. Soon enough, <Actor2.he_or_she> asks me out on a date and promises to show me a better side of vampires."
+            0:: "Go on a date with <Actor2.him_or_her>"
+            1:: "Exchange numbers for another time"
+            2:: "Reject <Actor2.him_or_her>"
+            
+            If 0
+                Actor2.makePermanent()
+                exchangeContact(Actor2)
+                endDate()
+                Actor2.startDate()
+            ElseIf 1
+                "<Actor2.name> seems interesting, but let's not rush it."
+                Actor2.makePermanent()
+                exchangeContact(Actor2)
+            Else
+                Player(Sad):: "Thank you for your help today. But I'm already with someone."
+            EndIf
+        EndIf
+    SceneEnd() // Improved by Raddeck
+    timeout(300, vampire_legal)

@@ -1,0 +1,38 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        Player.moveToPersonStand(Actor, 30)
+        "I quickly groped <Actor.name> private parts."
+        perversion += 0.5
+        If ActorisInterestedIn(Player) && Actor:perversion + Actor:arousal > 65
+            Actor:attractiontoplayer += 0.5
+            Actor:perversion += 0.5
+            Actor(Flirty):: "I must say that you have long hands. Wanna show me what you can do with them?"
+            0:: "It's my lucky day!"
+            1:: "Sorry, I didn't intend to do this, my hand slipped ..."
+            
+            If 0
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            Endif
+        Elseif Actor.hadSex() || Random(40, 100) < Actor:attractiontoplayer + perversion
+            "<Actor.name> didn't say a word but smiled at me. <Actor.He_or_She> definitely enjoyed my groping."
+            Actor:attractiontoplayer += 0.5
+            Actor:perversion += 0.5
+        Else
+            Actor(Angry):: "What the fuck! That's so inappropriate! Damn perv!"
+            Actor(Angry):: "I am being harassed, someone call the police!"
+            Actor:attractiontoplayer -= 1
+            If WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != stripclub && WHERE != prison
+                followUp(public_indecency)
+            Endif
+        Endif
+    SceneEnd() // Created by Raddeck

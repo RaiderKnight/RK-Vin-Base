@@ -1,0 +1,165 @@
+WHAT: all
+WHERE: all
+WHEN: 0-24
+WHO: none
+OTHER: PercentageOrcs > 0 && martial > 70
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Gagnant = random(500, 1000)
+        Gagnantlo = Gagnant.convertToLocalCurrency()
+        elleestla = false
+        "Some orcs heard about my martial arts skills and decided to invite me to a fighting competition organized by their tribe. I'm the only foreigner invited, so I can't help but feel a little flattered."
+        "In this kind of competition, the loser gets fucked by the winner."
+        "Should I join their competition?"
+        0:: "Yes"
+        1:: "Maybe not"
+        
+        If 0
+            setBackground(forest)
+            Dating = getSpecific(Dating)
+            If Dating.isValid()
+                Dating.dress()
+                Dating.show()
+                "<Dating.name> decided to come along to support me."
+                elleestla = true
+            EndIf
+            "The competition is about to begin. There are a lot of tough looking Orcs. I'm not sure of my chances to win..."
+            count = 0
+            Lost = false
+            While count < 3 && !Lost
+                Actor = generatePersonTemporary()
+                Actor.blendPreset(Orc)
+                Actor.dress()
+                Actor.show()
+                If count == 0
+                    "My first opponent is called <Actor.name>."
+                Else
+                    "My next opponent is called <Actor.name>."
+                EndIf
+                Actor2 = generatePersonTemporary()
+                Actor2.blendPreset(Orc)
+                Actor2.dress()
+                Actor2.show()
+                "<Actor.His_or_her> <Actor2.husband_or_wife> also come to support <Actor.his_or_her> as well."
+                Actor.moveToPersonStand(Player, 50)
+                Actor.animate(martialart)
+                Player.animate(martialart)
+                energy => 100
+                Actor:energy => 100
+                chk1 = random(10, 33)
+                If martial > Actor:martial && energy > 25
+                    energy -= chk1
+                    "I managed to defeat <Actor.name> and progressed to the next round."
+                    "As part of my victory, I have the right to use my defeated opponent or <Actor.his_or_her> <Actor2.husband_or_wife> for pleasure in order to revitalize my body for the next fight."
+                    0:: "Fuck <Actor.name>"
+                    1::isModEnabled(vin_NTR):: "Fuck <Actor.his_or_her> <Actor2.husband_or_wife> instead"
+                    2:: "Not interested in both"
+                    
+                    If 0
+                        Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                    Else
+                        If elleestla
+                            Sex(Player, Actor2)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                        Else
+                            "They told me that since I didn't bring my lover, I can't fuck my opponent's <Actor2.husband_or_wife>!"
+                            Sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                        EndIf
+                    EndIf
+                Else
+                    martial -= random(1, 5)
+                    Lost = true
+                    "Unfortunately, I lost and failed to progress to the next round."
+                    "As part of <Actor.his_or_her> victory, he has the right to use my body or my lover's body for pleasure in order to revitalize <Actor.his_or_her> body for the next fight."
+                    If Actor.isInterestedIn(Player)
+                        Sex(Actor, Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                    ElseIf Dating.isValid() && Actor.isInterestedIn(Dating)
+                        "<Actor.name> wasn't too keen on fucking me, so <Actor.he_or_she> chose my <Dating.boyfriend_or_girlfriend> instead."
+                        Sex(Actor, Dating)
+                    Else
+                        "Thankfully, <Actor.name> was nice enough to not enforce this rule to an outsider like me."
+                    EndIf
+                EndIf
+                count += 1
+            EndWhile
+            If !Lost
+                martial += random(1, 15)
+                mood += 15
+                "I won the whole competition! I can't believe it. The Orcs can't help but respect my fighting skills."
+                "They also gave me <Gagnantlo> as a thank you!"
+                money += Gagnant
+                If Actor.isInterestedIn(Player)
+                    If Dating.isValid()
+                        "The loser approaches you and asks if you would be interested in a foursome?"
+                        "What should I say?"
+                        0:: energy > 25::"Accept invitation"
+                        1::"Refuse invitation"
+                        2::Actor.isContactExchanged()::"Exchange numbers instead"
+                        
+                        If 0
+                            Dating.strip()
+                            Actor.strip()
+                            Player.strip()
+                            Actor2.strip()
+                            sex(Actor2, Player, Actor, Dating)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -4)
+                            EndIf
+                        ElseIf 1
+                            Player(Sad)::"Sorry but I have no more energy!"
+                            Actor(Serene)::"That's fine maybe another time! Bye!"
+                        Else
+                            Player(Sad)::"Sorry but I have no energy! But let's exchange numbers so I can call you when I have more energy!"
+                            Actor(Happy)::"That's fine maybe another for sex time! But sure yeah, let's exchange our numbers!"
+                            Actor.makePermanent()
+                            exchangeContact(Actor)
+                        EndIf
+                    Else
+                        "The loser approaches you and asks if you would be interested in a threesome?"
+                        "What should I say?"
+                        0:: energy > 25::"Accept invitation"
+                        1::"Refuse invitation"
+                        2::Actor.isContactExchanged()::"Exchange numbers instead"
+                        
+                        If 0
+                            Actor.strip()
+                            Player.strip()
+                            Actor2.strip()
+                            sex(Actor2, Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -3)
+                            EndIf
+                        ElseIf 1
+                            Player(Sad)::"Sorry but I have no more energy!"
+                            Actor(Serene)::"That's fine maybe another time! Bye!"
+                        Else
+                            Player(Sad)::"Sorry but I have no energy! But let's exchange numbers so I can call you when I have more energy!"
+                            Actor(Happy)::"That's fine maybe another for sex time! But sure yeah, let's exchange our numbers!"
+                            Actor.makePermanent()
+                            exchangeContact(Actor)
+                        EndIf
+                    EndIf
+                EndIf
+            Else
+                mood -= 25
+            EndIf
+        EndIf
+        Actor.hide()
+        Actor2.hide()
+    SceneEnd() // Improved by Raddeck
+    timeout(500, orc_martial)

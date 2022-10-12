@@ -1,0 +1,101 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        NPCisEngaged = rk_VB_isEngaged.getGlobal()
+        CurrentCompanion.show(2)
+        Pressure = CurrentCompanion.getActorVar(tag_pressure)
+        CEngaged = false
+        If Pressure > 0
+            "Under the pressure from <CurrentCompanion.name>'s family, we soon got engaged."
+            CEngaged = true
+            CurrentCompanion.setActorVar(tag_pressure, 0)
+        ElseIf !isPlayerMarried() && CurrentCompanion.isDating() || [Player.IsDominantSex(CurrentCompanion) || [interpersonal > Random(90, 100) && masochist < -70]]
+            "I think I'm in love with <CurrentCompanion.name>, and I know <CurrentCompanion.name> feels the same. However, have I ever imagined <CurrentCompanion.him_or_her> as my <CurrentCompanion.husband_or_wife>?"
+            0:: "Yes"
+            1:: "No"
+            
+            If 0
+                If CurrentCompanion.isExRelative() && isModEnabled(vin_Incest) // Edited by Raddeck
+                    "Even though we're related and incest is both frowned upon and forbidden, I cannot help but see myself spending the rest of my days with <CurrentCompanion.him_or_her> as my life partner."            
+                Else
+                    "I can definitely see myself spending the rest of my days with <CurrentCompanion.him_or_her> indeed."
+                Endif
+                "But is this the right time to have the courage to propose to <CurrentCompanion.him_or_her>?"
+                0:: "Yes"
+                1:: "No"
+                
+                If 0
+                    Player(Anxious):: "Baby, I have something really important to tell you ..."
+                    CurrentCompanion(Curious):: "Of course, <Player.name>. What is it?"
+                    Player(Anxious):: "We'll go to the restaurant, here not far, I reserved the place, we'll be quiet... ..." // Edited by Raddeck
+                    CurrentCompanion(Curious):: "Ok let's go!... I find you strange, everything fine..." // Edited by Raddeck
+                    Player(Anxious):: "It's a surprised, you'll see..." // Edited by Raddeck
+                    CurrentCompanion.animate() // Edited by Raddeck
+                    setBackground(restaurant)
+                    "We have now arrived at the restaurant..." // Edited by Raddeck
+                    If interpersonal < 50
+                        "Alright, this is the moment. <Player.name>, you can do this! Be brave. Keep calm ... Keep calm ... Don't screw this up!"
+                    Endif
+                    
+                    Player(Happy):: "You know, although we haven't been in a relationship with each other for too long, I am totally in love with you and I know you feel the same ..."
+                    Player(Happy):: "I would love nothing more than to take our relationship to the next level and be able to call you my <CurrentCompanion.husband_or_wife>."
+                    Player(Happy):: "<CurrentCompanion.name>, will you marry me?"
+                    CurrentCompanion(Surprised):: "<Player.name>! I ..."
+                    
+                    If CurrentCompanion:attractiontoplayer > 60
+                        CurrentCompanion(Happy):: "Yes! Yes! Of course, I'll be your <CurrentCompanion.husband_or_wife>! I'd love nothing more than spending the rest of my life with you"
+                        CEngaged = true
+                        rk_VB_isEngaged.setGlobal(1)
+                        NPCisEngaged = rk_VB_isEngaged.getGlobal()
+
+                        mood += 100                   
+                        "So we undressed and kissed, treasuring our first moment as an engaged couple."
+                        Sex(Player, CurrentCompanion)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Player.dress()
+                        CurrentCompanion.dress()
+                        
+                    Else
+                        If CurrentCompanion.isExRelative() && isModEnabled(vin_Incest) && !isQuestCompleted(legalized)
+                            CurrentCompanion(Surprised):: "<Player.name> ... I love you too ... but I'm not sure a marriage will ever be possible. We're related after all ... and incest is illegal in this country."                    
+                        Else
+                            CurrentCompanion(Surprised):: "<Player.name> ... I love you too ... but I'm not quite ready for marriage yet. We're too young for that."
+                        Endif
+                        "And ... I've been rejected ... My heart is broken and I don't know how to feel about this ... We're still a couple, although this rejection has put some serious doubt on the strength of our relationship."
+                        mood -= 100
+                        CurrentCompanion:attractiontoplayer -= Random(1, 20)
+                        CurrentCompanion:rapportwithplayer -= Random(1, 10)
+                    Endif
+                Else
+                    If CurrentCompanion.isExRelative()
+                        "No way we could get away with getting married. We're already playing around with the law with our current incest relationship."
+                    Else
+                        "No, it's still too early. I want to spend more time in a relationship with <CurrentCompanion.name> before thinking about the next step ..."
+                    Endif
+                Endif
+            Else
+                "Nope, I don't see <CurrentCompanion.name> as <CurrentCompanion.husband_or_wife> material."
+            Endif
+        Else
+            If isPlayerMarried()
+                "I'm already married..."
+            Else
+                "Maybe not the right time..."
+            Endif
+        Endif
+        NPCisEngaged = rk_VB_isEngaged.getGlobal()
+        If CEngaged || [NPCisEngaged > 0]
+            followUp(rk_VB_bachelor_Party)
+        Endif
+        endDate()
+    SceneEnd() // Scene improved by Raddeck

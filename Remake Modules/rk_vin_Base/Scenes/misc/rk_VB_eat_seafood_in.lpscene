@@ -1,0 +1,133 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+    
+        IBuySeafood = Player.getActorVar(rk_VB_IBuySeafood)
+        
+        // Get current seafood types
+        stock_Oysters = Player.getActorVar(stock_Oysters)
+        stock_Shrimps = Player.getActorVar(stock_Shrimps)
+        stock_Sushi = Player.getActorVar(stock_Sushi)
+        stock_Lobster = Player.getActorVar(stock_Lobster)
+        stock_Caviar = Player.getActorVar(stock_Caviar)
+        
+        stock_seafoodprod = stock_Oysters + stock_Shrimps + stock_Sushi + stock_Lobster + stock_Caviar
+        
+        eating = 0
+        
+        If stock_seafoodprod < 0.5 
+            Player(Anxious)::"Ok, not enough seafood to make a lunch!"
+            
+        Else
+            
+            Player::"Ok, which seafood I'm gonna eat?"
+            0:: stock_Oysters > 0:: "1 Oysters dish"
+            1:: stock_Shrimps > 0:: "1 Shrimp dish"
+            2:: stock_Sushi > 0:: "1 Sushi dish"
+            3:: stock_Lobster > 0:: "1 Lobster dish"
+            4:: stock_Caviar > 0:: "1 Caviar dish"
+            8:: "Bah! I'm not hungry !"
+            
+            If 0
+                Player.modifyActorVar(stock_Oysters, -1)
+                mood += 1
+                energy += 3
+                fitness += 1
+                intelligence += 1
+                arousal += 1
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 3)
+                EndIf
+                eating += 1
+    
+            Elseif 1
+                Player.modifyActorVar(stock_Shrimps, -1)
+                mood += 2
+                energy += 4
+                fitness += 2
+                intelligence += 2
+                arousal += 1.25
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 4)
+                EndIf
+                eating += 1
+    
+            Elseif 2
+                Player.modifyActorVar(stock_Sushi, -1)
+                mood += 3
+                energy += 6
+                fitness += 3
+                intelligence += 3
+                arousal += 1.5
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 6)
+                EndIf
+                eating += 1
+    
+            Elseif 3
+                Player.modifyActorVar(stock_Lobster, -1)
+                mood += 4
+                energy += 8
+                fitness += 4
+                intelligence += 4
+                arousal += 2
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 8)
+                EndIf
+                eating += 1
+    
+            Elseif 4
+                Player.modifyActorVar(stock_Caviar, -1)
+                mood += 5
+                energy += 10
+                fitness += 5
+                intelligence += 5
+                arousal += 3
+                Player.show()
+                Player.animate(eat)
+                Player(Happy)::"Hmmm, yummy!"
+                passTime(0.25, 0.5)
+                
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 10)
+                EndIf
+                eating += 1
+            
+            Endif
+            
+            If eating > 0
+                Player.modifyActorVar(rk_VB_IBuySeafood, -1)
+            Endif
+            
+            followUp(sb_VB_weight_gain)
+            
+        Endif
+        
+    SceneEnd()

@@ -1,0 +1,203 @@
+WHAT: do_hard_labour
+WHERE: prison
+WHEN: 6-21
+WHO: none
+OTHER: none
+
+    SceneStart()
+        preferentialtreatment = Player.getActorVar(rk_VB_preferentialtreatment)
+        setBackground3D(Modules/rk_vin_Base/World/rk_VB_smallPark.lpworld)
+        Actor = generatePersonTemporary()
+        Actor.dressUniform(Police)
+        Actor1 = generatePersonTemporary()
+        Actor1.dressUniform(Police)
+        Actor1:arousal => random(15, 50)
+        Actor:arousal => random(15, 50)
+        Actor1.makeInterested(Player)
+        Actor.makeInterested(Player)
+        Actor.show()
+        Actor1.show()
+        Mate1 = generatePersonTemporary()
+        While !Mate1.isSameGender(Player)
+            Mate1 = generatePersonTemporary()
+        EndWhile
+        Mate2 = generatePersonTemporary()
+        While !Mate2.isSameGender(Player)
+            Mate2 = generatePersonTemporary()
+        EndWhile
+        Mate3 = generatePersonTemporary()
+        While !Mate3.isSameGender(Player)
+            Mate3 = generatePersonTemporary()
+        EndWhile
+        Mate4 = generatePersonTemporary()
+        While !Mate4.isSameGender(Player)
+            Mate4 = generatePersonTemporary()
+        EndWhile
+        Mate11 = generatePersonTemporary()
+        While !Mate11.isSameGender(Player)
+            Mate11 = generatePersonTemporary()
+        EndWhile
+        Mate21 = generatePersonTemporary()
+        While !Mate21.isSameGender(Player)
+            Mate21 = generatePersonTemporary()
+        EndWhile
+        Mate31 = generatePersonTemporary()
+        While !Mate31.isSameGender(Player)
+            Mate31 = generatePersonTemporary()
+        EndWhile
+        Mate41 = generatePersonTemporary()
+        While !Mate41.isSameGender(Player)
+            Mate41 = generatePersonTemporary()
+        EndWhile
+        Player.dressUniform(Prison)
+        Mate1.dressUniform(Prison)
+        Mate2.dressUniform(Prison)
+        Mate3.dressUniform(Prison)
+        Mate4.dressUniform(Prison)
+        Mate11.dressUniform(Prison)
+        Mate21.dressUniform(Prison)
+        Mate31.dressUniform(Prison)
+        Mate41.dressUniform(Prison)
+        Mate1.show(1)
+        Mate2.show(2)
+        Mate3.show(3)
+        Mate4.show(4)
+        Mate11.show(5)
+        Mate21.show(6)
+        Mate31.show(7)
+        Mate41.show(8)
+        MauvaisJour = random(0, 100)
+        MauvaisJour = MauvaisJour.round()
+        ChoixDuJour = random(1, 2)
+        ChoixDuJour = ChoixDuJour.round()
+        Random
+            "Doing hard labor helps reduce my sentence!"
+            "The more I do hard labor, the more my sentence will be reduced"
+        EndRandom
+        If preferentialtreatment < 51 || MauvaisJour > 50
+            If ChoixDuJour == 1
+                "While I'm doing my little business in my corner, I notice 2 <Mate1.guys_or_girls> looking at me while talking. They don't seem to want to be my friend, I don't trust them too much."
+                Mate1.moveToPersonStand(Player, 50)
+                "All of a sudden, one of them approaches me and asks me:"
+                Mate11.hide()
+                Mate1(Happy)::"Hey <Player.bro_or_sister>, what are you doing?"
+                Mate21.hide()
+                Player(Curious)::"Humm! Nothing in particular! In fact, I was about to go inside!"
+                Mate31.hide()
+                Mate1(Happy)::"Didn't I hear a call to come in?"
+                Mate41.hide()
+                Player(Curious)::"..."
+                Actor.hide()
+                Actor1.hide()
+                Mate1(Sarcastic)::"So, finally you're not busy?"
+                "I suddenly feel the atmosphere becoming uncomfortable and also notice that the guards and the other prisoners have disappeared."
+                "Oh boy! It doesn't look good!"
+                Mate1(Sarcastic)::"I'm asking, because me and my <Mate2.buddies_or_bitches> over there would like to get to know you a little better!"
+                Player(Curious)::"Come on guys! What do you want, cigarettes, weed,...!"
+                If !Player.isMale()
+                    Mate2(Sarcastic)::"We don't any shit from you, but our mouths wants to taste your pussy!"
+                Else
+                    Mate2(Sarcastic)::"We don't any shit from you, but our dicks wants an ass like yours!"
+                EndIf
+                Player(Angry)::"Come on guys! please n...!"
+                Mate3(Sarcastic)::"I knew <Player.he_or_she>'d be interested! Check <Player.him_or_her> out, <Player.he_or_she>'s begging for it!"
+                Mate4(Happy)::"Ah ah ah! Let's show <Player.him_or_her> to calm down!"
+                Mate4.moveToPersonStand(Player, 30)
+                Player.strip()
+                Mate4.strip()
+                Mate2(Sarcastic)::"Yeah, the guards only give us a few minutes, so hurry up <Mate2.guys_or_bitches>!"
+                Mate1.strip()
+                Mate2.strip()
+                If !Player.isMale()
+                    Mate1(Happy)::"Yeah, let's show her who's boss here!"
+                Else
+                    Mate1(Happy)::"Yeah, let's fill his ass to the brim!"
+                EndIf
+                Mate3.strip()
+                Mate1.moveToPersonStand(Player, 30)
+                Filter(Aggressive)
+                talkNonConsensual()
+                sex(Mate1, Player)
+                Mate2(Flirty)::"Now my turn!"
+                Mate2.moveToPersonStand(Player, 30)
+                Filter(Aggressive)
+                talkNonConsensual()
+                sex(Mate2, Player)
+                Mate3(Flirty)::"Now my turn!"
+                Mate3.moveToPersonStand(Player, 30)
+                Filter(Aggressive)
+                talkNonConsensual()
+                sex(Mate3, Player)
+                Mate4(Flirty)::"Now my turn to fuck that bitch!"
+                Mate4.moveToPersonStand(Player, 30)
+                Filter(Aggressive)
+                talkNonConsensual()
+                sex(Mate4, Player)
+                Mate1(Happy)::"So that's it my boy! You are now free to go to your cell!"
+                Mate4(Happy)::"I wish you to dream about us tonight!"
+                Mate2(Happy)::"Ah ah ah ah!"
+                Actor.show()
+                Actor(Furious)::"Hey guys, what are you doing here? Go back to your cell right now!"
+                Actor(Furious)::"And you, it's not time to make cash!"
+                If !Player.isMale()
+                    "Fuck you asshole! Damn, my ass is hurting, all stretched out and dripping with cum... What a nice day!"
+                Else
+                    "Fuck you asshole! Damn, my <Player.ass_or_pussy> is all stretched out and dripping with saliva..."
+                EndIf
+                Player(Shy)::"..."
+                Actor.hide()
+                Mate3.hide()
+                Mate1.hide()
+                Mate4.hide()
+                Mate2.hide()
+            ElseIf ChoixDuJour == 2
+                Actor1.moveToPersonStand(Player, 100)
+                "While I'm doing my little business in my corner, I notice 2 guards coming in my direction. They don't seem to be happy, I don't know what to expect!"
+                Actor.moveToPersonStand(Player, 50)
+                Actor(Furious)::"Stand up, spread your legs, and put your hands against the wall. Do not turn around and look at me. If you disobey me you will regret it."
+                Player(Curious)::"WTF, I did nothing!"
+                Actor1(Angry)::"Shut up bitch, do as <Actor.he_or_she> said!"
+                "I suddenly feel the atmosphere becoming uncomfortable and also notice that all the other prisoners have disappeared."
+                "Oh boy! It doesn't look good!"
+                Actor(Sarcastic)::"In fact, we wanted to tell you that you're the lucky winner of our today's wonderful draw."
+                Actor1(Sarcastic)::"Wow, are you happy? Because today we decided to educate you while your friends are in their cells."
+                If random(0, 100) > 50
+                    "And like madmen, they started to beat me with their fists and feet."
+                    energy -= random(15, 25)
+                    mood -= random(15, 25)
+                    Actor(Sarcastic)::"Okay, class is now over for today, you can go back to your cell!"
+                    Actor1(Evil)::"Hey, tell anyone about this and your stay with us will be hell!"
+                    Actor(Evil)::"MOVE!!"
+                Else
+                    Actor1.moveToPersonStand(Player, 30)
+                    Player.strip()
+                    Player(Curious)::"WTF, why are you taking off my clothes!"
+                    Actor(Angry)::"Shut up, let us do our job or your trip here will be hell."
+                    "And like sex-starved monkeys, they fucked me without me being able to say anything."
+                    kinky = random(1, 2)
+                    kinky = kinky.round()
+                    If kinky == 1
+                        Actor.moveToPersonStand(Player, 30)
+                        Filter(Aggressive)
+                        talkNonConsensual()
+                        sex(Actor, Player)
+                        Actor1(Flirty)::"Now my turn!"
+                        Actor1.moveToPersonStand(Player, 30)
+                        Filter(Aggressive)
+                        talkNonConsensual()
+                        sex(Actor1, Player)
+                    ElseIf kinky == 2
+                        Actor1(Flirty)::"Nice body!"
+                        Actor1.moveToPersonStand(Player, 30)
+                        Filter(Aggressive)
+                        talkNonConsensual()
+                        sex(Actor1, Player, Actor)
+                    EndIf
+                    Actor(Sarcastic)::"Okay, class is now over for today, you can go back to your cell!"
+                    Actor1(Evil)::"Hey, tell anyone about this and your stay with us will be hell!"
+                    Actor(Evil)::"MOVE!!"
+                EndIf
+            EndIf
+        EndIf
+    SceneEnd()
+    timeout(1000, rk_VB_JobNotDone)

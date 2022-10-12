@@ -1,0 +1,79 @@
+WHAT: none
+WHERE: none
+WHEN: 17 - 22
+WHO: none
+OTHER: none
+    
+    SceneStart()
+    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        ChannelStarted = fitness_channel.getGlobal()
+        FchannelVids = Player.getActorVar(rk_VB_FchannelVids) // Fitness channel
+        
+        If ChannelStarted == 0
+        
+            "I consider myself fitness nut who is also knowledgeable about nutrition and supplements on my finger tips. I reckon I might just have some success starting a fitness channel on YouTube. Should I?"
+            0:: "Yes"
+            1:: "No"
+            
+            If 0
+            
+                "Why not? It's certainly worth a shot. Might be a good way to supplement my income."
+                mood += 3
+                fitness_channel.setGlobal(1)
+                
+            Else
+            
+                "No, I should stop daydreaming and focus on my real job."
+                //timeout(500, fitness_channel)
+                
+            Endif
+            
+        Else
+        
+            "I've got some spare time. Should I make a new video for my fitness channel?"
+            0:: "Yes"
+            1:: "No"
+            2:: "Close channel"
+            
+            If 0
+            
+                "Yes, it's important to upload regulary to keep my audience growing."
+                fitness += Random(0, 0.25)
+                
+                If Random(0, 100) < fitness
+                
+                    "The new video turned out to be a success, earning a decent amount of views and a bit of money for myself."
+                    money += Random(0.5, 5)*fitness
+                    mood += 10
+                    fitness += 0.05
+                    
+                Else
+                
+                    "Unfortunately, the new video was a miss, not earning many views at all and even less money."
+                    mood -= 10
+                    
+                Endif
+                Player.modifyActorVar(rk_VB_FchannelVids, 1)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                energy -= 10
+                
+            Elseif 1
+            
+                "I'm too busy right now to film. Let's do that another day."
+                
+            Else
+            
+                "This thing isn't working out. It's time to shut it down."
+                fitness_channel.clearGlobal()
+                //timeout(500, fitness_channel)
+                
+            Endif
+            
+        Endif
+    
+    SceneEnd()  // Scene improved by Raddeck
+    // timeout(48, fitness_channel)

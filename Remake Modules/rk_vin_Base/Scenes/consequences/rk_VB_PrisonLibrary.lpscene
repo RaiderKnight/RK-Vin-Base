@@ -1,0 +1,109 @@
+WHAT: all
+WHERE: prison
+WHEN: 10 - 21
+WHO: none
+OTHER: none
+
+    SceneStart()
+        // Based on LadyDaisy story - Rewriting/coding by Raddeck
+        preferentialtreatment = Player.getActorVar(rk_VB_preferentialtreatment)
+        Actor = generatePersonTemporary()
+        Actor.dressUniform(Police)
+        Actor:arousal => random(15, 50)
+        Actor.hide()
+        gratuit = false
+        Mate1 = generatePerson()
+        While !Mate1.isSameGender(Player)
+            Mate1 = generatePerson()
+        EndWhile
+        Mate1.dressUniform(Prison)
+        Mate1.makeInterested(Player)
+        MID = Mate1.getID()
+        myluv = false
+        setBackground(Library)
+        Mate1.show()
+        "One day, I was in the prison library, looking at books. A <Mate1.guy_or_girl>  came up next to me."
+        Mate1.moveToPersonStand(Player, 50)
+        Mate1(Flirty)::"Hey, baby. You're new here right?"
+        Player(Serene)::"Don't call me baby, please."
+        Mate1(Flirty)::"I'm <Mate1.name>. I got five years for being a scammer. Oh, I was the God of scams but someone turned me in."
+        Player(Serene)::"Oh, I'm sorry that happened to you. But I don't ..."
+        Mate1(Flirty)::"Let me guess. You were a good little <Player.boy_or_girl> who fell in love with an asshole. Here, you'll have to be a bad <Player.boy_or_girl> and be willing to fight."
+        Player(Annoyed)::"Do you want something, or..."
+        Mate1(Flirty)::"Perhaps!" 
+        Mate1(Flirty)::"How have you been getting along with the others?"
+        Player(Annoyed)::"Alright!"
+        Mate1(Flirty)::"Had any 'fun' in prison?"
+        Player(Annoyed)::"I don't think prison is fun!"
+        Mate1(Flirty)::"Oh, it can be. If you meet the right people!"
+        animatePair(Mate1, Player, Kissing)
+        "What should I do?"
+        0::"Kiss <Mate1.him_or_her> back"
+        99::"Scold <Mate1.him_or_her>"
+        
+        If 0
+            animatePair(Mate1, Player, Kissing)
+            Player(Kiss)::"..."
+            myluv = true
+        Else
+            Player(Furious)::"WTF are you doing??, I'm not interested! Can we stay friend instead!"
+            Mate1(Angry)::"Not really! Fuck you bitch!"
+        EndIf
+        If myluv
+            Player(Flirty)::"On second thought, perhaps I can have some fun here!"
+            Mate1(Happy)::"Yeah, great!"
+            Mate1.moveToPersonStand(Player, 30)
+            Player.strip()
+            "<Mate1.He_or_She> pulled down my pants and my <Player.boxers_or_panties> and started kissing my body. I backed up against the bookshelf."
+            Mate1.strip()
+            "<Mate1.name> then started kissing my parts, <Mate1.his_or_her> lips making contact with my unshaved <Player.cock_or_pussy>."
+            "At the same time <Mate1.he_or_she> stick <Mate1.his_or_her> fingers in my spread <Player.ass_or_pussy>."
+            If Mate1.isMale() && Player.isMale()
+                Filter(Blowjob)
+            Else
+                Filter(LickPussy)
+            EndIf
+            sex(Mate1, Player)
+            rk_VB_mateidPris.setGlobal(MID)
+            Player.setActorVar(rk_VB_taginmate, MID)
+            Mate1:rapportwithplayer += random(3, 15)
+            Mate1:attractiontoplayer += random(3, 15)
+            "<Mate1.He_or_She> started jamming multiple fingers in to maximize the fun. As <Mate1.he_or_she> did so, we heard someone behind us..."
+            Actor.show()
+            If Actor.isInterestedIn(Player) && Actor:perversion > 50
+                Actor(Serene)::"Your time is up! But, I can let you finish your work if you want, but only if I can join you!"
+                "What I should say?" 
+                0::Mate1.isInterestedIn(Actor)::"Accept"
+                1::"Refuse"
+                
+                If 0
+                    Actor.strip()
+                    sex(Mate1, Player, Actor)
+                    Player.modifyActorVar(rk_VB_preferentialtreatment, 1)
+                    Actor.dressUniform(Police)
+                    "Once our threesome trip was over, the guard escorted each of us to our cells..."
+                    Actor.hide()
+                    Mate1.hide()
+                Else
+                    Actor(Serene)::"If so, go back to your cells!"
+                    Actor.hide()
+                    Mate1.hide()
+                EndIf
+            Else
+                Actor(Serene)::"Your time is up! Back to your cells!" 
+                "The guard came in, not saying anything about our sex session. It was probably trivial in <Actor.his_or_her> eyes."
+                Actor.hide()
+                Mate1.hide()
+            EndIf
+            arousal += random(3, 15)
+            setBackground(prison)
+            "When the lights went out I reached my hands down my pants and played with my <Player.dick_or_pussy>."
+            Filter(Solo)
+            sex(Player)
+            "For the first time in a long time, I felt happy. Maybe prison wouldn't be so bad after all. My mind then turned to what would happen when I was released..."
+            mood += random(3, 5)
+        EndIf
+        Actor.hide()
+        Mate1.hide()
+    SceneEnd()
+    timeout(500, rk_VB_PrisonLibrary)

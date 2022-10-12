@@ -1,0 +1,227 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        ilestla = false
+        If isModEnabled(rk_Vin_Base)
+            IBuyaPhone = Player.getActorVar(rk_VB_IBuyaPhone) // How many phones I buy?
+            Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            MastuCVids = rk_VB_setCallerVids.getGlobal()
+            MastuCPics = rk_VB_setCallerPics.getGlobal()
+            TMCpv = MastuCVids + MastuCPics
+            NowSlaveofActor = rk_MN_NowSlaveofActor.getGlobal()
+            SlaveofActor = rk_MN_SlaveofActor.getGlobal()
+            Atag_Master = Actor.getActorVar(tag_Master)
+            If NowSlaveofActor == 1 && SlaveofActor >= 1
+                Tag_Maso = Actor.getActorVar(rk_MN_Tag_Maso)
+                Actor = getSpecific(Tag_Maso)
+                ilestla = true
+            Else
+                Actor = getPerson(Atag_Master)
+                ilestla = true
+            EndIf
+            Actor.hide()
+            If HungerEnable > 0 && Hunger < 9
+                "You need to eat something... You don't have enough energy!"
+            ElseIf energy < 9
+                "You don't have enough energy...."
+            ElseIf IBuyaPhone <= 0
+                "You can't make a call, you don't have any phone! Go buy one at the store!"
+            Else
+                RegardeMP = true
+                While RegardeMP
+                    "What should I do?"
+                    1::"Make a call"
+                    9::"Go on internet"
+                    10::isAtHome() && money >= 7 ::"Order some foods"
+                    70:: TMCpv > 0 ::"Watch contact's pics/vids"
+                    90::"Pay my debt"
+                    91::"Find a job"
+                    95::"Criminal Activities"
+                    97::"Play a video game"
+                    98::"Gamble online - <CashOnlineBid_loc> min. bid"
+                    99::"Close the phone"
+                    
+                    If 1
+                        Player.animate(Browse)
+                        "What should I do?"
+                        1:: ilestla ::"Call my master"
+                        10::"Call friends with benefits"
+                        20:: "Call my sugar..."
+                        30:: "Call Pawn Shop"
+                        50:: "Call at my work place"
+                        60:: "Call a hooker"
+                        70:: arousal > 50 && perversion > 30 :: "Give a booty call"
+                        99::"Go back!"
+            
+                        If 1
+                            RegardeMP = false
+                            followUp(rk_VB_Call_to_master)
+                        ElseIf 10
+                            RegardeMP = false
+                            followUp(friend_with_benefits)
+                        ElseIf 20
+                            "Who should I call?"
+                            1:: Player:age > 30::"My sugarbabe"
+                            2:: "My Sugar<Actor.Daddy_or_Mommy>"
+                            99::"Go back!"
+                            
+                            If 1
+                                RegardeMP = false
+                                followUp(sugardaddy)
+                            ElseIf 2
+                                RegardeMP = false
+                                followUp(rk_VB_call_sugardaddy)
+                            EndIf
+                        ElseIf 30
+                            RegardeMP = false
+                            followUp(rk_VB_Call_PawnShop)
+                        ElseIf 50
+                            "What for?"
+                            1:: "Call in sick"
+                            99::"Go back!"
+                            
+                            If 1
+                                RegardeMP = false
+                                followUp(call_in_sick)
+                            EndIf
+                        ElseIf 60
+                            "What type of escort do you want to pay for?"
+                            0::"Basic hooker"
+                            10::"Fantasy hooker"
+                            90::isModEnabled(vin_Bestiality)::"Hooker for beasty"
+                            91::isModEnabled(vin_Bestiality)::"Beasty Hooker"
+                            99::"Go back!"
+                            
+                            If 0
+                                RegardeMP = false
+                                followUp(call_a_hooker)
+                            ElseIf 10
+                                RegardeMP = false
+                                followUp(rk_VB_call_a_hookerFanta)
+                            ElseIf 90
+                                RegardeMP = false
+                                followUp(rk_VB_call_a_hookerHB)
+                            ElseIf 91
+                                RegardeMP = false
+                                followUp(rk_VB_call_a_hookerCB)
+                            EndIf
+                        ElseIf 70
+                            RegardeMP = false
+                            followUp(booty_call)
+                        EndIf
+                    ElseIf 9
+                        RegardeMP = false
+                        followUp(rk_VB_Visit_Internet)
+                    ElseIf 10
+                        "What type of order I want to make?"
+                        0::isAtHome()::"Order takeaway"
+                        1::isModEnabled(rk_OnlineFoodShop)::"Make online grocery"
+                        99::"Go back!"
+                        
+                        If 0
+                            money -= 7 
+                            stock_meal += 1
+                            RegardeMP = false
+                            followUp(deliveryman)
+                        ElseIf 1
+                            RegardeMP = false
+                            followUp(rk_OS_Buy_Online)
+                        ElseIf
+                    ElseIf 70
+                        "What type of content should I watch?"
+                        65:: MastuCPics >= 1::"Masturb on contact's pictures"
+                        66:: MastuCVids >= 1::"Masturb on contact's videos"
+                        99::"Go back!"
+                        
+                        If 65
+                            RegardeMP = false
+                            followUp(rk_VB_MastuCallerPics)
+                        ElseIf 66
+                            RegardeMP = false
+                            followUp(rk_VB_MastuCallerVids)
+                        EndIf
+                    ElseIf 90
+                        "Who should I call?"
+                        10::"Pay your vehicle maintenance bills"
+                        11::"Pay your vehicle debts"
+                        90::"Pay Government Revenue Agency"
+                        99::"Go back!"
+                        
+                        If 10
+                            RegardeMP = false
+                            followUp(rk_VB_PayMaintenanceVehicle)
+                        ElseIf 11
+                            RegardeMP = false
+                            followUp(rk_VB_call_To_Pay_Debt)
+                        ElseIf 90
+                            RegardeMP = false
+                            followUp(rk_VB_Call_Pay_GRA)
+                        EndIf
+                    ElseIf 91
+                        "What should I do?"
+                        10:: "Find a model agency"
+                        99::"Go back!"
+                        
+                        If 10
+                            RegardeMP = false
+                            followUp(find_a_modeling_agency)
+                        EndIf
+                    ElseIf 95
+                        "Who should I call?"
+                        10::"Report to the Boss"
+                        99::"Go back!"
+                        
+                        If 10
+                            RegardeMP = false
+                            followUp(report_to_boss)
+                        EndIf
+                    ElseIf 97
+                        Random
+                            Game1 = "Card games"
+                            Game1 = "MahJong"
+                            Game1 = "Minesweeper"
+                            Game1 = "Sudoku"
+                            Game1 = "Word Games"
+                        EndRandom
+                        "What I should do?"
+                        0::"Play LifePlay"
+                        30::"Play a video game"
+                        
+                        If 0
+                            Player.animate(browse)
+                            "I decided to play LifePlay on my pc..."
+                            intelligence += 0.2
+                            mood += 3
+                            arousal += 3
+                            energy -= 1
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
+                            passTime(1, 3)
+                        ElseIf 30
+                            Player.animate(browse)
+                            "I decided to play <Game1> on my pc..."
+                            intelligence += 0.2
+                            mood += 3
+                            energy -= 1
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -1)
+                            EndIf
+                            passTime(0.35, 2)
+                        EndIf
+                        passTime(0.9, 2)
+                    ElseIf 98
+                        RegardeMP = false
+                        followUp(rk_VB_gamble_online)
+                    Else
+                        RegardeMP = false
+                    EndIf
+                EndWhile
+            EndIf
+        EndIf
+    SceneEnd()

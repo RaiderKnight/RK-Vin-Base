@@ -1,0 +1,91 @@
+WHAT: all
+WHERE: home
+WHEN: 0-24
+WHO: Actor = getCompanion(); Actor2 = getSpecific(Dating); If Actor2.isRace(Vampire)
+OTHER:
+
+    
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        setBackgroundCustom(livingroom)
+        Actor2.dress()
+        Actor2.show()
+        "I was hanging out with my friend <Actor.name> at home. My <Actor2.boyfriend_or_girlfriend> <Actor2.name> was there as well and soon asked me to have a little private chat."
+        Actor2(Serene):: "Baby, I know <Actor.name> is your friend but I'm really hungry and <Actor.his_or_her> blood just smells so good."
+        Actor2(Serene):: "Maybe you can get <Actor.him_or_her> drunk enough to lure <Actor.him_or_her> to sleep over at our place tonight."
+        Suck = false
+        Actor2(Serene):: "So that I can have a taste, <Actor.name> would none the wiser the next morning. Only a small bite mark!"
+        0:: "No way!"
+        1:: "Okay ... only for you"
+        2:: openRelationship():: "Alcohol won't be enough ..."
+        
+        If 0
+            Player(Sad)::"No way ... I'm not letting you do that to my friend. That's a serious betrayal of trust."
+            Actor2(Sad)::"That's fine, don't be mad!"
+            Actor2:rapportwithplayer += random(-3, 3)
+        ElseIf 1
+            "I found a reason to get <Actor.name> to stay over and have <Actor.him_or_her> drink some alcohol, which eventually ended in a binge."
+            Actor:intoxication => random(70, 90)
+            Actor2:rapportwithplayer += random(0, 3)
+            Actor2:attractiontoplayer += random(0, 3)
+            Actor:rapportwithplayer += random(0, 3)
+            Actor:attractiontoplayer += random(0, 3)
+            "Soon enough, <Actor.name> could barely maintain consciousness. And forgetting that <Actor.he_or_she> has agreed to stay the night, <Actor.he_or_she> tries to get up to leave but <Actor.he_or_she> is too drunk to move."
+            "So I made the suggestion for <Actor.name> to stay over for the night as it wasn't a good idea to drive back under the influence. <Actor.He_or_She> agreed."
+            Suck = true
+        Else
+            fait = true
+            Player(Serene):: "You don't know <Actor.name>, no amount of alcohol is going to affect <Actor.him_or_her> ... Sex, on the other hand, ..."
+            Actor2(Happy)::"You're right, let's do it!"
+            Actor2:rapportwithplayer += random(0, 3)
+            Actor2:attractiontoplayer += random(0, 3)
+            "I found a reason to get <Actor.name> to stay over and have <Actor.him_or_her> drink some alcohol, which eventually ended in a binge."
+            Actor:rapportwithplayer += random(0, 3)
+            Actor:attractiontoplayer += random(0, 3)
+            Actor:intoxication => random(70, 90)
+            Actor2(Curious):: "What we do now? <Actor.He_or_She>'s completly drunk!"
+            0:: "I fuck with <Actor.him_or_her> and you suck <Actor.his_or_her> blood while we fuck."
+            1:: "You fuck with <Actor.him_or_her> and suck <Actor.his_or_her> blood while you fuck."
+            2:: "We fuck with <Actor.him_or_her> and you suck <Actor.his_or_her> blood while we fuck."
+            99:: "I changed my mind, not on my friend!"
+            
+            If 0
+                setBackground(home)
+                "I soon seduce <Actor.name> into bed."
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            ElseIf 1
+                setBackground(home)
+                "<Actor2.name> soon seduces without any difficulty <Actor.name> into bed."
+                Sex(Actor2, Actor)        
+            ElseIf 2
+                setBackground(home)
+                "Together, we soon seduce <Actor.name> into bed."
+                Sex(Player, Actor, Actor2)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -3)
+                EndIf
+            Else
+                fait = false
+                Suck = false
+            EndIf
+            If fait
+                perversion += random(0, 1)
+                Actor2:perversion += random(0, 1)
+                Suck = true
+            EndIf
+        EndIf
+        If Suck
+            Actor.animate(na_sleep)
+            "After all that, <Actor.name> is in deep sleep in the bed. That's the perfect opportunity for <Actor2.name> to strike."
+            "<Actor2.name> really enjoyed <Actor2.his_or_her> meal. I may have betrayed my friend but I have shown nothing but total dedication to my vampire <Actor2.boyfriend_or_girlfriend>."
+            Actor2:rapportwithplayer += random(0, 3)
+            Actor2:attractiontoplayer += random(0, 3)
+        EndIf
+    SceneEnd() // Improved by Raddeck
+    timeout(200, vampire_dating_companion)

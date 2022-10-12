@@ -1,0 +1,116 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        HypnoLvL = Player.getActorVar(rk_VB_VampHypnoLvL)
+        HBloodInv = Player.getActorVar(rk_VB_Hum_BloodInv)
+        OBloodInv = Player.getActorVar(rk_VB_Orc_BloodInv)
+        EBloodInv = Player.getActorVar(rk_VB_Elf_BloodInv)
+        VBloodInv = Player.getActorVar(rk_VB_Vam_BloodInv)
+        HBloodInvP = Player.getActorVar(rk_VB_Hum_BloodInv_Poc)
+        OBloodInvP = Player.getActorVar(rk_VB_Orc_BloodInv_Poc)
+        EBloodInvP = Player.getActorVar(rk_VB_Elf_BloodInv_Poc)
+        VBloodInvP = Player.getActorVar(rk_VB_Vam_BloodInv_Poc)
+        TotBloodInvP = HBloodInvP + OBloodInvP + EBloodInvP + VBloodInvP
+        TotBloodInv = HBloodInv + OBloodInv + EBloodInv + VBloodInv
+        If isModEnabled(rk_vin_Base) && TotBloodInv <= 0
+            Player(Anxious)::"I got nothing inside my stash!"
+        Else
+            "What do you want to do?"
+            stayInMenu = true
+            While stayInMenu
+                11:: "Show blood inventory"
+                21:: energy < 100 || HypnoLvL < 100::"Drink some blood"
+                51:: TotBloodInvP <= 3.8::"Put some bottles in my pockets"
+                99:: "Exit"
+
+                If  11
+                    "You have <TotBloodInv> bottle(s) of blood!"
+                    0::"<EBloodInv> bottle(s) of Elven Blood"
+                    0::"<HBloodInv> bottle(s) of Human Blood"
+                    0::"<OBloodInv> bottle(s) of Orc Blood"
+                    0::"<VBloodInv> bottle(s) of Vampire Blood"
+                    99::"Go Back!"
+
+                ElseIf  21
+                    "What type of blood would I like to drink?"
+                    1::EBloodInv >= 1::"1 bottle of Elven Blood"
+                    2::HBloodInv >= 1::"1 bottle of Human Blood"
+                    3::OBloodInv >= 1::"1 bottle of Orc Blood"
+                    4::VBloodInv >= 1::"1 bottle of Vampire Blood"
+                    99::"Go Back!"
+                    
+                    If 1
+                        Player.animate(drinkbottle)
+                        intelligence += random(1, 3)
+                        attractiveness += random(1, 3)
+                        Player(Happy)::"Oh yeah! Now I feel better, a bit more intelligent and sexy!"
+                        mood += random(1, 3)
+                        Player.modifyActorVar(rk_VB_VampHypnoLvL, 25)
+                        Player.modifyActorVar(rk_VB_Elf_BloodInv, -1)
+                    ElseIf 2
+                        Player.animate(drinkbottle)
+                        Player(Happy)::"Oh yeah! Now I feel better!"
+                        mood += random(1, 3)
+                        Player.modifyActorVar(rk_VB_VampHypnoLvL, 25)
+                        Player.modifyActorVar(rk_VB_Hum_BloodInv, -1)
+                    ElseIf 3
+                        muscle += random(1, 3)
+                        martial += random(1, 3)
+                        Player.animate(drinkbottle)
+                        Player(Happy)::"Oh yeah! Now I feel better and a bit more stronger!"
+                        mood += random(1, 3)
+                        Player.modifyActorVar(rk_VB_VampHypnoLvL, 25)
+                        Player.modifyActorVar(rk_VB_Orc_BloodInv, -1)
+                    ElseIf 4
+                        fitness += random(1, 3)
+                        attractiveness += random(1, 3)
+                        Player.animate(drinkbottle)
+                        Player(Happy)::"Oh yeah! Now I feel better, a bit more fit and sexy!"
+                        mood += random(1, 3)
+                        Player.modifyActorVar(rk_VB_VampHypnoLvL, 25)
+                        Player.modifyActorVar(rk_VB_Vam_BloodInv, -1)
+                    EndIf
+                    HypnoLvL = Player.getActorVar(rk_VB_VampHypnoLvL)
+                    If HypnoLvL > 100
+                        Player.setActorVar(rk_VB_VampHypnoLvL, 100)
+                    EndIf
+                ElseIf  51
+                    "What type of blood I want to transfert in my pockets?"
+                    1::EBloodInv >= 1 && TotBloodInvP <= 3.8::"1 bottle of Elven Blood"
+                    2::HBloodInv >= 1 && TotBloodInvP <= 3.8::"1 bottle of Human Blood"
+                    3::OBloodInv >= 1 && TotBloodInvP <= 3.8::"1 bottle of Orc Blood"
+                    4::VBloodInv >= 1 && TotBloodInvP <= 3.8::"1 bottle of Vampire Blood"
+                    99::"Go Back!"
+                    
+                    If 1
+                        Player.modifyActorVar(rk_VB_Elf_BloodInv, -1)
+                        Player.modifyActorVar(rk_VB_Elf_BloodInv_Poc, 1)
+                        "1 bottle of Elven Blood added to your pockets!"
+                    ElseIf 2
+                        Player.modifyActorVar(rk_VB_Hum_BloodInv, -1)
+                        Player.modifyActorVar(rk_VB_Hum_BloodInv_Poc, 1)
+                        "1 bottle of Human Blood added to your pockets!"
+                    ElseIf 3
+                        Player.modifyActorVar(rk_VB_Orc_BloodInv, -1)
+                        Player.modifyActorVar(rk_VB_Orc_BloodInv_Poc, 1)
+                        "1 bottle of Orc Blood added to your pockets!"
+                    ElseIf 4
+                        Player.modifyActorVar(rk_VB_Vam_BloodInv, -1)
+                        Player.modifyActorVar(rk_VB_Vam_BloodInv_Poc, 1)
+                        "1 bottle of Vampire Blood added to your pockets!"
+                    EndIf
+                Else
+                    stayInMenu = false
+                EndIf
+            EndWhile
+        EndIf
+        Player.animate()
+    SceneEnd()

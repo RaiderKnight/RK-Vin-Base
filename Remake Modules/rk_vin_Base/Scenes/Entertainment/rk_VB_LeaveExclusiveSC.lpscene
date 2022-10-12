@@ -1,0 +1,35 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        SCsetPrice = Player.getActorVar(rk_VB_SCsetPrice)
+        SCsetDate = Player.getActorVar(rk_VB_SCsetDate)
+        SCsetDateT = Player.getActorVar(rk_VB_SCsetDateTemp)
+        setESwingerClub = rk_VB_setESwingerClub.getGlobal()
+        "Do I really want to leave the exclusive club?"
+        0::"Yes"
+        1::"No"
+
+        If 0
+            "All data will be deleted..."
+            0::"Yes"
+            1::"Nevermind"
+            
+            If 0
+                Player.setActorVar(rk_VB_SCsetPrice, 0)
+                Player.setActorVar(rk_VB_SCsetDate, 0)
+                Player.setActorVar(rk_VB_SCsetDateTemp, 0)
+                rk_VB_setESwingerClub.setGlobal(0)
+                "All data have been deleted..."
+            EndIf
+        Else
+            "Actually no, I had a weakness! I changed my mind!"
+        EndIf
+    SceneEnd()

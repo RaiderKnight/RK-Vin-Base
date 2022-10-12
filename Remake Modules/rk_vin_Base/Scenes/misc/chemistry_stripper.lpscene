@@ -1,0 +1,112 @@
+WHAT: all
+WHERE: brothel, stripclub
+WHEN: 8 - 22
+WHO: none
+OTHER: !Player.isDating() || isModEnabled(vin_Polyamorous)
+
+    SceneStart()
+        GoldDigger = Actor.getActorVar(rk_VB_GoldDigger)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        "I know it's a bit of a common joke that lonely <Player.men_or_women> end up getting attached to sex workers whose services they've used regularly. Some people even tend to have deep conversations with their favorite sex workers when it's not allowed."
+        Actor = generatePersonTemporary()
+        While !Player.isInterestedIn(Actor)
+            Actor = generatePersonTemporary()
+        Endwhile
+        Actor:age => age + Random(-3, 3)
+        If Actor:age < 18
+            Actor:age => 18
+        Endif
+        Actor:attractiveness => Random(66, 100)
+        Actor.randomizeFace()
+        Actor.randomizeHairs()
+        Actor.dressUniform(sexwork)
+        Actor.show()
+        "I say this because, I've been in the middle of a conversation with one of my favorites sex worker, <Actor.name>, for the past hour or so. I can't help but feel there's an attraction between us beyond sex."
+        "Also, I can't help but feel that <Actor.name> deserves more than this and that <Actor.he_or_she> is being forced into this job because of <Actor.his_or_her> dire financial situation."
+        "Am I ready to be the knight in shining armor who will free this <Actor.prince_or_princess>?"
+        0:: "Ask <Actor.name> to leave this place and become my <Actor.boyfriend_or_girlfriend>"
+        1:: "Ask <Actor.name> to quit <Actor.his_or_her> job and become my <Actor.boyfriend_or_girlfriend>"
+        2:: Player:money > 3000::"Give <Actor.name> some money to quit <Actor.his_or_her> job and start a new life"
+        99:: "Why would I do that?"
+        
+        If 0
+            If Actor.isInterestedIn(Player)
+                "Delighted, <Actor.name> agreed right away. <Actor.His_or_Her> colleagues mocked <Actor.him_or_her> for hanging out with a former client and all bet that our relationship won't last..."
+                "Maybe they're just salty because how life treated them previously."
+                Actor.makePermanent()
+                Actor.makeInterested(Player)
+                Actor:attractiontoplayer += Random(20, 50)
+                Actor:rapportwithplayer += Random(20, 50)
+                exchangeContact(Actor)
+                Actor.setDating()
+                "As <Actor.his_or_her> new <Player.boyfriend_or_girlfriend>, I decided to support <Actor.him_or_her> in <Actor.his_or_her> job and promised not to be jealous towards <Actor.his_or_her> clients."
+                moveTo(home)
+            Else
+                Actor(Flirty)::"Oooh! You are so cute! You know you're not the first person to offer me this! But you are not my type, sorry!"
+            Endif
+        Elseif 1
+            If Actor.isInterestedIn(Player)
+                "Delighted, <Actor.name> agreed right away. <Actor.His_or_Her> colleagues mocked <Actor.him_or_her> for running away with a former client and all bet that our relationship won't last and <Actor.name> will be back here working before long."
+                "Maybe they're just salty because how life treated them previously."
+                Actor.makePermanent()
+                Actor.makeInterested(Player)
+                Actor:attractiontoplayer += Random(20, 50)
+                Actor:rapportwithplayer += Random(20, 50)
+                exchangeContact(Actor)
+                Actor.setDating()
+                karma += Random(2, 5)
+                "As <Actor.his_or_her> new <Player.boyfriend_or_girlfriend>, I decided to support <Actor.him_or_her> financially for a while before <Actor.he_or_she> could find a normal job."
+                moveTo(home)
+            Else
+                Actor(Flirty)::"Oooh! You are so cute! You know you're not the first person to offer me this! But you are not my type, sorry!"
+            Endif
+        Elseif 2
+            OfferCash = 3000
+            OfferCash2 = 18000
+            OfferCashloc = OfferCash.convertToLocalCurrency()
+            OfferCashloc2 = OfferCash2.convertToLocalCurrency()
+            CTBGoldDigger = Random(0, 100)
+            If CTBGoldDigger > 50
+                Actor(Flirty)::"Oooh! You are so cute! You know you're not the first person to offer me this!"
+                Actor(Grin)::"I am currently making <OfferCashloc> a month, so your offer will only cover 1 month."
+                Actor(Grin)::"If you're willing to offer me 6 months, then I'm ready to take the plunge into a 'normal' life!"
+                "What should I do?"
+                0::"Accept <Actor.his_or_her> offer"
+                1::"Refuse <Actor.his_or_her> offer"
+                
+                If 0
+                    money -= OfferCash2
+                    karma += 50
+                    "<Actor.name> finally agreed to do it and is forever grateful to me for giving <Actor.him_or_her> another chance in life..."
+                    "So I gave <OfferCashloc2> to <Actor.name>. Of course, we'll stay in touch."
+                    Actor.makePermanent()
+                    exchangeContact(Actor)
+                    Actor:rapportwithplayer => 100
+                    Actor:rapportwithplayer += Random(20, 50)
+                Else
+                    Player(Sad)::"Ok! So, nevermind, I'm not that rich!"
+                    mood -= 5
+                Endif
+                Actor.hide()
+                Actor.modifyActorVar(rk_VB_GoldDigger, 1)
+            ElseIf Actor.isInterestedIn(Player)
+                "Feeling charitable, I decided to give <Actor.him_or_her> some money (<OfferCashloc>) to quit <Actor.him_or_her> job and survive for a few months while looking for a 'normal' job."
+                money -= OfferCash
+                karma += 50
+                "<Actor.name> finally agreed to do it and is forever grateful to me for giving <Actor.him_or_her> another chance in life. Of course, we'll stay in touch."
+                Actor.makePermanent()
+                exchangeContact(Actor)
+                Actor:rapportwithplayer => 100
+                Actor:rapportwithplayer += Random(20, 50)
+                Actor.hide()
+            Else
+                Actor(Flirty)::"Oooh! You are so cute! You know you're not the first person to offer me this! But you are not my type, sorry!"
+                mood -= 5
+                Actor.hide()
+            Endif
+        Endif
+    SceneEnd() // Scene improved by Raddeck
+    timeout(500, chemistry_stripper)

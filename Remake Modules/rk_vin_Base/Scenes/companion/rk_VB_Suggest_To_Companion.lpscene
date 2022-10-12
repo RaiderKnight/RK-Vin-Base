@@ -1,0 +1,33 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Dating = getSpecific(Dating)
+        Actor3 = getCompanion()
+        "What I should suggest?"
+        0:: isModEnabled(vin_NTR) ::"A special trip to a swinger club"
+        1:: isModEnabled(vin_Netori) ::"Go to a swinger club and pretend to be a married couple"
+        5:: Player.isDating() && isModEnabled(vin_NTR) && isModEnabled(vin_Pregnancy) ::"Suggest Breeding Party to Companion"
+        29:: isModEnabled(vin_NTR) ::"Send a XXX picture of <Actor3.him_or_her> to one of <Actor3.his_or_her> friends"
+        30:: isModEnabled(vin_NTR) ::"Send a XXX video of <Actor3.him_or_her> to one of <Actor3.his_or_her> friends"
+        99::"I changed my mind"
+
+        If 0
+            followUp(swinger_club)
+        ElseIf 1
+            followUp(swinger_club_cheat)
+        ElseIf 5
+            followUp(breeding_party_companion_cms)
+        ElseIf 29
+            followUp(sr_fso_phone_dare1_cms)
+        ElseIf 30
+            followUp(sr_fso_phonedare2_cms)
+        EndIf
+    SceneEnd() // Scene created by Raddeck

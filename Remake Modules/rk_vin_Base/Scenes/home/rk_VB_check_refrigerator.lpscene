@@ -1,0 +1,169 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        // Get current items inside inventory
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        stock_HealthyCookie = Player.getActorVar(stock_HealthyCookie)
+        stock_LentilStew = Player.getActorVar(stock_LentilStew)
+        stock_CauliAlfredo = Player.getActorVar(stock_CauliAlfredo)
+        stock_RicePeas = Player.getActorVar(stock_RicePeas)
+        stock_Edamame = Player.getActorVar(stock_Edamame)
+        stock_PastaAlfredo = Player.getActorVar(stock_PastaAlfredo)
+        stock_CrispyTofu = Player.getActorVar(stock_CrispyTofu)
+        stock_LoMein = Player.getActorVar(stock_LoMein)
+        
+        stock_veganmeal = stock_HealthyCookie + stock_LentilStew + stock_CauliAlfredo + stock_RicePeas + stock_Edamame + stock_PastaAlfredo + stock_CrispyTofu + stock_LoMein
+        
+        stock_Jerkey = Player.getActorVar(stock_Jerkey)
+        stock_Cheesesteak = Player.getActorVar(stock_Cheesesteak)
+        stock_Chicken = Player.getActorVar(stock_Chicken)
+        stock_SaltNPepper = Player.getActorVar(stock_SaltNPepper)
+        stock_WrappedPork = Player.getActorVar(stock_WrappedPork)
+        stock_ChickenKebabs = Player.getActorVar(stock_ChickenKebabs)
+        stock_ChineseBeef = Player.getActorVar(stock_ChineseBeef)
+        stock_SurfNTurf = Player.getActorVar(stock_SurfNTurf)
+        stock_meatprod = stock_Jerkey + stock_Cheesesteak + stock_Chicken + stock_SaltNPepper + stock_WrappedPork + stock_ChickenKebabs + stock_ChineseBeef + stock_SurfNTurf
+        
+        refrigerator_inventory = stock_veganmeal + stock_meatprod + stock_juice + stock_meal
+        setBackgroundCustom(kitchen)
+        If refrigerator_inventory < 1 
+            Player(Anxious)::"My refrigerator is totally empty! But I always have water..."
+            "Do I want to drink water?"
+            0::"Yes"
+            1::"No"
+            
+            If 0
+                
+                Player.animate(drinkglass)
+                "I decided to drink water..."
+                mood += 0.5
+                fitness += 0.01
+                energy += 1
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, 1)
+                EndIf
+                If UrgeToPeeEnable > 0
+                    Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                EndIf
+            
+            EndIf
+            
+        Else
+
+            stayInMenu = true
+            While stayInMenu
+            
+                Player(Curious)::"Let see what I got in my refrigerator"
+                0:: stock_juice >= 0.8::"Juice inventory (<stock_juice>)"
+                0:: stock_meal >= 0.8 ::"Meal inventory (<stock_meal>)"
+                11:: "Check vegan meal(s) inventory (<stock_veganmeal>)"
+                10:: "Check meat dish(es) inventory (<stock_meatprod>)"
+                30:: "--------------"
+                40:: "Drink water"
+                42:: stock_juice >= 0.8::"Drink juice"
+                47:: stock_meal >= 0.8 ::"Eat a ready meal"
+                50:: "Eat a vegan meal"
+                60:: "Eat a meat dish"
+                99::"Nevermind, I will check later !"
+            
+                If 11
+            
+                    If stock_veganmeal  < 1
+                        Player(Anxious)::"Ok, I don't have any vegan meal! I have to go shopping to the greengrocer !"
+                    Else
+            
+                        0:: "<stock_HealthyCookie> Healthy cookie(s)"
+                        0:: "<stock_LentilStew> Winter Squash and Lentil Stew(s)"
+                        0:: "<stock_CauliAlfredo> Cauliflower Alfredo"
+                        0:: "<stock_RicePeas> Coconutty Rice and Peas"
+                        0:: "<stock_Edamame> Peanutty Edamame and Noodle Salad"
+                        0:: "<stock_PastaAlfredo> Pasta with Red Pepper Alfredo"
+                        0:: "<stock_CrispyTofu> Crispy Tofu Bowl(s) with fruits"
+                        0:: "<stock_LoMein> Veggie Lo Mein"
+                        99:: "Go back !"
+                    
+                    Endif
+                
+                Elseif 10
+
+                    If stock_meatprod  < 1
+                        Player(Anxious)::"Ok, I don't have any meat! I have to go to the butcher shop!"
+                    Else
+                
+                        0:: "<stock_Jerkey> Beef Jerkey bag(s)"
+                        0:: "<stock_Cheesesteak> Philly Cheesesteak"
+                        0:: "<stock_Chicken> Chicken schnitzel"
+                        0:: "<stock_SaltNPepper> Salt-and-Pepper Steak"
+                        0:: "<stock_WrappedPork> Bacon-Wrapped Pork"
+                        0:: "<stock_ChickenKebabs> Chicken Kebabs with rice"
+                        0:: "<stock_ChineseBeef> Chinese Beef & Broccoli"
+                        0:: "<stock_SurfNTurf> Surf 'n Turf"
+                        99:: "Go back !"
+                
+                    Endif
+                
+                ElseIf 40
+                
+                    Player.animate(drinkglass)
+                    "I decided to drink water..."
+                    mood += 0.5
+                    fitness += 0.01
+                    energy += 1
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, 1)
+                    EndIf
+                    If UrgeToPeeEnable > 0
+                        Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                    EndIf
+                    passTime(0.15, 0.5)
+                
+                ElseIf 42
+                
+                    Player.animate(drinkglass)
+                    "I decided to drink juice..."
+                    stock_juice -= 1
+                    mood += 0.8
+                    fitness += 0.015
+                    energy += 1
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, 1)
+                    EndIf
+                    If UrgeToPeeEnable > 0
+                        Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+                    EndIf
+                    passTime(0.15, 0.5)
+                
+                ElseIf 47
+                
+                    Player.animate(eat)
+                    "I decided to eat a ready meal.."
+                    stock_meal -= 1
+                    mood += 3
+                    energy += 15
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, 15)
+                    EndIf
+                    passTime(0.25, 0.5)
+                    
+                ElseIf 50
+                
+                    followUp(rk_VB_eat_vegan_meal_in)
+                    stayInMenu = false
+                    
+                ElseIf 60
+                
+                    followUp(rk_VB_eat_meat_in)
+                    stayInMenu = false
+                Else
+                
+                    stayInMenu = false
+            
+                Endif
+            EndWhile
+        Endif
+    SceneEnd()
