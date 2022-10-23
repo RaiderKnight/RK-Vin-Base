@@ -1,0 +1,179 @@
+WHAT: none
+WHERE: chemist, pharmacy
+WHEN: 0 - 24
+WHO: none
+OTHER: random(0, 100) > 90
+
+    SceneStart()
+        VendID = rk_VB_DrugStoreStoryID.getGlobal()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Degrees = rk_VB_DrugStoreStory.getGlobal()
+        OnyVas = false
+        // Based on one of Cristiano Caffieri stories
+        If Degrees == 0
+            If isModEnabled(rk_vin_Base)
+                If Player.isFemale()
+                    Vendeur = generatePersonTemporary()
+                    While !Vendeur.isMale() && Vendeur.isTrans()
+                        Vendeur = generatePersonTemporary()
+                    EndWhile
+                Else    
+                    Vendeur = generatePersonTemporary()
+                    While Vendeur.isMale() && Vendeur.isTrans()
+                        Vendeur = generatePersonTemporary()
+                    EndWhile
+                EndIf
+                Vendeur:attractiveness => random(70, 100)
+                Vendeur.randomizeHairs()
+                Vendeur.randomizeRace()
+                Vendeur.randomizeFace()
+                Vendeur.show()
+                arousal += random(0, 1)
+                "Wow, the cashier is really beautiful, my kind of <Vendeur.man_or_woman>... Almost love at first sight... Damn!"
+                Player.moveToPersonStand(Vendeur, 50)
+                "Although I came here to buy a pack of condoms, I'm far too embarrassed to put them in front of <Vendeur.him_or_her> at the checkout. Instead, I decided to buy some candy."
+                Vendeur(Happy)::"Is there anything else?"
+                "What should I say?"
+                0::"Invite <Vendeur.him_or_her> to the cinema"
+                1::"Nothing"
+                
+                If 0
+                    interpersonal += random(0.5, 1)
+                    Player(Flirty)::"Would you go to the movies with me?"
+                    "<Vendeur.He_or_She> froze for a moment, then smiled, perhaps because of my boldness."
+                    If Vendeur.isInterestedIn(Player)
+                        rk_VB_DrugStoreStory.setGlobal(1)
+                        Vendeur(Happy)::"When?"
+                        Player(Flirty)::"What about later today?"
+                        Vendeur(Curious)::"You’re very impulsive?"
+                        "And for a moment there was a look of doubt on <Vendeur.his_or_her> face, in fact, <Vendeur.he_or_she> mumbled something but that turned out to be a little joke."
+                        "When I handed <Vendeur.him_or_her> the money for the gum, <Vendeur.he_or_she> said yes and a place and time to meet was agreed upon."
+                        If !Vendeur.isContactExchanged()
+                            Vendeur.makePermanent()
+                            exchangeContact(Vendeur)
+                        EndIf
+                        Vendeur:rapportwithplayer += random(1, 5)
+                        Vendeur:attractiontoplayer += random(1, 5)
+                        VendID = Vendeur.getID()
+                        rk_VB_DrugStoreStoryID.setGlobal(VendID)
+                        startDate()
+                        Player(Flirty)::"See you later!"
+                        Vendeur(Happy)::"Bye!"
+                        Vendeur.hide()
+                        timeoutPrecise(2, rk_VB_DrugStoreStory)
+                    Else
+                        price = 3
+                        pricel = price.convertToLocalCurrency()
+                        Vendeur(Annoyed)::"Sorry but you are not my type! That'll be <pricel> for the candy!"
+                        Player(Flirty)::"Okay, that's fine, at least I tried!"
+                        mood -= 1
+                        Vendeur.hide()
+                    EndIf
+                Else
+                    Player(Happy)::"Nope, nothing else!"
+                    If Vendeur.isInterestedIn(Player) && !Vendeur.isContactExchanged()
+                        Vendeur(Flirty)::"Would it be possible to get your numbers so that we can meet again another time?"
+                        "What should I do?"
+                        0::"Accept"
+                        1::"Refuse"
+                        
+                        If 0
+                            Player(Flirty)::"Of course, why not!"
+                            "So we exchanged numbers and went our separate ways."
+                            Vendeur.makePermanent()
+                            exchangeContact(Vendeur)
+                            Vendeur:rapportwithplayer += random(1, 5)
+                            Vendeur:attractiontoplayer += random(1, 5)
+                        Else
+                            Player(Sad)"Sorry but I don't share my phone number with strangers!"
+                            Vendeur(Sad)::"Ok then!"
+                        EndIf
+                    EndIf
+                    timeoutPrecise(500, rk_VB_DrugStoreStory)
+                EndIf
+            EndIf
+        ElseIf Degrees == 2 || Degrees == 3 || Degrees == 4
+            "All of a sudden, my phone rings..."
+            "Do I answer it?"
+            0::"Yes"
+            1::"No"
+            
+            If 0
+                Vendeur(Happy)::"Hi, it's <Vendeur.name>, I'm calling to invite you to the movies, are you interested? I liked it last time!"
+                "What should I say?"
+                0::"Yes"
+                1::"No"
+                
+                If 0
+                    Player(Happy)::"Sure anytime!"
+                    Vendeur(Happy)::"Cool, see you soon!"
+                    OnyVas = true
+                Else
+                    Player(Sad)::"Sorry, I'm busy right now, maybe another time!"
+                    Vendeur(Sad)::"Ok then!"
+                EndIf
+            Else
+                "I'm busy, I don't have time for this!"
+            EndIf
+        EndIf 
+        timeoutPrecise(36, rk_VB_DrugStoreStory)
+        If Degrees == 1 || OnyVas
+            followUp(rk_VB_DrugStoreStoryD2)
+        EndIf
+    SceneEnd()
+
+
+As I handed her the money for the gum she said OK and a time and a place to meet was agreed. 
+After the show, I drove her home hoping for a little necking session in the car but all I got was a sisterly kiss and even on a second date there was only a slight improvement but she blocked all my attempts to cop a feel.
+However, on the third date, she did let me grope her tits through her sweater.
+
+I was getting a bit frustrated but then on the fourth occasion, she invited me up to her apartment for coffee. 
+Having sipped our Java, looking at each suggestively other over our cups, she didn’t object when I moved closer to her on the sofa. In fact, she didn’t object when I started to kiss her or when I slipped my hand up her top to grasp her tits. Neither did she object when I ran my hand up her skirt and touched her crotch.
+
+“I suppose you’re dying to get me into bed aren’t you?” she asked.
+
+I nodded my head so enthusiastically I was afraid it might come off. She stood up, took my hand, and led me into the bedroom where she pulled all the covers off down to one sheet and then started to remove her clothes. My God, she was so fucking beautiful.
+
+I was so taken up with her beauty I got tangled up in my pants and almost fell flat ton my face.
+“There are certain things I like when I make love,” she smiled, “I hope you’re OK with them.”
+
+I didn’t care what she wanted, she could have it up the ass, between the tits or in a bathtub full of Jello – it was OK by me. However, I was a bit shocked when she produced a large jar of chocolate spread and asked me if I’d mind rubbing it on her tits and licking it off.
+
+By this time she was lying stretched out on the bed naked offering me the jar. I took it from her, unscrewed the top as I looked down on her gorgeous tits and then I dipped two fingers in, scooped out an enormous dollop and rubbed it over one tit. She wiggled and giggled as I plastered more on the other and started to make swirly patterns with my finger.
+
+Putting the jar aside I knelt over the top of her and as she closed her eyes in anticipation. I bent forward and started licking. She responded by groaning and moaning, so much so, I thought she was going to have an orgasm there and then, but she didn’t. Licking and sucking I managed to clean off one tit and then I went for the other.
+
+“That feels so fucking good,” she sighed, “so fucking good.”
+
+I’d never eaten dessert off a couple of Double Lattes before but I was getting into it. Even though I had chocolate smeared all over my face, I’d managed to clean her tits up pretty good.
+
+As she lay writhing as if she couldn’t get enough I moved my head between her legs and dipping one finger into the spread I rubbed it into the lips of her pussy. She began to tremble as I slipped my face between her thighs and began to eat her out.
+
+“My God you’re torturing me.” she cried, as I very gently nibbled away at her chocolate-covered folds. When I felt she was cumming I began to really lap it up with big long strokes of the tongue. She went bat shit, grabbing hold of the lobes of my ears almost tearing them off.
+
+When she reached climax her body bounced up and down as she yelled, “I’m cumming, I’m cumming.”
+
+Once she’d calmed down I rammed my dick it into her fudge delight and began to pound her pussy. Her tits still covered with a few blobs of chocolate bounced around as I plunged it in at an ever-increasing pace. When I felt my cum shooting up my pipe I called out as she’d done, “I’m cumming, I’m cumming,” and with that last powerful thrust I shot my load into her crack. Tasha grabbed onto my arms urging me to keep my dong moving in and out and then as if by delayed action, she suddenly began to gyrate her ass and went into another massive orgasm.
+
+Once I’d withdrawn she’d quietened down, felt under her pillow, pulled out a tube of gell and told me to stand at the end of the bed.
+
+“This is cotton candy flavor,” she said, “It’s one of my favorites.”
+
+She began to coat my cock and my balls in the gell and then she slid her ass onto the floor and started to lick my scrotum.
+
+“This is really yummy,” she said, “I could lick this all day.”
+
+“Go ahead,” I said, “I think I can take it.”
+
+When she got to my dick she plunged it right into her mouth and massaging my balls she sucked it like a champion. When I felt my cum moving up for a second time I knew she was going to swallow the lot and she did. I let out a bellow as she skillfully worked it out with a combination of her hand and lips.
+
+Quite frankly I was exhausted but she seemed ready for more and opened up a drawer in her bedside cabinet that looked like a fucking candy store. There was Oral Candy, Nipple Nibblers, Strawberry Pasties and more.
+
+“Maybe we should have some coffee and then I’ll put on my candy G string and you can eat it off of me.” she laughed.
+
+As Tasha was so much into confectionery, some weeks later, when I was feeling in a silly mood, I got to work in my little galley kitchen and baked some pastry wrapped around a chunk of wood. I phoned her later and invited her over. When I slipped the pastry shell over my dick like a savory condom I thought she was going to die laughing but then she coated it in chocolate spread and ate the whole thing. I still have the teeth marks. 
+
+

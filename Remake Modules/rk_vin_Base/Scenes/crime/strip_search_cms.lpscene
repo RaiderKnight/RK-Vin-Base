@@ -12,16 +12,22 @@ OTHER:
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         "I was going about my day when I was suddenly stopped by a female police officer."
         Actor = generatePersonTemporary()
-        While Actor.isMale()
-            Actor = generatePersonTemporary()
-        Endwhile
+        If !Player.isMale() || random(0, 100) > 30
+            While !Actor.isMale() && Actor.isTrans()
+                Actor = generatePersonTemporary()
+            EndWhile
+        ElseIf Player.isMale() || random(0, 100) > 30
+            While Actor.isMale() && Actor.isTrans()
+                Actor = generatePersonTemporary()
+            EndWhile
+        EndIf
         Actor.dressUniform(Police)
         Actor.show()
         Actor(Curious):: "Excuse me, citizen, that shop owner over there accuses you of shoplifting. You'll have to follow me to the nearest police station for a strip search ..."
         Player.animate()
         Player(Curious)::"What!? This is ridiculous! I haven't even been inside that damn shop!"
-        0:: "Agree to the strip search"
-        1:: "Scare her off with my legal rights"
+        0:: "Agree to follow <Actor.him_or_her>"
+        1:: "Scare <Actor.him_or_her> off with my legal rights"
         
         If 0
             "I'm innocent but I don't want to risk being arrested for obstruction of justice ..."
@@ -43,8 +49,8 @@ OTHER:
             "After a while..." // End edit by Raddeck
             "The police officer seems to be having a little too much fun touching all my private parts."
             "Should I say something?" // Edit by Raddeck
-            0::"Just let her do her job!" // Edit by Raddeck
-            1::"Tell her she's going a little too far..." // Edit by Raddeck
+            0::"Just let <Actor.him_or_her> do <Actor.his_or_her> job!" // Edit by Raddeck
+            1::"Tell <Actor.him_or_her> <Actor.he_or_she>'s going a little too far..." // Edit by Raddeck
             
             If 0
                 Actor(Flirty)::"Now, I will search more deeper... spread your legs...!"
@@ -55,6 +61,19 @@ OTHER:
                     animatePair(Actor, Player, Stripsearch)
                 EndIf
                 Player.strip()
+                If Actor:arousal > 15 && Actor:perversion > 50 && Actor.isInterestedIn(Player)
+                    Actor(Grin)::"Humm, wait... I think I got something..."
+                    If Player.isFemale()
+                        Filter(LickPussy)
+                        SexNoAffair(Actor, Player)
+                    Else
+                        Filter(Blowjob)
+                        SexNoAffair(Actor, Player)
+                    EndIf
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                EndIf
                 Actor:arousal += random(0, 3)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -1)
@@ -136,7 +155,6 @@ OTHER:
         Else
             "I gave the cop an earful about my rights, clearly demonstrating that I wasn't any easy target to bully."
             "The cop eventually gave in and let me go."
-        Endif
-    
+        EndIf
     SceneEnd() // Scene improved by Raddeck
     timeout(150, strip_search_cms)

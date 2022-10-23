@@ -1,11 +1,10 @@
 WHAT: all
 WHERE: all
 WHEN: 7-19
-WHO: Actor = getRelatedPeople(Poly); If Actor0.isContactExchanged() && [Random(10, 60) < Actor0:attractiontoplayer || Random(10, 60) < Actor1:attractiontoplayer]
+WHO: Actor = getRelatedPeople(Poly); If Actor0.isContactExchanged() && [random(10, 60) < Actor0:attractiontoplayer || random(10, 60) < Actor1:attractiontoplayer]
 OTHER:
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -29,16 +28,13 @@ OTHER:
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -3)
             EndIf
-            
             If Actor0.isInterestedIn(Player)
                 Actor0:attractiontoplayer += 10
-            Endif
-            
+            EndIf
             If Actor1.isInterestedIn(Player)
                 Actor1:attractiontoplayer += 10
-            Endif
-            
-            If Random(30, 100) < Actor0:attractiontoplayer || Random(30, 100) < Actor1:attractiontoplayer
+            EndIf
+            If random(30, 100) < Actor0:attractiontoplayer || random(30, 100) < Actor1:attractiontoplayer
                 "After having some fun with this open-minded couple, I was getting ready to go home when they stopped me to say something."
                 Actor0:: "<Player.name>, the three of us had incredible chemistry back there."
                 Actor1:: "Absolutely, we both slept around with a lot of other people casually, but you're special."
@@ -47,18 +43,20 @@ OTHER:
                 1:: "No"
                 
                 If 0
-                    Player:: "Of course, I'd love to!"
+                    Player(Happy):: "Of course, I'd love to!"
                     If !OpenRelationship()
                         startOpenRelationship()
-                    Endif
+                    EndIf
                     removeNpcRelationship(Actor0, Actor1)
                     Actor0.setDating()
                     Actor1.setDating()
                     addNpcRelationship(Dating, Actor0, Actor1)
+                    exchangeContact(Actor0)
+                    exchangeContact(Actor1)
                 Else
                     "This was just some fun, I'd rather not deal with the emotional baggage of a threeway open relationship."
-                Endif
-            Endif
-        Endif
+                EndIf
+            EndIf
+        EndIf
     SceneEnd() // Scene improved by Raddeck
     timeout(100, poly_couple_repeats)

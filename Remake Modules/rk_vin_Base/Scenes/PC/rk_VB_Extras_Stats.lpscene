@@ -20,6 +20,7 @@ OTHER: none
         RapeCount = Player.getActorVar(rk_VB_RapeCount)
         ProstCount = Player.getActorVar(rk_VB_ProstCount)
         SexAssaultCount = Player.getActorVar(rk_VB_SexAssaultCount)
+        Jealousy = Player.getActorVar(rk_VB_Jealousy)
         If HungerEnable > 0
             If Hunger > 100
                 Totalpoopenergy = Hunger - 100
@@ -39,15 +40,61 @@ OTHER: none
         Else
             KillCountTXT = "You are a good citizen!"
         EndIf
-        
-        0:: HungerEnable > 0 ::"Your hunger level is <Hunger>/100"
-        0:: UrgeToPeeEnable > 0 ::"Your urge to go pee is <UrgeToPee>/100"
+        DoLGLic = GotALifeguardLicenseG.getGlobal()
+        If DoLGLic == 1
+            txtLFG = "have"
+        Else
+            txtLFG = "don't have"
+        EndIf
+        MeineSka = Player.getActorVar(rk_VB_LifeguardSkills)
+        PoliceSXP = Player.getActorVar(rk_VB_PoliceSXP)
+        Job_police = rk_VB_Job_police.getGlobal()
+        PoliceXP = Player.getActorVar(rk_VB_PoliceXP)
+        Job_MilkMan = rk_VB_Job_MilkMan.getGlobal()
+        MilkManXP = Player.getActorVar(rk_VB_MilkManXP)
+        Job_MailMan = rk_VB_Job_MailMan.getGlobal()
+        MailManXP = Player.getActorVar(rk_VB_MailManXP)
+        If Job_police == 1
+            txtPoli = "You are"
+        Else
+            txtPoli = "You are not"
+        EndIf
+        If Job_MailMan == 1
+            txtMIM = "You are"
+        Else
+            txtMIM = "You are not"
+        EndIf
+        If Job_MilkMan == 1
+            txtMAM = "You are"
+        Else
+            txtMAM = "You are not"
+        EndIf
+        0:: "Your hunger level is <Hunger>/100"
+        0:: "Your urge to go pee is <UrgeToPee>/100"
+        0::"Your jealousy Level is: <Jealousy>/100"
         0::"Your brown nose level is: <Boss_Sucker>/100"
         0::"You have <RubCWAPITM> Rubber chicken with a pulley"
-        1::"Check your criminal record"
+        10::"Check your other job positions"
+        50::"Check your criminal record"
         99::"Back to the game!"
         
-        If 1
+        If 10
+            0::"You <txtLFG> a license to be a Life guard!"
+            0::"You're skills as a Life guard - <MeineSka>/100"
+            0::"------------------------------------------"
+            0::"<txtMIM> a mailman"
+            0::"Your experience level as a mailman - <MailManXP>/100"
+            0::"------------------------------------------"
+            0::"<txtMAM> a milkman"
+            0::"Your experience level as a milkman - <MilkManXP>/100"
+            0::"------------------------------------------"
+            0::"<txtPoli> a police officer"
+            0::"Your experience level as a cop - <PoliceXP>/100"
+            0::"Your shooting level as a cop - <PoliceSXP>/100"
+            0::"------------------------------------------"
+            99::"Back to the game!"
+            
+        ElseIf 50
             0::"<KillCountTXT>"
             0::"You murdered <KillCount> person(s)"
             0::"You have been caught doing sexual assault <SexAssaultCount> time(s)"

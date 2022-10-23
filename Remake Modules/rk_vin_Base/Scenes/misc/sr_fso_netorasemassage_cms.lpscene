@@ -22,11 +22,14 @@ OTHER: none
             Actor.strip()
             Actor2.dress()
             Actor2.show()
-            
-            animatePair(Actor2, Actor, FingerPussy)
+            If !Actor.isMale()
+                animatePair(Actor2, Actor, FingerPussy)
+            Else
+                animatePair(Actor2, Actor, Handjob)
+            EndIf
             "My <Actor.boyfriend_or_girlfriend> has a massage at home from a stranger." 
             
-            If Random(0, 100) < 50
+            If random(0, 100) < 50
                 "The stranger was a professional though and didn't try anything funny."
             Else
                 "The stranger wishes to get handsy with <Actor.him_or_her> ..."
@@ -41,9 +44,9 @@ OTHER: none
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -3)
                         EndIf
-                    Endif
-                Endif
-            Endif
-        Endif
+                    EndIf
+                EndIf
+            EndIf
+        EndIf
     SceneEnd()
     timeout(200, sr_fso_netorasemassage_cms) // Scene improved by Raddeck

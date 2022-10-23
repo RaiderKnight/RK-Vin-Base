@@ -2,7 +2,7 @@ WHAT: masturbate, sleep, sleep_hotel, nap, nap_hotel, rk_VB_small_sleep
 WHERE: all
 WHEN: 0 - 24
 WHO: none
-OTHER: Random(0, 200) < perversion && arousal > 10
+OTHER: random(0, 200) < perversion && arousal > 10
 
     SceneStart()
         Dating = getSpecific(Dating)
@@ -35,9 +35,9 @@ OTHER: Random(0, 200) < perversion && arousal > 10
             Else
                 If 2
                     goforelf = true // Edit Raddeck
-                Elseif 3
+                ElseIf 3
                     gofororc = true // Edit Raddeck
-                Elseif 4
+                ElseIf 4
                     goforvamp = true // Edit Raddeck
                 EndIf
                
@@ -63,7 +63,7 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                         Actor.blendPreset(vampire)
                         Actor.randomizeRace()
                     EndIf
-                Elseif 1
+                ElseIf 1
                     Actor = generatePersonTemporary()
                     While !Actor.isMale()
                         Actor = generatePersonTemporary()
@@ -100,7 +100,7 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                         Actor.randomizeRace()
                     EndIf
                 EndIf
-            Endif
+            EndIf
             If Actor.isValid()
                 Actor.dress()
                 Actor.show(2)
@@ -113,14 +113,14 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                     Player.strip()
                     Actor.strip()
                     SexNoAffair(Player, Actor)
-                    perversion += Random(0, 0.25)
+                    perversion += random(0, 0.25)
                     arousal += 25
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
                     EndIf
                     Wetdream = true
                     
-                Elseif 1
+                ElseIf 1
                     "Who else would be participating in my fantasy orgy?"
                     selectNPC()
                     Actor2 = getSelectedNPC()
@@ -135,7 +135,7 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                         Actor.strip()
                         Actor2.strip()
                         SexNoAffair(Player, Actor, Actor2)
-                        perversion += Random(0, 0.35)
+                        perversion += random(0, 0.35)
                         arousal += 25
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
@@ -157,7 +157,7 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                             Actor2.strip()
                             Actor3.strip()
                             SexNoAffair(Player, Actor, Actor2, Actor3)
-                            perversion += Random(0, 0.45)
+                            perversion += random(0, 0.45)
                             arousal += 25
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -1)
@@ -176,35 +176,35 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                             Actor3.strip()
                             Actor4.strip()
                             SexNoAffair(Player, Actor, Actor2, Actor3, Actor4)
-                            perversion += Random(0, 0.5)
+                            perversion += random(0, 0.5)
                             arousal += 25
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -1)
                             EndIf
                             Wetdream = true
-                        Endif
-                    Endif
-                Endif
+                        EndIf
+                    EndIf
+                EndIf
                 If Wetdream
-                    Bonus = Random(25, 70)
+                    Bonus = random(25, 70)
                     If Player:arousal > Bonus
                         "Damn, this ultra erotic dream makes me want to masturbate ..."
                         Player.strip()
                         Filter(solo)
                         sex(Player)
-                        arousal -= Random(5, 25)
+                        arousal -= random(5, 25)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
                         EndIf
                     Else
-                        If Random(0, 100) > 50
+                        If random(0, 100) > 50
                             If Player.isMale()
                                 "Damn, I came in my panty because of this ultra erotic dream ..."
-                                arousal -= Random(25, 50)
+                                arousal -= random(25, 50)
                             Else
                                 "Damn, I wetted my panty because of this ultra erotic dream ..."
-                                arousal -= Random(25, 50)
-                            Endif
+                                arousal -= random(25, 50)
+                            EndIf
                             "Should I take a shower?"
                             0::"Yes"
                             1::"No"
@@ -218,15 +218,26 @@ OTHER: Random(0, 200) < perversion && arousal > 10
                                 Else
                                     "I decided to go back to sleep with my panty all wet ..."
                                     perversion += 1
-                                Endif
-                            Endif
-                        Endif
-                    Endif
-                Endif
-            Endif
+                                EndIf
+                            EndIf
+                        EndIf
+                    EndIf
+                EndIf
+            EndIf
         ElseIf 10
             followUp(cuckold_ir)
-        Endif
-        
+        EndIf
+        If Actor.isContactExchanged()
+            Actor.hide()
+        Else
+            Actor.hide()
+            Actor.deletePerson()
+        EndIf
+        Actor2.hide()
+        Actor3.hide()
+        Actor4.hide()
+        Actor2.deletePerson()
+        Actor3.deletePerson()
+        Actor4.deletePerson()
     SceneEnd() // Improved by Raddeck
     timeout(550, fantasize)

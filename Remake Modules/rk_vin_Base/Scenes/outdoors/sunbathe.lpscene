@@ -5,17 +5,15 @@ WHO: none
 OTHER:
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-    
         Dice = Player.getActorVar(rng_dice)
         Dice += 1
         If Dice > 4 // CHANGE HERE
             Dice = 1
-        Endif
+        EndIf
         Player.setActorVar(rng_dice, Dice)
         Nothing = false
         
@@ -29,7 +27,7 @@ OTHER:
                 Actor = generatePersonTemporary()
                 Actor.dress()
                 Actor.show()
-            Endif
+            EndIf
             
             If Actor:perversion + Actor:interpersonal > 50
                 Actor.moveToPersonStand(Player, 50)
@@ -63,26 +61,26 @@ OTHER:
                                 
                                 If 1
                                     setBackground(home)
-                                Endif
+                                EndIf
                                 Sex(Actor, Player)
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
                             Elseif 1
                                 "We obviously have some chemistry but this is a public place after all. Let's be decent people and exchange numbers to meet another time."
-                                Actor.makePermenant()
+                                Actor.makePermanent()
                                 exchangeContact(Actor)
-                            Endif
-                        Endif   
+                            EndIf
+                        EndIf   
                     Else
                         "<He_or_She> did a good job. I don't have to worry about skin cancer while tanning now."
-                    Endif
+                    EndIf
                 Else
                     Player:: "No need. Thank you for the offer though."
-                Endif
+                EndIf
             Else
                 Nothing = true
-            Endif
+            EndIf
             
         Elseif Dice == 2
             // You decide to sunbathe nude. A stranger or your companion either compliments or disapproves.
@@ -102,7 +100,7 @@ OTHER:
                         Actor = generatePersonTemporary()
                         Actor.dress()
                         Actor.show()
-                    Endif
+                    EndIf
                     
                     Actor.moveToPersonStand(Player, 50)
                     
@@ -111,7 +109,7 @@ OTHER:
                             Actor:: "I think you should put some clothes on. This is a public place after all."
                         Else
                             "<Actor.name> didn't say a word, but seemed uncomfortable with my nakedness." 
-                        Endif
+                        EndIf
                     Else
                         Actor:: "Wow, you're so beautiful! And so confident in your own skin too."
                         Player:: "Thank you. That's very kind of you."
@@ -136,16 +134,16 @@ OTHER:
                                 
                                 If 1
                                     setBackground(home)
-                                Endif
+                                EndIf
                                 Sex(Actor, Player)
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
-                            Endif
-                        Endif
-                    Endif
-               Endif
-            Endif
+                            EndIf
+                        EndIf
+                    EndIf
+               EndIf
+            EndIf
         Elseif Dice == 3
             // A stranger has a perfect view of your bulge or camel toe from the water
             Actor = generatePersonTemporary()
@@ -161,7 +159,7 @@ OTHER:
                     "From the water looking up, the swimmer must have a perfect view of my camel toe."
                 Else
                     "From the water looking up, the swimmer must have a perfect view of my bulge."        
-                Endif
+                EndIf
                 "What should I do?"
                 0:: "Cross my legs"
                 1:: "Smile back"
@@ -185,7 +183,7 @@ OTHER:
                         
                         If 1
                             setBackground(home)
-                        Endif
+                        EndIf
                         Sex(Actor, Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
@@ -197,13 +195,13 @@ OTHER:
                         exchangeContact(Actor)
                     Else
                         "That was just a bit of fun checking out and flirting with someone random. I have no intention to take this any further."
-                    Endif                 
+                    EndIf                 
                 Else
                     "I quickly crossed my legs, denying the perverted swimmer the view. Embarrassed, <Actor.he_or_she> had no choice but swim away."
-                Endif
+                EndIf
             Else
                 Nothing = true
-            Endif
+            EndIf
         Elseif Dice == 4
             // If Netorare is enabled, your companion may accept a stranger's offer to apply sunscreen
             Actor = generatePersonTemporary()
@@ -233,20 +231,20 @@ OTHER:
                             "Eventually though, they got even more comfortable with each other and disappeared together somewhere, not caring at all that I was right there."
                             masochist += 0.25
                             Sex(Actor, CurrentCompanion)
-                        Endif   
+                        EndIf   
                     Else
                         "Thankfully, it turned out the stranger genuinely just wanted to help."
-                    Endif
-                Endif
+                    EndIf
+                EndIf
             Else
                 Nothing = true
-            Endif
+            EndIf
         Else
             Nothing = true
-        Endif
+        EndIf
         
         If Nothing
             "Nothing unusual happened."
-        Endif
+        EndIf
     
     SceneEnd() // Improved by Raddeck

@@ -5,29 +5,25 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    
+        ChevPrice = random(50, 100)
+        PrixSBCL = ChevPrice.convertToLocalCurrency()
         If isWithCompanionCreature()
-        
-            "Do I want to visit the vet with <CurrentCompanion.name>?"
-            0:: "Yes"
+            "Sould I pay for a health test for my pet <CurrentCompanion.name>?"
+            0:: money > ChevPrice::"Yes (<PrixSBCL>)"
             1:: "No"
             
             If 0
-            
+                money -= ChevPrice
                 "It cost quite a bit but <CurrentCompanion.name> came out of the session looking as healthy as ever."
-                money -= Random(50, 200)
-                CurrentCompanion:fitness += Random(0, 50)
-                
+                money -= random(50, 200)
+                CurrentCompanion:fitness += random(0, 50)
+                CurrentCompanion:mood += random(0, 50)
+                CurrentCompanion:rapportwithplayer += random(1,2.5)
+                CurrentCompanion:attractiontoplayer += random(2,3.5)
             Else
-            
                 "<CurrentCompanion.name> seems fine. No need to waste money."
-                
-            Endif
-            
+            EndIf
         Else
-        
-            "I'm not taking any pets with me. I can't visit the vet."
-            
-        Endif
-        
+            "I don't have a pet with me, so there's no need to go for a health test!"
+        EndIf
     SceneEnd() // Improved by Raddeck

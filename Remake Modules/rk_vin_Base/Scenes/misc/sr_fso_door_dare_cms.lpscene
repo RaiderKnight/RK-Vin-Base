@@ -2,10 +2,9 @@ WHAT: all, -sleep, -nap
 WHERE: home
 WHEN: 8 - 22
 WHO: Actor = getSpecific(Dating); If !Actor.isMale()
-OTHER: Player.isMale() && Random(44, 100) < perversion
+OTHER: Player.isMale() && random(44, 100) < perversion
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -26,16 +25,14 @@ OTHER: Player.isMale() && Random(44, 100) < perversion
             Actor.strip()
             "I ordered a pizza from a local restaurant to be delivered."
             Player.animate(camera)
-            If Random(0, 100) < 60
+            If random(0, 100) < 60
                 Actor2 = generatePersonTemporary()
                 While !Actor2.isMale()
                     Actor2 = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor2.dress()
                 Actor2.show()
-                
                 Actor.moveToPersonStand(Actor2, 100)
-                
                 "The delivery boy shows up with the pizza." 
                 "When the door is opened he is surprised to see my nude <Actor2.boyfriend_or_girlfriend>." 
                 "He becomes aroused seeing this. The wife notices his arousal along with the me."
@@ -49,20 +46,19 @@ OTHER: Player.isMale() && Random(44, 100) < perversion
                     "<Actor.name> got my message and proceeded to seduce the delivery boy"
                     Sex(Actor2, Actor)
                     
-                    If Random(25, 75) < Actor2:prone_to_orgasm
+                    If random(25, 75) < Actor2:prone_to_orgasm
                         "The sex was so good that <Actor.name> insisted that we kept this delivery boy's phone number to have some fun with him in the future."
                         Actor2.makePermanent()
                         exchangeContact(Actor2)
-                    Endif
-                Endif
-            Elseif Random(0, 100) < 25 && isModEnabled(vin_NonConsensual) && isModEnabled(vin_NTR)
+                    EndIf
+                EndIf
+            ElseIf random(0, 100) < 25 && isModEnabled(vin_NonConsensual) && isModEnabled(vin_NTR)
                 Actor2 = generatePersonTemporary()
                 While !Actor2.isMale()
                     Actor2 = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor2.dress()
                 Actor2.show()
-
                 "The doorbell was not the delivery boy. In fact it was a known local repeated sex offender who had been in and out of prison many times!" 
                 "He tells her she's a pretty lady and looks like she requires some company." 
                 "She screams and is pushed down onto the sofa"
@@ -83,22 +79,24 @@ OTHER: Player.isMale() && Random(44, 100) < perversion
                         Raped = false
                         Actor2.hide()
                         "I managed to win the fight and the sex offender ran away."
-                    Endif
-                Endif
-                
+                    EndIf
+                EndIf
                 If Raped
                     TalkNonConsensual()
-                    Filter(Aggressive)
+                    If Actor2.isMale() && !Actor.isMale()
+                        Filter(AggressiveFM)
+                    Else
+                        Filter(Aggressive)
+                    EndIf
                     Sex(Actor2, Actor)
-                Endif   
-            Elseif Random(0, 100) < 33
+                EndIf
+            ElseIf random(0, 100) < 33
                 Actor2 = generatePersonTemporary()
                 While !Actor2.isMale()
                     Actor2 = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor2.dress()
                 Actor2.show()
-                
                 "The delivery boy shows up with the pizza." 
                 "He is surprised to see my nude <Actor.boyfriend_or_girlfriend>." 
                 "He somehow notices me hiding behind cover filming and straight up asks if he can watch the <Actor.name> masturbate."
@@ -113,12 +111,12 @@ OTHER: Player.isMale() && Random(44, 100) < perversion
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -3)
                     EndIf
-                Endif
+                EndIf
             Else
                 "The delivery person turned out to be a middle-aged woman, who wasn't too amused by our whole dare and simply delivered the pizza and got out of there quick."
-            Endif
+            EndIf
         Else
-            Actor:: "No, I’m not feeling up for that kind of thing."
-        Endif
+            Actor(Sad):: "No, I’m not feeling up for that kind of thing."
+        EndIf
     SceneEnd()
     timeout(120, sr_fso_door_dare_cms) // Improved by Raddeck

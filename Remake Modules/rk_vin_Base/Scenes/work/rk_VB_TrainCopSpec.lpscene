@@ -1,0 +1,69 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        tagPolice = Policier.getActorVar(tag_Police)
+        Boss_Sucker = Player.getActorVar(rk_VB_Boss_Sucker)
+        SleepingWithBoss = SleepingWithCopBoss.getGlobal()
+        Job_police = rk_VB_Job_police.getGlobal()
+        PoliceXP = Player.getActorVar(rk_VB_PoliceXP)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        PPID = rk_VB_PPatronID.getGlobal()
+        PPatron = getSpecific(PPID)
+        PPatron.dressUniform(police)
+        PPatron.hide()
+        If isModEnabled(rk_vin_Base)
+            Colleague = getSpecific(tagPolice)
+            // Colleague = getPerson(tagPolice)
+            PPatron.show(2)
+            "There's a specialist training course being organized by HR today. Spaces are limited as those external trainers are expensive to hire, so my department can only send one person."
+            PPatron(Happy):: "So, who wants to sign up for this training course tomorrow?"
+            Colleague.dressUniform(police)
+            Colleague.show(4)
+            Colleague(Happy):: "I would love to do it!"
+            0:: "Sign up"
+            1:: "Stay silent"
+            
+            If 1
+                "If <Colleague.name> wants to take the course, I'll be nice enough to not stand in <Colleague.his_or_her> way."
+                If random(0, 100) > 50
+                    Going = true
+                Else
+                    Going = false
+                EndIf
+            Else
+                Player(Excited):: "I would really appreciate this opportunity!"
+                Colleague:rapportwithplayer -= random(0, 5)
+                If intelligence > Colleague:intelligence || PPatron:rapportwithplayer > random(35, 100) || PPatron.isDating()
+                    Going = true
+                    PPatron(Happy):: "Alright, <Player.name>, I feel this course would benefit you the most. <Colleague.name>, sorry, but next time we'll definitely consider you."
+                Else
+                    Going = false
+                    PPatron(Sad):: "Sorry, <Player.name>, but we'll let <Colleague.name> take the course this time. Next time, we'll definitely consider you."
+                EndIf
+            EndIf
+            PPatron.hide()
+            Colleague.hide()
+            If Going
+                "I might have threatened my relationship with <Colleague.name>, but in exchange, I was able to participate in a fantastic training course. The knowledge I acquired and the people I met there was quite a boost to my career."
+                jobexperience += random(0, 2)
+                intelligence += random(0, 1)
+                mood += random(1, 5)
+                energy -= random(15, 30)
+                Player.modifyActorVar(rk_VB_PoliceXP, 1)
+            Else
+                "<Colleague.name> went to the training course. When <Colleague.he_or_she> came back, <Colleague.he_or_she> spent the whole lunch hour saying how great the course was and how much <Colleague.he_or_she> learned. If true, that was quite an opportunity missed for me ..."
+                mood -= random(1, 5)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -10)
+                EndIf
+            EndIf
+        EndIf
+    SceneEnd()
+    

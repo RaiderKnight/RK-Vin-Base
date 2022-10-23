@@ -1,0 +1,23 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        GALGL = GotALifeguardLicenseG.getGlobal()
+        LifeguardSkills = Player.getActorVar(rk_VB_LifeguardSkills)
+        "Are you sure you want to stop being a lifeguard?"
+        0::"Yes"
+        1::"I changed my mind"
+        
+        If 0
+            GotALifeguardLicense => 0
+            GotALifeguardLicenseG.setGlobal(0)
+            "All done!"
+        EndIf
+    SceneEnd()

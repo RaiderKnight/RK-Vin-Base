@@ -2,10 +2,9 @@ WHAT: all, -sleep, -nap
 WHERE: home
 WHEN: 8 - 22
 WHO: Actor = getSpecific(Dating); If !Actor.isMale()
-OTHER: Player.isMale() && Random(44, 100) < perversion
+OTHER: Player.isMale() && random(44, 100) < perversion && isModEnabled(vin_NTR)
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -24,10 +23,10 @@ OTHER: Player.isMale() && Random(44, 100) < perversion
             Filter(Solo)
             Sex(Actor)
             
-            If Random(0, 100) < 25
+            If random(0, 100) < 25
                 "Your <Actor.boyfriend_or_girlfriend> fingers herself in the doorway. You film it and rewatch it anytime you want to be reminded of how perverted and loyal she is."
                 timeout(160, sr_fso_door_dare2_cms)
-            Elseif Random(0, 100) < 33
+            ElseIf random(0, 100) < 33
                 "<Actor.name> fingers herself in the doorway." 
                 Actor2 = getSpecific(Neighbour)
                 Actor2.dress()
@@ -57,32 +56,36 @@ OTHER: Player.isMale() && Random(44, 100) < perversion
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -3)
                             EndIf
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                 Else
                     "Unfortunately, <Actor2.name> simply scolded <Actor.name> for such public indecency."
-                Endif
+                EndIf
                 timeout(160, sr_fso_door_dare2_cms)
-            Elseif Random(0, 100) < 50 && isModEnabled(vin_NTR) && isModEnabled(vin_NonConsensual)
+            ElseIf random(0, 100) < 50 && isModEnabled(vin_NTR) && isModEnabled(vin_NonConsensual)
                 Actor = generatePersonTemporary()
                 While !Actor.isMale()
                     Actor = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor.dress()
                 Actor.show()
                 "Your <Actor.boyfriend_or_girlfriend> is masturbating in the doorway. Someone walking by sees this and quickly moves to her shoving her inside the apartment and rapes her."
                 0:: "Peek and watch"
                 1:: "Call the cops"
                 
-                Filter(Aggressive)
+                If Actor.isMale() && !Actor2.isMale()
+                    Filter(AggressiveFM)
+                Else
+                    Filter(Aggressive)
+                EndIf
                 TalkNonConsensual()
                 Sex(Actor, Actor2)
                 
                 If 1
                     "The cops eventually arrived and arrested the sex offender, but not before <Actor.name> had already had to endure a round with this vile man."
-                Endif
+                EndIf
                 timeout(120, sr_fso_door_dare2_cms)
-            Elseif isModEnabled(vin_NTR)
+            ElseIf isModEnabled(vin_NTR)
                 Actor2 = getRelative()
                 Actor2.dress()
                 Actor2.show()
@@ -99,14 +102,14 @@ OTHER: Player.isMale() && Random(44, 100) < perversion
                         "Hey, what the fuck are you doing with <Actor.name>, <Actor.he_or_she> is your <Actor2.callplayer>'s <Actor.boyfriend_or_girlfriend>, for god's sake!"
                     Else
                         Sex(Actor2, Actor)
-                    Endif
+                    EndIf
                 Else
                     "Unfortunately, my <Actor2.relationship> wasn't impressed by our dare and scolded us for our stupid prank."
-                Endif
+                EndIf
                 timeout(120, sr_fso_door_dare2_cms)
             Else
                 "The plan certainly went down better in my head since absolutely nothing actually happened after <Actor.name>'s performance."
                 timeout(160, sr_fso_door_dare2_cms)            
-            Endif
-        Endif
+            EndIf
+        EndIf
     SceneEnd() // Improved by Raddeck

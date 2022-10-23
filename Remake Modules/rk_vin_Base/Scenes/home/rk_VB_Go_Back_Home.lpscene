@@ -6,6 +6,12 @@ OTHER: none
 
     SceneStart()
         SlaveofActor = rk_MN_SlaveofActor.getGlobal()
-        "I decided to go back to my house!"
-        moveTo(home)
+        If PlayerHasHome()
+            "I decided to go back to my house!"
+            moveTo(home)
+        ElseIf DatingHasHome()
+            "Let's go back to my girlfriend's house..."
+        Else
+            "I don't have a house or apartment!"
+        EndIf
     SceneEnd()

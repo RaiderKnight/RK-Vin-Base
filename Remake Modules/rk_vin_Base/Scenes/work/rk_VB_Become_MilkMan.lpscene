@@ -1,0 +1,131 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        jelai = false
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Geography_Major_Ses_Done = rk_VB_Geography_Major_Ses_Done.getGlobal()
+        Job_MilkMan = rk_VB_Job_MilkMan.getGlobal()
+        PSalaire = CostOfLiving*2*[350 + [intelligence*20]]
+        PSalaireL = PSalaire.convertToLocalCurrency()
+        Actor1 = generatePersonTemporary()
+        Actor1:age => random(18, 55)
+        Actor1.randomizeFace()
+        Actor1.randomizeRace()
+        Actor1.randomizeHairs()
+        Actor1.dress()
+        PPatron = generatePerson()
+        PPatron.setBoss()
+        PPatron:age => random(18, 55)
+        PPatron.randomizeFace()
+        PPatron.randomizeRace()
+        PPatron.randomizeHairs()
+        PPatron.dress()
+        PPatron.hide()
+        If Geography_Major_Ses_Done == 0
+            "It is necessary to have some knowledge of geography to become a milkman. Take a geography class at university!"
+        ElseIf Job_MilkMan == 1
+            followUp(rk_VB_Job_MilkMan)
+        ElseIf muscle < 30
+            "To become a milkman, you need to be in shape! I think you need to train... Go work on your muscles."
+        ElseIf fitness < 40
+            "To become a milkman, you need to be in shape! I think you need to train... Go work on your fitness."
+        Else
+            "Do I want to apply for a career as a police officer in this precinct? They offer average salaries per month of <PSalaireL> for a police officer."
+            0:: "Apply for a job as a police officer"
+            1:: "I changed my mind"
+    
+            If 0
+                "Yes, I have always dreamed of doing this job because it allows us to meet all kinds of people and sometimes a few extras, according to rumors!"
+                Actor1.show()
+                Actor1.moveToPersonStand(Player, 50)
+                Actor1(Happy)::"Hi, can I help you?"
+                Player(Happy)::"Well actually I came for the milkman job, are there still positions open?"
+                Actor1(Happy)::"Of course, we are always looking for new talent!"
+                Actor1(Happy)::"Leave me your resume and I will submit it to my boss. You will receive a call if you are selected!"
+                Player(Happy)::"Ok, thanks! Have a nice day!"
+                Actor1.hide()
+                passTime(1, 2)
+                setBackground(home)
+                "After a while ..."
+                "I get a call, I hope this is the place I applied earlier ..."
+                Player.animate(call)
+                facteurs = attractiveness + fitness + muscle
+                secondScreen(Actor1)
+                Actor1.show()
+                If facteurs >= 70
+                    Actor1(Happy)::"Hello my dear <Player.sir_or_miss>, this is to announce that you have been selected. You can start working from today if you wish!"
+                    Player(Happy)::"Cool thanks a lot for the job!"
+                    rk_VB_Job_MilkMan.setGlobal(1)
+                    Player.setActorVar(rk_VB_MilkManSalary, PSalaire)
+                    Player.setActorVar(rk_VB_MilkManXP, 1)
+                    mood += random(3, 6)
+                    Actor1(Happy)::"For every new milkman, we hold a welcome reception before their first day on the job. So you are invited to come and meet us!"
+                    Player(Happy)::"Sure, I'll come!"
+                    Actor1(Happy)::"Good, see you soon!"
+                Else
+                    Actor1(Serene)::"Hello my dear <Player.sir_or_miss>, this is to inform you that you have not been selected. I wish you to find a job as soon as possible!"
+                    Player(Sad)::"Okay, thank you anyway..."
+                    Actor1(Happy)::"Have a nice day!"
+                    mood -= random(1, 5)
+                EndIf
+                Actor1.hide()
+                secondScreen()
+                Player.animate()
+            EndIf
+            If isModEnabled(rk_vin_Base)
+                If jelai
+                    Player.dress()
+                    "I dress appropriately and leave for the milk warehouse for the reception in my honor and to meet my new colleagues."
+                    setBackground(ice_cream)
+                    "Once arrived at the milk warehouse... A <PPatron.guy_or_girl> approaches me and says:"
+                    PPatron.show()
+                    PPatron.moveToPersonStand(Player, 50)
+                    PPatron(Happy)::"Hi, you must be <Player.name> <Player.name_last>! I'm happy to meet you, I'm <PPatron.name> <PPatron.name_last>, but you can also call me boss!"
+                    Player(Happy):: "Nice to meet you too, <PPatron.mr_or_miss> <PPatron.name_last>!"
+                    exchangeContact(PPatron)
+                    PPatron(Happy)::"Follow me, I'll introduce you to some of your new colleagues, at least the ones you'll work with sometimes!"
+                    MesColl = random(5, 10)
+                    count = 0
+                    While count < MesColl
+                        Milker = generatePerson()
+                        Milker:age => random(18, 55)
+                        Milker.randomizeFace()
+                        Milker.randomizeRace()
+                        Milker.randomizeHairs()
+                        Milker.dressUniform(ice_cream)
+                        Milker.setActorVar(tag_Milkman, 1)
+                        Milker.addColleague()
+                        Milker.show()
+                        "One of my new colleague approached me ..."
+                        Milker.moveToPersonStand(Player, 50)
+                        Random
+                            Milker(Happy)::"Hey there, nice to meet you, welcome back! My name is <Milker.name>!"
+                            Milker(Happy)::"Hey hi, I'm <Milker.name>, nice to meet you!"
+                            Milker(Happy)::"Hi, welcome to your new family! I'm <Milker.name>!"
+                        EndRandom
+                        "Should I exchange my phone numbers with <Milker.him_or_her>?"
+                        0::"Yes"
+                        1::"No"
+                        
+                        If 0
+                            "We exchanged phone numbers and then <Milker.he_or_she> left to see other colleagues!"
+                            exchangeContact(Milker)
+                            Milker:rapportwithplayer += random(1, 5)
+                        EndIf
+                        Milker.saveAndDelete()
+                        count += 1
+                        Milker.hide()
+                    EndWhile
+                    PPatron.hide()
+                    "Eventually, the reception wound down. I'm glad to have met many of my colleagues. I cannot wait for my first day tomorrow."
+                EndIf
+            EndIf
+        EndIf
+    SceneEnd()

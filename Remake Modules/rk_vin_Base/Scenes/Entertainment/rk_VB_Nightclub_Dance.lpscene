@@ -1475,7 +1475,7 @@ OTHER: !isWithCompanion() && Random(0, 100) > 60
                 ImFucked = true
             ElseIf [DoISmoked <= 0 && DrunkLvl > 12 && Player.isFemale()] || [DoISmoked <= 0 && DrunkLvl > 25 && Player.isMale()]
                 ImFucked = true
-            ElseIf Player:intoxication >= 80
+            ElseIf intoxication >= 80
                 ImFucked = true
             EndIf
             If ImFucked
@@ -1607,7 +1607,11 @@ OTHER: !isWithCompanion() && Random(0, 100) > 60
                         Player(Crying):: "No! Please stop ... I beg you ... Somebody help ..."
                         "My cries for help went unheard in the dark alley and I had no choice but endure it all ..."
                         BadAssFriend(Grin)::"Oh yeah! Nice ass ..."
-                        Filter(Aggressive)
+                        If BadAssFriend.isMale() && !Player.isMale()
+                            Filter(AggressiveFM)
+                        Else
+                            Filter(Aggressive)
+                        EndIf
                         TalkNonConsensual()
                         BadAssFriend.strip()
                         SexNoAffair(BadAssFriend, Player)
@@ -1616,7 +1620,11 @@ OTHER: !isWithCompanion() && Random(0, 100) > 60
                         BadAssFriend(Grin):: "About time ...!"
                         BadAss.strip()
                         Player(Crying):: "No! Please stop ... I beg you ..."
-                        Filter(Aggressive)
+                        If BadAss.isMale() && !Player.isMale()
+                            Filter(AggressiveFM)
+                        Else
+                            Filter(Aggressive)
+                        EndIf
                         TalkNonConsensual()
                         SexNoAffair(BadAss, Player)
                         BadAssFriend(Grin)::"Hey man! Let's fuck <Player.him_or_her> together ..."

@@ -2,7 +2,7 @@ WHAT: all
 WHERE: all
 WHEN: 9 - 17 
 WHO: none
-OTHER: money < 300
+OTHER: money < 0
 
 
     SceneStart()
@@ -20,8 +20,8 @@ OTHER: money < 300
             setBackground(bank)
             Actor = generatePersonTemporary()
             Actor.makeInterested(Player)
-            Actor:attractiontoplayer => Random(30, 50)
-            Actor:perversion => Random(80, 100)
+            Actor:attractiontoplayer => random(30, 50)
+            Actor:perversion => random(80, 100)
             dressFormal()
             Actor.dress()
             Actor.show()
@@ -44,7 +44,7 @@ OTHER: money < 300
                 money => 0
             Else
                 Player(Angry):: "What? No way! I'm not that desperate ..."
-            Endif
-        Endif
+            EndIf
+        EndIf
     SceneEnd()
     timeout(300, debt_desperate)

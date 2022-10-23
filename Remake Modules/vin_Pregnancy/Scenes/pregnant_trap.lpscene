@@ -14,10 +14,11 @@ OTHER: !Player.isFemale() && Player.isInterestedInWomen()
         Actor = generatePersonTemporary()
         While !Actor.isFemale()
             Actor = generatePersonTemporary()
-        Endwhile
-        Actor:age => Random(18, 29)
-        Actor:attractiveness => Random(90, 100)
+        EndWhile
+        Actor:age => random(18, 29)
+        Actor:attractiveness => random(90, 100)
         Actor.randomizeFace()
+        Actor.randomizeRace()
         Actor.randomizeHairs()
         Actor.setMorphValue(Genesis8Female__PBMPregnant, 0.2)
         Actor.dress()
@@ -34,7 +35,10 @@ OTHER: !Player.isFemale() && Player.isInterestedInWomen()
             setBackground(home)
             "Soon enough, we ended up in her bedroom. The fact that I haven't been ambushed and killed in a dark alley so far is quite incredible. This might actually be happening."
             Actor(Flirty):: "Please, fuck me bare, and cum inside!"
-            blockPregnancy()
+            Actor:fertility += 0.5
+            If !Player.isVirgin()
+                blockPregnancy()
+            EndIf
             Player.strip()
             Actor.strip()
             Sex(Player, Actor)
@@ -54,6 +58,7 @@ OTHER: !Player.isFemale() && Player.isInterestedInWomen()
                 Actor.makeInterested(Player)
                 Actor.makePermanent()
                 Actor.setDating()
+                exchangeContact(Actor)
                 Actor.impregnate(Player)
                 "And just like that, <Actor.name> became my girlfriend, mere hours after meeting me."
             Else
@@ -71,6 +76,7 @@ OTHER: !Player.isFemale() && Player.isInterestedInWomen()
                     Actor.makeInterested(Player)
                     Actor.makePermanent()
                     Actor.setDating()
+                    exchangeContact(Actor)
                     "And just like that, <Actor.name> became my girlfriend, mere hours after meeting me."
                     "There's something else to decide though: whether to accept this child as mine or not."
                     0:: "Accept the baby as mine"
@@ -84,12 +90,12 @@ OTHER: !Player.isFemale() && Player.isInterestedInWomen()
                     Else
                         "I'm happy to be in a relationship with her and give the child some kind of a steady home, but the child shall never be my responsibility legally."
                         Actor.impregnate()
-                    Endif
-                Endif
-            Endif
+                    EndIf
+                EndIf
+            EndIf
         Else
             "Life isn't this easy ... this must be some sort of trap. I don't want to end up mugged or murdered ..."
             Player(Sad)::"Sorry, I don't fuck with strangers..." // Edit by Raddeck
-        Endif
+        EndIf
     SceneEnd() // Improved by Raddeck
     timeout(500, pregnant_trap)

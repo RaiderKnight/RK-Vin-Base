@@ -1,0 +1,246 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Player.dressUniform(police)
+        badluck = random(1, 3)
+        Job_police = rk_VB_Job_police.getGlobal()
+        PoliceXP = Player.getActorVar(rk_VB_PoliceXP)
+        nogood = PoliceXP - badluck
+        PSalaire = Player.getActorVar(rk_VB_PoliceSalary)
+        PSalaireL = PSalaire.convertToLocalCurrency()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        gfaitmajobcop = Player.getActorVar(rk_VB_gfaitmajobcop)
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        PremierJ = rk_VB_Job_PolPremierJ.getGlobal()
+        PPID = rk_VB_PPatronID.getGlobal()
+        encoreTemp = Player.getActorVar(rk_VB_encoreTemp)
+        UnMois = PremierJ + 28
+        PPatron = getSpecific(PPID)
+        PPatron.dressUniform(police)
+        PPatron.hide()
+        Pjour = age*365
+        Pjour = Pjour.round()
+        UnJ = PremierJ + 1
+        JourTranq = false
+        If Pjour >= UnMois 
+            If gfaitmajobcop >= 10
+                money += PSalaire
+                rk_VB_Job_PolPremierJ.setGlobal(Pjour)
+                "Cool, it's payday! A nice extra <PSalaireL> in my pocket!"
+                Player.setActorVar(rk_VB_gfaitmajobcop, 0)
+            Else
+                If gfaitmajobcop <= 9
+                    "The boss has decided not to pay you because you have not worked enough in the last 28 days. You must work at least 10 days in a month."
+                Else
+                    "The boss has decided not to pay you because you have not worked in the last 28 days."
+                EndIf
+                mood -= random(5, 10)
+                Player.setActorVar(rk_VB_PoliceXP, nogood)
+            EndIf
+        EndIf
+        If Pjour >= UnJ
+            Player.setActorVar(rk_VB_encoreTemp, 0)
+        EndIf
+        PremierJ = rk_VB_Job_PolPremierJ.getGlobal()
+        If Job_police == 0
+            "You have to apply for a police officer position before you can work as a police officer!"
+        ElseIf isModEnabled(rk_vin_Base)
+            "What should I do?"
+            0::"Working"
+            1:: WHEN >= 7 || WHEN <= 20 "Some training"
+            
+            If 0
+                If random(0, 100) > 70
+                    "Well, today the boss demanded that I stay at the station to do some administrative work..."
+                    followUp(rk_VB_CopAdminWorks)
+                Else
+                    "Well, today my job is to patrol the streets of the city..."
+                    Fait = false
+                    CopCall = random(1, 10)
+                    CopCall = CopCall.round()
+                    Iwork = true
+                    While Iwork
+                        encoreTemp = Player.getActorVar(rk_VB_encoreTemp)
+                        If encoreTemp == 3
+                            Fait = true
+                        EndIf
+                        takeHim = false
+                        If CopCall == 1 || !Fait
+                            "Attention, we have a 10-91 - Need prisoner escort - someone free, please respond!"
+                            "Do I take this call or do I wait for another call?"
+                            0::"Take the call"
+                            1::"Wait"
+                            
+                            If 0
+                                secondScreen(PPatron)
+                                PPatron.show()
+                                Player(Serene)::"Hey boss, I'm taking the prisoner, where should I take him?"
+                                PPatron(Serene)::"Good! Take him to any prison!"
+                                Player(Serene)::"10-4"
+                                "Well, let's go get this prisoner..."
+                                PPatron.hide()
+                                secondScreen()
+                                takeHim = true
+                            EndIf
+                            Player.modifyActorVar(rk_VB_encoreTemp, 1)
+                            If takeHim
+                                followUp(rk_VB_Jobcop_PickUpPrisoner)
+                            EndIf
+                        ElseIf CopCall == 2
+                            JourTranq = true
+                            Iwork = false
+                        ElseIf CopCall == 3 || !Fait
+                            "Attention, we have a 10-31 - Crime in Progress in a shop - someone free, please respond!"
+                            "Do I take this call or do I wait for another call?"
+                            0::"Take the call"
+                            1::"Wait"
+                            
+                            If 0
+                                secondScreen(PPatron)
+                                PPatron.show()
+                                Player(Serene)::"Hey boss, I'll take this call, where should I go?"
+                                PPatron(Serene)::"Good! There is a robbery in progress in a shop nearby, the assailant is alone and armed, please be careful!"
+                                Player(Serene)::"10-4, send coordinates!"
+                                "Well, let's go see if I can stop this mugger..."
+                                PPatron.hide()
+                                secondScreen()
+                                takeHim = true
+                            EndIf
+                            Player.modifyActorVar(rk_VB_encoreTemp, 1.5)
+                            If takeHim
+                                followUp(rk_VB_Jobcop_ShopRob)
+                            EndIf
+                        ElseIf CopCall == 4 || !Fait
+                            "Attention, we have a 10-10 - Fight in Progress - someone free, please respond!"
+                            "Do I take this call or do I wait for another call?"
+                            0::"Take the call"
+                            1::"Wait"
+                            
+                            If 0
+                                secondScreen(PPatron)
+                                PPatron.show()
+                                Player(Serene)::"Hey boss, I'll take this call, where should I go?"
+                                PPatron(Serene)::"Good! There is a fight in progress in a park nearby, please be careful!"
+                                Player(Serene)::"10-4, send coordinates!"
+                                "Well, let's go see if I can stop this fight..."
+                                PPatron.hide()
+                                secondScreen()
+                                takeHim = true
+                            EndIf
+                            Player.modifyActorVar(rk_VB_encoreTemp, 1.5)
+                            If takeHim
+                                followUp(rk_VB_Jobcop_FightProgress)
+                            EndIf
+                        ElseIf CopCall == 5 || !Fait
+                            "Attention, we have a 10-16 - Domestic Problem - someone free, please respond!"
+                            "Do I take this call or do I wait for another call?"
+                            0::"Take the call"
+                            1::"Wait"
+                            
+                            If 0
+                                secondScreen(PPatron)
+                                PPatron.show()
+                                Player(Serene)::"Hey boss, I'll take this call, where should I go?"
+                                PPatron(Serene)::"Good! There is a domestic issue in progress at a nearby residence, please be careful!"
+                                Player(Serene)::"10-4, send coordinates!"
+                                "Well, let's go see what I can do..."
+                                PPatron.hide()
+                                secondScreen()
+                                takeHim = true
+                            EndIf
+                            Player.modifyActorVar(rk_VB_encoreTemp, 1.5)
+                            If takeHim
+                                followUp(rk_VB_Jobcop_DomesticProblem)
+                            EndIf
+                        ElseIf CopCall == 6
+                            JourTranq = true
+                            Iwork = false
+                        ElseIf CopCall == 7 || !Fait
+                            "Attention, we have a 10-56 - Intoxicated Pedestrian - someone free, please respond!"
+                            "Do I take this call or do I wait for another call?"
+                            0::"Take the call"
+                            1::"Wait"
+                            
+                            If 0
+                                secondScreen(PPatron)
+                                PPatron.show()
+                                Player(Serene)::"Hey boss, I'll take this call, where should I go?"
+                                PPatron(Serene)::"Good! There is an intoxicated pedestrian walking down the street near your location, please be careful!"
+                                Player(Serene)::"10-4, send coordinates!"
+                                "Well, let's go see what I can do..."
+                                PPatron.hide()
+                                secondScreen()
+                                takeHim = true
+                            EndIf
+                            Player.modifyActorVar(rk_VB_encoreTemp, 1)
+                            If takeHim
+                                followUp(rk_VB_Jobcop_IntoxPedestrian)
+                            EndIf
+                        ElseIf CopCall == 8 || !Fait
+                            "Attention, we have a 10-15 - Civil Disturbance - someone free, please respond!"
+                            "Do I take this call or do I wait for another call?"
+                            0::"Take the call"
+                            1::"Wait"
+                            
+                            If 0
+                                secondScreen(PPatron)
+                                PPatron.show()
+                                Player(Serene)::"Hey boss, I'll take this call, where should I go?"
+                                PPatron(Serene)::"Good! Actually, nothing serious, just a quarrel between two neighbors, go ahead and do a check!"
+                                Player(Serene)::"10-4, send coordinates!"
+                                "Well, let's go see what I can do..."
+                                PPatron.hide()
+                                secondScreen()
+                                takeHim = true
+                            EndIf
+                            Player.modifyActorVar(rk_VB_encoreTemp, 1)
+                            If takeHim
+                                followUp(rk_VB_Jobcop_CivilDisturbNeigh)
+                            EndIf
+                        ElseIf CopCall == 9 || !Fait
+                            "Attention, we have a 10-90 - Possible Bank Robbery in Progress - someone free, please respond!"
+                            "Do I take this call or do I wait for another call?"
+                            0::"Take the call"
+                            1::"Wait"
+                            
+                            If 0
+                                secondScreen(PPatron)
+                                PPatron.show()
+                                Player(Serene)::"Hey boss, I'll take this call, where should I go?"
+                                PPatron(Serene)::"Good! There are already several police officers heading to the scene! They will need your help, that's clear! We don't have any information on the number of assailants in the bank, so be careful!"
+                                Player(Serene)::"10-4, send coordinates!"
+                                "Well, let's see what I can do to help my colleagues..."
+                                PPatron.hide()
+                                secondScreen()
+                                takeHim = true
+                            EndIf
+                            Player.modifyActorVar(rk_VB_encoreTemp, 3)
+                            If takeHim
+                                followUp(rk_VB_Jobcop_BankRobbery)
+                            EndIf
+                        ElseIf CopCall == 10
+                            JourTranq = true
+                            Iwork = false
+                        EndIf
+                    EndWhile
+                    If JourTranq
+                        "I finally finished my rounds, nothing serious happen, I only give few tickets and helps some people... It was a nice round!"
+                        mood += random(0, 3)
+                        energy -= random(10, 15)
+                        Player.modifyActorVar(rk_VB_gfaitmajobcop, 1)
+                        passTime(1, 2)
+                    EndIf
+                EndIf
+                Player.modifyActorVar(rk_VB_PoliceXP, 1)
+                Player.setActorVar(rk_VB_encoreTemp, 0)
+            Else
+                followUp(rk_VB_TrainAsACop)
+            EndIf
+        EndIf
+    SceneEnd()

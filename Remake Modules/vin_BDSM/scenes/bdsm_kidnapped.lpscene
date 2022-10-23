@@ -2,7 +2,7 @@ WHAT: sleep, sleep_hotel, nap, nap_hotel
 WHERE: all
 WHEN: 0-24
 WHO: none
-OTHER: !Player.isMale() && isModEnabled(vin_NonConsensual)
+OTHER: !Player.isMale() && isModEnabled(vin_NonConsensual) && random(0, 100)*random(0, 1) > energy - intoxication
 
     SceneStart()
         DGetFuck = false
@@ -163,7 +163,11 @@ OTHER: !Player.isMale() && isModEnabled(vin_NonConsensual)
                 "To make matters worse, the burglar decides to fuck my dog too."
                 Player(Crying):: "No, please stop ... not my dog too!"
                 "I am too weak to move, I can't do anything for my dog..."
-                Filter(Aggressive)
+                If Actor.isMale() && !Actor2.isMale()
+                    Filter(AggressiveFM)
+                Else
+                    Filter(Aggressive)
+                EndIf
                 TalkNonConsensual()
                 SexNoAffair(Actor, Actor2)
             EndIf

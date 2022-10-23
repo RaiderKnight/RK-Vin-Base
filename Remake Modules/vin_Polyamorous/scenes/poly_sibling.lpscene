@@ -25,7 +25,7 @@ OTHER:
         Actor3 = Actor.generatePersonTemporaryMatchRace()
         While !Actor.isSameGender(Actor3)
             Actor3 = Actor.generatePersonTemporaryMatchRace()
-        endwhile
+        EndWhile
         Actor3:age => Actor:age + random(2, 6)
         Actor3.randomizeFace()
         Actor3.randomizeHairs()
@@ -120,28 +120,30 @@ OTHER:
             EndIf
             Actor3:rapportwithplayer -= 100
         EndIf
-        If Douxdep
-            Actor3(Sarcastic)::"Hey genius, do I look that stupid? You really think that according to your theory, I'm going to say, oh yeah, right, you're right!"
-            Actor3(Sarcastic)::"No fucking way I accept that!"
-            Actor3(Sarcastic)::"Suzie, you come where I get mad!"
-            Actor(Annoyed)::"Calm down, calm down! I'm coming!"
-            Player(Surprised)::"What are you doing??"
-            Actor(Annoyed)::"I'm going with <Actor3.him_or_her>, so <Actor3.he_or_she> won't destroy anything and won't hit anyone,... it's just to shut <Actor3.him_or_her> up..."
-            Player(Annoyed)::"Ok, fine!"
-        EndIf
-        If PasDou
-            If PasDou1
-                Actor3(Sarcastic)::"Hey, big, you don't really scare me! If you think I'm gonna fucked my <Actor.brother_or_sister> with you, you just earned yourself a couple of punches in the face!"
-            ElseIf PasDou2
-                Actor3(Disgusted):: "What the fuck? You degenerate! You're nothing but abusing my poor little <Actor.brother_or_sister>."
-                Actor3(Disgusted):: "<Actor.name>, I'm so disappointed in you. You've completely lost your mind!"
-                Actor3(Disgusted)::"You, you just earned yourself a couple of punches in the face! ..."
-            Else
-                Actor3(Sarcastic)::"Hey, big, you don't really scare me! If you think you're gonna fucked my <Actor.brother_or_sister> in front of me, you just earned yourself a couple of punches in the face!"
+        If isModEnabled(rk_vin_Base)
+            If Douxdep
+                Actor3(Sarcastic)::"Hey genius, do I look that stupid? You really think that according to your theory, I'm going to say, oh yeah, right, you're right!"
+                Actor3(Sarcastic)::"No fucking way I accept that!"
+                Actor3(Sarcastic)::"Suzie, you come where I get mad!"
+                Actor(Annoyed)::"Calm down, calm down! I'm coming!"
+                Player(Surprised)::"What are you doing??"
+                Actor(Annoyed)::"I'm going with <Actor3.him_or_her>, so <Actor3.he_or_she> won't destroy anything and won't hit anyone,... it's just to shut <Actor3.him_or_her> up..."
+                Player(Annoyed)::"Ok, fine!"
             EndIf
-            rk_VB_polySibling_npdID.setGlobal(A3ID)
-            rk_VB_polySibling_Fight.setGlobal(1)
-            followUp(rk_MI_NPC_fight)
+            If PasDou
+                If PasDou1
+                    Actor3(Sarcastic)::"Hey, big, you don't really scare me! If you think I'm gonna fucked my <Actor.brother_or_sister> with you, you just earned yourself a couple of punches in the face!"
+                ElseIf PasDou2
+                    Actor3(Disgusted):: "What the fuck? You degenerate! You're nothing but abusing my poor little <Actor.brother_or_sister>."
+                    Actor3(Disgusted):: "<Actor.name>, I'm so disappointed in you. You've completely lost your mind!"
+                    Actor3(Disgusted)::"You, you just earned yourself a couple of punches in the face! ..."
+                Else
+                    Actor3(Sarcastic)::"Hey, big, you don't really scare me! If you think you're gonna fucked my <Actor.brother_or_sister> in front of me, you just earned yourself a couple of punches in the face!"
+                EndIf
+                rk_VB_polySibling_npdID.setGlobal(A3ID)
+                rk_VB_polySibling_Fight.setGlobal(1)
+                followUp(rk_MI_NPC_fight)
+            EndIf
         EndIf
         Actor3.hide()
     SceneEnd() // Improved by Raddeck

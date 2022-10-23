@@ -11,6 +11,7 @@ OTHER: isModEnabled(vin_Pregnancy)
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         If Actor2.isValid()
+            Actor2.dress()
             Actor2.show()
             Actor2(Curious)::"Hey, baby! Would you caress my belly? I want you to feel our baby!"
             "What I should answer?"
@@ -18,9 +19,9 @@ OTHER: isModEnabled(vin_Pregnancy)
             1::"I'm busy!"
             
             If 0
-                Actor2:attractiontoplayer += Random(0, 1)
-                Actor2:rapportwithplayer += Random(0, 1)
-                Actor2:mood += Random(0, 1)
+                Actor2:attractiontoplayer += random(0, 1)
+                Actor2:rapportwithplayer += random(0, 1)
+                Actor2:mood += random(0, 1)
                 animatePair(Player, Actor2, Hugging)
                 If perversion > 50
                     "While I'm touching her, doest it turn me so on that I want want to..."
@@ -50,8 +51,8 @@ OTHER: isModEnabled(vin_Pregnancy)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
-                            Actor2:attractiontoplayer += Random(0, 1)
-                            Actor2:rapportwithplayer += Random(0, 1)
+                            Actor2:attractiontoplayer += random(0, 1)
+                            Actor2:rapportwithplayer += random(0, 1)
                         Else
                             Actor2(Annoyed)::"Not now!"
                         EndIf
@@ -74,8 +75,8 @@ OTHER: isModEnabled(vin_Pregnancy)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
-                            Actor2:attractiontoplayer += Random(0, 1)
-                            Actor2:rapportwithplayer += Random(0, 1)
+                            Actor2:attractiontoplayer += random(0, 1)
+                            Actor2:rapportwithplayer += random(0, 1)
                         Else
                             Actor2(Annoyed)::"Not now!"
                         EndIf
@@ -99,8 +100,8 @@ OTHER: isModEnabled(vin_Pregnancy)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
-                            Actor2:attractiontoplayer += Random(0, 1)
-                            Actor2:rapportwithplayer += Random(0, 1)
+                            Actor2:attractiontoplayer += random(0, 1)
+                            Actor2:rapportwithplayer += random(0, 1)
                         Else
                             Actor2(Annoyed)::"Not now!"
                         EndIf
@@ -122,8 +123,8 @@ OTHER: isModEnabled(vin_Pregnancy)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
-                            Actor2:attractiontoplayer += Random(0, 1)
-                            Actor2:rapportwithplayer += Random(0, 1)
+                            Actor2:attractiontoplayer += random(0, 1)
+                            Actor2:rapportwithplayer += random(0, 1)
                         Else
                             Actor2(Annoyed)::"Not now!"
                         EndIf
@@ -131,18 +132,20 @@ OTHER: isModEnabled(vin_Pregnancy)
                 EndIf
             Else
                 Player(Sad)::"Sorry babe! I'm really busy right now!"
-                Actor2:rapportwithplayer += Random(-1, 1)
+                Actor2:rapportwithplayer += random(-1, 1)
             EndIf
         Else
+            Actor.dress()
+            Actor.show()
             Actor(Curious)::"Hey, <Player.name>! Would you want to touch my belly? I want you to feel my baby!"
             "What I should answer?"
             0::"Sure!"
             1::"I'm busy!"
 
             If 0
-                Actor:attractiontoplayer += Random(0, 1)
-                Actor:rapportwithplayer += Random(0, 1)
-                Actor:mood += Random(0, 1)
+                Actor:attractiontoplayer += random(0, 1)
+                Actor:rapportwithplayer += random(0, 1)
+                Actor:mood += random(0, 1)
                 animatePair(Player, Actor, Hugging)
                 If perversion > 50
                     "While I'm touching her, doest it turn me so on that I want want to..."
@@ -172,14 +175,14 @@ OTHER: isModEnabled(vin_Pregnancy)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
-                            Actor:attractiontoplayer += Random(0, 1)
-                            Actor:rapportwithplayer += Random(0, 1)
+                            Actor:attractiontoplayer += random(0, 1)
+                            Actor:rapportwithplayer += random(0, 1)
                         ElseIf Actor.isInterestedIn(Player) && Actor:arousal > 25
                             Actor(Happy)::"You're funny, you could try!"
                             animatePair(Player, Actor, LickPussy)
                             Actor(Annoyed)::"What are you doing? Not here!"
-                            Actor:attractiontoplayer += Random(0, 1)
-                            Actor:rapportwithplayer += Random(0, 1)
+                            Actor:attractiontoplayer += random(0, 1)
+                            Actor:rapportwithplayer += random(0, 1)
                             Actor:arousal += 1
                             If !Actor.isContactExchanged()
                                 "<Actor.namee> suggested that we exchange contacts. Shall I?"
@@ -198,8 +201,8 @@ OTHER: isModEnabled(vin_Pregnancy)
                             Actor(Angry)::"Hey, you fucking pervert! WTF are you doing?"
                             If !isAtHome()
                                 Actor(Angry)::"Somebody call the police, <Player.he_or_she>'s stalking me!"
-                                Actor:attractiontoplayer += Random(0, 1)
-                                Actor:rapportwithplayer += Random(0, 1)
+                                Actor:attractiontoplayer += random(0, 1)
+                                Actor:rapportwithplayer += random(0, 1)
                                 followUp(rk_VB_SexAssault_Arrest)
                             Else
                                 Actor(Angry)::"That's not cool! I'm leaving!"
@@ -225,13 +228,13 @@ OTHER: isModEnabled(vin_Pregnancy)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
-                            Actor:attractiontoplayer += Random(0, 1)
-                            Actor:rapportwithplayer += Random(0, 1)
+                            Actor:attractiontoplayer += random(0, 1)
+                            Actor:rapportwithplayer += random(0, 1)
                         ElseIf Actor.isInterestedIn(Player) && Actor:arousal > 25
                             Actor(Annoyed)::"What are you doing? Not here!"
                             Actor(Annoyed)::"Sorry but I have to go!"
-                            Actor:attractiontoplayer += Random(0, 1)
-                            Actor:rapportwithplayer += Random(0, 1)
+                            Actor:attractiontoplayer += random(0, 1)
+                            Actor:rapportwithplayer += random(0, 1)
                             Actor:arousal += 1
                             If !Actor.isContactExchanged()
                                 "<Actor.namee> suggested that we exchange contacts. Shall I?"
@@ -250,8 +253,8 @@ OTHER: isModEnabled(vin_Pregnancy)
                             Actor(Angry)::"Hey, you fucking pervert! WTF are you doing?"
                             If !isAtHome()
                                 Actor(Angry)::"Somebody call the police, <Player.he_or_she> tried to touch my vagina!"
-                                Actor:attractiontoplayer += Random(0, 1)
-                                Actor:rapportwithplayer += Random(0, 1)
+                                Actor:attractiontoplayer += random(0, 1)
+                                Actor:rapportwithplayer += random(0, 1)
                                 followUp(rk_VB_SexAssault_Arrest)
                             Else
                                 Actor(Angry)::"That's not cool! I'm leaving!"
@@ -277,13 +280,13 @@ OTHER: isModEnabled(vin_Pregnancy)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
-                            Actor:attractiontoplayer += Random(0, 1)
-                            Actor:rapportwithplayer += Random(0, 1)
+                            Actor:attractiontoplayer += random(0, 1)
+                            Actor:rapportwithplayer += random(0, 1)
                         ElseIf Actor.isInterestedIn(Player) && Actor:arousal > 25
                             Actor(Annoyed)::"What are you doing? Not here!"
                             Actor(Annoyed)::"Sorry but I have to go!"
-                            Actor:attractiontoplayer += Random(0, 1)
-                            Actor:rapportwithplayer += Random(0, 1)
+                            Actor:attractiontoplayer += random(0, 1)
+                            Actor:rapportwithplayer += random(0, 1)
                             Actor:arousal += 1
                             If !Actor.isContactExchanged()
                                 "<Actor.namee> suggested that we exchange contacts. Shall I?"
@@ -302,8 +305,8 @@ OTHER: isModEnabled(vin_Pregnancy)
                             Actor(Angry)::"Hey, you fucking pervert! WTF are you doing?"
                             If !isAtHome()
                                 Actor(Angry)::"Somebody call the police, <Player.he_or_she> touched my tits!"
-                                Actor:attractiontoplayer += Random(0, 1)
-                                Actor:rapportwithplayer += Random(0, 1)
+                                Actor:attractiontoplayer += random(0, 1)
+                                Actor:rapportwithplayer += random(0, 1)
                                 followUp(rk_VB_SexAssault_Arrest)
                             Else
                                 Actor(Angry)::"That's not cool! I'm leaving!"
@@ -328,13 +331,13 @@ OTHER: isModEnabled(vin_Pregnancy)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
-                            Actor:attractiontoplayer += Random(0, 1)
-                            Actor:rapportwithplayer += Random(0, 1)
+                            Actor:attractiontoplayer += random(0, 1)
+                            Actor:rapportwithplayer += random(0, 1)
                         ElseIf Actor.isInterestedIn(Player) && Actor:arousal > 25
                             Actor(Annoyed)::"What are you doing? Not here!"
                             Actor(Annoyed)::"Sorry but I have to go!"
-                            Actor:attractiontoplayer += Random(0, 1)
-                            Actor:rapportwithplayer += Random(0, 1)
+                            Actor:attractiontoplayer += random(0, 1)
+                            Actor:rapportwithplayer += random(0, 1)
                             Actor:arousal += 1
                             If !Actor.isContactExchanged()
                                 "<Actor.namee> suggested that we exchange contacts. Shall I?"
@@ -353,8 +356,8 @@ OTHER: isModEnabled(vin_Pregnancy)
                             Actor(Angry)::"Hey, you fucking pervert! WTF are you doing?"
                             If !isAtHome()
                                 Actor(Angry)::"Somebody call the police, <Player.he_or_she>'s trying to rape me!"
-                                Actor:attractiontoplayer += Random(0, 1)
-                                Actor:rapportwithplayer += Random(0, 1)
+                                Actor:attractiontoplayer += random(0, 1)
+                                Actor:rapportwithplayer += random(0, 1)
                                 followUp(rk_VB_SexAssault_Arrest)
                             Else
                                 Actor(Angry)::"That's not cool! I'm leaving!"
@@ -365,7 +368,7 @@ OTHER: isModEnabled(vin_Pregnancy)
                 EndIf
             Else
                 Player(Sad)::"Sorry <Actor.name>! I'm really busy right now!"
-                Actor:rapportwithplayer += Random(-1, 1)
+                Actor:rapportwithplayer += random(-1, 1)
             EndIf
         EndIf
     SceneEnd()

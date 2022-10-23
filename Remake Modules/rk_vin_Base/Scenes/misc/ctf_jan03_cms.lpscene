@@ -10,7 +10,6 @@ OTHER:
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-    
         Actor2 = Actor.getRelatedPerson(JohnSexWorker)
         If Actor2.isValid()
             Actor.dress()
@@ -26,11 +25,11 @@ OTHER:
             If 3
                 timeout(1000, ctf_jan03_cms)
                 "It was a mistake hiring escorts for my <Actor.relationship> anyway. Let's not do this again anytime soon."
-            Elseif 1
+            ElseIf 1
                 removeNpcRelationship(Actor, Actor2)
                 "My <Actor.relationship> was getting too attached emotionally to this escort, which will not be a good thing for the long term. Might as well cut it off now."
                 followUp(ctf_jan03_cms)
-            Elseif 0    
+            ElseIf 0    
                 fuckParent = Actor2.getActorVar(fuckParent)
                 fuckParent += 1
                 money -= 100
@@ -44,9 +43,9 @@ OTHER:
                     Actor2.dress()
                     Actor2.show()
                     Sex(Actor, Actor2)
-                Endif
+                EndIf
                 
-                If fuckParent > Random(3, 10)
+                If fuckParent > random(3, 10)
                     setBackgroundCustom(livingroom)
                     "I came home one day to find both my <Actor.relationship> and <Actor2.name> the escort there. It was quite shocking at first. Have they been seeing each other outside of the dates I arrange myself?"
                     "And my shock didn't end there, as my <Actor.relationship> now introduced <Actor2.name> as <Actor.his_or_her> new <Actor2.boyfriend_or_girlfriend> ..."
@@ -57,8 +56,8 @@ OTHER:
                     "Something telling me that my <Actor.relationship> being in a public relationship with a former escort isn't the best idea in the world, but I'm partly responsible for this."
                     "In a way though, I'm happy for my <Actor.relationship>. At least, <Actor.he_or_she> isn't lonely anymore. And who knows, this might work ... Maybe this is a new beginning for both of them."
                     "Of course, I'm not thrilled about the prospect of one day calling an escort I used to hire my step-<Actor2.mom_or_dad> though ..."
-                Endif
-            Endif
+                EndIf
+            EndIf
         Else
             Actor3 = getRelative(Parent, StepParent)
             If Actor3.isValid()
@@ -100,12 +99,12 @@ OTHER:
                             Actor2.dress()
                             Actor2.show()
                             Sex(Actor, Actor2)
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                 Else
-                    //timeout(1000, ctf_jan03_cms)
-                Endif
-            Endif
-        Endif
+                    timeout(1000, ctf_jan03_cms)
+                EndIf
+            EndIf
+        EndIf
     SceneEnd() // Scene improved by Raddeck
     //timeout(100, ctf_jan03_cms)

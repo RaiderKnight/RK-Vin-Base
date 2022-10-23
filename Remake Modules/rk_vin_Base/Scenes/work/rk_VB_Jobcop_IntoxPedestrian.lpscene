@@ -1,0 +1,125 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        If isModEnabled(rk_vin_Base)
+            gfaitmajobcop = Player.getActorVar(rk_VB_gfaitmajobcop)
+            Job_police = rk_VB_Job_police.getGlobal()
+            PoliceXP = Player.getActorVar(rk_VB_PoliceXP)
+            Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+            UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+            coordon = false
+            AvanceTu = 65 - PoliceXP
+            If AvanceTu < 0
+                AvanceTu = 0
+            EndIf
+            If random(0, 100) > AvanceTu
+                Wasted = generatePersonTemporary()
+                Wasted.randomizeFace()
+                Wasted.randomizeRace()
+                Wasted.randomizeHairs()
+                Wasted:arousal => random(35, 80)
+                Wasted:perversion => random(50, 90)
+                Wasted:intoxication => random(75, 90)
+                Wasted.dressExcept(Bottom, Bottom_Under)
+                Wasted.show()
+                setBackground3D(Modules/rk_vin_Base/World/gl_street1.lpworld)
+                "I arrive at the place that the supervisor asked me to go and I immediately notice the individual completely drunk or drugged, <Wasted.he_or_she> can hardly stand and <Wasted.he_or_she> is half naked!"
+                "So, I decide to approach <Wasted.him_or_her> because <Wasted.he_or_she> disturbs the people that <Wasted.he_or_she> crosses!"
+                Player.moveToPersonStand(Wasted, 50)
+                Player(Annoyed)::"Excuse me <Wasted.sir_or_madam>! Please, put your clothes back on!"
+                Wasted(Flirty)::"Why, you don't like what you see!"
+                Player(Annoyed)::"Ok <Wasted.sir_or_madam>! But you'll have to follow me, I think a good nap at the police station will do you good!"
+                Wasted(Flirty)::"Why the police station, there is a hotel nearby!"
+                Player(Annoyed)::"Come on, follow me!"
+                Wasted(Flirty)::"I'm following you baby!!"
+                "The <Wasted.guy_or_girl> is so drunk that <Wasted.he_or_she> doesn't realize <Wasted.he_or_she>'s flirting with a police."
+                "Do I take advantage of <Wasted.his_or_her> drunkenness to:"
+                0::"Ask <Wasted.him_or_her> for oral job"
+                1::"Fuck <Wasted.him_or_her>"
+                99::"Do nothing"
+                
+                If 0
+                    perversion += 1
+                    Player(Annoyed)::"Just to inform you that I am a police officer and not just anyone! I'm here to arrest you for drunkenness!"
+                    Player(Sad)::"Ok, sorry officer!"
+                    Player(Flirty)::"I'll give you two choices, either follow me to the station or <Player.suck_or_lick> my <Player.dick_or_pussy> and I'll let you go!"
+                    If Wasted.isInterestedIn(Player)
+                        Sex(Wasted, Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Player.dressUniform(police)
+                        Wasted.dress()
+                        coordon = true
+                    Else
+                        Wasted(Evil)::"Fuuck yoouu! I don't like bacon! I will never fuck with a cop! ..."
+                        Player(Serene)::"As you wish! Then you're under arrest for public nudity and obstructing a police officer!"
+                        Wasted(Evil)::"Fucking corrupt cop!"
+                        "I decided to simply take <Wasted.him_or_her> to the police station for the night, tomorrow <Wasted.he_or_she> will probably be released with a nice little fine!"
+                        Player.modifyActorVar(rk_VB_PoliceXP, 0.5)
+                        jobperformance += 0.5
+                        jobexperience += 0.5
+                    EndIf
+                ElseIf 1 
+                    perversion += 1
+                    Player(Flirty)::"Um, I'm just telling you this, but if you want instead of taking you to the station, we could go to a hotel like you suggested 10 minutes ago!"
+                    If Wasted.isInterestedIn(Player)
+                        Wasted(Flirty)::"Oh yes, I told you that, Huh! okay we'll go! You are so handsome anyway!"
+                        setBackground(hotel)
+                        "Once we get to the hotel, I take <Wasted.him_or_her> to the room, and once I get in, I don't waste any time getting <Wasted.him_or_her> undressed and start fucking!"
+                        Player.strip()
+                        Wasted.strip()
+                        Sex(Player, Wasted)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Player.dressUniform(police)
+                        Wasted.dress()
+                        coordon = true
+                    Else
+                        Wasted(Flirty)::"I said that as a joke! I'm not interested in you at all!"
+                        Player(Serene)::"As you wish!"
+                        "I decided to simply take <Wasted.him_or_her> to the station for the night, tomorrow <Wasted.he_or_she> will probably be released with a nice little fine!"
+                        Player.modifyActorVar(rk_VB_PoliceXP, 0.5)
+                        jobperformance += 0.5
+                        jobexperience += 0.5
+                    EndIf
+                Else
+                    "I decided to simply take <Wasted.him_or_her> to the station for the night, tomorrow <Wasted.he_or_she> will probably be released with a nice little fine!"
+                    karma += 0.5
+                    Player.modifyActorVar(rk_VB_PoliceXP, 0.5)
+                    jobperformance += 0.5
+                    jobexperience += 0.5
+                EndIf
+            Else
+                "It seems that the individual has disappeared or has finally entered <Wasted.his_or_her> house! It was easy!"
+                "So I decide to inform my superior that everything is now in order!"
+                Player.modifyActorVar(rk_VB_PoliceXP, 0.25)
+                jobperformance += 0.25
+                jobexperience += 0.25
+            EndIf
+        EndIf
+        If coordon
+            If !Wasted.isContactExchanged()
+                "After having sex with <Wasted.him_or_her>, I decided to let <Wasted.him_or_her> go but before <Wasted.he_or_she> left, should I ask for <Wasted.him_or_her> phone number?"
+                0::"Yes"
+                1::"No"
+                
+                If 0
+                    "<Wasted.He_or_She> immediately accepted my offer and we exchanged phone numbers"
+                    Wasted.makePermanent()
+                    exchangeContact(Wasted)
+                EndIf
+            EndIf
+        EndIf
+        energy -= random(5, 15)
+        Wasted.hide()
+        passTime(1, 2)
+        Player.modifyActorVar(rk_VB_gfaitmajobcop, 1)
+    SceneEnd()

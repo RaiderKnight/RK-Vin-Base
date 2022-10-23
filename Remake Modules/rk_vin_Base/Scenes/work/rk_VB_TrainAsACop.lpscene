@@ -1,0 +1,64 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Job_police = rk_VB_Job_police.getGlobal()
+        PoliceXP = Player.getActorVar(rk_VB_PoliceXP)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        SXP = Player.getActorVar(rk_VB_PoliceSXP)
+        LPS = Player.getActorVar(rk_VB_PoliceLPS)
+        Player.hide()
+        If isModEnabled(rk_vin_Base)
+            fini = true
+            jai = false
+            assez = false
+            entrainer = false
+            While fini
+                Competence = random(2, 4)
+                "What skill I should train today?"
+                0::!jai::"My lock picking skills"
+                1::!assez::"My shooting skills"
+                2::!entrainer::"My sneaking skills"
+                99::"<txtlps>"
+                
+                If 0
+                    "I decided to improve my performance in lock picking for a few hours..."
+                    Player:glLockPickingSkill += Competence
+                    Player.modifyActorVar(rk_VB_PoliceLPS, Competence)
+                    jai = true
+                ElseIf 1
+                    "I decided to improve my performance in shooting for a few hours..."
+                    Player:glGunShootingSkill += Competence
+                    Player.modifyActorVar(rk_VB_PoliceSXP, Competence)
+                    assez = true
+                ElseIf 2
+                    "I decided to improve my performance in sneaking for a few hours..."
+                    sneak += Competence
+                    entrainer = true
+                Else
+                    fini = false
+                EndIf
+                If energy <= 10 || Hunger <= 10
+                    "Ok, I think that's enough for today, I have no more strength and I'm hungry!"
+                    fini = false
+                EndIf
+                If jai || assez || entrainer
+                    txtlps = "Done training"
+                    passTime(1, 2)
+                    energy -= 10
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -10)
+                    EndIf
+                Else
+                    txtlps = "I changed my mind"
+                EndIf
+            EndWhile
+        EndIf
+        Player.show()
+    SceneEnd()

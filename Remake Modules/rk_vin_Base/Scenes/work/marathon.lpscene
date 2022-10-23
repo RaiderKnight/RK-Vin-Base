@@ -2,18 +2,18 @@ WHAT: all
 WHERE: work
 WHEN: 7 - 11
 WHO: Colleague1 = getSpecific(Colleague); Colleague2 = getSpecific(Colleague); If Colleague1:fitness > 70 && Colleague2:fitness > 70
-OTHER: fitness > 70 && Random(0, 100) < 0.01*fitness*ActionDuration
+OTHER: fitness > 70 && random(0, 100) < 0.01*fitness*ActionDuration
 
 
     SceneStart()
-
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         Colleague1.dress()
         Colleague2.dress()
         Colleague1.show(2)
         Colleague2.show(3)
-        
         "There's a charity marathon organized by an industry association coming up soon. Two of my colleagues, <Colleague1.name> and <Colleague2.name> already signed up. I reckon I'm fit enough to run. Should I sign up?"
         0:: "Sign up"
         1:: "Maybe not"
@@ -32,16 +32,16 @@ OTHER: fitness > 70 && Random(0, 100) < 0.01*fitness*ActionDuration
             If 0
                 Player.dress()
                 "I also took it seriously and went to the gym every day to prepare for the marathon - to the delight of my two competitive colleagues. As a result, my actual work performance suffered a bit."
-                jobperformance -= Random(0, 2)
-                Colleague1:rapportwithplayer += Random(0, 2)
-                Colleague2:rapportwithplayer += Random(0, 2)
-                fitness += Random(0, 2)
+                jobperformance -= random(0, 2)
+                Colleague1:rapportwithplayer += random(0, 2)
+                Colleague2:rapportwithplayer += random(0, 2)
+                fitness += random(0, 2)
             Else
                 Player.dress()
                 "I trained here and there, but didn't take the whole thing very seriously, to the disappointment of my two competitive colleagues. I was sure I made the right choice though, because unlike theirs, my job performance wasn't affected by my participation in the marathon at all."
-                Colleague1:rapportwithplayer -= Random(0, 2)
-                Colleague2:rapportwithplayer -= Random(0, 2)
-            Endif
+                Colleague1:rapportwithplayer -= random(0, 2)
+                Colleague2:rapportwithplayer -= random(0, 2)
+            EndIf
             
             setBackground(street)
             "The day of the marathon ..."
@@ -52,18 +52,19 @@ OTHER: fitness > 70 && Random(0, 100) < 0.01*fitness*ActionDuration
             
             If 0
                 "My competitive nature doesn't give me any other choice! I ran with all I had. Eventually, my colleagues and I all managed to finish the marathon in under four hours. We congratulated each other on our performance, ready to go back to work high in morale the next day."
-                Colleague1:rapportwithplayer += Random(0, 3)
-                Colleague2:rapportwithplayer += Random(0, 3)
+                Colleague1:rapportwithplayer += random(0, 3)
+                Colleague2:rapportwithplayer += random(0, 3)
                 mood += 100
             Else
                 Colleague1.hide()
                 Colleague2.hide()
                 "I decided to take it easy and stay behind with the slower but better-connected executives. It ended up taking forever to finish the marathon - but that was hardly a bad thing, because I got plenty of chances to make new professional contacts. My more competitive colleagues were disappointed in me though - they both finished the marathon in under four hours."
-                Colleague1:rapportwithplayer -= Random(0, 3)
-                Colleague2:rapportwithplayer -= Random(0, 3)
-                jobexperience += Random(0, 2)
-            Endif
-        Endif
+                Colleague1:rapportwithplayer -= random(0, 3)
+                Colleague2:rapportwithplayer -= random(0, 3)
+                jobexperience += random(0, 2)
+            EndIf
+            fitness += random(5, 10)
+        EndIf
 
     SceneEnd() // Improved by Raddeck
     timeout(1500, marathon)

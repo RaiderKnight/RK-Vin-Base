@@ -29,14 +29,14 @@ OTHER: martial > 50 && !isTimingOut(strt_asian_f) && likes_asian > 0
                     Actor.blendPreset(strt_asian_m)
                 Else
                     Actor.blendPreset(strt_asian_f)
-                Endif
+                EndIf
                 
                 Actor2 = generatePersonTemporary()
                 If Actor2.isMale()
                     Actor2.blendPreset(strt_asian_m)
                 Else
                     Actor2.blendPreset(strt_asian_f)
-                Endif
+                EndIf
                 Actor.dress()
                 Actor2.dress()
                 Actor.show()
@@ -46,7 +46,7 @@ OTHER: martial > 50 && !isTimingOut(strt_asian_f) && likes_asian > 0
                     "One day, me and <Actor3.name> was just going about our business when we were ambushed by two Asian assailants"
                 Else
                     "One day, I was just going about my business when I was ambushed by two Asian assailants"
-                Endif
+                EndIf
                 Actor.animate(martialart)
                 Actor2.animate(martialart)
                 Player.animate(martialart)
@@ -68,10 +68,10 @@ OTHER: martial > 50 && !isTimingOut(strt_asian_f) && likes_asian > 0
                                 Actor4.blendPreset(strt_asian_m)
                             Else
                                 Actor4.blendPreset(strt_asian_f)
-                            Endif
+                            EndIf
                             Actor4.makePermanent()
                             Actor4.setActorVar(tag_martialmaster, 1)
-                        Endif
+                        EndIf
                         Player.modifyActorVar(rk_VB_martialStage, 1) // Edit Raddeck
                         "I manage to get an address from a note in the attacker's pocket."
                         Actor.show()
@@ -97,7 +97,7 @@ OTHER: martial > 50 && !isTimingOut(strt_asian_f) && likes_asian > 0
                                 If stage == 7 || martialStage == 7
                                     Actor4:: "It was just a fluke"
                                     Player.modifyActorVar(rk_VB_martialStage, 1) // Edit Raddeck
-                                Elseif stage == 8 || martialStage == 8
+                                ElseIf stage == 8 || martialStage == 8
                                     "The master just frown and silently leaves the room."
                                     Player.modifyActorVar(rk_VB_martialStage, 1) // Edit Raddeck
                                 Else
@@ -113,14 +113,14 @@ OTHER: martial > 50 && !isTimingOut(strt_asian_f) && likes_asian > 0
                                         EndIf
                                         "Afterwards, <Actor4.name> gave me <Actor4.his_or_her> number and asked me to come and 'practice' anytime."
                                         exchangeContact(Actor4)
-                                    Elseif 1
+                                    ElseIf 1
                                         "Afterwards, <Actor4.name> gave me <Actor4.his_or_her> number and asked me to come and 'practice' anytime." // Edit Raddeck
                                         exchangeContact(Actor4) // Edit Raddeck
-                                    Endif
+                                    EndIf
                                     Actor4.setActorVar(tag_martialmaster, 0)
                                     stage => 0
                                     Player.setActorVar(rk_VB_martialStage, 0) // Edit Raddeck
-                                Endif
+                                EndIf
                             
                             Else
                                 Filter(Aggressive)
@@ -131,14 +131,14 @@ OTHER: martial > 50 && !isTimingOut(strt_asian_f) && likes_asian > 0
                                 Actor4.setActorVar(tag_martialmaster, 0) // Edit Raddeck
                                 stage => 0 // Edit Raddeck
                                 Player.setActorVar(rk_VB_martialStage, 0) // Edit Raddeck
-                            Endif
+                            EndIf
                         Else
                             Player.animate(fightlost)
                             "Unfortunately, <Actor4.he_or_she> was too good for me ..."
                             "They threw me out ..."
                             stage -= 2
                             Player.modifyActorVar(rk_VB_martialStage, -2) // Edit Raddeck
-                        Endif
+                        EndIf
                     Else
                         martial += 3 // Edit Raddeck
                         "I managed to defeat my assailants, who turned and ran away"
@@ -155,9 +155,9 @@ OTHER: martial > 50 && !isTimingOut(strt_asian_f) && likes_asian > 0
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
-                            Endif
-                        Endif
-                    Endif
+                            EndIf
+                        EndIf
+                    EndIf
                 Else
                     Player.animate(fightlost)
                     "Unfortunately, they were too good for me ..."
@@ -169,14 +169,18 @@ OTHER: martial > 50 && !isTimingOut(strt_asian_f) && likes_asian > 0
                         "My loss has left my companion <Actor3.name> vulnerable ... My assailant turned their attention to <Actor3.him_or_her>"
                         Actor3(Crying):: "No! Please stop ... I beg you ... Somebody help ..."
                         "<Actor3.His_or_Her> cries for help went unheard and I had no choice but watch <Actor3.him_or_her> endure it all."
-                        Filter(Aggressive)
+                        If Actor.isMale() && !Actor3.isMale()
+                            Filter(AggressiveFM)
+                        Else
+                            Filter(Aggressive)
+                        EndIf
                         TalkNonConsensual()
                         SexNoAffair(Actor, Actor3)
-                    Endif
-                Endif
-            Endif
+                    EndIf
+                EndIf
+            EndIf
         Else
             timeoutPrecise(2000, asian_learn_martial_cms)    
-        Endif
+        EndIf
     SceneEnd()
     timeout(200, asian_learn_martial_cms) // Improved by Raddeck

@@ -1,0 +1,37 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        setBackground(sports_centre)
+        "I decided to train my muscles a little."
+        Player.animate(weights)
+        0:: "Lift until I'm fed up"
+        1:: "One more time"
+        2:: "I'm done!"
+        
+        If 0
+            counte = 0
+            levepoid = true
+            While levepoid && counte < 10
+                "..."
+                Player.animate(weights)
+                counte += 1
+            EndWhile
+        ElseIf 1
+            Player.animate(weights)
+        EndIf
+        If random(0, 100) > 95
+            followUp(big_ego)
+        EndIf
+        If HungerEnable > 0
+            Player.modifyActorVar(rk_VB_Hunger, -2)
+        EndIf
+        followUp(sb_VB_weight_loss)
+    SceneEnd()

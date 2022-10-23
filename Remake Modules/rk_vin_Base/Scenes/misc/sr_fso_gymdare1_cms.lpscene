@@ -2,11 +2,10 @@ WHAT: all
 WHERE: sports_centre
 WHEN: 8-17
 WHO: Actor = getSpecific(Dating); If !Actor.isMale() && Actor:rapportwithplayer > 35
-OTHER: Player:perversion > 50
+OTHER: Player:perversion > 50 && isModEnabled(vin_NTR)
 
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -47,12 +46,12 @@ OTHER: Player:perversion > 50
                     Actor6 = generatePersonTemporary()
                     While !Actor6.isSameGender(Actor)
                         Actor6 = generatePersonTemporary()
-                    Endwhile
+                    EndWhile
                     Actor6.randomizeFace()
                     Actor6.randomizeHairs()
                     Actor6.dress()
                     Actor6.show()
-                    TChoice = Random(1, 4)
+                    TChoice = random(1, 4)
                     TChoice = TChoice.round()
                     "Should I tell her to find someone else?"
                     0::"Yes"
@@ -71,7 +70,7 @@ OTHER: Player:perversion > 50
                             txtC = "do some push-ups"
                         ElseIf TChoice == 4 && !TChoiceD4
                             txtC = "in the weight section"
-                        Endif
+                        EndIf
                         "<Actor.name> decides to go flash someone <txtC>..."
                         "And I place myself accordingly to see the whole scene and prepare my phone to be able to take discreetly a picture of <Actor6.his_or_her> reaction."
                         If TChoice == 1 && !TChoiceD1
@@ -91,7 +90,7 @@ OTHER: Player:perversion > 50
                             "After a few minutes of weight training, while she was pushing weights with her legs, the crotch of her pants suddenly ripped, showing her pussy. And then she said..."
                             Actor(Embarrassed)::"Oh fuck, my pants just ripped!"
                             "As she bends down to look at the extent of the hole, as a bonus, she reveals her breasts to <Actor6.him_or_her>..."
-                        Endif
+                        EndIf
                         If Actor6.isInterestedIn(Actor) && Actor6:arousal > 25
                             If TChoice == 1
                                 "The <Actor6.guy_or_girl> notices the butt hole and enjoys the sight of a pair of buttocks waddling in front of <Actor6.him_or_her>."
@@ -102,9 +101,9 @@ OTHER: Player:perversion > 50
                                 "The <Actor6.guy_or_girl> notices the feast and enjoys the sight of boobs swaying in front of <Actor6.him_or_her>."
                             ElseIf TChoice == 4
                                 "The <Actor6.guy_or_girl> notices the feast and enjoys the sight of the breasts swaying in front of <Actor6.him_or_her> and that sweaty wet pussy."
-                            Endif
+                            EndIf
                             fuckYes = true
-                        Elseif Actor6.isInterestedIn(Actor)
+                        ElseIf Actor6.isInterestedIn(Actor)
                             If TChoice == 1
                                 Actor6.moveToPersonStand(Player, 50)
                                 faceEachOther(Player, Actor6)
@@ -118,19 +117,19 @@ OTHER: Player:perversion > 50
                                 Actor6.moveToPersonStand(Player, 50)
                                 faceEachOther(Player, Actor6)
                                 Actor6(Annoyed)::"Sorry to bother you my dear but everyone can see your pussy..."
-                            Endif
+                            EndIf
                             Actor6(Annoyed)::"I don't know if it's intentional but it's not very polite so I would ask you to refrain from doing so..."
                             Actor(Embarrassed)::"Oh fuck, sorry about that!"
                             Actor6.delete()
                             CallP = random(0, 100)
                             If CallP > 75
                                 shithappen = true
-                            Endif
+                            EndIf
                         Else
                             "The <Actor6.guy_or_girl> didn't noticed what she did because <Actor6.he_or_she> were too busy practicing. But you still managed to get some good shots of her at least."
                             NoSee = true
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                     If fuckYes
                         Actor6:arousal += 5
                         Actor6(Flirty)::"Hey hi, as I can see you are flashing me on purpose, do you want to fuck?"
@@ -156,7 +155,7 @@ OTHER: Player:perversion > 50
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
-                            Elseif 1
+                            ElseIf 1
                                 Actor6(Flirty)::"Let's go somewhere more private"
                                 setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                                 Actor6:rapportwithplayer += random(0, 2)
@@ -170,7 +169,7 @@ OTHER: Player:perversion > 50
                                 EndIf
                             Else
                                 If Actor6:masochist < Player:masochist || Actor6:muscle > Player:muscle
-                                    Extork = Random(150, 500)
+                                    Extork = random(150, 500)
                                     Extork_loc = Extork.convertToLocalCurrency()
                                     Actor6(Flirty)::"Ok, but here's the thing my dear! If you give me <Extork_loc> or agree to a threesome, I won't report you to the owner of this place."
                                     "What should I do?"
@@ -203,20 +202,20 @@ OTHER: Player:perversion > 50
                                         Actor6.delete()
                                     Else
                                         Actor6(Sad)::"Okay fine, at least I tried!"
-                                        DamnFucker = Random(0, 100)
+                                        DamnFucker = random(0, 100)
                                         If DamnFucker > 40
                                             shithappen = true
-                                        Endif
-                                    Endif
+                                        EndIf
+                                    EndIf
                                     "After our little session, the <Actor6.guy_or_girl> walked away..."
                                 Else
                                     Actor6(Sad)::"Okay fine, at least I tried!"
-                                Endif
+                                EndIf
                                 Actor6.hide()
                                 Actor6.delete()
                             EndIf
-                        Elseif Actor:arousal > 15 && Actor:perversion > 75 && Actor6.isInterestedIn(Actor)
-                            If Random(0, 100) > 35
+                        ElseIf Actor:arousal > 15 && Actor:perversion > 75 && Actor6.isInterestedIn(Actor)
+                            If random(0, 100) > 35
                                 Actor(Flirty)::"Let's go somewhere more private"
                                 Actor6(Flirty)::"Of course, honey, I'm following you!"
                                 setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
@@ -238,14 +237,14 @@ OTHER: Player:perversion > 50
                         Else
                             Actor(Flirty)::"No, it was just an accident!"
                             Actor6(Sad)::"Pff! Yeah, right!"
-                            DamnFucker = Random(0, 100)
+                            DamnFucker = random(0, 100)
                             If DamnFucker > 60
                                 shithappen = true
-                            Endif
+                            EndIf
                             Actor6.hide()
                             Actor6.delete()
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                     If turncount > 4
                         StartA = true
                         "Should I tell her to stop?"
@@ -262,7 +261,7 @@ OTHER: Player:perversion > 50
                                 PictAdd += 1
                             ElseIf TChoiceD4
                                 PictAdd += 1
-                            Endif
+                            EndIf
                             TotalP = PictAdd
                             WeTrainFlash = false
                             "I motioned to <Actor.name> to stop..."
@@ -275,7 +274,7 @@ OTHER: Player:perversion > 50
                             perversion += 1
                             Actor:perversion += 1
                         EndIf
-                    Endif
+                    EndIf
                     If StartA
                         If !steponeS
                             steponeS = true
@@ -308,8 +307,8 @@ OTHER: Player:perversion > 50
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
-                        Endif
-                        If Random(0, 100) > 75
+                        EndIf
+                        If random(0, 100) > 75
                             Actor7 = generatePersonTemporary()
                             Actor7.dress()
                             Actor7.show()
@@ -340,7 +339,7 @@ OTHER: Player:perversion > 50
                                 Actor7.delete()
                             Else
                                 If Actor7:masochist < Player:masochist || Actor7:muscle > Player:muscle
-                                    Extork = Random(150, 500)
+                                    Extork = random(150, 500)
                                     Extork_loc = Extork.convertToLocalCurrency()
                                     Actor7(Flirty)::"Ok, but here's the thing my dear! If you give me <Extork_loc> or agree to a threesome, I won't report you to the owner of this place."
                                     "What should I do?"
@@ -373,20 +372,20 @@ OTHER: Player:perversion > 50
                                         Actor7.delete()
                                     Else
                                         Actor7(Sad)::"Okay fine, at least I tried!"
-                                        DamnFucker = Random(0, 100)
+                                        DamnFucker = random(0, 100)
                                         If DamnFucker > 40
                                             shithappen = true
-                                        Endif
-                                    Endif
+                                        EndIf
+                                    EndIf
                                     "After our little session, the <Actor7.guy_or_girl> walked away..."
                                 Else
                                     Actor7(Sad)::"Okay fine, at least I tried!"
-                                Endif
+                                EndIf
                                 Actor7.hide()
                                 Actor7.delete()
-                            Endif
-                        Endif
-                        If Random(0, 100) > 50
+                            EndIf
+                        EndIf
+                        If random(0, 100) > 50
                             "While <Actor.name> is practicing while flashing her victim..."
                             "The victim in question has realized that I am in collusion with <Actor.name> and is heading towards me..."
                             Actor6(Flirty)::"Hey there, I don't know what you and your girlfriend are playing at, but your girlfriend managed to turn me on completely and I can tell you that you're not ugly either..."
@@ -414,7 +413,7 @@ OTHER: Player:perversion > 50
                                 Actor6.delete()
                             Else
                                 If Actor6:masochist < Player:masochist || Actor6:muscle > Player:muscle
-                                    Extork = Random(150, 500)
+                                    Extork = random(150, 500)
                                     Extork_loc = Extork.convertToLocalCurrency()
                                     Actor6(Flirty)::"Ok, but here's the thing my dear! If you give me <Extork_loc> or agree to a threesome, I won't report you to the owner of this place."
                                     "What should I do?"
@@ -447,20 +446,20 @@ OTHER: Player:perversion > 50
                                         Actor6.delete()
                                     Else
                                         Actor6(Sad)::"Okay fine, at least I tried!"
-                                        DamnFucker = Random(0, 100)
+                                        DamnFucker = random(0, 100)
                                         If DamnFucker > 40
                                             shithappen = true
-                                        Endif
-                                    Endif
+                                        EndIf
+                                    EndIf
                                     "After our little session, the <Actor6.guy_or_girl> walked away..."
                                 Else
                                     Actor6(Sad)::"Okay fine, at least I tried!"
-                                Endif
+                                EndIf
                                 Actor6.hide()
                                 Actor6.delete()
-                            Endif
-                        Endif
-                    Endif
+                            EndIf
+                        EndIf
+                    EndIf
                     If shithappen || [random(0, 100) > 75 && WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != stripclub && WHERE != prison]
                        WeTrainFlash = false
                        followUp(public_indecency)
@@ -474,18 +473,18 @@ OTHER: Player:perversion > 50
                             PictAdd += 1
                         ElseIf TChoiceD4
                             PictAdd += 1
-                        Endif
+                        EndIf
                         TotalP = PictAdd
                         If NoSee
                             If TotalP >= 2
                                 "No one else noticed what she did because they were too busy practicing. But I still managed to get some good shots of her at least."
                             Else
                                 "No one else noticed what she did because they were too busy practicing. But I still managed to a good shots of her at least."
-                            Endif
+                            EndIf
                         Else
                             "No one noticed what she did because they were too busy practicing."
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                     turncount += 1
                     Actor:arousal += 5
                     Actor:perversion += 0.05
@@ -493,6 +492,6 @@ OTHER: Player:perversion > 50
             Else
                 Actor(Annoyed):: "Hmm, nope! I don't really feel like doing this, sorry!"
                 Player(Sad)::"That's fine, maybe another time..."
-            Endif
-        Endif
+            EndIf
+        EndIf
     SceneEnd() // Scene improved by Raddeck
