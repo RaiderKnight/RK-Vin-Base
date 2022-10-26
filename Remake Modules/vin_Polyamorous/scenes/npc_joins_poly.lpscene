@@ -1,11 +1,10 @@
 WHAT: all, -go_to_the_bathroom
 WHERE: all, -toilets, -PC, -office
 WHEN: 0-24
-WHO: Companion = getCompanion(); If !CurrentCompanion.isDating() && [CurrentCompanion.hasRelationship(Poly) || !CurrentCompanion.hasRelationship(Spouses, Dating)] && CurrentCompanion.IsInterestedIn(Player) && CurrentCompanion:attractiontoplayer > Random(10, 50) && CurrentCompanion:perversion > 50
-OTHER: Player.isDating() && OpenRelationship() && isModEnabled(vin_Polyamorous)
+WHO: Companion = getCompanion(); If !CurrentCompanion.isDating() && [CurrentCompanion.hasRelationship(Poly) || !CurrentCompanion.hasRelationship(Spouses, Dating)] && CurrentCompanion.isInterestedIn(Player) && CurrentCompanion:attractiontoplayer > random(10, 50) && CurrentCompanion:perversion > 50
+OTHER: Player.isDating() && OpenRelationship()
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -35,27 +34,30 @@ OTHER: Player.isDating() && OpenRelationship() && isModEnabled(vin_Polyamorous)
                     If Actor.isValid()
                         Actor.dress()
                         Actor.show()
-                        Actor:: "Welcome, <CurrentCompanion.name>! Let me show you how it works in this relationship."
+                        Actor(Happy):: "Welcome, <CurrentCompanion.name>! Let me show you how it works in this relationship."
                         Sex(Player, Actor, CurrentCompanion)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -3)
                         EndIf
-                    Endif
-                Endwhile
+                    EndIf
+                EndWhile
                 "After having sex, we continued our date, with <CurrentCompanion.name> as my latest lover."
                 CurrentCompanion.setDating()
             Else
                 "We continued our date, with <CurrentCompanion.name> as my latest lover."
                 CurrentCompanion.setDating()
-            Endif
+            EndIf
+            If !CurrentCompanion.isContactExchanged()
+                exchangeContact(CurrentCompanion)
+            EndIf
         Else
             Player(Surprised):: "<CurrentCompanion.name> ... I like you too ... but just not that way. I only see you as a friend ..."
             mood -= 10
             "It was a difficult conversation to have. On one hand, I don't have any romantic interest in <CurrentCompanion.name>. On another hand, I don't want to lose <CurrentCompanion.him_or_her> as a friend." 
             "Eventually ..."
-            If CurrentCompanion:rapportwithplayer + interpersonal > Random(0, 50)
+            If CurrentCompanion:rapportwithplayer + interpersonal > random(0, 50)
                 CurrentCompanion(Sad):: "Alright, I respect your decision. Let's just be friends ..."
-                CurrentCompanion:attractiontoplayer -= Random(0, 20)
+                CurrentCompanion:attractiontoplayer -= random(0, 20)
                 "Those words were clearly said with a lot of reluctance, but at least I managed to keep <CurrentCompanion.name> in my life ... for now."
             Else
                 CurrentCompanion(Offended):: "No, if I cannot have your heart, then I'd rather not have you in my life at all!"
@@ -67,8 +69,7 @@ OTHER: Player.isDating() && OpenRelationship() && isModEnabled(vin_Polyamorous)
                 "Thinking that <CurrentCompanion.he_or_she> would have calmed down by now, I tried to call, only to find out that I had been blocked! It's a sad day, I might have forever lost <CurrentCompanion.name> from my life ..."
                 blockContact(CurrentCompanion)
                 endDate()                
-            Endif
-        Endif
-
+            EndIf
+        EndIf
     SceneEnd() // Scene improved by Raddeck
     timeout(300, npc_joins_poly)
