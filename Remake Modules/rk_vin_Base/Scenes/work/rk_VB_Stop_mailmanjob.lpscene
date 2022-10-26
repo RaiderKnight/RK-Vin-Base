@@ -1,0 +1,27 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Job_MailMan = rk_VB_Job_MailMan.getGlobal()
+        MailManSalary = Player.getActorVar(rk_VB_MailManSalary)
+        MailManXP = Player.getActorVar(rk_VB_MailManXP)
+        "Are you sure you want to stop being a mailman?"
+        0::"Yes"
+        1::"I changed my mind"
+        
+        If 0
+            rk_VB_Job_MailMan.setGlobal(0)
+            Player.setActorVar(rk_VB_MailManSalary, 0)
+            Player.setActorVar(rk_VB_MailManXP, 0)
+            "All done!"
+        Else
+            "Well, I have nothing but this job to earn money! I'll think about it again!"
+        EndIf
+    SceneEnd()

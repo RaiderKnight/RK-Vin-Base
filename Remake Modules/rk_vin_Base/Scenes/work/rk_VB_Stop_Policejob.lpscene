@@ -1,0 +1,27 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Job_police = rk_VB_Job_police.getGlobal()
+        PoliceXP = Player.getActorVar(rk_VB_PoliceXP)
+        PSalaire = Player.getActorVar(rk_VB_PoliceSalary)
+        "Are you sure you want to stop being a police officer?"
+        0::Job_police > 0:: "Yes"
+        1::"I changed my mind"
+        
+        If 0
+            Player.setActorVar(rk_VB_PoliceSalary, 0)
+            Player.setActorVar(rk_VB_PoliceXP, 0)
+            rk_VB_PoliceXP.setGlobal(0)
+            "All done!"
+        Else
+            "Well, I have nothing but this job to earn money! I'll think about it again!"
+        EndIf
+    SceneEnd()

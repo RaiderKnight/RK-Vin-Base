@@ -403,7 +403,11 @@ OTHER: !isWithCompanion() && random(0, 100) > 85 && isModEnabled(rk_vin_Base)
                             If roundtoGetfucked == 3
                                 roundtofuck = false
                             ElseIf roundtoGetfucked == 0
-                                Filter(Aggressive)
+                                If policeman2.isMale() && !Player.isMale()
+                                    Filter(AggressiveFM)
+                                Else
+                                    Filter(Aggressive)
+                                EndIf
                                 TalkNonConsensual()
                                 SexNoAffair(policeman2, Player)
                                 If HungerEnable > 0
@@ -411,7 +415,11 @@ OTHER: !isWithCompanion() && random(0, 100) > 85 && isModEnabled(rk_vin_Base)
                                 EndIf
                                 roundtoGetfucked += 1
                             ElseIf roundtoGetfucked == 1
-                                Filter(Aggressive)
+                                If policeman.isMale() && !Player.isMale()
+                                    Filter(AggressiveFM)
+                                Else
+                                    Filter(Aggressive)
+                                EndIf
                                 TalkNonConsensual()
                                 SexNoAffair(policeman, Player)
                                 If HungerEnable > 0
@@ -419,7 +427,11 @@ OTHER: !isWithCompanion() && random(0, 100) > 85 && isModEnabled(rk_vin_Base)
                                 EndIf
                                 roundtoGetfucked += 1
                             ElseIf roundtoGetfucked == 2
-                                Filter(Aggressive)
+                                If policeman2.isMale() && !Player.isMale()
+                                    Filter(AggressiveFM)
+                                Else
+                                    Filter(Aggressive)
+                                EndIf
                                 TalkNonConsensual()
                                 SexNoAffair(policeman2, Player, policeman)
                                 If HungerEnable > 0

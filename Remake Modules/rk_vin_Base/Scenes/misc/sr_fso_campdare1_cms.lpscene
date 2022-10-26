@@ -1,37 +1,34 @@
 WHAT: all
 WHERE: forest, mountain, river
 WHEN: 0 - 24
-WHO: Actor = getCompanion(); If !Actor.isMale() && Actor.isDating() && Actor:perversion > 40
-OTHER:
+WHO: Actor = getCompanion(); If Actor.isDating() && Actor:perversion > 40
+OTHER: isModEnabled(vin_NTR)
 
-    //Summery - the player dare's their girlfriend/wife to do something naughty while at their camp. There are 2 things that can be dared.
-    
     SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-    
         "While camping with <Actor.name> I began thinking about a hentai I watched recently with same setting as here."
         "Perhaps I should ask <Actor.name> to do one of the things in the hentai?"
-        0:: "I'll dare <Actor.name> to strip nude and sleep with herself in full view of the tent's window."
-        1:: "I'll dare <Actor.name> to masturbate right behind a tree near the camp site while I film her!"    
+        0:: "I'll dare <Actor.name> to strip nude and sleep with <Actor.him_or_her> in full view of the tent's window."
+        1:: "I'll dare <Actor.name> to masturbate right behind a tree near the camp site while I film <Actor.him_or_her>!"    
         2:: "Nevermind actually. Lets not get too crazy out here. Who knows what might happen."
         
         If 0
             Actor.strip()
-            "<Actor.name> agreed to my dirty idea and she stripped down nude. She left the flap to her tent's window down and got within her tent. She then fell to sleep."
+            "<Actor.name> agreed to my dirty idea and <Actor.he_or_she> stripped down nude. <Actor.He_or_She> left the flap to <Actor.his_or_her> tent's window down and got within <Actor.his_or_her> tent. <Actor.He_or_She> then fell to sleep."
             If random(0, 100) < 50
                 Actor2 = generatePersonTemporary()
                 Actor2.dress()
                 Actor2.show()
                 Actor2.animate(camera)
-                "Unfortunately, she is caught by a random person who proceeds to take pictures of her and then leaves"
+                "Unfortunately, <Actor.he_or_she> is caught by a random person who proceeds to take pictures of <Actor.him_or_her> and then leaves"
             Else
-                "Thankfully, noone else saw it and she manages to sleep peacefully"
+                "Thankfully, noone else saw it and <Actor.he_or_she> manages to sleep peacefully"
             EndIf
         ElseIf 1
-            "<Actor.name> agreed to my dirty idea. She quickly ran behind a nearby tree still close to the camp and began to play with herself."
+            "<Actor.name> agreed to my dirty idea. <Actor.He_or_She> quickly ran behind a nearby tree still close to the camp and began to play with <Actor.himself_or_herself>."
             Filter(Solo)
             Sex(Actor)
             //two things may happen from here. She is caught and the stranger propsitions her for sex, or no one catches her."
@@ -42,15 +39,15 @@ OTHER:
                 EndWhile
                 Actor2.dress()
                 Actor2.show()
-                "She's caught in the act by a stranger, who asks if he can bang her."
-                0:: "Let him"
-                1:: "Stop him"
+                "<Actor.He_or_She>'s caught in the act by a stranger, who asks if <Actor2.he_or_she> can bang <Actor.him_or_her>."
+                0:: "Let <Actor2.him_or_her>"
+                1:: "Stop <Actor2.him_or_her>"
                 
                 If 0
                     Sex(Actor, Actor2)
                 EndIf
             Else    
-                "Thankfully, no one else saw it and she wasn't caught in the act"
+                "Thankfully, no one else saw it and <Actor.he_or_she> wasn't caught in the act"
             EndIf
         EndIf
     

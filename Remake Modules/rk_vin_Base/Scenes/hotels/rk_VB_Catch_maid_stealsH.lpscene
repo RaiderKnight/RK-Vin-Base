@@ -67,7 +67,11 @@ OTHER: none
                     Actor.strip()
                     Player.strip()
                     Player(Evil):: "Good, now I will show you how I kill loser like you with my <Player.dick_or_pussy>!"
-                    Filter(Aggressive)
+                    If Player.isMale() && !Actor.isMale()
+                        Filter(AggressiveFM)
+                    Else
+                        Filter(Aggressive)
+                    EndIf
                     TalkNonConsensual()
                     SexNoAffair(Player, Actor)
                     If HungerEnable > 0

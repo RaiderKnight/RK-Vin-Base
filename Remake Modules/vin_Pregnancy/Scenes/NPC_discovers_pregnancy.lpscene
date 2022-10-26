@@ -28,14 +28,14 @@ OTHER: none
                     "The evidence from the paternity test is undeniable. I'm the father of <Actor.name>'s unborn baby."
                     "Or more precisely ... of my own <Actor.relationship>'s unborn baby!"
                     "We did something forbidden and extremely risky that led to this baby. We can now only hope that the truth will never come out and the baby will somehow turn out to be healthy physically and mentally." 
-                Elseif Actor.isExRelative()
+                ElseIf Actor.isExRelative()
                     "The evidence from the paternity test is undeniable. I'm the father of <Actor.name>'s unborn baby."
                     "As much as I'm happy about the news, <Actor.name> and I are biologically related after all ... Let's hope the baby will turn out to be healthy physically and mentally."
-                Endif
+                EndIf
                 If Actor.wantsBabies() && Actor.isDating()
                     "<Actor.name> and I have been trying for a baby for a while, so this is long-awaited news."
-                    Actor.setwantsBabies(false)
-                Endif
+                    Actor.setWantsBabies(false)
+                EndIf
                 Actor2 = Actor.getRelatedPerson(Spouses, Dating)
                 
                 Rape = Actor.getPregnancyTag()
@@ -51,7 +51,7 @@ OTHER: none
                             "<Actor.He_or_She> is now my <Actor.boyfriend_or_girlfriend> ... Not the most romantic love story but maybe with time, both of us will forget that we are only together because I raped <Actor.him_or_her> and got <Actor.him_or_her> pregnant and we will actually turn out to be a healthy family."
                             If Actor:attractiontoplayer < 0
                                 Actor:attractiontoplayer => 0
-                            Endif
+                            EndIf
                             Actor:attractiontoplayer += 10
                             Actor.setActorVar(tag_DaddyKnows, 2)
                             exchangeContact(Actor)
@@ -61,7 +61,7 @@ OTHER: none
                             Actor.strip()
                             Actor.endPregnancy()
                             "A couple of months later, I found out that <Actor.name> decided to abort the child after all ... Probably the thought of having to raise a baby alone was too much for <Actor.him_or_her>."
-                        Endif
+                        EndIf
                     Else
                         "<Actor.He_or_She> gave me an ultimatum: give <Actor.him_or_her> a huge sum of money to abort the baby and to keep <Actor.his_or_her> mouth shut, or <Actor.he_or_she> will file a sexual assault report and send me straight to jail, since the baby inside <Actor.him_or_her> is indisputable evidence."
                         0:: "Give <Actor.him_or_her> the money"
@@ -74,13 +74,13 @@ OTHER: none
                             "The amount of money <Actor.he_or_she> was asking for was absurd. I had no choice but pay for my crime with my freedom ..."
                             sentence += 1825
                             followUp(imprisoned)
-                        Endif
+                        EndIf
                         Actor.strip()
                         Actor.endPregnancy()
                         "For <Actor.his_or_her> part, <Actor.name> promptly aborted the baby."
-                    Endif
+                    EndIf
                     
-                Elseif Rape.isString("AggressiveFM") && !Actor.isDating()
+                ElseIf Rape.isString("AggressiveFM") && !Actor.isDating()
                     "Of course <Actor.name> and I both know that this pregnancy wasn't the result of some loving relationship. Instead, it was the result of me being sexually assaulted by <Actor.him_or_her>."
                     "To my shock, <Actor.name> shamelessly begged me to forgive <Actor.him_or_her> for the rape and become <Actor.his_or_her> <Player.boyfriend_or_girlfriend> and help raise the kid together ..."
                     0:: "Forgive <Actor.him_or_her> and raise the kid together"
@@ -91,7 +91,7 @@ OTHER: none
                         "<Actor.He_or_She> is now my <Actor.boyfriend_or_girlfriend> ... Not the most romantic love story but maybe with time, both of us will forget that we are only together because I raped <Actor.him_or_her> and got <Actor.him_or_her> pregnant and we will actually turn out to be a healthy family."
                         If Actor:attractiontoplayer < 0
                             Actor:attractiontoplayer => 0
-                        Endif
+                        EndIf
                         Actor:attractiontoplayer += 10
                         Actor.setActorVar(tag_DaddyKnows, 2)
                         exchangeContact(Actor)
@@ -102,14 +102,14 @@ OTHER: none
                         Actor.strip()
                         Actor.endPregnancy()
                         "A couple of months later, I found out that <Actor.name> decided to abort the child after all ... Probably the thought of having to raise a baby alone was too much for <Actor.him_or_her>."                    
-                    Endif                
+                    EndIf                
                     
-                Elseif !Actor.isDating() && Actor2.isValid()
+                ElseIf !Actor.isDating() && Actor2.isValid()
                     "Of course, the fact that I knocked up <Actor.name>, who is already in a commited relationship with <Actor2.name>, is potentially complicated."
                     Cuck = Actor2.getActorVar(tag_NTRCuck)
                     If Cuck > 0
                         "<Actor2.name> is a willing cuck though, so of course <Actor2.he_or_she> doesn't mind."
-                    Elseif Random(0, 100) < Actor:intelligence && !Actor2.isFemale()
+                    ElseIf random(0, 100) < Actor:intelligence && !Actor2.isFemale()
                         "Thankfully, <Actor.name> was smart enough to convince <Actor.his_or_her> current <Actor2.boyfriend_or_girlfriend> <Actor2.name> that the baby was <Actor2.his_or_hers>."
                     Else
                         setBackground(home)
@@ -137,7 +137,7 @@ OTHER: none
                                 Player.hide()
                                 
                                 "<Actor2.name> fired <Actor2.his_or_her> gun..."
-                                If Random(0, 30) < fitness
+                                If random(0, 30) < fitness
                             
                                     "I managed to dodge the shot. Phew, that was close."
                                     Player(Shocked)::"Are you fucking crazy?"
@@ -182,13 +182,13 @@ OTHER: none
                         Else
                             Actor2(Furious):: "You fucked my <Actor.boyfriend_or_girlfriend> and make her pregnant! I should just kill you, <Player.scum_or_bitch>!"
                             Actor2(Angry):: "But I won't lower myself to deal with the likes of you. You both adulterers could fuck off from my life and take care of the baby yourself!"
-                        Endif
-                    Endif
-                Endif
+                        EndIf
+                    EndIf
+                EndIf
             Else
                 "<Actor.name>, the surrogate mother I had a procedure with, just called to announce that she was pregnant."
                 "As a couple, we've been trying in vain for a baby so this is a great news."
-            Endif
+            EndIf
         Else
             Actor.dress()
             Actor.show(2)
@@ -199,9 +199,9 @@ OTHER: none
             "I suspected as much: her belly clearly got bigger in recent months."
             Actor.setActorVar(tag_Pregnant, 1)
             If 1
-                perversion += Random(0,0.5)
-            Endif        
-        Endif
+                perversion += random(0,0.5)
+            EndIf        
+        EndIf
         SceneEnd()
-    Endif // Improved by Raddeck
+    EndIf // Improved by Raddeck
     

@@ -1,8 +1,8 @@
 WHAT: all, -sleep, -nap
 WHERE: all, -prison
 WHEN: 8 - 22
-WHO: Actor = getSpecific(Dating); Actor1 = getSpecific(Dating_Friend); If Actor1.isInterestedIn(Player) && Actor1:perversion > 50 && Actor1:perversion > 50
-OTHER: !isWithCompanion()
+WHO: Actor = getSpecific(Dating); Actor1 = getSpecific(Dating_Friend); If Actor1.isInterestedIn(Player) && Actor:perversion > 50 && Actor1:perversion > 50
+OTHER: isModEnabled(vin_NTR)
 
     SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
@@ -13,7 +13,7 @@ OTHER: !isWithCompanion()
         If !Actor1.isValid()
             Actor1 = generatePersonTemporary()
             Actor1.addDatingFriend()
-        Endif
+        EndIf
         "I just got a text from my <Actor.boyfriend_or_girlfriend>'s friend?"
         secondScreen(Actor1)
         Actor1.dress()
@@ -34,27 +34,29 @@ OTHER: !isWithCompanion()
             Sex(Actor1)
             "<Actor1.name>, <Actor.name>'s friend, was alone in <Actor1.his_or_her> hallway, in the middle of an intense masturbation session and when <Actor1.he_or_she> saw me, <Actor1.he_or_she> said..."
             Actor1(Flirty)::"Stop looking and come play with my body dirty <Player.boy_or_girl>..."
-            arousal += Random(0, 3)
+            arousal += random(0, 3)
             "What should I say?"
             0:: "I'm sorry I can't do this to my <Actor.boyfriend_or_girlfriend>"
             1:: "Don't worry, I was waiting your invitation!"
 
             If 1
-                karma += Random(0, 1)
-                perversion += Random(0, 1)
+                perversion += random(0, 1)
                 Player.strip()
                 Sex(Player, Actor1)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
                 "After the fuck, we exchanged numbers and parted ways."
-                exchangeContact(Actor1)
-                Actor1:rapportwithplayer += Random(0, 3)
-                Actor1:attractiontoplayer += Random(0, 3)
-            Endif
+                If !Actor1.isContactExchanged()
+                    exchangeContact(Actor1)
+                EndIf
+                Actor1:rapportwithplayer += random(0, 3)
+                Actor1:attractiontoplayer += random(0, 3)
+            EndIf
         Else
+            karma += random(0, 1)
             "I told <Actor1.him_or_her> I had something more important to do and I couldn't go!"
             Actor1:mood -= 5
-        Endif
+        EndIf
     SceneEnd() // Scene improved by Raddeck
     timeout(240, sr_fso_door_dare3_friend_cms)

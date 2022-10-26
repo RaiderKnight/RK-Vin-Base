@@ -397,7 +397,7 @@ OTHER: PercentageVampires > 0 && !Player.isRace(Vampire)
                     Actor(Evil)::"Ah ah ah ah!"
                     Actor.hide()
                 EndIf
-            Elseif 1
+            ElseIf 1
                 Player(Serene):: "Well, if it's to save a life then I guess it's no different from a normal blood donation at the hospital"
                 animatePair(Actor, Player, Kissing)
                 "The vampire sucked out some of my blood, which saved <Actor.his_or_her> life, but I feel quite weakened."
@@ -474,7 +474,11 @@ OTHER: PercentageVampires > 0 && !Player.isRace(Vampire)
             "To make matters worse, the burglar decides to fuck my dog too."
             Player(Crying):: "No, please stop ... not my dog too!"
             "I am too weak to move, I can't do anything for my dog..."
-            Filter(Aggressive)
+            If Actor.isMale() && !Actor2.isMale()
+                Filter(AggressiveFM)
+            Else
+                Filter(Aggressive)
+            EndIf
             TalkNonConsensual()
             SexNoAffair(Actor, Actor2)
         EndIf

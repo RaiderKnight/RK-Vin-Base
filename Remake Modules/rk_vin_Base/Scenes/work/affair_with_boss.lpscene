@@ -1,34 +1,34 @@
 WHAT: work
 WHERE: work
 WHEN: 18 - 22
-WHO: Boss = getSpecific(Boss); If Boss:perversion + Boss:attractiontoplayer > Random(0, 100) && !Boss.isDating()
-OTHER: perversion > 20 && Random(0, 100) < 0.1*perversion
+WHO: Boss = getSpecific(Boss); If Boss:perversion + Boss:attractiontoplayer > random(0, 100) && !Boss.isDating()
+OTHER: perversion > 20 && random(0, 100) < 0.1*perversion
 
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Boss_Sucker = Player.getActorVar(rk_VB_Boss_Sucker)
         setBackground(work)
         Boss.dress()
         Boss.show(2)
         SleepingWithBoss = SleepingWithBoss.getGlobal()
-    
         If SleepingWithBoss == 0
-            "It's obvious from the way <Boss.name> looks at me that <Boss.he_or_she> fancies me quite a bit. I've heard tales about young ambitious <Player.guy_or_girl> sleeping with <Player.his_or_her> boss to gain a career advantage. But is this the road that I want to go down?"
+            "It's obvious from the way my boss looks at me that <Boss.he_or_she> likes me a lot. I've heard stories of ambitious employees willing to sleep with their bosses to gain a professional advantage."
+            "But is this the road that I want to go down?"
             0:: "Yes"
             1:: "No"
             
             If 0
-            
-                perversion += Random(0, 2)
+                perversion += random(0, 2)
                 karma -= 5
                 "It's a competitive job market, I'll do whatever it takes to get ahead."
-                "Late that evening, after everyone else has gone home ..."
+                "Late that evening, after everyone else has gone home... I decide to go directly to my boss to suggest my private services ..."
                 Boss(Flirty):: "You have no idea how much I have been waiting for you to offer me that since the day you started here!"
                 Player(Flirty):: "I'm glad to be of service ..."
-                jobperformance += Random(0, 30)
+                jobperformance += random(0, 10)
                 Sex(Boss, Player)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
@@ -37,25 +37,22 @@ OTHER: perversion > 20 && Random(0, 100) < 0.1*perversion
                 Boss(Flirty):: "That was amazing, babe. We must do it again soon, but we must wait until everyone else has left."
                 SleepingWithBoss.setGlobal(1)
                 Player.modifyActorVar(rk_VB_Boss_Sucker, 1)
-                
             Else
-            
                 "No, I will achieve my ambitions based on merits alone."
-                Boss:attractiontoplayer -= Random(0, 20)
+                Boss:attractiontoplayer -= random(0, 20)
                 Player.modifyActorVar(rk_VB_Boss_Sucker, -1)
                 timeout(500, affair_with_boss)
-                
-            Endif
+            EndIf
         Else
-            "My boss is calling for me. It's very late in the evening and we're the the only two left in the office. It's obvious again what <Boss.he_or_she> wants tonight ..."
+            "My boss is calling for me. It's very late in the evening and we're the only two left in the office. It's obvious again what <Boss.he_or_she> wants tonight ..."
             0:: "Yes"
             1:: "No"
             
             If 0
                 karma -= 1
                 "I can't risk jeopardizing my career by breaking our secret arrangement ... Of course, I'll give <Boss.him_or_her> what <Boss.he_or_she> wants again."
-                perversion += Random(0, 0.2)
-                jobperformance += Random(0, 4)
+                perversion += random(0, 0.2)
+                jobperformance += random(0, 4)
                 Sex(Boss, Player)
                 Boss.show(2)
                 Boss(Flirty)::"You were great, as usual. Keep doing what you've been doing and you'll be promoted in no time!"
@@ -63,16 +60,11 @@ OTHER: perversion > 20 && Random(0, 100) < 0.1*perversion
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
-                
             Else
-            
                 "I just don't feel like it today. I excused myself out of my indecent duty. The boss was visibly upset."
-                jobperformance -= Random(0, 2)
+                jobperformance -= random(0, 2)
                 Player.modifyActorVar(rk_VB_Boss_Sucker, -0.25)
-                
-            Endif
-            
-        Endif
-
+            EndIf
+        EndIf
     SceneEnd()
     timeout(400, affair_with_boss) // Improved by Raddeck

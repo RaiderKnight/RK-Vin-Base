@@ -18,7 +18,7 @@ OTHER: PercentageElves > 0 || PercentageOrcs > 0 || PercentageVampires > 0
         cadeau = false
         fourrerO = false
         setBackgroundCustom(livingroom)
-        "I come home only to find a stranger hiding in my living room"
+        "I come home only to find a stranger sitting in my living room..."
         Actor99 = generatePersonTemporary()
         Actor99.hide()
         Actor = generatePersonTemporary()
@@ -29,20 +29,28 @@ OTHER: PercentageElves > 0 || PercentageOrcs > 0 || PercentageVampires > 0
         Actor:attractiveness => random(70, 100)
         Actor.randomizeFace()
         Actor.randomizeHairs()
-        Random
+        If PercentageElves > 0 && PercentageOrcs > 0 && PercentageVampires > 0
+            Random
+                Actor.blendPreset(Elf)
+                Actor.blendPreset(Orc)
+                Actor.blendPreset(Vampire)
+            EndRandom
+        ElseIf PercentageElves > 0
             Actor.blendPreset(Elf)
+        ElseIf PercentageOrcs > 0
             Actor.blendPreset(Orc)
+        ElseIf PercentageVampires > 0
             Actor.blendPreset(Vampire)
-        EndRandom
+        EndIf
         // Actor.setVirgin(true)
         Actor.dress()
-        Actor.show()
         ActorC = generatePersonTemporary()
         While !Player.isInterestedIn(ActorC)
             ActorC = generatePersonTemporary()
         EndWhile
         ActorC:age => random(30, 70)
         ActorC:attractiveness => random(70, 100)
+        ActorC.randomizeRace()
         ActorC.randomizeFace()
         ActorC.randomizeHairs()
         ActorC.dress()
@@ -62,6 +70,7 @@ OTHER: PercentageElves > 0 || PercentageOrcs > 0 || PercentageVampires > 0
             texto = "vampires"
             ActorC.hide()
         EndIf
+        Actor.show()
         Player(Furious):: "What the fuck are you doing in my living room? You're trespassing. Get out before I call the cops!"
         Actor(Scared):: "Please don't make too much noise. I'm running away from my shitty community."
         Actor(Scared):: "They want to offer me as an annual tribute to a corrupt local official who knows our secrets. <Actor99.He_or_She> demands virgins from my community to serve <Actor99.him_or_her> as sex slaves in exchange for letting us live in peace."
@@ -113,7 +122,9 @@ OTHER: PercentageElves > 0 || PercentageOrcs > 0 || PercentageVampires > 0
         EndIf
         If cadeau
             Actor.makePermanent()
-            exchangeContact(Actor)
+            If !Actor.isContactExchanged()
+                exchangeContact(Actor)
+            EndIf
             Actor.makeInterested(Player)
             Actor:attractiontoplayer += random(10, 30)
             Actor:rapportwithplayer += random(10, 30)

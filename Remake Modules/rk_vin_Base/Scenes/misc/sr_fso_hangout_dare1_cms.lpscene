@@ -2,7 +2,7 @@ WHAT: all, -sleep, -nap
 WHERE: home
 WHEN: 8 - 22
 WHO: Actor = getSpecific(Dating); If !Actor.isMale()
-OTHER: Player.isMale() && Random(35, 100) < perversion
+OTHER: Player.isMale() && random(35, 100) < perversion && isModEnabled(vin_NTR)
 
     SceneStart()
 
@@ -28,15 +28,15 @@ OTHER: Player.isMale() && Random(35, 100) < perversion
             setBackgroundCustom(livingroom)
             
             "Who should I invite?"
-            selectNpc()
-            Actor1 = getSelectedNpc()
+            selectNPC()
+            Actor1 = getSelectedNPC()
             
             Actor1.dress()
             Actor1.show()
             
             "Who else should I invite? Click Close if enough."
-            selectNpc()
-            Actor2 = getSelectedNpc()
+            selectNPC()
+            Actor2 = getSelectedNPC()
             
             Actor2.dress()
             Actor2.show()
@@ -44,12 +44,12 @@ OTHER: Player.isMale() && Random(35, 100) < perversion
             
             If Actor2.isValid()
                 "Who else should I invite? Click Close if enough."
-                selectNpc()
-                Actor3 = getSelectedNpc()
+                selectNPC()
+                Actor3 = getSelectedNPC()
                 
                 Actor3.dress()
                 Actor3.show()
-            Endif
+            EndIf
 
             "Once all of my friends came over we immediately went over to the TV and started watching our favorite program. I went to the hallway where <Actor.name> was standing nervously."
             "I asked her to go to the kitchen and grab a few drinks for me and my friends and then to come join me on the couch."
@@ -64,13 +64,13 @@ OTHER: Player.isMale() && Random(35, 100) < perversion
                 Actor.stripOne()
                 animatePair(Player, Actor, Kissing)
                 "I carefully pulled her shirt up while hugging her showing off her entire bare bottoms to everyone. I then proceeded to kiss <Actor.name>."
-                If Random(0, 100) < 33 && Actor2.isValid()
+                If random(0, 100) < 33 && Actor2.isValid()
                     Actor4 = Actor2
-                Elseif Random(0, 100) < 33 && Actor3.isValid()
+                ElseIf random(0, 100) < 33 && Actor3.isValid()
                     Actor4 = Actor3
                 Else
                     Actor4 = Actor1
-                Endif
+                EndIf
                 
                 Actor4.moveToPersonStand(Actor, 50)
                 "While we did this, <Actor4.name> got close behind her staring directly at her lower regions from behind."
@@ -86,7 +86,7 @@ OTHER: Player.isMale() && Random(35, 100) < perversion
                 Actor1:rapportwithplayer += 5
                 Actor2:rapportwithplayer += 5
                 Actor3:rapportwithplayer += 5
-            Elseif 1
+            ElseIf 1
                 "I’m going to convince <Actor.name> to drink enough to get her drunk and have some fun."
                 "The <Actor.boyfriend_or_girlfriend> drank so much she began getting tipsy. I began teasing her till she couldn’t take it anymore and took me to our bedroom."
                 setBackground(home)
@@ -100,7 +100,7 @@ OTHER: Player.isMale() && Random(35, 100) < perversion
                 Actor1:rapportwithplayer += 1
                 Actor2:rapportwithplayer += 1
                 Actor3:rapportwithplayer += 1            
-            Elseif 2
+            ElseIf 2
                 "Lucky I planned ahead and bought some items. I spiked everyone’s drinks and soon everyone was nude and I could see my <Actor.boyfriend_or_girlfriend> was sweating. Her lower regions dripping wet. I then said"
                 Player:: "Why don’t we make this hangout spiced up some more? I then parted my <Actor.boyfriend_or_girlfriend>'s legs showing her off to everyone and very quickly we all went to town on her."
                 
@@ -109,7 +109,7 @@ OTHER: Player.isMale() && Random(35, 100) < perversion
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -5)
                     EndIf
-                Elseif Actor2.isValid()
+                ElseIf Actor2.isValid()
                     Sex(Player, Actor1, Actor2, Actor)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -4)
@@ -119,13 +119,13 @@ OTHER: Player.isMale() && Random(35, 100) < perversion
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -3)
                     EndIf
-                Endif
+                EndIf
                 "After sex is finished everyone goes home."
                 
                 Actor1:rapportwithplayer += 5
                 Actor2:rapportwithplayer += 5
                 Actor3:rapportwithplayer += 5
-            Endif
-        Endif
+            EndIf
+        EndIf
     SceneEnd()
     timeout(150, sr_fso_hangout_dare1_cms) // Improved by Raddeck

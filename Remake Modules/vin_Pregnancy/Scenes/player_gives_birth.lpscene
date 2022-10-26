@@ -10,251 +10,275 @@ OTHER: none
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        "Oh no, I'm going into labour ..."
-        0:: "Be taken to a hospital"
-        
-        setBackground(hospital)
-        TheDoctor = generatePersonTemporary()
-        TheDoctor.dressUniform(Doctor)
-        TheDoctor.show()
-        Player.strip()
-        If TfGame()
-            "Pain like I’ve never experienced, followed by exhaustion so deep it feels like my bones have melted; the end result of hours of labor."
-            "But when they lay the child back into my arms, it’s all swept away by exhilaration and an odd feeling of triumph. I did this. I made this little person."
-            "I’m a mom now. And I’m going to do everything I can to make sure this little person gets the best life I can possibly give them. I made a miracle happen; I feel like a God right now."
-            "No. A Goddess!"
-        Else
-            "It was a painful experience, but thankfully, everything went smoothly in the end. Nothing beats the feeling of being a new mom."
-        EndIf
-        Actor2 = getPerson(tag_DaddyKnows)
-        DaddyKnows = Actor2.getActorVar(tag_DaddyKnows)
-        Actor2.setActorVar(tag_DaddyKnows, 0)
-        BioDaddy = Player.getBabyDaddy()
-        Player.endPregnancy()
-        energy -= 100
-        mood += 100
-        Surrogated = Surrogate.getGlobal()
-        Surrogated *= 2
-        perdSuro = money - Surrogated
-        gagneSuro = money + Surrogated
-        If Surrogated > 0
-            Surrogate.setGlobal(0)
-            "Of course, I know better than anyone that even though I personally carried this child to term, I'm only a surrogate mother and it's not my baby after all. I now have to hand the child over to <Actor2.name> as agreed."
-            0:: "Hand over the child and get paid for being the surrogate"
-            1:: money > Surrogated::"Keep the baby and refund the payment"
+        Days = Player.countPregnancyDays()
+        If Days > 280
+            "Oh no, I'm going into labour ..."
+            0:: "Be taken to a hospital"
             
-            If 0
-                "As agreed, as soon as I've given birth, the baby was given to the paying father <Actor2.name>. I did my best to not look at the baby and avoid getting too attached."
-                KeepBaby = false
-                Actor = Player.generatePersonMatchRace()
-                Actor:age => 0
-                Actor.randomizeFace()
-                Actor.randomizeHairs()
-                Actor.blendAppearanceFrom(Actor2, Player)
-                money => gagneSuro
-                addNpcRelationship(ParentChild, Actor2, Actor)
-                Actor.matchLastName(Actor2)
+            setBackground(hospital)
+            TheDoctor = generatePersonTemporary()
+            TheDoctor.dressUniform(Doctor)
+            TheDoctor.show()
+            Player.strip()
+            If TfGame()
+                "Pain like I’ve never experienced, followed by exhaustion so deep it feels like my bones have melted; the end result of hours of labor."
+                "But when they lay the child back into my arms, it’s all swept away by exhilaration and an odd feeling of triumph. I did this. I made this little person."
+                "I’m a mom now. And I’m going to do everything I can to make sure this little person gets the best life I can possibly give them. I made a miracle happen; I feel like a God right now."
+                "No. A Goddess!"
             Else
-                "The truth is I have grown attached to this child, who's unquestionably mine!"
-                KeepBaby = true
-                "The law permits surrogate mothers to change their mind and keep the baby, thankfully. But any payment to date must be refunded. I have no choice but return the money. <Actor2.name> was understandably upset but had to accept my choice after all since it was all legal."
-                money => perdSuro
-                Actor2:rapportwithplayer -= 50
-                Actor2:attractiontoplayer -= 50
+                "It was a painful experience, but thankfully, everything went smoothly in the end. Nothing beats the feeling of being a new mom."
             EndIf
-        Else
-            KeepBaby = true
+            Actor2 = getPerson(tag_DaddyKnows)
+            DaddyKnows = Actor2.getActorVar(tag_DaddyKnows)
+            //Actor2 = getPerson(tag_DaddyKnows)
+            //DaddyKnows = Actor2.getActorVar(tag_DaddyKnows)
+            //Actor2.setActorVar(tag_DaddyKnows, 0)
+            BioDaddy = Player.getBabyDaddy()
+            Player.endPregnancy()
+            energy -= 100
+            mood += 100
+            Surrogated = Surrogate.getGlobal()
+            Surrogated *= 2
+            perdSuro = money - Surrogated
+            gagneSuro = money + Surrogated
+            If Surrogated > 0
+                Surrogate.setGlobal(0)
+                "Of course, I know better than anyone that even though I personally carried this child to term, I'm only a surrogate mother and it's not my baby after all. I now have to hand the child over to <Actor2.name> as agreed."
+                0:: "Hand over the child and get paid for being the surrogate"
+                1:: money > Surrogated::"Keep the baby and refund the payment"
+                
+                If 0
+                    "As agreed, as soon as I've given birth, the baby was given to the paying father <Actor2.name>. I did my best to not look at the baby and avoid getting too attached."
+                    KeepBaby = false
+                    Actor = Player.generatePersonMatchRace()
+                    Actor:age => 0
+                    Actor.randomizeFace()
+                    Actor.randomizeHairs()
+                    Actor.blendAppearanceFrom(Actor2, Player)
+                    money => gagneSuro
+                    addNpcRelationship(ParentChild, Actor2, Actor)
+                    Actor.matchLastName(Actor2)
+                Else
+                    "The truth is I have grown attached to this child, who's unquestionably mine!"
+                    KeepBaby = true
+                    "The law permits surrogate mothers to change their mind and keep the baby, thankfully. But any payment to date must be refunded. I have no choice but return the money. <Actor2.name> was understandably upset but had to accept my choice after all since it was all legal."
+                    money => perdSuro
+                    Actor2:rapportwithplayer -= 50
+                    Actor2:attractiontoplayer -= 50
+                EndIf
+            Else
+                KeepBaby = true
+            EndIf
         EndIf
         If KeepBaby
-            ChanceIdentical = random(0, 100)
-            ChanceIdenticalA = random(0, 100)
-            ChanceIdenticalB = random(0, 100)
-            ChanceIdenticalC = random(0, 100)
-            LuckyD = random(2, 10)
-            LuckyD = LuckyD.round()
-            Actor = Player.generateRelativeMatchRace()
-            Actor.randomizeFace()
-            Actor.randomizeHairs()
-            If BioDaddy.isValid() && !BioDaddy.isCreature()
-                Actor.blendAppearanceFrom(BioDaddy, Player)
-            EndIf
-            Actor.setRelativeType(Child)
-            If Actor2.isValid()
-                addNpcRelationship(ParentChild, Actor2, Actor)
-            EndIf
-            "It's a <Actor.boy_or_girl>! What should I name my <Actor.son_or_daughter>?"
-            Actor.enterFirstName()
-            Actor:age => 0
-            Player:children += 1
-            If LuckyD == 4
-                Player:children += 3
-                TheDoctor(Happy)::"OMG, Wait! She's having quadruplets!"
-                Actor7 = Player.generateRelativeMatchRace()
-                Actor7.setRelativeType(Child)
-                Actor7.randomizeFace()
-                Actor7.randomizeHairs()
-                If ChanceIdentical > 60
-                    Actor7.cloneFrom(Actor)
-                ElseIf BioDaddy.isValid() && !BioDaddy.isCreature()
-                    Actor7.blendAppearanceFrom(BioDaddy, Player)
-                EndIf
-                If Actor2.isValid()
-                    addNpcRelationship(ParentChild, Actor2, Actor7)
-                EndIf
-                "It's a <Actor7.boy_or_girl>! What should I name my <Actor7.son_or_daughter>?"
-                Actor7.enterFirstName()
-                Actor7:age => 0
-                TheDoctor(Shocked)::"The second one comes slowly, push madam!"
-                Actor8 = Player.generateRelativeMatchRace()
-                Actor8.setRelativeType(Child)
-                Actor8.randomizeFace()
-                Actor8.randomizeHairs()
-                If ChanceIdentical > 60
-                    Actor8.cloneFrom(Actor)
-                ElseIf BioDaddy.isValid() && !BioDaddy.isCreature()
-                    Actor8.blendAppearanceFrom(BioDaddy, Player)
-                EndIf
-                If Actor2.isValid()
-                    addNpcRelationship(ParentChild, Actor2, Actor8)
-                EndIf
-                "It's a <Actor8.boy_or_girl>! What should I name my <Actor8.son_or_daughter>?"
-                Actor8.enterFirstName()
-                Actor8:age => 0
-                TheDoctor(Shocked)::"The last one comes slowly, push madam!"
-                Actor9 = Player.generateRelativeMatchRace()
-                Actor9.setRelativeType(Child)
-                Actor9.randomizeFace()
-                Actor9.randomizeHairs()
-                If ChanceIdentical > 60
-                    Actor9.cloneFrom(Actor)
-                ElseIf BioDaddy.isValid() && !BioDaddy.isCreature()
-                    Actor9.blendAppearanceFrom(BioDaddy, Player)
-                EndIf
-                If Actor2.isValid()
-                    addNpcRelationship(ParentChild, Actor2, Actor9)
-                EndIf
-                "It's a <Actor9.boy_or_girl>! What should I name my <Actor9.son_or_daughter>?"
-                Actor9.enterFirstName()
-                Actor9:age => 0            
-                GDEnough = true
-            ElseIf LuckyD == 5
-                Player:children += 4
-                TheDoctor(Happy)::"OMG, Wait! She's having quintuplets!"
-                Actor7 = Player.generateRelativeMatchRace()
-                Actor7.setRelativeType(Child)
-                Actor7.randomizeFace()
-                Actor7.randomizeHairs()
-                If ChanceIdentical > 60
-                    Actor7.cloneFrom(Actor)
-                ElseIf BioDaddy.isValid() && !BioDaddy.isCreature()
-                    Actor7.blendAppearanceFrom(BioDaddy, Player)
-                EndIf
-                If Actor2.isValid()
-                    addNpcRelationship(ParentChild, Actor2, Actor7)
-                EndIf
-                "It's a <Actor7.boy_or_girl>! What should I name my <Actor7.son_or_daughter>?"
-                Actor7.enterFirstName()
-                Actor7:age => 0
-                TheDoctor(Shocked)::"The third one comes slowly, push madam!"
-                Actor8 = Player.generateRelativeMatchRace()
-                Actor8.setRelativeType(Child)
-                Actor8.randomizeFace()
-                Actor8.randomizeHairs()
-                If ChanceIdentical > 60
-                    Actor8.cloneFrom(Actor)
-                ElseIf BioDaddy.isValid() && !BioDaddy.isCreature()
-                    Actor8.blendAppearanceFrom(BioDaddy, Player)
-                EndIf
-                If Actor2.isValid()
-                    addNpcRelationship(ParentChild, Actor2, Actor8)
-                EndIf
-                "It's a <Actor8.boy_or_girl>! What should I name my <Actor8.son_or_daughter>?"
-                Actor8.enterFirstName()
-                Actor8:age => 0
-                TheDoctor(Shocked)::"The fourth one comes slowly, push madam!"
-                Actor9 = Player.generateRelativeMatchRace()
-                Actor9.setRelativeType(Child)
-                Actor9.randomizeFace()
-                Actor9.randomizeHairs()
-                If ChanceIdentical > 60
-                    Actor9.cloneFrom(Actor)
-                ElseIf BioDaddy.isValid() && !BioDaddy.isCreature()
-                    Actor9.blendAppearanceFrom(BioDaddy, Player)
-                EndIf
-                If Actor2.isValid()
-                    addNpcRelationship(ParentChild, Actor2, Actor9)
-                EndIf
-                "It's a <Actor9.boy_or_girl>! What should I name my <Actor9.son_or_daughter>?"
-                Actor9.enterFirstName()
-                Actor9:age => 0
-                TheDoctor(Shocked)::"The last one comes slowly, push madam!"
-                Actor91 = Player.generateRelativeMatchRace()
-                Actor91.setRelativeType(Child)
-                Actor91.randomizeFace()
-                Actor91.randomizeHairs()
-                If ChanceIdentical > 60
-                    Actor91.cloneFrom(Actor)
-                ElseIf BioDaddy.isValid() && !BioDaddy.isCreature()
-                    Actor91.blendAppearanceFrom(BioDaddy, Player)
-                EndIf
-                If Actor2.isValid()
-                    addNpcRelationship(ParentChild, Actor2, Actor91)
-                EndIf
-                "It's a <Actor91.boy_or_girl>! What should I name my <Actor91.son_or_daughter>?"
-                Actor91.enterFirstName()
-                Actor91:age => 0
-                GDEnough = true
-            EndIf
-            If !GDEnough && [random(0, 200) < fertility] || [Random(0, 50) < fertility && [Player.isRace(Orc) || BioDaddy.isRace(Orc)]]
-                "I'm having twins!"
-                Actor3 = Player.generateRelativeMatchRace()
-                Actor3.randomizeFace()
-                Actor3.randomizeHairs()
-                If BioDaddy.isValid() && !BioDaddy.isCreature()
-                    Actor3.blendAppearanceFrom(BioDaddy, Player)
-                EndIf
-                Actor3.setRelativeType(Child)
-                If Actor2.isValid()
-                    addNpcRelationship(ParentChild, Actor2, Actor3)
-                EndIf
-                "It's a <Actor3.boy_or_girl>! What should I name my <Actor3.son_or_daughter>?"
-                Actor3.enterFirstName()
-                Actor3:age => 0
-                Player:children += 1
-                If [random(0, 200) < fertility] || [Random(0, 50) < fertility && [Player.isRace(Orc) || BioDaddy.isRace(Orc)]]
-                    "I'm having triplets!"
-                    Actor4 = Player.generateRelativeMatchRace()
-                    Actor4.randomizeFace()
-                    Actor4.randomizeHairs()
-                    If BioDaddy.isValid() && !BioDaddy.isCreature()
-                        Actor4.blendAppearanceFrom(BioDaddy, Player)
-                    EndIf
-                    Actor4.setRelativeType(Child)
-                    If Actor2.isValid()
-                        addNpcRelationship(ParentChild, Actor2, Actor4)
-                    EndIf
-                    "It's a <Actor4.boy_or_girl>! What should I name my <Actor3.son_or_daughter>?"
-                    Actor4.enterFirstName()
-                    Actor4:age => 0
-                    Player:children += 1
-                EndIf        
-            EndIf
-            If Actor2.isValid() && Surrogated == 0
-                If Actor2.isContactExchanged()
-                    Actor2.dress()
-                    Actor2.show()
-                    "Of course, <Actor2.name> was there with me in the hospital, welcoming his new born child into the world."
-                    If DaddyKnows == 2
-                        "Little did he know, the baby might not even be his ... let's hope it's a secret that never comes out."
-                    EndIf
-                Else
-                    "<Actor2.name>, who was told that he was the father of the baby, didn't even bother to show up at the hospital ... Looks like I have no choice but to raise this child on my own."
+            If BioDaddy.isCreature()
+                If BioDaddy.isCreatureType(Dog)
+                    Actor = generateCreatureTemporary(Dog)
+                    Actor.makePermanent()
+                    Actor:age => 0
+                    "To the shock of all the doctors, I somehow gave birth to a puppy. Only I know the real reason of course."
+                    "It's a <Actor.male_or_female> puppy! What should I name my dog <Actor.son_or_daughter>?"
+                    Actor.enterFirstName()                
+                Else    
+                    Actor = generateCreatureTemporary(Horse)
+                    Actor.makePermanent()
+                    Actor:age => 0
+                    "To the shock of all the doctors, I somehow gave birth to a foal. Only I know the real reason of course"
+                    "It's a <Actor.male_or_female> foal! What should I name my horse <Actor.son_or_daughter>?"
+                    Actor.enterFirstName()         
                 EndIf
             Else
-                "It's a shame that my baby was born without me even knowing who the father is. But after all, it was my choice not to try and find that out. I'm more than capable of raising the child on my own."
-            EndIf
+                ChanceIdentical = random(0, 100)
+                ChanceIdenticalA = random(0, 100)
+                ChanceIdenticalB = random(0, 100)
+                ChanceIdenticalC = random(0, 100)
+                LuckyD = random(2, 10)
+                LuckyD = LuckyD.round()
+                Actor = Player.generateRelativeMatchRace()
+                Actor.randomizeFace()
+                Actor.randomizeHairs()
+                If BioDaddy.isValid() && !BioDaddy.isCreature()
+                    Actor.blendAppearanceFrom(BioDaddy, Player)
+                EndIf
+                Actor.setRelativeType(Child)
+                If Actor2.isValid()
+                    addNpcRelationship(ParentChild, Actor2, Actor)
+                EndIf
+                "It's a <Actor.boy_or_girl>! What should I name my <Actor.son_or_daughter>?"
+                Actor.enterFirstName()
+                Actor:age => 0
+                children += 1
+                If LuckyD == 4
+                    children += 3
+                    TheDoctor(Happy)::"OMG, Wait! She's having quadruplets!"
+                    Actor7 = Player.generateRelativeMatchRace()
+                    Actor7.setRelativeType(Child)
+                    Actor7.randomizeFace()
+                    Actor7.randomizeHairs()
+                    If ChanceIdentical > 60
+                        Actor7.cloneFrom(Actor)
+                    ElseIf BioDaddy.isValid() && !BioDaddy.isCreature()
+                        Actor7.blendAppearanceFrom(BioDaddy, Player)
+                    EndIf
+                    If Actor2.isValid()
+                        addNpcRelationship(ParentChild, Actor2, Actor7)
+                    EndIf
+                    "It's a <Actor7.boy_or_girl>! What should I name my <Actor7.son_or_daughter>?"
+                    Actor7.enterFirstName()
+                    Actor7:age => 0
+                    TheDoctor(Shocked)::"The second one comes slowly, push madam!"
+                    Actor8 = Player.generateRelativeMatchRace()
+                    Actor8.setRelativeType(Child)
+                    Actor8.randomizeFace()
+                    Actor8.randomizeHairs()
+                    If ChanceIdentical > 60
+                        Actor8.cloneFrom(Actor)
+                    ElseIf BioDaddy.isValid() && !BioDaddy.isCreature()
+                        Actor8.blendAppearanceFrom(BioDaddy, Player)
+                    EndIf
+                    If Actor2.isValid()
+                        addNpcRelationship(ParentChild, Actor2, Actor8)
+                    EndIf
+                    "It's a <Actor8.boy_or_girl>! What should I name my <Actor8.son_or_daughter>?"
+                    Actor8.enterFirstName()
+                    Actor8:age => 0
+                    TheDoctor(Shocked)::"The last one comes slowly, push madam!"
+                    Actor9 = Player.generateRelativeMatchRace()
+                    Actor9.setRelativeType(Child)
+                    Actor9.randomizeFace()
+                    Actor9.randomizeHairs()
+                    If ChanceIdentical > 60
+                        Actor9.cloneFrom(Actor)
+                    ElseIf BioDaddy.isValid() && !BioDaddy.isCreature()
+                        Actor9.blendAppearanceFrom(BioDaddy, Player)
+                    EndIf
+                    If Actor2.isValid()
+                        addNpcRelationship(ParentChild, Actor2, Actor9)
+                    EndIf
+                    "It's a <Actor9.boy_or_girl>! What should I name my <Actor9.son_or_daughter>?"
+                    Actor9.enterFirstName()
+                    Actor9:age => 0            
+                    GDEnough = true
+                ElseIf LuckyD == 5
+                    children += 4
+                    TheDoctor(Happy)::"OMG, Wait! She's having quintuplets!"
+                    Actor7 = Player.generateRelativeMatchRace()
+                    Actor7.setRelativeType(Child)
+                    Actor7.randomizeFace()
+                    Actor7.randomizeHairs()
+                    If ChanceIdentical > 60
+                        Actor7.cloneFrom(Actor)
+                    ElseIf BioDaddy.isValid() && !BioDaddy.isCreature()
+                        Actor7.blendAppearanceFrom(BioDaddy, Player)
+                    EndIf
+                    If Actor2.isValid()
+                        addNpcRelationship(ParentChild, Actor2, Actor7)
+                    EndIf
+                    "It's a <Actor7.boy_or_girl>! What should I name my <Actor7.son_or_daughter>?"
+                    Actor7.enterFirstName()
+                    Actor7:age => 0
+                    TheDoctor(Shocked)::"The third one comes slowly, push madam!"
+                    Actor8 = Player.generateRelativeMatchRace()
+                    Actor8.setRelativeType(Child)
+                    Actor8.randomizeFace()
+                    Actor8.randomizeHairs()
+                    If ChanceIdentical > 60
+                        Actor8.cloneFrom(Actor)
+                    ElseIf BioDaddy.isValid() && !BioDaddy.isCreature()
+                        Actor8.blendAppearanceFrom(BioDaddy, Player)
+                    EndIf
+                    If Actor2.isValid()
+                        addNpcRelationship(ParentChild, Actor2, Actor8)
+                    EndIf
+                    "It's a <Actor8.boy_or_girl>! What should I name my <Actor8.son_or_daughter>?"
+                    Actor8.enterFirstName()
+                    Actor8:age => 0
+                    TheDoctor(Shocked)::"The fourth one comes slowly, push madam!"
+                    Actor9 = Player.generateRelativeMatchRace()
+                    Actor9.setRelativeType(Child)
+                    Actor9.randomizeFace()
+                    Actor9.randomizeHairs()
+                    If ChanceIdentical > 60
+                        Actor9.cloneFrom(Actor)
+                    ElseIf BioDaddy.isValid() && !BioDaddy.isCreature()
+                        Actor9.blendAppearanceFrom(BioDaddy, Player)
+                    EndIf
+                    If Actor2.isValid()
+                        addNpcRelationship(ParentChild, Actor2, Actor9)
+                    EndIf
+                    "It's a <Actor9.boy_or_girl>! What should I name my <Actor9.son_or_daughter>?"
+                    Actor9.enterFirstName()
+                    Actor9:age => 0
+                    TheDoctor(Shocked)::"The last one comes slowly, push madam!"
+                    Actor91 = Player.generateRelativeMatchRace()
+                    Actor91.setRelativeType(Child)
+                    Actor91.randomizeFace()
+                    Actor91.randomizeHairs()
+                    If ChanceIdentical > 60
+                        Actor91.cloneFrom(Actor)
+                    ElseIf BioDaddy.isValid() && !BioDaddy.isCreature()
+                        Actor91.blendAppearanceFrom(BioDaddy, Player)
+                    EndIf
+                    If Actor2.isValid()
+                        addNpcRelationship(ParentChild, Actor2, Actor91)
+                    EndIf
+                    "It's a <Actor91.boy_or_girl>! What should I name my <Actor91.son_or_daughter>?"
+                    Actor91.enterFirstName()
+                    Actor91:age => 0
+                    GDEnough = true
+                EndIf
+                If !GDEnough && [random(0, 200) < fertility || [Random(0, 50) < fertility && [Player.isRace(Orc) || BioDaddy.isRace(Orc)]]]
+                    "I'm having twins!"
+                    Actor3 = Player.generateRelativeMatchRace()
+                    Actor3.randomizeFace()
+                    Actor3.randomizeHairs()
+                    If BioDaddy.isValid() && !BioDaddy.isCreature()
+                        Actor3.blendAppearanceFrom(BioDaddy, Player)
+                    EndIf
+                    Actor3.setRelativeType(Child)
+                    If Actor2.isValid()
+                        addNpcRelationship(ParentChild, Actor2, Actor3)
+                    EndIf
+                    "It's a <Actor3.boy_or_girl>! What should I name my <Actor3.son_or_daughter>?"
+                    Actor3.enterFirstName()
+                    Actor3:age => 0
+                    children += 1
+                    If random(0, 200) < fertility || [Random(0, 50) < fertility && [Player.isRace(Orc) || BioDaddy.isRace(Orc)]]
+                        "I'm having triplets!"
+                        Actor4 = Player.generateRelativeMatchRace()
+                        Actor4.randomizeFace()
+                        Actor4.randomizeHairs()
+                        If BioDaddy.isValid() && !BioDaddy.isCreature()
+                            Actor4.blendAppearanceFrom(BioDaddy, Player)
+                        EndIf
+                        Actor4.setRelativeType(Child)
+                        If Actor2.isValid()
+                            addNpcRelationship(ParentChild, Actor2, Actor4)
+                        EndIf
+                        "It's a <Actor4.boy_or_girl>! What should I name my <Actor3.son_or_daughter>?"
+                        Actor4.enterFirstName()
+                        Actor4:age => 0
+                        children += 1
+                    EndIf        
+                EndIf
+                If Actor2.isValid() && Surrogated == 0
+                    If Actor2.isContactExchanged()
+                        Actor2.dress()
+                        Actor2.show()
+                        "Of course, <Actor2.name> was there with me in the hospital, welcoming his new born child into the world."
+                        If DaddyKnows == 2
+                            "Little did he know, the baby might not even be his ... let's hope it's a secret that never comes out."
+                        EndIf
+                    Else
+                        "<Actor2.name>, who was told that he was the father of the baby, didn't even bother to show up at the hospital ... Looks like I have no choice but to raise this child on my own."
+                    EndIf
+                Else
+                    "It's a shame that my baby was born without me even knowing who the father is. But after all, it was my choice not to try and find that out. I'm more than capable of raising the child on my own."
+                EndIf
+            EndIf 
         Else
             "It was a painful experience, but thankfully, everything went smoothly in the end. But I decided to not keep the baby..."
         EndIf
+        Actor2.setActorVar(tag_DaddyKnows, 0)
         TheDoctor.hide()
     SceneEnd()

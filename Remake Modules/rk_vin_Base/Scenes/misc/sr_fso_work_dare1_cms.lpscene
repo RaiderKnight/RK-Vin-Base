@@ -2,7 +2,7 @@ WHAT: all
 WHERE: work
 WHEN: 14 - 24
 WHO: Actor = getSpecific(Dating); If !Actor.isMale() && Actor.isColleague()
-OTHER: Player.isMale() && Random(50, 100) < perversion
+OTHER: Player.isMale() && random(50, 100) < perversion
 
     SceneStart()
 
@@ -47,18 +47,18 @@ OTHER: Player.isMale() && Random(50, 100) < perversion
                         Actor.stripOne()
                         Actor.stripOne()
                         "She proceeds to strip to her underwear and walk out to the hallway"
-                        If Random(0, 100) < 50
+                        If random(0, 100) < 50
                             setBackground(toilets)
                             "<Actor.name> comes back into the bathroom, masturbates in the stalls"
                             Filter(Solo)
                             Sex(Actor)
                             "She then retrieves her clothes from you and tells you how exciting that was before she goes back to work."
                             Actor:: "That was amazing! Hope you have some more ideas for us in the future!"
-                        Elseif Random(0, 100) < 50 && isModEnabled(vin_NTR) && isModEnabled(vin_NonConsensual)
+                        ElseIf random(0, 100) < 50 && isModEnabled(vin_NTR) && isModEnabled(vin_NonConsensual)
                             Actor2 = getSpecific(Colleague)
                             Actor2.dress()
                             Actor2.show()
-                            Actor2.movetoPersonStand(Actor, 100)
+                            Actor2.moveToPersonStand(Actor, 100)
                             
                             "<Actor.name> was caught in the act by one of my other colleagues, <Actor2.name>."
                             If Actor2:perversion > 30 && Actor2:masochist < 0 && Actor2.isInterestedIn(Actor)
@@ -69,13 +69,17 @@ OTHER: Player.isMale() && Random(50, 100) < perversion
                                 If 0
                                     Actor:: "Please no ..."
                                     Actor2:: "You were asking for it!"
-                                    Filter(Aggressive)
+                                    If Actor2.isMale() && !Actor.isMale()
+                                        Filter(AggressiveFM)
+                                    Else
+                                        Filter(Aggressive)
+                                    EndIf
                                     TalkNonConsensual()
                                     Sex(Actor2, Actor)
-                                Endif
+                                EndIf
                             Else
                                 "<Actor2.name> wasn't impressed and scolded us for our unprofessional behavior in the workplace."
-                            Endif
+                            EndIf
                         Else
                             Actor2 = getSpecific(Boss)
                             Actor2.dress()
@@ -89,15 +93,15 @@ OTHER: Player.isMale() && Random(50, 100) < perversion
                             If 0
                                 Actor.setActorVar(tag_sr_fso_work_flash, 1)
                                 "We agreed to the demand."
-                            Endif
-                        Endif
+                            EndIf
+                        EndIf
                     Else
                         "Unfortunately, <Actor.name> declined my perverted request."
-                    Endif
-                Endif
+                    EndIf
+                EndIf
             Else
                 Actor:attractiontoplayer += 1
-            Endif
-        Endif
+            EndIf
+        EndIf
     SceneEnd()
     timeout(75, sr_fso_work_dare1_cms) // Improved by Raddeck

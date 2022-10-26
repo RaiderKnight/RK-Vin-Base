@@ -1,0 +1,32 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        Pjour = age*365
+        Pjour = Pjour.round()
+        PremierJ = rk_VB_Job_PolPremierJ.getGlobal()
+        Depuis = Pjour - PremierJ
+        Depuis = Depuis.round()
+        Job_police = rk_VB_Job_police.getGlobal()
+        PXP = Player.getActorVar(rk_VB_PoliceXP)
+        SXP = Player.getActorVar(rk_VB_PoliceSXP)
+        LPS = Player.getActorVar(rk_VB_PoliceLPS)
+        sneaky = Player:sneak
+        PSalaire = Player.getActorVar(rk_VB_PoliceSalary)
+        If Job_police == 0
+            "You have to apply for a police officer position before you checking your police officer stats!"
+        ElseIf isModEnabled(rk_vin_Base)
+            "Here are my current statistics as police officer..."
+            0::"My salary is <PSalaire>"
+            0::"Work as a cop since <Depuis> days"
+            0::"My skills as a cop (<PXP>/100)"
+            0::"My Lockpicking skills (<LPS>/100)"
+            0::"My Shooting skills (<SXP>/100)"
+            0::"My Sneaking skills (<sneaky>/100)"
+            99::"Go back to the game!"
+        
+        EndIf
+    SceneEnd()

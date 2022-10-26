@@ -13,7 +13,7 @@ OTHER: none
         Nurse = generatePersonTemporary()
         While Nurse.isMale() || !Nurse.isInterestedIn(Player) || Nurse:age > 35
             Nurse = generatePersonTemporary()
-        endWhile
+        EndWhile
         Nurse.randomizeHairs()
         Nurse.randomizeSexy()
         Nurse.randomizeFace()
@@ -49,7 +49,7 @@ OTHER: none
                 Nurse(Serene):: "<Player.Mr_or_Ms> <Player.name_last>, this institute is a respectful one and we do not allow such unpleasant inquiries."
                 Player(Serene):: "..."
                 Nurse(Serene):: "..."
-                If Nurse.IsInterestedIn(Player) && [Player:attractiveness > 50 || Player:interpersonal > 95 || random(0,1000) < 10] && Nurse:perversion > 25
+                If Nurse.isInterestedIn(Player) && [attractiveness > 50 || interpersonal > 95 || random(0,1000) < 10] && Nurse:perversion > 25
                     Nurse(Happy):: "All right, but this time only."
                     setBackground(hospital)
                     Filter(Handjob)
@@ -79,7 +79,7 @@ OTHER: none
                     Player.show(0)
                     Nurse.show(2)
                     Nurse(Serene):: "Thank you <Player.Mr_or_Ms> <Player.name_last>, I'll take this. The analysis will take a while."
-                    If Nurse.IsInterestedIn(Player) && Nurse:attractiontoplayer > random(0, 30)
+                    If Nurse.isInterestedIn(Player) && Nurse:attractiontoplayer > random(0, 30)
                         Nurse(Flirty):: "Oh ... mmmh ... do you want my number? Just in case you need more help ..."
                         0:: "Yes, why not ..."
                         1:: "No, thanks ..."
@@ -96,7 +96,7 @@ OTHER: none
                 
             ElseIf 1
                 Player(Happy):: "Sorry if I'm being a weirdo but I find you quite cute. Perhaps we could exchange numbers and hang out another day?"
-                If Nurse.IsInterestedIn(Player) && Nurse:attractiontoplayer > random(0, 30)
+                If Nurse.isInterestedIn(Player) && Nurse:attractiontoplayer > random(0, 30)
                     Nurse(Surprised):: "Oh ... mmmh ... yeah, why not ... let's exchange contacts."
                     Nurse.makePermanent()
                     exchangeContact(Nurse)
@@ -269,11 +269,11 @@ OTHER: none
                         "As soon as I left the sperm bank clinic, I was approached by a strange young <Actor4.man_or_woman>. <Actor4.He_or_She> claimed to be my biological <Actor4.son_or_daughter> from my donated sperm from two decades ago. <Actor4.He_or_She> managed to convince a sperm bank employee to help <Actor4.him_or_her> find out my identity and was delighted to find out I was booked in for another sperm donation at the clinic today."
                         "<Actor4.He_or_She> realized it was an invasive thing to do but <Actor4.he_or_she> couldn't help but feel curious about the man who contributed half of <Actor4.his_or_her> genes. Ideally, <Actor4.he_or_she> hoped to have me in <Actor4.his_or_her> life in some way but understood that I might not want to."
                         0:: "This must be a case of mistaken identity!"
-                        1:: "Exchange numbers"
+                        1:: !Actor4.isContactExchanged()::"Exchange numbers"
         
                         If 0
-                            Player:: "Sorry, but I think the employee must have mixed up the sperm donor list. I didn't donate sperm that long in the past. I'm not the guy you're looking for."
-                            Actor4:: "Oh okay ... sorry to bother you."
+                            Player(Sad):: "Sorry, but I think the employee must have mixed up the sperm donor list. I didn't donate sperm that long in the past. I'm not the guy you're looking for."
+                            Actor4(Sad):: "Oh okay ... sorry to bother you!"
                         Else
                             "It's certainly unusual, I'm not sure how I feel about this. It makes me think about all the children my sperm was used to create over the years. Sperm donation is supposed to anonymous but this meeting makes it so personal all of a sudden."
                             "Still, I agreed to stay in touch with <Actor4.name> as a friend and exchanged numbers with <Actor4.him_or_her>."
@@ -364,7 +364,7 @@ OTHER: none
                                                     Player.modifyActorVar(rk_VB_Hunger, -3)
                                                 EndIf
                                             Else
-                                                Player:: "Glad to hear I inspired your lifestyle and helped with your marriage, but personally I'm not into that sort of things."
+                                                Player(Happy):: "Glad to hear I inspired your lifestyle and helped with your marriage, but personally I'm not into that sort of things."
                                             EndIf
                                         EndIf
                                     Else
@@ -392,7 +392,7 @@ OTHER: none
                     Else
                         Actor2 = getPerson(tag_BabyCrazy)
                 
-                        If Actor2.isPregnant() || !Actor2.isValid()
+                        If Actor2.isPregnant() && !Actor2.isValid()
                             Actor2 = generatePersonTemporary()
                             While Actor2.isMale()
                                 Actor2 = generatePersonTemporary()

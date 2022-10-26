@@ -5,7 +5,6 @@ WHO: Actor = getCompanion(); If Actor:perversion > 75 && !Actor.isDating() && !A
 OTHER: isModEnabled(vin_Interracial) && isModEnabled(vin_Polyamorous)
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -15,44 +14,43 @@ OTHER: isModEnabled(vin_Interracial) && isModEnabled(vin_Polyamorous)
         Actor2 = generatePersonTemporary()
         While !Player.isInterestedIn(Actor2)
             Actor2 = generatePersonTemporary()
-        Endwhile
-        
+        EndWhile
         If Actor2.isEthnic(black) && Actor2.isMale() && !isTimingOut(strt_black_m)
             Actor2.blendPreset(strt_black_m)
             
-        Elseif Actor2.isEthnic(black) && !Actor2.isMale() && !isTimingOut(strt_black_f)
+        ElseIf Actor2.isEthnic(black) && !Actor2.isMale() && !isTimingOut(strt_black_f)
             Actor2.blendPreset(strt_black_f)
 
-        Elseif Actor2.isEthnic(indian) && Actor2.isMale() && !isTimingOut(strt_indian_m)
+        ElseIf Actor2.isEthnic(indian) && Actor2.isMale() && !isTimingOut(strt_indian_m)
             Actor2.blendPreset(strt_indian_m)
             
-        Elseif Actor2.isEthnic(indian) && !Actor2.isMale() && !isTimingOut(strt_indian_f)
+        ElseIf Actor2.isEthnic(indian) && !Actor2.isMale() && !isTimingOut(strt_indian_f)
             Actor2.blendPreset(strt_indian_f)
             
-        Elseif Actor2.isEthnic(arab) && Actor2.isMale() && !isTimingOut(strt_arab_m)
+        ElseIf Actor2.isEthnic(arab) && Actor2.isMale() && !isTimingOut(strt_arab_m)
             Actor2.blendPreset(strt_arab_m)
             
-        Elseif Actor2.isEthnic(arab) && !Actor2.isMale() && !isTimingOut(strt_arab_f)
+        ElseIf Actor2.isEthnic(arab) && !Actor2.isMale() && !isTimingOut(strt_arab_f)
             Actor2.blendPreset(strt_arab_f)
 
-        Elseif Actor2.isEthnic(latin) && Actor2.isMale() && !isTimingOut(strt_latin_m)
+        ElseIf Actor2.isEthnic(latin) && Actor2.isMale() && !isTimingOut(strt_latin_m)
             Actor2.blendPreset(strt_latin_m)
             
-        Elseif Actor2.isEthnic(latin) && !Actor2.isMale() && !isTimingOut(strt_latin_f)
+        ElseIf Actor2.isEthnic(latin) && !Actor2.isMale() && !isTimingOut(strt_latin_f)
             Actor2.blendPreset(strt_latin_f)
             
-        Elseif Actor2.isEthnic(asian) && Actor2.isMale() && !isTimingOut(strt_asian_m)
+        ElseIf Actor2.isEthnic(asian) && Actor2.isMale() && !isTimingOut(strt_asian_m)
             Actor2.blendPreset(strt_asian_m)
             
-        Elseif Actor2.isEthnic(asian) && !Actor2.isMale() && !isTimingOut(strt_asian_f)
+        ElseIf Actor2.isEthnic(asian) && !Actor2.isMale() && !isTimingOut(strt_asian_f)
             Actor2.blendPreset(strt_asian_f)
 
-        Elseif Actor2.isEthnic(white) && Actor2.isMale() && !isTimingOut(strt_white_m)
+        ElseIf Actor2.isEthnic(white) && Actor2.isMale() && !isTimingOut(strt_white_m)
             Actor2.blendPreset(strt_white_m)
             
-        Elseif Actor2.isEthnic(white) && !Actor2.isMale() && !isTimingOut(strt_white_f)
+        ElseIf Actor2.isEthnic(white) && !Actor2.isMale() && !isTimingOut(strt_white_f)
             Actor2.blendPreset(strt_white_f)
-        Endif
+        EndIf
         "<Actor.name> noted that I hadn't really crossed paths with a lot of <Actor2.race> <Actor2.men_or_women> in my sexual life."
         "<Actor.name> insists that I am missing something, and offers to bring in one of <Actor.his_or_her> black escort friends as a gift for me, just to convince me."
         0:: "Try out <Actor.name>'s <Actor2.race> escort"
@@ -78,7 +76,6 @@ OTHER: isModEnabled(vin_Interracial) && isModEnabled(vin_Polyamorous)
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -3)
             EndIf
-        Endif
-    
+        EndIf
     SceneEnd() // Scene improved by Raddeck
     timeout(300, ctf_jan04_cms)

@@ -97,7 +97,11 @@ OTHER: none
                     While !Actor2.isMale()
                         Actor2 = generatePersonTemporary()
                     EndWhile
-                    Filter(Aggressive)
+                    If Actor2.isMale() && !Actor.isMale()
+                        Filter(AggressiveFM)
+                    Else
+                        Filter(Aggressive)
+                    EndIf
                     TalkNonConsensual()
                     Sex(Actor2, Actor)   
                 EndIf

@@ -81,7 +81,11 @@ OTHER: Player.isVirgin() && Player.isFemale() && PercentageOrcs > 0 && isModEnab
             Player.animate(fightlost)
             Player(Crying):: "No! Please stop ... I beg you ... Somebody help ..."
             "My cries for help went unheard in the empty shack and I had no choice but endure it all at the hand of this vile orc, giving up my virginity for the sake of some stupid orc ritual."
-            Filter(Aggressive)
+            If !Actor2.isMale() && Player.isMale()
+                Filter(AggressiveFM)
+            Else
+                Filter(Aggressive)
+            EndIf
             TalkNonConsensual()
             SexNoAffair(Actor2, Player)
             Actor2.hide()

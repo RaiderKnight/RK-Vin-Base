@@ -13,11 +13,11 @@ OTHER:
         "I was just going about my day when I came across a couple walking in the opposite direction."
         setRaceGenerated(Player, false)
         Actor = generatePersonTemporary()
-        While !Actor.isSameGender(Player)
+        While !Actor.isSameGender(Player) && !Actor.isSameEthnic(Player)
             Actor = generatePersonTemporary()
         Endwhile
         Actor2 = generatePersonTemporary()
-        While !Player.isInterestedIn(Actor2)
+        While !Player.isInterestedIn(Actor2) && !Actor2.isSameEthnic(Player)
             Actor2 = generatePersonTemporary()    
         Endwhile
         Actor2.ModifyRaceFetish(Player, 50, 150)

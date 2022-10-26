@@ -90,11 +90,11 @@ OTHER: isModEnabled(vin_NonConsensual) && !Player.isGay()
                     mood -= Random(0, 50)
                 Else
                     "My cries for help went unheard in that disgusting motel room and I had no choice but endure the worst night of my life at the hand of this vile <Actor.man_or_woman>."
-                    If Actor.isMale()
-                        Filter(Aggressive)
-                    Else
+                    If Actor.isMale() && !Player.isMale()
                         Filter(AggressiveFM)
-                    Endif
+                    Else
+                        Filter(Aggressive)
+                    EndIf
                     TalkNonConsensual()
                     SexNoAffair(Actor, Player)
                     If HungerEnable > 0

@@ -1,0 +1,46 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        LGLicense = random(1000, 2000)
+        LGLicenseL = LGLicense.convertToLocalCurrency()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        GALGL = GotALifeguardLicenseG.getGlobal()
+        Actor2 = generatePersonTemporary()
+        Actor2.dress()
+        MeineSk = attractiveness + muscle + fitness
+        MeineSka = MeineSk/100
+        If muscle < 50 && fitness < 50
+            "To become a life guard, you need to be in shape! I think you need to train... Go work on your muscles and fitness."
+        ElseIf muscle < 50
+            "To become a life guard, you need to be in shape! I think you need to train... Go work on your muscles."
+        ElseIf fitness < 50
+            "To become a life guard, you need to be in shape! I think you need to train... Go work on your fitness."
+        ElseIf GALGL > 0
+            "You're already a life guard!"
+        Else
+            "To become a life guard, you must obtain a special license to allow you to save people without being acted upon."
+            "The price of this license is: <LGLicenseL>. Should I pay for a license?"
+            0::money > LGLicense::"Yes"
+            1::"No"
+            
+            If 0
+                money -= LGLicense
+                Player:GotALifeguardLicense => 1
+                GotALifeguardLicenseG.setGlobal(1)
+                Player.setActorVar(rk_VB_LifeguardSkills, MeineSka)
+                Actor2.show()
+                Actor2(Serene)::"Hi, I just want to tell you that sometimes you will get a call to save people, we count on you to go and save those people!"
+                Player(Happy)::"Count on me!"
+            Else
+                "I think I'll wait!"
+            EndIf
+        EndIf
+        Actor2.hide()
+    SceneEnd()

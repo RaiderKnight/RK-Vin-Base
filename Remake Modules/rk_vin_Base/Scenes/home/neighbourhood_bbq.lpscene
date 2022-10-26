@@ -1,14 +1,14 @@
 WHAT: all, -sleep, -nap
 WHERE: home
 WHEN: 11 - 19
-WHO: Actor1 = getSpecific(Neighbour); If Actor1:rapportwithplayer > Random(0, 30)
-OTHER: !IsWithCompanion() && Random(0, 500) < interpersonal
+WHO: Actor1 = getSpecific(Neighbour); If Actor1:rapportwithplayer > random(0, 30)
+OTHER: !isWithCompanion() && random(0, 500) < interpersonal
 
     SceneStart()
-    
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
-        
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         secondScreen(Actor1)
         Actor1.dress()
         Actor1.Show(2)
@@ -27,21 +27,21 @@ OTHER: !IsWithCompanion() && Random(0, 500) < interpersonal
             If !Actor2.isValid()
                 Actor2 = generatePerson()
                 Actor2.addNeighbour()
-            Endif
+            EndIf
             Actor2.dress()
             
             Actor3 = getSpecific(Neighbour)
             If !Actor3.isValid()
                 Actor3 = generatePerson()
                 Actor3.addNeighbour()
-            Endif
+            EndIf
             Actor3.dress()
             
             Actor4 = getSpecific(Neighbour)
             If !Actor4.isValid()
                 Actor4 = generatePerson()
                 Actor4.addNeighbour()
-            Endif
+            EndIf
             Actor4.dress()
             
             Actor5 = generatePerson()
@@ -65,11 +65,11 @@ OTHER: !IsWithCompanion() && Random(0, 500) < interpersonal
             While PartyOngoing
                 passTime(0.5, 1.5)
                 Drank = false
-                Actor1:intoxication += Random(0, 10)
-                Actor2:intoxication += Random(0, 10)
-                Actor3:intoxication += Random(0, 10)
-                Actor4:intoxication += Random(0, 10)
-                Actor5:intoxication += Random(0, 10)
+                Actor1:intoxication += random(0, 10)
+                Actor2:intoxication += random(0, 10)
+                Actor3:intoxication += random(0, 10)
+                Actor4:intoxication += random(0, 10)
+                Actor5:intoxication += random(0, 10)
                 
                 "What should I do now?"
                 0:: "Drink beer"
@@ -81,36 +81,36 @@ OTHER: !IsWithCompanion() && Random(0, 500) < interpersonal
                 6::timePassed > 1:: "Leave"
                 
                 If 0
-                    intoxication += Random(0, 15)
-                    money -= Random(3, 10)
+                    intoxication += random(0, 15)
+                    money -= random(3, 10)
                     "I got myself a beer and drank it down with some tasty BBC."
-                Elseif 6
+                ElseIf 6
                     Player(Happy):: "Sorry guys, I think it's about time that I go now!"
                     Actor1(Happy):: "Alright, we'll see you around!"
                     PartyOngoing = false
                 Else
                     If 1
                         SitWith = Actor1
-                    Elseif 2
+                    ElseIf 2
                         SitWith = Actor2
-                    Elseif 3
+                    ElseIf 3
                         SitWith = Actor3
-                    Elseif 4
+                    ElseIf 4
                         SitWith = Actor4
-                    Elseif 5
+                    ElseIf 5
                         SitWith = Actor5
-                    Endif
+                    EndIf
                     
                     Player.moveToPerson(SitWith)
                     "I spent some time chatting with <SitWith.name>, while enjoying some nice BBQ."
-                    If SitWith.IsInterestedIn(Player) && Random(0, 100) < attractiveness
-                        SitWith:attractiontoplayer += Random(-1, 2)
+                    If SitWith.isInterestedIn(Player) && random(0, 100) < attractiveness
+                        SitWith:attractiontoplayer += random(-1, 2)
                     Else
-                        SitWith:rapportwithplayer += Random(-1, 2)
-                    Endif
+                        SitWith:rapportwithplayer += random(-1, 2)
+                    EndIf
                     
                     If !SitWith.isContactExchanged()
-                        If [SitWith.IsDominantSex(Player) || !SitWith.IsInterestedIn(Player)] && [SitWith:attractiontoplayer > Random(20, 60) || SitWith:rapportwithplayer > Random(20, 60)]
+                        If [SitWith.isDominantSex(Player) || !SitWith.isInterestedIn(Player)] && [SitWith:attractiontoplayer > random(20, 60) || SitWith:rapportwithplayer > random(20, 60)]
                             SitWith(Happy):: "Hey, I just realized I didn't have your personal number. Do you mind ..."
                             0:: "Exchange contacts"
                             1:: "Sorry but no"
@@ -118,11 +118,11 @@ OTHER: !IsWithCompanion() && Random(0, 500) < interpersonal
                             If 0
                                 Player(Excited):: "Of course! Let's exchange numbers!"
                                 exchangeContact(SitWith)
-                                SitWith:rapportwithplayer += Random(0, 5)
+                                SitWith:rapportwithplayer += random(0, 5)
                             Else
                                 Player(Sad):: "I'm afraid I don't know you well enough yet for that."
-                                SitWith:rapportwithplayer -= Random(0, 3)
-                            Endif
+                                SitWith:rapportwithplayer -= random(0, 3)
+                            EndIf
                         Else
                             "Should I ask <SitWith.name> for <SitWith.his_or_her> number?"
                             0:: "Ask for <SitWith.his_or_her> number"
@@ -130,36 +130,36 @@ OTHER: !IsWithCompanion() && Random(0, 500) < interpersonal
                             
                             If 0
                                 Player(Happy):: "You know what? Let's exchange numbers. You never know when you'll need your neighbour."
-                                If SitWith:attractiontoplayer > Random(0, 30) || SitWith:rapportwithplayer > Random(0, 30) || SitWith:intoxication > Random(50, 100)
+                                If SitWith:attractiontoplayer > random(0, 30) || SitWith:rapportwithplayer > random(0, 30) || SitWith:intoxication > random(50, 100)
                                     SitWith(Excited):: "Of course! Let's exchange numbers!"
                                     exchangeContact(SitWith)
                                 Else
                                     SitWith(Sad):: "I'm afraid I don't know you well enough yet for that. Maybe next time."
-                                Endif
+                                EndIf
                             Else
                                 "Not yet. I want to get to know <SitWith.name> a bit better first ..."
-                            Endif
-                        Endif
-                    Endif
+                            EndIf
+                        EndIf
+                    EndIf
                     
-                    If Random(0, 100) < SitWith:perversion + SitWith:attractiontoplayer + SitWith:rapportwithplayer
+                    If random(0, 100) < SitWith:perversion + SitWith:attractiontoplayer + SitWith:rapportwithplayer
                         "<SitWith.name> offered me another beer. Shall I?"
                     Else
                         "Should I offer <SitWith.name> a beer?"
-                    Endif         
+                    EndIf         
                     "Have another beer?"
                     0:: "Yes"
                     1:: "No"
                         
                     If 0
-                        intoxication += Random(0, 15)
-                        SitWith:intoxication += Random(0, 15)
-                    Endif
-                    If SitWith.IsInterestedIn(Player) && [SitWith:attractiontoplayer > 70 || intoxication > 90]
+                        intoxication += random(0, 15)
+                        SitWith:intoxication += random(0, 15)
+                    EndIf
+                    If SitWith.isInterestedIn(Player) && [SitWith:attractiontoplayer > 70 || intoxication > 90]
                         KissBack = false
-                        If SitWith.IsDominantSex(Player) && SitWith:perversion + SitWith:attractiontoplayer > Random(0, 200)
+                        If SitWith.isDominantSex(Player) && SitWith:perversion + SitWith:attractiontoplayer > random(0, 200)
                             "All of a sudden, <SitWith.name> grabbed me and leaned in for a kiss"
-                            AnimatePair(Player, SitWith, Kissing)
+                            animatePair(Player, SitWith, Kissing)
                             SitWith(Kiss):: "..."
                             0:: "Kiss back"
                             1:: "Turn <SitWith.him_or_her> down"
@@ -168,32 +168,32 @@ OTHER: !IsWithCompanion() && Random(0, 500) < interpersonal
                                 KissBack = true
                             Else
                                 "I pulled myself away from <SitWith.him_or_her>. <SitWith.He_or_She> was visibly embarrassed."
-                                SitWith:attractiontoplayer -= Random(0, 1)
-                            Endif
+                                SitWith:attractiontoplayer -= random(0, 1)
+                            EndIf
                         Else
                             "From the way <SitWith.name> was checking me out, I could tell that <SitWith.he_or_she> was totally into me. Should I make my move now and kiss <SitWith.him_or_her>?"
                             0:: "Kiss <SitWith.name>"
                             1:: "Maybe not"
                             
                             If 0
-                                AnimatePair(Player, SitWith, Kissing)
+                                animatePair(Player, SitWith, Kissing)
                                 Player(Kiss):: "..."
-                                If SitWith:intoxication > Random(70, 100) || [SitWith:attractiontoplayer > Random(30, 100) && SitWith:perversion > Random(30, 100)]
+                                If SitWith:intoxication > random(70, 100) || [SitWith:attractiontoplayer > random(30, 100) && SitWith:perversion > random(30, 100)]
                                     SitWith(Kiss):: "..."
                                     "Wow, that's quite a pleasant surprise. <SitWith.name> was totally receptive to my advance. In fact, <SitWith.he_or_she> certainly showed that <SitWith.he_or_she> wanted something more ..."
                                     KissBack = true
                                 Else
                                     "<SitWith.name> pulled away from my advances. Embarrassed, I retreated, pretending for the rest of the drinks as if nothing happened ..."
-                                Endif
+                                EndIf
                             Else
                                 "Perhaps not ... It would be extremely embarassing to be rejected in front of all my neighbours."
-                            Endif
-                        Endif
+                            EndIf
+                        EndIf
                         
                         If KissBack
                             Player(Kiss):: "..."
                             "I responded in kind and we indulged ourselves in a passionate kiss."
-                            SitWith:attractiontoplayer += Random(0, 1)
+                            SitWith:attractiontoplayer += random(0, 1)
                             0:: "Invite <SitWith.him_or_her> home"
                             1:: "Stop it there"
                             
@@ -203,7 +203,7 @@ OTHER: !IsWithCompanion() && Random(0, 500) < interpersonal
                                 "We excused ourselves from the BBQ, trying to raise as little suspicions as possible and started heading back to my apartment. It was only a short walk."
                                 setBackground(home)
                                 "As soon as we were inside, our hands were all over each other and a passionate makeout started."
-                                perversion += Random(0, 0.2)
+                                perversion += random(0, 0.2)
                                 Sex(SitWith, Player)
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -1)
@@ -213,20 +213,17 @@ OTHER: !IsWithCompanion() && Random(0, 500) < interpersonal
                                 PartyOngoing = false
                             Else
                                 "I enjoyed the kiss but didn't feel like going any further ..."
-                            Endif
-                        Endif
-                    Endif
-                    
-                Endif
-            
-                If PartyOngoing && timePassed > Random(1, 4)
+                            EndIf
+                        EndIf
+                    EndIf
+                EndIf
+                If PartyOngoing && timePassed > random(1, 4)
                     "It was getting very late. Eventually, each person made their excuse to leave and the BBQ ended. It was a fun way to get to know my neighbours on a more personal level ..."
                     PartyOngoing = false
-                Endif
-            endWhile    
+                EndIf
+            EndWhile    
         Else
             Player(Sad):: "I'd love to, but I'm afraid I have other plans already today. Maybe next time."
-        Endif
-        
+        EndIf
         timeout(800, neighbourhood_bbq)
     SceneEnd() // Improved by Raddeck

@@ -2,7 +2,7 @@ WHAT: all, -sleep, -nap
 WHERE: home
 WHEN: 8 - 22
 WHO: Actor = getSpecific(Dating); Actor2 = getPerson(true); If !Actor.isMale() && Actor2.isMale() && Actor2.isInterestedIn(Actor) && Actor2:rapportwithplayer > 35
-OTHER: Player.isMale() && Random(35, 100) > perversion
+OTHER: Player.isMale() && random(35, 100) > perversion && isModEnabled(vin_NTR)
 
     
     SceneStart()
@@ -37,12 +37,12 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
             Actor2.animate(call)
             secondScreen(Actor2)
             Player(Angry)::"You're sick, my <Actor.boyfriend_or_girlfriend> is not a toy that I share. Keep fantasizing my <Actor2.man_or_girl>!"
-            Actor2:rapportwithplayer -= Random(1, 5)
-            Actor2:attractiontoplayer -= Random(1, 5)
+            Actor2:rapportwithplayer -= random(1, 5)
+            Actor2:attractiontoplayer -= random(1, 5)
             secondScreen()
             Actor2.hide()
             Player.animate()
-        Endif
+        EndIf
         
         If GFGetF
             Actor3 = Actor2.getRelatedPerson(Spouses, Dating)
@@ -56,13 +56,13 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
 
             If 0
                 Player(Sad)::"Sorry, but if I do this to my <Actor.boyfriend_or_girlfriend>, <Actor.he_or_she> will kill me."
-                Actor2:rapportwithplayer -= Random(1, 5)
-                Actor2:attractiontoplayer -= Random(1, 5)
+                Actor2:rapportwithplayer -= random(1, 5)
+                Actor2:attractiontoplayer -= random(1, 5)
                 secondScreen(Actor2)
                 Actor2(Wink)::"Ok fine, at least I tried!"
                 "After, we talked for a few more minutes on other topics and we finally said goodbye..."
                 secondScreen()
-            Elseif 1
+            ElseIf 1
                 secondScreen(Actor2)
                 Actor2(Grin)::"Ok cool, I'm off to your place to prepare our tactics for sex and see if we invite more people..."
                 Player(Sad)::"Ok I'm waiting for you..."
@@ -70,14 +70,14 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
                 secondScreen()
             Else
                 secondScreen(Actor2)
-                If Random(0, 100) > 30
+                If random(0, 100) > 30
                     Actor2(Grin)::"Ok cool, I'm off to your place to prepare our tactics for sex and see if we invite more people..."
                     Player(Sad)::"Ok I'm waiting for you..."
                     PartyAlmostStarted = true
                     FuckisFriend = true
-                Endif
+                EndIf
                 secondScreen()
-            Endif
+            EndIf
             Actor2.hide()
             Actor2.animate()
             Player.animate()
@@ -98,7 +98,7 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
                     Guest1 = getSelectedNPC()
                     If !Guest1.isValid()
                         "I can't quite decide on who to invite."
-                    Elseif Guest1:rapportwithplayer > 0 || Guest1:attractiontoplayer > 0
+                    ElseIf Guest1:rapportwithplayer > 0 || Guest1:attractiontoplayer > 0
                         Guest1.hide()
                         "<Guest1.name> happily accepted our invitation."
                         PartyStarted = true
@@ -107,14 +107,14 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
                         Guest1.hide()
                         "<Guest1.name> turned down our invitation. Oh well ..."
                         Guest1.delete()
-                    Endif
+                    EndIf
                     
                     "Who else should I invite?"
                     selectNPC()
                     Guest2 = getSelectedNPC()
                     If !Guest2.isValid()
                         "I can't quite decide on who to invite."
-                    Elseif Guest2:rapportwithplayer > 0 || Guest2:attractiontoplayer > 0
+                    ElseIf Guest2:rapportwithplayer > 0 || Guest2:attractiontoplayer > 0
                         Guest2.hide()
                         "<Guest2.name> happily accepted our invitation."
                         PartyStarted = true
@@ -123,14 +123,14 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
                         Guest2.hide()
                         "<Guest2.name> turned down our invitation. Oh well ..."
                         Guest2.delete()
-                    Endif
+                    EndIf
                     
                     "Who else should I invite?"
                     selectNPC()
                     Guest3 = getSelectedNPC()
                     If !Guest3.isValid()
                         "I can't quite decide on who to invite."
-                    Elseif Guest3:rapportwithplayer > 0 || Guest3:attractiontoplayer > 0
+                    ElseIf Guest3:rapportwithplayer > 0 || Guest3:attractiontoplayer > 0
                         Guest3.hide()
                         "<Guest3.name> happily accepted our invitation."
                         PartyStarted = true
@@ -139,10 +139,10 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
                         Guest3.hide()
                         "<Guest3.name> turned down our invitation. Oh well ..."
                         Guest3.delete()
-                    Endif
-                Endif
+                    EndIf
+                EndIf
                 PartyStarted = true
-            Endif
+            EndIf
             If PartyStarted
                 setBackgroundCustom(livingroom)
                 Actor2.dressUniform(Crime)
@@ -162,17 +162,17 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
                         Actor3.dressUniform(Crime)
                         "<Actor3.name> showed up."
                         Actor3.show(4)
-                    Endif
+                    EndIf
                     
                     If !Guest1.isValid() 
                         Random
                             Guest1 = getPerson()
                             Guest1 = generatePerson()
-                        endRandom
+                        EndRandom
                         If !Guest1.isValid()
                             Guest1 = generatePerson()
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                     Guest1.dressUniform(Crime)
                     "<Guest1.name> showed up."
                     Guest1.show(1)
@@ -181,11 +181,11 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
                         Random
                             Guest2 = getPerson()
                             Guest2 = generatePerson()
-                        endRandom
+                        EndRandom
                         If !Guest2.isValid()
                             Guest2 = generatePerson()
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                     Guest2.dressUniform(Crime)
                     "<Guest2.name> came in."
                     Guest2.show(2)
@@ -194,11 +194,11 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
                         Random
                             Guest3 = getPerson()
                             Guest3 = generatePerson()
-                        endRandom
+                        EndRandom
                         If !Guest3.isValid()
                             Guest3 = generatePerson()
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                     Guest3.dressUniform(Crime)
                     "<Guest3.name> arrived."
                     Guest3.show(3)
@@ -211,7 +211,7 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
                         Actor3.dressUniform(Crime)
                         "<Actor3.name> showed up."
                         Actor3.show(1)
-                    Endif
+                    EndIf
                     Player(Happy):: "Come in, everyone! Don't be shy. Everything's ready."
                 Else
                     "We decided to do a private party with only three people."
@@ -226,12 +226,12 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
                 While PartyOngoing && 
                     passTime(0.2, 0.6)
                     Drank = false
-                    Actor:intoxication += Random(0, 10)
-                    Actor2:intoxication += Random(0, 10)
-                    Actor3:intoxication += Random(0, 10)
-                    Guest1:intoxication += Random(0, 10)
-                    Guest2:intoxication += Random(0, 10)
-                    Guest3:intoxication += Random(0, 10)
+                    Actor:intoxication += random(0, 10)
+                    Actor2:intoxication += random(0, 10)
+                    Actor3:intoxication += random(0, 10)
+                    Guest1:intoxication += random(0, 10)
+                    Guest2:intoxication += random(0, 10)
+                    Guest3:intoxication += random(0, 10)
                     "What should I do now?"
                     0:: "Drink alcohol"
                     1:: "Try to fuck with <Actor3.name>"
@@ -240,15 +240,15 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
                     
                     If 0
                         Player.animate(drinkbottle)
-                        intoxication += Random(0, 15)
+                        intoxication += random(0, 15)
                         "I poured myself a drink and enjoyed it thoroughly."
                         If UrgeToPeeEnable > 0
                             Player.modifyActorVar(rk_VB_UrgeToPee, 1)
                         EndIf
-                    Elseif 2
+                    ElseIf 2
                         Player.animate(dance)
                         "I decided to dance a bit..."
-                    Elseif 99
+                    ElseIf 99
                         Player.animate()
                         "As the host, I decided that the party had run its course and ended it. Everyone promptly left ..."
                         PartyOngoing = false
@@ -256,13 +256,13 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
                         Player.animate(socialize)
                         Player.moveToPerson(Actor3)
                         "I spent some time chatting with <Actor3.name>"
-                        If Actor3.IsInterestedIn(Player) && Random(0, 100) < attractiveness
+                        If Actor3.IsInterestedIn(Player) && random(0, 100) < attractiveness
                             Actor3:attractiontoplayer += Random(-1, 2)
                         Else
                             Actor3:rapportwithplayer += Random(-1, 2)
-                        Endif
+                        EndIf
                         
-                        If Random(1, 5) >= 2
+                        If random(1, 5) >= 2
                             "<Actor2.name> managed to usurp my <Actor.boyfriend_or_girlfriend>, they're off to one of the rooms for a quickie..."
                             secondScreen()
                             setBackgroundCustom(livingroom)
@@ -274,9 +274,9 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
                             Actor2.dressUniform(Crime)
                             Actor.dressUniform(Crime)
                             FucMyG += 1
-                        Endif
+                        EndIf
  
-                        If Random(1, 5) >= 2
+                        If random(1, 5) >= 2
                             Player.animate()
                             "I managed to usurp <Actor2.name>'s <Actor3.boyfriend_or_girlfriend> and I take <Actor2.him_or_her> to one of the rooms for a quickie..."
                             sneak += 1
@@ -298,32 +298,32 @@ OTHER: Player.isMale() && Random(35, 100) > perversion
                     If FucMyG > MagicNumber && FucIsG > MagicNumber
                         timePassed = true
                     EndIf
-                    If timePassed > Random(2.5, 5)
+                    If timePassed > random(2.5, 5)
                         "It was getting very late. The party winded down and everyone left ..."
                         PartyWillStart => 0
                         PartyOngoing = false
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
-                    Endif
+                    EndIf
                     MagicD = random(1, 6)
                     MagicD = MagicD.round()
                     If MagicD == 1
                         Actor.animate(dance)
-                    Elseif MagicD == 2
+                    ElseIf MagicD == 2
                         Actor2.animate(dance)
-                    Elseif MagicD == 3
+                    ElseIf MagicD == 3
                         Actor3.animate(dance)
-                    Elseif MagicD == 4
+                    ElseIf MagicD == 4
                         Guest1.animate(dance)
-                    Elseif MagicD == 5
+                    ElseIf MagicD == 5
                         Guest2.animate(dance)
-                    Elseif MagicD == 6
+                    ElseIf MagicD == 6
                         Guest3.animate(dance)
-                    Endif
+                    EndIf
                 EndWhile
-            Endif
-        Endif        
+            EndIf
+        EndIf        
 
     SceneEnd() // Scene improved by Raddeck
     timeout(220, sr_fso_costumeparty_dare1_cms)

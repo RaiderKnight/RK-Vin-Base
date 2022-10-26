@@ -1,7 +1,7 @@
 WHAT: all, -sleep
 WHERE: home
 WHEN: 0-24
-WHO: Dating = getSpecific(Dating); Affair = getSpecific(Affair); If Dating:intelligence + Dating:interpersonal - Dating:masochist > Random(0, 500)*actionDuration
+WHO: Dating = getSpecific(Dating); Affair = getSpecific(Affair); If Dating:intelligence + Dating:interpersonal - Dating:masochist > random(0, 500)*actionDuration
 OTHER: none
 
     SceneStart()
@@ -101,7 +101,7 @@ OTHER: none
             EndIf
         Else
             Dating(Angry):: "<Player.name>, we need to talk!"
-            Dating:attractiontoplayer -= Random(0, 50)
+            Dating:attractiontoplayer -= random(0, 50)
             "This can't be good ..."
             Player(Anxious):: "Yes, darling, what is it? You don't look too happy ..."
             Dating(Angry):: "Of course I don't, and you know damn well why!"
@@ -126,10 +126,10 @@ OTHER: none
                     
                 EndIf
                 
-            Elseif 1
+            ElseIf 1
                 karma += 2.5
                 Player(Crying):: "Baby! It was a terrible mistake. I didn't mean to hurt you. I have felt guilty about it everday since ... Please don't leave me - it will never happen again."
-                If Dating:attractiontoplayer + interpersonal > Random(0, 200)
+                If Dating:attractiontoplayer + interpersonal > random(0, 200)
                     Dating(Sad):: "... Fine. For everything we've done together, I might as well give you one final chance. I hope I won't regret this later."
                     Dating:masochist += 1
                     mood += 0.5
@@ -146,12 +146,12 @@ OTHER: none
             Else
                 karma -= 10
                 Player(Evil):: "It's about time you find out ... So I fucked <Affair.him_or_her>. What's the matter? So what are you going to do? Break up with me? As if a loser like you could find someone better!"
-                masochist -= Random(0, 2)
+                masochist -= random(0, 2)
                 
-                If Dating:masochist > Random(30, 100)
+                If Dating:masochist > random(30, 100)
                 
                     Dating(Shocked):: "How could you? I'm your <Dating.boyfriend_or_girlfriend> ... But I guess you're right ... I couldn't bear to break up with you."
-                    Dating:masochist += Random(1, 10)
+                    Dating:masochist += random(1, 10)
                     mood += 2
                     breakup = false
                     
@@ -181,7 +181,7 @@ OTHER: none
                     Player.hide()
                     
                     "<Dating.name> fired <Dating.his_or_her> gun..."
-                    If Random(0, 30) < fitness
+                    If random(0, 30) < fitness
                 
                         "I managed to dodge the shot. Phew, that was close."
                         Player(Shocked)::"Are you fucking crazy?"
@@ -210,23 +210,17 @@ OTHER: none
                             Divorce()
                             
                             If Dating.isDominantSex(Player)
-                            
                                 "To make matters worse to <Dating.him_or_her>, the court awarded me for compensation, half of <Dating.his_or_her> hard-earned fortune..."
-                                money += Random(5000, 50000)
-                                
+                                money += random(5000, 50000)
                             EndIf 
-                    
                         Else
-                        
                             "After that crazy event, I take time to block <Dating.name>'s number ..."
                             mood -= 50
-                            
                         EndIf
-                        
                         ActID = Dating.getID()
                         Dating.setActorVar(rk_VB_ActArrestTagF, ActID)
                         Dating.setActorVar(tag_FPrison, 1)
-                        Friendsentence = Random(925, 1825)
+                        Friendsentence = random(925, 1825)
                         Dating.setActorVar(rk_VB_Sentence, Friendsentence)
                         Dating.setActorVar(rk_VB_MeToF, ActID)
                         DayGetImprison = Dating:age
@@ -243,7 +237,6 @@ OTHER: none
                         death = true
                     EndIf
                 EndWhile
-                
             Else
                 If isPlayerMarried()
                     Dating(Sad):: "I'm afraid this marriage isn't working ..."
@@ -263,7 +256,7 @@ OTHER: none
                 blockContact(Dating)
             EndIf
     
-        Elseif Affair.isContactExchanged() && Dating:masochist < 30
+        ElseIf Affair.isContactExchanged() && Dating:masochist < 30
             Dating(Angry):: "I can forgive you, with one condition ..."
             Dating(Angry):: "You must end all contacts with <Affair.name> - no meeting, call, social media, the rest of it!"
             0:: "Block <Affair.name>"
@@ -294,9 +287,7 @@ OTHER: none
                 blockContact(Dating)
             EndIf
         EndIf
-    
         Dating.hide()
-    
         If !death
             If Dating.isDating()
                 forgiveAffairs()
@@ -310,8 +301,8 @@ OTHER: none
                         
                         If 0
                             karma -= 5
-                            perversion += Random(0,1)
-                            masochist -= Random(0,2)
+                            perversion += random(0,1)
+                            masochist -= random(0,2)
                             "A while later ..."
                             Affair.dress()
                             Affair.show(2)
@@ -323,21 +314,18 @@ OTHER: none
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
-                            
                         Else
                             "That's fucked up. I shouldn't play with my chances like that ... It's best if I avoid seeing <Affair.name> for a while at least."
                             mood -= 3
                         EndIf
                     EndIf
                 EndIf
-                
-            Elseif perversion > 30 && Affair.isContactExchanged()
+            ElseIf perversion > 30 && Affair.isContactExchanged()
                 "Now that it's all over, a perverted idea came to my mind: Should I call <Affair.name> over to ... cheer me up?"
                 0:: "Call <Affair.name> over"
                 1:: "I should not"
                 
                 If 0
-                
                     karma -= 5
                     "I'll show that fool <Dating.name> that it's all <Dating.his_or_her> loss!"
                     "A while later ..."
@@ -347,18 +335,16 @@ OTHER: none
                     Sex(Affair, Player)
                     Affair.hide()
                     "I enjoyed that much more than usual. Sweet revenge certainly added spices to the sex."
-                    perversion += Random(0,1)
-                    masochist -= Random(0,2)
+                    perversion += random(0,1)
+                    masochist -= random(0,2)
                     mood += 3
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -2)
                     EndIf
-                    
                 Else
                     "That would be an evil thing to do and an insult to my memories with <Dating.name>. I may have cheated but I'm not completely shameless ..."
                     karma -= 1
                 EndIf
             EndIf
         EndIf
-
     SceneEnd() // Scene improved by Raddeck

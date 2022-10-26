@@ -4,10 +4,8 @@ WHEN: 0 - 24
 WHO: none
 OTHER: none
 
-    // New "Use an age-gap dating app" that will introduce you to people that fit in with your age gap preference. This also provides an immersive way to set your own "likes_older" stat without directly editing stats or trying to figure out the math.
     
     SceneStart()
-    
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -35,16 +33,14 @@ OTHER: none
             Actor = generatePersonTemporary()
             While !Player.isInterestedIn(Actor)
                 Actor = generatePersonTemporary()
-            Endwhile
+            EndWhile
             Actor.makeInterested(Player)
-            
             Actor:age => age + likes_older*0.5
             Actor:age += Random(-5, 5)
             Actor.randomizeFace()
             Actor.randomizeHairs()
             Actor:likes_older => 2*[age - Actor:age]
             Actor:attractiontoplayer += Random(25, 50)
-            
             Actor.dress()
             secondScreen(Actor)
             Actor.show()
@@ -60,6 +56,9 @@ OTHER: none
                 Actor.startDate()
                 Actor.show()
                 "Hopefully it will be a good experience"
-            Endif
-        Endif
+                If Actor:masochist < -66 && isModEnabled(vin_NonConsensual)
+                    followUp(vi_wanted)
+                EndIf
+            EndIf
+        EndIf
     SceneEnd() // Improved By Raddeck

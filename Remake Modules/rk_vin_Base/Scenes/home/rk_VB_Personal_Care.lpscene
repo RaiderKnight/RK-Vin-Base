@@ -12,8 +12,7 @@ OTHER: none
         BodyFat = Player.getActorVar(BodyFat)
         If energy < 2
             "You don't have enough energy...."
-        
-        Elseif WHERE == prison
+        ElseIf WHERE == prison
             "What should I do?"
             3::"Brush my teeth"
             5::"Groom"
@@ -29,7 +28,7 @@ OTHER: none
                 attractiveness += 0.03
                 energy -= 0.5
                 passTime(0.25, 0.5)
-            Elseif 5
+            ElseIf 5
                 Player.show()
                 Player.animate(makeup)
                 "I decided to groom..."
@@ -37,24 +36,22 @@ OTHER: none
                 attractiveness += 0.01
                 energy -= 1
                 passTime(0.25, 1)
-            Elseif 10
+            ElseIf 10
                 Filter(Solo)
-                sex(Player)
+                Sex(Player)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -1)
                 EndIf
-            Elseif 81
+            ElseIf 81
                 Player.show()
                 Player.animate(toilet)
                 "Ah, what a relief!"
                 Player.setActorVar(rk_VB_UrgeToPee, 0)
                 mood += 3
             EndIf
-        Elseif WHERE == bar || WHERE == biergarten || WHERE == cafe || WHERE == cinema || WHERE == hotel || WHERE == nightclub || WHERE == pub || WHERE == restaurant || WHERE == sports_centre || WHERE == toilets || WHERE == work
-        
+        ElseIf WHERE != home
             setBackground(toilets)
-            setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
-
+            setBackground3D(Modules/vin_Base/World/toilets___vin01.lpworld)
             "What should I do?"
             3::"Brush my teeth"
             10::"Masturbate"
@@ -76,12 +73,9 @@ OTHER: none
                 attractiveness += 0.03
                 energy -= 0.5
                 passTime(0.25, 0.5)
-            
-            Elseif 10
-
+            ElseIf 10
                 followUp(masturbate)
-            
-            Elseif 11
+            ElseIf 11
                 Player.show()
                 Player.animate(drinkbottle)
                 "I decided to take chinese aphrodisiac..."
@@ -89,8 +83,7 @@ OTHER: none
                 mood +=10
                 arousal +=100
                 passTime(0.05, 0.15)
-            
-            Elseif 12
+            ElseIf 12
                 Player.show()
                 Player.animate(makeup)
                 "I decided to put some makeup..."
@@ -99,20 +92,14 @@ OTHER: none
                 attractiveness += 5
                 energy -= 1
                 passTime(0.15, 0.5)
-            
-            Elseif 14
-
+            ElseIf 14
                 If isModEnabled(sb_BetterPregnancy)
                     "ATTENTION - I suggest to disable Better Pregnancy, this mod has been abandoned!"
                     followUp(take_rapedrug)
-                
                 Else
-                
                     followUp(sb_VB_take_rapedrug)
-                    
                 EndIf
-                
-            Elseif 15
+            ElseIf 15
                 Player.show()
                 Player.animate(drinkbottle)
                 "I decided to take supplements..."
@@ -122,7 +109,7 @@ OTHER: none
                 intelligence += 0.01
                 passTime(0.05, 0.15)
             
-             Elseif 17
+             ElseIf 17
                 Player.show()
                 Player.animate(makeup)
                 "I decided to use skincare..."
@@ -139,20 +126,19 @@ OTHER: none
                 Player.modifyActorVar(rk_VB_stock_viagra, -1)
                 passTime(0.05, 0.15)
             
-            Elseif 70
+            ElseIf 70
                 followUp(naked_with_doctor)
             
-            Elseif 81
+            ElseIf 81
                 Player.show()
                 Player.animate(toilet)
                 "Ah, what a relief!"
                 Player.setActorVar(rk_VB_UrgeToPee, 0)
                 mood += 3
-                
             EndIf
-
         Else
-
+            setBackground(toilets)
+            setBackground3D(Modules/vin_Base/World/bathroom___vin01.lpworld)
             "What should I do?"
             0::"Take a shower"
             1::"Take a bath"
@@ -174,36 +160,31 @@ OTHER: none
             99::"Go back"
     
             If 0
-                setBackground(shower)
-                setBackground3D(Modules/rk_vin_Base/World/bathroom___vin01.lpworld)
+                
                 Player.show()
                 Player.strip()
                 Filter(Shower)
                 "I decided to take a shower..."
-                sex(Player)
+                Sex(Player)
                 mood += 5
                 energy += 1
                 attractiveness += 0.05
                 karma += 0.25
                 passTime(0.35, 1)
             
-            Elseif 1
-                setBackground(toilets)
-                setBackground3D(Modules/rk_vin_Base/World/bathroom___vin01.lpworld)
+            ElseIf 1
                 Player.show()
                 Player.strip()
                 Filter(bathe)
                 "I decided to bathe..."
-                sex(Player)
+                Sex(Player)
                 mood += 5
                 energy += 1
                 attractiveness += 0.05
                 karma += 0.25
                 passTime(0.35, 1)
                 Player.animate()
-            Elseif 2
-                setBackground(toilets)
-                setBackground3D(Modules/rk_vin_Base/World/bathroom___vin01.lpworld)
+            ElseIf 2
                 Player.show()
                 Player.animate(dental)
                 "I decided to brush my teeth..."
@@ -212,9 +193,7 @@ OTHER: none
                 energy -= 0.5
                 passTime(0.25, 0.5)
                 Player.animate()
-            Elseif 3
-                setBackground(toilets)
-                setBackground3D(Modules/rk_vin_Base/World/bathroom___vin01.lpworld)
+            ElseIf 3
                 Player.show()
                 Player.animate(makeup)
                 "I decided to groom..."
@@ -224,30 +203,26 @@ OTHER: none
                 passTime(0.25, 1)
                 Player.animate()
             ElseIf 4
-                setBackground(toilets)
-                setBackground3D(Modules/rk_vin_Base/World/bathroom___vin01.lpworld)
                 XBodyFat = Player.getActorVar(BodyFat)
                 If XBodyFat == 0
                     If Player.isMale()
                         value = Player.getMorphValue(XY__FBMHeavy)
                     Else
                         value = Player.getMorphValue(Genesis8Female__FBMHeavy)
-                    Endif
+                    EndIf
                     value = 100*value
                     XBodyFat = 50+value
                     Player.setActorVar(BodyFat, XBodyFat)
-                Endif
+                EndIf
                 
                 "You get on the scales and check your weight ... "
                 "..."
-                
                 If XBodyFat < 46
                     XBodyFat = 46
-                Endif
+                EndIf
                     
-                XBodyFat -= Random(0,1)
-                XBodyFat += Random(0,1)
-                
+                XBodyFat -= random(0,1)
+                XBodyFat += random(0,1)
                 XLBS = XBodyFat*2.20462
                 "<XLBS> lbs / <XBodyFat> kg"
                 
@@ -258,31 +233,24 @@ OTHER: none
                             value = CurrentCompanion.getMorphValue(XY__FBMHeavy)
                         Else
                             value = CurrentCompanion.getMorphValue(Genesis8Female__FBMHeavy)
-                        Endif
+                        EndIf
                         value = 100*value
                         CCBodyFat = 50+value
                         CurrentCompanion.setActorVar(BodyFat, CCBodyFat)
-                    Endif
-                    
+                    EndIf
                     CurrentCompanion(Curious):: "Let me get on the scales too."
                     CurrentCompanion():: "..."
-                    
                     If CCBodyFat < 46
                         CCBodyFat = 46
-                    Endif
-                
-                    CCBodyFat -= Random(0,1)
-                    CCBodyFat += Random(0,1)
+                    EndIf
+                    CCBodyFat -= random(0,1)
+                    CCBodyFat += random(0,1)
                     
                     CCLBS = CCBodyFat*2.20462
                     "<CCLBS> lbs / <CCBodyFat> kg"
-                Endif
-                
+                EndIf
                 passTime(0.5,1)
-                
             ElseIf 5
-                setBackground(toilets)
-                setBackground3D(Modules/rk_vin_Base/World/bathroom___vin01.lpworld)
                 Player.show()
                 Player.animate(bathe)
                 "I decided to use haircare..."
@@ -292,7 +260,7 @@ OTHER: none
                 energy -= 1
                 passTime(0.05, 0.15)
                 Player.animate()
-            Elseif 6
+            ElseIf 6
                 Player.show()
                 Player.animate(makeup)
                 "I decided to put some makeup..."
@@ -302,7 +270,7 @@ OTHER: none
                 energy -= 1
                 passTime(0.15, 0.5)
                 Player.animate()
-            Elseif 7
+            ElseIf 7
                 Player.show()
                 Player.animate(makeup)
                 "I decided to use skincare..."
@@ -312,7 +280,7 @@ OTHER: none
                 energy -= 1
                 passTime(0.05, 0.15)
                 Player.animate()
-            Elseif 8
+            ElseIf 8
                 Player.show()
                 Player.animate(drinkbottle)
                 "I decided to take supplements..."
@@ -322,23 +290,15 @@ OTHER: none
                 intelligence += 0.01
                 passTime(0.05, 0.15)
                 Player.animate()
-            Elseif 9
-            
+            ElseIf 9
                 followUp(get_a_massage)
-            
-            Elseif 10
-            
+            ElseIf 10
                 followUp(rk_VB_get_a_sensual_massage)
-            
-            Elseif 11
-            
+            ElseIf 11
                 followUp(naked_with_doctor)
-
-            Elseif 12
-
+            ElseIf 12
                 followUp(masturbate)
-
-            Elseif 13
+            ElseIf 13
                 Player.show()
                 Player.animate(drinkbottle)
                 "I decided to take chinese aphrodisiac..."
@@ -347,17 +307,12 @@ OTHER: none
                 arousal +=100
                 passTime(0.05, 0.15)
                 Player.animate()
-            Elseif 14
-
+            ElseIf 14
                 If isModEnabled(sb_BetterPregnancy)
                     "ATTENTION - I suggest to disable Better Pregnancy, this mod has been abandoned!"
-                
                     followUp(take_rapedrug)
-                
                 Else
-                
                     followUp(sb_VB_take_rapedrug)
-                    
                 EndIf
             ElseIf 15
                 stock_viagra = Player.getActorVar(rk_VB_stock_viagra)
@@ -366,10 +321,7 @@ OTHER: none
                 energy += 50
                 Player.modifyActorVar(rk_VB_stock_viagra, -1)
                 passTime(0.05, 0.15)
-            
-            Elseif 81
-                setBackground(toilets)
-                setBackground3D(Modules/rk_vin_Base/World/bathroom___vin01.lpworld)
+            ElseIf 81
                 Player.show()
                 Player.animate(toilet)
                 "Ah, what a relief!"
@@ -377,7 +329,6 @@ OTHER: none
                 mood += 3
                 Player.animate()
             EndIf
-    
         EndIf
         followUp(rk_VB_Spot_Checks)
     SceneEnd()

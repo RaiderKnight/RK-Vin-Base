@@ -304,33 +304,23 @@ OTHER: none
                     
                     "I pay for the course and go home!"
                     If TuitionPriceEqualEnable > 0
-                
                         money -= Tuition
                         Tuition.setTuition()
-                        
                     Else
-                    
                         money -= Tuition4
                         Tuition4.setTuition()
-                        
                     EndIf
                     TextMajorChosen = "architecture"
                     choiceCourseMajor => 1
-    
                 ElseIf 1
-                
                     If Chemical_Engineering_Major_Ses == 0 || Chemical_Engineering_Major_Ses == 1
-                    
                         rk_VB_Chemical_Engineering_Major_Ses.setGlobal(1)
                         Player.setActorVar(rk_VB_Session_TCE, 1)
                         chooseCourse = true
-                    
                     ElseIf Chemical_Engineering_Major_Ses == 2
-                    
                         rk_VB_Chemical_Engineering_Major_Ses.setGlobal(2)
                         Player.setActorVar(rk_VB_Session_TCE, 1)
                         chooseCourse = true
-                    
                     ElseIf Chemical_Engineering_Major_Ses == 3
                     
                         rk_VB_Chemical_Engineering_Major_Ses.setGlobal(3)
@@ -350,7 +340,6 @@ OTHER: none
                         chooseCourse = true
                         
                     EndIf
-                
                     "I pay for the course and go home!"
                     If TuitionPriceEqualEnable > 0
                 
@@ -390,15 +379,11 @@ OTHER: none
                 
                     "I pay for the course and go home!"
                     If TuitionPriceEqualEnable > 0
-                
                         money -= Tuition
                         Tuition.setTuition()
-                        
                     Else
-                    
                         money -= Tuition3
                         Tuition3.setTuition()
-                        
                     EndIf
                     TextMajorChosen = "classics"
                     choiceCourseMajor => 3
@@ -541,43 +526,29 @@ OTHER: none
                         Tuition.setTuition()
                         
                     Else
-                    
                         money -= Tuition3
                         Tuition3.setTuition()
-                        
                     EndIf
                     TextMajorChosen = "education"
                     choiceCourseMajor => 6
- 
                 ElseIf 6
-                
                     If English_Major_Ses == 0 || English_Major_Ses == 1
-                    
                         rk_VB_English_Major_Ses.setGlobal(1)
                         Player.setActorVar(rk_VB_Session_TEN, 1)
                         chooseCourse = true
-                        
                     EndIf
-                
                     "I pay for the course and go home!"
                     If TuitionPriceEqualEnable > 0
-                
                         money -= Tuition
                         Tuition.setTuition()
-                        
                     Else
-                    
                         money -= Tuition1
                         Tuition1.setTuition()
-                        
                     EndIf
                     TextMajorChosen = "English"
                     choiceCourseMajor => 7
-  
                 ElseIf 7
-                
                     If Geography_Major_Ses == 0 || Geography_Major_Ses == 1
-                    
                         rk_VB_Geography_Major_Ses.setGlobal(1)
                         Player.setActorVar(rk_VB_Session_TGE, 1)
                         chooseCourse = true
@@ -976,46 +947,34 @@ OTHER: none
                         chooseCourse = true
                     
                     ElseIf Veterinary_Major_Ses == 4
-                    
                         rk_VB_Veterinary_Major_Ses.setGlobal(4)
                         Player.setActorVar(rk_VB_Session_TVE, 1)
                         chooseCourse = true
-                    
                     ElseIf Veterinary_Major_Ses == 5
-                    
                         rk_VB_Veterinary_Major_Ses.setGlobal(5)
                         Player.setActorVar(rk_VB_Session_TVE, 1)
                         chooseCourse = true
-                        
                     EndIf
-                
                     "I pay for the course and go home!"
                     If TuitionPriceEqualEnable > 0
-                
                         money -= Tuition
                         Tuition.setTuition()
-                        
                     Else
-                    
                         money -= Tuition5
                         Tuition5.setTuition()
-                        
                     EndIf
                     TextMajorChosen = "Veterinary"
                     choiceCourseMajor => 90
-
                 EndIf
-                
-            Endwhile
+            EndWhile
                 
             If chooseCourse
                 "Because their is no way to add new majors, to prevent bugs you need to choose a 'virtual' major."
                 chooseMajor()
                 setMajor()
                 "This major have no effect on the game..."
-                
                 chooseCourse => 0
-                "Yeah, the education is worth that money. I can get a once-in-a-lifetime experience and a much better job after I graduate."
+                Player(Happy)::"Yeah, the education is worth that money. I can get a once-in-a-lifetime experience and a much better job after I graduate."
                 
                 setBackground(home)
                 "A month later ..."
@@ -1033,9 +992,9 @@ OTHER: none
                     If random(0, 100) < 95
                         Actor:age => random(18, 22)
                         Actor.randomizeHairs()
+                        Actor.randomizeRace()
                         Actor.randomizeFace()
                     EndIf
-                    
                     If choiceCourseMajor == 1
                         Actor.setActorVar(rk_VB_Architecture_Major_Actor, 1)
                     ElseIf choiceCourseMajor == 2
@@ -1077,7 +1036,6 @@ OTHER: none
                     ElseIf choiceCourseMajor == 90
                         Actor.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
                     EndIf
-                    
                     Actor.setSameMajor()
                     Actor.dress()
                     Actor.show(2)
@@ -1105,10 +1063,10 @@ OTHER: none
                     EndIf
                     
                     Actor.hide()
-                    Actor.saveandDelete()
+                    Actor.saveAndDelete()
                     count += 1
                     Actor.animate()
-                Endwhile
+                EndWhile
                 
                 Total = random(3, 5)
                 count = 0
@@ -1116,6 +1074,7 @@ OTHER: none
                     Actor = generatePerson()
                     Actor:age => random(27, 70)
                     Actor.randomizeHairs()
+                    Actor.randomizeRace()
                     Actor.randomizeFace()
                     If choiceCourseMajor == 1
                         rk_VB_Major_Teacher.setGlobal(1)
@@ -1188,10 +1147,10 @@ OTHER: none
                     Player(Happy):: "Nice to meet you, Dr <Actor.name_last>. I'm <Player.name>. I'm looking forward to your class."
                     Actor(Happy):: "Great !"
                     Actor.hide()
-                    Actor.saveandDelete()        
+                    Actor.saveAndDelete()        
                     count += 1
                     Actor.animate()
-                Endwhile
+                EndWhile
                 "Eventually, the event wound down. I'm glad to have met many of my coursemates and lecturers. I cannot wait for my first day tomorrow."
                 // timeoutPrecise(2880, take_final)
                 Player:EnrollDegree => 1

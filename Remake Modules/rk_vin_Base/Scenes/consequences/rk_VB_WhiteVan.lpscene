@@ -1,0 +1,64 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none 
+OTHER: none
+
+    SceneStart()
+        Actor99 = generatePersonTemporary()
+        Actor99.dressUniform(crime)
+        Actor98 = generatePersonTemporary()
+        Actor98.dressUniform(crime)
+        RubCWAPITM = Player.getActorVar(RubCWAPITM)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Rejet = Player.getActorVar(rk_VB_RubCWAPITMRejet)
+        If Rejet >= 10
+            Rejeteux = Rejet - 10
+            Rejeteux = Rejeteux.round()
+            Player.setActorVar(rk_VB_RubCWAPITMRejet, Rejeteux)
+        EndIf
+        Actor99.show()
+        Actor98.show()
+        Actor99.moveToPerson(Actor98)
+        Actor98.moveToPersonStand(Player, 40)
+        "I was walking quietly when suddenly a white van stops in front of me and 2 guy get out and drag me inside the van!"
+        Player(Shocked)::"WTF! HElp m..."
+        Actor99(Evil)::"Sut the fuck up little teaser!"
+        "Suddenly everything goes black..."
+        setBackground3D(Modules/rk_vin_Base/World/rk_VB_BlackScreen.lpworld)
+        Player.hide()
+        Actor99.hide()
+        Actor98.hide()
+        passTime(1, 2)
+        "After a while the van stops and one of them wakes me up!"
+        setBackground3D(Modules/rk_vin_Base/World/rk_VB_Mountain.lpworld)
+        Actor99.strip()
+        Actor98.strip()
+        Player.strip()
+        Actor99.show()
+        Actor98.show()
+        Player.show()
+        Actor99(Evil)::"Wake up teaser!"
+        Actor98(Evil)::"We'll show you what happens to those who refuse to make out with club members!"
+        If !Actor98.isMale() && !Actor99.isMale() && Player.isMale()
+            Filter(AggressiveFM)
+        Else
+            Filter(Aggressive)
+        EndIf
+        SexNoAffair(Actor98, Player, Actor99)
+        If HungerEnable > 0
+            Player.modifyActorVar(rk_VB_Hunger, -4)
+        EndIf
+        mood -= 25
+        Actor99(Flirty)::"Dude, it's not complicated, if you don't want to fuck, just say you don't have the chicken... or this is what will happen!"
+        Actor98(Flirty)::"Are you a member or not?"
+        Actor99(Flirty)::"Now go home and think about it!"
+        Actor99.hide()
+        Actor98.hide()
+        "What the hell was that? I think I now understand how this club works!"
+        "Let's go back home, wash and recover from this event!"
+        moveTo(home)
+    SceneEnd()

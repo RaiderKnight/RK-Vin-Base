@@ -1,0 +1,482 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        gfaitmajobcop = Player.getActorVar(rk_VB_gfaitmajobcop)
+        SXP = Player.getActorVar(rk_VB_PoliceSXP)
+        Mystere = generatePersonTemporary()
+        Mystere.dressUniform(crime)
+        Mystere.hide()
+        Job_police = rk_VB_Job_police.getGlobal()
+        PoliceXP = Player.getActorVar(rk_VB_PoliceXP)
+        PSalaire = Player.getActorVar(rk_VB_PoliceSalary)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        ChoixVoleur = random(1, 49)
+        ChoixVoleur = ChoixVoleur.round()
+        Bonus = PoliceXP + sneak
+        If ChoixVoleur == 1
+            OverwriteCurrentLocation(art)
+            txtMag = "art"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 2
+            OverwriteCurrentLocation(bag)
+            txtMag = "bag"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 3
+            OverwriteCurrentLocation(bakery)
+            txtMag = "bakery"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 4
+            OverwriteCurrentLocation(beauty)
+            txtMag = "beauty"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 5
+            OverwriteCurrentLocation(beverages)
+            txtMag = "beverages"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 6
+            OverwriteCurrentLocation(bicycle)
+            txtMag = "bicycle"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 7
+            OverwriteCurrentLocation(books)
+            txtMag = "books"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 8
+            OverwriteCurrentLocation(butcher)
+            txtMag = "butcher"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 9
+            OverwriteCurrentLocation(cafe)
+            txtMag = "cafe"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 10
+            OverwriteCurrentLocation(car)
+            txtMag = "car"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 11
+            OverwriteCurrentLocation(clothes)
+            txtMag = "clothes"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 12
+            OverwriteCurrentLocation(coffee)
+            txtMag = "coffee"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 13
+            OverwriteCurrentLocation(computer)
+            txtMag = "computer"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 14
+            OverwriteCurrentLocation(confectionery)
+            txtMag = "confectionery"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 15
+            OverwriteCurrentLocation(convenience)
+            txtMag = "convenience"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 16
+            OverwriteCurrentLocation(copyshop)
+            txtMag = "copyshop"
+            txBout = ""
+        ElseIf ChoixVoleur == 17
+            OverwriteCurrentLocation(cosmetics)
+            txtMag = "cosmetics"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 18
+            OverwriteCurrentLocation(deli)
+            txtMag = "deli"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 19
+            OverwriteCurrentLocation(department_store)
+            txtMag = "department store"
+            txBout = ""
+        ElseIf ChoixVoleur == 20
+            OverwriteCurrentLocation(doityourself)
+            txtMag = "doityourself"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 21
+            OverwriteCurrentLocation(electronics)
+            txtMag = "electronics"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 22
+            OverwriteCurrentLocation(fast_food)
+            txtMag = "fast food"
+            txBout = ""
+        ElseIf ChoixVoleur == 23
+            OverwriteCurrentLocation(florist)
+            txtMag = "florist"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 24
+            OverwriteCurrentLocation(furniture)
+            txtMag = "furniture"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 25
+            OverwriteCurrentLocation(garden_centre)
+            txtMag = "garden centre"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 26
+            OverwriteCurrentLocation(gift)
+            txtMag = "gift"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 27
+            OverwriteCurrentLocation(greengrocer)
+            txtMag = "greengrocer"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 28
+            OverwriteCurrentLocation(hairdresser)
+            txtMag = "hairdresser"
+            txBout = ""
+        ElseIf ChoixVoleur == 29
+            OverwriteCurrentLocation(ice_cream)
+            txtMag = "ice cream"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 30
+            OverwriteCurrentLocation(jewellery)
+            txtMag = "jewellery"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 31
+            OverwriteCurrentLocation(marketplace)
+            txtMag = "marketplace"
+            txBout = ""
+        ElseIf ChoixVoleur == 32
+            OverwriteCurrentLocation(mobile_phone)
+            txtMag = "mobile phone"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 33
+            OverwriteCurrentLocation(motorcycle)
+            txtMag = "motorcycle"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 34
+            OverwriteCurrentLocation(musical_instrument)
+            txtMag = "musical instrument"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 35
+            OverwriteCurrentLocation(optician)
+            txtMag = "optician"
+            txBout = ""
+        ElseIf ChoixVoleur == 36
+            OverwriteCurrentLocation(outdoor)
+            txtMag = "outdoor"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 37
+            OverwriteCurrentLocation(pharmacy)
+            txtMag = "pharmacy"
+            txBout = ""
+        ElseIf ChoixVoleur == 38
+            OverwriteCurrentLocation(photo)
+            txtMag = "photo"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 39
+            OverwriteCurrentLocation(restaurant)
+            txtMag = "restaurant"
+            txBout = ""
+        ElseIf ChoixVoleur == 40
+            OverwriteCurrentLocation(seafood)
+            txtMag = "seafood"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 41
+            OverwriteCurrentLocation(shoes)
+            txtMag = "shoes"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 42
+            OverwriteCurrentLocation(sports)
+            txtMag = "sports"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 43
+            OverwriteCurrentLocation(stationery) 
+            txtMag = "stationery"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 44
+            OverwriteCurrentLocation(supermarket)
+            txtMag = "supermarket"
+            txBout = ""
+        ElseIf ChoixVoleur == 45
+            OverwriteCurrentLocation(tea)
+            txtMag = "tea"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 46
+            OverwriteCurrentLocation(tobacco)
+            txtMag = "tobacco"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 47
+            OverwriteCurrentLocation(toys)
+            txtMag = "toys"
+            txBout = "shop"
+        ElseIf ChoixVoleur == 48
+            OverwriteCurrentLocation(travel_agency)
+            txtMag = "travel agency"
+            txBout = ""
+        ElseIf ChoixVoleur == 49
+            OverwriteCurrentLocation(variety_store)  
+            txtMag = "variety store"  
+            txBout = ""    
+        EndIf
+        Direavant = false
+        western = false
+        attaque = false
+        negos = false
+        ditNon = false
+        If isModEnabled(rk_vin_Base) 
+            "So I head to the place mentioned in my onboard computer. Once there, I am careful not to attract attention, and sneak into the <txtMag> <txBout>."
+            If Bonus > 75 || random(0, 100) > 60
+                Player.hide()
+                sneak += 1
+                Mystere.show()
+                "Now that I am well hidden and have <Mystere.him_or_her> in my sights, what should I do?"
+                0::"Shoot <Mystere.him_or_her>"
+                1::"Intercept <Mystere.him_or_her> from behind with my bare hands"
+                2::"Try negociate"
+                
+                If 0
+                    western = true
+                ElseIf 1
+                    attaque = true
+                Else
+                    negos = true
+                EndIf
+                matourner = true
+                While matourner
+                    If western
+                        Player.show()
+                        UnPlus = 6 - counter
+                        JeTire = true
+                        lapogner = false
+                        compteur = 0
+                        counter = 0
+                        While JeTire
+                            Choisi = random(0, 100)
+                            Player.animate(gun)
+                            If compteur == 5 || [Choisi > 95 && compteur <= 2]
+                                Mystere.hide()
+                                "Damn, <Mystere.he_or_she> got away! I think I need to practice my shooting skills a little more!"
+                                Player.animate()
+                                Player.modifyActorVar(rk_VB_PoliceXP, 0.25)
+                                Player.modifyActorVar(rk_VB_PoliceSXP, 0.25)
+                                jobperformance += 0.25
+                                jobexperience += 0.25
+                                sneak -= 1
+                                mood -= random(1, 5)
+                                JeTire = false
+                                compteur += 15
+                                matourner = false
+                                "I made my report to my supervisors, and not surprisingly they were very disappointed with my performance on this arrest!"
+                            ElseIf SXP >= 90 || Choisi >= 90
+                                Mystere.animate(knockedout)
+                                Player.animate()
+                                "I managed to neutralize <Mystere.him_or_her> on the first try!"
+                                Player.modifyActorVar(rk_VB_PoliceXP, UnPlus)
+                                Player.modifyActorVar(rk_VB_PoliceSXP, 1)
+                                jobperformance += 1
+                                jobexperience += 1
+                                JeTire = false
+                                compteur += 15
+                                matourner = false
+                                "I made my report to my supervisors, and not surprisingly they were very happy with my performance on this arrest!"
+                            ElseIf SXP >= 50 || Choisi >= 50
+                                "I managed to shoot <Mystere.him_or_her> but <Mystere.he_or_she> managed to move to another place inside the building..."
+                                Player.modifyActorVar(rk_VB_PoliceXP, 0.25)
+                                Player.modifyActorVar(rk_VB_PoliceSXP, 0.25)
+                                jobperformance += 0.25
+                                jobexperience += 0.25
+                                compteur += 1
+                            Else
+                                "Damn, <Mystere.he_or_she> managed to move to another place inside the building..."
+                                compteur += 1
+                            EndIf
+                            Mystere.moveToPersonStand(Player, 100)
+                            counter += 1
+                        EndWhile
+                        Player.animate()
+                    ElseIf attaque
+                        Player.show()
+                        Player.moveToPersonStand(Mystere, 30)
+                        MaForce = fitness + martial + muscle
+                        SaForce = Mystere:fitness + Mystere:martial + Mystere:muscle
+                        Choisi = random(0, 300)
+                        If compteur == 5 || [Choisi > 95 && compteur <= 2]
+                            Mystere.hide()
+                            "Damn, <Mystere.he_or_she> got away! I think I need to practice my fighthing skills a little more!"
+                            Player.modifyActorVar(rk_VB_PoliceXP, 0.25)
+                            Player.modifyActorVar(rk_VB_PoliceSXP, 0.25)
+                            jobperformance += 0.25
+                            jobexperience += 0.25
+                            sneak -= 1
+                            mood -= random(1, 5)
+                            JeTire = false
+                            compteur += 15
+                            matourner = false
+                            "I made my report to my supervisors, and not surprisingly they were very disappointed with my performance on this arrest!"
+                        ElseIf MaForce > SaForce || MaForce >= Choisi3
+                            Mystere.animate(knockedout)
+                            "I slowly approach <Mystere.him_or_her> and jump on <Mystere.him_or_her> by surprise, and manage to neutralize <Mystere.him_or_her> with the first blow!"
+                            Player.modifyActorVar(rk_VB_PoliceXP, UnPlus)
+                            Player.modifyActorVar(rk_VB_PoliceSXP, 1)
+                            jobperformance += 1
+                            jobexperience += 1
+                            JeTire = false
+                            compteur += 15
+                            matourner = false
+                            "I made my report to my supervisors, and not surprisingly they were very happy with my performance on this arrest!"
+                        Else
+                            "Damn, <Mystere.he_or_she> managed to move to another place inside the building..."
+                            compteur += 1
+                        EndIf
+                        Mystere.moveToPersonStand(Player, 100)
+                        counter += 1
+                    ElseIf negos
+                        ouijeleveux = false
+                        troptard = false
+                        ditNon1 = false
+                        Player.show()
+                        "I quietly approach the criminal and point a gun at <Mystere.him_or_her> and say:"
+                        Player(Angry)::"Police, please put your weapon on the floor, away from you and then lie down on the ground, on your stomach, so that I can arrest you..."
+                        Mystere.animate(Scared)
+                        "The criminal seeing no way out, finally lies down on the ground without resistance..."
+                        Mystere.animate()
+                        Player.moveToPersonStand(Mystere, 30)
+                        "I proceed to <Mystere.his_or_her> arrest and recite <Mystere.his_or_her> rights..."
+                        If Mystere.isInterestedIn(Player) && Mystere:arousal > 15 && Mystere:perversion > 50
+                            "As I put the criminal in my car, <Mystere.he_or_she> tells me:"
+                            Mystere(Crying)::"Officer, please, I don't want to go to jail, in fact I didn't hurt anyone!"
+                            Player(Serene)::"Bla bla bla, your hotel room is waiting for you, big <Mystere.guy_or_girl>!"
+                            Mystere(Crying)::"Come on, I'm ready to <Player.suck_or_lick> you off in exchange for my freedom!"
+                            "Should I accept <Mystere.his_or_her> offer?"
+                            0::"Yes"
+                            1::"No"
+                            
+                            If 0
+                                Player(Serene)::"Ok, I'll give you a chance, I know a quiet place!"
+                                Mystere(Flirty)::"Cool! I promise you I'll swallow it all!"
+                                Player(Sarcastic)::"I hope so, in fact that's the minimum!"
+                                setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                                Player(Flirty)::"Here we are, this is the place! It's not like a hotel room, but it will do!"
+                                Mystere(Flirty)::"Ok..."
+                                Player.strip()
+                                Mystere.strip()
+                                If !Player.isMale()
+                                    "Without hesitation, <Mystere.he_or_she> gets down on <Mystere.his_or_her> knees and starts licking my pussy and sucking my clit like a raging squirt thirsty <Mystere.man_or_woman>!"
+                                    Filter(LickPussy)
+                                Else
+                                    "Without hesitation, <Mystere.he_or_she> gets down on <Mystere.his_or_her> knees and starts sucking my cock like a raging sperm thirsty <Mystere.man_or_woman>!"
+                                    Filter(Blowjob)
+                                EndIf
+                                Sex(Mystere, Player)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                                EndIf
+                                "Should I ask for more?"
+                                0::"Yes"
+                                1::"No"
+                                
+                                If 0
+                                    Direavant = true
+                                    ditNon = true
+                                Else
+                                    Mystere.dress()
+                                    Player.dressUniform(police)
+                                    Player(Evil)::"Ok, thanks for everything, now get out of my sight before I change my mind!"
+                                    Mystere(Sad)::"Thanks, bye!"
+                                    Mystere.hide()
+                                EndIf
+                            Else
+                                ditNon1 = true
+                            EndIf
+                            If ditNon || ditNon1
+                                If Direavant
+                                    Player(Grin)::"I liked your prowess with your mouth, but sorry to say it's not enough to erase your crime!"
+                                    Mystere(Sad)::"What?? What do you want?"
+                                    Player(Grin)::"I want to fuck you! So take off your clothes, it will only take a few minutes!"
+                                    Mystere(Sad)::"Ok! I guess I have no choice..."
+                                    ouijeleveux = true
+                                Else
+                                    Player(Serene)::"Sorry, but this is not enough to erase your crime!"
+                                    Mystere(Crying)::"Ah! Come on, I'm willing to let you fuck me in exchange for my freedom!"
+                                    "Should I accept <Mystere.his_or_her> offer?"
+                                    0::"Yes"
+                                    1::"No"
+                                    
+                                    If 0
+                                        ouijeleveux = true
+                                    Else
+                                        troptard = true
+                                    EndIf
+                                EndIf 
+                                If ouijeleveux
+                                    Mystere.strip()
+                                    Player.strip()
+                                    Sex(Player, Mystere)
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                                    EndIf
+                                    Mystere.dress()
+                                    Player.dressUniform(police)
+                                    Player(Evil)::"Ok, thanks for everything, now get out of my sight before I change my mind!"
+                                    Mystere(Sad)::"Thanks, bye!"
+                                    Mystere.hide()
+                                    Player.modifyActorVar(rk_VB_PoliceXP, 0.5)
+                                    Player.modifyActorVar(rk_VB_PoliceSXP, 0.5)
+                                    jobperformance += 0.5
+                                    jobexperience += 0.5
+                                EndIf
+                                If troptard
+                                    If ditNon1
+                                        "Now, what I should do with <Mystere.him_or_her>?"
+                                    Else
+                                        "Now that I got what I wanted, what I should do with <Mystere.him_or_her>?"
+                                    EndIf
+                                    0::"Let <Mystere.him_or_her> go!"
+                                    1::"Imprison <Mystere.him_or_her>!"
+                                    
+                                    If 0
+                                        Player(Evil)::"Ok, thanks for everything, now get out of my sight before I change my mind!"
+                                        Mystere(Sad)::"Thanks, bye!"
+                                        Mystere.hide()
+                                    Else
+                                        Player(Serene)::"As you wish! Then you're under arrest for stealing and obstructing a police officer!"
+                                        Mystere(Evil)::"Fucking corrupt cop!"
+                                        "I decided to simply take <Mystere.him_or_her> to the police station for the night, tomorrow <Mystere.he_or_she> will be judged and jailed!"
+                                    EndIf
+                                    Player.modifyActorVar(rk_VB_PoliceXP, 0.5)
+                                    Player.modifyActorVar(rk_VB_PoliceSXP, 0.5)
+                                    jobperformance += 0.5
+                                    jobexperience += 0.5
+                                EndIf
+                            EndIf  
+                        Else
+                            Mystere(Crying)::"..."
+                            Player(Sarcastic)::"What's up cry baby? You just won a free vacation in our beautiful hotel, I'm sure you'll make friends!"
+                            Mystere(Crying)::"Yeah right..."
+                            "I decided to simply take <Mystere.him_or_her> to the police station for the night, tomorrow <Mystere.he_or_she> will be judged and jailed!"
+                            Player.modifyActorVar(rk_VB_PoliceXP, 1)
+                            Player.modifyActorVar(rk_VB_PoliceSXP, 1)
+                            jobperformance += 1
+                            jobexperience += 1
+                            karma += 1
+                        EndIf
+                    EndIf
+                EndWhile
+            Else
+                Mystere.hide()
+                "Damn, <Mystere.he_or_she> got away! <Mystere.He_or_She> must have seen me coming! I need to practice my sneaking skills a little more!"
+                "I made my report to my supervisors, and not surprisingly they were very disappointed with my performance on this arrest!"
+                Player.modifyActorVar(rk_VB_PoliceXP, 0.25)
+                jobperformance += 0.25
+                jobexperience += 0.25
+                sneak -= 1
+                mood -= random(1, 5)
+            EndIf
+        EndIf
+        Mystere.hide()
+        If HungerEnable > 0
+            Player.modifyActorVar(rk_VB_Hunger, -5)
+        EndIf
+        energy -= random(5, 15)
+        passTime(1, 2)
+        Player.modifyActorVar(rk_VB_gfaitmajobcop, 1)
+    SceneEnd()

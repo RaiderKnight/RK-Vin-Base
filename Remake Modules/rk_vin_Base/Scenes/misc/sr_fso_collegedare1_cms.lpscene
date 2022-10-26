@@ -2,7 +2,7 @@ WHAT: all
 WHERE: university:school, fraternity
 WHEN: 0-24
 WHO: Actor = getSpecific(Dating)
-OTHER: perversion > 50 && arousal > 15
+OTHER: perversion > 50 && arousal > 15 && isModEnabled(vin_NTR)
 
     SceneStart()
 
@@ -21,7 +21,7 @@ OTHER: perversion > 50 && arousal > 15
                 "<Actor.name> agreed to my dare."
                 Filter(Solo)
                 Sex(Actor)
-                If Random(0, 100) < 33 && isModEnabled(vin_NonConsensual)
+                If random(0, 100) < 33 && isModEnabled(vin_NonConsensual)
                     Actor2 = generatePersonTemporary()
                     While !Actor.isInterestedIn(Actor2)
                         Actor2 = generatePersonTemporary()
@@ -29,13 +29,17 @@ OTHER: perversion > 50 && arousal > 15
                     Actor2.show()
                     Actor2.strip()
                     "Unfortunately for <Actor.him_or_her>, <Actor.he_or_she> was caught and rapped by a student who passed by."
-                    Filter(Aggressive)
+                    If Actor2.isMale() && !Actor.isMale()
+                        Filter(AggressiveFM)
+                    Else
+                        Filter(Aggressive)
+                    EndIf
                     TalkNonConsensual()
                     Sex(Actor2, Actor)
                     Actor:arousal -= random(20, 50)
                     Actor:mood -= random(20, 50)
                     Actor:perversion -= random(20, 50)
-                Elseif Random(0, 100) < 50
+                ElseIf random(0, 100) < 50
                     "No-one saw what <Actor.he_or_she> was doing but eventually <Actor.he_or_she> said <Actor.he_or_she> enjoyed that but we should leave fast just in case."
                     Actor:perversion += random(2, 5)
                 Else
@@ -44,12 +48,12 @@ OTHER: perversion > 50 && arousal > 15
                     "Unfortunately, <Actor.he_or_she> was caught by a university staff member and I have to pay <Price_loc> to shut the university staff up because <Actor.he_or_she> was threatened with expulsion."
                     money -= Price
                     Actor:mood -= random(2, 5)
-                Endif
+                EndIf
             Else
                 "<Actor.He_or_She> turned my idea down and actually got a bit angry at me for even suggesting it."
                 Actor:rapportwithplayer -= random(0, 1)
                 Actor:mood -= random(2, 5)
-            Endif
-        Endif
+            EndIf
+        EndIf
     SceneEnd()
     timeout(200, sr_fso_collegedare1_cms) // Scene improved by Raddeck

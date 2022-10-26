@@ -1,0 +1,69 @@
+WHAT: all
+WHERE: all, -home, -prison
+WHEN: 0 - 24
+WHO: none 
+OTHER: random(0, 100) < 3 && perversion > 50 && !isWithCompanion()
+
+    SceneStart()
+        Actor = generatePersonTemporary()
+        Actor.dress()
+        Actor.hide()
+        RubCWAPITM = Player.getActorVar(RubCWAPITM)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Rejet = Player.getActorVar(rk_VB_RubCWAPITMRejet)
+        "I was taking care of my occupation when suddenly a stranger approaches me and says..."
+        If RubCWAPITM == 1
+            followUp(deepwood_cms)
+        Else
+            Actor.show()
+            Actor(Happy):: "Hello my dear!, I'm <Actor.Mr_or_Ms> Deepwood!"
+            Actor(Happy):: "Forgive me if my question will sound somewhat weird!"
+            Player(Curious):: "Okay ..."
+            Actor(Curious):: "Would you like to you have a Rubber Chicken With A Pulley In The Middle?"
+            Player(Curious):: "What are you talking about?"
+            Actor(Happy)::"Actually you ask a good question, we know about your lifestyle and we have concluded that you are eligible for our sex club!"
+            Player(Curious):: "Okay ... and about Rubber Chicken With A Pulley In The Middle?"
+            Actor(Happy)::"Well, that's our emblem and secret code!"
+            Actor(Happy)::"If someone comes up to you and asks if you have a rubber chicken with a pulley in the middle, and you say yes, that's mean, let's go fuck somewhere!"
+            Actor(Happy)::"So do you want to join?"
+            "What should I do?"
+            0::"Accept"
+            1::"Refuse"
+            
+            If 0
+                Player(Happy)::"Sure why not! Sex is my first hobby so..."
+                Player.setActorVar(RubCWAPITM, 1)
+                Actor(Happy)::"Cool! You are now a member of our sex club!"
+                Player.setActorVar(rk_VB_RubCWAPITMRejet, 0)
+                Actor(Flirty)::"Now that you are a member, you want to celebrate here, now!"
+                "What should I do?"
+                0::"Accept"
+                1::"Refuse"
+                
+                If 0
+                    perversion += 1
+                    Player(Flirty)::"Sure that's why I join after all!"
+                    Player.strip()
+                    Actor.strip()
+                    Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                Else
+                    perversion -= 1
+                    Player(Curious)::"Thanks for your offer but I'm not interested!"
+                    Rejet = Player.getActorVar(rk_VB_RubCWAPITMRejet)
+                    Actor(Happy)::"Since you are a member, you are not supposed to refuse a request... Up to you my friend! "
+                    Player.modifyActorVar(rk_VB_RubCWAPITMRejet, 1)
+                EndIf
+            Else
+                Player(Curious)::"Thanks for your offer but I'm not interested!"
+                Actor(Happy)::"Up to you my friend!"
+            EndIf
+            Actor.hide()
+        EndIf
+    SceneEnd()
+    timeout(5000, rk_VB_RubCWAPITM)

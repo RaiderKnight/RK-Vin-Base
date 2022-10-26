@@ -9,7 +9,7 @@ OTHER: PercentageElves > 0 && martial > 70
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        Gagnant = random(500, 1000)
+        Gagnant = random(1000, 5000)
         Gagnantlo = Gagnant.convertToLocalCurrency()
         elleestla = false
         "Some Elves heard about my martial arts skills and decided to invite me to a fighting competition organized by their Council. I'm the only foreigner invited, so I can't help but feel a little flattered."
@@ -19,7 +19,22 @@ OTHER: PercentageElves > 0 && martial > 70
         1:: "Maybe not"
         
         If 0
-            setBackground(forest)
+            setBackground3D(Modules/vin_Base/World/forest___vin01.lpworld)
+            Actor71 = generatePersonTemporary()
+            Actor71.blendPreset(Vampire)
+            Actor71.dress()
+            Actor71.moveToPersonStand(Player, 150)
+            Actor71.show()
+            Actor81 = generatePersonTemporary()
+            Actor81.blendPreset(Vampire)
+            Actor81.dress()
+            Actor81.moveToPersonStand(Player, 125)
+            Actor81.show()
+            Actor91 = generatePersonTemporary()
+            Actor91.blendPreset(Vampire)
+            Actor91.dress()
+            Actor91.moveToPersonStand(Player, 200)
+            Actor91.show()
             Dating = getSpecific(Dating)
             If Dating.isValid()
                 Dating.dress()
@@ -29,8 +44,11 @@ OTHER: PercentageElves > 0 && martial > 70
             EndIf
             "The competition is about to begin. There are three shaped Elves ready to beat me. I'm not sure of my chances to win..."
             count = 0
+            gagner = 0
+            perdu = 0
+            Ggagner = false
             Lost = false
-            While count < 3 && !Lost
+            While count < 3
                 Actor = generatePersonTemporary()
                 Actor.blendPreset(Elf)
                 Actor.dress()
@@ -50,9 +68,11 @@ OTHER: PercentageElves > 0 && martial > 70
                 Player.animate(martialart)
                 energy => 100
                 Actor:energy => 100
-                chk1 = random(10, 33)
+                chk1 = random(20, 33)
                 If martial > Actor:martial && energy > 25
-                    energy -= chk1
+                    gagner += 1
+                    Actor.animate(knockedout)
+                    Player.animate()
                     "I managed to defeat <Actor.name> and progressed to the next round."
                     "As part of my victory, I have the right to use my defeated opponent or <Actor.his_or_her> <Actor2.husband_or_wife> for pleasure in order to revitalize my body for the next fight."
                     0:: "Fuck <Actor.name>"
@@ -60,17 +80,19 @@ OTHER: PercentageElves > 0 && martial > 70
                     2:: "Not interested in both"
                     
                     If 0
+                        Actor.animate()
                         Sex(Player, Actor)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
-                    Else
+                    ElseIf 1
                         If elleestla
                             Sex(Player, Actor2)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
                         Else
+                            Actor.animate()
                             "They told me that since I didn't bring my lover, I can't fuck my opponent's <Actor2.husband_or_wife>!"
                             Sex(Player, Actor)
                             If HungerEnable > 0
@@ -78,12 +100,25 @@ OTHER: PercentageElves > 0 && martial > 70
                             EndIf
                         EndIf
                     EndIf
+                    Actor.animate()
+                    Actor.hide()
+                    Actor2.hide()
+                    If gagner >= 2 || count >= 3
+                        Ggagner = true
+                    EndIf
                 Else
+                    perdu += 1
+                    Player.animate(knockedout)
+                    Actor.animate()
                     martial -= random(1, 5)
-                    Lost = true
-                    "Unfortunately, I lost and failed to progress to the next round."
+                    If perdu >= 2 || count >= 3
+                        "Unfortunately, I lost and failed to progress to the next round."
+                    Else
+                        "Unfortunately, I lost this round, I hope the next round will be better!"
+                    EndIf
                     "As part of <Actor.his_or_her> victory, he has the right to use my body or my lover's body for pleasure in order to revitalize <Actor.his_or_her> body for the next fight."
                     If Actor.isInterestedIn(Player)
+                        Player.animate()
                         Sex(Actor, Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
@@ -94,64 +129,88 @@ OTHER: PercentageElves > 0 && martial > 70
                     Else
                         "Thankfully, <Actor.name> was nice enough to not enforce this rule to an outsider like me."
                     EndIf
+                    Player.animate()
+                    Actor.hide()
+                    Actor2.hide()
+                    If perdu >= 2 || count >= 3
+                        Lost = true
+                    EndIf
                 EndIf
                 count += 1
+                clearGetList()
             EndWhile
-            If !Lost
+            energy -= chk1
+            If Ggagner
+                Actor81.hide()
+                Actor71.hide()
+                Actor91.hide()
+                Player.animate()
                 martial += random(1, 15)
                 mood += 15
+                Actor6 = generatePersonTemporary()
+                Actor6.blendPreset(Vampire)
+                Actor6.dress()
+                Actor7 = generatePersonTemporary()
+                Actor7.blendPreset(Vampire)
+                Actor7.dress()
+                Actor6.hide()
+                Actor7.hide()
                 "I won the whole competition! I can't believe it. The Elves can't help but respect my fighting skills."
                 "They also gave me <Gagnantlo> as a thank you!"
                 money += Gagnant
-                If Actor.isInterestedIn(Player)
+                If Actor6.isInterestedIn(Player)
+                    Actor6.show()
+                    Actor7.show()
+                    Actor7.moveToPerson(Actor6)
+                    Actor6.moveToPersonStand(Player, 50)
                     If Dating.isValid()
-                        "The loser approaches you and asks if you would be interested in a foursome?"
+                        "The spectator approaches you and asks if you would be interested in a foursome?"
                         "What should I say?"
                         0:: energy > 25::"Accept invitation"
                         1::"Refuse invitation"
-                        2::Actor.isContactExchanged()::"Exchange numbers instead"
+                        2::!Actor6.isContactExchanged()::"Exchange numbers instead"
                         
                         If 0
                             Dating.strip()
-                            Actor.strip()
+                            Actor6.strip()
                             Player.strip()
-                            Actor2.strip()
-                            sex(Actor2, Player, Actor, Dating)
+                            Actor7.strip()
+                            sex(Actor7, Player, Actor6, Dating)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -4)
                             EndIf
                         ElseIf 1
                             Player(Sad)::"Sorry but I have no more energy!"
-                            Actor(Serene)::"That's fine maybe another time! Bye!"
+                            Actor6(Serene)::"That's fine maybe another time! Bye!"
                         Else
                             Player(Sad)::"Sorry but I have no energy! But let's exchange numbers so I can call you when I have more energy!"
-                            Actor(Happy)::"That's fine maybe another for sex time! But sure yeah, let's exchange our numbers!"
-                            Actor.makePermanent()
-                            exchangeContact(Actor)
+                            Actor6(Happy)::"That's fine maybe another for sex time! But sure yeah, let's exchange our numbers!"
+                            Actor6.makePermanent()
+                            exchangeContact(Actor6)
                         EndIf
                     Else
-                        "The loser approaches you and asks if you would be interested in a threesome?"
+                        "The spectator approaches you and asks if you would be interested in a threesome?"
                         "What should I say?"
                         0:: energy > 25::"Accept invitation"
                         1::"Refuse invitation"
-                        2::Actor.isContactExchanged()::"Exchange numbers instead"
+                        2::!Actor6.isContactExchanged()::"Exchange numbers instead"
                         
                         If 0
-                            Actor.strip()
+                            Actor6.strip()
                             Player.strip()
-                            Actor2.strip()
-                            sex(Actor2, Player, Actor)
+                            Actor7.strip()
+                            sex(Actor7, Player, Actor6)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -3)
                             EndIf
                         ElseIf 1
                             Player(Sad)::"Sorry but I have no more energy!"
-                            Actor(Serene)::"That's fine maybe another time! Bye!"
+                            Actor6(Serene)::"That's fine maybe another time! Bye!"
                         Else
                             Player(Sad)::"Sorry but I have no energy! But let's exchange numbers so I can call you when I have more energy!"
-                            Actor(Happy)::"That's fine maybe another for sex time! But sure yeah, let's exchange our numbers!"
-                            Actor.makePermanent()
-                            exchangeContact(Actor)
+                            Actor6(Happy)::"That's fine maybe another for sex time! But sure yeah, let's exchange our numbers!"
+                            Actor6.makePermanent()
+                            exchangeContact(Actor6)
                         EndIf
                     EndIf
                 EndIf
@@ -161,5 +220,8 @@ OTHER: PercentageElves > 0 && martial > 70
         EndIf
         Actor.hide()
         Actor2.hide()
+        Actor81.hide()
+        Actor71.hide()
+        Actor91.hide()
     SceneEnd() // Improved by Raddeck
     timeout(500, rk_VB_Elf_martial)

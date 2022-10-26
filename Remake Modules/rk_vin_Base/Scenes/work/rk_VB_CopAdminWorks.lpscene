@@ -1,0 +1,104 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        autreChoix = false
+        dejatoutfait = false
+        dejatoutfait1 = false
+        Formation = false
+        volerfait = false
+        Harass = false
+        NpcQuit = false
+        tagPolice = Policier.getActorVar(tag_Police)
+        Boss_Sucker = Player.getActorVar(rk_VB_Boss_Sucker)
+        SleepingWithBoss = SleepingWithCopBoss.getGlobal()
+        Job_police = rk_VB_Job_police.getGlobal()
+        JobCopEvent = rk_VB_JobCopEvent.getGlobal()
+        PoliceXP = Player.getActorVar(rk_VB_PoliceXP)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        PPID = rk_VB_PPatronID.getGlobal()
+        PPatron = getSpecific(PPID)
+        PPatron.dressUniform(police)
+        PPatron.hide()
+        PColl = generatePersonTemporary()
+        PColl.randomizeFace()
+        PColl.randomizeRace()
+        PColl.randomizeHairs()
+        PColl.hide()
+        next = findNearbyBuilding(police)
+        moveTo(next)
+        setBackground(police)
+        vaTravailler = false
+        If isModEnabled(rk_vin_Base)
+            If random(0, 100) > 50
+                autreChoix = true
+            Else
+                ChoixJours = random(1, 8)
+            EndIf
+            If autreChoix
+                If random(0, 100) > 20
+                    If JobCopEvent == 1
+                        Formation = true
+                    ElseIf !Formation
+                        rk_VB_JobCopEvent.setGlobal(1)
+                        followUp(rk_VB_TrainCopSpec)
+                    Else
+                        ChoixJours = random(1, 8)
+                    EndIf
+                    If JobCopEvent == 3
+                        Harass = true
+                    ElseIf !Harass
+                        rk_VB_JobCopEvent.setGlobal(3)
+                        followUp(sexual_harassment)
+                    Else
+                        ChoixJours = random(1, 8)
+                    EndIf
+                    If JobCopEvent == 4
+                        NpcQuit = true
+                    ElseIf !NpcQuit
+                        rk_VB_JobCopEvent.setGlobal(4)
+                        followUp(farewell_party)
+                    Else
+                        ChoixJours = random(1, 8)
+                    EndIf
+                Else
+                    If JobCopEvent == 2
+                        volerfait = true
+                    ElseIf !volerfait
+                        rk_VB_JobCopEvent.setGlobal(2)
+                        followUp(rk_VB_Copstealfromwork)
+                    Else
+                        ChoixJours = random(1, 8)
+                    EndIf
+                EndIf
+                If Formation && volerfait && Harass && NpcQuit
+                    ChoixJours = random(1, 8)
+                    rk_VB_JobCopEvent.setGlobal(0)
+                Else
+                    ChoixJours = random(1, 8)
+                EndIf
+                dejatoutfait = true
+            EndIf
+            ChoixJours = ChoixJours.round()
+            If [!PPatron.isDating() && JobCopEvent == 0] || dejatoutfait 
+                If ChoixJours == 1
+                    followUp(rk_VB_affair_with_CopBoss)
+                ElseIf ChoixJours == 2
+                    
+                ElseIf ChoixJours == 3
+                    
+                ElseIf ChoixJours == 4
+                    
+                Else
+                    followUp(rk_VB_CopPaperWorks)
+                EndIf
+            EndIf
+        EndIf
+    SceneEnd()
+    

@@ -65,7 +65,6 @@ OTHER:
                 source = "an online store"
             EndRandom
         EndIf
-    
         "My door bell rang ... Must be the delivery person"
         Delivery = generatePersonTemporary()
         Delivery.dressUniform(Fast_food)
@@ -121,13 +120,11 @@ OTHER:
                 Delivery(Happy):: "I've got your <dish> delivery order ..."
             Else
                 Delivery(Happy):: "I've got your package from <source> ..."
-            EndIf 
-            
+            EndIf
             "Ah, just what I was expecting ..."
             Player(Excited):: "Thank you. I did indeed order them. Took less than I thought they would."
             Delivery(Happy):: "Alright, I think that's everything. Have a nice day!"
-    
-            If arousal > 15
+            If arousal > 15 && Delivery:attractiveness > 45
             
                 "This <Delivery.guy_or_girl> isn't actually too bad-looking. Should I just let <Delivery.him_or_her> leave, or do I have a better plan?"
                 0:: "Say goodbye"
@@ -157,7 +154,6 @@ OTHER:
                             Else
                                 "I find their more dominant attitude towards women somewhat arousing too."
                             EndIf
-                            
                         ElseIf Delivery.isEthnic(arab) && !Delivery.isMale() && !isTimingOut(strt_arab_f)
                             "The deliverywoman is Middle Eastern and there are just something about exotic yet sexually repressed Arab women that really attract me to them."
                             If !Player.isMale()
@@ -165,7 +161,6 @@ OTHER:
                             Else
                                 "I find their more traditional attitude towards the role of the woman in a relationship somewhat arousing too."
                             EndIf
-    
                         ElseIf Delivery.isEthnic(latin) && Delivery.isMale() && !isTimingOut(strt_latin_m)
                             "The deliveryman is Latino and I can't help but fantasize about these passionate Latino men with their tanned skin and dark handsome features. It's so sexy when they talk dirty in their mother tongue."
                             
@@ -183,12 +178,11 @@ OTHER:
                     EndIf
                     If 1
                         Player(Happy):: "Wait ... Sorry if I'm being weird but I find you quite cute. Perhaps we could exchange numbers and hang out another day?"
-                        If Delivery.IsInterestedIn(Player) && [Delivery.IsDominantSex(Player) || Delivery:attractiontoplayer + Delivery:perversion > random(0, 30)]
+                        If Delivery.isInterestedIn(Player) && [Delivery.isDominantSex(Player) || Delivery:attractiontoplayer + Delivery:perversion > random(0, 30)]
                             Delivery(Surprised):: "Of course! Let's exchange contacts. It's not often that I make a delivery to someone this nice ..."
                             Delivery.makePermanent()
                             exchangeContact(Delivery)
                             "Having given me <Delivery.his_or_her> number, the delivery <Delivery.guy_or_girl> begged <Delivery.his_or_her> leave."
-                            
                         Else
                         
                             Delivery(Irritated):: "I'm sorry, but I only met you a few minutes ago. I don't normally exchange numbers with random people I met on the job."
@@ -196,8 +190,8 @@ OTHER:
                         EndIf
                     Else
                         Player(Flirty):: "You must be exhausted from going door to door delivering stuffs all day. Why don't you come inside so that I can help you 'relax'?"
-                        Dominant = Delivery.IsDominantSex(Player)
-                        If Delivery.IsInterestedIn(Player) && [[Dominant && Delivery:perversion + Delivery:attractiontoplayer > random(0, 50)] || [!Dominant && Delivery:perversion + Delivery:attractiontoplayer > random(0, 100)]]
+                        Dominant = Delivery.isDominantSex(Player)
+                        If Delivery.isInterestedIn(Player) && [[Dominant && Delivery:perversion + Delivery:attractiontoplayer > random(0, 50)] || [!Dominant && Delivery:perversion + Delivery:attractiontoplayer > random(0, 100)]]
                             Delivery(Flirty):: "How can I say no? An offer like that rarely comes by ..."
                             perversion += random(0, 0.5)
                             Sex(Delivery, Player)
@@ -230,7 +224,6 @@ OTHER:
                             Delivery(Angry):: "I'm afraid I can't do that. I would lose my job!"
                             Player(Angry):: "Fine, it's your loss!"
                             "With that said, the delivery <Delivery.guy_or_girl> begged <Delivery.his_or_her> leave."  
-                            
                         EndIf
                     EndIf
                 EndIf
@@ -264,11 +257,8 @@ OTHER:
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -3)
                         EndIf
-                        
                     EndIf
-                    
                 EndIf
-                
                 If !Caught
                     Actor2.show()
                     Actor2(Happy):: "Here you go. That was free by the way."

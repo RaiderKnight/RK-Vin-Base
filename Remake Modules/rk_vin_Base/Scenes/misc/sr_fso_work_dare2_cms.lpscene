@@ -2,10 +2,9 @@ WHAT: all
 WHERE: work
 WHEN: 14 - 24
 WHO: Actor = getSpecific(Dating); Actor2 = getSpecific(Boss); If !Actor.isMale() && Actor.isColleague() && Actor2.isMale()
-OTHER: Player.isMale() && Random(50, 100) < perversion && isTimingOut(sr_fso_work_dare1_cms)
+OTHER: Player.isMale() && Random(50, 100) < perversion && isTimingOut(sr_fso_work_dare1_cms) && isModEnabled(vin_NTR)
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -52,7 +51,7 @@ OTHER: Player.isMale() && Random(50, 100) < perversion && isTimingOut(sr_fso_wor
                 "Finally ..."
                 Filter(Solo)
                 Sex(Actor)
-            Endif
+            EndIf
 
             "The boss says that watching and taking pictures of that got him turned on and he wants to finger your <Actor.boyfriend_or_girlfriend>."
             0:: "Sure"
@@ -72,11 +71,11 @@ OTHER: Player.isMale() && Random(50, 100) < perversion && isTimingOut(sr_fso_wor
                 Actor2:rapportwithplayer -= 3
                 jobperformance -= 3
                 Actor:attractiontoplayer += 3
-            Endif
+            EndIf
         Else
             "This is certainly a morale booster, having someone so dear near me for the whole work day."
             "As a result, my stress level reduces ..."
             mood += 10
-        Endif
+        EndIf
     SceneEnd()
     timeout(100, sr_fso_work_dare2_cms) // Improved by Raddeck

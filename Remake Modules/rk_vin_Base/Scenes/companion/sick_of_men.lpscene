@@ -4,8 +4,7 @@ WHEN: 0-24
 WHO: Actor = getCompanion(); If Actor.isFemale() && Actor.isInterestedInMen() && !Actor.isDating() && Actor:rapportwithplayer > 20 && !Actor.isVirgin() && !Actor.hasRelationship(Spouses, Dating)
 OTHER: Player.isFemale() && Player.isInterestedInWomen()
 
-    // As a woman while hanging out with another woman who have good rapport with you, she may admit that she's had bad luck with guys recently and just don't want to bother with them anymore. 
-
+    
     SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
@@ -45,7 +44,7 @@ OTHER: Player.isFemale() && Player.isInterestedInWomen()
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
-                Player:: "Did you enjoy it?"
+                Player(Curious):: "Did you enjoy it?"
                 Actor:: "Thank you for comforting me in my time of need. You're a good friend"
                 Actor:rapportwithplayer += 10
                 Actor:attractiontoplayer += Random(0, 5)
@@ -56,15 +55,15 @@ OTHER: Player.isFemale() && Player.isInterestedInWomen()
                     "I kinda liked it, but it was quite awkward at times. Maybe I'm not that into men after all."
                     Actor:perversion -= 10
                     Actor:arousal -= 10
-                Endif
-            Elseif Actor.isInterestedIn(Player)
+                EndIf
+            ElseIf Actor.isInterestedIn(Player)
                 Actor(Sad):: "That sounds good to me. But, mayba another time, because now I'm pissed off and drunk."
                 Actor:rapportwithplayer += random(0, 1)
                 Actor:attractiontoplayer += random(0, 1)
             Else
                 Actor(Sad):: "Look, I know you're gay and one of your fantasies is to fuck a straight girl, but don't count on me..."
                 Actor:rapportwithplayer += random(-1, 1)
-            Endif
-        Endif
+            EndIf
+        EndIf
     SceneEnd() // Scene improved by Raddeck
     timeout(200, sick_of_men)

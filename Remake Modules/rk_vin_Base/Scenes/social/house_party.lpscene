@@ -392,7 +392,11 @@ OTHER: none
                                     Else
                                         "Affected by the alcohol, I never stood a chance and <SitWith.name> managed to overcome my struggles easily. Soon, <SitWith.he_or_she> was ripping my clothes off and proceeded to force <SitWith.himself_or_herself> upon me."
                                         Player(Crying):: "No! Please stop ... I trusted you ... Somebody help ..."
-                                        Filter(Aggressive)
+                                        If SitWith.isMale() && !Player.isMale()
+                                            Filter(AggressiveFM)
+                                        Else
+                                            Filter(Aggressive)
+                                        EndIf
                                         TalkNonConsensual()
                                         SexNoAffair(SitWith, Player)
                                         If HungerEnable > 0
@@ -436,7 +440,11 @@ OTHER: none
                                         Else
                                             "Affected by the alcohol, <Actor.name> never stood a chance and I managed to overcome <Actor.his_or_her> struggles easily. Soon, I was ripping <Actor.his_or_her> clothes off and proceeded to force myself upon <Actor.him_or_her>."
                                             Actor(Crying):: "No! Please stop ... I trusted you ... Somebody help ..."
-                                            Filter(Aggressive)
+                                            If !Actor.isMale() && Player.isMale()
+                                                Filter(AggressiveFM)
+                                            Else
+                                                Filter(Aggressive)
+                                            EndIf
                                             TalkNonConsensual()
                                             SexNoAffair(Player, Actor)
                                             Actor.hide()

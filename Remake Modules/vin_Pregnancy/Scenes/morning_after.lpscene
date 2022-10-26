@@ -5,7 +5,6 @@ WHO: none
 OTHER:
 
     SceneStart()
-    
         stock_morning_afterPill = Player.getActorVar(rk_VB_stock_morning_afterPill)
         "I have had some unprotected sex recently, which was quite risky. Maybe I should take a morning after pill to help prevent an unwanted pregnancy?"
         0:: stock_morning_afterPill > 0::"Take a morning after / Plan B pill"
@@ -15,15 +14,15 @@ OTHER:
         If 0
             "Hopefully I wish I took it in time and won't get pregnant."
             If Player.isPregnant()
-                Days = countPregnancyDays()
+                Days = Player.countPregnancyDays()
                 If Days < 10
                     Player.endPregnancy()
-                Endif
-            Endif
+                EndIf
+            EndIf
             Player.modifyActorVar(rk_VB_stock_morning_afterPill, -1)
             karma -= 0.5
             fitness -= 5
-        Elseif 1
+        ElseIf 1
             followUp(naked_with_doctor)
-        Endif
+        EndIf
     SceneEnd() // Improved by Raddeck

@@ -2,25 +2,26 @@ WHAT: work
 WHERE: work
 WHEN: 8 - 20
 WHO: none
-OTHER: Random(0, 100) < 0.01*intelligence*ActionDuration
+OTHER: random(0, 100) < 0.01*intelligence*actionDuration
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         "My company has a procedure for claiming out-of-pocket expenses on business trips and client entertainments. It didn't take long for me to realize that there were plenty of holes to exploit in that procedure that I can take advantage of to make some quick cash."
         "I suspect some of my colleagues are already doing it. Should I take this risk?"
         0:: "Yes"
         1:: "No"
         
         If 0
-            "How can I turn down money? What's life without risks?"
+            "How can I turn down on money? What's life without risks?"
             "My clever exploits earned me quite a bit of cash from all the expenses I claimed that were never actually incurred."
             karma -= 10
-            If intelligence > Random(0, 100)*Random(0, 1)
-                money += Random(200, 2000)
+            If intelligence > random(0, 100)*random(0, 1)
+                money += random(200, 2000)
                 "However, I didn't go overboard in order to avoid suspicions and got away with it."
-                sneak += Random(0, 2)
+                sneak += random(0, 2)
             Else
                 sneak -= 1
                 Boss = getSpecific(Boss)
@@ -32,19 +33,16 @@ OTHER: Random(0, 100) < 0.01*intelligence*ActionDuration
                 loseJob()
                 setBackground(street)
                 "Not only did I lose my job, my reputation as a thief was passed from one HR team to another. It's harder to get a decent job now ..."
-                jobexperience -= Random(0, 20)
+                jobexperience -= random(0, 20)
                 mood -= 100
-                BossReallyPissed = Random(0, 100)
-                
+                BossReallyPissed = random(0, 100)
                 If BossReallyPissed > 50
                     followUp(rk_VB_Steal_Arrest)
-                Endif
-                
-            Endif
+                EndIf
+            EndIf
         Else
             "I think I like my job and my integrity too much to steal."
             intelligence += 1
-        Endif
-        
+        EndIf
         timeout(750, steal_from_work)
     SceneEnd() // Improved by Raddeck

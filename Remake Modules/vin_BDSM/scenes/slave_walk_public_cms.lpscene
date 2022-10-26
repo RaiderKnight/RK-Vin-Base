@@ -109,7 +109,11 @@ OTHER: isModEnabled(vin_NonConsensual)
                                 "I then ran away to managed to leave my kidnapper far behind ..."
                                 "But I fell,... I was too exhausted to run."
                                 "The noise immediately attracted the attention of the kidnapper, who arrived right away to take me back and fuck me as <Actor2.he_or_she> had promised before!"
-                                Filter(Aggressive)
+                                If Actor2.isMale() && !Player.isMale()
+                                    Filter(AggressiveFM)
+                                Else
+                                    Filter(Aggressive)
+                                EndIf
                                 TalkNonConsensual()
                                 Actor2.strip()
                                 Sex(Actor2, Player)
@@ -123,16 +127,20 @@ OTHER: isModEnabled(vin_NonConsensual)
                                 sneak += 1
                                 "I then ran away and after a while I managed to leave my kidnapper far behind ..."
                                 "Phew, that was a close call ..."
-                            Endif
+                            EndIf
                         Else
                             AGetFucked = true
-                        Endif
+                        EndIf
                     Else
                         AGetFucked = true
                     EndIf
                 EndIf
                 If AGetFucked
-                    Filter(Aggressive)
+                    If Actor2.isMale() && !Player.isMale()
+                        Filter(AggressiveFM)
+                    Else
+                        Filter(Aggressive)
+                    EndIf
                     TalkNonConsensual()
                     Actor2.strip()
                     SexNoAffair(Actor2, Player)
@@ -144,13 +152,13 @@ OTHER: isModEnabled(vin_NonConsensual)
                     energy -= 15
                 EndIf
                 count += 1
-            Endwhile
-        Endif
+            EndWhile
+        EndIf
         Actor(Happy):: "Well done, slave, you've worked hard for your <Actor.Master_or_Mistress> today ..."
         If AGetRapper
             Player(Sad):: "Except that I was raped..."
             mood -= 25
             energy -= 5
-        Endif
+        EndIf
     SceneEnd()
     timeout(200, slave_walk_public_cms) // Improved by Raddeck
