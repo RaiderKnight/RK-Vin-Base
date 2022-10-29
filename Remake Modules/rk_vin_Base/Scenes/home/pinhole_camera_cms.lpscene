@@ -5,63 +5,132 @@ WHO: Actor = getSpecific(Landlord)
 OTHER:
 
     SceneStart()
-    Pinhole = Actor.getActorVar(Pinhole)
-    
-    If Pinhole == 0
-        "While cleaning up my own place, to my horror, I found a hidden pinhole camera."
-        0:: "Ignore it"
-        1:: "Ask the landlord about it"
-        2:: "Call the police"
-        
-        If 0
-            "Thankfully, nothing seems to happen. I'm not even sure if the camera is even functional. Maybe something weird with the previous tenant that no longer affects me in any way."
-            Pinhole.setActorVar(Pinhole, 1)
-        Elseif 1
-            Actor.dress()
-            Actor.show()
-            Actor:: "I have no clue honestly. Must have been installed by the previous tenant. Probably not functional at all anymore. Don't worry."
-            Pinhole.setActorVar(Pinhole, 1)
-        Else
-            "The police came to investigate. Scared of legal consequences, the landlord removed it."
-            timeout(3000, pinhole_camera_cms)
-        Endif
-    Elseif Pinhole == 1     
-        "While browsing the web, I stumble onto some homemade voyeur porn that turns out to be of myself masturbating in my own apartment!"
-        0:: "Watch yourself and get turned on"
-        1:: "Keep it a secret"
-        2:: "Contact the police"
-        3:: intelligence > 50:: "Hack the web host to find out who the uploader is"
-        
-        If 0
-            "I can't believe how turned on am I watching myself ..."
-            "This may just provide more content for my voyeur ... but fuck it ..."
-            Filter(Solo)
-            Sex(Player)
-            perversion += 0.5
-        Elseif 1
-            "I don't want to risk this being known by my family or colleagues."
-        Elseif 2
-            "I decided to contact the police who eventually arrested the criminal behind the camera."
-            timeout(3000, pinhole_camera_cms)
-        Else
-            "I think I've managed to track down the uploader. What should I do?"
-            0:: "Report to the cops"
-            1:: "Blackmail for a 50% share of the profit"
-            
-            If 0
-                "I decided to contact the police who eventually arrested the criminal behind the camera."
-                timeout(3000, pinhole_camera_cms)            
-            Else
-                "I went to see the criminal myself and demanded my share of the profit while threatening to report him to the police."
-                "He had no choice but accept."
-                Pinhole.setActorVar(Pinhole, 2)
-            Endif
-        Endif
-    Else
-        "The man behind the pinhole camera in my apartment just uploaded a porn video of me with a lover. As per our agreement, I received a share of the profits as well."
-        "This really put a new meaning into the word 'passive income'."
-        money += 200 
-    Endif
-
-    SceneEnd()
+		If isModEnabled(rk_vin_Base)
+            Actor99 = generatePersonTemporary()
+			Actor99.dress()
+			Actor99.hide()
+			Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+            UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+			CPinhole = Player.getActorVar(rk_VB_CPinhole)
+			GPinhole = Player.getActorVar(rk_VB_Pinhole)
+			TPinhole = Player.getActorVar(rk_VB_pinhole_camera)
+			SharePinhole = Player.getActorVar(rk_VB_SharePinhole)
+			If SharePinhole == 1
+				"The man behind the pinhole camera in my apartment just uploaded a porn video of me doing sex. As per our agreement, I received a share of the profits as well."
+				"This really put a new meaning into the word 'passive income'."
+				money += random(100, 500)
+				timeout(300, pinhole_camera_cms)
+			Else
+				Attend = age*365
+				Attendre = TPinhole + 3000
+				cestbon = false
+				If GPinhole >= 1 && TPinhole >= Attendre
+					If random(0, 100) > 50
+						cestbon = true
+					EndIf
+				EndIf
+				If cestbon
+					Pinhole = random(1, 2)
+				Else
+					If GPinhole >= 1 && TPinhole <= Attendre
+						Pinhole = 2
+					Else
+						Pinhole = random(1, 2)
+					EndIf
+				EndIf
+				Pinhole = Pinhole.round()
+				Player.modifyActorVar(rk_VB_CPinhole, 2)
+				If Pinhole == 1
+					If CPinhole >= 1
+						txt1 = "functional, last time it was at another place."
+						txt11 = "a criminal. Honestly, it doesn't seem to work, there are no wires connecting it!"
+						"While cleaning up my own place, to my horror, I found again a hidden pinhole camera."
+					Else
+						txt1 = "functional"
+						txt11 = "the previous tenant. Probably not functional at all anymore"
+						"While cleaning up my own place, to my horror, I found a hidden pinhole camera."
+					EndIf
+					0:: "Ignore it"
+					1:: "Ask the landlord about it"
+					2:: "Call the police"
+					
+					If 0
+						"Thankfully, nothing seems to happen. I'm not even sure if the camera is even <txt1>. Maybe something weird with the previous tenant that no longer affects me in any way."
+						Player.setActorVar(rk_VB_Pinhole, 2)
+					ElseIf 1
+						Actor.dress()
+						Actor.show()
+						Actor(Curious):: "I have no clue honestly. Must have been installed by <txt11>. Don't worry!"
+						Player.setActorVar(rk_VB_Pinhole, 2)
+					Else
+						"The police came to investigate. Scared of legal consequences, the landlord removed it."
+						Player.setActorVar(rk_VB_Pinhole, 0)
+						Player.setActorVar(rk_VB_pinhole_camera, Attend)
+						If CPinhole >= 1
+							calc = CPinhole*100
+							temps = 3000+calc
+							temps = temps.round()
+							timeout(temps, pinhole_camera_cms)
+						Else
+							timeout(3000, pinhole_camera_cms)
+						EndIf
+					EndIf
+				ElseIf Pinhole == 2     
+					"While browsing the web, I stumble onto some homemade voyeur porn that turns out to be of myself masturbating in my own apartment!"
+					0:: "Watch yourself and get turned on"
+					1:: "Keep it a secret"
+					2:: "Contact the police"
+					3:: intelligence > 50:: "Hack the web host to find out who the uploader is"
+					
+					If 0
+						"I can't believe how turned on am I watching myself ..."
+						"This may just provide more content for my voyeur ... but fuck it ..."
+						Filter(Solo)
+						Sex(Player)
+						If HungerEnable > 0
+							Player.modifyActorVar(rk_VB_Hunger, -1)
+						EndIf
+						perversion += 0.5
+					ElseIf 1
+						"I don't want to risk this being known by my family or colleagues."
+					ElseIf 2
+						"I decided to contact the police who eventually arrested the criminal behind the camera."
+						If CPinhole >= 1
+							calc = CPinhole*100
+							temps = 3000+calc
+							temps = temps.round()
+							timeout(temps, pinhole_camera_cms)
+						Else
+							timeout(3000, pinhole_camera_cms)
+						EndIf
+					Else
+						"I think I've managed to track down the uploader. What should I do?"
+						0:: "Report to the cops"
+						1:: "Blackmail for a 50% share of the profit"
+						
+						If 0
+							"I decided to contact the police who eventually arrested the criminal behind the camera."
+							Player.setActorVar(rk_VB_Pinhole, 0)
+							Player.setActorVar(rk_VB_pinhole_camera, Attend)
+							If CPinhole >= 1
+								calc = CPinhole*100
+								temps = 3000+calc
+								temps = temps.round()
+								timeout(temps, pinhole_camera_cms)
+							Else
+								timeout(3000, pinhole_camera_cms)
+							EndIf            
+						Else
+							"I went to see the criminal myself and demanded my share of the profit while threatening to report <Actor99.him_or_her> to the police."
+							"<Actor99.He_or_She> had no choice but accept."
+							"So now, each time will post a video of me, I will receive my share..."
+							Player.setActorVar(rk_VB_SharePinhole, 1)
+						EndIf
+					EndIf
+				EndIf
+			EndIf
+		EndIf
+    SceneEnd() // Scene improved by Raddeck
     timeout(300, pinhole_camera_cms)
