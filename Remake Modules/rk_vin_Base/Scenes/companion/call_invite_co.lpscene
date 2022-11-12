@@ -1,15 +1,15 @@
 WHAT: all, -sleep, -sleep_hotel
 WHERE: all, -work
 WHEN: 9-23
-WHO: Friend = getPerson(true); If Friend.isInterestedIn(Player) && Random(70, 100) < Friend:perversion && Random(30, 100) < Friend:attractiontoplayer
-OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Friend:rapportwithplayer > 30 && Friend:arousal > 25
+WHO: Friend = getPerson(true); If Friend.isInterestedIn(Player) && random(70, 100) < Friend:perversion && random(30, 100) < Friend:attractiontoplayer
+OTHER: !isWithCompanion() && !isWithCompanionCreature() && Friend:rapportwithplayer > 30 && Friend:arousal > 25
 
-    sceneStart()
+    SceneStart()
         Friend.dress()
         "My phone rang ... It's <Friend.name> calling."
-        SecondScreen(Friend)
+        secondScreen(Friend)
         Friend.show(2)
-        Dating = Friend.IsDating()
+        Dating = Friend.isDating()
         Friend(Flirty):: "Hey <Player.beautiful_or_handsome>, are you missing me already? Listen, I've got to see that sexy <Player.body_or_ass> of yours again today! It's a shame you don't know what to do with it ... Maybe I can teach you a thing or two when we meet."
         "Go on a date with <Friend.name>?"
         0:: "Yes"
@@ -22,21 +22,21 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Friend:rapportwithpla
                 Friend:: "See you soon, darling!"
             Else
                 Friend:: "See you soon!"
-            Endif
+            EndIf
             passTime(0.25, 1)
-            Friend.StartDate()
+            Friend.startDate()
             timeout(12, call_invite_co, call_invite)
-            perversion += Random(0, 0.5)
+            perversion += random(0, 0.5)
         Else
             If Dating
                 Player:: "Not today, love. Call me again soon though ..."
                 Friend:: "Okay, baby. I'll see you later then."
-                Friend:attractiontoplayer -= Random(0, 1)
+                Friend:attractiontoplayer -= random(0, 1)
             Else
                 Player:: "Sorry, I'm busy today. Maybe next time ..."
                 Friend:: "Oh? That's a shame. I'll see you around then."
-            Endif
+            EndIf
             timeout(6, call_invite_co, call_invite)
-        Endif
-        //timeout(50, call_invite, call_invite_co, call_invite_f, family_invite_workout, invite_workout, call_invite_co_pregnant)
-    sceneEnd() // Scene improved by: Raddeck
+        EndIf
+    SceneEnd() // Scene improved by: Raddeck
+    timeout(50, call_invite, call_invite_co, call_invite_f, family_invite_workout, invite_workout, call_invite_co_pregnant)

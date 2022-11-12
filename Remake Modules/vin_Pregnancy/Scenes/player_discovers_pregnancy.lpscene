@@ -23,7 +23,8 @@ OTHER: none
             "It's a strange feeling - I don't know if I should feel excited or terrified."
         EndIf
         If TfGame()
-            "I stare at the test in blank incomprehension, the results of my test not quite making sense to my ears. I’m pregnant. I have life inside me now. It will grow into an entirely new person. I will be a mother. If there was any doubt remaining in the back of my mind that I was truly a woman, this just smashed it like a hammer. I am pregnant. This is real."
+            "I stare at the test in blank incomprehension, the results of my test not quite making sense to my ears. I’m pregnant. I have life inside me now. It will grow into an entirely new person."
+            "I will be a mother. If there was any doubt remaining in the back of my mind that I was truly a woman, this just smashed it like a hammer. I am pregnant. This is real."
         EndIf
         Actor = getSpecific(CurrentBabyDaddy)
     
@@ -79,6 +80,7 @@ OTHER: none
                         Else
                             masochist -= 3
                             "I decided to sacrifice the relationship to save a life ..."
+                            Dating.setDatingId()
                             loseDating()
                         EndIf
                     EndIf
@@ -99,7 +101,8 @@ OTHER: none
                     "Shamefully, I then proceeded to beg my rapist to accept me as <Actor.his_or_her> <Player.boyfriend_or_girlfriend> and help me raise the kid together."
                     If Actor:attractiontoplayer > 40 || Actor:masochist > -25
                         "<Actor.name> wasn't heartless and agreed to take responsibility for me and the child after all."
-                        "<Actor.He_or_She> is now my <Actor.boyfriend_or_girlfriend> ... Not the most romantic love story but maybe with time, both of us will forget that we are only together because <Actor.he_or_she> raped me and got me pregnant and we will actually turn out to be a healthy family."
+                        "<Actor.He_or_She> is now my <Actor.boyfriend_or_girlfriend> ..."
+                        "Not the most romantic love story but maybe with time, both of us will forget that we are only together because <Actor.he_or_she> raped me and got me pregnant and we will actually turn out to be a healthy family."
                         Actor:attractiontoplayer += 10
                         Actor.setActorVar(tag_DaddyKnows, 2)
                         exchangeContact(Actor)
@@ -150,6 +153,7 @@ OTHER: none
                         Else
                             masochist -= 3
                             "I decided to sacrifice the relationship to save a life ..."
+                            Dating.setDatingId()
                             loseDating()
                         EndIf
                     EndIf
@@ -159,7 +163,8 @@ OTHER: none
                     setBackground(cafe)
                     Actor.dress()
                     Actor.show()
-                    "I asked <Actor.name> to meet me in a public cafe, assuring <Actor.he_or_she> that I wasn't going to try anything naughty this time. <Actor.He_or_She> was stunned that I have the <Player.balls_or_galls> to even contact <Actor.him_or_her> again after raping <Actor.him_or_her>, but did show up to hear me out."
+                    "I asked <Actor.name> to meet me in a public cafe, assuring <Actor.he_or_she> that I wasn't going to try anything naughty this time."
+                    "<Actor.He_or_She> was stunned that I have the <Player.balls_or_galls> to even contact <Actor.him_or_her> again after raping <Actor.him_or_her>, but did show up to hear me out."
                     "It's time to give <Actor.him_or_her> the news ..."
                     Player:: "<Actor.name>, I'm pregnant ... with your child."
                     "Shamefully, I then proceeded to beg my rape vitim to accept me as <Actor.his_or_her> <Player.boyfriend_or_girlfriend> and help me raise the kid together."
@@ -219,6 +224,7 @@ OTHER: none
                             Told:attractiontoplayer =-100
                             Told(Angry):: "Good luck with the baby, because I don't want anything to do with it ... or you!"
                             Told(Angry):: "Bye, bitch!"
+                            Told.setDatingId()
                             loseDating()
                             blockContact(Told)
                             "And just like that, <Told.name> left me and baby growing inside my belly behind ..."
@@ -257,6 +263,7 @@ OTHER: none
                             Told:attractiontoplayer =-100
                             Told(Angry):: "Good luck with the baby, because I don't want anything to do with it ... or you!"
                             Told(Angry):: "Bye, bitch!"
+                            Told.setDatingId()
                             loseDating()
                             blockContact(Told)
                             "And just like that, <Told.name> left me and baby growing inside my belly behind ..."

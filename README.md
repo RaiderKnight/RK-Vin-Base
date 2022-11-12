@@ -3,7 +3,7 @@
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
 <h3>rk_vin_Base :</h3>
-<p>Version: 2.0.4</p>
+<p>Version: 2.0.5</p>
 <br>
 <br>
 <p><strong>What else does this project bring more?</strong></p>
@@ -13,8 +13,8 @@
 <p>- Contain 75% more content and 40% more items.</p>
 <p>- Universities have a purpose.</p>
 <p>- More items to buy/eat/sale or trade.</p>
-<p>- Most items you buyed have a purpose.</p>
-<p>- New stats (hunger, urge to pee, christanity,...).</p>
+<p>- Most items you bought have a purpose.</p>
+<p>- New stats (hunger, urge to pee, Christianity,...).</p>
 <p>- More actions, choices, consequence and possibilities</p>
 <p>- More online activities.</p>
 <p>- You can buy an alarm system and/or train your dog to protect you.</p>
@@ -39,7 +39,7 @@
 <p>- Basically, completely improve this mod</p>
 <p>- Add more texts and choices, to the files already edited ;)</p>
 <br>
-<p>I will also include all remaked scenes already made, who fit with rk_vin_Base, from other modders who are in/will join this project.</p>
+<p>I will also include all redone scenes, who fit with rk_vin_Base, from other modders or contributors who join this project.</p>
 <br>
 <h3>How to contribute or Join</h3>
 <p>- Contact me on <a href="https://discord.gg/d3U9E2wb4Y">Discord</a></p>
@@ -56,9 +56,10 @@
 <hr>
 <br>
 <h3>Safe Mods</h3>
-<p>- nn_NPCManager, nn_HomeExpander - by NickNo</p>
-<p>- rk_God_Mod, rk_Sex_Guru, rk_Weed_biz - by Raddeck</p>
-<p>- Medievalover's Character Presets - by Medievalover</p>
+<p><b>Inside RKLauncher</b>: All mods tagged [Remake Only] or [Ready for Remake]</p>
+<p>or</p>
+<p>- nn_NPCManager, nn_VB_HomeExpander - PornEmpire - Gang Of LifePlay by NickNo</p>
+<p>- God_Mod, Sex_Guru, Weed_biz - by Raddeck</p>
 <p>- Rooms Without Curtains - by @Tristimdorion (Tristim)</p>
 <p>- MattShizzle's Bedroom Replacements - by MattShizzle</p>
 <p>- Vima's Bedroom Presets Collection - by Vima</p>

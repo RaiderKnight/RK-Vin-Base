@@ -9,8 +9,71 @@ OTHER: none
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        choiceCourseMajor = rk_VB_choiceCourseMajor.getGlobal()
         Fees = 500*random(0.5, 1)*CostOfLiving
         FeesConverted = Fees.convertToLocalCurrency(true)
+        If choiceCourseMajor == 1
+            choiceCourseMajorT = 1
+            TextMajorChosen = "architecture"
+        ElseIf choiceCourseMajor == 2
+            choiceCourseMajorT = 2
+            TextMajorChosen = "chemical engineering"
+        ElseIf choiceCourseMajor == 3
+            choiceCourseMajorT = 3
+            TextMajorChosen = "classics"
+        ElseIf choiceCourseMajor == 4
+            choiceCourseMajorT = 4
+            TextMajorChosen = "computer science"
+        ElseIf choiceCourseMajor == 31
+            choiceCourseMajorT = 17
+            TextMajorChosen = "dental"
+        ElseIf choiceCourseMajor == 5
+            choiceCourseMajorT = 5
+            TextMajorChosen = "economics"
+        ElseIf choiceCourseMajor == 6
+            choiceCourseMajorT = 6
+            TextMajorChosen = "education"
+        ElseIf choiceCourseMajor == 7
+            choiceCourseMajorT = 7
+            TextMajorChosen = "English"
+        ElseIf choiceCourseMajor == 8
+            choiceCourseMajorT = 8
+            TextMajorChosen = "geography"
+        ElseIf choiceCourseMajor == 9
+            choiceCourseMajorT = 9
+            TextMajorChosen = "history"
+        ElseIf choiceCourseMajor == 10
+            choiceCourseMajorT = 10
+            TextMajorChosen = "law"
+        ElseIf choiceCourseMajor == 11
+            choiceCourseMajorT = 11
+            TextMajorChosen = "mathematics"
+        ElseIf choiceCourseMajor == 12
+            choiceCourseMajorT = 12
+            TextMajorChosen = "medicine"
+        ElseIf choiceCourseMajor == 13
+            choiceCourseMajorT = 13
+            TextMajorChosen = "music"
+        ElseIf choiceCourseMajor == 14
+            choiceCourseMajorT = 14
+            TextMajorChosen = "philosophy"
+        ElseIf choiceCourseMajor == 15
+            choiceCourseMajorT = 15
+            TextMajorChosen = "psychology"
+        ElseIf choiceCourseMajor == 16
+            choiceCourseMajorT = 16
+            TextMajorChosen = "political sciences"
+        ElseIf choiceCourseMajor == 60
+            choiceCourseMajorT = 18
+            TextMajorChosen = "sales and marketing"
+        ElseIf choiceCourseMajor == 80
+            choiceCourseMajorT = 19
+            TextMajorChosen = "travel and tourism"
+        ElseIf choiceCourseMajor == 90
+            choiceCourseMajorT = 20
+            TextMajorChosen = "veterinary"
+        EndIf
+        
         // Session is it started 1 = yes
         Session_TAR = Player.getActorVar(rk_VB_Session_TAR)
         Session_TCE = Player.getActorVar(rk_VB_Session_TCE)
@@ -33,12 +96,7 @@ OTHER: none
         Session_TVE = Player.getActorVar(rk_VB_Session_TVE)
         Session_TTT = Player.getActorVar(rk_VB_Session_TTT)
         TotalSession = Session_TAR + Session_TCE + Session_TCL + Session_TCS + Session_TEC + Session_TED + Session_TEN + Session_TGE + Session_THI + Session_TLA + Session_TMA + Session_TME + Session_TMU + Session_TPH + Session_TPS + Session_TPOL + Session_TSM + Session_TDM + Session_TVE + Session_TTT
-        If TotalSession >= 1
-            Player:EnrollDegree => 1
-        Else
-            Player:EnrollDegree => 0
-        EndIf
-        If isStudent() || TotalSession >= 1
+        If isModEnabled(rk_vin_Base) && EnrollDegree >= 1
             "Should I try to join this <Player.fraternity_or_sorority>? The chapter fees work out at around <FeesConverted> per month."
             0:: "Yes"
             1:: "No"
@@ -61,12 +119,105 @@ OTHER: none
                     Actor = generatePersonTemporary()
                     While !Actor.isSameGender(Player)
                         Actor = generatePersonTemporary()
-                    Endwhile
+                    EndWhile
                     Actor.makePermanent()
                     Actor:age => random(18, 22)
                     Actor.randomizeHairs()
+                    Actor.randomizeRace()
                     Actor.randomizeFace()
-                    Actor.setDifferentMajor()
+                    //Actor.setDifferentMajor()
+                    AcID = Actor.getID()
+                    Actor.setActorVar(rk_VB_tag_Student, 1)
+                    ChoixDsonCours = random(1, 20)
+                    ChoixDsonCours = ChoixDsonCours.round()
+                    While ChoixDsonCours == choiceCourseMajorT
+                        If choiceCourseMajorT == 1
+                            Actor.setActorVar(rk_VB_Architecture_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TAR, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TAR, AcID)
+                        ElseIf choiceCourseMajorT == 2
+                            Actor.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TCE, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TCE, AcID)
+                        ElseIf choiceCourseMajorT == 3
+                            Actor.setActorVar(rk_VB_Classics_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TCL, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TCL, AcID)
+                        ElseIf choiceCourseMajorT == 17
+                            Actor.setActorVar(rk_VB_Dental_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TDM, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TDM, AcID)
+                        ElseIf choiceCourseMajorT == 4
+                            Actor.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TCS, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TCS, AcID)
+                        ElseIf choiceCourseMajorT == 5
+                            Actor.setActorVar(rk_VB_Economics_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TEC, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TEC, AcID)
+                        ElseIf choiceCourseMajorT == 6
+                            Actor.setActorVar(rk_VB_Education_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TED, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TED, AcID)
+                        ElseIf choiceCourseMajorT == 7
+                            Actor.setActorVar(rk_VB_English_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TEN, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TEN, AcID)
+                        ElseIf choiceCourseMajorT == 8
+                            Actor.setActorVar(rk_VB_Geography_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TGE, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TGE, AcID)
+                        ElseIf choiceCourseMajorT == 9
+                            Actor.setActorVar(rk_VB_History_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_THI, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_THI, AcID)
+                        ElseIf choiceCourseMajorT == 10
+                            Actor.setActorVar(rk_VB_Law_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TLA, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TLA, AcID)
+                        ElseIf choiceCourseMajorT == 11
+                            Actor.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TMA, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TMA, AcID)
+                        ElseIf choiceCourseMajorT == 12
+                            Actor.setActorVar(rk_VB_Medicine_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TME, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TME, AcID)
+                        ElseIf choiceCourseMajorT == 13
+                            Actor.setActorVar(rk_VB_Music_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TMU, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TMU, AcID)
+                        ElseIf choiceCourseMajorT == 14
+                            Actor.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TPH, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TPH, AcID)
+                        ElseIf choiceCourseMajorT == 15
+                            Actor.setActorVar(rk_VB_Psychology_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TPS, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TPS, AcID)
+                        ElseIf choiceCourseMajorT == 16
+                            Actor.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TPOL, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
+                        ElseIf choiceCourseMajorT == 18
+                            Actor.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TSM, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TSM, AcID)
+                        ElseIf choiceCourseMajorT == 19
+                            Actor.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TTT, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TTT, AcID)
+                        ElseIf choiceCourseMajorT == 20
+                            Actor.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
+                            Actor.setActorVar(rk_VB_tag_TVE, 1)
+                            Actor.setActorVar(rk_VB_AcIdCC_TVE, AcID)
+                        EndIf
+                    EndWhile
+                    If !Actor.isMale()
+                        Actor.setActorVar(rk_VB_tag_ExeSoroS, 1)
+                    Else
+                        Actor.setActorVar(rk_VB_tag_ExeFratF, 1)
+                    EndIf
                     Actor.dress()
                     Actor.show(2)
                     If HungerEnable > 0
@@ -91,12 +242,13 @@ OTHER: none
                         Actor2 = generatePersonTemporary()
                         While Actor2.isSameGender(Player)
                             Actor2 = generatePersonTemporary()
-                        Endwhile
+                        EndWhile
                         Actor2:age => random(60, 80)
                         Actor2:fitness => 0
                         Actor2:muscle => 0
                         Actor2:attractiveness => 0
                         Actor2.randomizeHairs()
+                        Actor2.randomizeRace()
                         Actor2.randomizeFace()
                         setBackground(street)
                         Actor2.show(2)
@@ -109,13 +261,12 @@ OTHER: none
                         EndIf
                         Actor2.delete()
                         Player.show(0)
-                        
                         If isModEnabled(vin_Bestiality)
                             Actor.show()
                             Actor2 = generateCreatureTemporary(Dog)
                             While !Player.isInterestedIn(Actor2)
                                 Actor2 = generateCreatureTemporary(Dog)    
-                            Endwhile
+                            EndWhile
                             Actor2.show()
                             "Well done, but that's only the first part of the challenge. In order to join our <Actor.fraternity_or_sorority>, you'll have to fuck <Actor2.name>, our dog mascot."
                             0:: "Fuck the dog"
@@ -137,7 +288,7 @@ OTHER: none
                         Fees.setFraternityFees()
                         Actor.show(2)
                         Actor:rapportwithplayer += random(50, 100)
-                        Actor.setDifferentMajor()          
+                        //Actor.setDifferentMajor()          
                         Actor(Happy):: "Well done, my new <Player.brother_or_sister>. I knew you could do it! You deserve to be one of us now."
                         "A massive celebration erupted - I'm now a full member of the <Player.fraternity_or_sorority>. I finally have a chance to be introduced to my <Player.brothers_or_sisters> officially."
                         exchangeContact(Actor)
@@ -149,15 +300,104 @@ OTHER: none
                             Actor = generatePersonTemporary()
                             While !Actor.isSameGender(Player)
                                 Actor = generatePersonTemporary()
-                            Endwhile                       
+                            EndWhile                       
                             Actor.makePermanent()
                             Actor:age => random(18, 22)
                             Actor.randomizeHairs()
+                            Actor.randomizeRace()
                             Actor.randomizeFace()
-                            Actor.setDifferentMajor()
+                            //Actor.setDifferentMajor()
+                            AcID = Actor.getID()
+                            Actor.setActorVar(rk_VB_tag_Student, 1)
+                            ChoixDsonCours = random(1, 20)
+                            ChoixDsonCours = ChoixDsonCours.round()
+                            While ChoixDsonCours == choiceCourseMajorT
+                                If choiceCourseMajorT == 1
+                                    Actor.setActorVar(rk_VB_Architecture_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TAR, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TAR, AcID)
+                                ElseIf choiceCourseMajorT == 2
+                                    Actor.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TCE, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TCE, AcID)
+                                ElseIf choiceCourseMajorT == 3
+                                    Actor.setActorVar(rk_VB_Classics_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TCL, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TCL, AcID)
+                                ElseIf choiceCourseMajorT == 17
+                                    Actor.setActorVar(rk_VB_Dental_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TDM, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TDM, AcID)
+                                ElseIf choiceCourseMajorT == 4
+                                    Actor.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TCS, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TCS, AcID)
+                                ElseIf choiceCourseMajorT == 5
+                                    Actor.setActorVar(rk_VB_Economics_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TEC, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TEC, AcID)
+                                ElseIf choiceCourseMajorT == 6
+                                    Actor.setActorVar(rk_VB_Education_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TED, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TED, AcID)
+                                ElseIf choiceCourseMajorT == 7
+                                    Actor.setActorVar(rk_VB_English_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TEN, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TEN, AcID)
+                                ElseIf choiceCourseMajorT == 8
+                                    Actor.setActorVar(rk_VB_Geography_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TGE, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TGE, AcID)
+                                ElseIf choiceCourseMajorT == 9
+                                    Actor.setActorVar(rk_VB_History_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_THI, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_THI, AcID)
+                                ElseIf choiceCourseMajorT == 10
+                                    Actor.setActorVar(rk_VB_Law_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TLA, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TLA, AcID)
+                                ElseIf choiceCourseMajorT == 11
+                                    Actor.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TMA, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TMA, AcID)
+                                ElseIf choiceCourseMajorT == 12
+                                    Actor.setActorVar(rk_VB_Medicine_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TME, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TME, AcID)
+                                ElseIf choiceCourseMajorT == 13
+                                    Actor.setActorVar(rk_VB_Music_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TMU, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TMU, AcID)
+                                ElseIf choiceCourseMajorT == 14
+                                    Actor.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TPH, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TPH, AcID)
+                                ElseIf choiceCourseMajorT == 15
+                                    Actor.setActorVar(rk_VB_Psychology_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TPS, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TPS, AcID)
+                                ElseIf choiceCourseMajorT == 16
+                                    Actor.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TPOL, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
+                                ElseIf choiceCourseMajorT == 18
+                                    Actor.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TSM, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TSM, AcID)
+                                ElseIf choiceCourseMajorT == 19
+                                    Actor.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TTT, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TTT, AcID)
+                                ElseIf choiceCourseMajorT == 20
+                                    Actor.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
+                                    Actor.setActorVar(rk_VB_tag_TVE, 1)
+                                    Actor.setActorVar(rk_VB_AcIdCC_TVE, AcID)
+                                EndIf
+                            EndWhile
                             Actor:rapportwithplayer => 101
                             Actor.dress()
                             Actor.show(2)
+                            Actor.moveToPersonStand(Player, 50)
                             "A <Actor.brother_or_sister> approached me."
                             Actor(Happy):: "Welcome, my new <Actor.brother_or_sister>, I'm <Actor.name>."
                             Player(Happy):: "Nice to meet you, <Actor.brother_or_sister>."
@@ -178,6 +418,8 @@ OTHER: none
                                     If HungerEnable > 0
                                         Player.modifyActorVar(rk_VB_Hunger, -2)
                                     EndIf
+                                    Actor:attractiontoplayer += random(0, 5)
+                                    Actor:rapportwithplayer += random(0, 5)
                                 EndIf
                             EndIf //End edit Raddeck
                             exchangeContact(Actor)

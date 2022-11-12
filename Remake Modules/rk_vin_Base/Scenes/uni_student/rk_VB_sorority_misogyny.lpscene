@@ -5,20 +5,29 @@ WHO: none
 OTHER: Player.isFemale()
 
     SceneStart()
-        "I'm in a middle of a frat party when some of my sisters started their favorite chants."
-        "'No means Yes, Yes means Cash!'"
-        "'No means Yes, Yes means Cash!'"
-        "'No means Yes, Yes means Cash!'"
-        "'No means Yes, Yes means Cash!'"
+        "I'm in a middle of a frat party when some of my sisters started to sing one of their favourite chants."
+        Chanson = random(1, 4)
+        Chanson = Chanson.round()
+        If Chanson <= 2
+            "'Take me out to your frat house, ..."
+            "'take me up to your room ...'"
+            "'We don't need pillows or sheets tonight, ...'"
+            "'just a condom that fits you just right!'"
+        Else
+            "'No means Yes, Yes means Cash!'"
+            "'No means Yes, Yes means Cash!'"
+            "'No means Yes, Yes means Cash!'"
+            "'No means Yes, Yes means Cash!'"
+        EndIf
         0:: "Chant along"
         1:: "Stay silent"
         
         If 0
             Player(Evil):: "No means Yes, Yes means Cash!"
-            masochist -= Random(0, 0.5)
+            masochist -= random(0, 0.5)
             karma -= 2.5
         Else
-            masochist += Random(0, 0.25)
-        Endif
-    SceneEnd() // Improved by Raddeck
+            masochist += random(0, 0.25)
+        EndIf
+    SceneEnd() // Created by Raddeck
     timeout(200, rk_VB_sorority_misogyny)

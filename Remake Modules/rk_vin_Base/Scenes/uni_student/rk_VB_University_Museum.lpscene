@@ -1,11 +1,10 @@
 WHAT: all
-WHERE: university:school, university:work
+WHERE: university:school
 WHEN: 0-24
 WHO: 
-OTHER: !isWithCompanion() && 70 < random(0, 100) && EnrollDegree > 0
+OTHER: !isWithCompanion() && 70 < random(0, 100) && EnrollDegree >= 1
 
     SceneStart()
-        
         Actor = generatePersonTemporary()
         Actor.makeInterested(Player)
         setBackground(art)
@@ -37,10 +36,8 @@ OTHER: !isWithCompanion() && 70 < random(0, 100) && EnrollDegree > 0
             arousal += 1
             perversion += 1
         EndIf
-        
         Actor(Flirty)::"Sorry, but I like to get things out in the open,..."
         Actor(Flirty)::"I just wanted you to know that I'd like to use the bathroom for about 15 minutes at least..."
-        
         "What I should say about this?"
         0::"Be outraged"
         1::"Compliment"
@@ -66,25 +63,25 @@ OTHER: !isWithCompanion() && 70 < random(0, 100) && EnrollDegree > 0
             Actor.strip()
             Actor.dressExcept(Bottom, Outerwear, Bottom_Under)
             Filter(solo)
-            sex(Actor)
+            Sex(Actor)
             Actor.hide()
-            "The idea of <Actor.him_or_her> jerking <Actor.himself_or_herself> off excited me and made my <Player.pants_or_panties> wet."
+            "The idea of <Actor.him_or_her> <Actor.jerking_or_fingering> <Actor.himself_or_herself> off excited me and made my <Player.pants_or_panties> wet."
             If arousal > 25
                 If !Player.isMale()
                     "That's too much! I stripped and fingered my pussy and I came about the same time as <Actor.he_or_she> did."
                 Else                
                     "That's too much! I stripped and began to rubbed my cock and I came about the same time as <Actor.he_or_she> did."
-                Endif
+                EndIf
                 Player.strip()
                 Player.dressExcept(Bottom, Outerwear, Bottom_Under)
                 Filter(solo)
-                sex(Player)
+                Sex(Player)
                 arousal -= 5
                 Player.dress()
                 If HungerEnable > 0
                     Player.setActorVar(rk_VB_Hunger, -1)
                 EndIf
-            Endif
+            EndIf
             "I quickly moved away before <Actor.he_or_she> came out."
         Else
             "The idea of <Actor.him_or_her> jerking <Actor.himself_or_herself> off, disgust me."
@@ -119,10 +116,8 @@ OTHER: !isWithCompanion() && 70 < random(0, 100) && EnrollDegree > 0
             Actor:rapportwithplayer += random(0, 1)
             Actor:attractiontoplayer += random(0, 1)
         EndIf
-        
         "<Actor.His_or_Her> hands dived into <Actor.his_or_her> backpack and <Actor.he_or_she> pulls out a small <Player.fleshlight_or_vibrator>."
         Actor(Flirty)::"<Player.Men_or_Women> say this is a very good one, it drives them crazy."
-        
         "What I should say about this?"
         0::"Be outraged"
         1::"Accept the gift"
@@ -156,8 +151,8 @@ OTHER: !isWithCompanion() && 70 < random(0, 100) && EnrollDegree > 0
                 "So I head to the bathroom, sit on the seat, take off my panties and start sliding the dildo into my pussy."
                 Player.strip()
                 Player.dressExcept(Bottom, Outerwear, Bottom_Under)
-                Filter(vibrator)
-                sex(Player)
+                Filter(Vibrator)
+                Sex(Player)
                 If HungerEnable > 0
                     Player.setActorVar(rk_VB_Hunger, -1)
                 EndIf
@@ -168,7 +163,7 @@ OTHER: !isWithCompanion() && 70 < random(0, 100) && EnrollDegree > 0
                 Player.strip()
                 Player.dressExcept(Bottom, Outerwear, Bottom_Under)
                 Filter(Fleshlight)
-                sex(Player)
+                Sex(Player)
                 If HungerEnable > 0
                     Player.setActorVar(rk_VB_Hunger, -1)
                 EndIf
@@ -234,15 +229,14 @@ OTHER: !isWithCompanion() && 70 < random(0, 100) && EnrollDegree > 0
                     "As we went through every functions we both got more and more excited. I came first which made <Actor.him_or_her> speed up the process and then <Actor.he_or_she> yelled when <Actor.he_or_she> shot his load."
                 EndIf
                 If !Player.isMale()
-                    Filter(vibrator)
-                    sex(Actor, Player)
+                    Filter(Vibrator)
                 Else
                     Filter(Fleshlight)
-                    sex(Actor, Player)
                 EndIf
+                Sex(Actor, Player)
                 "Still tingling from the effects of the <Player.fleshlight_or_vibrator> I had a strong desire to fuck..."
                 "So we lay down on the carpet and we immediately started to fuck!"
-                sex(Player, Actor)
+                Sex(Player, Actor)
                 If HungerEnable > 0
                     Player.setActorVar(rk_VB_Hunger, -2)
                 EndIf

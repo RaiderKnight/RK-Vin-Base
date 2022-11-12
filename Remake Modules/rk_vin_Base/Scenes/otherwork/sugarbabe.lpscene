@@ -2,17 +2,15 @@ WHAT: all, -sleep, -nap, -sleep_hotel, -nap_hotel
 WHERE: home
 WHEN: 16 - 22
 WHO: none
-OTHER: !isWithCompanion() && jobexperience < 40 && age < 30
+OTHER: !isWithCompanion() && age < 30
 
     SceneStart()
-    
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
-        
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         SugarParent = SugarParent.getGlobal()
-        
         If SugarParent > 0
-        
             Actor = getSpecific(SugarParent)
             "My phone is ringing. It's my <Actor.sugardaddy_or_sugarmommy> <Actor.name>."
             secondScreen(Actor)
@@ -27,15 +25,12 @@ OTHER: !isWithCompanion() && jobexperience < 40 && age < 30
             
                 Player(Happy):: "I miss you too, <Actor.Daddy_or_Mommy>. Let's meet."
                 secondScreen()
-                If Random(0, 100) < 50
-                
+                If random(0, 100) < 50
                     Loc = findNearbyBuilding(restaurant, bar, nightclub)
                     moveTo(Loc)
                     Actor.show()
                     "With that said, that evening, <Actor.Daddy_or_Mommy> took me to a nice expensive date and as usual, we ended up in luxury hotel suite afterwards."
-                    
-                Elseif Actor:arousal > 25
-                
+                ElseIf Actor:arousal > 25
                     Loc = findNearbyBuilding(gift, florist, marketplace)
                     moveTo(Loc)
                     Actor.show()
@@ -47,9 +42,7 @@ OTHER: !isWithCompanion() && jobexperience < 40 && age < 30
                     stock_flower += 1
                     arousal += 1
                     "Of course, as usual, we ended up in luxury hotel suite afterwards."
-                
                 Else
-                
                     Loc = findNearbyBuilding(clothes, shoes, bag)
                     moveTo(Loc)
                     Actor.show()
@@ -58,15 +51,12 @@ OTHER: !isWithCompanion() && jobexperience < 40 && age < 30
                     Actor(Happy):: "No problem, baby. That price tag is really not much money for me at all and I would love nothing more than to be able to spoil a <Player.handsome_or_beautiful> <Player.prince_or_princess> like you ..."
                     "And just like that, <Actor.he_or_she> went ahead to buy me what I wanted, seemingly unmoved by a small fortune that thing cost. I guess expensive gifts like this are part and parcel of the sugardating scene."
                     "Of course, as usual, we ended up in luxury hotel suite afterwards." 
-                    
-                Endif
-                
+                EndIf
                 Loc = findNearbyBuilding(hotel)
                 moveTo(Loc)
                 setBackground(home)
                 Threesome = false
-                If Random(30, 200) < Actor:perversion
-                
+                If random(30, 200) < Actor:perversion
                     "Once we were there, I was surprised to see that some stranger was already waiting in the hotel suite ..."
                     Actor2 = generatePersonTemporary()
                     Actor2.dress()
@@ -76,69 +66,49 @@ OTHER: !isWithCompanion() && jobexperience < 40 && age < 30
                     1:: "No way"
                     
                     If 0
-                    
                         Threesome = true
                         Player(Flirty):: "You know I'll do anything for you as long as you remain so generous to me ..."
                         Actor(Flirty):: "That's my good <Player.boy_or_girl>."
                         Actor:rapportwithplayer += 1
                         Actor:attractiontoplayer += 1
-                        
                     Else
-                    
                         Threesome = false
                         Player(Sad):: "I'm sorry, <Actor.Daddy_or_Mommy>. But this isn't part of our arrangement ..."
                         Actor(Angry):: "Fine then ... I won't force you."
                         mood -= 1
                         Actor:rapportwithplayer -= 1
                         Actor:attractiontoplayer -= 1
-                        
-                    Endif
-                    
-                Endif
-                
+                    EndIf
+                EndIf
                 If Threesome
                     Sex(Actor, Player, Actor2)
                     Actor.show(2)
                     Actor2.hide()
-                    perversion += Random(0, 0.5)
+                    perversion += random(0, 0.5)
                     If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                        Player.modifyActorVar(rk_VB_Hunger, -3)
                     EndIf
-                    
                 Else
-                
                     Sex(Actor, Player)
                     Actor.show(2) 
                     If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
                     EndIf
-                            
-                Endif
-                
-                "With the deed done, we spent the night together and <Actor.Daddy_or_Mommy> left me a big fat envelope in the morning. Getting pampered and spoiled, having great sex AND getting paid - I can't say no to that, ever."
-                money += Random(100, 300)
-                perversion += Random(0, 0.25)
-                
-                If Actor:attractiontoplayer > 60 && Actor:rapportwithplayer > 75
-                    
-                    Actor(Flirty):: "I really like you my good <Player.boy_or_girl>."
-                    money += Random(100, 300)
-                    
                 EndIf
-                
-            Elseif 1
-            
+                "With the deed done, we spent the night together and <Actor.Daddy_or_Mommy> left me a big fat envelope in the morning. Getting pampered and spoiled, having great sex AND getting paid - I can't say no to that, ever."
+                money += random(100, 300)
+                perversion += random(0, 0.25)
+                If Actor:attractiontoplayer > 60 && Actor:rapportwithplayer > 75
+                    Actor(Flirty):: "I really like you my good <Player.boy_or_girl>."
+                    money += random(100, 300)
+                EndIf
+            ElseIf 1
                 Player(Sad):: "I'm sorry, <Actor.Daddy_or_Mommy>. I can't do it tonight, but I miss you too and can't wait to see you soon."
-                
             Else
-            
                 "I don't know it was the right decision, but I felt like I was now in a stage of my life to move on from this particular arrangement. It's time to stand on my own two feet ... or find another sugarparent."
                 SugarParent.clearGlobal()
                 timeout(500, sugarbabe)
-                
-            Endif 
-
-        Endif
-    
+            EndIf
+        EndIf
     SceneEnd()
     timeout(196, sugarbabe) // Scene improved by Raddeck

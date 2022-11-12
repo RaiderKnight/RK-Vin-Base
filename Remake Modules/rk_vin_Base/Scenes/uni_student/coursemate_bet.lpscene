@@ -1,87 +1,299 @@
 WHAT: all
 WHERE: university:school
 WHEN: 0-24
-WHO: Actor = getSpecific(Lecturer); Actor2 = getSpecific(Coursemate); If !Actor.isDating() && !Actor2.isDating() && Actor2.isInterestedIn(Actor) && Actor.isInterestedIn(Actor2) && Actor2:perversion > 50
+WHO: Actor = getPerson(rk_VB_tag_Major); Actor2 = getPerson(rk_VB_tag_Student); If !Actor.isDating() && !Actor2.isDating() && Actor2.isInterestedIn(Actor) && Actor.isInterestedIn(Actor2) && Actor2:perversion > 50
 OTHER: Actor.isInterestedIn(Player)
 
     SceneStart()
-        Hunger = Player.getActorVar(rk_VB_Hunger)
-        HungerEnable = rk_VB_EnableHunger.getGlobal()
-        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
-        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        Actor2.dress()
-        Actor2.show()
-        dressFormal()
-        Actor.dress()
-        Actor.show()
-        "I was sitting next to my classmate <Actor2.name> during Dr <Actor.name> <Actor.name_last>'s <Actor.major> class when <Actor2.he_or_she> whispers something into my ear."
-        Actor2:: "To be honest, I hate this subject. I'm only here to admire the Dr <Actor.name_last>'s hotness."
-        0:: "Yeah, <Actor.he_or_she>'s pretty hot for a university lecturer"
-        1:: "Not my type"
-        
-        If 0
-            Player:: "Dr <Actor.name_last> is definitely easy on the eye."
-            Actor2:: "How about a friendly bet of who can take <Actor.him_or_her> to bed first?"
-            0:: "Bet"
-            1:: "You're crazy!"
+        choiceCourseMajor = rk_VB_choiceCourseMajor.getGlobal()
+        MajorTeacher = rk_VB_Major_Teacher.getGlobal()
+        tagTAR = Actor.getActorVar(rk_VB_tag_TAR)
+        tagTCE = Actor.getActorVar(rk_VB_tag_TCE)
+        tagTCL = Actor.getActorVar(rk_VB_tag_TCL)
+        tagTCS = Actor.getActorVar(rk_VB_tag_TCS)
+        tagTEC = Actor.getActorVar(rk_VB_tag_TEC)
+        tagTED = Actor.getActorVar(rk_VB_tag_TED)
+        tagTEN = Actor.getActorVar(rk_VB_tag_TEN)
+        tagTGE = Actor.getActorVar(rk_VB_tag_TGE)
+        tagTHI = Actor.getActorVar(rk_VB_tag_THI)
+        tagTLA = Actor.getActorVar(rk_VB_tag_TLA)
+        tagTMA = Actor.getActorVar(rk_VB_tag_TMA)
+        tagTME = Actor.getActorVar(rk_VB_tag_TME)
+        tagTMU = Actor.getActorVar(rk_VB_tag_TMU)
+        tagTPH = Actor.getActorVar(rk_VB_tag_TPH)
+        tagTPS = Actor.getActorVar(rk_VB_tag_TPS)
+        tagTPOL = Actor.getActorVar(rk_VB_tag_TPOL)
+        tagTSM = Actor.getActorVar(rk_VB_tag_TSM)
+        tagTDM = Actor.getActorVar(rk_VB_tag_TDM)
+        tagTVE = Actor.getActorVar(rk_VB_tag_TVE)
+        tagTTT = Actor.getActorVar(rk_VB_tag_TTT)
+        If Actor.isValid()
+            If tagTAR >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TAR)
+                Architecture_Major_Actor = Actor.getActorVar(rk_VB_Architecture_Major_Actor)
+            ElseIf tagTCE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TCE)
+                Chemical_Engineering_Major_Actor = Actor.getActorVar(rk_VB_Chemical_Engineering_Major_Actor)
+            ElseIf tagTCL >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TCL)
+                Classics_Major_Actor = Actor.getActorVar(rk_VB_Classics_Major_Actor)
+            ElseIf tagTCS >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TCS)
+                Computer_Science_Major_Actor = Actor.getActorVar(rk_VB_Computer_Science_Major_Actor)
+            ElseIf tagTEC >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TEC)
+                Economics_Major_Actor = Actor.getActorVar(rk_VB_Economics_Major_Actor)
+            ElseIf tagTED >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TED)
+                Education_Major_Actor = Actor.getActorVar(rk_VB_Education_Major_Actor)
+            ElseIf tagTEN >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TEN)
+                English_Major_Actor = Actor.getActorVar(rk_VB_English_Major_Actor)
+            ElseIf tagTGE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TGE)
+                Geography_Major_Actor = Actor.getActorVar(rk_VB_Geography_Major_Actor)
+            ElseIf tagTHI >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_THI)
+                History_Major_Actor = Actor.getActorVar(rk_VB_History_Major_Actor)
+            ElseIf tagTLA >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TLA)
+                Law_Major_Actor = Actor.getActorVar(rk_VB_Law_Major_Actor)
+            ElseIf tagTMA >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TMA)
+                Mathematics_Major_Actor = Actor.getActorVar(rk_VB_Mathematics_Major_Actor)
+            ElseIf tagTME >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TME)
+                Medicine_Major_Actor = Actor.getActorVar(rk_VB_Medicine_Major_Actor)
+            ElseIf tagTMU >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TMU)
+                Music_Major_Actor = Actor.getActorVar(rk_VB_Music_Major_Actor)
+            ElseIf tagTPH >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TPH)
+                Philosophy_Major_Actor = Actor.getActorVar(rk_VB_Philosophy_Major_Actor)
+            ElseIf tagTPS >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TPS)
+                Psychology_Major_Actor = Actor.getActorVar(rk_VB_Psychology_Major_Actor)
+            ElseIf tagTPOL >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TPOL)
+                Political_Sciences_Major_Actor = Actor.getActorVar(rk_VB_Political_Sciences_Major_Actor)
+            ElseIf tagTSM >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TSM)
+                SalesMarketing_Major_Actor = Actor.getActorVar(rk_VB_SalesMarketing_Major_Actor)
+            ElseIf tagTDM >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TDM)
+                Dental_Major_Actor = Actor.getActorVar(rk_VB_Dental_Major_Actor)
+            ElseIf tagTVE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TVE)
+                Veterinary_Major_Actor = Actor.getActorVar(rk_VB_Veterinary_Major_Actor)
+            ElseIf tagTTT >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TTT)
+                TravelTourism_Major_Actor = Actor.getActorVar(rk_VB_TravelTourism_Major_Actor)
+            EndIf
+            //Actor = getPerson(rk_VB_tag_Major)
+        EndIf
+        tagTAR = Actor2.getActorVar(rk_VB_tag_TAR)
+        tagTCE = Actor2.getActorVar(rk_VB_tag_TCE)
+        tagTCL = Actor2.getActorVar(rk_VB_tag_TCL)
+        tagTCS = Actor2.getActorVar(rk_VB_tag_TCS)
+        tagTEC = Actor2.getActorVar(rk_VB_tag_TEC)
+        tagTED = Actor2.getActorVar(rk_VB_tag_TED)
+        tagTEN = Actor2.getActorVar(rk_VB_tag_TEN)
+        tagTGE = Actor2.getActorVar(rk_VB_tag_TGE)
+        tagTHI = Actor2.getActorVar(rk_VB_tag_THI)
+        tagTLA = Actor2.getActorVar(rk_VB_tag_TLA)
+        tagTMA = Actor2.getActorVar(rk_VB_tag_TMA)
+        tagTME = Actor2.getActorVar(rk_VB_tag_TME)
+        tagTMU = Actor2.getActorVar(rk_VB_tag_TMU)
+        tagTPH = Actor2.getActorVar(rk_VB_tag_TPH)
+        tagTPS = Actor2.getActorVar(rk_VB_tag_TPS)
+        tagTPOL = Actor2.getActorVar(rk_VB_tag_TPOL)
+        tagTSM = Actor2.getActorVar(rk_VB_tag_TSM)
+        tagTDM = Actor2.getActorVar(rk_VB_tag_TDM)
+        tagTVE = Actor2.getActorVar(rk_VB_tag_TVE)
+        tagTTT = Actor2.getActorVar(rk_VB_tag_TTT)
+        If isModEnabled(rk_vin_Base) && Actor2.isValid()
+            If tagTAR >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TAR)
+                Architecture_Major_Actor = Actor2.getActorVar(rk_VB_Architecture_Major_Actor)
+            ElseIf tagTCE >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TCE)
+                Chemical_Engineering_Major_Actor = Actor2.getActorVar(rk_VB_Chemical_Engineering_Major_Actor)
+            ElseIf tagTCL >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TCL)
+                Classics_Major_Actor = Actor2.getActorVar(rk_VB_Classics_Major_Actor)
+            ElseIf tagTCS >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TCS)
+                Computer_Science_Major_Actor = Actor2.getActorVar(rk_VB_Computer_Science_Major_Actor)
+            ElseIf tagTEC >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TEC)
+                Economics_Major_Actor = Actor2.getActorVar(rk_VB_Economics_Major_Actor)
+            ElseIf tagTED >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TED)
+                Education_Major_Actor = Actor2.getActorVar(rk_VB_Education_Major_Actor)
+            ElseIf tagTEN >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TEN)
+                English_Major_Actor = Actor2.getActorVar(rk_VB_English_Major_Actor)
+            ElseIf tagTGE >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TGE)
+                Geography_Major_Actor = Actor2.getActorVar(rk_VB_Geography_Major_Actor)
+            ElseIf tagTHI >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_THI)
+                History_Major_Actor = Actor2.getActorVar(rk_VB_History_Major_Actor)
+            ElseIf tagTLA >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TLA)
+                Law_Major_Actor = Actor2.getActorVar(rk_VB_Law_Major_Actor)
+            ElseIf tagTMA >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TMA)
+                Mathematics_Major_Actor = Actor2.getActorVar(rk_VB_Mathematics_Major_Actor)
+            ElseIf tagTME >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TME)
+                Medicine_Major_Actor = Actor2.getActorVar(rk_VB_Medicine_Major_Actor)
+            ElseIf tagTMU >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TMU)
+                Music_Major_Actor = Actor2.getActorVar(rk_VB_Music_Major_Actor)
+            ElseIf tagTPH >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TPH)
+                Philosophy_Major_Actor = Actor2.getActorVar(rk_VB_Philosophy_Major_Actor)
+            ElseIf tagTPS >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TPS)
+                Psychology_Major_Actor = Actor2.getActorVar(rk_VB_Psychology_Major_Actor)
+            ElseIf tagTPOL >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TPOL)
+                Political_Sciences_Major_Actor = Actor2.getActorVar(rk_VB_Political_Sciences_Major_Actor)
+            ElseIf tagTSM >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TSM)
+                SalesMarketing_Major_Actor = Actor2.getActorVar(rk_VB_SalesMarketing_Major_Actor)
+            ElseIf tagTDM >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TDM)
+                Dental_Major_Actor = Actor2.getActorVar(rk_VB_Dental_Major_Actor)
+            ElseIf tagTVE >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TVE)
+                Veterinary_Major_Actor = Actor2.getActorVar(rk_VB_Veterinary_Major_Actor)
+            ElseIf tagTTT >= 1
+                AcID = Actor2.getActorVar(rk_VB_AcIdCC_TTT)
+                TravelTourism_Major_Actor = Actor2.getActorVar(rk_VB_TravelTourism_Major_Actor)
+            EndIf
+        EndIf
+        If isModEnabled(rk_vin_Base)
+            If choiceCourseMajor == 1
+                TextMajorChosen = "architecture"
+            ElseIf choiceCourseMajor == 2
+                TextMajorChosen = "chemical engineering"
+            ElseIf choiceCourseMajor == 3
+                TextMajorChosen = "classics"
+            ElseIf choiceCourseMajor == 4
+                TextMajorChosen = "computer science"
+            ElseIf choiceCourseMajor == 31
+                TextMajorChosen = "dental"
+            ElseIf choiceCourseMajor == 5
+                TextMajorChosen = "economics"
+            ElseIf choiceCourseMajor == 6
+                TextMajorChosen = "education"
+            ElseIf choiceCourseMajor == 7
+                TextMajorChosen = "English"
+            ElseIf choiceCourseMajor == 8
+                TextMajorChosen = "geography"
+            ElseIf choiceCourseMajor == 9
+                TextMajorChosen = "history"
+            ElseIf choiceCourseMajor == 10
+                TextMajorChosen = "law"
+            ElseIf choiceCourseMajor == 11
+                TextMajorChosen = "mathematics"
+            ElseIf choiceCourseMajor == 12
+                TextMajorChosen = "medicine"
+            ElseIf choiceCourseMajor == 13
+                TextMajorChosen = "music"
+            ElseIf choiceCourseMajor == 14
+                TextMajorChosen = "philosophy"
+            ElseIf choiceCourseMajor == 15
+                TextMajorChosen = "psychology"
+            ElseIf choiceCourseMajor == 16
+                TextMajorChosen = "political sciences"
+            ElseIf choiceCourseMajor == 60
+                TextMajorChosen = "sales and marketing"
+            ElseIf choiceCourseMajor == 80
+                TextMajorChosen = "travel and tourism"
+            ElseIf choiceCourseMajor == 90
+                TextMajorChosen = "veterinary"
+            EndIf
+            Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+            UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+            Actor2.dress()
+            Actor2.show()
+            dressFormal()
+            Actor.dress()
+            Actor.show()
+            "I was sitting next to my classmate <Actor2.name> during Dr <Actor.name> <Actor.name_last>'s <TextMajorChosen> class when <Actor2.he_or_she> whispers something into my ear."
+            Actor2(Sarcastic):: "To be honest, I hate this subject. I'm only here to admire the Dr <Actor.name_last>'s hotness."
+            0:: "Yeah, <Actor.he_or_she>'s pretty hot for a university lecturer"
+            1:: "Not my type"
             
             If 0
-                Player:: "Sure, but only if I get the first shot."
-                Actor2:: "Deal!"
-                money -= 50
-                Actor2.hide()
-                Player.moveToPersonStand(Actor, 50)
-                "I decided to come up to Dr <Actor.name_last>'s office after class and showed my interest in more advanced reading materials about the subject matter."
-                Actor(Happy):: "I think these book recommendations should keep you occupied for a while. If you have any questions or fail to understand anything while reading these, you can come see me during my office hours and I'll be happy to help."
-                0:: "Seduce <Actor.him_or_her>"
-                1:: "Chicken out"
+                Player(Happy):: "Dr <Actor.name_last> is definitely easy on the eye."
+                Actor2(Happy):: "How about a friendly bet of who can take <Actor.him_or_her> to bed first?"
+                0:: "Bet"
+                1:: "You're crazy!"
                 
                 If 0
-                    If Actor.hadSex() || Actor:attractiontoplayer + Actor:perversion > Random(50, 150)
-                        Actor:: "I know what you want! I'm strictly prohibited from having a sexual relationship with students but I can't resist this temptation anymore ..."
-                        Sex(Player, Actor)
-                        If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                    Player(Happy):: "Sure, but only if I get the first shot."
+                    Actor2(Happy):: "Deal!"
+                    money -= 50
+                    Actor2.hide()
+                    Player.moveToPersonStand(Actor, 50)
+                    "I decided to come up to Dr <Actor.name_last>'s office after class and showed my interest in more advanced reading materials about the subject matter."
+                    Actor(Happy):: "I think these book recommendations should keep you occupied for a while."
+                    Actor(Happy)::"If you have any questions or fail to understand anything while reading these, you can come see me during my office hours and I'll be happy to help."
+                    0:: "Seduce <Actor.him_or_her>"
+                    1:: "Chicken out"
+                    
+                    If 0
+                        If Actor.hadSex() || Actor:attractiontoplayer + Actor:perversion > random(50, 150)
+                            Actor(Flirty):: "I know what you want! I'm strictly prohibited from having a sexual relationship with students but I can't resist this temptation anymore ..."
+                            Sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            Ahead = false
+                            Actor.hide()
+                            Actor2.show()
+                            Player(Happy):: "So, how about that? You accept defeat yet?"
+                            Actor2(Happy):: "Fair play, you got to fuck <Actor.him_or_her> first. But I won't be far behind, I can assure you."
+                            Player(Happy):: "Yeah, maybe, but that's not the bet. Now pay up!"
+                            money += 100
+                        Else
+                            Ahead = true
+                            Actor(Annoyed):: "Excuse me, but your behaviour is totally inappropriate. Please leave my office at once!"
+                            Actor.hide()
+                            Actor2.show()
+                            Player(Sad):: "<Actor.He_or_She> is very serious and professional, you won't stand a chance either."
+                            Actor2(Happy):: "Watch and learn!"
                         EndIf
-                        Ahead = false
-                        Actor.hide()
-                        Actor2.show()
-                        Player:: "So, how about that? You accept defeat yet?"
-                        Actor2:: "Fair play, you got to fuck <Actor.him_or_her> first. But I won't be far behind, I can assure you."
-                        Player:: "Yeah, maybe, but that's not the bet. Now pay up!"
-                        money += 100
                     Else
                         Ahead = true
-                        Actor:: "Excuse me, but your behavior is totally inappropriate. Please leave my office at once!"
                         Actor.hide()
-                        Actor2.show()
-                        Player:: "<Actor.He_or_She> is very serious and professional, you won't stand a chance either."
-                        Actor2:: "Watch and learn!"
-                    Endif
+                    EndIf     
                 Else
+                    Player(Sad):: "Sorry, not my type of competition. You go ahead."
                     Ahead = true
-                    Actor.hide()
-                Endif     
+                EndIf
+                If Ahead
+                    Player.hide()
+                    Actor2.show()
+                    Actor.show()
+                    "Having been given a go-ahead, <Actor2.name> decided to come up to Dr <Actor.name_last>'s office after class and tried to seduce <Actor.him_or_her>."
+                    If Actor2:attractiveness + Actor:perversion > random(50, 150)
+                        Actor(Flirty):: "I know what you want! I'm strictly prohibited from having a sexual relationship with students but I can't resist this temptation anymore ..."
+                        Sex(Actor2, Actor)
+                    Else
+                        Actor(Annoyed):: "Excuse me, but your behaviour is totally inappropriate. Please leave my office at once!"
+                    EndIf
+                    Player.show()
+                EndIf
             Else
-                Player:: "Sorry, not my type of competition. You go ahead."
-                Ahead = true
-            Endif
-            
-            If Ahead
-                Player.hide()
-                Actor2.show()
-                Actor.show()
-                "Having been given a go-ahead, <Actor2.name> decided to come up to Dr <Actor.name_last>'s office after class and tried to seduce <Actor.him_or_her>."
-                If Actor2:attractiveness + Actor:perversion > Random(50, 150)
-                    Actor:: "I know what you want! I'm strictly prohibited from having a sexual relationship with students but I can't resist this temptation anymore ..."
-                    Sex(Actor2, Actor)
-                Else
-                    Actor:: "Excuse me, but your behavior is totally inappropriate. Please leave my office at once!"
-                Endif
-                Player.show()
-            Endif
-        Else
-            Player:: "I don't really see it myself, but I guess to each their own."
-        Endif
+                "I don't really see it myself, but I guess to each their own."
+            EndIf
+        EndIf
     SceneEnd() // Improved by Raddeck
     timeout(300, coursemate_bet)

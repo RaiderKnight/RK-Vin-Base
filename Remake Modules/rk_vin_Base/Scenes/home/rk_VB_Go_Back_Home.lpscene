@@ -6,11 +6,58 @@ OTHER: none
 
     SceneStart()
         SlaveofActor = rk_MN_SlaveofActor.getGlobal()
-        If PlayerHasHome()
+        Chambre = rk_VB_setBackgroundRoom.getGlobal()
+        RentUnivRoom = rk_VB_RentUnivRoom.getGlobal()
+        If RentUnivRoom > 0
+            moveTo(home)
+            If Chambre == 1
+                setBackground3D(Modules\vin_Base\Bedrooms\0.lpworld)
+            ElseIf Chambre == 2
+                setBackground3D(Modules\vin_Base\Bedrooms\1.lpworld)
+            ElseIf Chambre == 3
+                setBackground3D(Modules\vin_Base\Bedrooms\2.lpworld)
+            ElseIf Chambre == 4
+                setBackground3D(Modules\vin_Base\Bedrooms\3.lpworld)
+            ElseIf Chambre == 5
+                setBackground3D(Modules\vin_Base\Bedrooms\4.lpworld)
+            ElseIf Chambre == 6
+                setBackground3D(Modules\vin_Base\Bedrooms\5.lpworld)
+            ElseIf Chambre == 7
+                setBackground3D(Modules\vin_Base\Bedrooms\6.lpworld)
+            ElseIf Chambre == 8
+                setBackground3D(Modules\vin_Base\Bedrooms\7.lpworld)
+            ElseIf Chambre == 9
+                setBackground3D(Modules\vin_Base\Bedrooms\8.lpworld)
+            ElseIf Chambre == 10
+                setBackground3D(Modules\vin_Base\Bedrooms\9.lpworld)
+            ElseIf Chambre == 11
+                setBackground3D(Modules\vin_Base\Bedrooms\10.lpworld)
+            ElseIf Chambre == 12
+                setBackground3D(Modules\vin_Base\Bedrooms\11.lpworld)
+            ElseIf Chambre == 13
+                setBackground3D(Modules\vin_Base\Bedrooms\12.lpworld)
+            ElseIf Chambre == 14
+                setBackground3D(Modules\vin_Base\Bedrooms\13.lpworld)
+            ElseIf Chambre == 15
+                setBackground3D(Modules\vin_Base\Bedrooms\14.lpworld)
+            ElseIf Chambre == 16
+                setBackground3D(Modules\vin_Base\Bedrooms\15.lpworld)
+            EndIf
+            Actor = getCreature()
+            If Actor.isValid() && Actor.isCreatureType(Dog)
+                chance = random(0, 6)
+                If chance >= 3
+                    Actor.show()
+                Else
+                    Actor.hide()
+                EndIf
+            EndIf
+        ElseIf PlayerHasHome()
             "I decided to go back to my house!"
             moveTo(home)
         ElseIf DatingHasHome()
             "Let's go back to my girlfriend's house..."
+            moveTo(home_dating)
         Else
             "I don't have a house or apartment!"
         EndIf

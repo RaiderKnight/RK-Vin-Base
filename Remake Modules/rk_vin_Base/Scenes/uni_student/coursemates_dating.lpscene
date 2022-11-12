@@ -1,11 +1,241 @@
 WHAT: all
-WHERE: university:school, university:work
+WHERE: university:school
 WHEN: 0-24
-WHO: Actor = getSpecific(Coursemate); Actor2 = getSpecific(Coursemate); If !Actor.isDating() && !Actor2.isDating() && Actor.isInterestedIn(Actor2) && Actor2.isInterestedIn(Actor) && !Actor.hasRelationship(Spouses, Dating) && !Actor2.hasRelationship(Spouses, Dating) && Actor:attractiontoplayer < 40 && Actor2:attractiontoplayer < 40
+WHO: Actor = getPerson(rk_VB_tag_Student); Actor2 = getPerson(rk_VB_tag_Student); If !Actor.isDating() && !Actor2.isDating() && Actor.isInterestedIn(Actor2) && Actor2.isInterestedIn(Actor) && !Actor.hasRelationship(Spouses, Dating) && !Actor2.hasRelationship(Spouses, Dating) && Actor:attractiontoplayer < 40 && Actor2:attractiontoplayer < 40
 OTHER: none
 
     SceneStart()
-    
+        TeacherUni = rk_VB_job_Teacher_Uni.getGlobal()
+        choiceCourseMajor = rk_VB_choiceCourseMajor.getGlobal()
+        If choiceCourseMajor == 1
+            choiceCourseMajorT = 1
+            TextMajorChosen = "architecture"
+        ElseIf choiceCourseMajor == 2
+            choiceCourseMajorT = 2
+            TextMajorChosen = "chemical engineering"
+        ElseIf choiceCourseMajor == 3
+            choiceCourseMajorT = 3
+            TextMajorChosen = "classics"
+        ElseIf choiceCourseMajor == 4
+            choiceCourseMajorT = 4
+            TextMajorChosen = "computer science"
+        ElseIf choiceCourseMajor == 31
+            choiceCourseMajorT = 17
+            TextMajorChosen = "dental"
+        ElseIf choiceCourseMajor == 5
+            choiceCourseMajorT = 5
+            TextMajorChosen = "economics"
+        ElseIf choiceCourseMajor == 6
+            choiceCourseMajorT = 6
+            TextMajorChosen = "education"
+        ElseIf choiceCourseMajor == 7
+            choiceCourseMajorT = 7
+            TextMajorChosen = "English"
+        ElseIf choiceCourseMajor == 8
+            choiceCourseMajorT = 8
+            TextMajorChosen = "geography"
+        ElseIf choiceCourseMajor == 9
+            choiceCourseMajorT = 9
+            TextMajorChosen = "history"
+        ElseIf choiceCourseMajor == 10
+            choiceCourseMajorT = 10
+            TextMajorChosen = "law"
+        ElseIf choiceCourseMajor == 11
+            choiceCourseMajorT = 11
+            TextMajorChosen = "mathematics"
+        ElseIf choiceCourseMajor == 12
+            choiceCourseMajorT = 12
+            TextMajorChosen = "medicine"
+        ElseIf choiceCourseMajor == 13
+            choiceCourseMajorT = 13
+            TextMajorChosen = "music"
+        ElseIf choiceCourseMajor == 14
+            choiceCourseMajorT = 14
+            TextMajorChosen = "philosophy"
+        ElseIf choiceCourseMajor == 15
+            choiceCourseMajorT = 15
+            TextMajorChosen = "psychology"
+        ElseIf choiceCourseMajor == 16
+            choiceCourseMajorT = 16
+            TextMajorChosen = "political sciences"
+        ElseIf choiceCourseMajor == 60
+            choiceCourseMajorT = 18
+            TextMajorChosen = "sales and marketing"
+        ElseIf choiceCourseMajor == 80
+            choiceCourseMajorT = 19
+            TextMajorChosen = "travel and tourism"
+        ElseIf choiceCourseMajor == 90
+            choiceCourseMajorT = 20
+            TextMajorChosen = "veterinary"
+        EndIf
+        tagTAR = Actor.getActorVar(rk_VB_tag_TAR)
+        tagTCE = Actor.getActorVar(rk_VB_tag_TCE)
+        tagTCL = Actor.getActorVar(rk_VB_tag_TCL)
+        tagTCS = Actor.getActorVar(rk_VB_tag_TCS)
+        tagTEC = Actor.getActorVar(rk_VB_tag_TEC)
+        tagTED = Actor.getActorVar(rk_VB_tag_TED)
+        tagTEN = Actor.getActorVar(rk_VB_tag_TEN)
+        tagTGE = Actor.getActorVar(rk_VB_tag_TGE)
+        tagTHI = Actor.getActorVar(rk_VB_tag_THI)
+        tagTLA = Actor.getActorVar(rk_VB_tag_TLA)
+        tagTMA = Actor.getActorVar(rk_VB_tag_TMA)
+        tagTME = Actor.getActorVar(rk_VB_tag_TME)
+        tagTMU = Actor.getActorVar(rk_VB_tag_TMU)
+        tagTPH = Actor.getActorVar(rk_VB_tag_TPH)
+        tagTPS = Actor.getActorVar(rk_VB_tag_TPS)
+        tagTPOL = Actor.getActorVar(rk_VB_tag_TPOL)
+        tagTSM = Actor.getActorVar(rk_VB_tag_TSM)
+        tagTDM = Actor.getActorVar(rk_VB_tag_TDM)
+        tagTVE = Actor.getActorVar(rk_VB_tag_TVE)
+        tagTTT = Actor.getActorVar(rk_VB_tag_TTT)
+        If isModEnabled(rk_vin_Base) && Actor.isValid()
+            If tagTAR >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TAR)
+                Architecture_Major_Actor = Actor.getActorVar(rk_VB_Architecture_Major_Actor)
+            ElseIf tagTCE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TCE)
+                Chemical_Engineering_Major_Actor = Actor.getActorVar(rk_VB_Chemical_Engineering_Major_Actor)
+            ElseIf tagTCL >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TCL)
+                Classics_Major_Actor = Actor.getActorVar(rk_VB_Classics_Major_Actor)
+            ElseIf tagTCS >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TCS)
+                Computer_Science_Major_Actor = Actor.getActorVar(rk_VB_Computer_Science_Major_Actor)
+            ElseIf tagTEC >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TEC)
+                Economics_Major_Actor = Actor.getActorVar(rk_VB_Economics_Major_Actor)
+            ElseIf tagTED >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TED)
+                Education_Major_Actor = Actor.getActorVar(rk_VB_Education_Major_Actor)
+            ElseIf tagTEN >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TEN)
+                English_Major_Actor = Actor.getActorVar(rk_VB_English_Major_Actor)
+            ElseIf tagTGE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TGE)
+                Geography_Major_Actor = Actor.getActorVar(rk_VB_Geography_Major_Actor)
+            ElseIf tagTHI >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_THI)
+                History_Major_Actor = Actor.getActorVar(rk_VB_History_Major_Actor)
+            ElseIf tagTLA >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TLA)
+                Law_Major_Actor = Actor.getActorVar(rk_VB_Law_Major_Actor)
+            ElseIf tagTMA >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TMA)
+                Mathematics_Major_Actor = Actor.getActorVar(rk_VB_Mathematics_Major_Actor)
+            ElseIf tagTME >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TME)
+                Medicine_Major_Actor = Actor.getActorVar(rk_VB_Medicine_Major_Actor)
+            ElseIf tagTMU >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TMU)
+                Music_Major_Actor = Actor.getActorVar(rk_VB_Music_Major_Actor)
+            ElseIf tagTPH >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TPH)
+                Philosophy_Major_Actor = Actor.getActorVar(rk_VB_Philosophy_Major_Actor)
+            ElseIf tagTPS >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TPS)
+                Psychology_Major_Actor = Actor.getActorVar(rk_VB_Psychology_Major_Actor)
+            ElseIf tagTPOL >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TPOL)
+                Political_Sciences_Major_Actor = Actor.getActorVar(rk_VB_Political_Sciences_Major_Actor)
+            ElseIf tagTSM >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TSM)
+                SalesMarketing_Major_Actor = Actor.getActorVar(rk_VB_SalesMarketing_Major_Actor)
+            ElseIf tagTDM >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TDM)
+                Dental_Major_Actor = Actor.getActorVar(rk_VB_Dental_Major_Actor)
+            ElseIf tagTVE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TVE)
+                Veterinary_Major_Actor = Actor.getActorVar(rk_VB_Veterinary_Major_Actor)
+            ElseIf tagTTT >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TTT)
+                TravelTourism_Major_Actor = Actor.getActorVar(rk_VB_TravelTourism_Major_Actor)
+            EndIf
+        EndIf
+        While Actor2.isSameAs(Actor)
+            tagTAR = Actor2.getActorVar(rk_VB_tag_TAR)
+            tagTCE = Actor2.getActorVar(rk_VB_tag_TCE)
+            tagTCL = Actor2.getActorVar(rk_VB_tag_TCL)
+            tagTCS = Actor2.getActorVar(rk_VB_tag_TCS)
+            tagTEC = Actor2.getActorVar(rk_VB_tag_TEC)
+            tagTED = Actor2.getActorVar(rk_VB_tag_TED)
+            tagTEN = Actor2.getActorVar(rk_VB_tag_TEN)
+            tagTGE = Actor2.getActorVar(rk_VB_tag_TGE)
+            tagTHI = Actor2.getActorVar(rk_VB_tag_THI)
+            tagTLA = Actor2.getActorVar(rk_VB_tag_TLA)
+            tagTMA = Actor2.getActorVar(rk_VB_tag_TMA)
+            tagTME = Actor2.getActorVar(rk_VB_tag_TME)
+            tagTMU = Actor2.getActorVar(rk_VB_tag_TMU)
+            tagTPH = Actor2.getActorVar(rk_VB_tag_TPH)
+            tagTPS = Actor2.getActorVar(rk_VB_tag_TPS)
+            tagTPOL = Actor2.getActorVar(rk_VB_tag_TPOL)
+            tagTSM = Actor2.getActorVar(rk_VB_tag_TSM)
+            tagTDM = Actor2.getActorVar(rk_VB_tag_TDM)
+            tagTVE = Actor2.getActorVar(rk_VB_tag_TVE)
+            tagTTT = Actor2.getActorVar(rk_VB_tag_TTT)
+            If isModEnabled(rk_vin_Base) && Actor2.isValid()
+                If tagTAR >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TAR)
+                    Architecture_Major_Actor = Actor2.getActorVar(rk_VB_Architecture_Major_Actor)
+                ElseIf tagTCE >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TCE)
+                    Chemical_Engineering_Major_Actor = Actor2.getActorVar(rk_VB_Chemical_Engineering_Major_Actor)
+                ElseIf tagTCL >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TCL)
+                    Classics_Major_Actor = Actor2.getActorVar(rk_VB_Classics_Major_Actor)
+                ElseIf tagTCS >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TCS)
+                    Computer_Science_Major_Actor = Actor2.getActorVar(rk_VB_Computer_Science_Major_Actor)
+                ElseIf tagTEC >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TEC)
+                    Economics_Major_Actor = Actor2.getActorVar(rk_VB_Economics_Major_Actor)
+                ElseIf tagTED >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TED)
+                    Education_Major_Actor = Actor2.getActorVar(rk_VB_Education_Major_Actor)
+                ElseIf tagTEN >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TEN)
+                    English_Major_Actor = Actor2.getActorVar(rk_VB_English_Major_Actor)
+                ElseIf tagTGE >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TGE)
+                    Geography_Major_Actor = Actor2.getActorVar(rk_VB_Geography_Major_Actor)
+                ElseIf tagTHI >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_THI)
+                    History_Major_Actor = Actor2.getActorVar(rk_VB_History_Major_Actor)
+                ElseIf tagTLA >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TLA)
+                    Law_Major_Actor = Actor2.getActorVar(rk_VB_Law_Major_Actor)
+                ElseIf tagTMA >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TMA)
+                    Mathematics_Major_Actor = Actor2.getActorVar(rk_VB_Mathematics_Major_Actor)
+                ElseIf tagTME >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TME)
+                    Medicine_Major_Actor = Actor2.getActorVar(rk_VB_Medicine_Major_Actor)
+                ElseIf tagTMU >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TMU)
+                    Music_Major_Actor = Actor2.getActorVar(rk_VB_Music_Major_Actor)
+                ElseIf tagTPH >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TPH)
+                    Philosophy_Major_Actor = Actor2.getActorVar(rk_VB_Philosophy_Major_Actor)
+                ElseIf tagTPS >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TPS)
+                    Psychology_Major_Actor = Actor2.getActorVar(rk_VB_Psychology_Major_Actor)
+                ElseIf tagTPOL >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TPOL)
+                    Political_Sciences_Major_Actor = Actor2.getActorVar(rk_VB_Political_Sciences_Major_Actor)
+                ElseIf tagTSM >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TSM)
+                    SalesMarketing_Major_Actor = Actor2.getActorVar(rk_VB_SalesMarketing_Major_Actor)
+                ElseIf tagTDM >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TDM)
+                    Dental_Major_Actor = Actor2.getActorVar(rk_VB_Dental_Major_Actor)
+                ElseIf tagTVE >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TVE)
+                    Veterinary_Major_Actor = Actor2.getActorVar(rk_VB_Veterinary_Major_Actor)
+                ElseIf tagTTT >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TTT)
+                    TravelTourism_Major_Actor = Actor2.getActorVar(rk_VB_TravelTourism_Major_Actor)
+                EndIf
+            EndIf
+        EndWhile
         Actor.dress()
         Actor.show(2)
         Actor2.dress()
@@ -13,7 +243,7 @@ OTHER: none
         Jealousy = Player.getActorVar(rk_VB_Jealousy) // My general jealousy
         JealousTowardIDA = Actor.getActorVar(rk_VB_PlayerJealousTowardIDA)
         JealousTowardIDA2 = Actor2.getActorVar(rk_VB_PlayerJealousTowardIDA)
-        If WHERE == university:school
+        If TeacherUni == 0
             "Two of my classmates <Actor.name> and <Actor2.name> have been seen together an awful lot these days, inside and outside of class ... I wonder if they are together now ..."
         Else
             "Two of my students <Actor.name> and <Actor2.name> have been seen together an awful lot these days in class ... I wonder if they are together now ..."        

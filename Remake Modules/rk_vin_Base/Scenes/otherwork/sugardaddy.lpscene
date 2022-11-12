@@ -14,9 +14,7 @@ OTHER: none
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         SugarBabe = SugarBabe.getGlobal()
-        
         If SugarBabe > 0
-        
             Actor = getSpecific(SugarBabe)
             secondScreen(Actor)
             Actor.dress()
@@ -27,7 +25,6 @@ OTHER: none
             2:: "End arrangement"
             
             If 0
-            
                 Player(Happy):: "Honey, I miss you. Let's meet tonight."
                 Actor(Happy):: "I miss you too, <Player.Daddy_or_Mommy>. Let's meet."
                 secondScreen()
@@ -44,26 +41,17 @@ OTHER: none
                 EndIf
                 Actor.show(2)
                 "With the deed done, we spent the night together and I left <Actor.name> a big fat envelope in the morning. Getting pampered and spoiled, having great sex AND getting paid - no wonder <Actor.he_or_she> can't say no."
-                money -= Random(100, 300)
-                perversion += Random(0, 0.25)   
-                
-            Elseif 1
-            
+                money -= random(100, 300)
+                perversion += random(0, 0.25)
+            ElseIf 1
                 "Not today. These dates can be quite expensive."
-                
             Else
-            
                 "To be honest, I'm getting bored of <Actor.name>, so I told <Actor.him_or_her> our arrangement was over. I have no doubt <Actor.he_or_she> will find another sugarparent soon though."
                 SugarParent.clearGlobal()
                 //timeout(500, sugardaddy)
-                
-            Endif
-
+            EndIf
         Else
-
-            "You don't have any sugarbabe!"        
-
-        Endif
-        
+            "You don't have any sugarbabe!"
+        EndIf
     SceneEnd()
     // timeout(96, sugardaddy) Scene improved by Raddeck

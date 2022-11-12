@@ -4,8 +4,7 @@ WHEN: 23-6
 WHO: Companion = getCompanionAny()
 OTHER: none
 
-    sceneStart()
-    
+    SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -20,11 +19,11 @@ OTHER: none
         Else
             WalkedHome = false
             MyHome = false
-            Dating = CurrentCompanion.IsDating()
+            Dating = CurrentCompanion.isDating()
             "Time flies. I have enjoyed spending time with <CurrentCompanion.name> but it's time to part."
             If CurrentCompanion.isRelative()
                 "It has been good catching up with my <CurrentCompanion.relationship>."
-            ElseIf CurrentCompanion.IsDominantSex(Player)
+            ElseIf CurrentCompanion.isDominantSex(Player)
                 If !isAtHome() && [Dating || CurrentCompanion:interpersonal + CurrentCompanion:attractiontoplayer > random(0, 100)]
                     CurrentCompanion::"I'll be glad to walk you home safe. It's only my duty."
                     0:: "Be walked home"
@@ -47,33 +46,25 @@ OTHER: none
                             
                                 Player(Flirty):: "Baby, why don't you stay for the night?"
                                 CurrentCompanion(Flirty):: "Of course, love."   
-                                
                             Else
-                            
                                 Player(Flirty):: "Wait ... Do you want to come inside and chill for a while? You were so kind in walking me all the way back after all."
                                 CurrentCompanion(Happy):: "Of course, it'll be my pleasure."
                             EndIf
-                            
                         Else
                             Player(Happy):: "Goodbye. I had a great time today. See you soon!"
                             "We went our separate ways."
-                            
                         EndIf
-                        
                     Else
-                    
-                        Player(Surprised)::"It's not neccessary! Thank you for the nice offer though."
+                        Player(Surprised)::"It's not necessary! Thank you for the nice offer though."
                         "We went our separate ways."
                     EndIf
                 EndIf
             Else
-            
                 "Should I offer to walk <CurrentCompanion.name> home?"
                 0:: "Yes"
                 1:: "No"
                 
                 If 0
-                    
                     Player(Happy)::"Do you want me to walk you home? I just want to make sure you're safe."
                     If Dating || CurrentCompanion:attractiontoplayer > random(0, 100) || CurrentCompanion:rapportwithplayer > random(0, 100)
                             
@@ -86,17 +77,12 @@ OTHER: none
                         "A while later ..."
                         Player(Happy):: "So here it is, we arrived. I guess I'll see you soon ..."
                         If Dating || CurrentCompanion:attractiontoplayer > random(0, 100)
-                               
                             If Dating
-                               
                                 CurrentCompanion(Flirty)::"Baby, don't leave just yet. Do you want to stay the night?"  
                                 
                             Else
-                                
                                 CurrentCompanion(Flirty)::"Wait, don't leave just yet. I feel guilty making you walk all the way here. Do you want to come in for tea or something?"                
-                                
                             EndIf
-                                
                             "Come in?"
                             0:: "Yes"
                             1:: "No"
@@ -122,21 +108,20 @@ OTHER: none
                 Else
                     "I decided not to offer to walk <CurrentCompanion.him_or_her> back. We said goodbye and parted ways."
                 EndIf
-
             EndIf
 
             If WalkedHome
                 moveTo(home_dating)
                 "We're now inside <CurrentCompanion.his_or_her> apartment."
+                setBackgroundCustom(livingroom)
                 choice = -1    
                 ate = false
                 hadSex = false    
-                Vanilla = IsModEnabled(vin_VanillaRealistic)
+                Vanilla = isModEnabled(vin_VanillaRealistic)
                 MyHome = true
                 
                 While choice < 5
                     Kissed = false
-                    setBackgroundCustom(livingroom)
                     "What should I suggest to <CurrentCompanion.name> that we do?"
                     0:: "Chat"
                     1:: !ate :: "Eat something together"
@@ -144,30 +129,27 @@ OTHER: none
                     3:: "Drink alcohol"
                     4:: !hadSex:: "Kiss <CurrentCompanion.him_or_her>"
                     5:: "Politely leave <CurrentCompanion.him_or_her>"
-                    7:: Dating && !IsPlayerMarried():: "Break up!"
-                    8:: Dating && IsPlayerMarried():: "Divorce!"
+                    7:: Dating && !isPlayerMarried():: "Break up!"
+                    8:: Dating && isPlayerMarried():: "Divorce!"
                 
                     If 5
-                    
                         "We said goodbye and went our ways."
                         If HungerEnable > 0
-            
                             Player.modifyActorVar(rk_VB_Hunger, -1)
-                
                         EndIf
-                        
                     ElseIf 7
                         Player(Sad):: "Baby, I'm afraid this isn't working ..."
                         "It was a difficult conversation to have, but I did it! I broke up with <CurrentCompanion.name>. We just weren't meant for each other ..."
                         mood -= 50
-                        LoseDating()
-                        
+                        CurrentCompanion.setDatingId()
+                        loseDating()
                     ElseIf 8
                         Player(Sad):: "Baby, I'm afraid this marriage isn't working ..."
                         "It was a difficult conversation to have, but I did it! We agreed to divorce. We just weren't meant for each other ..."
                         mood -= 100
+                        CurrentCompanion.setDatingId()
                         Divorce()
-                        LoseDating()
+                        loseDating()
                         If Player.isDominantSex(Dating) && money > 1000
                             "Unfortunately for me, the court awarded half of my hard-earned fortune to <Dating.name> ... What a disaster of a marriage that was ..."
                             money -= money*0.5
@@ -177,26 +159,21 @@ OTHER: none
                         CurrentCompanion(Sad):: "Baby, I'm afraid this isn't working ..."
                         "<CurrentCompanion.name> did it! <CurrentCompanion.He_or_She> broke up with me. Maybe it was something I did ... or we simply weren't meant for each other."
                         mood -= 100
-                        LoseDating()
+                        CurrentCompanion.setDatingId()
+                        loseDating()
                         choice = 7
-                        
                     Else
                     
                         If 0
-                        
                             "We simply sat and chat for a while ..."
                             mood += 1
                             CurrentCompanion:attractiontoplayer += 1
                             CurrentCompanion:rapportwithplayer += 1
                             passTime(0.1, 0.2)
-                            
                         ElseIf 1
-                        
                             "We made some quick snacks and enjoyed them together ..."
                             If HungerEnable > 0
-            
                                 Player.modifyActorVar(rk_VB_Hunger, 5)
-                
                             EndIf
                             CurrentCompanion:attractiontoplayer += 1
                             CurrentCompanion:rapportwithplayer += 1
@@ -204,10 +181,7 @@ OTHER: none
                             energy += 5
                             ate = true
                             passTime(0.2, 0.4)
-                            
                         ElseIf 2
-                        
-                            
                             "We watched a movie together ..."
                             mood += 1
                             CurrentCompanion:attractiontoplayer += 1
@@ -217,9 +191,7 @@ OTHER: none
                             EndIf
                             energy -= 1
                             passTime(1, 2)
-                            
                         ElseIf 3
-                        
                             Player.animate(drinkglass)
                             CurrentCompanion.animate(drinkglass)
                             "We had a drink alcohol together ..."
@@ -235,11 +207,10 @@ OTHER: none
                         ElseIf 4
                         
                             Kissed = true
-                            
                         EndIf
 
                         If Kissed || [CurrentCompanion.isInterestedIn(Player) && !hadSex && CurrentCompanion:attractiontoplayer > random(0, 200)]
-                            AnimatePair(Player, CurrentCompanion, Kissing)
+                            animatePair(Player, CurrentCompanion, Kissing)
                             Player(Kiss):: "..."
                             CurrentCompanion(Kiss):: "..."
                             If Dating
@@ -248,17 +219,15 @@ OTHER: none
                                 "We had a kiss, an awkward one at first, but soon moving towards a more passionate direction."
                             EndIf
                             "Should I let this escalate further?"
-                            0:: Vanilla:: "Make out"
+                            0:: "Make out"
                             1:: "Stop"
                         
                             If 0
-                                If CurrentCompanion.isDating() || [CurrentCompanion.isInterestedIn(Player) && [CurrentCompanion.IsDominantSex(Player) || CurrentCompanion:attractiontoplayer + CurrentCompanion:perversion > random(50, 200) || CurrentCompanion:intoxication > 80]]
-                                    
+                                If CurrentCompanion.isDating() || [CurrentCompanion.isInterestedIn(Player) && [CurrentCompanion.isDominantSex(Player) || CurrentCompanion:attractiontoplayer + CurrentCompanion:perversion > random(50, 200) || CurrentCompanion:intoxication > 80]]
                                     "Our kiss got more and more steamy and soon we were making out, our hands all over each other."
                                     If TfGame() && CurrentCompanion.isMale()
                                         "I'm a man trapped inside a woman's body. I don't think I'm gay, but here I am, about to hook up with my male date."
                                     EndIf
-                                    
                                     hadSex = true
                                     Player:perversion += random(0, 1)
                                     Sex(Player, CurrentCompanion)
@@ -324,7 +293,6 @@ OTHER: none
                                     Else
                                         "The sex was amazing. We put our clothes back on afterwards and continued our date."
                                     EndIf
-                                    
                                     If HungerEnable > 0
                                         Player.modifyActorVar(rk_VB_Hunger, -1)
                                     EndIf
@@ -367,4 +335,4 @@ OTHER: none
         Actor2.hide()
         endDate()
         CurrentCompanion:intoxication => 0
-    sceneEnd() // Scene improved by: Raddeck
+    SceneEnd() // Scene improved by: Raddeck

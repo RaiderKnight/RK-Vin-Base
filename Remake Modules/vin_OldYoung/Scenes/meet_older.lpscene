@@ -7,7 +7,6 @@ OTHER: likes_older > 10 && !Player.isAsexual() && !isAtHome()
     // Randomly triggered scene for a younger player character that prefers older where a DILF / MILF (depending on your gender & sexual orientation) approaches you
     
     SceneStart()
-    
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -16,17 +15,17 @@ OTHER: likes_older > 10 && !Player.isAsexual() && !isAtHome()
         Actor = generatePersonTemporary()
         While !Player.isInterestedIn(Actor)
             Actor = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor.makeInterested(Player)
         
         Actor:age => age + likes_older*0.5
-        Actor:age += Random(-5, 5)
-        Actor:attractiveness => Random(70, 100)
-        Actor:interpersonal => Random(70, 100)
+        Actor:age += random(-5, 5)
+        Actor:attractiveness => random(70, 100)
+        Actor:interpersonal => random(70, 100)
         Actor.randomizeFace()
         Actor.randomizeHairs()
         Actor:likes_older => 2*[age - Actor:age]
-        Actor:attractiontoplayer += Random(25, 50)
+        Actor:attractiontoplayer += random(25, 50)
         
         Actor.dress()
         Actor.show()
@@ -50,7 +49,7 @@ OTHER: likes_older > 10 && !Player.isAsexual() && !isAtHome()
                 "Hopefully it will be a good experience. Since we're obviously into each other, this may turn out to be a rather hot date."
             Else
                 "Although <Actor.name> seems my type, I don't want to seem over eager. Let's just give <Actor.him_or_her> my number and hang out another day to get to know each other better."        
-            Endif
-        Endif
+            EndIf
+        EndIf
     SceneEnd()
     timeout(100, meet_older) // Improved by Raddeck

@@ -7,7 +7,6 @@ OTHER: likes_older < -10 && !Player.isAsexual()
     // Randomly triggered scene for an older player character that prefers younger where you come across someone younger who checks you out and you have a choice to approach
     
     SceneStart()
-    
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -16,16 +15,16 @@ OTHER: likes_older < -10 && !Player.isAsexual()
         Actor = generatePersonTemporary()
         While !Player.isInterestedIn(Actor)
             Actor = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor.makeInterested(Player)
         
         Actor:age => age + likes_older*0.5
-        Actor:age += Random(-5, 5)
-        Actor:attractiveness => Random(70, 100)
+        Actor:age += random(-5, 5)
+        Actor:attractiveness => random(70, 100)
         Actor.randomizeFace()
         Actor.randomizeHairs()
         Actor:likes_older => 2*[age - Actor:age]
-        Actor:attractiontoplayer += Random(25, 50)
+        Actor:attractiontoplayer += random(25, 50)
         
         Actor.dress()
         Actor.show()
@@ -51,18 +50,18 @@ OTHER: likes_older < -10 && !Player.isAsexual()
                 "<Actor.name> was happy to exchange numbers with me."
                 
                 If 0
-                    If Random(50, 100) < Actor:attractiontoplayer
+                    If random(50, 100) < Actor:attractiontoplayer
                         "To my delight, <Actor.name> seemed very eager and agreed to a date right away."
                         Actor.startDate()
                         "Hopefully it will be a good experience. Since we're obviously into each other, this may turn out to be a rather hot date."                    
                     Else
                         "Unfortunately, <Actor.name> wasn't available for a date right way."
                         "Oh well, at least I got <Actor.his_or_her> number."
-                    Endif
-                Endif
-            Endif
+                    EndIf
+                EndIf
+            EndIf
         Else
             "I was too terrified of the prospect of getting rejected in public and everyone staring at me as an old creep that I decided not to approach the younger <Actor.guy_or_girl>."
-        Endif
+        EndIf
     SceneEnd() // Improved By Raddeck
     timeout(100, meet_younger)

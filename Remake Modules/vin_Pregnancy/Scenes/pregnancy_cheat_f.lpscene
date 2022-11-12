@@ -22,6 +22,7 @@ OTHER:
         3:: "Help me impregnate <Actor2.name>'s woman to make it even!"
         
         If 0
+            Actor.setDatingId()
             loseDating()
             "I decided to dump <Actor.name> right away. This affair was unforgivable and I wanted nothing to do with another man's child."
         ElseIf 1
@@ -33,7 +34,7 @@ OTHER:
             Actor.endPregnancy()
         Else
             secondScreen()
-            "I know that <Actor.name> is also friends with <Actor2.name>'s girl, which makes this a double betrayal. I sugget that she makes it right."
+            "I know that <Actor.name> is also friends with <Actor2.name>'s girl, which makes this a double betrayal. I suggest that she makes it right."
             "She eventually agrees."
             setBackgroundCustom(livingroom)
             Actor3 = Actor.getRelatedPerson(Dating, Spouses)
@@ -44,6 +45,7 @@ OTHER:
                 EndWhile
                 Actor3:age => random(18, 40)
                 Actor3.randomizeFace()
+                Actor3.randomizeRace()
                 Actor3.randomizeHairs()
                 Actor3.makePermanent()
                 addNpcRelationship(Dating, Actor, Actor3)

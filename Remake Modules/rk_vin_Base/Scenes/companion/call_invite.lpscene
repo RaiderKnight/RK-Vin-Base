@@ -1,15 +1,12 @@
 WHAT: all, -sleep, -sleep_hotel
 WHERE: all, -work
 WHEN: 9-21
-WHO: Friend = getPerson(true); If Friend:rapportwithplayer > Random(0, 10) || [Friend.IsDominantSex(Player) && Friend:attractiontoplayer > Random(0, 10)]
-OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Random(0, 200) < 75
+WHO: Friend = getPerson(true); If Friend:rapportwithplayer > random(0, 10) || [Friend.isDominantSex(Player) && Friend:attractiontoplayer > random(0, 10)]
+OTHER: !isWithCompanion() && !isWithCompanionCreature() && random(0, 200) < 75
 
-    sceneStart()
-
+    SceneStart()
         Friendsentence = Friend.getActorVar(rk_VB_Sentence)
-        
         If Friendsentence > 0
-        
             While Friend.isValid()
                 ActArrestTagF = Friend.getActorVar(rk_VB_ActArrestTagF)
             EndWhile
@@ -18,25 +15,16 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Random(0, 200) < 75
             FPrison = Friend.getActorVar(tag_FPrison)
             Fsentence = Friend.getActorVar(rk_VB_ActSentence)
             Friendsentence = Friend.getActorVar(rk_VB_Sentence)
-            
             Friend.dressPrisoner()
-    
             "My phone rang ... It's <Friend.name> calling from prison."
-
-            SecondScreen(Friend)
+            secondScreen(Friend)
             Friend.show(2)
-            Dating = Friend.IsDating()
-            
+            Dating = Friend.isDating()
             If Dating
-            
                 Friend(Sad):: "Baby, I miss you, are you gonna come visiting me today?"
-                
             Else
-            
                 Friend(Happy):: "Hey <Player.name>, I miss you, are you gonna come visiting me today?"
-                
-            Endif
-            
+            EndIf
             "What should I say?"
             0:: "Yes"
             1:: "No"
@@ -45,64 +33,43 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Random(0, 200) < 75
                 Player(Happy):: "Of course. I'll see you in a bit!"
                 mood += 1
                 If Dating
-                
                     Friend(Happy):: "See you soon, darling!"
-                    
                 Else
-                
                     Friend(Happy):: "See you soon!"
-                    
-                Endif
-                
+                EndIf
                 "What should I do?"
                 0::"Visit <Friend.him_or_her> right now!"
                 1::"<Friend.He_or_She> can wait!"
                 
                 If 0
-                
+                    secondScreen()
                     moveTo(police)
                     SceneEnd()
-
-                Endif
-                
+                EndIf
             Else
-            
                 If Dating
-                
                     Player(Sad):: "Not today, love. Call me again soon though ..."
                     Friend(Sad):: "Okay, baby. I'll see you later then."
-                    
                 Else
-                
                     Player(Sad):: "Sorry, I'm busy today. Maybe next time ..."
                     Friend(Sad):: "Oh? That's a shame. I'll see you around then."
-                    
-                Endif
-        
+                EndIf
                 timeout(48, call_invite)
-                
-            Endif
-            
+            EndIf
+            secondScreen()
         Else
             Friend.dress()
-    
             "My phone rang ... It's <Friend.name> calling."
-            SecondScreen(Friend)
+            secondScreen(Friend)
             Friend.show(2)
-            Dating = Friend.IsDating()
-            
+            Dating = Friend.isDating()
             If Dating
-            
                 Friend(Flirty):: "Baby, let's spend time together today!"
                 Date = "Go on a date"
-                
             Else
-            
                 Friend(Happy):: "Hey <Player.name>, it's <Friend.name>. Listen, do you want to hang out today?"
                 Date = "Hang out"
-                
-            Endif
-            
+            EndIf
             "<Date> with <Friend.name>?"
             0:: "Yes"
             1:: "No"
@@ -111,44 +78,25 @@ OTHER: !IsWithCompanion() && !isWithCompanionCreature() && Random(0, 200) < 75
                 Player(Happy):: "Of course. I'll see you in a bit!"
                 mood += 1
                 If Dating
-                
                     Friend(Happy):: "See you soon, darling!"
-                    
                 Else
-                
                     Friend(Happy):: "See you soon!"
-                    
-                Endif
+                EndIf
                 passTime(0.25, 1)
-                
-                Friend.StartDate()
+                Friend.startDate()
                 timeout(12, call_invite)
-                
             Else
-            
                 If Dating
-                
                     Player(Sad):: "Not today, love. Call me again soon though ..."
                     Friend(Sad):: "Okay, baby. I'll see you later then."
-                    Friend:attractiontoplayer -= Random(0, 1)
-                    
+                    Friend:attractiontoplayer -= random(0, 1)
                 Else
-                
                     Player(Sad):: "Sorry, I'm busy today. Maybe next time ..."
                     Friend(Sad):: "Oh? That's a shame. I'll see you around then."
-                    
-                Endif
-        
+                EndIf
                 timeout(6, call_invite)
-                
-            Endif
-            Saved = getPerson(tag_Saved); 
-            If Saved:perversion > 15 && !Saved.isMarried()
-                Saved:perversion -= 1000
-                Saved:masochist =< 0
-                Saved:incest =< 0
-            Endif
-        Endif
+            EndIf
+            secondScreen()
+        EndIf
         //timeout(50, call_invite, call_invite_co, call_invite_f, family_invite_workout, invite_workout, call_invite_co_pregnant)
-
-    sceneEnd() // Scene improved by: Raddeck
+    SceneEnd() // Scene improved by: Raddeck

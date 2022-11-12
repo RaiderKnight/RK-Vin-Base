@@ -15,7 +15,6 @@ OTHER: random(1, 100) < pornfame && Player.isInterestedInWomen()
         P2C = P2.convertToLocalCurrency(true)
         P3 = Dice/3
         P3C = P3.convertToLocalCurrency(true)
-        
         MarchePas = false
         Choice1 = Dice*2
         Choice1lo = Choice1.convertToLocalCurrency(true)
@@ -24,20 +23,19 @@ OTHER: random(1, 100) < pornfame && Player.isInterestedInWomen()
         Choice3 = Dice + P3
         Choice3lo = Choice3.convertToLocalCurrency(true)
         MarcheOk = false
-        
         Actor = generatePersonTemporary()
         While !Actor.isFemale()
             Actor = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Random
             Actor.setMorphValue(Genesis8Female__PBMPregnant, 1.0)
             Actor.setMorphValue(Genesis8Female__PBMPregnant, 0.8)
             Actor.setMorphValue(Genesis8Female__PBMPregnant, 0.6)
-        endRandom
+        EndRandom
         Actor.dress()
         Actor.show(2)
         DoneBeast = Player.getActorVar(tag_beastporn)
-        
+        ilaccept = false
         If DoneBeast > 0 && random(0, 100) < 50
             "One of the most famous porn directors was planning to shoot me, but pulled out in the last minute after finding out about me being involved in a bestiality shoot earlier in my career. He didn't think I would fit the glamcore market."
         Else
@@ -54,6 +52,7 @@ OTHER: random(1, 100) < pornfame && Player.isInterestedInWomen()
             ElseIf 1
                 If random(0, 100) < choice*pornfame
                     money += Dice
+                    ilaccept = true
                 Else
                     MarchePas = true
                     MarcheOk = true
@@ -82,7 +81,11 @@ OTHER: random(1, 100) < pornfame && Player.isInterestedInWomen()
             EndIf
             If isModEnabled(rk_vin_Base)
                 If MarcheOk
-                    "The porn director accepted my demands and soon enough we were meeting at the shoot location that we agreed on."
+                    If ilaccept
+                        "Then the porn director invited me at the shoot location that we agreed on."
+                    Else
+                        "The porn director accepted my demands and soon enough we were meeting at the shoot location that we agreed on."
+                    EndIf
                     Random
                         setBackground(home)
                         setBackground(bar)
@@ -121,10 +124,12 @@ OTHER: random(1, 100) < pornfame && Player.isInterestedInWomen()
                         Actor2 = generatePersonTemporary()
                         Actor2:age => random(35, 55)
                         Actor2.randomizeFace()
+                        Actor2.randomizeRace()
                         Actor2.randomizeHairs()
                         Actor2.dress()
                         Actor2.show(3)
-                        Player(Flirty):: "I heard you were quite a star performer back in your day? Why don't you join us, make this a POV threesome video and teach us a thing or two about performing in this industry? It would be quite a honor to star alongside an industry legend."
+                        Player(Flirty):: "I heard you were quite a star performer back in your day? Why don't you join us, make this a POV threesome video and teach us a thing or two about performing in this industry?"
+                        Player(Flirty)::"It would be quite a honour to star alongside an industry legend."
                         Actor2(Flirty):: "It's been a long time since I last performed, but since you insist ..."
                         Sex(Actor, Actor2, Player)
                         If HungerEnable > 0
@@ -144,7 +149,8 @@ OTHER: random(1, 100) < pornfame && Player.isInterestedInWomen()
                             "The director got pissed off and tried to hit me"
                             If random(0, 100) < martial
                                 "Unfortunately for him, I was no pushover and gave him a good spanking."
-                                "As things would have it, our little incident went viral in the porn industry media and somehow made me even more popular. I guess no publicity is bad publicity. Besides, other directors will have to think twice now before trying to bully me in the future."
+                                "As things would have it, our little incident went viral in the porn industry media and somehow made me even more popular. I guess no publicity is bad publicity."
+                                "Besides, other directors will have to think twice now before trying to bully me in the future."
                                 pornfame += 2
                             Else
                                 "I tried to stand my ground but ..."

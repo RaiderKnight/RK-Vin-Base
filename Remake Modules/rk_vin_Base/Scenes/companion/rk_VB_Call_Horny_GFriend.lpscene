@@ -1,0 +1,126 @@
+WHAT: all
+WHERE: all, -prison, -work
+WHEN: 10-24
+WHO: Amis = getPerson(); If Amis.isGay() && Amis.isSameGender(Player) && Amis.isInterestedIn(Player) && !Player.isGay()
+OTHER: !isWithCompanion()
+
+
+    SceneStart()
+        sucer = false
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        cestki = false
+        willy = false
+        "My phone is ringing, should I answer it?"
+        0::"Yes"
+        1::"No"
+        
+        If 0
+            cestki = true
+        Else
+            "I don't have time to answer... if it's important, I'll be called back later..."
+        EndIf
+        If cestki
+            Amis.show()
+            Amis(Happy)::"Hi <Player.name>, how are you?"
+            Player(Happy)::"Good, and you!"
+            Amis(Happy)::"I'm fine, I was calling to see if I could come and visit you?"
+            "What should I do?"
+            0::"Accept"
+            1::"Refuse"
+            
+            If 0
+                Amis:arousal += 25
+                Player(Happy)::"Yes of course, come, I'm waiting for you!"
+                Amis(Happy):: "See you soon!"
+                passTime(0.25, 1)
+                "After a while, my friend finally arrived."
+                "Once <Amis.he_or_she> entered my house, I noticed that <Amis.he_or_she> was wearing sexy clothes, so I invited <Amis.him_or_her> to the living room and told <Amis.him_or_her>..."
+                setBackgroundCustom(livingroom)
+                Player(Happy)::"To what do I owe the honor of your visit?"
+                Amis(Flirty)::"Actually, I wanted to see you in person to ask you something a little special!"
+                Player(Curious)::"Okay, what?"
+                Amis(Flirty)::"Well, since you're single, you must want to get laid like everyone else, right?"
+                Player(Curious)::"Yeah, what's that got to do with it?"
+                If !Player.isMale()
+                    Amis(Flirty)::"Well if you want me to lick your pussy and suck your clit, I'll enjoy it, I love it and I swallow."
+                Else
+                    Amis(Flirty)::"Well if you want me to suck your dick, I'll enjoy it, I love it and I swallow."
+                EndIf
+                "What do I say to <Amis.him_or_her>?"
+                0::"Accept"
+                1::"Refuse"
+                
+                If 0
+                    Player(Happy)::"Sure, why not!"
+                    Player.strip()
+                    Player.dressExcept(Bottom, Bottom_Under)
+                    perversion += 1
+                    If !Player.isMale()
+                        Filter(LickPussy)
+                    Else
+                        Filter(Blowjob)
+                    EndIf
+                    Sex(Amis, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    sucer = true
+                Else
+                    Player(Sad)::"Thanks for the offer but I'm not gay and I'm not that desperate to fuck someone of the same sex as me!"
+                    Amis(Sad)::"Fine, if you change your mind, think of me, I will be happy to visit you to taste your sex juice!"
+                EndIf
+            Else
+                Amis:arousal -= 5
+                Player(Sad)::"Sorry, I'm actually busy today!"
+                Amis(Sad)::"Fine, another time then! See you soon!"
+            EndIf
+            If sucer
+                If !Player.isMale()
+                    "Your pussy juice is delicious, can I finger your pussy, I would like to have some more juice..."
+                Else
+                    "Your cum is delicious, can I masturbate your penis, I would like to have some more cum..."
+                EndIf
+                "What do I say to <Amis.him_or_her>?"
+                0::"Accept"
+                1::"Refuse"
+                
+                If 0
+                    Player(Happy)::"Sure, go ahead!"
+                    If !Player.isMale()
+                        Filter(Fingering)
+                    Else
+                        Filter(Handjob)
+                    EndIf
+                    Sex(Amis, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                    EndIf
+                    willy = true
+                Else
+                    Player(Sad)::"Sorry, but that's enough for today!"
+                    Amis(Sad)::"Fine, maybe another time then!"
+                EndIf
+            EndIf
+            If willy
+                Amis(Flirty)::"After all that, do you want to fuck?"
+                "What do I say to <Amis.him_or_her>?"
+                0::"Accept"
+                1::"Refuse"
+                
+                If 0
+                    Player(Happy)::"Sure, let's go!"
+                    Sex(Amis, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                Else
+                    Player(Sad)::"Sorry, but that's enough for today!"
+                    Amis(Sad)::"Fine, maybe another time then!"
+                EndIf
+            EndIf
+        EndIf
+    SceneEnd()
+    timeout(500, rk_VB_Call_GHorny_Friend)

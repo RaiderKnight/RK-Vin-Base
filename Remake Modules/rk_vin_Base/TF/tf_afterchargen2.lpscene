@@ -5,11 +5,11 @@ WHO: none
 OTHER: none
 
     If TfGame()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         FacebookFriend = rk_VB_FacebookFriend.getGlobal()
-        
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         TBstock_IPhone = Player.getActorVar(TBstock_IPhone)
         TBstock_Samsung = Player.getActorVar(TBstock_Samsung)
         TBstock_OnePlus = Player.getActorVar(TBstock_OnePlus)
@@ -117,7 +117,6 @@ OTHER: none
         
         IBuyaComputer = Player.getActorVar(rk_VB_IBuyaComputer) // How many computers I buy?
         IBuyaPhone = Player.getActorVar(rk_VB_IBuyaPhone) // How many phones I buy?
-        
         Stock_Computers = Ostock_Computer + SRstock_Computer + LRstock_Computer + MBstock_Computer + SBstock_Computer + Kstock_Computer + TBstock_Computer + stock_Computer
         Stock_phones = Stock_phonesP + OStock_phones + SRStock_phones + LRStock_phones + MBStock_phones + SBStock_phones + KStock_phones + TBStock_phones + Stock_phone
         
@@ -132,48 +131,34 @@ OTHER: none
         1:: "It's like a dream!"
         
         If 0
-        
             Player(Furious):: "Nooooooooooooooooooooooooooooooooooooooooooooooooooo!"
             mood -= 5
             "I screamed out in complete shock and horror, only to get even more shocked and horrified at how high-pitched and feminine my voice has become. Not only do I look like a woman, I also sound like a woman."
-        
         Else
-        
             "I don't believe what I'm seeing! I lean into the mirror, touching my face, blinking my eyes, unable to help the manic grin spreading across my face."
             "A loud, high-pitched scream of delight passes from my throat. It’s real! It’s impossible, insane, but it’s real!"
             mood += 5
-        
-        Endif
-        
+        EndIf
         If IBuyaComputer > 0
             textVB = "open my computer"
             TextVB2 = "That's the same name on the Facebook profile I was logged into."
-        Elseif IBuyaPhone > 0
+        ElseIf IBuyaPhone > 0
             textVB = "take out my phone"
             TextVB2 = "That's the same name on the Facebook profile I was logged into."
         EndIf
-        
         If IBuyaComputer > 0 || IBuyaPhone > 0
-        
             "It's 2021 so my reaction to everything is to of course <textVB>. I immediately clicked on Facebook."
-            "And to add the shock, I'm logged in as some '<Player.name> <Player.name_last>'. My hometown and friendlist all remains the same, but I couldn't find a single photo or even mention of <OldPlayer.name> <OldPlayer.name_last> ..."
+            "And to add the shock, I'm logged in as some '<Player.name> <Player.name_last>'. My hometown and friend list all remains the same, but I couldn't find a single photo or even mention of <OldPlayer.name> <OldPlayer.name_last> ..."
             "I searched for that name on Facebook, then Google, but no matches. It's like I has been erased from the internet, which I didn't know was even possible."
-        
         EndIf
-        
         "Suddenly, I hear a knock on my door ..."
         Actor = getRelative()
         If Actor.isValid()
-        
             "It's my <Actor.relationship>, <Actor.name>."
-            
         Else
-        
             Actor = getSpecific(Landlord)
             "It's my <Actor.landlord_or_landlady>, <Actor.name>."
-            
-        Endif
-        
+        EndIf
         Actor(Curious):: "Is everything okay in there, <Player.name>? I heard your scream! What's wrong?"
         Player(Sad):: "It's ok. I just hurt myself with my desk, don't worry I'm fine ..."
         "Shit, I shouldn't have screamed, how do I explain to <Actor.him_or_her> about my high-pitched voice?"
@@ -183,24 +168,18 @@ OTHER: none
         1:: "No way, I'm <OldPlayer.name>"
         
         If 0
-        
             "Maybe that's my name now ... maybe I'm a woman now ... somehow. And everyone seems to have always known me as a woman."
-            masochist += Random(0, 10)
-            
+            masochist += random(0, 10)
         Else
-        
             "I'm not <Player.name>. I'm not a woman for fuck's sake. This is all a cruel dream. I'll wake up from it and be <OldPlayer.name> again."
             mood -= 5
-            
-        Endif
-        
+        EndIf
         "Maybe I should go to a hospital and tell a doctor everything?"
         "I suppose that's the only decent idea I have right now."
         "Damn, I'm still naked ... I need to put on some clothes. None of my clothes would fit, but at least I can get this woman's body covered."
         "I open my wardrobe and long and behold, none of my clothes were there ... Instead, it's full of women's clothes ... <Player.name>'s clothes ..."
         "Damn it, seems like every trace of <OldPlayer.name> has been erased from my own apartment. Oh well, at least these clothes would fit this body."
         SceneEnd()
-        OpenMenu(Inventory)
+        openMenu(Inventory)
         followUp(tf_afterinventory)
-        
-    Endif // Improved by Raddeck
+    EndIf // Improved by Raddeck

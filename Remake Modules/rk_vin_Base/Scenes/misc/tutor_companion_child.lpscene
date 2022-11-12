@@ -1,16 +1,15 @@
 WHAT: all
 WHERE: all
 WHEN: 0 - 24
-WHO: Actor = getCompanion(); If Actor:age > 40 && !Actor.isDating()
+WHO: Actor = getCompanion(); If Actor:age > 30 && !Actor.isDating()
 OTHER: intelligence > 50
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        Actor:: "Hey, I remember you mentioned you took this subject at university and did very well academically, right?"
+        Actor(Happy):: "Hey, I remember you mentioned you took this subject at university and did very well academically, right?"
         Actor2 = Actor.getRelatedPerson(ParentChild)
         If Actor2.isValid() && Actor2:age < Actor:age
             Actor2.dress()
@@ -18,14 +17,15 @@ OTHER: intelligence > 50
             Actor2 = generatePersonTemporary()
             While !Player.isInterestedIn(Actor2)
                 Actor2 = generatePersonTemporary()
-            Endwhile
-            Actor2:age => Actor:age - Random(18, 25)
+            EndWhile
+            Actor2:age => Actor:age - random(18, 25)
             Actor2.randomizeFace()
+            Actor2.randomizeRace()
             Actor2.randomizeHairs()
             Actor2.dress()
             Actor2.makePermanent()
-            addNpcRelationship(Actor, Actor2, ParentChild)
-        Endif
+            addNpcRelationship(ParentChild, Actor, Actor2)
+        EndIf
         Actor:: "My <Actor2.son_or_daughter> <Actor2.name> is having an exam in the same subject soon. Would you mind tutoring <Actor2.him_or_her> a bit?"
         0:: "Agree to tutor <Actor.name>'s <Actor2.son_or_daughter>"
         1:: "Decline"
@@ -42,16 +42,17 @@ OTHER: intelligence > 50
             1:: "Stay gentle"
             
             If 0
-                If Random(0, 100) < Actor2:attractiontoplayer + Actor2:perversion
-                    Actor2:: "Now I see why you agreed to tutor your friend's <Actor2.son_or_daughter> in the first place ... Have a thing for a younger lover, I see? Lucky for you, I have a thing for older <Player.men_or_women> myself ... especially my <Actor.Dad_or_Mom>'s friends ..."
+                If random(0, 100) < Actor2:attractiontoplayer + Actor2:perversion
+                    Actor2(Flirty):: "Now I see why you agreed to tutor your friend's <Actor2.son_or_daughter> in the first place ..."
+                    "Have a thing for a younger lover, I see? Lucky for you, I have a thing for older <Player.men_or_women> myself ... especially my <Actor.Dad_or_Mom>'s friends ..."
                     Sex(Player, Actor2)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -2)
                     EndIf
                     
-                    If Random(0, 100) < 50
+                    If random(0, 100) < 50
                         Actor.show()
-                        Actor:: "What was that noise? Are you two okay ... What the fuck!"
+                        Actor(Shocked):: "What was that noise? Are you two okay ... What the fuck!"
                         If Actor:perversion > 50 || Actor.hadSex()
                             "<Actor.name>'s shock soon turned into excitement as <Actor.he_or_she> soon joined <Actor.his_or_her> <Actor2.son_or_daugher> in having fun with me ..."
                             Sex(Player, Actor, Actor2)
@@ -62,12 +63,12 @@ OTHER: intelligence > 50
                             Actor:: "How dare you seduce my precious <Actor2.son_or_daughter>? I trusted you to be a role model. Get out of my apartment this instance."
                             Actor:rapportwithplayer -= 20
                             endDate()
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                 Else
-                    Actor2:: "What are you doing? Please keep your hand off me ..." 
-                Endif
-            Endif
-        Endif
+                    Actor2(Furious):: "What are you doing? Please keep your hand off me ..." 
+                EndIf
+            EndIf
+        EndIf
     SceneEnd()
     timeout(100, tutor_companion_child) // Improved by Raddeck

@@ -5,18 +5,21 @@ WHO: Actor = getRelative(Parent); If !Actor.isMale() && Actor:perversion > 50 &&
 OTHER: isAtHome() && Player:age < 25
 
     SceneStart()
-        FightingLost = false
-        IlAPerdu = false
-        VraiLoser = false
-        Slutty_momJohn = rk_VB_Slutty_momJohn.getGlobal()
-        Hunger = Player.getActorVar(rk_VB_Hunger)
-        HungerEnable = rk_VB_EnableHunger.getGlobal()
-        FacebookFriend = rk_VB_FacebookFriend.getGlobal()
-        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
-        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        John = getSpecific(Slutty_momJohn)
-        GofckHim = false
-        OkThenA = false
+        If isModEnabled(rk_vin_Base)
+            FightingLost = false
+            IlAPerdu = false
+            VraiLoser = false
+            Slutty_momJohn = rk_VB_Slutty_momJohn.getGlobal()
+            Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            FacebookFriend = rk_VB_FacebookFriend.getGlobal()
+            UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+            UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+            John = getSpecific(Slutty_momJohn)
+            GofckHim = false
+            OkThenA = false
+            FiniLeShow = true
+        EndIf
         If !John.Valid() && Slutty_momJohn <= 0
             John = generatePersonTemporary()
             While !John.isMale()
@@ -60,7 +63,7 @@ OTHER: isAtHome() && Player:age < 25
             Player(Annoyed)::"Oh mom... Why? Why did you do this?"
             Actor(Grin)::"You think <John.name> will like it?"
             Player(Annoyed)::"Yeah mom."
-            "She cheerfully bent over and kissed the top of my head, her tits slapping my face, I could feel the cold sting of her nipple jewelry pressing on my nose."
+            "She cheerfully bent over and kissed the top of my head, her tits slapping my face, I could feel the cold sting of her nipple jewellery pressing on my nose."
             AnimatePair(Actor, Player, Kissing)
             Player(Annoyed)::"God dammit mom!"
             "My mother walked to her room giggling her boyfriend's name. I could hear my mom giggling, and <John.name>'s deep voice coming from upstairs."
@@ -96,7 +99,7 @@ OTHER: isAtHome() && Player:age < 25
             Actor(Excited)::"Stop it. Stop it daddy! Ohhhh yes! Fuck me, daddy! FUCK ME! "
             "What? No. No. No, No way, not here."
             "I thought to myself. I reach my headphones but froze when I saw their reflection on the TV. My mom was cutting vegetables while <John.name> was behind her grinding his cock up and down the crack of her ass and groping her tits."
-            sex(John, Actor)
+            Sex(John, Actor)
             John(Excited)::"Come on baby."
             Actor(Excited)::"No baby, we can't."
             John(Grin)::"Yes we can!"
@@ -106,7 +109,7 @@ OTHER: isAtHome() && Player:age < 25
             "Then the fucking really started, <John.name>'s stamina was unnatural for his age."
             Actor.strip()
             Filter(Aggressive)
-            sex(John, Actor)
+            Sex(John, Actor)
             John(Excited)::"Look at him!"
             Actor(Excited)::"No. Please daddy, no."
             John(Excited)::"You fucking whore!"
@@ -132,7 +135,7 @@ OTHER: isAtHome() && Player:age < 25
             "Her hand surrounding his cock and stroking it under the table. My mother pulls her hand away from his cock, drools on it and is back down on his cock, not breaking contact with me. The sound of drool bounced off the walls of the silent kitchen."
             "<John.name> is leaning back, looking at my mom and her hand stroking him, and <John.name>'s cock has started to contract and his balls have tightened. My mom smiles wickedly at me as she points his cock in my direction...."
             filter(Handjob)
-            sex(Actor, John)
+            Sex(Actor, John)
             John(Excited)::"Uhhhhnnnng!" 
             "She masturbates him, taking care that his cum splashes into my face. A few drops of cum went on the food, but the big gooey drop made its way over my upper lips to my chin."
             "My mom licks the cum off her hand, looks at me and says..."
@@ -157,7 +160,6 @@ OTHER: isAtHome() && Player:age < 25
                 JohnID = John.getID()
                 rk_VB_Slutty_momJohn.setGlobal(JohnID)
             EndIf
-            
             Player.animate()
         Else
             Slutty_momJohn = rk_VB_Slutty_momJohn.getGlobal()
@@ -182,12 +184,12 @@ OTHER: isAtHome() && Player:age < 25
                 If 0
                     "I decided to lick the sperm over his dick..."
                     Filter(Blowjob)
-                    sex(Player, John)
+                    Sex(Player, John)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
                     EndIf
                     masochist += 1
-                Elseif 1
+                ElseIf 1
                     John(Grin)::"Good <Player.boy_or_girl>!"
                     animatePair(Player, John, Kissing)
                     If HungerEnable > 0
@@ -199,7 +201,7 @@ OTHER: isAtHome() && Player:age < 25
                     masochist -= random(5, 10)
                     GofckHim = true
                 EndIf
-            Elseif John:arousal > 15 && John:perversion > 60
+            ElseIf John:arousal > 15 && John:perversion > 60
                 SomeCash = random(50, 100)
                 SomeCashloc = SomeCash.convertToLocalCurrency()
                 "Well, since your mother is gone, do you want to suck my dick, I'll give you <SomeCashloc>?"
@@ -211,13 +213,13 @@ OTHER: isAtHome() && Player:age < 25
                 If 0
                     "I decided to lick the sperm and suck his dick for <SomeCashloc>..."
                     Filter(Blowjob)
-                    sex(Player, John)
+                    Sex(Player, John)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
                     EndIf
                     masochist += 1
                     money += SomeCash
-                Elseif 1
+                ElseIf 1
                     John.hide()
                     Loc = findNearbyBuilding(restaurant)
                     moveTo(Loc)
@@ -227,7 +229,7 @@ OTHER: isAtHome() && Player:age < 25
                     masochist -= random(5, 10)
                     GofckHim = true
                 EndIf
-            Elseif John:arousal > 15 && John:perversion > 45
+            ElseIf John:arousal > 15 && John:perversion > 45
                 "Well, since your mother is gone, do you want me to <Player.suck_or_lick> your <Player.cock_or_pussy> while you watch TV."
                 "What I should answer?"
                 0::"Sure why not!"
@@ -241,13 +243,13 @@ OTHER: isAtHome() && Player:age < 25
                     Else
                         Filter(Blowjob)
                     EndIf
-                    sex(John, Player)
+                    Sex(John, Player)
                     masochist += 1
                     money += SomeCash
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
                     EndIf
-                Elseif 1
+                ElseIf 1
                     John.hide()
                     Loc = findNearbyBuilding(bar)
                     moveTo(Loc)
@@ -273,22 +275,15 @@ OTHER: isAtHome() && Player:age < 25
             John.moveToPersonStand(Player, 25)
             Roundcount = 0
             FightInAction = 0
-            While FightInAction < 1 && Player:energy > 10
+            While FightInAction < 1 && energy > 10
                 John.show()
                 FightAction = random(0, 2)
                 FightAction = FightAction.round()
-                // 0 = miss
-                // 2 = small hit
-                // 4 = big hit
                 BlockAction = random(0, 3)
                 BlockAction = BlockAction.round()
-                // 0 = miss
-                // 2 = small hit
-                // 4 = big hit
                 JFightAction = random(0, 1)
                 JFightAction = JFightAction.round()
                 JFightHit = random(3, 6)
-                    
                 "What should I do?"
                 0:: Roundcount > 5::"Try to stop the fight"
                 1:: "Hit him"
@@ -299,6 +294,7 @@ OTHER: isAtHome() && Player:age < 25
                         SceneStart()
                             John(Pain)::"Ok for now, consider yourself lucky...!"
                             FightInAction = 2
+                            FiniLeShow = true
                         SceneEnd()
                     Else
                         John(Evil)::"Fuck off little pussy...c'mon come..."
@@ -312,7 +308,7 @@ OTHER: isAtHome() && Player:age < 25
                         Player.animate(martialart)
                         John.animate(martialart)
                         "You completely missed your attack ... <John.name> blocked your move!"
-                        Player:energy -= 1
+                        energy -= 1
                         FightInAction = 0
                     ElseIf FightAction == 1
                         John.moveToPersonStand(Player, 25)
@@ -350,19 +346,19 @@ OTHER: isAtHome() && Player:age < 25
                             DefendHit = DefendHit.round()
                             If DefendHit == 0
                                 "<John.name> respond with <John.his_or_her> fist in your face!"
-                                Player:energy -= JFightHit 
+                                energy -= JFightHit 
                             ElseIf DefendHit == 1
                                 "<John.name> respond with a hit in your genitals."
-                                Player:energy -= JFightHit + 2
+                                energy -= JFightHit + 2
                             ElseIf DefendHit == 2
                                 "<John.name> respond with a hit in your rib cage."
-                                Player:energy -= JFightHit + 1
+                                energy -= JFightHit + 1
                             ElseIf DefendHit == 3
                                 "<John.name> respond with a front kick."
-                                Player:energy -= JFightHit + 3
+                                energy -= JFightHit + 3
                             ElseIf DefendHit == 4
                                 "<John.name> respond with a knee kick." 
-                                Player:energy -= JFightHit + 3
+                                energy -= JFightHit + 3
                             ElseIf DefendHit >= 5
                                 "<John.name> gets back into fighting position."
                             EndIf
@@ -382,58 +378,56 @@ OTHER: isAtHome() && Player:age < 25
                                 "<John.name> manage to hit you with a nice uppercut punch."
                                 "<John.name> manage to give you a good punch in the throat." 
                             EndRandom
-                            Player:energy -= 5
+                            energy -= 5
                         ElseIf BlockAction == 1
                             Random
                                 "<John.name> manage to hit you with a double punch in the face."
                                 "<John.name> manage to hit you with a front kick."
                                 "<John.name> manage to hit you with a knee kick." 
                             EndRandom
-                            Player:energy -= 3
+                            energy -= 3
                         ElseIf BlockAction == 2
                             Random
                                 "<John.name> manage to hit you with an elbow to the face."
                                 "<John.name> manage to hit you with a good palm strike."
                             EndRandom
-                            Player:energy -= 2
+                            energy -= 2
                         ElseIf BlockAction == 3
                             "<John.name> manage to hit you with a straight punch in the face."
-                            Player:energy -= 1
+                            energy -= 1
                         Else
                             John.moveToPersonStand(Player, 25)
                             faceEachOther(John, Player)
                             Player.animate(martialart)
                             John.animate(martialart)
                             "<John.name> completely missed <John.his_or_her> attack ... You managed to block <John.his_or_her> move!"
-                            Player:energy -= 1
+                            energy -= 1
                         EndIf
-                            
                         If JFightAction > 0
                             John.animate(martialart)
                             DefendHit = random(0, 4)
                             DefendHit = DefendHit.round()
-                            
                             If 0
                                 "<John.name> respond with his fist in your face!"
-                                Player:energy -= JFightHit 
+                                energy -= JFightHit 
                             ElseIf 1
                                 "<John.name> respond with a hit in your genitals."
-                                Player:energy -= JFightHit + 2
+                                energy -= JFightHit + 2
                             ElseIf 2
                                 "<John.name> respond with a hit in your rib cage."
-                                Player:energy -= JFightHit + 1
+                                energy -= JFightHit + 1
                             ElseIf 3
                                 "<John.name> respond with a front kick."
-                                Player:energy -= JFightHit + 3
+                                energy -= JFightHit + 3
                             ElseIf 4
                                 "<John.name> respond with a knee kick." 
-                                Player:energy -= JFightHit + 3
+                                energy -= JFightHit + 3
                             EndIf
                         EndIf
                         FightInAction = 0
                     EndIf
                 EndIf
-                If Player:energy < 10
+                If energy < 10
                     FightingLost = true
                     FightInAction = 2
                 ElseIf John:energy < 10
@@ -441,7 +435,7 @@ OTHER: isAtHome() && Player:age < 25
                     FightInAction = 2
                 EndIf
             EndWhile
-            If Player:energy < 10
+            If energy < 10
                 FightingLost = true
                 FightInAction = 2
             ElseIf John:energy < 10
@@ -449,7 +443,7 @@ OTHER: isAtHome() && Player:age < 25
                 FightInAction = 2
             EndIf
             TempStatA = John:energy
-            TempStatP = Player:energy
+            TempStatP = energy
             TempStatA > TempStatP
             If FightingLost && TempStatA > TempStatP
                 VraiLoser = true
@@ -460,119 +454,120 @@ OTHER: isAtHome() && Player:age < 25
             Else TempStatP > TempStatA
                 IlAPerdu = true
             EndIf
-            If VraiLoser
-                John.animate()
-                "<John.name> win the fight, <John.he_or_she> beat me all the way..."
-                "Suddenly everything goes black ... you lost your consciousness."
-                Player.animate(knockedout)
-                Player.closeEyes(true)
-                John:rapportwithplayer -= 5
-                John:attractiontoplayer -= 1
-                If isModEnabled(vin_NonConsensual) && John:arousal > 15 && John:perversion > 50
-                    John(Angry)::"I'm not done with you, <Player.scum_or_bitch>!"
-                    "<John.name> stripped off all my clothes and started fucking me right here!"
-                    Player.strip()
-                    John.dressExcept(Outerwear, Bottom, Bottom_Under)
-                    Filter(Aggressive)
-                    SexNoAffair(John, Player)
-                    If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -3)
+            If !FiniLeShow && isModEnabled(rk_vin_Base)
+                If VraiLoser
+                    John.animate()
+                    "<John.name> win the fight, <John.he_or_she> beat me all the way..."
+                    "Suddenly everything goes black ... you lost your consciousness."
+                    Player.animate(knockedout)
+                    Player.closeEyes(true)
+                    John:rapportwithplayer -= 5
+                    John:attractiontoplayer -= 1
+                    If isModEnabled(vin_NonConsensual) && John:arousal > 15 && John:perversion > 50
+                        John(Angry)::"I'm not done with you, <Player.scum_or_bitch>!"
+                        "<John.name> stripped off all my clothes and started fucking me right here!"
+                        Player.strip()
+                        John.dressExcept(Outerwear, Bottom, Bottom_Under)
+                        Filter(Aggressive)
+                        SexNoAffair(John, Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                        EndIf
+                        passTime(0.50, 1.50)
+                        John.hide()
+                        "After a few minutes, I woke up but I'm still a little stunned…"
+                        Player.animate()
+                        "As you try to stand up you notice that you are naked ... and your whole body hurts. It feels like you have been beaten up."
+                        Player.show()
+                        "You feel something running down your <Player.ass_or_pussy>..."
+                        "You touch your <Player.ass_or_pussy> to see what it is ..."
+                        "It's cum, a lot of cum! It gushes literally out of your <Player.ass_or_pussy>, running down both legs ..."
+                        Player(Disgusted)::"WTF..."
+                        "I wiped a bit and put my clothes back on..."
+                        Player.dress()
+                        mood => 0
+                        energy => 5
+                    ElseIf random(0, 100) > 60
+                        ActorLooting = random(1, 10)
+                        ActorLooting = ActorLooting.round()
+                        ActorLootingCash = random(10, 200)
+                        ActorLootingCash_loc = ActorLootingCash.convertToLocalCurrency()
+                        If ActorLooting > 6
+                            "<John.name> stole you <ActorLootingCash_loc> from your pockets."
+                            money -= ActorLootingCash
+                        EndIf
+                        John.hide()
+                        John:rapportwithplayer -= 50
+                        John:attractiontoplayer -= 50
+                        passTime(0.15, 0.50)
+                    Else
+                        "After a few minutes, I woke up but I'm still a little stunned…"
                     EndIf
-                    passTime(0.50, 1.50)
-                    John.hide()
-                    "After a few minutes, I woke up but I'm still a little stunned…"
+                    Player.closeEyes(false)
                     Player.animate()
-                    "As you try to stand up you notice that you are naked ... and your whole body hurts. It feels like you have been beaten up."
-                    Player.show()
-                    "You feel something running down your <Player.ass_or_pussy>..."
-                    "You touch your <Player.ass_or_pussy> to see what it is ..."
-                    "It's cum, a lot of cum! It gushes literally out of your <Player.ass_or_pussy>, running down both legs ..."
-                    Player(Disgusted)::"WTF..."
-                    "I wiped a bit and put my clothes back on..."
-                    Player.dress()
-                    mood => 0
+                    mood => 5
                     energy => 5
-                ElseIf random(0, 100) > 60
-                    ActorLooting = random(1, 10)
-                    ActorLooting = ActorLooting.round()
-                    ActorLootingCash = random(10, 200)
-                    ActorLootingCash_loc = ActorLootingCash.convertToLocalCurrency()
-                    If ActorLooting > 6
-                        "<John.name> stoled you <ActorLootingCash_loc> from your pockets."
-                        money -= ActorLootingCash
-                    EndIf
-                    John.hide()
-                    John:rapportwithplayer -= 50
-                    John:attractiontoplayer -= 50
-                    passTime(0.15, 0.50)
-                Else
-                    "After a few minutes, I woke up but I'm still a little stunned…"
+                    "Going back home..."
+                    moveTo(home)
+                    SceneEnd()
                 EndIf
-                Player.closeEyes(false)
-                Player.animate()
-                mood => 5
-                energy => 5
-                "Going back home..."
-                moveTo(home)
-                SceneEnd()
-            EndIf
-            
-            If IlAPerdu
-                rk_VB_Slutty_momJohn.setGlobal(0)
-                "I win the fight, <John.he_or_she> will stay quiet for a few..."
-                John.animate(knockedout)
-                John.closeEyes(true)
-                "What do I do?"
-                0::"Loot <John.him_or_her>"
-                1::"Fuck <John.him_or_her>"
-                99::"Nothing"
-                                
-                If 0
-                    FindMoney = random(20, 500)
-                    FindMoney_Loc = FindMoney.convertToLocalCurrency()
-                    FindWeedg = random(2, 7) 
-                    WeedVar = random(1, 4)
-                    WeedVar = WeedVar.round()
-                    If WeedVar == 1
-                        VarWeed = "<FindWeedg>g of Sunset Sherbet"
-                        Player.modifyActorVar(stock_SSweed, FindWeedg)
-                    ElseIf WeedVar == 2
-                        divideWeed = FindWeedg/2
-                        divideWeed2 = FindWeedg/2
-                        VarWeed = "<divideWeed>g of Bruce Banner and <divideWeed2>g of Gorilla Glue"
-                        Player.modifyActorVar(stock_BBweed, divideWeed)
-                        Player.modifyActorVar(stock_GGweed, divideWeed2)
-                    ElseIf WeedVar == 3
-                        divideWeed = FindWeedg/2
-                        divideWeed1 = FindWeedg/2
-                        divideWeed2 = FindWeedg/2
-                        VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
-                        Player.modifyActorVar(stock_SSweed, divideWeed)
-                        Player.modifyActorVar(stock_GGweed, divideWeed2)
-                        Player.modifyActorVar(stock_AK47weed, divideWeed1)
-                    ElseIf WeedVar == 4
-                        divideWeed = FindWeedg/2
-                        divideWeed1 = FindWeedg/2
-                        divideWeed2 = FindWeedg/2
-                        divideWeed3 = FindWeedg/2
-                        VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed3>g of Pineapple Express, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
-                        Player.modifyActorVar(stock_SSweed, divideWeed)
-                        Player.modifyActorVar(stock_AK47weed, divideWeed1)
-                        Player.modifyActorVar(stock_GGweed, divideWeed2)
-                        Player.modifyActorVar(stock_PEweed, divideWeed3)
+                If IlAPerdu
+                    rk_VB_Slutty_momJohn.setGlobal(0)
+                    "I win the fight, <John.he_or_she> will stay quiet for a few..."
+                    John.animate(knockedout)
+                    John.closeEyes(true)
+                    "What do I do?"
+                    0::"Loot <John.him_or_her>"
+                    1::"Fuck <John.him_or_her>"
+                    99::"Nothing"
+                                    
+                    If 0
+                        FindMoney = random(20, 500)
+                        FindMoney_Loc = FindMoney.convertToLocalCurrency()
+                        FindWeedg = random(2, 7) 
+                        WeedVar = random(1, 4)
+                        WeedVar = WeedVar.round()
+                        If WeedVar == 1
+                            VarWeed = "<FindWeedg>g of Sunset Sherbet"
+                            Player.modifyActorVar(stock_SSweed, FindWeedg)
+                        ElseIf WeedVar == 2
+                            divideWeed = FindWeedg/2
+                            divideWeed2 = FindWeedg/2
+                            VarWeed = "<divideWeed>g of Bruce Banner and <divideWeed2>g of Gorilla Glue"
+                            Player.modifyActorVar(stock_BBweed, divideWeed)
+                            Player.modifyActorVar(stock_GGweed, divideWeed2)
+                        ElseIf WeedVar == 3
+                            divideWeed = FindWeedg/2
+                            divideWeed1 = FindWeedg/2
+                            divideWeed2 = FindWeedg/2
+                            VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
+                            Player.modifyActorVar(stock_SSweed, divideWeed)
+                            Player.modifyActorVar(stock_GGweed, divideWeed2)
+                            Player.modifyActorVar(stock_AK47weed, divideWeed1)
+                        ElseIf WeedVar == 4
+                            divideWeed = FindWeedg/2
+                            divideWeed1 = FindWeedg/2
+                            divideWeed2 = FindWeedg/2
+                            divideWeed3 = FindWeedg/2
+                            VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed3>g of Pineapple Express, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
+                            Player.modifyActorVar(stock_SSweed, divideWeed)
+                            Player.modifyActorVar(stock_AK47weed, divideWeed1)
+                            Player.modifyActorVar(stock_GGweed, divideWeed2)
+                            Player.modifyActorVar(stock_PEweed, divideWeed3)
+                        EndIf
+                        "You find <FindMoney_Loc> and <FindWeedg>g of weeds! <VarWeed>."
+                        mood += 1
+                        money += FindMoney
+                    ElseIf 1
+                        Player.dressExcept(Outerwear, Bottom)
+                        John.strip()
+                        Filter(Aggressive)
+                        SexNoAffair(Player, John)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        passTime(0.50, 1.50)
                     EndIf
-                    "You find <FindMoney_Loc> and <FindWeedg>g of weeds! <VarWeed>."
-                    mood += 1
-                    money += FindMoney
-                ElseIf 1
-                    Player.dressExcept(Outerwear, Bottom)
-                    John.strip()
-                    Filter(Aggressive)
-                    SexNoAffair(Player, John)
-                    If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -2)
-                    EndIf
-                    passTime(0.50, 1.50)
                 EndIf
             EndIf
         EndIf

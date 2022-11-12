@@ -1,13 +1,11 @@
 WHAT: all
 WHERE: all
 WHEN: 8 - 22
-WHO: Actor2 = getCompanion(); If !Actor2.isSameEthnic(Player) && Player.isInterestedInRace(Actor2) && !Actor2.isDating() && Random(20, 50) < Actor2:rapportwithplayer
+WHO: Actor2 = getCompanion(); If !Actor2.isSameEthnic(Player) && Player.isInterestedInRace(Actor2) && !Actor2.isDating() && random(20, 50) < Actor2:rapportwithplayer
 OTHER:
 
-    // When hanging out with a friend of a different race and at least decent rapport, they invite you to their home where either their single sibling or widowed parent is proud to show off their country's traditional cuisine. If you praise their cooking and manage to engage in a passionate conversation about food with this relative (which requires either high interpersonal or high cooking yourself), your friend will eventually notice the chemistry, explain their relative's recent loneliness and offer to leave you two alone ...
     
     SceneStart()
-    
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Hunger = Player.getActorVar(rk_VB_Hunger)
@@ -20,73 +18,64 @@ OTHER:
         
         If 0
             setBackgroundCustom(kitchen)
-            
             setRaceGenerated(Actor2, true)
-            
-            If Random(0, 100) < 50
+            If random(0, 100) < 50
                 Parent = true
                 Actor = Actor2.getRelatedPerson(ParentChild)
-                If !Actor.isValid()
+                If !Actor.isValid() || Actor:age < Actor2:age
                     Actor = generatePersonTemporary()
                     While !Player.isInterestedIn(Actor)
                         Actor = generatePersonTemporary()
-                    Endwhile
+                    EndWhile
                     Actor.makeInterested(Player)
-                    Actor:age => Actor2:age + Random(20, 40)
+                    Actor:age => Actor2:age + random(20, 40)
                     Actor.randomizeFace()
                     Actor.randomizeHairs()
                     
                     If Actor.isEthnic(black) && Actor.isMale() && !isTimingOut(strt_black_m)
                         Actor.blendPreset(strt_black_m)
                         
-                    Elseif Actor.isEthnic(black) && !Actor.isMale() && !isTimingOut(strt_black_f)
+                    ElseIf Actor.isEthnic(black) && !Actor.isMale() && !isTimingOut(strt_black_f)
                         Actor.blendPreset(strt_black_f)
 
-                    Elseif Actor.isEthnic(indian) && Actor.isMale() && !isTimingOut(strt_indian_m)
+                    ElseIf Actor.isEthnic(indian) && Actor.isMale() && !isTimingOut(strt_indian_m)
                         Actor.blendPreset(strt_indian_m)
                         
-                    Elseif Actor.isEthnic(indian) && !Actor.isMale() && !isTimingOut(strt_indian_f)
+                    ElseIf Actor.isEthnic(indian) && !Actor.isMale() && !isTimingOut(strt_indian_f)
                         Actor.blendPreset(strt_indian_f)
                         
-                    Elseif Actor.isEthnic(arab) && Actor.isMale() && !isTimingOut(strt_arab_m)
+                    ElseIf Actor.isEthnic(arab) && Actor.isMale() && !isTimingOut(strt_arab_m)
                         Actor.blendPreset(strt_arab_m)
                         
-                    Elseif Actor.isEthnic(arab) && !Actor.isMale() && !isTimingOut(strt_arab_f)
+                    ElseIf Actor.isEthnic(arab) && !Actor.isMale() && !isTimingOut(strt_arab_f)
                         Actor.blendPreset(strt_arab_f)
-
-
-                    Elseif Actor.isEthnic(latin) && Actor.isMale() && !isTimingOut(strt_latin_m)
+                    ElseIf Actor.isEthnic(latin) && Actor.isMale() && !isTimingOut(strt_latin_m)
                         Actor.blendPreset(strt_latin_m)
                         
-                    Elseif Actor.isEthnic(latin) && !Actor.isMale() && !isTimingOut(strt_latin_f)
+                    ElseIf Actor.isEthnic(latin) && !Actor.isMale() && !isTimingOut(strt_latin_f)
                         Actor.blendPreset(strt_latin_f)
-
-                        
-                    Elseif Actor.isEthnic(asian) && Actor.isMale() && !isTimingOut(strt_asian_m)
+                    ElseIf Actor.isEthnic(asian) && Actor.isMale() && !isTimingOut(strt_asian_m)
                         Actor.blendPreset(strt_asian_m)
                         
-                    Elseif Actor.isEthnic(asian) && !Actor.isMale() && !isTimingOut(strt_asian_f)
+                    ElseIf Actor.isEthnic(asian) && !Actor.isMale() && !isTimingOut(strt_asian_f)
                         Actor.blendPreset(strt_asian_f)
-
-
-                    Elseif Actor.isEthnic(white) && Actor.isMale() && !isTimingOut(strt_white_m)
+                    ElseIf Actor.isEthnic(white) && Actor.isMale() && !isTimingOut(strt_white_m)
                         Actor.blendPreset(strt_white_m)
                         
-                    Elseif Actor.isEthnic(white) && !Actor.isMale() && !isTimingOut(strt_white_f)
+                    ElseIf Actor.isEthnic(white) && !Actor.isMale() && !isTimingOut(strt_white_f)
                         Actor.blendPreset(strt_white_f)
-                    Endif
-                    
-                    Actor:cooking => Random(50, 100)
+                    EndIf
+                    Actor:cooking => random(50, 100)
                     
                     Actor.makePermanent()
                     addNpcRelationship(ParentChild, Actor, Actor2)
-                Endif
+                EndIf
                 
                 If Actor.isMale()
                     rela = "dad"
                 Else
                     rela = "mom"
-                Endif
+                EndIf
             Else
                 Parent = false
                 Actor = Actor2.getRelatedPerson(Siblings)
@@ -94,83 +83,73 @@ OTHER:
                     Actor = generatePersonTemporary()
                     While !Player.isInterestedIn(Actor)
                         Actor = generatePersonTemporary()
-                    Endwhile
+                    EndWhile
                     Actor.makeInterested(Player)
                     Actor:age => Actor2:age
-                    Actor:age += Random(-10, 10)
+                    Actor:age += random(-10, 10)
                     Actor.randomizeFace()
                     Actor.randomizeHairs()
                     
                     If Actor.isEthnic(black) && Actor.isMale() && !isTimingOut(strt_black_m)
                         Actor.blendPreset(strt_black_m)
                         
-                    Elseif Actor.isEthnic(black) && !Actor.isMale() && !isTimingOut(strt_black_f)
+                    ElseIf Actor.isEthnic(black) && !Actor.isMale() && !isTimingOut(strt_black_f)
                         Actor.blendPreset(strt_black_f)
 
-                    Elseif Actor.isEthnic(indian) && Actor.isMale() && !isTimingOut(strt_indian_m)
+                    ElseIf Actor.isEthnic(indian) && Actor.isMale() && !isTimingOut(strt_indian_m)
                         Actor.blendPreset(strt_indian_m)
                         
-                    Elseif Actor.isEthnic(indian) && !Actor.isMale() && !isTimingOut(strt_indian_f)
+                    ElseIf Actor.isEthnic(indian) && !Actor.isMale() && !isTimingOut(strt_indian_f)
                         Actor.blendPreset(strt_indian_f)
                         
-                    Elseif Actor.isEthnic(arab) && Actor.isMale() && !isTimingOut(strt_arab_m)
+                    ElseIf Actor.isEthnic(arab) && Actor.isMale() && !isTimingOut(strt_arab_m)
                         Actor.blendPreset(strt_arab_m)
                         
-                    Elseif Actor.isEthnic(arab) && !Actor.isMale() && !isTimingOut(strt_arab_f)
+                    ElseIf Actor.isEthnic(arab) && !Actor.isMale() && !isTimingOut(strt_arab_f)
                         Actor.blendPreset(strt_arab_f)
-
-
-                    Elseif Actor.isEthnic(latin) && Actor.isMale() && !isTimingOut(strt_latin_m)
+                    ElseIf Actor.isEthnic(latin) && Actor.isMale() && !isTimingOut(strt_latin_m)
                         Actor.blendPreset(strt_latin_m)
-                        
-                    Elseif Actor.isEthnic(latin) && !Actor.isMale() && !isTimingOut(strt_latin_f)
+                    ElseIf Actor.isEthnic(latin) && !Actor.isMale() && !isTimingOut(strt_latin_f)
                         Actor.blendPreset(strt_latin_f)
-
-                        
-                    Elseif Actor.isEthnic(asian) && Actor.isMale() && !isTimingOut(strt_asian_m)
+                    ElseIf Actor.isEthnic(asian) && Actor.isMale() && !isTimingOut(strt_asian_m)
                         Actor.blendPreset(strt_asian_m)
-                        
-                    Elseif Actor.isEthnic(asian) && !Actor.isMale() && !isTimingOut(strt_asian_f)
+                    ElseIf Actor.isEthnic(asian) && !Actor.isMale() && !isTimingOut(strt_asian_f)
                         Actor.blendPreset(strt_asian_f)
-
-
-                    Elseif Actor.isEthnic(white) && Actor.isMale() && !isTimingOut(strt_white_m)
+                    ElseIf Actor.isEthnic(white) && Actor.isMale() && !isTimingOut(strt_white_m)
                         Actor.blendPreset(strt_white_m)
-                        
-                    Elseif Actor.isEthnic(white) && !Actor.isMale() && !isTimingOut(strt_white_f)
+                    ElseIf Actor.isEthnic(white) && !Actor.isMale() && !isTimingOut(strt_white_f)
                         Actor.blendPreset(strt_white_f)
-                    Endif
+                    EndIf
                     
-                    Actor:cooking => Random(50, 100)
-                    
+                    Actor:cooking => random(50, 100)
                     Actor.makePermanent()
                     addNpcRelationship(Siblings, Actor, Actor2)            
-                Endif
+                EndIf
                 
                 If Actor.isMale()
                     rela = "brother"
                 Else
                     rela = "sister"
-                Endif
-            Endif
-            
+                EndIf
+            EndIf
             Actor.dress()
             Actor.show()
             "When we arrived <Actor2.name>'s <rela> <Actor.name> is already nearly finished in the kitchen. <Actor.He_or_She> seems to really know what <Actor.he_or_she>'s doing."
             Actor:: "Sit down and enjoy the meal. Don't be a stranger! Let me know what you think!"
-            "Damn, this is a lot of food for just three people. They all taste very good except one dish that's too exotic for my taste. Seeing how proud <Actor2.name>'s <rela> is about their national cuisine, I don't think it's a good idea to say anything but compliment the dishes. After all, I just had enough food to keep me full for a week all for free."
+            "Damn, this is a lot of food for just three people. They all taste very good except one dish that's too exotic for my taste. Seeing how proud <Actor2.name>'s <rela> is about their national cuisine, I don't think it's a good idea to say anything but compliment the dishes."
+            "After all, I just had enough food to keep me full for a week all for free."
             Player:: "It was amazing. It tastes so much better than those restaurants claiming to be authentic. You're such a versatile and skillful chef!"
-            If Actor.isInterestedIn(Player) && [Actor.hadSex() || Random(50, 100) < interpersonal + cooking]
+            If Actor.isInterestedIn(Player) && [Actor.hadSex() || random(50, 100) < interpersonal + cooking]
                 "Soon we engaged in a rather passionate conversation about food and cuisines around the world. <Actor2.name>'s <rela> and I got on surprisingly well due to our shared passion for culinary arts."
                 If Actor.hadSex()
                     "Either that or because we already slept with each other ..."
-                endif
-                "After some time witnessing our undeniable chemistry, <Actor2.name> signaled me to chat privately for a bit. I wonder what it might be. 'Keep your hands off my <rela>!' perhaps?"
+                EndIf
+                "After some time witnessing our undeniable chemistry, <Actor2.name> texted me to chat privately for a bit. I wonder what it might be. 'Keep your hands off my <rela>!' perhaps?"
                 If Parent
                     Actor2:: "My <rela> has been very lonely since <Actor.mom_or_dad> passed away. <Actor.He_or_She>'s been pouring all <Actor.his_or_her> time and effort into <Actor.his_or_her> only passion left that is cooking."
                 Else
                     Actor2:: "My <rela> has been very lonely since <Actor.his_or_her> last breakup. <Actor.He_or_She>'s been pouring all <Actor.his_or_her> time and effort into <Actor.his_or_her> only passion left that is cooking."            
-                Endif
+                EndIf
                 Actor2:: "I haven't seen <Actor.him_or_her> so happy with someone like with you. And I feel you might be ... interested too."
                 Actor2:: "I know it's super weird encouraging my friend to get with my <rela> ... but go ahead ... I'll happily leave you two alone."
                 0:: "Thanks, <Actor2.name>"
@@ -196,17 +175,18 @@ OTHER:
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
-                    Endif
+                    EndIf
                 Else
                     Player:: "You misunderstood ... I was just being friendly ..."
-                Endif
+                EndIf
             Else
-                "I tried to keep the conversation going but my lack of food knowledge doesn't really allow me to go any deeper than just praising the cooking. Oh well ... it doesn't matter. It's not like I'm trying to impress my friend's <rela> for whatever reason."
-            Endif
+                "I tried to keep the conversation going but my lack of food knowledge doesn't really allow me to go any deeper than just praising the cooking."
+                "Oh well ... it doesn't matter. It's not like I'm trying to impress my friend's <rela> for whatever reason."
+            EndIf
         Else
             "I'm not good with exotic food. What if I end up throwing up in front of <Actor2.name>'s family? That would be hugely embarrassing!"
             Actor2:rapportwithplayer -= 1
-        Endif
+        EndIf
     
     SceneEnd() // Improved by raddeck
     timeout(300, ir_cook)

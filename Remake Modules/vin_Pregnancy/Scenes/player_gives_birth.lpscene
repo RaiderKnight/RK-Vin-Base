@@ -21,7 +21,7 @@ OTHER: none
             TheDoctor.show()
             Player.strip()
             If TfGame()
-                "Pain like I’ve never experienced, followed by exhaustion so deep it feels like my bones have melted; the end result of hours of labor."
+                "Pain like I’ve never experienced, followed by exhaustion so deep it feels like my bones have melted; the end result of hours of labour."
                 "But when they lay the child back into my arms, it’s all swept away by exhilaration and an odd feeling of triumph. I did this. I made this little person."
                 "I’m a mom now. And I’m going to do everything I can to make sure this little person gets the best life I can possibly give them. I made a miracle happen; I feel like a God right now."
                 "No. A Goddess!"
@@ -43,7 +43,8 @@ OTHER: none
             gagneSuro = money + Surrogated
             If Surrogated > 0
                 Surrogate.setGlobal(0)
-                "Of course, I know better than anyone that even though I personally carried this child to term, I'm only a surrogate mother and it's not my baby after all. I now have to hand the child over to <Actor2.name> as agreed."
+                "Of course, I know better than anyone that even though I personally carried this child to term, I'm only a surrogate mother and it's not my baby after all."
+                "I now have to hand the child over to <Actor2.name> as agreed."
                 0:: "Hand over the child and get paid for being the surrogate"
                 1:: money > Surrogated::"Keep the baby and refund the payment"
                 
@@ -51,7 +52,7 @@ OTHER: none
                     "As agreed, as soon as I've given birth, the baby was given to the paying father <Actor2.name>. I did my best to not look at the baby and avoid getting too attached."
                     KeepBaby = false
                     Actor = Player.generatePersonMatchRace()
-                    Actor:age => 0
+                    Actor:age => 18
                     Actor.randomizeFace()
                     Actor.randomizeHairs()
                     Actor.blendAppearanceFrom(Actor2, Player)
@@ -61,7 +62,8 @@ OTHER: none
                 Else
                     "The truth is I have grown attached to this child, who's unquestionably mine!"
                     KeepBaby = true
-                    "The law permits surrogate mothers to change their mind and keep the baby, thankfully. But any payment to date must be refunded. I have no choice but return the money. <Actor2.name> was understandably upset but had to accept my choice after all since it was all legal."
+                    "The law permits surrogate mothers to change their mind and keep the baby, thankfully. But any payment to date must be refunded. I have no choice but return the money."
+                    "<Actor2.name> was understandably upset but had to accept my choice after all since it was all legal."
                     money => perdSuro
                     Actor2:rapportwithplayer -= 50
                     Actor2:attractiontoplayer -= 50
@@ -227,7 +229,7 @@ OTHER: none
                     Actor91:age => 0
                     GDEnough = true
                 EndIf
-                If !GDEnough && [random(0, 200) < fertility || [Random(0, 50) < fertility && [Player.isRace(Orc) || BioDaddy.isRace(Orc)]]]
+                If !GDEnough && [random(0, 200) < fertility || [random(0, 50) < fertility && [Player.isRace(Orc) || BioDaddy.isRace(Orc)]]]
                     "I'm having twins!"
                     Actor3 = Player.generateRelativeMatchRace()
                     Actor3.randomizeFace()
@@ -243,7 +245,7 @@ OTHER: none
                     Actor3.enterFirstName()
                     Actor3:age => 0
                     children += 1
-                    If random(0, 200) < fertility || [Random(0, 50) < fertility && [Player.isRace(Orc) || BioDaddy.isRace(Orc)]]
+                    If random(0, 200) < fertility || [random(0, 50) < fertility && [Player.isRace(Orc) || BioDaddy.isRace(Orc)]]
                         "I'm having triplets!"
                         Actor4 = Player.generateRelativeMatchRace()
                         Actor4.randomizeFace()
@@ -273,7 +275,8 @@ OTHER: none
                         "<Actor2.name>, who was told that he was the father of the baby, didn't even bother to show up at the hospital ... Looks like I have no choice but to raise this child on my own."
                     EndIf
                 Else
-                    "It's a shame that my baby was born without me even knowing who the father is. But after all, it was my choice not to try and find that out. I'm more than capable of raising the child on my own."
+                    "It's a shame that my baby was born without me even knowing who the father is. But after all, it was my choice not to try and find that out."
+                    "I'm more than capable of raising the child on my own."
                 EndIf
             EndIf 
         Else

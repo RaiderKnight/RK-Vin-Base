@@ -4,7 +4,6 @@ WHEN: 12 - 20
 WHO: Actor = getSpecific(Boss); Actor2 = getSpecific(Dating); If Actor.isInterestedIn(Actor2) && Actor2.isInterestedIn(Actor) && Actor:perversion > 50 && Actor:masochist < 0 && [Actor2:perversion > 50 || OpenRelationship()]
 OTHER: jobexperience < 80 && isModEnabled(vin_NTR)
 
-    // If the Netorare module is enabled, you get a pleasant surprise of a big promotion one day, only to come home and see your boss banging your SO, who has taken upon themselves to help out your career. If you put a stop to it, your boss may fire you in the next performance review. If you let the arrangement continue, you'll find your boss coming over your place periodically to bang your SO but your job performance will always be seen as perfect and you may get another promotion before long. Be careful and make sure you keep your SO's attraction to you high though, as your SO may skip the middle man one day and leave you for your boss otherwise.
     
     SceneStart()
         contiStory = false
@@ -22,12 +21,12 @@ OTHER: jobexperience < 80 && isModEnabled(vin_NTR)
             "Oh wait ..."
             "'Congratulations on your promotion. Please find enclosed your revised contract.'"
             "Wait, what? The next performance review is still a long way to go and I haven't been performing that well recently. How the hell did the boss give me a promotion? Maybe <Actor.he_or_she> will explain tomorrow morning."
-            mood += Random(15, 30)
+            mood += random(15, 30)
             Player(Happy):: "I guess it's my lucky day!"
             Player.animate(write)
             "I took no time at all to sign the new contract with the new position and a nice new salary to go with it."
             Salary = getSalary()
-            Salary *= Random(1.3, 1.5)
+            Salary *= random(1.3, 1.5)
             Salary.setSalary()
             jobexperience += 20
             timeoutPrecise(1440, ask_for_promotion)    
@@ -36,16 +35,16 @@ OTHER: jobexperience < 80 && isModEnabled(vin_NTR)
             moveTo(home)
             setBackgroundCustom(livingroom)
             Player(Happy):: "Hey babe, you won't believe what happened in the office today! I got a ..."
-            "Wher the fuck <Actor2.he_or_she> is??"
+            "Where the fuck <Actor2.he_or_she> is??"
             Actor.show()
             Actor2.show()
             If OpenRelationship()
                 Player(Shocked):: "Well well well! ..."
-                mood -= Random(5, 10)
+                mood -= random(5, 10)
             Else
                 Player(Shocked):: "What the fuck!"
-                mood -= Random(15, 30)
-            Endif
+                mood -= random(15, 30)
+            EndIf
             Sex(Actor, Actor2)
             Actor(Grin):: "Don't act so shocked! You didn't really think you deserved that promotion for your average performances on the job, did you?"
             Actor(Grin):: "You see, your <Actor2.boyfriend_or_girlfriend> was so concerned about your lack of career progression and approached me at the office party last night and gave me a deal I couldn't really turn down."
@@ -58,12 +57,12 @@ OTHER: jobexperience < 80 && isModEnabled(vin_NTR)
             If 0
                 Player(Sad)::"I thought we we're supposed to consult each other before fucking someone else..."
                 Player(Sad):: "Okay ... I guess I have no choice ..."
-                arousal -= Random(5, 10)
-                perversion -= Random(15, 30)
+                arousal -= random(5, 10)
+                perversion -= random(15, 30)
                 "The new compensation package to come with the promotion is truly very generous and since <Actor2.name> already went through with it anyway ..."
                 masochist += 10
                 Actor.setActorVar(tag_BossFuckingSO, 1)
-                AGD = Random(1, 3)
+                AGD = random(1, 3)
                 Actor2.modifyActorVar(rk_VB_GoldDigger, AGD)
             Else
                 If OpenRelationship()
@@ -79,9 +78,9 @@ OTHER: jobexperience < 80 && isModEnabled(vin_NTR)
                     Player(Wink)::"I have a sneaky feeling that my boss will probably fire me in the next performance review. There's another jobs anyway..."
                     Actor2(Serene)::"We'll see!"
                     masochist -= 5
-                    arousal -= Random(1, 3)
-                    perversion -= Random(1, 3)
-                    jobperformance -= Random(50, 100)
+                    arousal -= random(1, 3)
+                    perversion -= random(1, 3)
+                    jobperformance -= random(50, 100)
                 Else
                     Player.modifyActorVar(rk_VB_Boss_Sucker, -5)
                     Player(Angry):: "I didn't know you were a slut, I trusted you, there are many ways to bring money on the table my dear, but you ruined everything!"
@@ -98,22 +97,23 @@ OTHER: jobexperience < 80 && isModEnabled(vin_NTR)
                         Actor2.hide()
                         "I really should have seen it coming ..."
                         "Since my <Actor2.boyfriend_or_girlfriend> became a 'Gold Digger', our relationship is no longer the same. Because <Actor2.he_or_she>'s only interested in money and luxury, <Actor2.he_or_she> eventually with my boss permanently instead ..."
+                        Actor2.setDatingId()
                         loseDating()
                         addNpcRelationship(Dating, Actor, Actor2)
                     Else
                         contiStory = true
-                    Endif
+                    EndIf
                     If contiStory
                         Actor.hide()
                         Player.moveToPersonStand(Actor2, 40)
                         Player(Angry):: "And you, we need to talk..."
                         "I angrily kicked my boss out and had a big argument with my <Actor2.boyfriend_or_girlfriend> who still insisted <Actor2.he_or_she> only did it to help me."
                         masochist -= 5
-                        arousal -= Random(5, 10)
-                        perversion -= Random(15, 30)
+                        arousal -= random(5, 10)
+                        perversion -= random(15, 30)
                         "Thankfully, I already signed the new contract today and my boss couldn't really tell HR that <Actor.he_or_she> changed <Actor.his_or_her> mind so swiftly, so I kept the promotion ... for now."
                         "I have a sneaky feeling that my boss will probably fire me in the next performance review."
-                        jobperformance -= Random(50, 100)
+                        jobperformance -= random(50, 100)
                         Actor2:attractiontoplayer -= 20
                         If Actor2:attractiontoplayer < 0
                             Actor2.modifyActorVar(rk_VB_GoldDigger, 5)
@@ -121,12 +121,13 @@ OTHER: jobexperience < 80 && isModEnabled(vin_NTR)
                             Actor2.hide()
                             "I really should have seen it coming ..."
                             "But after a few encounters between my <Actor2.boyfriend_or_girlfriend> and my boss, our relationship was no longer the same and eventually <Actor2.name> figured <Actor2.he_or_she> might as well skip the middle man in me and just go and be with my boss permanently instead ..."
+                            Actor2.setDatingId()
                             loseDating()
                             addNpcRelationship(Dating, Actor, Actor2)
-                        Endif
-                    Endif
-                Endif
-            Endif
+                        EndIf
+                    EndIf
+                EndIf
+            EndIf
         Else
             Actor.dress()
             Actor.show()
@@ -138,8 +139,8 @@ OTHER: jobexperience < 80 && isModEnabled(vin_NTR)
             If 0
                 Actor2.modifyActorVar(rk_VB_GoldDigger, 1)
                 If !OpenRelationship()
-                    Actor2:attractiontoplayer -= Random(0, 2)
-                Endif
+                    Actor2:attractiontoplayer -= random(0, 2)
+                EndIf
                 "I know I don't really deserve my current position and is only kept here due to this arrangement. Let's just rock the boat."
                 setBackgroundCustom(livingroom)
                 Player.hide()
@@ -152,22 +153,24 @@ OTHER: jobexperience < 80 && isModEnabled(vin_NTR)
                 If Actor2:attractiontoplayer < 0
                     "I really should have seen it coming ..."
                     "But after a few encounters between my <Actor2.boyfriend_or_girlfriend> and my boss, our relationship was no longer the same and eventually <Actor2.name> figured <Actor2.he_or_she> might as well skip the middle man in me and just go and be with my boss permanently instead ..."
+                    Actor2.setDatingId()
                     loseDating()
                     addNpcRelationship(Dating, Actor, Actor2)
                 ElseIf GoldDigger > 75 && money < 100000
                     "I really should have seen it coming ..."
                     "Since my <Actor2.boyfriend_or_girlfriend> became a 'Gold Digger', our relationship is no longer the same. Because <Actor2.he_or_she>'s only interested in money and luxury, <Actor2.he_or_she> eventually with my boss permanently instead ..."
+                    Actor2.setDatingId()
                     loseDating()
                     addNpcRelationship(Dating, Actor, Actor2)
-                Endif
+                EndIf
             Else
                 Player.modifyActorVar(rk_VB_Boss_Sucker, -5)
                 Actor.setActorVar(tag_BossFuckingSO, 0)
                 "This has gone on long enough and to be honest, I think I merit my current position now. There's no need to exchange it for my <Actor2.boyfriend_or_girlfriend> any longer."
                 "I told the boss that the arrangement is over and if <Actor.he_or_she> decides to take revenge in the next performance review, I'll face the consequences."
                 masochist -= 5
-                jobperformance -= Random(50, 100)
-            Endif
-        Endif
+                jobperformance -= random(50, 100)
+            EndIf
+        EndIf
     SceneEnd()
     timeout(200, surprise_promotion)

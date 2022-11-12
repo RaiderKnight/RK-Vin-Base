@@ -5,13 +5,11 @@ WHO: Dating = getSpecific(Dating); Affair = getSpecific(Affair); If Dating:intel
 OTHER: none
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         setBackground(home)
         Dating.dress()
         Dating.show(2)
-        
         If Affair.isFemale() && Dating.isMale() && Player.isFemale() && Dating:perversion > 40
             Dating:: "Baby, I think we need to talk ..."
             "I wonder what this is about ..."
@@ -123,9 +121,7 @@ OTHER: none
                     Dating:masochist -= 1
                     mood -= 2
                     breakup = true
-                    
                 EndIf
-                
             ElseIf 1
                 karma += 2.5
                 Player(Crying):: "Baby! It was a terrible mistake. I didn't mean to hurt you. I have felt guilty about it everday since ... Please don't leave me - it will never happen again."
@@ -134,15 +130,12 @@ OTHER: none
                     Dating:masochist += 1
                     mood += 0.5
                     breakup = false
-                    
                 Else
                     Dating(Furious):: "Of course you would say that. They always say it's a mistake. You know what? I made a mistake getting in a relationship with someone like you in the first place."
                     Dating:masochist -= 1
                     mood -= 2
-                    breakup = true   
-                    
+                    breakup = true
                 EndIf
-                
             Else
                 karma -= 10
                 Player(Evil):: "It's about time you find out ... So I fucked <Affair.him_or_her>. What's the matter? So what are you going to do? Break up with me? As if a loser like you could find someone better!"
@@ -170,7 +163,7 @@ OTHER: none
             If Dating:masochist + karma < -50
                 Dating.animate(gun)
                 Dating.moveToPerson(Player)
-                Dating(Furious):: "You betrayed me, you humilated me ... now you die!"
+                Dating(Furious):: "You betrayed me, you humiliated me ... now you die!"
                 
                 Bitchfired = 0
                 While Bitchfired < 3
@@ -179,10 +172,8 @@ OTHER: none
                     EndIf
                     "Pow!"
                     Player.hide()
-                    
                     "<Dating.name> fired <Dating.his_or_her> gun..."
                     If random(0, 30) < fitness
-                
                         "I managed to dodge the shot. Phew, that was close."
                         Player(Shocked)::"Are you fucking crazy?"
                         sneak += 1
@@ -191,7 +182,6 @@ OTHER: none
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
                         EndIf
-                        
                     ElseIf Bitchfired >= 3
                             
                         "I managed to escape the house. Phew, that was close."
@@ -200,15 +190,13 @@ OTHER: none
                         "And I already call the cops who arrest <Dating.him_or_her> right away!"
                         mood += 5
                         sneak += 1
-                        LoseDating()
+                        Dating.setDatingId()
+                        loseDating()
                         Player.animate()
-                        
                         If isPlayerMarried()
-                        
                             "And just like that, I demand divorced to <Dating.name>... <Dating.He_or_She> have no choice to say yes, anyway!"
                             mood -= 50
                             Divorce()
-                            
                             If Dating.isDominantSex(Player)
                                 "To make matters worse to <Dating.him_or_her>, the court awarded me for compensation, half of <Dating.his_or_her> hard-earned fortune..."
                                 money += random(5000, 50000)
@@ -231,7 +219,8 @@ OTHER: none
                     Else
                         Player.hide()
                         "<Dating.name> managed to shot me in the chest. It was a perfect shot ..."
-                        LoseDating()
+                        Dating.setDatingId()
+                        loseDating()
                         Divorce()
                         followUp(death)
                         death = true
@@ -242,15 +231,17 @@ OTHER: none
                     Dating(Sad):: "I'm afraid this marriage isn't working ..."
                     "And just like that, <Dating.name> divorced me ..."
                     mood -= 100
+                    Dating.setDatingId()
                     Divorce()
-                    LoseDating()
+                    loseDating()
                     If Player.isDominantSex(Dating) && money > 1000
                         "To make matters worse, the court awarded half of my hard-earned fortune to <Dating.name> ... What a disaster of a marriage that was ..."
                         money -= money*0.5
                     EndIf
                 Else
                     "And just like that, <Dating.name> broke up with me ... What's more - I found out later that <Dating.he_or_she> also blocked my number."
-                    LoseDating()
+                    Dating.setDatingId()
+                    loseDating()
                     mood -= 50
                 EndIf
                 blockContact(Dating)
@@ -273,15 +264,17 @@ OTHER: none
                     Dating(Sad):: "I'm afraid this marriage isn't working ..."
                     "And just like that, <Dating.name> divorced me ..."
                     mood -= 100
+                    Dating.setDatingId()
                     Divorce()
-                    LoseDating()
+                    loseDating()
                     If Player.isDominantSex(Dating) && money > 1000
                         "To make matters worse, the court awarded half of my hard-earned fortune to <Dating.name> ... What a disaster of a marriage that was ..."
                         money -= money*0.5
                     EndIf      
                 Else
                     "And just like that, <Dating.name> broke up with me ... What's more - I found out later that <Dating.he_or_she> also blocked my number."
-                    LoseDating()
+                    Dating.setDatingId()
+                    loseDating()
                     mood -= 50
                 EndIf
                 blockContact(Dating)

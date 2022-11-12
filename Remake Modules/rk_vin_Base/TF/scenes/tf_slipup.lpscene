@@ -2,7 +2,7 @@ WHAT: all
 WHERE: all
 WHEN: 0 - 24
 WHO: Actor = getCompanion()
-OTHER: TfGame() && perversion + masochist < Random(-100, 200)
+OTHER: TfGame() && perversion + masochist < random(-100, 200)
 
     
     SceneStart()
@@ -47,6 +47,7 @@ OTHER: TfGame() && perversion + masochist < Random(-100, 200)
                 Else
                     Actor:: "You're crazy and disgusting."
                     If Actor.isDating()
+                        Actor.setDatingId()
                         loseDating()
                     EndIf
                     If Actor.hadSex() && Actor.isInterestedIn(Player)

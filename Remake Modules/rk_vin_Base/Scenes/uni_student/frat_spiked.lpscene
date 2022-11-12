@@ -6,30 +6,179 @@ OTHER: none
 
 
     SceneStart()
+        choiceCourseMajor = rk_VB_choiceCourseMajor.getGlobal()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        If choiceCourseMajor == 1
+            choiceCourseMajorT = 1
+            TextMajorChosen = "architecture"
+        ElseIf choiceCourseMajor == 2
+            choiceCourseMajorT = 2
+            TextMajorChosen = "chemical engineering"
+        ElseIf choiceCourseMajor == 3
+            choiceCourseMajorT = 3
+            TextMajorChosen = "classics"
+        ElseIf choiceCourseMajor == 4
+            choiceCourseMajorT = 4
+            TextMajorChosen = "computer science"
+        ElseIf choiceCourseMajor == 31
+            choiceCourseMajorT = 17
+            TextMajorChosen = "dental"
+        ElseIf choiceCourseMajor == 5
+            choiceCourseMajorT = 5
+            TextMajorChosen = "economics"
+        ElseIf choiceCourseMajor == 6
+            choiceCourseMajorT = 6
+            TextMajorChosen = "education"
+        ElseIf choiceCourseMajor == 7
+            choiceCourseMajorT = 7
+            TextMajorChosen = "English"
+        ElseIf choiceCourseMajor == 8
+            choiceCourseMajorT = 8
+            TextMajorChosen = "geography"
+        ElseIf choiceCourseMajor == 9
+            choiceCourseMajorT = 9
+            TextMajorChosen = "history"
+        ElseIf choiceCourseMajor == 10
+            choiceCourseMajorT = 10
+            TextMajorChosen = "law"
+        ElseIf choiceCourseMajor == 11
+            choiceCourseMajorT = 11
+            TextMajorChosen = "mathematics"
+        ElseIf choiceCourseMajor == 12
+            choiceCourseMajorT = 12
+            TextMajorChosen = "medicine"
+        ElseIf choiceCourseMajor == 13
+            choiceCourseMajorT = 13
+            TextMajorChosen = "music"
+        ElseIf choiceCourseMajor == 14
+            choiceCourseMajorT = 14
+            TextMajorChosen = "philosophy"
+        ElseIf choiceCourseMajor == 15
+            choiceCourseMajorT = 15
+            TextMajorChosen = "psychology"
+        ElseIf choiceCourseMajor == 16
+            choiceCourseMajorT = 16
+            TextMajorChosen = "political sciences"
+        ElseIf choiceCourseMajor == 60
+            choiceCourseMajorT = 18
+            TextMajorChosen = "sales and marketing"
+        ElseIf choiceCourseMajor == 80
+            choiceCourseMajorT = 19
+            TextMajorChosen = "travel and tourism"
+        ElseIf choiceCourseMajor == 90
+            choiceCourseMajorT = 20
+            TextMajorChosen = "veterinary"
+        EndIf
         Actor.dress()
         Actor.show()
         "I'm currently at yet another party thrown by my <Player.fraternity_or_sorority>. As expected, drinks are flowing and there's hardly anyone still sober left."
-        Actor2 = getSpecific(Student)
+        Actor2 = getSpecific(Fraternity)
         While !Actor.isInterestedIn(Actor2)
             Actor2 = generatePersonTemporary()
-            Actor2:age => Random(18, 22)
+            Actor2:age => random(18, 22)
             Actor2.randomizeHairs()
             Actor2.randomizeFace()
             Actor2.randomizeRace()
-        endWhile
+        EndWhile
         If Actor2.isTemporary()
             Actor2.makePermanent()
-            Actor2.setDifferentMajor()
-        endIf
-        
+            //Actor2.setDifferentMajor()
+            AcID = Actor2.getID()
+            Actor2.setActorVar(rk_VB_tag_Student, 1)
+            ChoixDsonCours = random(1, 20)
+            ChoixDsonCours = ChoixDsonCours.round()
+            While ChoixDsonCours == choiceCourseMajorT
+                If choiceCourseMajorT == 1
+                    Actor2.setActorVar(rk_VB_Architecture_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TAR, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TAR, AcID)
+                ElseIf choiceCourseMajorT == 2
+                    Actor2.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TCE, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TCE, AcID)
+                ElseIf choiceCourseMajorT == 3
+                    Actor2.setActorVar(rk_VB_Classics_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TCL, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TCL, AcID)
+                ElseIf choiceCourseMajorT == 17
+                    Actor2.setActorVar(rk_VB_Dental_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TDM, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TDM, AcID)
+                ElseIf choiceCourseMajorT == 4
+                    Actor2.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TCS, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TCS, AcID)
+                ElseIf choiceCourseMajorT == 5
+                    Actor2.setActorVar(rk_VB_Economics_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TEC, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TEC, AcID)
+                ElseIf choiceCourseMajorT == 6
+                    Actor2.setActorVar(rk_VB_Education_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TED, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TED, AcID)
+                ElseIf choiceCourseMajorT == 7
+                    Actor2.setActorVar(rk_VB_English_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TEN, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TEN, AcID)
+                ElseIf choiceCourseMajorT == 8
+                    Actor2.setActorVar(rk_VB_Geography_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TGE, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TGE, AcID)
+                ElseIf choiceCourseMajorT == 9
+                    Actor2.setActorVar(rk_VB_History_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_THI, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_THI, AcID)
+                ElseIf choiceCourseMajorT == 10
+                    Actor2.setActorVar(rk_VB_Law_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TLA, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TLA, AcID)
+                ElseIf choiceCourseMajorT == 11
+                    Actor2.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TMA, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TMA, AcID)
+                ElseIf choiceCourseMajorT == 12
+                    Actor2.setActorVar(rk_VB_Medicine_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TME, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TME, AcID)
+                ElseIf choiceCourseMajorT == 13
+                    Actor2.setActorVar(rk_VB_Music_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TMU, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TMU, AcID)
+                ElseIf choiceCourseMajorT == 14
+                    Actor2.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TPH, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TPH, AcID)
+                ElseIf choiceCourseMajorT == 15
+                    Actor2.setActorVar(rk_VB_Psychology_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TPS, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TPS, AcID)
+                ElseIf choiceCourseMajorT == 16
+                    Actor2.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TPOL, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
+                ElseIf choiceCourseMajorT == 18
+                    Actor2.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TSM, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TSM, AcID)
+                ElseIf choiceCourseMajorT == 19
+                    Actor2.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TTT, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TTT, AcID)
+                ElseIf choiceCourseMajorT == 20
+                    Actor2.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
+                    Actor2.setActorVar(rk_VB_tag_TVE, 1)
+                    Actor2.setActorVar(rk_VB_AcIdCC_TVE, AcID)
+                EndIf
+            EndWhile
+        EndIf
         Actor2.dress()
         Actor2.show()
         Actor.moveToPersonStand(Actor2, 50)
-        "One of my <Player.fraternity_or_sorority> <Player.brothers_or_sisters> <Actor.name> has been hitting on this <Actor2.guy_or_girl> studying <Actor2.major> all night but <Actor2.he_or_she> was having none of it. I wonder how long it would take for <Actor.name> to get the message and leave the poor <Actor2.guy_or_girl> alone."
+        "One of my <Player.fraternity_or_sorority> <Player.brothers_or_sisters> <Actor.name> has been hitting on this <Actor2.guy_or_girl> studying <TextMajorChosen> all night but <Actor2.he_or_she> was having none of it."
+        "I wonder how long it would take for <Actor.name> to get the message and leave the poor <Actor2.guy_or_girl> alone."
         Actor2.hide()
         "Looks like <Actor.he_or_she> gave up now ... oh no, <Actor.he_or_she>'s just heading to the bar to make another drink. Drinking down the sorrow of being rejected, I suppose."
         "Wait, <Actor.he_or_she>'s taking out a white powder package and pouring some of it into the drink ... The drink must be intended for the <Actor2.guy_or_girl> <Actor.he_or_she> is trying to get with, no doubt ..."
@@ -39,17 +188,16 @@ OTHER: none
         If 0
             Player.moveToPersonStand(Actor, 50)
             Player:: "<Actor.name>, I saw you pouring that into the drink. Don't even think about it, <Actor.buddy_or_girl>! Think about the consequences!"
-            If Random(0, 100) < interpersonal
+            If random(0, 100) < interpersonal
                 Ahead = false
                 Actor:: "You're right. I almost did something I would regret for the rest of my life ..."
             Else
                 Ahead = true
                 Actor:: "Huh? You saw me pouring what into what drink? I have no idea what you're talking about."
-            Endif
+            EndIf
         Else
             Ahead = true
-        Endif
-        
+        EndIf
         If Ahead
             Actor2.show()
             Actor.moveToPersonStand(Actor2, 50)
@@ -76,9 +224,9 @@ OTHER: none
                 If 0
                     "We got talking a bit before exchanging numbers to get to know each other better in the future."
                     exchangeContact(Actor2)
-                Elseif 1
-                    If Actor2.isInterestedIn(Player) && Random(50, 125) < Actor2:perversion + Actor2:attractiontoplayer
-                        "We got talking a bit but with the adrenaline of <Actor2.him_or_her> just escaping a potential date rape and me being the hero, the conversation soon turned quite flirtatous."
+                ElseIf 1
+                    If Actor2.isInterestedIn(Player) && random(50, 125) < Actor2:perversion + Actor2:attractiontoplayer
+                        "We got talking a bit but with the adrenaline of <Actor2.him_or_her> just escaping a potential date rape and me being the hero, the conversation soon turned quite flirtatious."
                         setBackground(home)
                         "And soon, we ended up in bed together"
                         Sex(Player, Actor2)
@@ -87,19 +235,20 @@ OTHER: none
                         EndIf
                         "Yes, <Actor.name>, that's how it's done. It pays to be a <Player.gentleman_or_lady>, not a creepy date rapist."
                     Else
-                        "We got talking a bit but unfortunately, as much as I try to flirt, <Actor2.he_or_she> wasn't having anymore of it than <Actor2.he_or_she> did for <Actor.name> earlier. I guess the date rape threat earlier probably killed off <Actor2.his_or_her> mood for tonight."
-                    Endif
-                Endif
+                        "We got talking a bit but unfortunately, as much as I try to flirt, <Actor2.he_or_she> wasn't having anymore of it than <Actor2.he_or_she> did for <Actor.name> earlier."
+                        "I guess the date rape threat earlier probably killed off <Actor2.his_or_her> mood for tonight."
+                    EndIf
+                EndIf
             Else
                 karma -= 2
                 If isModEnabled(vin_NonConsensual)
                     Ahead = true
                 Else
                     Ahead = false
-                    "Even without my warning, this <Actor2.major> student has enough wits about <Actor2.him_or_her> to not accept the drink. After all, date rape at a <Player.fraternity_or_sorority> party is hardly unheard of, and it's normal to get suspicious when a <Actor.guy_or_girl> you just rejected come back with a drink."
-                Endif
-            Endif
-            
+                    "Even without my warning, this <TextMajorChosen> student has enough wits about <Actor2.him_or_her> to not accept the drink."
+                    "After all, date rape at a <Player.fraternity_or_sorority> party is hardly unheard of, and it's normal to get suspicious when a <Actor.guy_or_girl> you just rejected come back with a drink."
+                EndIf
+            EndIf
             If Ahead
                 "Not aware of the threat contained in that drink, the poor <Actor2.guy_or_girl> drink it without hesitation."
                 "Soon enough, the drug visibly took its effects on the victim and <Actor2.he_or_she> was guided into a bedroom by <Actor.name>."
@@ -119,7 +268,7 @@ OTHER: none
                         Filter(AggressiveFM)
                     Else
                         Filter(Aggressive)
-                    Endif
+                    EndIf
                     Sex(Actor, Actor2)
                     "I can't believe I just stood there and watched my <Actor.fraternity_or_sorority> date-raping a fellow student. Since I'm basically an accomplice now by not putting a stop to it, might as well get some rewards for it?"
                     0:: "Let's rape <Actor2.him_or_her> together, <Actor.bro_or_sis>."
@@ -132,10 +281,9 @@ OTHER: none
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -3)
                         EndIf
-                    Endif
-                Endif
-            Endif
-        Endif
-    
+                    EndIf
+                EndIf
+            EndIf
+        EndIf
     SceneEnd() // Improved by Raddeck
     timeout(200, frat_spiked)

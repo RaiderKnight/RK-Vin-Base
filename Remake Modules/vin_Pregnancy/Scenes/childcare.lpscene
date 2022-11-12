@@ -5,17 +5,16 @@ WHO: Actor = getAnyRelative(Child); If Actor:age < 18
 OTHER:
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         stock_Formula_Milk = Player.getActorVar(rk_VB_stock_Formula_Milk)
-        If !Actor.isValid() || Actor:age > 18
+        If !Actor.isValid() || Actor:age > 18 || Actor.isCreature()
             Actor = getAnyRelative(Child)
             While Actor.isValid() && Actor:age > 18
                 Actor = getAnyRelative(Child)
-            endWhile
+            EndWhile
         EndIf
         If Actor.isValid()
             If Actor:age < 2 // BABY    
@@ -26,8 +25,8 @@ OTHER:
                     scene = 23 // cry
                     scene = 24 // diaper
                     scene = 1801 // babysitter
-                endRandom
-            Elseif Actor:age < 5 // KINDERGARTEN
+                EndRandom
+            ElseIf Actor:age < 5 // KINDERGARTEN
                 Random
                     scene = 50 // cook
                     scene = 51 // play
@@ -35,8 +34,8 @@ OTHER:
                     scene = 1801 // babysitter
                     scene = 1802 // teacher
                     scene = 1803 // fellow parents
-                endRandom
-            Elseif Actor:age < 12 // PRIMARY SCHOOL
+                EndRandom
+            ElseIf Actor:age < 12 // PRIMARY SCHOOL
                 Random
                     scene = 120 // swear
                     scene = 121 // chores
@@ -51,7 +50,7 @@ OTHER:
                     scene = 1801 // babysitter
                     scene = 1802 // teacher
                     scene = 1803 // fellow parents
-                endRandom
+                EndRandom
             Else // TEENAGER
                 Random
                     scene = 171 // sex ed
@@ -63,9 +62,8 @@ OTHER:
                     scene = 177 // gossip
                     scene = 1802 // teacher
                     scene = 1803 // fellow parents
-                endRandom
+                EndRandom
             EndIf
-            
             If scene == 20 // breastfeed
                 "<Actor.name> is crying quite loudly. <Actor.He_or_She> is probably hungry."
                 0:: !Player.isMale():: "Breastfeed"
@@ -73,21 +71,16 @@ OTHER:
                 99::"I don't have milk!"
                 
                 If 0
-                
-                    Actor:fitness += Random(0, 0.5)
-                    Actor:intelligence += Random(0, 0.5)
-                    Actor:attractiveness += Random(0, 0.5)
-                    
-                Elseif 1
-                
+                    Actor:fitness += random(0, 0.5)
+                    Actor:intelligence += random(0, 0.5)
+                    Actor:attractiveness += random(0, 0.5)
+                ElseIf 1
                     Player.modifyActorVar(rk_VB_stock_Formula_Milk, -1)
-                    Actor:fitness += Random(0, 0.5)
-                    Actor:intelligence += Random(0, 0.5)
-                    Actor:attractiveness += Random(0, 0.5)
-
+                    Actor:fitness += random(0, 0.5)
+                    Actor:intelligence += random(0, 0.5)
+                    Actor:attractiveness += random(0, 0.5)
                 EndIf
-                
-            Elseif scene == 21 // talk
+            ElseIf scene == 21 // talk
                 Actor:: "<Player.Papa_or_Mama>!"
                 Actor:: "(inaudible)"
                 "<Actor.name> is only starting to speak a few words."
@@ -95,11 +88,11 @@ OTHER:
                 1:: "What's the point?"
                 
                 If 0
-                    Actor:interpersonal += Random(0, 0.5) 
+                    Actor:interpersonal += random(0, 0.5) 
                 Else
                     "<Actor.name> can't say anything back anyway. I would just be talking to myself."
                 EndIf
-            Elseif scene == 22 // walk
+            ElseIf scene == 22 // walk
                 "<Actor.name> is trying to walk. <Actor.He_or_She> is struggling quite a bit to keep balance."
                 0:: "Stop <Actor.him_or_her>"
                 1:: "Let <Actor.him_or_her>"
@@ -108,59 +101,59 @@ OTHER:
                     "Let's stop <Actor.him_or_her> before <Actor.he_or_she> falls over and hurts <Actor.himself_or_herself>."
                 Else
                     "What baby hasn't fell down a few times trying to learn to walk?"
-                    Actor:fitness += Random(0, 0.5)
+                    Actor:fitness += random(0, 0.5)
                 EndIf
-            Elseif scene == 23 // cry
+            ElseIf scene == 23 // cry
                 "<Actor.name> just wouldn't stop crying for the past couple of hours. I'm seriously losing patience!"
                 0:: "Endure it"
                 1:: "Scream back at <Actor.him_or_her>"
                 
                 If 0
-                    mood -= Random(0, 20)
-                    Actor:rapportwithplayer += Random(0, 0.5)
+                    mood -= random(0, 20)
+                    Actor:rapportwithplayer += random(0, 0.5)
                 Else
                     Player(Furious):: "Would you please just shut up for one god damn second?"
-                    Actor:rapportwithplayer -= Random(0, 0.5)
+                    Actor:rapportwithplayer -= random(0, 0.5)
                 EndIf
-            Elseif scene == 24 // diaper    
+            ElseIf scene == 24 // diaper    
                 "<Actor.name> made a mess ... again."
                 0:: "Change <Actor.his_or_her> diaper."
                 1:: "Can't be bothered right now."
                 
                 If 0
-                    mood -= Random(0, 15)
-                    Actor:fitness += Random(0, 0.5)      
+                    mood -= random(0, 15)
+                    Actor:fitness += random(0, 0.5)      
                 EndIf
-            Elseif scene == 50 // cook
+            ElseIf scene == 50 // cook
                 Actor:: "<Player.Daddy_or_Mommy>, I'm hungry!"
                 0:: "Make <Actor.him_or_her> a healthy meal"
                 1:: "Some instant noodle should do"
                 
                 If 0
-                    energy -= Random(0, 15)
-                    Actor:fitness += Random(0, 0.5)
-                    Actor:intelligence += Random(0, 0.5)
-                    Actor:attractiveness += Random(0, 0.5)
+                    energy -= random(0, 15)
+                    Actor:fitness += random(0, 0.5)
+                    Actor:intelligence += random(0, 0.5)
+                    Actor:attractiveness += random(0, 0.5)
                 EndIf
-            Elseif scene == 51 // play
+            ElseIf scene == 51 // play
                 Actor:: "<Player.Daddy_or_Mommy>, play Lego with me!"
                 0:: "Sure!"
                 1:: "I'm busy ..."
                 
                 If 0
-                    Actor:rapportwithplayer += Random(0, 0.5)
+                    Actor:rapportwithplayer += random(0, 0.5)
                 EndIf
-            Elseif scene == 52 // park
+            ElseIf scene == 52 // park
                 Actor:: "<Player.Daddy_or_Mommy>, I want to go to the park!"
                 0:: "Sure!"
                 1:: "I'm busy ..."
                 
                 If 0
-                    Actor:rapportwithplayer += Random(0, 0.5)
-                    Actor:fitness += Random(0, 0.5)
-                    energy -= Random(0, 15)
-                EndIf    
-            Elseif scene == 120 // swear
+                    Actor:rapportwithplayer += random(0, 0.5)
+                    Actor:fitness += random(0, 0.5)
+                    energy -= random(0, 15)
+                EndIf   
+            ElseIf scene == 120 // swear
                 Player(Happy):: "You're back! How was your day at school?"
                 Actor:: "It was fucking crap, <Player.Dad_or_Mom>!"
                 0:: "Don't use those words!"
@@ -168,188 +161,188 @@ OTHER:
                 
                 If 0
                     Player(Angry):: "Hey, who taught you those bad words? Don't let me hear you speak like that again, okay?"
-                    Actor:interpersonal += Random(0, 0.5)
-                    Actor:rapportwithplayer -= Random(0, 0.25)
+                    Actor:interpersonal += random(0, 0.5)
+                    Actor:rapportwithplayer -= random(0, 0.25)
                 EndIf
-            Elseif scene == 121 // chores
+            ElseIf scene == 121 // chores
                 "<Actor.name> has a lot of free time away from school."
                 0:: "Give <Actor.him_or_her> some chores"
                 1:: "Do everything for <Actor.him_or_her>"
                 
                 If 0
-                    Actor:fitness += Random(0, 0.5)
-                    Actor:masochist -= Random(0, 0.5)
-                    Actor:rapportwithplayer -= Random(0, 0.25)
+                    Actor:fitness += random(0, 0.5)
+                    Actor:masochist -= random(0, 0.5)
+                    Actor:rapportwithplayer -= random(0, 0.25)
                 Else
-                    Actor:masochist += Random(0, 0.5)        
+                    Actor:masochist += random(0, 0.5)        
                 EndIf
-            Elseif scene == 122 // violence
+            ElseIf scene == 122 // violence
                 "I walked in to <Actor.name> watching some action movie on TV, with its fair share of graphic violence."
                 0:: "Switch to Disney"
                 1:: "Do nothing"
                 
                 If 0
-                    Actor:masochist += Random(0, 0.5)
-                    Actor:rapportwithplayer -= Random(0, 0.25)            
+                    Actor:masochist += random(0, 0.5)
+                    Actor:rapportwithplayer -= random(0, 0.25)            
                 Else
-                    Actor:martial += Random(0, 0.5)
-                    Actor:masochist -= Random(0, 0.5)        
+                    Actor:martial += random(0, 0.5)
+                    Actor:masochist -= random(0, 0.5)        
                 EndIf
-            Elseif scene == 123 // questions
+            ElseIf scene == 123 // questions
                 "<Actor.name> is a curious <Actor.boy_or_girl>, never stopping asking questions. <Actor.He_or_She> is beginning to get on my nerves."
                 0:: "Answer all <Actor.his_or_her> questions"
                 1:: "Respond with silence"
                 
                 If 0
-                    mood -= Random(0, 20)
-                    Actor:intelligence += Random(0, 0.5)
-                    Actor:rapportwithplayer += Random(0, 0.25)                        
+                    mood -= random(0, 20)
+                    Actor:intelligence += random(0, 0.5)
+                    Actor:rapportwithplayer += random(0, 0.25)                        
                 Else
-                    Actor:rapportwithplayer -= Random(0, 0.25)
+                    Actor:rapportwithplayer -= random(0, 0.25)
                 EndIf
-            Elseif scene == 124 // sports
+            ElseIf scene == 124 // sports
                 "<Actor.name>'s school is asking for parents' consent to take part in sport activities."
                 0:: "Sign <Actor.him_or_her> up for the football team"
                 1:: "Chess counts as sports I guess ..."
                 
                 If 0
-                    Actor:fitness += Random(0, 0.5)
+                    Actor:fitness += random(0, 0.5)
                 Else
                     "I don't want <Actor.him_or_her> to hurt <Actor.himself_or_herself> getting tackled."
-                    Actor:intelligence += Random(0, 0.25)
+                    Actor:intelligence += random(0, 0.25)
                 EndIf
-            Elseif scene == 125 // iphone
+            ElseIf scene == 125 // iphone
                 "I'm far too busy right now to play with <Actor.name>."
                 0:: "Tell <Actor.him_or_her> to go play outside"
                 1:: "Give <Actor.him_or_her> my smartphone to play with"
                 
                 If 0
-                    Actor:fitness += Random(0, 0.5)
+                    Actor:fitness += random(0, 0.5)
                 Else
                     "I don't want risk <Actor.him_or_her> getting kidnapped."
-                    Actor:intelligence += Random(0, 0.25)
+                    Actor:intelligence += random(0, 0.25)
                 EndIf
-            Elseif scene == 126 // tutor
+            ElseIf scene == 126 // tutor
                 Actor:: "<Player.Daddy_or_Mommy>, could you help me with some math problems?"
                 0:: "Sure!"
                 1:: "I'm busy ..."
                 
                 If 0
-                    Actor:rapportwithplayer += Random(0, 0.5)
-                    Actor:intelligence += Random(0, 0.5)
-                    mood -= Random(0, 10)
-                EndIf        
-            Elseif scene == 127 // parental control
+                    Actor:rapportwithplayer += random(0, 0.5)
+                    Actor:intelligence += random(0, 0.5)
+                    mood -= random(0, 10)
+                EndIf       
+            ElseIf scene == 127 // parental control
                 "Since <Actor.name> is sometimes given my smartphone to play games on, maybe I should install a parental control app."
                 0:: "Of course"
                 1:: "It's a waste of money"
                 
                 If 0
-                    money -= Random(0, 20)
+                    money -= random(0, 20)
                 Else
-                    Actor:perversion += Random(0, 0.5)
+                    Actor:perversion += random(0, 0.5)
                 EndIf
-            Elseif scene == 128 // piano or IT
+            ElseIf scene == 128 // piano or IT
                 "<Actor.name>'s school is asking for parents' consent to take part in some extra classes."
                 0:: "Sign <Actor.him_or_her> up for piano"
                 1:: "Some beginner computer science would be useful"
                 
                 If 0
-                    Actor:music += Random(0, 0.5)
+                    Actor:music += random(0, 0.5)
                 Else
-                    Actor:intelligence += Random(0, 0.25)
-                EndIf    
-            Elseif scene == 129 // dance or Japanese
+                    Actor:intelligence += random(0, 0.25)
+                EndIf   
+            ElseIf scene == 129 // dance or Japanese
                 "<Actor.name>'s school is asking for parents' consent to take part in some extra classes."
                 0:: "Sign <Actor.him_or_her> up for the dance class"
                 1:: "Some beginner Japanese would be useful"
                 
                 If 0
-                    Actor:dance += Random(0, 0.5)
+                    Actor:dance += random(0, 0.5)
                 Else
-                    Actor:interpersonal += Random(0, 0.25)
-                EndIf      
-            Elseif scene == 171 // sex ed
+                    Actor:interpersonal += random(0, 0.25)
+                EndIf     
+            ElseIf scene == 171 // sex ed
                 Player(Happy):: "<Actor.name>, dinner is ready! Come down!"
                 Actor:: "<Player.Dad_or_Mom>, I'm ... busy. You go ahead and eat."
-                "This has been a regular occurence ... I have a strong suspicion about what my teenage <Actor.son_or_daughter> is doing in <Actor.his_or_her> bedroom."
+                "This has occurred regularly ... I have a strong suspicion about what my teenage <Actor.son_or_daughter> is doing in <Actor.his_or_her> bedroom."
                 0:: "Find time for some sex ed chat"
                 1:: "I'll let <Actor.his_or_her> school take care of that"
                 
                 If 0
                     "It's the most awkward thing in the world to talk to your child about sex ... but it has to be done." 
-                    Actor:perversion += Random(0, 0.5)
-                    Actor:rapportwithplayer -= Random(0, 0.25)
+                    Actor:perversion += random(0, 0.5)
+                    Actor:rapportwithplayer -= random(0, 0.25)
                 EndIf
-            Elseif scene == 172 // porn
+            ElseIf scene == 172 // porn
                 "By accident, I came across <Actor.name>'s browser history ... It's full of visits to PornHub ..."
                 0:: "Take <Actor.his_or_her> computer away"
                 1:: "I was the same at <Actor.his_or_her> age ..."
                 
                 If 0
                     "<Actor.He_or_She> is far too young for this sort of content."
-                    Actor:rapportwithplayer -= Random(0, 0.5)
+                    Actor:rapportwithplayer -= random(0, 0.5)
                 Else
                     "Realistically though, does anyone actually wait till 18 to start watching porn?"
-                    Actor:perversion += Random(0, 0.5)
+                    Actor:perversion += random(0, 0.5)
                 EndIf
-            Elseif scene == 173 // expectations
+            ElseIf scene == 173 // expectations
                 Actor:: "<Player.Dad_or_Mom>, one of the seniors in my school just got accepted into Harvard. The school is making a big deal of it."
                 0:: "That's what I expect from you!"
                 1:: "It doesn't matter"
                 
                 If 0
                     Player(Happy):: "That will be you in a few years' time. I just know it!"
-                    Actor:intelligence += Random(0, 0.5)
-                    Actor:rapportwithplayer -= Random(0, 0.25)
+                    Actor:intelligence += random(0, 0.5)
+                    Actor:rapportwithplayer -= random(0, 0.25)
                 Else
                     Player(Happy):: "It doesn't matter which university you get into, as long as you're a good person."
-                    Actor:rapportwithplayer += Random(0, 0.5)
+                    Actor:rapportwithplayer += random(0, 0.5)
                 EndIf
-            Elseif scene == 174 // loud music
+            ElseIf scene == 174 // loud music
                 "<Actor.name> is playing extremely loud music. Worse still, the songs are all teen pop trash."
                 0:: "Tell <Actor.him_or_her> to turn it down"
                 1:: "Be cool"
                 
                 If 0
-                    Player(Angry):: "Could you please turn the volume down? Do you want the whole neighborhood to complain about us?"
-                    Actor:rapportwithplayer -= Random(0, 0.5)
+                    Player(Angry):: "Could you please turn the volume down? Do you want the whole neighbourhood to complain about us?"
+                    Actor:rapportwithplayer -= random(0, 0.5)
                 Else
-                    Actor:music += Random(0, 0.5)
+                    Actor:music += random(0, 0.5)
                 EndIf
-            Elseif scene == 175 // dating
+            ElseIf scene == 175 // dating
                 Actor:: "<Player.Dad_or_Mom>, there's this <Actor.pretty_or_handsome> <Actor.girl_or_guy> at school ..."
                 0:: "You're too young to be dating ..."
                 1:: "Give advice"
                 
                 If 0
-                    Actor:rapportwithplayer -= Random(0, 0.5)
+                    Actor:rapportwithplayer -= random(0, 0.5)
                 Else
-                    Actor:perversion += Random(0, 0.5)
+                    Actor:perversion += random(0, 0.5)
                 EndIf
-            Elseif scene == 176 // smoking
+            ElseIf scene == 176 // smoking
                 "I couldn't help but smell tobacco in <Actor.name>'s breath these days."
                 0:: "Tell <Actor.him_or_her> off"
                 1:: "Say nothing"
                 
                 If 0
-                    Actor:fitness += Random(0, 0.5)
-                    Actor:attractiveness += Random(0, 0.5)
-                    Actor:rapportwithplayer -= Random(0, 0.25)
+                    Actor:fitness += random(0, 0.5)
+                    Actor:attractiveness += random(0, 0.5)
+                    Actor:rapportwithplayer -= random(0, 0.25)
                 Else
-                    Actor:interpersonal += Random(0, 0.5)
+                    Actor:interpersonal += random(0, 0.5)
                 EndIf
-            Elseif scene == 177 // gossip
+            ElseIf scene == 177 // gossip
                 Actor:: "There's this girl Stephanie in school. She's a bitch. Everyone knows she slept with the entire football team!"
                 0:: "You shouldn't gossip about other people"
                 1:: "Say nothing"
                 
                 If 0
-                    Actor:rapportwithplayer -= Random(0, 0.25)
+                    Actor:rapportwithplayer -= random(0, 0.25)
                 Else
-                    Actor:interpersonal += Random(0, 0.25)
+                    Actor:interpersonal += random(0, 0.25)
                 EndIf
-            Elseif scene > 1000
+            ElseIf scene > 1000
                 If scene == 1801 // babysitter
                     Actor2 = getPerson(tag_babysitter)
                     If Actor2.isValid()
@@ -362,7 +355,7 @@ OTHER:
                         If 0
                             Dating = getSpecific(Dating)
                             Dating.dress()
-                            If !Actor2.hadSex() && Dating.isInterestedIn(Actor2) && Actor2.isInterestedIn(Dating) && [OpenRelationship() || [isModEnabled(vin_NTR) && Dating:perversion - Dating:attractiontoplayer > 70] ] && Random(0, 100) < 20
+                            If !Actor2.hadSex() && Dating.isInterestedIn(Actor2) && Actor2.isInterestedIn(Dating) && [OpenRelationship() || [isModEnabled(vin_NTR) && Dating:perversion - Dating:attractiontoplayer > 70] ] && random(0, 100) < 20
                                 setBackgroundCustom(livingroom)
                                 Actor2.hide()
                                 Dating.hide()
@@ -390,24 +383,25 @@ OTHER:
                                     2:: "Do nothing"
                                     
                                     If 0
+                                        Dating.setDatingId()
                                         loseDating()
-                                    Elseif 1
+                                    ElseIf 1
                                         Dating:attractiontoplayer -= 20
                                     Else
                                         If OpenRelationship()
                                             "I did agree to an open relationship after all ..."
-                                        EndIf                            
+                                        EndIf                           
                                     EndIf
-                                Elseif 2
+                                ElseIf 2
                                     Player.show()
                                     Player:: "Looks like you guys already started the party without me! Mind if I join?"
                                     Dating:: "You're the best <Player.boyfriend_or_girlfriend> in the world!"
                                     Sex(Player, Dating, Actor2)
                                     If HungerEnable > 0
                                         Player.modifyActorVar(rk_VB_Hunger, -3)
-                                    EndIf 
+                                    EndIf
                                 EndIf
-                            Elseif Actor2.hadSex()
+                            ElseIf Actor2.hadSex()
                                 "I've been sleeping with the babysitter ... <Actor2.he_or_she> is coming over again today. Should I ask <Actor2.him_or_her> to perform some 'extra duty' afterwards too?"
                                 0:: "Yes"
                                 1:: "No"
@@ -418,21 +412,22 @@ OTHER:
                                     Sex(Player, Actor2)
                                     If HungerEnable > 0
                                         Player.modifyActorVar(rk_VB_Hunger, -2)
-                                    EndIf 
-                                Elseif 2
-                                    "After <Actor.name> has been put to sleep, I ask the babysitter to come over to the bedroom for some extra work. Of course, it would be selfish of me not to share <Actor2.him_or_her> with <Dating.name>. We're in an open relationship after all."
+                                    EndIf
+                                ElseIf 2
+                                    "After <Actor.name> has been put to sleep, I ask the babysitter to come over to the bedroom for some extra work."
+                                    "Of course, it would be selfish of me not to share <Actor2.him_or_her> with <Dating.name>. We're in an open relationship after all."
                                     Sex(Player, Dating, Actor2)
                                     If HungerEnable > 0
                                         Player.modifyActorVar(rk_VB_Hunger, -3)
-                                    EndIf                        
+                                    EndIf                       
                                 EndIf
                             Else
                                 "<Actor2.name> came over today to take care of <Actor.name>."
-                                0:: "Flirt with <Actor2.him_or_her>"
-                                1:: "Leave <Actor2.him_or_her> alone to do <Actor2.his_or_her> job>"
+                                1:: "Flirt with <Actor2.him_or_her>"
+                                0:: "Leave <Actor2.him_or_her> alone to do <Actor2.his_or_her> job>"
                                 
                                 If 1
-                                    If Actor2.isInterestedIn(Player) && Random(0, 100) < Actor2:perversion
+                                    If Actor2.isInterestedIn(Player) && random(0, 100) < Actor2:perversion
                                         "<Actor2.He_or_She> seems rather receptive to my advances ..."
                                         Actor2:attractiontoplayer += Actor2:perversion*0.1
                                         "Should I try to go further?"
@@ -453,7 +448,7 @@ OTHER:
                                     Else
                                         "<Actor2.He_or_She> doesn't seem interested at all in anything but a professional babysitting gig today."
                                     EndIf
-                                EndIf                    
+                                EndIf                   
                             EndIf
                         Else
                             "We'll think about hiring a different babysitter on another day."
@@ -481,8 +476,8 @@ OTHER:
                             EndIf
                         EndIf
                     EndIf
-                Elseif scene == 1802  // teacher
-                    If Random(0, 100) < 20   // Blackmail
+                ElseIf scene == 1802  // teacher
+                    If random(0, 100) < 20   // Blackmail
                         Dating = getSpecific(Dating)
                         Dating.dress()
                         "<Actor.name>'s grades in one of the subjects in school have been terrible recently."
@@ -497,13 +492,13 @@ OTHER:
                         
                         If 0
                             "Thankfully, the school launched an investigation and the corrupt teacher was removed."
-                        Elseif 1
+                        ElseIf 1
                             "Anything for the sake of my <Actor.son_or_daughter>'s education ..."
                             Sex(Actor2, Player)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
-                        Elseif 2
+                        ElseIf 2
                             masochist += 2
                             Dating.show()
                             If OpenRelationship() || Dating:perversion > 60   
@@ -523,7 +518,7 @@ OTHER:
                         Actor2 = generatePersonTemporary()
                         While !Player.isInterestedIn(Actor2)
                             Actor2 = generatePersonTemporary()
-                        Endwhile
+                        EndWhile
                         Actor2.dress()
                         Actor2.show()
                         "Each time I take <Actor.name> to school, I can't help but notice how hot one of <Actor.his_or_her> teachers, <Actor2.name>, is ..."
@@ -537,17 +532,17 @@ OTHER:
                             "Now I just need to find an excuse to ask <Actor2.him_or_her> out for a date ..."
                         EndIf
                     EndIf
-                Elseif scene == 1803 // fellow parents
+                ElseIf scene == 1803 // fellow parents
                     setBackground(street)
                     Actor2 = generatePersonTemporary()
                     Actor3 = generatePersonTemporary()
                     While Actor3.isSameGender(Actor2)
                         Actor3 = generatePersonTemporary()
-                    Endwhile
+                    EndWhile
                     Actor2.makeInterested(Actor3)
                     Actor3.makeInterested(Actor2)
-                    Actor2:age => age*Random(0.8, 1.2)
-                    Actor3:age => age*Random(0.8, 1.2)             
+                    Actor2:age => age*random(0.8, 1.2)
+                    Actor3:age => age*random(0.8, 1.2)             
                     Actor2.randomizeFace()
                     Actor2.randomizeHairs()
                     Actor3.randomizeFace()
@@ -571,7 +566,7 @@ OTHER:
                             "Of course, being in an open relationship, I would be lying if I didn't think about them being potential swinging partners ..."
                             "I guess I would find out more about how open minded they are as a couple soon enough ..."
                         EndIf
-                    EndIf 
+                    EndIf
                 EndIf
             EndIf
             timeout(2, childcare)

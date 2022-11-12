@@ -13,6 +13,7 @@ OTHER: isAtHome()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         personal_vids = Player.getActorVar(rk_VB_personal_vids)
+        FiniLeShow = false
         "What's that sound? If it is what I think it is, then <Actor.brother_or_sister> <Actor.name> is getting very intimate with a lover. They are moaning very loudly."
         0:: "Ignore"
         1:: masochist < 50:: "Complain"
@@ -21,7 +22,7 @@ OTHER: isAtHome()
         If 0
             "Good for <Actor.him_or_her> I guess. Sex is an essential part of Greek life!"
             perversion += 0.005
-        Elseif 1
+        ElseIf 1
             Player(Angry):: "For god's sake, keep it down. I'm trying to study here."
             masochist -= random(0, 1)
             mood += 3
@@ -29,17 +30,18 @@ OTHER: isAtHome()
             perversion -= 1 // Edit Raddeck
         Else
             perversion += random(0, 0.5)
-            "My curiousity got the better of me and I just had to see this ..."
-            SneakGame()
+            "My curiosity got the better of me and I just had to see this ..."
+            If sneak < 90
+                sneakGame()
+            EndIf
             If random(0, 70) < sneak
-            
                 "Luckily, <Actor.name> didn't quite close <Actor.his_or_her> door completely shut - probably too busy with fooling around with <Actor.his_or_her> partner to pay attention to the door. With my sneaking talent, I managed to get a pretty good view of what was going on ..."
                 Actor2 = Actor.getRelatedPerson(Dating, Spouses)
                 If !Actor2.isValid()
                     Actor2 = generatePersonTemporary()
                     While !Actor.isInterestedIn(Actor2)
                         Actor2 = generatePersonTemporary()
-                    Endwhile
+                    EndWhile
                 EndIf
                 "Do I film them to blackmail them later?" // Edit Raddeck
                 0:: "Yes"
@@ -50,7 +52,6 @@ OTHER: isAtHome()
                     "I decided to film them..."
                     filmed = true
                 EndIf
-                
                 Sex(Actor, Actor2)
                 arousal += random(0, 30)
                 Actor.show(2)
@@ -61,7 +62,6 @@ OTHER: isAtHome()
                     Player.modifyActorVar(rk_VB_personal_vids, 1)
                     Player.animate()
                 EndIf
-                
                 "That was hot. But it looks like they're already ready for another round ..."
                 0:: "Offer to join them"
                 1:: "Enough"
@@ -101,7 +101,7 @@ OTHER: isAtHome()
                                 Actor.moveToPersonStand(Player, 50)
                                 Actor.animate(martialart)
                                 "I receive a punch in the face without having time to retaliate"
-                                If Actor:martial > Player:martial
+                                If Actor:martial > martial
                                     Player.animate(fightlost)
                                     "A punch so intense that I fell down"
                                     Player.animate(knockedout)
@@ -114,17 +114,11 @@ OTHER: isAtHome()
                                     faceEachOther(Actor, Player)
                                     Roundcount = 0
                                     FightInAction = 0
-                                    While FightInAction < 1 && Player:energy > 10
+                                    While FightInAction < 1 && energy > 10
                                         FightAction = random(0, 2)
                                         FightAction = FightAction.round()
-                                        // 0 = miss
-                                        // 2 = small hit
-                                        // 4 = big hit
                                         BlockAction = random(0, 3)
                                         BlockAction = BlockAction.round()
-                                        // 0 = miss
-                                        // 2 = small hit
-                                        // 4 = big hit
                                         JFightAction = random(0, 1)
                                         JFightAction = JFightAction.round()
                                         JFightHit = random(3, 6)
@@ -140,6 +134,7 @@ OTHER: isAtHome()
                                                 Player(Embarrassed)::"Ok, Fine!"
                                                 Player.modifyActorVar(rk_VB_personal_vids, -1)
                                                 FightInAction = 2
+                                                FiniLeShow = true
                                             Else
                                                 Actor(Evil)::"Fuck off little pussy...c'mon come..."
                                                 FightInAction = 0
@@ -153,7 +148,7 @@ OTHER: isAtHome()
                                                 Player.animate(martialart)
                                                 Actor.animate(martialart)
                                                 "You completely missed your attack ... <Actor.name> blocked your move!"
-                                                Player:energy -= 1
+                                                energy -= 1
                                                 FightInAction = 0
                                                 
                                             ElseIf FightAction == 1
@@ -194,19 +189,19 @@ OTHER: isAtHome()
                                                     DefendHit = DefendHit.round()
                                                     If DefendHit == 0
                                                         "<Actor.name> respond with <Actor.his_or_her> fist in your face!"
-                                                        Player:energy -= JFightHit 
+                                                        energy -= JFightHit 
                                                     ElseIf DefendHit == 1
                                                         "<Actor.name> respond with a hit in your genitals."
-                                                        Player:energy -= JFightHit + 2
+                                                        energy -= JFightHit + 2
                                                     ElseIf DefendHit == 2
                                                         "<Actor.name> respond with a hit in your rib cage."
-                                                        Player:energy -= JFightHit + 1
+                                                        energy -= JFightHit + 1
                                                     ElseIf DefendHit == 3
                                                         "<Actor.name> respond with a front kick."
-                                                        Player:energy -= JFightHit + 3
+                                                        energy -= JFightHit + 3
                                                     ElseIf DefendHit == 4
                                                         "<Actor.name> respond with a knee kick." 
-                                                        Player:energy -= JFightHit + 3
+                                                        energy -= JFightHit + 3
                                                     ElseIf DefendHit >= 5
                                                         "<Actor.name> gets back into fighting position."
                                                     EndIf
@@ -227,30 +222,30 @@ OTHER: isAtHome()
                                                         "<Actor.name> manage to hit you with a nice uppercut punch."
                                                         "<Actor.name> manage to give you a good punch in the throat." 
                                                     EndRandom
-                                                    Player:energy -= 5
+                                                    energy -= 5
                                                 ElseIf BlockAction == 1
                                                     Random
                                                         "<Actor.name> manage to hit you with a double punch in the face."
                                                         "<Actor.name> manage to hit you with a front kick."
                                                         "<Actor.name> manage to hit you with a knee kick." 
                                                     EndRandom
-                                                    Player:energy -= 3
+                                                    energy -= 3
                                                 ElseIf BlockAction == 2
                                                     Random
                                                         "<Actor.name> manage to hit you with an elbow to the face."
                                                         "<Actor.name> manage to hit you with a good palm strike."
                                                     EndRandom
-                                                    Player:energy -= 2
+                                                    energy -= 2
                                                 ElseIf BlockAction == 3
                                                     "<Actor.name> manage to hit you with a straight punch in the face."
-                                                    Player:energy -= 1
+                                                    energy -= 1
                                                 Else
                                                     Actor.moveToPersonStand(Player, 25)
                                                     faceEachOther(Actor, Player)
                                                     Player.animate(martialart)
                                                     Actor.animate(martialart)
                                                     "<Actor.name> completely missed <Actor.his_or_her> attack ... You managed to block <Actor.his_or_her> move!"
-                                                    Player:energy -= 1
+                                                    energy -= 1
                                                 EndIf
                                                     
                                                 If JFightAction > 0
@@ -279,7 +274,7 @@ OTHER: isAtHome()
                                                 FightInAction = 0
                                             EndIf
                                         EndIf
-                                        If Player:energy < 10
+                                        If energy < 10
                                             FightingLost = true
                                             FightInAction = 2
                                         ElseIf Actor:energy < 10
@@ -303,7 +298,7 @@ OTHER: isAtHome()
                                     Player.modifyActorVar(rk_VB_Hunger, -3)
                                 EndIf
                             EndIf
-                            If Player:energy < 10
+                            If energy < 10
                                 FightingLost = true
                                 FightInAction = 2
                             ElseIf Actor:energy < 10
@@ -311,7 +306,7 @@ OTHER: isAtHome()
                                 FightInAction = 2
                             EndIf
                             TempStatA = Actor:energy
-                            TempStatP = Player:energy
+                            TempStatP = energy
                             TempStatA > TempStatP
                             If FightingLost && TempStatA > TempStatP
                                 VraiLoser = true
@@ -322,156 +317,156 @@ OTHER: isAtHome()
                             Else TempStatP > TempStatA
                                 IlAPerdu = true
                             EndIf
-                            
-                            If VraiLoser
-                                Actor.animate()
-                                "<Actor.name> win the fight, <Actor.he_or_she> beat me all the way..."
-                                "Suddenly everything goes black ... you lost your consciousness."
-                                Player.animate(knockedout)
-                                Player.closeEyes(true)
-                                Actor:rapportwithplayer -= 5
-                                Actor:attractiontoplayer -= 1
-                                
-                                If isModEnabled(vin_NonConsensual) && Actor:arousal > 10 && Actor:perversion > 50
-                                    Actor(Angry)::"I'm not done with you, <Player.scum_or_bitch>!"
-                                    "<Actor.name> stripped off all my clothes and started fucking me right here!"
-                                    Player.strip()
-                                    Actor.dressExcept(Outerwear, Bottom, Bottom_Under)
-                                    Filter(Aggressive)
-                                    SexNoAffair(Actor, Player)
-                                    If HungerEnable > 0
-                                        Player.modifyActorVar(rk_VB_Hunger, -3)
-                                    EndIf
-                                    passTime(0.50, 1.50)
-                                    Actor.hide()
-                                    "After a few minutes, I woke up but I'm still a little stunned…"
-                                    Player.animate()
-                                    "As you try to stand up you notice that you are naked ... and your whole body hurts. It feels like you have been beaten up."
-                                    Player.show()
-                                    "You feel something running down your <Player.ass_or_pussy>..."
-                                    "You touch your <Player.ass_or_pussy> to see what it is ..."
-                                    "It's cum, a lot of cum! It gushes literally out of your <Player.ass_or_pussy>, running down both legs ..."
-                                    Player(Disgusted)::"WTF..."
-                                    "I wiped a bit and put my clothes back on..."
-                                    Player.dress()
-                                    mood => 0
-                                    energy => 5
-                                ElseIf random(0, 100) > 60
-                                    ActorLooting = random(1, 10)
-                                    ActorLooting = ActorLooting.round()
-                                    ActorLootingCash = random(10, 200)
-                                    ActorLootingCash_loc = ActorLootingCash.convertToLocalCurrency()
-                                    If ActorLooting > 6
-                                        "<Actor.name> stoled you <ActorLootingCash_loc> from your pockets."
-                                        money -= ActorLootingCash
-                                    EndIf
-                                    Actor.hide()
-                                    Actor:rapportwithplayer -= 50
-                                    Actor:attractiontoplayer -= 50
-                                    passTime(0.15, 0.50)
-                                Else
-                                    "After a few minutes, I woke up but I'm still a little stunned…"
-                                EndIf
-                                Player.closeEyes(false)
-                                Player.animate()
-                                mood => 5
-                                energy => 5
-                                Actor.hide()
-                                Player.animate() 
-                                Teacher = generatePersonTemporary()
-                                Teacher.dress()
-                                Teacher.show()
-                                Teacher.moveToPersonStand(Player, 50)
-                                Teacher(Wink)::"Hey my friend! Are you ok! Do you want a glass of water before you go?"
-                                "Do I accept or I'm going home?"
-                                0::"Yeah sure, that'll wake me up a bit more..."
-                                1::"No thanks, I think I will go home instead..."
-                                        
-                                If 0
-                                    RapeChance = random(0, 10)
-                                    If isModEnabled(vin_NonConsensual) && Teacher.isInterestedIn(Player) && RapeChance > 7
-                                        "I think <Teacher.he_or_she> put some drug inside the drink because I feel dizzy..."
-                                        "The teacher take off my clothes, but I can barely move or say anything... WTF..."
-                                        intoxication += 75
+                            If !FiniLeShow && isModEnabled(rk_vin_Base)
+                                If VraiLoser
+                                    Actor.animate()
+                                    "<Actor.name> win the fight, <Actor.he_or_she> beat me all the way..."
+                                    "Suddenly everything goes black ... you lost your consciousness."
+                                    Player.animate(knockedout)
+                                    Player.closeEyes(true)
+                                    Actor:rapportwithplayer -= 5
+                                    Actor:attractiontoplayer -= 1
+                                    If isModEnabled(vin_NonConsensual) && Actor:arousal > 10 && Actor:perversion > 50
+                                        Actor(Angry)::"I'm not done with you, <Player.scum_or_bitch>!"
+                                        "<Actor.name> stripped off all my clothes and started fucking me right here!"
                                         Player.strip()
-                                        Teacher.strip()
+                                        Actor.dressExcept(Outerwear, Bottom, Bottom_Under)
                                         Filter(Aggressive)
-                                        SexNoAffair(Teacher, Player)
-                                        "That's really not my day..."
-                                        "Now my holes are red and in real bad shapes,.... fuck!"
-                                        "I'm going home right now!"
-                                        intoxication => 15
-                                        energy => 10
+                                        SexNoAffair(Actor, Player)
+                                        If HungerEnable > 0
+                                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                                        EndIf
+                                        passTime(0.50, 1.50)
+                                        Actor.hide()
+                                        "After a few minutes, I woke up but I'm still a little stunned…"
+                                        Player.animate()
+                                        "As you try to stand up you notice that you are naked ... and your whole body hurts. It feels like you have been beaten up."
+                                        Player.show()
+                                        "You feel something running down your <Player.ass_or_pussy>..."
+                                        "You touch your <Player.ass_or_pussy> to see what it is ..."
+                                        "It's cum, a lot of cum! It gushes literally out of your <Player.ass_or_pussy>, running down both legs ..."
+                                        Player(Disgusted)::"WTF..."
+                                        "I wiped a bit and put my clothes back on..."
+                                        Player.dress()
+                                        mood => 0
+                                        energy => 5
+                                    ElseIf random(0, 100) > 60
+                                        ActorLooting = random(1, 10)
+                                        ActorLooting = ActorLooting.round()
+                                        ActorLootingCash = random(10, 200)
+                                        ActorLootingCash_loc = ActorLootingCash.convertToLocalCurrency()
+                                        If ActorLooting > 6
+                                            "<Actor.name> stole you <ActorLootingCash_loc> from your pockets."
+                                            money -= ActorLootingCash
+                                        EndIf
+                                        Actor.hide()
+                                        Actor:rapportwithplayer -= 50
+                                        Actor:attractiontoplayer -= 50
+                                        passTime(0.15, 0.50)
                                     Else
-                                        "I drink my glass with difficulty..."
-                                        energy += 10
-                                        "Once my drink is finished, I go straight home..."
-                                        mood += 2
+                                        "After a few minutes, I woke up but I'm still a little stunned…"
                                     EndIf
-                                    "I decided to go back home..."
-                                    moveTo(home)
-                                Else
-                                    "Going back home..."
-                                    moveTo(home)
+                                    Player.closeEyes(false)
+                                    Player.animate()
+                                    mood => 5
+                                    energy => 5
+                                    Actor.hide()
+                                    Player.animate() 
+                                    Teacher = generatePersonTemporary()
+                                    Teacher.dress()
+                                    Teacher.show()
+                                    Teacher.moveToPersonStand(Player, 50)
+                                    Teacher(Wink)::"Hey my friend! Are you ok! Do you want a glass of water before you go?"
+                                    "Do I accept or I'm going home?"
+                                    0::"Yeah sure, that'll wake me up a bit more..."
+                                    1::"No thanks, I think I will go home instead..."
+                                            
+                                    If 0
+                                        RapeChance = random(0, 10)
+                                        If isModEnabled(vin_NonConsensual) && Teacher.isInterestedIn(Player) && RapeChance > 7
+                                            "I think <Teacher.he_or_she> put some drug inside the drink because I feel dizzy..."
+                                            "The teacher take off my clothes, but I can barely move or say anything... WTF..."
+                                            intoxication += 75
+                                            Player.strip()
+                                            Teacher.strip()
+                                            Filter(Aggressive)
+                                            SexNoAffair(Teacher, Player)
+                                            "That's really not my day..."
+                                            "Now my holes are red and in real bad shapes,.... fuck!"
+                                            "I'm going home right now!"
+                                            intoxication => 15
+                                            energy => 10
+                                        Else
+                                            "I drink my glass with difficulty..."
+                                            energy += 10
+                                            "Once my drink is finished, I go straight home..."
+                                            mood += 2
+                                        EndIf
+                                        "I decided to go back home..."
+                                        moveTo(home)
+                                    Else
+                                        "Going back home..."
+                                        moveTo(home)
+                                    EndIf
                                 EndIf
-                            EndIf
 
-                            If IlAPerdu
-                                "I win the fight, <Actor.he_or_she> will stay quiet for a few..."
-                                "<Actor2.name> get scared and runs away..."
-                                Actor.animate(knockedout)
-                                Actor.closeEyes(true)
-                                "What do I do?"
-                                0::"Loot <Actor.him_or_her>"
-                                1::"Fuck <Actor.him_or_her>"
-                                99::"Nothing"
-                                                
-                                If 0
-                                    FindMoney = random(20, 500)
-                                    FindMoney_Loc = FindMoney.convertToLocalCurrency()
-                                    FindWeedg = random(2, 7) 
-                                    WeedVar = random(1, 4)
-                                    WeedVar = WeedVar.round()
-                                    If WeedVar == 1
-                                        VarWeed = "<FindWeedg>g of Sunset Sherbet"
-                                        Player.modifyActorVar(stock_SSweed, FindWeedg)
-                                    ElseIf WeedVar == 2
-                                        divideWeed = FindWeedg/2
-                                        divideWeed2 = FindWeedg/2
-                                        VarWeed = "<divideWeed>g of Bruce Banner and <divideWeed2>g of Gorilla Glue"
-                                        Player.modifyActorVar(stock_BBweed, divideWeed)
-                                        Player.modifyActorVar(stock_GGweed, divideWeed2)
-                                    ElseIf WeedVar == 3
-                                        divideWeed = FindWeedg/2
-                                        divideWeed1 = FindWeedg/2
-                                        divideWeed2 = FindWeedg/2
-                                        VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
-                                        Player.modifyActorVar(stock_SSweed, divideWeed)
-                                        Player.modifyActorVar(stock_GGweed, divideWeed2)
-                                        Player.modifyActorVar(stock_AK47weed, divideWeed1)
-                                    ElseIf WeedVar == 4
-                                        divideWeed = FindWeedg/2
-                                        divideWeed1 = FindWeedg/2
-                                        divideWeed2 = FindWeedg/2
-                                        divideWeed3 = FindWeedg/2
-                                        VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed3>g of Pineapple Express, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
-                                        Player.modifyActorVar(stock_SSweed, divideWeed)
-                                        Player.modifyActorVar(stock_AK47weed, divideWeed1)
-                                        Player.modifyActorVar(stock_GGweed, divideWeed2)
-                                        Player.modifyActorVar(stock_PEweed, divideWeed3)
+                                If IlAPerdu
+                                    "I win the fight, <Actor.he_or_she> will stay quiet for a few..."
+                                    "<Actor2.name> get scared and runs away..."
+                                    Actor.animate(knockedout)
+                                    Actor.closeEyes(true)
+                                    "What do I do?"
+                                    0::"Loot <Actor.him_or_her>"
+                                    1::"Fuck <Actor.him_or_her>"
+                                    99::"Nothing"
+                                                    
+                                    If 0
+                                        FindMoney = random(20, 500)
+                                        FindMoney_Loc = FindMoney.convertToLocalCurrency()
+                                        FindWeedg = random(2, 7) 
+                                        WeedVar = random(1, 4)
+                                        WeedVar = WeedVar.round()
+                                        If WeedVar == 1
+                                            VarWeed = "<FindWeedg>g of Sunset Sherbet"
+                                            Player.modifyActorVar(stock_SSweed, FindWeedg)
+                                        ElseIf WeedVar == 2
+                                            divideWeed = FindWeedg/2
+                                            divideWeed2 = FindWeedg/2
+                                            VarWeed = "<divideWeed>g of Bruce Banner and <divideWeed2>g of Gorilla Glue"
+                                            Player.modifyActorVar(stock_BBweed, divideWeed)
+                                            Player.modifyActorVar(stock_GGweed, divideWeed2)
+                                        ElseIf WeedVar == 3
+                                            divideWeed = FindWeedg/2
+                                            divideWeed1 = FindWeedg/2
+                                            divideWeed2 = FindWeedg/2
+                                            VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
+                                            Player.modifyActorVar(stock_SSweed, divideWeed)
+                                            Player.modifyActorVar(stock_GGweed, divideWeed2)
+                                            Player.modifyActorVar(stock_AK47weed, divideWeed1)
+                                        ElseIf WeedVar == 4
+                                            divideWeed = FindWeedg/2
+                                            divideWeed1 = FindWeedg/2
+                                            divideWeed2 = FindWeedg/2
+                                            divideWeed3 = FindWeedg/2
+                                            VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed3>g of Pineapple Express, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
+                                            Player.modifyActorVar(stock_SSweed, divideWeed)
+                                            Player.modifyActorVar(stock_AK47weed, divideWeed1)
+                                            Player.modifyActorVar(stock_GGweed, divideWeed2)
+                                            Player.modifyActorVar(stock_PEweed, divideWeed3)
+                                        EndIf
+                                        "You find <FindMoney_Loc> and <FindWeedg>g of weeds! <VarWeed>."
+                                        mood += 1
+                                        money += FindMoney
+                                    ElseIf 1
+                                        Player.dressExcept(Outerwear, Bottom)
+                                        Actor.strip()
+                                        Filter(Aggressive)
+                                        SexNoAffair(Player, Actor)
+                                        If HungerEnable > 0
+                                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                                        EndIf
+                                        passTime(0.50, 1.50)
                                     EndIf
-                                    "You find <FindMoney_Loc> and <FindWeedg>g of weeds! <VarWeed>."
-                                    mood += 1
-                                    money += FindMoney
-                                ElseIf 1
-                                    Player.dressExcept(Outerwear, Bottom)
-                                    Actor.strip()
-                                    Filter(Aggressive)
-                                    SexNoAffair(Player, Actor)
-                                    If HungerEnable > 0
-                                        Player.modifyActorVar(rk_VB_Hunger, -2)
-                                    EndIf
-                                    passTime(0.50, 1.50)
                                 EndIf
                             EndIf
                         EndIf
@@ -484,6 +479,5 @@ OTHER: isAtHome()
                 "Unfortunately for me, their doors were fully closed and all the curtains were pulled down. There's no way I can get a look in ..."
             EndIf
         EndIf
-
     SceneEnd() // Improved by Raddeck
     timeout(400, fraternity_peep)

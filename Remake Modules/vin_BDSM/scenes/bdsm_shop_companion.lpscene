@@ -1,7 +1,7 @@
 WHAT: all
 WHERE: all
 WHEN: 0-24
-WHO: Actor = getCompanion(); If Random(50, 100) < Actor:perversion && !Actor.isAsexual() && Actor:likes_bondage > 0
+WHO: Actor = getCompanion(); If random(50, 100) < Actor:perversion && !Actor.isAsexual() && Actor:likes_bondage > 0
 OTHER: !Player.isMale()
 
     SceneStart()
@@ -40,14 +40,14 @@ OTHER: !Player.isMale()
                     "I can't believe I just did that, have I turned in a bit of a bondage whore?"
                 Else
                     "Sensing my objection, <Actor.name> decided to leave me alone." 
-                Endif
+                EndIf
             Else
                 If !Actor.isMale()
                     Actor:: "Let me try on some as well. I'll ask the shop assistant to help me out ..."
                     Actor2 = generatePersonTemporary()
                     While !Actor.isInterestedIn(Actor2)
                         Actor2 = generatePersonTemporary()
-                    Endwhile
+                    EndWhile
                     Actor2.dress()
                     Actor2.show()
                     Actor2(Curious):: "Yes, <Actor.Sir_or_Madam>, how can I help?"
@@ -76,15 +76,14 @@ OTHER: !Player.isMale()
                         perversion += 1
                     Else
                         Sex(Actor2, Actor)
-                    Endif
+                    EndIf
                 Else
                     "Once we're done, we continue hanging out."
-                Endif
-            Endif
+                EndIf
+            EndIf
         Else
             Player(Sad):: "Sorry, but this isn't my thing at all ..."
             Actor:rapportwithplayer -= 1
-        Endif
-    
+        EndIf
     SceneEnd() // scene improved by Raddeck
     timeout(100, bdsm_shop_companion)

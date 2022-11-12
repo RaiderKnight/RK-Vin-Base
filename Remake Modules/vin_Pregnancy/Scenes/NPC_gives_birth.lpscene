@@ -6,6 +6,7 @@ OTHER: none
 
     SceneStart()
         If !Actor.isMale()
+            tag_Pregnant = Actor.getActorVar(tag_Pregnant)
             If Player.isMale() || Player.isTrans()
                 Days = Actor.countPregnancyDays()
                 If Days > 280
@@ -21,13 +22,12 @@ OTHER: none
                         Actor.endPregnancy()
                         Actor.dress()
                         Actor.show(2)
+                        Actor2 = Actor.generatePersonMatchRace()
                         Actor.setActorVar(tag_Pregnant, 0)
                         If BioDaddy.isValid() && !BioDaddy.isCreature()
                             Actor2.blendAppearanceFrom(BioDaddy, Actor)
-                        Else
-                            Actor2 = Actor.generatePersonMatchRace()
                         EndIf
-                        Actor2:age => 0
+                        Actor2:age => 18
                         Actor2.randomizeFace()
                         Actor2.randomizeHairs()
                         addNpcRelationship(ParentChild, Actor, Actor2)
@@ -43,7 +43,8 @@ OTHER: none
                                 "Of course, by fucking and impregnating <Actor.name> in the first place, I have cucked <Actor.his_or_her> <Actor3.boyfriend_or_girlfriend> <Actor3.name>. Let's see if he ever finds out that the baby isn't his."
                                 Past = Actor3.getActorVar(tag_NTRCuck)
                                 If Past > 0
-                                    "Of course, there's no reason at all to hide that baby is mine, since <Actor3.name> is a willing cuck and is the one who asks me to fuck his <Actor.boyfriend_or_girlfriend> in the first place. I'm sure the pathetic cuckold will be more than happy to bring up the lovechildren of his <Actor.boyfriend_or_girlfriend> and her favorite bull."
+                                    "Of course, there's no reason at all to hide that baby is mine, since <Actor3.name> is a willing cuck and is the one who asks me to fuck his <Actor.boyfriend_or_girlfriend> in the first place."
+                                    "I'm sure the pathetic cuckold will be more than happy to bring up the lovechildren of his <Actor.boyfriend_or_girlfriend> and her favourite bull."
                                     "In fact, now that <Actor.name> has given birth, I probably should visit the couple soon and try to impregnate her again. It would be quite something to create a family full of my love-children."
                                 ElseIf random(0, 100) < Actor3:intelligence || !Actor3.isSameEthnic(Player)
                                     "Unfortunately, <Actor.name> must have been a terrible liar or the baby's physical features at birth had made it obvious that the baby wasn't <Actor3.name>'s."
@@ -63,7 +64,7 @@ OTHER: none
                                         If 0
                                             Actor.dress()
                                             Actor.show()
-                                            "Soon enough, as soon as <Actor.name> becomes fertile again, I have another secret rendezvous with her. Only this time, it isn't so secret, as <Actor3.name> was kind enough to arrange the whole thing and is even there to watch the whole thing."
+                                            "Soon enough, as soon as <Actor.name> becomes fertile again, I have another secret rendez-vous with her. Only this time, it isn't so secret, as <Actor3.name> was kind enough to arrange the whole thing and is even there to watch the whole thing."
                                             Sex(Player, Actor)
                                             If !Actor.isPregnant()
                                                 Actor.impregnate(Player)
@@ -76,7 +77,7 @@ OTHER: none
                                         Dating = getSpecific(Dating)
                                         "<Actor3.name> has already found out and forgiven <Actor.name>. He agreed to accept the innocent child as his. However, he doesn't let me off the hook easily and demand I pay him a lump sum now as a sort of unofficial child support."
                                         0:: "Pay up"
-                                        1:: Dating.isValid() && Actor3.isInterestedIn(Dating):: "You can fuck my <Dating.boyfriend_or_girlfriend> <Daing.name> as payback"
+                                        1:: Dating.isValid() && Actor3.isInterestedIn(Dating):: "You can fuck my <Dating.boyfriend_or_girlfriend> <Dating.name> as payback"
                                         2:: "Refuse"
                                         
                                         If 0
@@ -178,6 +179,7 @@ OTHER: none
                                         "The baby is clearly not mine. I made that clear to <Actor.name>, who could no longer make any excuses."
                                         "I broke up with <Actor.name> right there and then and wanted nothing to do with this child."
                                         If Actor.isDating()
+                                            Actor.setDatingId()
                                             loseDating()
                                         EndIf
                                     EndIf
@@ -315,7 +317,7 @@ OTHER: none
                                         Actor91:age => 0
                                         GDEnough = true
                                     EndIf
-                                    If !GDEnough && [random(0, 200) < Actor:fertility || [Random(0, 50) < Actor:fertility && [Actor.isRace(Orc) || BioDaddy.isRace(Orc)]]]
+                                    If !GDEnough && [random(0, 200) < Actor:fertility || [random(0, 50) < Actor:fertility && [Actor.isRace(Orc) || BioDaddy.isRace(Orc)]]]
                                         Actor5 = Actor.generateRelativeMatchRace()
                                         Actor5:age => 0
                                         Actor5.randomizeFace()
@@ -329,13 +331,12 @@ OTHER: none
                                         "It's a <Actor5.boy_or_girl>! What should I name my <Actor5.son_or_daughter>?"
                                         Actor5.enterFirstName()
                                         children += 1
-                                        If random(0, 200) < Actor:fertility || [Random(0, 100) < Actor:fertility && [Actor.isRace(Orc) || BioDaddy.isRace(Orc)]]
+                                        If random(0, 200) < Actor:fertility || [random(0, 100) < Actor:fertility && [Actor.isRace(Orc) || BioDaddy.isRace(Orc)]]
                                             Actor6 = Actor.generateRelativeMatchRace()
                                             Actor6:age => 0
                                             Actor6.randomizeFace()
                                             Actor6.randomizeHairs()
                                             TheDoctor(Happy)::"No Wait! She's having triplets!"
-                                            
                                             If BioDaddy.isValid() && !BioDaddy.isCreature()
                                                 Actor6.blendAppearanceFrom(BioDaddy, Actor)
                                             EndIf
@@ -358,7 +359,7 @@ OTHER: none
                                     If 0
                                         secondScreen(BioDaddy)
                                         BioDaddy.show()
-                                        "After some detective work, I became certain that the baby daddy is called <BioDaddy.name>. I also found out where he lived."\
+                                        "After some detective work, I became certain that the baby daddy is called <BioDaddy.name>. I also found out where he lived."
                                         setBackgroundCustom(livingroom)
                                         secondScreen()
                                         If isModEnabled(vin_NTR) && random(50, 200) < masochist + Actor:perversion                                   
@@ -397,6 +398,7 @@ OTHER: none
                                 Actor:attractiontoplayer -= 50
                                 Actor:rapportwithplayer -= 50
                                 If Actor.isDating()
+                                    Actor.setDatingId()
                                     loseDating()
                                     "Needless to say though, <Actor.name> promptly broke up with me ..."
                                 EndIf
@@ -411,7 +413,7 @@ OTHER: none
                 Actor.show(2)
                 Actor.setActorVar(tag_Pregnant, 0)
                 Actor2 = Actor.generatePersonMatchRace()
-                Actor2:age => 0
+                Actor2:age => 18
                 Actor2.randomizeFace()
                 Actor2.randomizeHairs()
                 addNpcRelationship(ParentChild, Actor, Actor2)

@@ -5,7 +5,6 @@ WHO: none
 OTHER: none
 
     SceneStart()
-        
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         FacebookFriend = rk_VB_FacebookFriend.getGlobal()
@@ -13,12 +12,9 @@ OTHER: none
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Actor = a1.getActorAlias()
         Actor2 = a2.getActorAlias()
-        
         relation = sabotage_relation.getGlobal()
         detection = sabotage_detection.getGlobal()
-        
         If relation <= 0
-        
             "Hmm, a new Facebook update ..."
             Actor.dress()
             Actor.show(2)
@@ -26,15 +22,13 @@ OTHER: none
             Actor2.show(3)
             "<Actor.name> <Actor.name_last> is now single."
             "<Actor2.name> <Actor2.name_last> is now single."
-            removeNPCRelationship(Actor, Actor2)
+            removeNpcRelationship(Actor, Actor2)
             "Haha! My sabotage effort worked out perfectly. Their relationship never stood a chance."
             sneak += 1
             karma -= 10
             intelligence += 5
-            QuestEnd()
-            
-        Elseif detection >= 100
-        
+            questEnd()
+        ElseIf detection >= 100
             Actor.dress()
             Actor.show(2)
             Actor2.dress()
@@ -51,13 +45,9 @@ OTHER: none
             Actor2:attractiontoplayer => -100
             sneak -= 10
             mood -= 5
-            QuestEnd()
-            
+            questEnd()
         Else
-        
             "The current relationship strength between <Actor.name> and <Actor2.name> is <relation>."
             "The level of suspicion they have about my sabotaging attempt is <detection>."
-            
-        Endif
-    
+        EndIf
     SceneEnd() // Improved by Raddeck

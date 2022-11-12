@@ -4,8 +4,7 @@ WHEN: 0 - 24
 WHO: Actor = getPerson(tag_john); Actor2 = getRelative(); If Actor.isInterestedIn(Actor2) && Actor2.isInterestedIn(Actor)
 OTHER:
 
-    // One of your regular Johns brings a friend and you serve them, although your John's friend was initially reluctant having just started a committed relationship with someone (who your John hasn't even met), but they gave in to peer pressure in the end. A few days later, you get confronted by a relative you thought were single, who told you that the reluctant guy/girl you served earlier was their brand new boyfriend/girlfriend! They demand that you bring them along the next time your regular John calls you, for the perfect revenge.
-
+    
     SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
@@ -23,31 +22,30 @@ OTHER:
                 Actor3 = generatePersonTemporary()
                 While !Actor.isSameGender(Actor3)
                     Actor3 = generatePersonTemporary()
-                Endwhile
-            Endif
+                EndWhile
+            EndIf
             "Why not? <Actor.name> is always generous and this isn't my first threesome ..."
             secondScreen()
-            SetBackground(home)
+            setBackground(home)
             Actor3.dress()
             Actor3.show()
             Actor.dress()
             Actor.show()
             "I arrive at a nice hotel room where <Actor.name> and <Actor.his_or_her> friend <Actor3.name> were already there waiting for me."
             "<Actor3.name> was initially reluctant, apparently being in a committed relationship with someone."
-            Actor:: "Give me a break! How committed can your relationship be if I'm your best friend and I haven't even met <Actor2.him_or_her>! Just relax and have some fun!"
+            Actor(Annoyed):: "Give me a break! How committed can your relationship be if I'm your best friend and I haven't even met <Actor2.him_or_her>! Just relax and have some fun!"
             "<Actor3.name> gave in to peer pressure in the end. For my part, I didn't care much, I was there to provide a service and earn that cash."
             Sex(Actor, Actor3, Player)
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -3)
             EndIf
-            money += Random(300, 500)
+            money += random(300, 500)
             Actor:: "I filmed the whole thing by the way. I'll send you the video to you later on, <Actor3.name> ..."
             Actor3:: "Oh, no need to do this ..."
             Actor:: "Come on, it's a good memory that us friends share together, don't you think?"
             "Something tells me that sending a threesome sex tape to someone in a committed relationship was probably a disaster waiting to happen, but none of my business."
             Actor.hide()
             Actor3.hide()
-            
             setBackgroundCustom(livingroom)
             Actor2.dress()
             Actor2.show()
@@ -59,7 +57,7 @@ OTHER:
             Player:: "I swear I didn't know ... I wouldn't have done it if I knew ..."
             Player:: "Besides, your <Actor3.boyfriend_or_girlfriend> didn't really want to cheat on you, <Actor3.he_or_she> was uncomfortable with the whole thing. It's <Actor3.his_or_her> friend's idea."
             Actor2:: "It's the other <Actor.guy_or_girl> in the video, right?"
-            Player:: "Yeah, <Actor.his_or_her> name is <Actor.name>. <Actor.He_or_She> is one of my regulars ... They're best friends aparently."
+            Player:: "Yeah, <Actor.his_or_her> name is <Actor.name>. <Actor.He_or_She> is one of my regulars ... They're best friends apparently."
             Actor2:: "How comes my <Actor3.boyfriend_or_girlfriend> never introduced me to this 'best friend' of <Actor3.his_or_hers>? What other sick things have they been doing together, I wonder?"
             Actor2:: "You know what ... I have an idea ... You owe me one."
             Actor2:: "Bring me along whenever you go see <Actor.name> next. Just tell <Actor.him_or_her> I'm new to the job."
@@ -86,10 +84,9 @@ OTHER:
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -3)
                     EndIf
-                Endif
+                EndIf
                 "Aside from paying <Actor2.name> enough to pay off <Actor2.his_or_her> debt, <Actor.name> also gave me a big tip for introducing <Actor2.name> to <Actor.him_or_her>."
-                money += Random(200, 400)
-                
+                money += random(200, 400)
                 If Actor3.isTemporary()
                     "Of course, my <Actor2.relationship> filmed the whole thing and sent it to <Actor2.his_or_her> <Actor3.boyfriend_or_girlfriend> before breaking up with <Actor3.him_or_her> ..."
                     "<Actor2.He_or_She> got <Actor2.his_or_her> revenge. When <Actor.name> found out that I set <Actor.him_or_her> up to unknowingly betray <Actor.his_or_her> friend, <Actor.he_or_she> also cut contact with me and never asked for my service again."
@@ -100,11 +97,11 @@ OTHER:
                     "My <Actor2.relationship> did film the whole thing but lost <Actor2.his_or_her> nerve in the end and didn't actually send it to <Actor2.his_or_her> <Actor3.boyfriend_or_girlfriend> ..."
                     "Miraculously, they stayed together. I guess my <Actor2.relationship> already got the satisfaction of revenge and that was enough for <Actor2.him_or_her>."
                     "I would love to see <Actor.name>'s face whenever <Actor3.name> finally decides to introduce my <Actor2.relationship> to <Actor3.his_or_her> best friend though."
-                Endif
+                EndIf
             Else
                 "My <Actor2.relationship> got really angry and our relationship was seriously damaged."
                 Actor2:rapportwithplayer -= 30
-            Endif
-        Endif
+            EndIf
+        EndIf
     SceneEnd // Improved by Raddeck()
     timeout(300, john_regular_relative)

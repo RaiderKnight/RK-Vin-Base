@@ -1,11 +1,10 @@
 WHAT: all
 WHERE: home
 WHEN: 0 - 24
-WHO: Dating = getSpecific(Dating); If Dating.isDominantSex(Player) && Dating:attractiontoplayer < -5 && Dating:martial > Random(65, 100) && Dating:masochist < -50
+WHO: Dating = getSpecific(Dating); If Dating.isDominantSex(Player) && Dating:attractiontoplayer < -5 && Dating:martial > random(65, 100) && Dating:masochist < -50
 OTHER: !isWithCompanion()
 
     SceneStart()
-    
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         Dating.dress()
@@ -16,51 +15,47 @@ OTHER: !isWithCompanion()
         1:: "Leave <Dating.name>"
     
         If 0
-            
             Dating(Furious)::"So you don't want to answer...."
             "I don't know if I'm crazy or just stupid, but somehow I keep on accepting the physical and emotional abuses <Dating.name> brings me. I just couldn't get away from this monster."
-            masochist += Random(0, 2)
-            mood -= Random(0, 100)
-            energy -= Random(0, 100)
-            fitness -= Random(0, 1)
-            attractiveness -= Random(0, 1)
-            interpersonal -= Random(0, 1)
-            intelligence -= Random(0, 1)
-            
+            masochist += random(0, 2)
+            mood -= random(0, 100)
+            energy -= random(0, 100)
+            fitness -= random(0, 1)
+            attractiveness -= random(0, 1)
+            interpersonal -= random(0, 1)
+            intelligence -= random(0, 1)
             If masochist > 50
-            
                 Dating(Furious)::"Undress little bitch, let me taste your body to check if you get fucked by someone else, you're hiding something...."
                 "I undressed rapidly and .... <Dating.name> started to fuck me!"
-                Dating:attractiontoplayer += Random(0, 2)
-                Dating:rapportwithplayer += Random(0, 2)
+                Dating:attractiontoplayer += random(0, 2)
+                Dating:rapportwithplayer += random(0, 2)
                 mood -= 5
                 Sex(Dating, Player)
                 If HungerEnable > 0
                      Player.modifyActorVar(rk_VB_Hunger, -1)
                 EndIf
-                masochist += Random(0, 2)
-            
-            Endif
-            
+                masochist += random(0, 2)
+            EndIf
         Else
             "Enough is enough. I don't want <Dating.him_or_her> in jail but I also don't have to put up with this!"
             If isPlayerMarried()
                 Player(Crying):: "I cannot put up with this abusive marriage any longer ..."
                 "And just like that, I divorced that abusive <Dating.husband_or_wife> of mine ..."
                 mood -= 100
+                Dating.setDatingId()
                 Divorce()
-                LoseDating()
+                loseDating()
                 If Player.isDominantSex(Dating) && money > 1000
                     "Unfortunately for me, the court awarded half of my hard-earned fortune to <Dating.name> ... What a disaster of a marriage that was ..."
                     money -= money*0.5
-                Endif        
+                EndIf        
             Else
                 "I ran away from my abusive <Dating.boyfriend_or_girlfriend>, telling <Dating.him_or_her> it was all over."
-                LoseDating()
+                Dating.setDatingId()
+                loseDating()
                 mood -= 50
-            Endif
+            EndIf
             blockContact(Dating)
-        Endif
-    
+        EndIf
         timeout(250, domestic_violence)
     SceneEnd() // Scene improved by Raddeck

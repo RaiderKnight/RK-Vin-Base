@@ -1,12 +1,138 @@
 WHAT: all
 WHERE: university:school
 WHEN: 0-24
-WHO: Actor = getSpecific(Lecturer); If Actor.isInterestedIn(Player) && !Actor.hadSex()
+WHO: Actor = getPerson(rk_VB_tag_Major); If Actor.isInterestedIn(Player) && !Actor.hadSex()
 OTHER: pornfame > 0
 
-    // If you're a unversity student who's also a por nstan, you go to a lecturer's office for help with an assignment. You notice this lecturer seems strangely nervous around you. It all makes sense when they bring up their web browser to show you something related to the assignment, only for you to notice your Por nhub profile as one of their bookmarks. You can either pretend not to see it, or seduce your secret fan. Once you've slept with them once, they will find regular excuses to be alone with you in their office.
-    
+   
     SceneStart()
+        choiceCourseMajor = rk_VB_choiceCourseMajor.getGlobal()
+        MajorTeacher = rk_VB_Major_Teacher.getGlobal()
+        tagTAR = Actor.getActorVar(rk_VB_tag_TAR)
+        tagTCE = Actor.getActorVar(rk_VB_tag_TCE)
+        tagTCL = Actor.getActorVar(rk_VB_tag_TCL)
+        tagTCS = Actor.getActorVar(rk_VB_tag_TCS)
+        tagTEC = Actor.getActorVar(rk_VB_tag_TEC)
+        tagTED = Actor.getActorVar(rk_VB_tag_TED)
+        tagTEN = Actor.getActorVar(rk_VB_tag_TEN)
+        tagTGE = Actor.getActorVar(rk_VB_tag_TGE)
+        tagTHI = Actor.getActorVar(rk_VB_tag_THI)
+        tagTLA = Actor.getActorVar(rk_VB_tag_TLA)
+        tagTMA = Actor.getActorVar(rk_VB_tag_TMA)
+        tagTME = Actor.getActorVar(rk_VB_tag_TME)
+        tagTMU = Actor.getActorVar(rk_VB_tag_TMU)
+        tagTPH = Actor.getActorVar(rk_VB_tag_TPH)
+        tagTPS = Actor.getActorVar(rk_VB_tag_TPS)
+        tagTPOL = Actor.getActorVar(rk_VB_tag_TPOL)
+        tagTSM = Actor.getActorVar(rk_VB_tag_TSM)
+        tagTDM = Actor.getActorVar(rk_VB_tag_TDM)
+        tagTVE = Actor.getActorVar(rk_VB_tag_TVE)
+        tagTTT = Actor.getActorVar(rk_VB_tag_TTT)
+        If Actor.isValid()
+            If tagTAR >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TAR)
+                Architecture_Major_Actor = Actor.getActorVar(rk_VB_Architecture_Major_Actor)
+            ElseIf tagTCE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TCE)
+                Chemical_Engineering_Major_Actor = Actor.getActorVar(rk_VB_Chemical_Engineering_Major_Actor)
+            ElseIf tagTCL >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TCL)
+                Classics_Major_Actor = Actor.getActorVar(rk_VB_Classics_Major_Actor)
+            ElseIf tagTCS >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TCS)
+                Computer_Science_Major_Actor = Actor.getActorVar(rk_VB_Computer_Science_Major_Actor)
+            ElseIf tagTEC >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TEC)
+                Economics_Major_Actor = Actor.getActorVar(rk_VB_Economics_Major_Actor)
+            ElseIf tagTED >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TED)
+                Education_Major_Actor = Actor.getActorVar(rk_VB_Education_Major_Actor)
+            ElseIf tagTEN >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TEN)
+                English_Major_Actor = Actor.getActorVar(rk_VB_English_Major_Actor)
+            ElseIf tagTGE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TGE)
+                Geography_Major_Actor = Actor.getActorVar(rk_VB_Geography_Major_Actor)
+            ElseIf tagTHI >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_THI)
+                History_Major_Actor = Actor.getActorVar(rk_VB_History_Major_Actor)
+            ElseIf tagTLA >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TLA)
+                Law_Major_Actor = Actor.getActorVar(rk_VB_Law_Major_Actor)
+            ElseIf tagTMA >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TMA)
+                Mathematics_Major_Actor = Actor.getActorVar(rk_VB_Mathematics_Major_Actor)
+            ElseIf tagTME >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TME)
+                Medicine_Major_Actor = Actor.getActorVar(rk_VB_Medicine_Major_Actor)
+            ElseIf tagTMU >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TMU)
+                Music_Major_Actor = Actor.getActorVar(rk_VB_Music_Major_Actor)
+            ElseIf tagTPH >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TPH)
+                Philosophy_Major_Actor = Actor.getActorVar(rk_VB_Philosophy_Major_Actor)
+            ElseIf tagTPS >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TPS)
+                Psychology_Major_Actor = Actor.getActorVar(rk_VB_Psychology_Major_Actor)
+            ElseIf tagTPOL >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TPOL)
+                Political_Sciences_Major_Actor = Actor.getActorVar(rk_VB_Political_Sciences_Major_Actor)
+            ElseIf tagTSM >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TSM)
+                SalesMarketing_Major_Actor = Actor.getActorVar(rk_VB_SalesMarketing_Major_Actor)
+            ElseIf tagTDM >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TDM)
+                Dental_Major_Actor = Actor.getActorVar(rk_VB_Dental_Major_Actor)
+            ElseIf tagTVE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TVE)
+                Veterinary_Major_Actor = Actor.getActorVar(rk_VB_Veterinary_Major_Actor)
+            ElseIf tagTTT >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TTT)
+                TravelTourism_Major_Actor = Actor.getActorVar(rk_VB_TravelTourism_Major_Actor)
+            EndIf
+            //Actor = getPerson(rk_VB_tag_Major)
+        EndIf
+        If choiceCourseMajor == 1
+            TextMajorChosen = "architecture"
+        ElseIf choiceCourseMajor == 2
+            TextMajorChosen = "chemical engineering"
+        ElseIf choiceCourseMajor == 3
+            TextMajorChosen = "classics"
+        ElseIf choiceCourseMajor == 4
+            TextMajorChosen = "computer science"
+        ElseIf choiceCourseMajor == 31
+            TextMajorChosen = "dental"
+        ElseIf choiceCourseMajor == 5
+            TextMajorChosen = "economics"
+        ElseIf choiceCourseMajor == 6
+            TextMajorChosen = "education"
+        ElseIf choiceCourseMajor == 7
+            TextMajorChosen = "English"
+        ElseIf choiceCourseMajor == 8
+            TextMajorChosen = "geography"
+        ElseIf choiceCourseMajor == 9
+            TextMajorChosen = "history"
+        ElseIf choiceCourseMajor == 10
+            TextMajorChosen = "law"
+        ElseIf choiceCourseMajor == 11
+            TextMajorChosen = "mathematics"
+        ElseIf choiceCourseMajor == 12
+            TextMajorChosen = "medicine"
+        ElseIf choiceCourseMajor == 13
+            TextMajorChosen = "music"
+        ElseIf choiceCourseMajor == 14
+            TextMajorChosen = "philosophy"
+        ElseIf choiceCourseMajor == 15
+            TextMajorChosen = "psychology"
+        ElseIf choiceCourseMajor == 16
+            TextMajorChosen = "political sciences"
+        ElseIf choiceCourseMajor == 60
+            TextMajorChosen = "sales and marketing"
+        ElseIf choiceCourseMajor == 80
+            TextMajorChosen = "travel and tourism"
+        ElseIf choiceCourseMajor == 90
+            TextMajorChosen = "veterinary"
+        EndIf
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -14,21 +140,14 @@ OTHER: pornfame > 0
         dressFormal()
         Actor.dress()
         Actor.show(2)
-        
         Fan = Actor.getActorVar(tag_pornfan)
-        
         If Fan == 0   
-            "My <Actor.Major> lecturer, Dr <Actor.name_last>, set out an important individual assignment for the whole class at the end of <Actor.his_or_her> last lecture. Unfortunately, running out of time, <Actor.he_or_she> didn't do a great job in explaining it."
-            
+            "My <TextMajorChosen> lecturer, Dr <Actor.name_last>, set out an important individual assignment for the whole class at the end of <Actor.his_or_her> last lecture. Unfortunately, running out of time, <Actor.he_or_she> didn't do a great job in explaining it."
             "Quite a few of my classmates already paid <Actor.him_or_her> a visit to understand the assignment. At this point, it would almost be a disadvantage if I don't go."
-            
             setBackground(bank)
-            
             "I decided to pop in to see <Actor.him_or_her> during today's office hours."
-            
             Actor:: "<Player.Mr_or_Ms> <Player.name_last> ... How can I help?"
             "Dr <Actor.name_last> explained the assignment to me in better depth. However, I couldn't help but sense certain nervousness and awkwardness in <Actor.his_or_her> voice around me, which is strange because <Actor.he_or_she> is used to speaking publicly to hundreds of students at the same time."
-            
             Actor:: "Here. If you look on my computer screen, I'll show you ..."
             
             "It all makes sense when <Actor.him_or_her> bring up <Actor.his_or_her> web browser to show you something related to the assignment, only for me to notice my Pornhub profile as one of <Actor.his_or_her> bookmarks."
@@ -53,7 +172,7 @@ OTHER: pornfame > 0
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
-            Endif
+            EndIf
         Else
             "I previously found out that Dr <Actor.name_last> knew about my porn career and became quite a fan of my videos."
             "I decided to go ahead and seduce <Actor.him_or_her>."
@@ -70,9 +189,7 @@ OTHER: pornfame > 0
                 EndIf
             Else
                 timeout(300, porn_uni_lecturer)
-            Endif
-        Endif
-    
+            EndIf
+        EndIf
     SceneEnd() // Improved by Raddeck
-    
     timeout(100, porn_uni_lecturer)

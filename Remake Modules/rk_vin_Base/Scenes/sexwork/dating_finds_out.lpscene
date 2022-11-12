@@ -20,18 +20,20 @@ OTHER: Random(0, 1000) < pornfame/intelligence
             Actor(Sad):: "I'm afraid this marriage isn't working ..."
             "And just like that, <Actor.name> divorced me ..."
             mood -= 100
+            Actor.setDatingId()
             Divorce()
-            LoseDating()
+            loseDating()
             If Player.isDominantSex(Actor) && money > 1000
                 "To make matters worse, the court awarded half of my hard-earned fortune to <Actor.name> ... What a disaster of a marriage that was ..."
                 money -= money*0.5
-            Endif        
+            EndIf        
         Else
             "And just like that, <Actor.name> broke up with me ... What's more - I found out later that <Actor.he_or_she> also blocked my number."
-            LoseDating()
+            Actor.setDatingId()
+            loseDating()
             mood -= 50
-        Endif
+        EndIf
         blockContact(Actor)
-        Actor:attractiontoplayer -= Random(0, 100)
+        Actor:attractiontoplayer -= random(0, 100)
         
     SceneEnd() // Improved by Raddeck

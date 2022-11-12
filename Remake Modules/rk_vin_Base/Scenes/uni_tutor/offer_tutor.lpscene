@@ -5,7 +5,10 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Tutor = Actor.getActorVar(tag_Tutor)
         Tutee = Actor.getActorVar(tag_Tutee)
         If Tutor + Tutee > 0
@@ -19,8 +22,11 @@ OTHER: none
                 Actor.setActorVar(tag_Tutor, 1)
             Else
                 Actor.setActorVar(tag_Tutee, 1)
-            Endif
-            "<Actor.name> accepted my offer."
-        Endif
-        
+            EndIf
+            If Actor.isInterestedIn(Player)
+                "<Actor.name> accepted my offer."
+            Else
+                "<Actor.name> refused my offer."
+            EndIf
+        EndIf
     SceneEnd() // Improved by Raddeck

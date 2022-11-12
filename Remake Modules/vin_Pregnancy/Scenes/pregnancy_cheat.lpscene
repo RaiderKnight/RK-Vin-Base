@@ -18,6 +18,7 @@ OTHER:
         2:: "Help me get impregnated by <Actor2.name>'s man to make it even!"
         
         If 0
+            Actor.setDatingId()
             loseDating()
             "I decided to dump <Actor.name> right away. This affair was unforgivable and I wanted nothing to do with a man with a baggage as large as a lovechild."
         ElseIf 1
@@ -25,7 +26,7 @@ OTHER:
             karma += 50
             "<Actor.name> couldn't believe my open-mindedness and tell me that <Actor.he_or_she> was so lucky to have a <Player.boyfriend_or_girlfriend> like me."
         Else
-            "I know that <Actor.name> is also friends with <Actor2.name>'s man, which makes this a double betrayal. I sugget that he makes it right."
+            "I know that <Actor.name> is also friends with <Actor2.name>'s man, which makes this a double betrayal. I suggest that he makes it right."
             "He eventually agrees."
             setBackgroundCustom(livingroom)
             Actor3 = Actor.getRelatedPerson(Dating, Spouses)
@@ -35,6 +36,7 @@ OTHER:
                     Actor3 = generatePersonTemporary()
                 EndWhile
                 Actor3:age => random(18, 40)
+                Actor3.randomizeFace()
                 Actor3.randomizeFace()
                 Actor3.randomizeHairs()
                 Actor3.makePermanent()

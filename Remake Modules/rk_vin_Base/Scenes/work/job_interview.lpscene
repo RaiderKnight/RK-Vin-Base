@@ -4,8 +4,8 @@ WHEN: 0-24
 WHO: none
 OTHER: none
 
-    HadSex = false
     SceneStart()
+        HadSex = false
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         Boss_Sucker = Player.getActorVar(rk_VB_Boss_Sucker)
@@ -15,7 +15,7 @@ OTHER: none
         If Player.isNaked()
             Player.dress()
         EndIf
-        "I discovered a open vacancy at this company for someone with my experience. I calculated that I could take home around <SalaryConverted> per month with this job."
+        "I discovered a open position at this company for someone with my experience. I calculated that I could take home around <SalaryConverted> per month with this job."
         "Should I apply for this position?"
         0:: "Yes"
         1:: "No"
@@ -47,20 +47,15 @@ OTHER: none
                 EndIf
                 Player.animate()
                 setBackground(work)
-
                 "The day of the interview ..."
-                
                 "I hope I'm smartly dressed enough ..."
-                
                 Boss = generatePerson()
-    
                 If random(0,1) < 0.7
                     Random
                         Boss.blendPreset(workaholic)
                         Boss.blendPreset(workhard_playhard)
                     EndRandom
                 EndIf
-    
                 If random(0,1) < 0.95
                     Random
                         Boss.blendPreset(fourties)
@@ -68,18 +63,15 @@ OTHER: none
                         Boss.blendPreset(sixties)        
                     EndRandom
                 EndIf
-                    
+                Boss.randomizeRace()   
                 Boss.randomizeFace()
                 Boss.randomizeHairs()
-                    
                 Boss.dress()
                 Boss.show(2)
                 Boss.moveToPerson(Player)
-
                 Boss(Happy):: "I'm the Managing Director, <Boss.name> <Boss.name_last>. It's a pleasure to meet you, <Player.Mr_or_Ms> <Player.name_last>."
                 Player(Happy):: "The pleasure is all mine, <Boss.Mr_or_Ms> <Boss.name_last>. Please, just <Player.name> is enough."
                 Boss(Happy):: "Please take a seat ... So, <Player.name>, shall we begin the interview?"
-                
                 Performance = 0
                 Flirt = 0
                 // Porn = isModEnabled(vin_VanillaPorn)
@@ -89,7 +81,6 @@ OTHER: none
                 If Diff_Intel < 0
                     Diff_Intel *= -1
                 EndIf
-                
                 Diff_Inter = Boss:interpersonal - interpersonal
                 If Diff_Inter < 0
                     Diff_Inter *= -1
@@ -224,7 +215,7 @@ OTHER: none
                                 Player(Flirty):: "That's very nice of you! Let's go."
                                 setBackground(street)
                                 "20 minutes later ..."
-                                Boss(Flirty):: "So here you are. This is a nice neighborhood to live."
+                                Boss(Flirty):: "So here you are. This is a nice neighbourhood to live."
                                 "And <Boss.name> kept the conversation going in the car. It was obvious that <Boss.he_or_she> was expecting something more ..."
                                 0:: "Say goodbye"
                                 1:: "Kiss <Boss.him_or_her>"
@@ -250,7 +241,8 @@ OTHER: none
                                         setBackground(home)
                                         "Let's not kid ourselves here! We both knew how this night was going to end up. As soon as we were inside, our hands were all over each other and we started passionately making out."
                                         If TfGame() && Boss.isMale()
-                                            "When I was a man I used to hold the moral high ground and somewhat looked down on women who use their bodies to get advantages in life. Here I am, offering my body in exchange for a job offer. I'm such a hypocrite after all."
+                                            "When I was a man I used to hold the moral high ground and somewhat looked down on women who use their bodies to get advantages in life."
+                                            "Here I am, offering my body in exchange for a job offer. I'm such a hypocrite after all."
                                         EndIf
                                         HadSex = true
                                         Sex(Boss, Player)

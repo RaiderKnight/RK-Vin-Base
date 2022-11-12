@@ -17,11 +17,15 @@ OTHER: OpenRelationship()
         Actor2 = generatePersonTemporary()
         While !Player.isInterestedIn(Actor2)
             Actor2 = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor2.makeInterested(Player)
-        Actor2:attractiontoplayer => Random(30, 70)
-        Actor2:age => Random(0.85, 1.15)*Actor:age
+        Actor2:attractiontoplayer => random(30, 70)
+        Actor2:age => random(0.85, 1.15)*Actor:age
+        If Actor2:age < 18
+            Actor2:age => Random(18, 24)
+        EndIf
         Actor2.randomizeFace()
+        Actor2.randomizeRace()
         Actor2.randomizeHairs()
         Actor2.dress()
         Actor2.show()
@@ -36,7 +40,7 @@ OTHER: OpenRelationship()
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
-        Elseif 1
+        ElseIf 1
             Fucked = true
             Sex(Player, Actor2, Actor)
             If HungerEnable > 0
@@ -45,7 +49,7 @@ OTHER: OpenRelationship()
         Else
             Fucked = false
             "<Actor2.name> isn't my type at all. I'd have thought <Actor.name> knew me better!"
-        Endif
+        EndIf
         
         If Fucked
             "Having 'tested out' this potential 'new recruit' to our 'family', what do I think?"
@@ -60,8 +64,8 @@ OTHER: OpenRelationship()
                 "<Actor2.name> is now my latest <Actor2.boyfriend_or_girlfriend>."
             Else
                 "Unfortunately, I don't think <Actor2.name> would be a good fit."
-            Endif
-        Endif
+            EndIf
+        EndIf
     
     SceneEnd() // Scene improved by Raddeck
     timeout(300, poly_introduces)

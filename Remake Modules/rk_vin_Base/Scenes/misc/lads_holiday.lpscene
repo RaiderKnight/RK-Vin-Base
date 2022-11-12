@@ -7,13 +7,12 @@ OTHER: none
     // At home or travel agencies, you can now "Organize a group holiday abroad" to a party destination. You choose which country and choose three more friends with the same gender as you to bring along. Once there, your group ends up inviting a group of four locals back to your AirBnb to hang out and you get to pick your main target to flirt with. Depending on your and the others's willingness and skill in seduction (for example, if you invite along three guys with low interpersonal and attractiveness, or with low perversion and already in a relationship, you may end up with all the girls for yourself), the night may end up with all sorts of matchups. A lot of group fun may be involved, but if you instead remain committed to only one local girl/ guy for the night, you can ask them to become your gf/ bf and move back to your country with you. Your mates might also do the same if they have low perversion.
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         FacebookFriend = rk_VB_FacebookFriend.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        HolyDayPrice = Random(100, 300)
+        HolyDayPrice = random(100, 300)
         HolyDayPriceloc = HolyDayPrice.convertToLocalCurrency()
         "My country's flagship airline is offering a big promotion to a number of party cities abroad for groups of four."
         "I can invite three of my friends to come along, hire a local AirBnB and split the cost among us. It should work out quite cheaply for a nice holiday abroad with non-stop partying and hooking up with locals."
@@ -32,31 +31,31 @@ OTHER: none
             
             If 0
                 setRaceGenerated(black)
-            Elseif 1
+            ElseIf 1
                 setRaceGenerated(indian)    
-            Elseif 2
+            ElseIf 2
                 setRaceGenerated(arab)        
-            Elseif 3
+            ElseIf 3
                 setRaceGenerated(latin)    
-            Elseif 4
+            ElseIf 4
                 setRaceGenerated(asian)    
             Else
                 setRaceGenerated(white)    
-            Endif
+            EndIf
             
             "Now, in order to take advantage of this airline promotion, I need to invite 3 more <Player.guys_or_girls>."
             
             "Who's the first <Player.guy_or_girl> I should invite?"
-            selectNpc()
-            Actor = getSelectedNpc()
+            selectNPC()
+            Actor = getSelectedNPC()
             
             "Who's the second <Player.guy_or_girl> I should invite?"
-            selectNpc()
-            Actor2 = getSelectedNpc()
+            selectNPC()
+            Actor2 = getSelectedNPC()
             
             "Who's the third <Player.guy_or_girl> I should invite?"
-            selectNpc()
-            Actor3 = getSelectedNpc()
+            selectNPC()
+            Actor3 = getSelectedNPC()
             
             If Actor.isValid() && Actor.isSameGender(Player) && Actor2.isValid() && Actor2.isSameGender(Player) && Actor3.isValid() && Actor3.isSameGender(Player)
                 money -= HolyDayPrice
@@ -75,12 +74,12 @@ OTHER: none
                 Fuck = generatePersonTemporary()
                 While !Player.isInterestedIn(Fuck)
                     Fuck = generatePersonTemporary()
-                Endwhile
-                Fuck:age => Actor:age + Random(-2, 2)
+                EndWhile
+                Fuck:age => Actor:age + random(-2, 2)
                 If Fuck:age < 18
                     Fuck:age => 18
-                Endif
-                Fuck:attractiveness => Random(65, 100)
+                EndIf
+                Fuck:attractiveness => random(65, 100)
                 Fuck.randomizeFace()
                 Fuck.randomizeHairs()
                 Fuck.dress()
@@ -91,12 +90,12 @@ OTHER: none
                 Fuck2 = generatePersonTemporary()
                 While !Fuck.isSameGender(Fuck2)
                     Fuck2 = generatePersonTemporary()
-                Endwhile
-                Fuck2:age => Actor2:age + Random(-2, 2)
+                EndWhile
+                Fuck2:age => Actor2:age + random(-2, 2)
                 If Fuck2:age < 18
                     Fuck2:age => 18
-                Endif
-                Fuck2:attractiveness => Random(65, 100)
+                EndIf
+                Fuck2:attractiveness => random(65, 100)
                 Fuck2.randomizeFace()
                 Fuck2.randomizeHairs()
                 Fuck2.dress()
@@ -107,12 +106,12 @@ OTHER: none
                 Fuck3 = generatePersonTemporary()
                 While !Fuck.isSameGender(Fuck3)
                     Fuck3 = generatePersonTemporary()
-                Endwhile
-                Fuck3:age => Actor3:age + Random(-2, 2)
+                EndWhile
+                Fuck3:age => Actor3:age + random(-2, 2)
                 If Fuck3:age < 18
                     Fuck3:age => 18
-                Endif
-                Fuck3:attractiveness => Random(65, 100)
+                EndIf
+                Fuck3:attractiveness => random(65, 100)
                 Fuck3.randomizeFace()
                 Fuck3.randomizeHairs()
                 Fuck3.dress()
@@ -123,12 +122,12 @@ OTHER: none
                 Fuck4 = generatePersonTemporary()
                 While !Fuck.isSameGender(Fuck4)
                     Fuck4 = generatePersonTemporary()
-                Endwhile
-                Fuck4:age => age + Random(-2, 2)
+                EndWhile
+                Fuck4:age => age + random(-2, 2)
                 If Fuck4:age < 18
                     Fuck4:age => 18
-                Endif
-                Fuck4:attractiveness => Random(65, 100)
+                EndIf
+                Fuck4:attractiveness => random(65, 100)
                 Fuck4.randomizeFace()
                 Fuck4.randomizeHairs()
                 Fuck4.dress()
@@ -154,12 +153,12 @@ OTHER: none
                     FuckActor = Fuck4
                     FuckActor2 = Fuck2
                     FuckActor3 = Fuck3
-                Elseif 1
+                ElseIf 1
                     FuckPlayer = Fuck2
                     FuckActor = Fuck4
                     FuckActor2 = Fuck
                     FuckActor3 = Fuck3            
-                Elseif 2
+                ElseIf 2
                     FuckPlayer = Fuck3
                     FuckActor = Fuck4
                     FuckActor2 = Fuck2
@@ -169,9 +168,9 @@ OTHER: none
                     FuckActor = Fuck
                     FuckActor2 = Fuck2
                     FuckActor3 = Fuck3            
-                Endif
+                EndIf
                 
-                Player.movetoPersonStand(FuckPlayer, 100)
+                Player.moveToPersonStand(FuckPlayer, 100)
                 "I decided to pay <FuckPlayer.name> some special attention and started to up my flirting game with <FuckPlayer.him_or_her>."
                 "Meanwhile, <Actor.name> ended up sitting next to <FuckActor.name>."
                 "<Actor2.name> chatted for a long time with <FuckActor2.name>."
@@ -180,47 +179,49 @@ OTHER: none
                 "<FuckPlayer.name> seemed genuinely attracted to me and responded to my flirting in kind."
                 
                 If Actor.isInterestedIn(FuckActor) && [Actor:perversion > 50 || !Actor.hasRelationship(Spouses, Dating)]
-                    If FuckActor:attractiontoplayer*Random(1, 4) < Actor:attractiveness + Actor:interpersonal
+                    If FuckActor:attractiontoplayer*random(1, 4) < Actor:attractiveness + Actor:interpersonal
                         "<Actor.name> and <FuckActor.name> seemed immediately drawn to each other and soon enough, <Actor.he_or_she> took this newly-met local back into <Actor.his_or_her> bedroom."
                         Actor.hide()
                         FuckActor.hide()
-                        If !Actor.hasRelationship(Spouses, Dating) && !Actor.isDating() && Actor:perversion < Random(35, 65)
+                        If !Actor.hasRelationship(Spouses, Dating) && !Actor.isDating() && Actor:perversion < random(35, 65)
                             "I didn't know it at the time, but what looked like a one-night stand in a foreign country with no commitment to deal with turned into something a lot more serious for the two lovebirds, as <Actor.name> ignored the rest of our group to spend the rest of the holiday with <FuckActor.name>."
                             "Before flying back home, <Actor.name> asked <FuckActor.name> to become <Actor.his_or_her> <FuckActor.boyfriend_or_girlfriend> and move to our country to live with <Actor.him_or_her>."
                             FuckActor.makePermanent()
                             exchangeContact(FuckActor)
                             addNpcRelationship(Dating, Actor, FuckActor) 
                         Else
-                            "Of course, if <FuckActor.name> was expecting anything more from <Actor.name> than a one-night stand in a foreign country with no commitment to deal with, <FuckActor.he_or_she> would have been disappointed. I asked <Actor.name> later about <Actor.his_or_her> foreign conquest, and like a true player, <Actor.name> didn't even bother to keep in touch with <FuckActor.name>" 
-                        Endif
+                            "Of course, if <FuckActor.name> was expecting anything more from <Actor.name> than a one-night stand in a foreign country with no commitment to deal with, <FuckActor.he_or_she> would have been disappointed."
+                            "I asked <Actor.name> later about <Actor.his_or_her> foreign conquest, and like a true player, <Actor.name> didn't even bother to keep in touch with <FuckActor.name>" 
+                        EndIf
                     Else
                         "Not for the lack of trying, poor <Actor.name> couldn't get <FuckActor.name> to become interested in <Actor.him_or_her> at all. Rejected, <Actor.name> excused <Actor.himself_or_herself> to go to bed early, leaving <FuckActor.name> to join us."
                         Actor.hide()
                         FuckPlayer2 = FuckActor
                         Virgin = Actor
-                    Endif
+                    EndIf
                 Else
                     "It seemed <Actor.name> stopped just sort of trying to seduce <FuckActor.name> though. Maybe <Actor.he_or_she> just isn't interested, or is just being faithful to someone at home."
                     "Not wanting to escalate things any further with <FuckActor.name>, <Actor.name> excused <Actor.himself_or_herself> to go to bed early, leaving <FuckActor.name> to join us."
                     Actor.hide()
                     FuckPlayer2 = FuckActor
-                Endif
+                EndIf
                 
                 "Meanwhile ..."
                 If Actor2.isInterestedIn(FuckActor2) && [Actor2:perversion > 50 || !Actor2.hasRelationship(Spouses, Dating)]
-                    If FuckActor2:attractiontoplayer*Random(1, 4) < Actor2:attractiveness + Actor2:interpersonal
+                    If FuckActor2:attractiontoplayer*random(1, 4) < Actor2:attractiveness + Actor2:interpersonal
                         "<Actor2.name> and <FuckActor2.name> seemed immediately drawn to each other and soon enough, <Actor2.he_or_she> took this newly-met local back into <Actor2.his_or_her> bedroom."
                         Actor2.hide()
                         FuckActor2.hide()
-                        If !Actor2.hasRelationship(Spouses, Dating) && !Actor2.isDating() && Actor2:perversion < Random(35, 65)
+                        If !Actor2.hasRelationship(Spouses, Dating) && !Actor2.isDating() && Actor2:perversion < random(35, 65)
                             "I didn't know it at the time, but what looked like a one-night stand in a foreign country with no commitment to deal with turned into something a lot more serious for the two lovebirds, as <Actor2.name> ignored the rest of our group to spend the rest of the holiday with <FuckActor2.name>."
                             "Before flying back home, <Actor2.name> asked <FuckActor2.name> to become <Actor2.his_or_her> <FuckActor2.boyfriend_or_girlfriend> and move to our country to live with <Actor2.him_or_her>."
                             FuckActor2.makePermanent()
                             exchangeContact(FuckActor2)
                             addNpcRelationship(Dating, Actor2, FuckActor2) 
                         Else
-                            "Of course, if <FuckActor2.name> was expecting anything more from <Actor2.name> than a one-night stand in a foreign country with no commitment to deal with, <FuckActor2.he_or_she> would have been disappointed. I asked <Actor2.name> later about <Actor2.his_or_her> foreign conquest, and like a true player, <Actor2.name> didn't even bother to keep in touch with <FuckActor2.name>" 
-                        Endif
+                            "Of course, if <FuckActor2.name> was expecting anything more from <Actor2.name> than a one-night stand in a foreign country with no commitment to deal with, <FuckActor2.he_or_she> would have been disappointed."
+                            "I asked <Actor2.name> later about <Actor2.his_or_her> foreign conquest, and like a true player, <Actor2.name> didn't even bother to keep in touch with <FuckActor2.name>" 
+                        EndIf
                     Else
                         "Not for the lack of trying, poor <Actor2.name> couldn't get <FuckActor2.name> to become interested in <Actor2.him_or_her> at all. Rejected, <Actor2.name> excused <Actor2.himself_or_herself> to go to bed early, leaving <FuckActor2.name> to join us."
                         Actor2.hide()
@@ -228,14 +229,14 @@ OTHER: none
                             FuckPlayer3 = FuckActor2
                         Else
                             FuckPlayer2 = FuckActor2
-                        Endif
+                        EndIf
                         
                         If Virgin.isValid()
                             Virgin2 = Actor2
                         Else
                             Virgin = Actor2
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                 Else
                     "It seemed <Actor2.name> stopped just sort of trying to seduce <FuckActor2.name> though. Maybe <Actor2.he_or_she> just isn't interested, or is just being faithful to someone at home."
                     "Not wanting to escalate things any further with <FuckActor2.name>, <Actor2.name> excused <Actor2.himself_or_herself> to go to bed early, leaving <FuckActor2.name> to join us."
@@ -244,55 +245,56 @@ OTHER: none
                         FuckPlayer3 = FuckActor2
                     Else
                         FuckPlayer2 = FuckActor2
-                    Endif
-                Endif
+                    EndIf
+                EndIf
                 
                 "Meanwhile ..."
                 If Actor3.isInterestedIn(FuckActor3) && [Actor3:perversion > 50 || !Actor3.hasRelationship(Spouses, Dating)]
-                    If FuckActor3:attractiontoplayer*Random(1, 4) < Actor3:attractiveness + Actor3:interpersonal
+                    If FuckActor3:attractiontoplayer*random(1, 4) < Actor3:attractiveness + Actor3:interpersonal
                         "<Actor3.name> and <FuckActor3.name> seemed immediately drawn to each other and soon enough, <Actor3.he_or_she> took this newly-met local back into <Actor3.his_or_her> bedroom."
                         Actor3.hide()
                         FuckActor3.hide()
-                        If !Actor3.hasRelationship(Spouses, Dating) && !Actor3.isDating() && Actor3:perversion < Random(35, 65)
+                        If !Actor3.hasRelationship(Spouses, Dating) && !Actor3.isDating() && Actor3:perversion < random(35, 65)
                             "I didn't know it at the time, but what looked like a one-night stand in a foreign country with no commitment to deal with turned into something a lot more serious for the two lovebirds, as <Actor3.name> ignored the rest of our group to spend the rest of the holiday with <FuckActor3.name>."
                             "Before flying back home, <Actor3.name> asked <FuckActor3.name> to become <Actor3.his_or_her> <FuckActor3.boyfriend_or_girlfriend> and move to our country to live with <Actor3.him_or_her>."
                             FuckActor3.makePermanent()
                             exchangeContact(FuckActor3)
                             addNpcRelationship(Dating, Actor3, FuckActor3) 
                         Else
-                            "Of course, if <FuckActor3.name> was expecting anything more from <Actor3.name> than a one-night stand in a foreign country with no commitment to deal with, <FuckActor3.he_or_she> would have been disappointed. I asked <Actor3.name> later about <Actor3.his_or_her> foreign conquest, and like a true player, <Actor3.name> didn't even bother to keep in touch with <FuckActor3.name>" 
-                        Endif
+                            "Of course, if <FuckActor3.name> was expecting anything more from <Actor3.name> than a one-night stand in a foreign country with no commitment to deal with, <FuckActor3.he_or_she> would have been disappointed."
+                            "I asked <Actor3.name> later about <Actor3.his_or_her> foreign conquest, and like a true player, <Actor3.name> didn't even bother to keep in touch with <FuckActor3.name>" 
+                        EndIf
                     Else
                         "Not for the lack of trying, poor <Actor3.name> couldn't get <FuckActor3.name> to become interested in <Actor3.him_or_her> at all. Rejected, <Actor3.name> excused <Actor3.himself_or_herself> to go to bed early, leaving <FuckActor3.name> to join us."
                         Actor3.hide()
                         If FuckPlayer3.isValid() 
                             FuckPlayer4 = FuckActor3
-                        Elseif FuckPlayer2.isValid()
+                        ElseIf FuckPlayer2.isValid()
                             FuckPlayer3 = FuckActor3
                         Else
                             FuckPlayer2 = FuckActor3
-                        Endif
+                        EndIf
                         
                         If Virgin2.isValid()
                             Virgin3 = Actor3
-                        Elseif Virgin.isValid()
+                        ElseIf Virgin.isValid()
                             Virgin2 = Actor3
                         Else
                             Virgin = Actor3
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                 Else
                     "It seemed <Actor3.name> stopped just sort of trying to seduce <FuckActor3.name> though. Maybe <Actor3.he_or_she> just isn't interested, or is just being faithful to someone at home."
                     "Not wanting to escalate things any further with <FuckActor3.name>, <Actor3.name> excused <Actor3.himself_or_herself> to go to bed early, leaving <FuckActor3.name> to join us."
                     Actor3.hide()
                     If FuckPlayer3.isValid() 
                         FuckPlayer4 = FuckActor3
-                    Elseif FuckPlayer2.isValid()
+                    ElseIf FuckPlayer2.isValid()
                         FuckPlayer3 = FuckActor3
                     Else
                         FuckPlayer2 = FuckActor3
-                    Endif
-                Endif
+                    EndIf
+                EndIf
                 
                 "With all my friends already occupied, it's time for me to make my move."
                 0:: "Take only <FuckPlayer.name> to bed"
@@ -314,8 +316,8 @@ OTHER: none
                             "<Virgin2.name> was there as well!"
                             If Virgin3.isValid()
                                 "And so was <Virgin3.name> ... my hot session with <FuckPlayer.name> has turned into somewhat of a spectacle considering that none of my friends got any action ..."
-                            Endif
-                        Endif
+                            EndIf
+                        EndIf
                         "What should I do about this?"
                         0:: "Share <FuckPlayer.name>"
                         1:: "No way"
@@ -325,10 +327,10 @@ OTHER: none
                         Else
                             Shared = false
                             "I gestured for the peeping Tom to go away and leave us alone."
-                        Endif
+                        EndIf
                     Else
                         Shared = false
-                    Endif
+                    EndIf
                     
                     If Shared
                         FuckPlayer:: "<Player.name>, your friend is here ..."
@@ -339,7 +341,7 @@ OTHER: none
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -5)
                             EndIf
-                        Elseif Virgin2.isValid()
+                        ElseIf Virgin2.isValid()
                             Sex(Virgin2, Virgin, Player, FuckPlayer)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -4)
@@ -349,10 +351,11 @@ OTHER: none
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -3)
                             EndIf
-                        Endif
+                        EndIf
                     Else
                         "We had great chemistry and spent the night together. In the morning though, <FuckPlayer> seemed to wake up a little sad."
-                        FuckPlayer:: "Be honest with me, <Player.name>. Am I just an one-night stand to you? A little foreign conquest I can brag to your friends at home? A <FuckPlayer.dick_or_pussy> abroad that you use once and never have to worry about ever again ... Is this feeling I'm developing for you pure stupidity?"
+                        FuckPlayer:: "Be honest with me, <Player.name>. Am I just an one-night stand to you? A little foreign conquest I can brag to your friends at home?"
+                        "A <FuckPlayer.dick_or_pussy> abroad that you use once and never have to worry about ever again ... Is this feeling I'm developing for you pure stupidity?"
                         0:: "You know the drill with tourists like us ..."
                         1:: "Come home with me and be my <FuckPlayer.boyfriend_or_girlfriend>"
                         
@@ -364,8 +367,8 @@ OTHER: none
                             FuckPlayer.makePermanent()
                             exchangeContact(FuckPlayer)
                             FuckPlayer.setDating()
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                 Else
                     "<FuckPlayer.name> seemed a little offended that I was interested in more than just <FuckPlayer.his_or_her> company, but eventually, <FuckPlayer.he_or_she> came around to the idea of sharing me with <FuckPlayer.his_or_her> friends who were left lonely by my friends."
                     "After all, it would be rude of us to just fuck in the bedroom and make <FuckPlayer.name>'s friends waiting in the living room ..."
@@ -377,7 +380,7 @@ OTHER: none
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -5)
                         EndIf
-                    Elseif FuckPlayer3.isValid() 
+                    ElseIf FuckPlayer3.isValid() 
                         Sex(Player, FuckPlayer, FuckPlayer2, FuckPlayer3)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -4)
@@ -387,11 +390,11 @@ OTHER: none
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -3)
                         EndIf
-                    Endif
-                Endif
+                    EndIf
+                EndIf
             Else
                 "I couldn't find three <Player.guys_or_girls> to come along. Let's try to organize this trip again another day perhaps." 
-            Endif
-        Endif
+            EndIf
+        EndIf
     
     SceneEnd() // Improved by Raddeck

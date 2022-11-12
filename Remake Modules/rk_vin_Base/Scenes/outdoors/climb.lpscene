@@ -13,23 +13,20 @@ OTHER:
         Dice += 1
         If Dice > 4 // CHANGE HERE
             Dice = 1
-        Endif
+        EndIf
         Player.setActorVar(rng_dice, Dice)
         Nothing = false
         Player.animate(climb)
         If Dice == 1
-            // You almost fall off a cliff and the target / companion / a stranger saves your life.
             If !Actor.isValid()
                 Actor = getCompanion()
                 If !Actor.isValid()
                     Actor = generatePersonTemporary()
                     Actor.dress()
                     Actor.show()
-                Endif
-            Endif
-            
+                EndIf
+            EndIf
             Actor.animate(climb)
-            
             If Actor:muscle - muscle > 30
                 "Oh no, I lost my grip! I'm about to fall off the cliff ..."
                 Player:: "Help!"
@@ -45,12 +42,12 @@ OTHER:
                 If 0
                     Actor:: "Well, if you insist."
                     money -= 50
-                Elseif 1
+                ElseIf 1
                     Actor:: "Sure, I'll be happy to get to know you more."
                     Actor.makePermanent()
                     exchangeContact(Actor)
                 Else
-                    If Random(50, 100) < Actor:perversion + Actor:attractiontoplayer || Actor.hadSex()
+                    If random(50, 100) < Actor:perversion + Actor:attractiontoplayer || Actor.hadSex()
                         Actor:: "Well, I wouldn't say no to such a happy ending ..."
                         Sex(Actor, Player)
                         If HungerEnable > 0
@@ -58,15 +55,12 @@ OTHER:
                         EndIf
                     Else
                         Actor:: "You're joking, right? I didn't help you for that."
-                    Endif
-                Endif
+                    EndIf
+                EndIf
             Else
                 Nothing = true
-            Endif
-
-        Elseif Dice == 2
-            // The target almost fall off a cliff and you save their life.
-            
+            EndIf
+        ElseIf Dice == 2
             If Actor.isValid() && muscle - Actor:muscle > 30
                 Actor.animate(climb)
                 Actor:: "Help!"
@@ -84,12 +78,12 @@ OTHER:
                 If 0
                     Actor:: "Sure. Here's all I have on me right now."
                     money += 50
-                Elseif 1
+                ElseIf 1
                     Actor:: "Sure, I'll be happy to get to know you more."
                     Actor.makePermanent()
                     exchangeContact(Actor)
-                Elseif 2
-                    If Random(50, 100) < Actor:perversion + Actor:attractiontoplayer || Actor.hadSex()
+                ElseIf 2
+                    If random(50, 100) < Actor:perversion + Actor:attractiontoplayer || Actor.hadSex()
                         Actor:: "Well, I guess my hero deserves a happy ending ..."
                         Sex(Actor, Player)
                         If HungerEnable > 0
@@ -97,20 +91,18 @@ OTHER:
                         EndIf
                     Else
                         Actor:: "You're joking, right? Thank you for your help but that's too big a request."
-                    Endif
+                    EndIf
                 Else
                     Player:: "It was only the right thing to do"
                     karma += 5
-                Endif
+                EndIf
             Else
                 Nothing = true
-            Endif
-        Elseif Dice == 3
-            // Your target may get tired and can't climb higher. If you insist on continuing yourself, they'll stay behind and may meet a stranger.
+            EndIf
+        ElseIf Dice == 3
             If !Actor.isValid()
                 Actor = getCompanion()
-            Endif
-            
+            EndIf
             If isModEnabled(vin_NTR) && Actor.isValid() && Actor:perversion > 50
                 Actor2 = generatePersonTemporary()
                 Actor2.dress()
@@ -131,16 +123,14 @@ OTHER:
                         Actor.show()
                         Actor2.show()
                         Sex(Actor, Actor2)
-                    Endif
+                    EndIf
                 Else
                     Nothing = true
-                Endif
+                EndIf
             Else
                 Nothing = true
-            endif
-        Elseif Dice == 4
-            // If Netori is enabled, the target has a SO too cowardly to climb, leaving you and the target alone higher up ...
-            
+            EndIf
+        ElseIf Dice == 4
             If Actor.isValid() && isModEnabled(vin_Netori)
                 Actor2 = Actor.getRelatedPerson(Spouses, Dating)
                 If !Actor2.isValid()
@@ -149,7 +139,7 @@ OTHER:
                     Actor2.show()
                     Actor.makeInterested(Actor2)
                     Actor2.makeInterested(Actor)
-                Endif
+                EndIf
                 "I asked <Actor.name> to join me on the climb, only for <Actor.him_or_her> to introduce me to <Actor.his_or_her> <Actor2.boyfriend_or_girlfriend> <Actor2.name>, who didn't seem much of a mountaineer."
                 Player:: "Let's all climb together then ..."
                 "It wasn't long before you reach the part too difficult for <Actor2.name>"
@@ -173,13 +163,16 @@ OTHER:
                     If 0
                         "While enjoying the view, we chat for a long time before starting to head back down."
                         Actor:rapportwithplayer += 5
-                    Elseif 1
+                    ElseIf 1
                         "After some nice conversations, I decided to ask for <Actor2.name>'s number so that we could arrange another mpuntaineering trip in the future."
                         Actor.makePermanent()
+                        Actor2.makePermanent()
+                        addNpcRelationship(Dating, Actor, Actor2)
                         exchangeContact(Actor)
+                        exchangeContact(Actor2)
                     Else
                         Player:: "We don't have to start climbing down anytime soon, why don't we stay here and have some fun in the meantime?"
-                        If Random(50, 100) < Actor:perversion + Actor:attractiontoplayer
+                        If random(50, 100) < Actor:perversion + Actor:attractiontoplayer
                             Actor:: "Okay, this will hopefully teach my useless <Actor.boyfriend_or_girlfriend> a lesson and not be such a coward all the time."
                             Sex(Player, Actor)
                             If HungerEnable > 0
@@ -187,16 +180,16 @@ OTHER:
                             EndIf
                         Else
                             Actor:: "I don't know what you're talking about ..."
-                        Endif
-                    Endif
-                Endif
+                        EndIf
+                    EndIf
+                EndIf
             Else
                 Nothing = true
-            Endif
+            EndIf
         Else
             Nothing = true
-        Endif
+        EndIf
         If Nothing
             "Nothing unusual happened."
-        Endif
+        EndIf
     SceneEnd() // Improved by Raddeck

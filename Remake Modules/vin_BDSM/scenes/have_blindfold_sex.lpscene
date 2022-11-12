@@ -5,8 +5,6 @@ WHO: none
 OTHER:
 
 
-    // You can click on and convince your SO / someone else you've hooked up with in the past to put on a blindfold, only to invite someone else to have fun with them instead
-
     SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
@@ -23,21 +21,20 @@ OTHER:
         Else
             If 1
                 "Who do I have in mind to fuck <Actor.name>, unbeknown to <Actor.him_or_her>?"
-                selectNpc()
-                Actor2 = getSelectedNpc()
-                
+                selectNPC()
+                Actor2 = getSelectedNPC()
                 If Actor2.isValid() && Actor2.isInterestedIn(Actor) && [Actor2:perversion > 50 || Actor2.hadSex()]
                     "<Actor2.name> agreed to be part of my devious plan."
                     Actor2:rapportwithplayer += 2
                 Else
                     "I couldn't convince <Actor2.name> to be part of my plan."
                     Actor2.delete()
-                Endif
-            Elseif 2
+                EndIf
+            ElseIf 2
                 Actor2 = getCreature(Dog)
                 While !Actor.isInterestedIn(Actor2) && Actor2.isValid()
                     Actor2 = getCreature(Dog)
-                Endwhile
+                EndWhile
                 
                 If Actor2.isValid()                           
                     "Perhaps my dog <Actor2.name> would be a good candidate for my slave to fuck?"
@@ -46,12 +43,11 @@ OTHER:
                     
                     If 1
                         Actor2.delete()
-                    Endif
+                    EndIf
                 Else
                     "I can't think of any dogs I own that would be appropriate for this."
-                Endif 
-            Endif
-            
+                EndIf 
+            EndIf
             moveTo(home)
             setBackground(home)
             Actor.show()
@@ -73,15 +69,15 @@ OTHER:
                     "I quietly invited <Actor2.him_or_her> in, and while trying <Actor2.his_or_her> best to not say anything and risk <Actor.name> finding out that it wasn't me anymore, <Actor2.he_or_she> started having <Actor2.his_or_her> way with <Actor.name> ..."
                     Sex(Actor2, Actor)
                     Actor2.hide()
-                Endif
+                EndIf
             Else
                 "I then proceeded to have some good old blindfold sex with <Actor.him_or_her> ... Let's see if it would actually heighten the sensation for <Actor.him_or_her> ..."
                 Sex(Player, Actor)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
-            Endif
+            EndIf
             Actor.clearBondage()
             Actor(Happy):: "Wow, baby, that was incredible. You were right, having sight taken away completely as a sense really did heighten the other sensations ..."
-        Endif
+        EndIf
     SceneEnd() // scene improved by Raddeck

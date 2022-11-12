@@ -6,7 +6,6 @@ OTHER: none
 
     If !Actor.isMale()
         SceneStart()
-            //Start edit Vin
             secondScreen(Actor)
             BioDaddy = Actor.getBabyDaddy()
             Actor.endPregnancy()
@@ -14,16 +13,15 @@ OTHER: none
             Actor.show(2)
             Actor.setActorVar(tag_Pregnant, 0)
             Actor2 = Actor.generatePersonMatchRace()
-            Actor2:age => 0
+            Actor2:age => 18
             Actor2.randomizeFace()
             Actor2.randomizeHairs()
             If BioDaddy.isValid() && !BioDaddy.isCreature()
                 Actor2.blendAppearanceFrom(BioDaddy, Actor)
-            Endif
+            EndIf
             addNpcRelationship(ParentChild, Actor, Actor2)
             Actor2.matchLastName(Actor)
             "<Actor.name> has recently given birth to a cute baby, whom she named <Actor2.name>. Her baby photos are all over Facebook."
-            //End edit Vin
         SceneEnd()
-    Endif // Edit by Raddeck
+    EndIf // Edited by Raddeck
     

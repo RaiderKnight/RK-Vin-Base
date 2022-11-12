@@ -5,6 +5,7 @@ WHO: none
 OTHER: random(0, 100) > 85
 
     SceneStart()
+        FiniLeShow = false
         NPID = rk_VB_EthnicFlavor_NPID.getGlobal()
         Flavor_Fight = rk_VB_EthnicFlavor_Fight.getGlobal()
         NpcBeat = rk_VB_polySibling_Fight.getGlobal()
@@ -154,6 +155,7 @@ OTHER: random(0, 100) > 85
                     If Roundcount >= 20 || AEnerg < 50 && Roundcount >= 5
                         Actor(Pain)::"Ok for now, consider yourself lucky...!"
                         FightInAction = false
+                        FiniLeShow = true
                     Else
                         Actor(Evil)::"Fuck off little pussy...c'mon come..."
                     EndIf
@@ -326,150 +328,152 @@ OTHER: random(0, 100) > 85
             Else TempStatP > TempStatA
                 IlAPerdu = true
             EndIf
-            If VraiLoser
-                Actor.animate()
-                "<Actor.name> win the fight, <Actor.he_or_she> beat me all the way..."
-                "Suddenly everything goes black ... you lost your consciousness."
-                Player.animate(knockedout)
-                Actor:rapportwithplayer -= 5
-                Actor:attractiontoplayer -= 1
-                If isModEnabled(vin_NonConsensual) && Actor:arousal > 10 && Actor:perversion > 50
-                    Actor(Angry)::"I'm not done with you, <Player.scum_or_bitch>!"
-                    "<Actor.name> stripped off all my clothes and started fucking me right here!"
-                    Player.strip()
-                    Actor.dressExcept(Outerwear, Bottom, Bottom_Under)
-                    Filter(Aggressive)
-                    SexNoAffair(Actor, Player)
-                    If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -3)
-                    EndIf
-                    passTime(0.50, 1.50)
-                    Actor.hide()
-                    "After a few minutes, I woke up but I'm still a little stunned…"
-                    Player.animate()
-                    "As you try to stand up you notice that you are naked ... and your whole body hurts. It feels like you have been beaten up."
-                    Player.show()
-                    "You feel something running down your <Player.ass_or_pussy>..."
-                    "You touch your <Player.ass_or_pussy> to see what it is ..."
-                    "It's cum, a lot of cum! It gushes literally out of your <Player.ass_or_pussy>, running down both legs ..."
-                    Player(Disgusted)::"WTF..."
-                    "I wiped a bit and put my clothes back on..."
-                    Player.dress()
-                    mood => 0
-                    energy => 5
-                ElseIf random(0, 100) > 60
-                    ActorLooting = random(1, 10)
-                    ActorLooting = ActorLooting.round()
-                    ActorLootingCash = random(10, 200)
-                    ActorLootingCash_loc = ActorLootingCash.convertToLocalCurrency()
-                    If ActorLooting > 6
-                        "<Actor.name> stoled you <ActorLootingCash_loc> from your pockets."
-                        money -= ActorLootingCash
-                    EndIf
-                    Actor.hide()
-                    Actor:rapportwithplayer -= 50
-                    Actor:attractiontoplayer -= 50
-                    passTime(0.15, 0.50)
-                Else
-                    "After a few minutes, I woke up but I'm still a little stunned…"
-                EndIf
-                If Flavor_Fight == 1
-                    rk_VB_EthnicFlavor_Fight.setGlobal(0)
-                    rk_VB_EthnicFlavor_NPID.setGlobal(0)
-                ElseIf NpcBeat == 1
-                    rk_VB_polySibling_Fight.setGlobal(0)
-                    rk_VB_polySibling_npdID.setGlobal(0)
-                ElseIf SharkF == 1
-                    rk_VB_Shark_Fight.setGlobal(0)
-                    rk_VB_Shark_npdID.setGlobal(0)
-                EndIf
-                Player.closeEyes(false)
-                Player.animate()
-                mood => 5
-                energy => 5
-                If WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != stripclub && WHERE != prison
-                    "Going back home..."
-                    moveTo(home)
-                EndIf
-                SceneEnd()
-            EndIf
-            If IlAPerdu
-                If Flavor_Fight == 1
-                    rk_VB_EthnicFlavor_Fight.setGlobal(0)
-                    rk_VB_EthnicFlavor_NPID.setGlobal(0)
-                ElseIf NpcBeat == 1
-                    rk_VB_polySibling_Fight.setGlobal(0)
-                    rk_VB_polySibling_npdID.setGlobal(0)
-                ElseIf SharkF == 1
-                    rk_VB_Shark_Fight.setGlobal(0)
-                    rk_VB_Shark_npdID.setGlobal(0)
-                EndIf
-                JeLoot = false
-                JeFuck = false
-                "I win the fight, <Actor.he_or_she> will stay quiet for a few..."
-                Actor.animate(knockedout)
-                Actor.closeEyes(true)
-                IlAPerduKnock = true
-                While IlAPerduKnock
-                    "What do I do?"
-                    0::!JeLoot::"Loot <Actor.him_or_her>"
-                    1::!JeFuck::"Fuck <Actor.him_or_her>"
-                    99::"Nothing"
-                                    
-                    If 0
-                        FindMoney = random(5, 500)
-                        FindMoney_Loc = FindMoney.convertToLocalCurrency()
-                        FindWeedg = random(2, 7) 
-                        WeedVar = random(1, 4)
-                        WeedVar = WeedVar.round()
-                        If WeedVar == 1
-                            VarWeed = "<FindWeedg>g of Sunset Sherbet"
-                            Player.modifyActorVar(stock_SSweed, FindWeedg)
-                        ElseIf WeedVar == 2
-                            divideWeed = FindWeedg/2
-                            divideWeed2 = FindWeedg/2
-                            VarWeed = "<divideWeed>g of Bruce Banner and <divideWeed2>g of Gorilla Glue"
-                            Player.modifyActorVar(stock_BBweed, divideWeed)
-                            Player.modifyActorVar(stock_GGweed, divideWeed2)
-                        ElseIf WeedVar == 3
-                            divideWeed = FindWeedg/2
-                            divideWeed1 = FindWeedg/2
-                            divideWeed2 = FindWeedg/2
-                            VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
-                            Player.modifyActorVar(stock_SSweed, divideWeed)
-                            Player.modifyActorVar(stock_GGweed, divideWeed2)
-                            Player.modifyActorVar(stock_AK47weed, divideWeed1)
-                        ElseIf WeedVar == 4
-                            divideWeed = FindWeedg/2
-                            divideWeed1 = FindWeedg/2
-                            divideWeed2 = FindWeedg/2
-                            divideWeed3 = FindWeedg/2
-                            VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed3>g of Pineapple Express, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
-                            Player.modifyActorVar(stock_SSweed, divideWeed)
-                            Player.modifyActorVar(stock_AK47weed, divideWeed1)
-                            Player.modifyActorVar(stock_GGweed, divideWeed2)
-                            Player.modifyActorVar(stock_PEweed, divideWeed3)
-                        EndIf
-                        "You find <FindMoney_Loc> and <FindWeedg>g of weeds! <VarWeed>."
-                        mood += 1
-                        money += FindMoney
-                        JeLoot = true
-                    ElseIf 1
-                        perversion += random(1, 2)
-                        masochist += random(0, 1)
-                        JeFuck = true
-                        Player.dressExcept(Outerwear, Bottom)
-                        Actor.strip()
+            If !FiniLeShow
+                If VraiLoser
+                    Actor.animate()
+                    "<Actor.name> win the fight, <Actor.he_or_she> beat me all the way..."
+                    "Suddenly everything goes black ... you lost your consciousness."
+                    Player.animate(knockedout)
+                    Actor:rapportwithplayer -= 5
+                    Actor:attractiontoplayer -= 1
+                    If isModEnabled(vin_NonConsensual) && Actor:arousal > 10 && Actor:perversion > 50
+                        Actor(Angry)::"I'm not done with you, <Player.scum_or_bitch>!"
+                        "<Actor.name> stripped off all my clothes and started fucking me right here!"
+                        Player.strip()
+                        Actor.dressExcept(Outerwear, Bottom, Bottom_Under)
                         Filter(Aggressive)
-                        SexNoAffair(Player, Actor)
+                        SexNoAffair(Actor, Player)
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                            Player.modifyActorVar(rk_VB_Hunger, -3)
                         EndIf
                         passTime(0.50, 1.50)
+                        Actor.hide()
+                        "After a few minutes, I woke up but I'm still a little stunned…"
+                        Player.animate()
+                        "As you try to stand up you notice that you are naked ... and your whole body hurts. It feels like you have been beaten up."
+                        Player.show()
+                        "You feel something running down your <Player.ass_or_pussy>..."
+                        "You touch your <Player.ass_or_pussy> to see what it is ..."
+                        "It's cum, a lot of cum! It gushes literally out of your <Player.ass_or_pussy>, running down both legs ..."
+                        Player(Disgusted)::"WTF..."
+                        "I wiped a bit and put my clothes back on..."
+                        Player.dress()
+                        mood => 0
+                        energy => 5
+                    ElseIf random(0, 100) > 60
+                        ActorLooting = random(1, 10)
+                        ActorLooting = ActorLooting.round()
+                        ActorLootingCash = random(10, 200)
+                        ActorLootingCash_loc = ActorLootingCash.convertToLocalCurrency()
+                        If ActorLooting > 6
+                            "<Actor.name> stole you <ActorLootingCash_loc> from your pockets."
+                            money -= ActorLootingCash
+                        EndIf
+                        Actor.hide()
+                        Actor:rapportwithplayer -= 50
+                        Actor:attractiontoplayer -= 50
+                        passTime(0.15, 0.50)
                     Else
-                        IlAPerduKnock = false
+                        "After a few minutes, I woke up but I'm still a little stunned…"
                     EndIf
-                EndWhile
+                    If Flavor_Fight == 1
+                        rk_VB_EthnicFlavor_Fight.setGlobal(0)
+                        rk_VB_EthnicFlavor_NPID.setGlobal(0)
+                    ElseIf NpcBeat == 1
+                        rk_VB_polySibling_Fight.setGlobal(0)
+                        rk_VB_polySibling_npdID.setGlobal(0)
+                    ElseIf SharkF == 1
+                        rk_VB_Shark_Fight.setGlobal(0)
+                        rk_VB_Shark_npdID.setGlobal(0)
+                    EndIf
+                    Player.closeEyes(false)
+                    Player.animate()
+                    mood => 5
+                    energy => 5
+                    If WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != stripclub && WHERE != prison
+                        "Going back home..."
+                        moveTo(home)
+                    EndIf
+                    SceneEnd()
+                EndIf
+                If IlAPerdu
+                    If Flavor_Fight == 1
+                        rk_VB_EthnicFlavor_Fight.setGlobal(0)
+                        rk_VB_EthnicFlavor_NPID.setGlobal(0)
+                    ElseIf NpcBeat == 1
+                        rk_VB_polySibling_Fight.setGlobal(0)
+                        rk_VB_polySibling_npdID.setGlobal(0)
+                    ElseIf SharkF == 1
+                        rk_VB_Shark_Fight.setGlobal(0)
+                        rk_VB_Shark_npdID.setGlobal(0)
+                    EndIf
+                    JeLoot = false
+                    JeFuck = false
+                    "I win the fight, <Actor.he_or_she> will stay quiet for a few..."
+                    Actor.animate(knockedout)
+                    Actor.closeEyes(true)
+                    IlAPerduKnock = true
+                    While IlAPerduKnock
+                        "What do I do?"
+                        0::!JeLoot::"Loot <Actor.him_or_her>"
+                        1::!JeFuck::"Fuck <Actor.him_or_her>"
+                        99::"Nothing"
+                                        
+                        If 0
+                            FindMoney = random(5, 500)
+                            FindMoney_Loc = FindMoney.convertToLocalCurrency()
+                            FindWeedg = random(2, 7) 
+                            WeedVar = random(1, 4)
+                            WeedVar = WeedVar.round()
+                            If WeedVar == 1
+                                VarWeed = "<FindWeedg>g of Sunset Sherbet"
+                                Player.modifyActorVar(stock_SSweed, FindWeedg)
+                            ElseIf WeedVar == 2
+                                divideWeed = FindWeedg/2
+                                divideWeed2 = FindWeedg/2
+                                VarWeed = "<divideWeed>g of Bruce Banner and <divideWeed2>g of Gorilla Glue"
+                                Player.modifyActorVar(stock_BBweed, divideWeed)
+                                Player.modifyActorVar(stock_GGweed, divideWeed2)
+                            ElseIf WeedVar == 3
+                                divideWeed = FindWeedg/2
+                                divideWeed1 = FindWeedg/2
+                                divideWeed2 = FindWeedg/2
+                                VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
+                                Player.modifyActorVar(stock_SSweed, divideWeed)
+                                Player.modifyActorVar(stock_GGweed, divideWeed2)
+                                Player.modifyActorVar(stock_AK47weed, divideWeed1)
+                            ElseIf WeedVar == 4
+                                divideWeed = FindWeedg/2
+                                divideWeed1 = FindWeedg/2
+                                divideWeed2 = FindWeedg/2
+                                divideWeed3 = FindWeedg/2
+                                VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed3>g of Pineapple Express, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
+                                Player.modifyActorVar(stock_SSweed, divideWeed)
+                                Player.modifyActorVar(stock_AK47weed, divideWeed1)
+                                Player.modifyActorVar(stock_GGweed, divideWeed2)
+                                Player.modifyActorVar(stock_PEweed, divideWeed3)
+                            EndIf
+                            "You find <FindMoney_Loc> and <FindWeedg>g of weeds! <VarWeed>."
+                            mood += 1
+                            money += FindMoney
+                            JeLoot = true
+                        ElseIf 1
+                            perversion += random(1, 2)
+                            masochist += random(0, 1)
+                            JeFuck = true
+                            Player.dressExcept(Outerwear, Bottom)
+                            Actor.strip()
+                            Filter(Aggressive)
+                            SexNoAffair(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            passTime(0.50, 1.50)
+                        Else
+                            IlAPerduKnock = false
+                        EndIf
+                    EndWhile
+                EndIf
             EndIf
         EndIf
         If Flavor_Fight == 1

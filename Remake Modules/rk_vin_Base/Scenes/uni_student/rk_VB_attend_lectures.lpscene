@@ -5,13 +5,16 @@ WHO: none
 OTHER: none
 
     SceneStart()
+        rkVBchoiceCourseMajor = rk_VB_choiceCourseMajor.getGlobal()
         If jobexperience <= 30
             jobexperience += 0.025
         EndIf
+        copinepresent = false
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         FacebookFriend = rk_VB_FacebookFriend.getGlobal()
-
         // Get number of sessions
         Architecture_Major_Ses = rk_VB_Architecture_Major_Ses.getGlobal()
         Chemical_Engineering_Major_Ses = rk_VB_Chemical_Engineering_Major_Ses.getGlobal()
@@ -33,7 +36,6 @@ OTHER: none
         Dental_Major_Ses = rk_VB_Dental_Major_Ses.getGlobal()
         Veterinary_Major_Ses = rk_VB_Veterinary_Major_Ses.getGlobal()
         TravelTourism_Major_Ses = rk_VB_TravelTourism_Major_Ses.getGlobal()
-        
         // Get if sessions is ended or not 1 = yes
         Architecture_Major_Ses_Done = rk_VB_Architecture_Major_Ses_Done.getGlobal()
         Chemical_Engineering_Major_Ses_Done = rk_VB_Chemical_Engineering_Major_Ses_Done.getGlobal()
@@ -55,7 +57,6 @@ OTHER: none
         Dental_Major_Ses_Done = rk_VB_Dental_Major_Ses_Done.getGlobal()
         Veterinary_Major_Ses_Done = rk_VB_Veterinary_Major_Ses_Done.getGlobal()
         TravelTourism_Major_Ses_Done = rk_VB_TravelTourism_Major_Ses_Done.getGlobal()
-        
         // Get number of credits/units to pass to the next degree
         Architecture_Major_Units = Player.getActorVar(rk_VB_Architecture_Major_Units)
         Chemical_Engineering_Major_Units = Player.getActorVar(rk_VB_Chemical_Engineering_Major_Units)
@@ -77,7 +78,6 @@ OTHER: none
         Dental_Major_Units = Player.getActorVar(rk_VB_Dental_Major_Units)
         Veterinary_Major_Units = Player.getActorVar(rk_VB_Veterinary_Major_Units)
         TravelTourism_Major_Units = Player.getActorVar(rk_VB_TravelTourism_Major_Units)
-        
         // level for each session, reset at the end of the session
         Architecture_Major_Level = Player.getActorVar(rk_VB_Architecture_Major_Level)
         Chemical_Engineering_Major_Level = Player.getActorVar(rk_VB_Chemical_Engineering_Major_Level)
@@ -99,52 +99,7 @@ OTHER: none
         Dental_Major_Level = Player.getActorVar(rk_VB_Dental_Major_Level)
         Veterinary_Major_Level = Player.getActorVar(rk_VB_Veterinary_Major_Level)
         TravelTourism_Major_Level = Player.getActorVar(rk_VB_TravelTourism_Major_Level)
-        
-        // Get Actor major
-        Architecture_Major_Actor = Actor.getActorVar(rk_VB_Architecture_Major_Actor)
-        Chemical_Engineering_Major_Actor = Actor.getActorVar(rk_VB_Chemical_Engineering_Major_Actor)
-        Classics_Major_Actor = Actor.getActorVar(rk_VB_Classics_Major_Actor)
-        Computer_Science_Major_Actor = Actor.getActorVar(rk_VB_Computer_Science_Major_Actor)
-        Economics_Major_Actor = Actor.getActorVar(rk_VB_Economics_Major_Actor)
-        Education_Major_Actor = Actor.getActorVar(rk_VB_Education_Major_Actor)
-        English_Major_Actor = Actor.getActorVar(rk_VB_English_Major_Actor)
-        Geography_Major_Actor = Actor.getActorVar(rk_VB_Geography_Major_Actor)
-        History_Major_Actor = Actor.getActorVar(rk_VB_History_Major_Actor)
-        Law_Major_Actor = Actor.getActorVar(rk_VB_Law_Major_Actor)
-        Mathematics_Major_Actor = Actor.getActorVar(rk_VB_Mathematics_Major_Actor)
-        Medicine_Major_Actor = Actor.getActorVar(rk_VB_Medicine_Major_Actor)
-        Music_Major_Actor = Actor.getActorVar(rk_VB_Music_Major_Actor)
-        Philosophy_Major_Actor = Actor.getActorVar(rk_VB_Philosophy_Major_Actor)
-        Psychology_Major_Actor = Actor.getActorVar(rk_VB_Psychology_Major_Actor)
-        Political_Sciences_Major_Actor = Actor.getActorVar(rk_VB_Political_Sciences_Major_Actor)
-        SalesMarketing_Major_Actor = Actor.getActorVar(rk_VB_SalesMarketing_Major_Actor)
-        Dental_Major_Actor = Actor.getActorVar(rk_VB_Dental_Major_Actor)
-        Veterinary_Major_Actor = Actor.getActorVar(rk_VB_Veterinary_Major_Actor)
-        TravelTourism_Major_Actor = Actor.getActorVar(rk_VB_TravelTourism_Major_Actor)
-        // Get Teacher major
-        Major_Teach = rk_VB_Major_Teacher.getGlobal()
         setBackground(university)
-        rk_VB_tag_TAR = Actor.getActorVar(rk_VB_tag_TAR)
-        rk_VB_tag_TCE = Actor.getActorVar(rk_VB_tag_TCE)
-        rk_VB_tag_TCL = Actor.getActorVar(rk_VB_tag_TCL)
-        rk_VB_tag_TCS = Actor.getActorVar(rk_VB_tag_TCS)
-        rk_VB_tag_TEC = Actor.getActorVar(rk_VB_tag_TEC)
-        rk_VB_tag_TED = Actor.getActorVar(rk_VB_tag_TED)
-        rk_VB_tag_TEN = Actor.getActorVar(rk_VB_tag_TEN)
-        rk_VB_tag_TGE = Actor.getActorVar(rk_VB_tag_TGE)
-        rk_VB_tag_THI = Actor.getActorVar(rk_VB_tag_THI)
-        rk_VB_tag_TLA = Actor.getActorVar(rk_VB_tag_TLA)
-        rk_VB_tag_TMA = Actor.getActorVar(rk_VB_tag_TMA)
-        rk_VB_tag_TME = Actor.getActorVar(rk_VB_tag_TME)
-        rk_VB_tag_TMU = Actor.getActorVar(rk_VB_tag_TMU)
-        rk_VB_tag_TPH = Actor.getActorVar(rk_VB_tag_TPH)
-        rk_VB_tag_TPS = Actor.getActorVar(rk_VB_tag_TPS)
-        rk_VB_tag_TPOL = Actor.getActorVar(rk_VB_tag_TPOL)
-        rk_VB_tag_TSM = Actor.getActorVar(rk_VB_tag_TSM)
-        rk_VB_tag_TDM = Actor.getActorVar(rk_VB_tag_TDM)
-        rk_VB_tag_TVE = Actor.getActorVar(rk_VB_tag_TVE)
-        rk_VB_tag_TTT = Actor.getActorVar(rk_VB_tag_TTT)
-
         // Session is it started 1 = yes
         Session_TAR = Player.getActorVar(rk_VB_Session_TAR)
         Session_TCE = Player.getActorVar(rk_VB_Session_TCE)
@@ -166,224 +121,562 @@ OTHER: none
         Session_TDM = Player.getActorVar(rk_VB_Session_TDM)
         Session_TVE = Player.getActorVar(rk_VB_Session_TVE)
         Session_TTT = Player.getActorVar(rk_VB_Session_TTT)
-        nyvaspas = false
+        nyvaspas = true
         DoIAttemd = false
         choiceCourseMajor = 0
-        "Now, which lectures should I attend?"
-        0:: Architecture_Major_Ses_Done <= 0 && Architecture_Major_Ses >= 1 && Session_TAR >= 1 ::"Architecture"
-        1:: Chemical_Engineering_Major_Ses_Done <= 0 && Chemical_Engineering_Major_Ses >= 1 && Session_TCE >= 1 ::"Chemical Engineering"
-        2:: Classics_Major_Ses_Done <= 0 && Classics_Major_Ses >= 1 && Session_TCL >= 1 ::"Classics"
-        3:: Computer_Science_Major_Ses_Done <= 0 && Computer_Science_Major_Ses >= 1 && Session_TCS >= 1 ::"Computer Science"
-        31:: Dental_Major_Ses_Done <= 0 && Dental_Major_Ses >= 1 && Session_TDM >= 1 ::"Dental"
-        4:: Economics_Major_Ses_Done <= 0 && Economics_Major_Ses >= 1 && Session_TEC >= 1 ::"Economics"
-        5:: Education_Major_Ses_Done <= 0 && Education_Major_Ses >= 1 && Session_TED >= 1 ::"Education"
-        6:: English_Major_Ses_Done <= 0 && English_Major_Ses >= 1 && Session_TEN >= 1 ::"English"
-        7:: Geography_Major_Ses_Done <= 0 && Geography_Major_Ses >= 1 && Session_TGE >= 1 ::"Geography"
-        8:: History_Major_Ses_Done <= 0 && History_Major_Ses >= 1 && Session_THI >= 1 ::"History"
-        9:: Law_Major_Ses_Done <= 0 && Law_Major_Ses >= 1 && Session_TLA >= 1 ::"Law"
-        10:: Mathematics_Major_Ses_Done <= 0 && Mathematics_Major_Ses >= 1 && Session_TMA >= 1 ::"Mathematics"
-        11:: Medicine_Major_Ses_Done <= 0 && Medicine_Major_Ses >= 1 && Session_TME >= 1 ::"Medicine"
-        12:: Music_Major_Ses_Done <= 0 && Music_Major_Ses >= 1 && Session_TMU >= 1 ::"Music"
-        13:: Philosophy_Major_Ses_Done <= 0 && Philosophy_Major_Ses >= 1 && Session_TPH >= 1 ::"Philosophy"
-        14:: Psychology_Major_Ses_Done <= 0 && Psychology_Major_Ses >= 1 && Session_TPS >= 1 ::"Psychology"
-        15:: Political_Sciences_Major_Ses_Done <= 0 && Political_Sciences_Major_Ses >= 1 && Session_TPOL >= 1 ::"Political Sciences"
-        60:: SalesMarketing_Major_Ses_Done <= 0 && SalesMarketing_Major_Ses >= 1 && Session_TSM >= 1 ::"Sales and Marketing"
-        80:: TravelTourism_Major_Ses_Done <= 0 && TravelTourism_Major_Ses >= 1 && Session_TTT >= 1 ::"Travel and Tourism"
-        90:: Veterinary_Major_Ses_Done <= 0 && Veterinary_Major_Ses >= 1 && Session_TVE >= 1 ::"Veterinary"
-        99::"Go back!"
+        teachers_pet = Player.getActorVar(rk_VB_TempoPopUpteachers_pet)
+        coursemates_dating = Player.getActorVar(rk_VB_TempoPopUpcoursemates_dating)
+        coursemate_dating_another = Player.getActorVar(rk_VB_TempoPopUpcoursemate_dating_another)
+        porn_uni_lecturer = Player.getActorVar(rk_VB_TempoPopUpporn_uni_lecturer)
+        rk_VB_University_Museum = Player.getActorVar(rk_VB_TempoPopUp_University_Museum)
+        teacher_sex_cms = Player.getActorVar(rk_VB_TempoPopUpteacher_sex_cms)
+        teacher_sex_repeat = Player.getActorVar(rk_VB_TempoPopUpteacher_sex_repeat)
+        coursemate_bet = Player.getActorVar(rk_VB_TempoPopUpcoursemate_bet)
+        clinical_trial = Player.getActorVar(rk_VB_TempoPopUpclinical_trial)
+        porn_uni_coursemate = Player.getActorVar(rk_VB_TempoPopUpporn_uni_coursemate)
+        coursemate_affair = Player.getActorVar(rk_VB_TempoPopUpcoursemate_affair)
+        saChoisi = true
+        saChoisiBot = true
         
-        If 0
-            Actor = getSpecific(rk_VB_tag_TAR)
-            TextMajorChosen = "architecture"
-            choiceCourseMajor => 1
-            DoIAttemd = true
-        ElseIf 1
-            Actor = getSpecific(rk_VB_tag_TCE)
-            TextMajorChosen = "chemical engineering"
-            choiceCourseMajor => 2
-            DoIAttemd = true
-        ElseIf 2
-            Actor = getSpecific(rk_VB_tag_TCL)
-            TextMajorChosen = "classics"
-            choiceCourseMajor => 3
-            DoIAttemd = true
-        ElseIf 3
-            Actor = getSpecific(rk_VB_tag_TCS)
-            TextMajorChosen = "computer science"
-            choiceCourseMajor => 4
-            DoIAttemd = true
-        ElseIf 31
-            Actor = getSpecific(rk_VB_tag_TDM)
-            TextMajorChosen = "dental"
-            choiceCourseMajor => 31
-            DoIAttemd = true
-        ElseIf 4
-            Actor = getSpecific(rk_VB_tag_TEC)
-            TextMajorChosen = "economics"
-            choiceCourseMajor => 5
-            DoIAttemd = true
-        ElseIf 5
-            Actor = getSpecific(rk_VB_tag_TED)
-            TextMajorChosen = "education"
-            choiceCourseMajor => 6
-            DoIAttemd = true
-        ElseIf 6
-            Actor = getSpecific(rk_VB_tag_TEN)
-            TextMajorChosen = "English"
-            choiceCourseMajor => 7
-            DoIAttemd = true
-        ElseIf 7
-            Actor = getSpecific(rk_VB_tag_TGE)
-            TextMajorChosen = "geography"
-            choiceCourseMajor => 8
-            DoIAttemd = true
-        ElseIf 8
-            Actor = getSpecific(rk_VB_tag_THI)
-            TextMajorChosen = "history"
-            choiceCourseMajor => 9
-            DoIAttemd = true
-        ElseIf 9
-            Actor = getSpecific(rk_VB_tag_TLA)
-            TextMajorChosen = "law"
-            choiceCourseMajor => 10
-            DoIAttemd = true
-        ElseIf 10
-            Actor = getSpecific(rk_VB_tag_TMA)
-            TextMajorChosen = "mathematics"
-            choiceCourseMajor => 11
-            DoIAttemd = true
-        ElseIf 11
-            Actor = getSpecific(rk_VB_tag_TME)
-            TextMajorChosen = "medecine"
-            choiceCourseMajor => 12
-            DoIAttemd = true
-        ElseIf 12
-            Actor = getSpecific(rk_VB_tag_TMU)
-            TextMajorChosen = "music"
-            choiceCourseMajor => 13
-            DoIAttemd = true
-        ElseIf 13
-            Actor = getSpecific(rk_VB_tag_TPH)
-            TextMajorChosen = "philosophy"
-            choiceCourseMajor => 14
-            DoIAttemd = true
-        ElseIf 14
-            Actor = getSpecific(rk_VB_tag_TPS)
-            TextMajorChosen = "psychology"
-            choiceCourseMajor => 15
-            DoIAttemd = true
-        ElseIf 15
-            Actor = getSpecific(rk_VB_tag_TPOL)
-            TextMajorChosen = "political sciences"
-            choiceCourseMajor => 16
-            DoIAttemd = true
-        ElseIf 60
-            Actor = getSpecific(rk_VB_tag_TSM)
-            TextMajorChosen = "sales and marketing"
-            choiceCourseMajor => 60
-            DoIAttemd = true
-        ElseIf 80
-            Actor = getSpecific(rk_VB_tag_TTT)
-            TextMajorChosen = "travel and tourism"
-            choiceCourseMajor => 80
-            DoIAttemd = true
-        ElseIf 90
-            Actor = getSpecific(rk_VB_tag_TVE)
-            TextMajorChosen = "veterinary"
-            choiceCourseMajor => 90
-            DoIAttemd = true
-        
+        If isModEnabled(rk_vin_Base)
+            "Now, which lectures should I attend?"
+            0:: Architecture_Major_Ses_Done <= 0 && Architecture_Major_Ses >= 1 && Session_TAR >= 1 ::"Architecture"
+            1:: Chemical_Engineering_Major_Ses_Done <= 0 && Chemical_Engineering_Major_Ses >= 1 && Session_TCE >= 1 ::"Chemical Engineering"
+            2:: Classics_Major_Ses_Done <= 0 && Classics_Major_Ses >= 1 && Session_TCL >= 1 ::"Classics"
+            3:: Computer_Science_Major_Ses_Done <= 0 && Computer_Science_Major_Ses >= 1 && Session_TCS >= 1 ::"Computer Science"
+            31:: Dental_Major_Ses_Done <= 0 && Dental_Major_Ses >= 1 && Session_TDM >= 1 ::"Dental"
+            4:: Economics_Major_Ses_Done <= 0 && Economics_Major_Ses >= 1 && Session_TEC >= 1 ::"Economics"
+            5:: Education_Major_Ses_Done <= 0 && Education_Major_Ses >= 1 && Session_TED >= 1 ::"Education"
+            6:: English_Major_Ses_Done <= 0 && English_Major_Ses >= 1 && Session_TEN >= 1 ::"English"
+            7:: Geography_Major_Ses_Done <= 0 && Geography_Major_Ses >= 1 && Session_TGE >= 1 ::"Geography"
+            8:: History_Major_Ses_Done <= 0 && History_Major_Ses >= 1 && Session_THI >= 1 ::"History"
+            9:: Law_Major_Ses_Done <= 0 && Law_Major_Ses >= 1 && Session_TLA >= 1 ::"Law"
+            10:: Mathematics_Major_Ses_Done <= 0 && Mathematics_Major_Ses >= 1 && Session_TMA >= 1 ::"Mathematics"
+            11:: Medicine_Major_Ses_Done <= 0 && Medicine_Major_Ses >= 1 && Session_TME >= 1 ::"Medicine"
+            12:: Music_Major_Ses_Done <= 0 && Music_Major_Ses >= 1 && Session_TMU >= 1 ::"Music"
+            13:: Philosophy_Major_Ses_Done <= 0 && Philosophy_Major_Ses >= 1 && Session_TPH >= 1 ::"Philosophy"
+            14:: Psychology_Major_Ses_Done <= 0 && Psychology_Major_Ses >= 1 && Session_TPS >= 1 ::"Psychology"
+            15:: Political_Sciences_Major_Ses_Done <= 0 && Political_Sciences_Major_Ses >= 1 && Session_TPOL >= 1 ::"Political Sciences"
+            60:: SalesMarketing_Major_Ses_Done <= 0 && SalesMarketing_Major_Ses >= 1 && Session_TSM >= 1 ::"Sales and Marketing"
+            80:: TravelTourism_Major_Ses_Done <= 0 && TravelTourism_Major_Ses >= 1 && Session_TTT >= 1 ::"Travel and Tourism"
+            90:: Veterinary_Major_Ses_Done <= 0 && Veterinary_Major_Ses >= 1 && Session_TVE >= 1 ::"Veterinary"
+            99::"Go back!"
+            
+            If 0
+                TextMajorChosen = "architecture"
+                choiceCourseMajor => 1
+                rk_VB_choiceCourseMajor.setGlobal(1)
+                DoIAttemd = true
+            ElseIf 1
+                TextMajorChosen = "chemical engineering"
+                choiceCourseMajor => 2
+                rk_VB_choiceCourseMajor.setGlobal(2)
+                DoIAttemd = true
+            ElseIf 2
+                TextMajorChosen = "classics"
+                choiceCourseMajor => 3
+                rk_VB_choiceCourseMajor.setGlobal(3)
+                DoIAttemd = true
+            ElseIf 3
+                TextMajorChosen = "computer science"
+                choiceCourseMajor => 4
+                rk_VB_choiceCourseMajor.setGlobal(4)
+                DoIAttemd = true
+            ElseIf 31
+                TextMajorChosen = "dental"
+                choiceCourseMajor => 31
+                rk_VB_choiceCourseMajor.setGlobal(31)
+                DoIAttemd = true
+            ElseIf 4
+                TextMajorChosen = "economics"
+                choiceCourseMajor => 5
+                rk_VB_choiceCourseMajor.setGlobal(5)
+                DoIAttemd = true
+            ElseIf 5
+                TextMajorChosen = "education"
+                choiceCourseMajor => 6
+                rk_VB_choiceCourseMajor.setGlobal(6)
+                DoIAttemd = true
+            ElseIf 6
+                TextMajorChosen = "English"
+                choiceCourseMajor => 7
+                rk_VB_choiceCourseMajor.setGlobal(7)
+                DoIAttemd = true
+            ElseIf 7
+                TextMajorChosen = "geography"
+                choiceCourseMajor => 8
+                rk_VB_choiceCourseMajor.setGlobal(8)
+                DoIAttemd = true
+            ElseIf 8
+                TextMajorChosen = "history"
+                choiceCourseMajor => 9
+                rk_VB_choiceCourseMajor.setGlobal(9)
+                DoIAttemd = true
+            ElseIf 9
+                TextMajorChosen = "law"
+                choiceCourseMajor => 10
+                rk_VB_choiceCourseMajor.setGlobal(10)
+                DoIAttemd = true
+            ElseIf 10
+                TextMajorChosen = "mathematics"
+                choiceCourseMajor => 11
+                rk_VB_choiceCourseMajor.setGlobal(11)
+                DoIAttemd = true
+            ElseIf 11
+                TextMajorChosen = "medicine"
+                choiceCourseMajor => 12
+                rk_VB_choiceCourseMajor.setGlobal(12)
+                DoIAttemd = true
+            ElseIf 12
+                TextMajorChosen = "music"
+                choiceCourseMajor => 13
+                rk_VB_choiceCourseMajor.setGlobal(13)
+                DoIAttemd = true
+            ElseIf 13
+                TextMajorChosen = "philosophy"
+                choiceCourseMajor => 14
+                rk_VB_choiceCourseMajor.setGlobal(14)
+                DoIAttemd = true
+            ElseIf 14
+                TextMajorChosen = "psychology"
+                choiceCourseMajor => 15
+                rk_VB_choiceCourseMajor.setGlobal(15)
+                DoIAttemd = true
+            ElseIf 15
+                TextMajorChosen = "political sciences"
+                choiceCourseMajor => 16
+                rk_VB_choiceCourseMajor.setGlobal(16)
+                DoIAttemd = true
+            ElseIf 60
+                TextMajorChosen = "sales and marketing"
+                choiceCourseMajor => 60
+                rk_VB_choiceCourseMajor.setGlobal(60)
+                DoIAttemd = true
+            ElseIf 80
+                TextMajorChosen = "travel and tourism"
+                choiceCourseMajor => 80
+                rk_VB_choiceCourseMajor.setGlobal(80)
+                DoIAttemd = true
+            ElseIf 90
+                TextMajorChosen = "veterinary"
+                choiceCourseMajor => 90
+                rk_VB_choiceCourseMajor.setGlobal(90)
+                DoIAttemd = true
+            EndIf
         EndIf
+        rkVBchoiceCourseMajor = rk_VB_choiceCourseMajor.getGlobal()
         If DoIAttemd
+            passTime(0.75, 1)
             ReadyForExam = false
-            If choiceCourseMajor == 1 && Architecture_Major_Level > 40
+            If rkVBchoiceCourseMajor == 1 && Architecture_Major_Level > 40
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 2 && Chemical_Engineering_Major_Level > 50
+            If rkVBchoiceCourseMajor == 2 && Chemical_Engineering_Major_Level > 50
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 3 && Classics_Major_Level > 30
+            If rkVBchoiceCourseMajor == 3 && Classics_Major_Level > 30
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 31 && Dental_Major_Level > 50
+            If rkVBchoiceCourseMajor == 31 && Dental_Major_Level > 50
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 4 && Computer_Science_Major_Level > 40
+            If rkVBchoiceCourseMajor == 4 && Computer_Science_Major_Level > 40
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 5 && Economics_Major_Level > 30
+            If rkVBchoiceCourseMajor == 5 && Economics_Major_Level > 30
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 6 && Education_Major_Level > 30
+            If rkVBchoiceCourseMajor == 6 && Education_Major_Level > 30
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 7 && English_Major_Level > 10
+            If rkVBchoiceCourseMajor == 7 && English_Major_Level > 10
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 8 && Geography_Major_Level > 10
+            If rkVBchoiceCourseMajor == 8 && Geography_Major_Level > 10
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 9 && History_Major_Level > 10
+            If rkVBchoiceCourseMajor == 9 && History_Major_Level > 10
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 10 && Law_Major_Level > 30
+            If rkVBchoiceCourseMajor == 10 && Law_Major_Level > 30
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 11 && Mathematics_Major_Level > 30
+            If rkVBchoiceCourseMajor == 11 && Mathematics_Major_Level > 30
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 12 && Medicine_Major_Level > 50
+            If rkVBchoiceCourseMajor == 12 && Medicine_Major_Level > 50
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 13 && Music_Major_Level > 30
+            If rkVBchoiceCourseMajor == 13 && Music_Major_Level > 30
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 14 && Philosophy_Major_Level > 10
+            If rkVBchoiceCourseMajor == 14 && Philosophy_Major_Level > 10
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 15 && Psychology_Major_Level > 50
+            If rkVBchoiceCourseMajor == 15 && Psychology_Major_Level > 50
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 16 && Political_Sciences_Major_Level > 30
+            If rkVBchoiceCourseMajor == 16 && Political_Sciences_Major_Level > 30
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 60 && SalesMarketing_Major_Level > 20
+            If rkVBchoiceCourseMajor == 60 && SalesMarketing_Major_Level > 20
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 80 && TravelTourism_Major_Level > 20
+            If rkVBchoiceCourseMajor == 80 && TravelTourism_Major_Level > 20
                 ReadyForExam = true
             EndIf
-            If choiceCourseMajor == 90 && Veterinary_Major_Level > 50
+            If rkVBchoiceCourseMajor == 90 && Veterinary_Major_Level > 50
                 ReadyForExam = true
             EndIf
             If ReadyForExam
                 "You are ready to passed an exam ..."
             EndIf
+            MajorTeacher = rk_VB_Major_Teacher.getGlobal()
+            Actor = getPerson(rk_VB_tag_Major)
+            tagTAR = Actor.getActorVar(rk_VB_tag_TAR)
+            tagTCE = Actor.getActorVar(rk_VB_tag_TCE)
+            tagTCL = Actor.getActorVar(rk_VB_tag_TCL)
+            tagTCS = Actor.getActorVar(rk_VB_tag_TCS)
+            tagTEC = Actor.getActorVar(rk_VB_tag_TEC)
+            tagTED = Actor.getActorVar(rk_VB_tag_TED)
+            tagTEN = Actor.getActorVar(rk_VB_tag_TEN)
+            tagTGE = Actor.getActorVar(rk_VB_tag_TGE)
+            tagTHI = Actor.getActorVar(rk_VB_tag_THI)
+            tagTLA = Actor.getActorVar(rk_VB_tag_TLA)
+            tagTMA = Actor.getActorVar(rk_VB_tag_TMA)
+            tagTME = Actor.getActorVar(rk_VB_tag_TME)
+            tagTMU = Actor.getActorVar(rk_VB_tag_TMU)
+            tagTPH = Actor.getActorVar(rk_VB_tag_TPH)
+            tagTPS = Actor.getActorVar(rk_VB_tag_TPS)
+            tagTPOL = Actor.getActorVar(rk_VB_tag_TPOL)
+            tagTSM = Actor.getActorVar(rk_VB_tag_TSM)
+            tagTDM = Actor.getActorVar(rk_VB_tag_TDM)
+            tagTVE = Actor.getActorVar(rk_VB_tag_TVE)
+            tagTTT = Actor.getActorVar(rk_VB_tag_TTT)
+            If Actor.isValid()
+                If tagTAR >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TAR)
+                    Architecture_Major_Actor = Actor.getActorVar(rk_VB_Architecture_Major_Actor)
+                ElseIf tagTCE >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TCE)
+                    Chemical_Engineering_Major_Actor = Actor.getActorVar(rk_VB_Chemical_Engineering_Major_Actor)
+                ElseIf tagTCL >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TCL)
+                    Classics_Major_Actor = Actor.getActorVar(rk_VB_Classics_Major_Actor)
+                ElseIf tagTCS >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TCS)
+                    Computer_Science_Major_Actor = Actor.getActorVar(rk_VB_Computer_Science_Major_Actor)
+                ElseIf tagTEC >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TEC)
+                    Economics_Major_Actor = Actor.getActorVar(rk_VB_Economics_Major_Actor)
+                ElseIf tagTED >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TED)
+                    Education_Major_Actor = Actor.getActorVar(rk_VB_Education_Major_Actor)
+                ElseIf tagTEN >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TEN)
+                    English_Major_Actor = Actor.getActorVar(rk_VB_English_Major_Actor)
+                ElseIf tagTGE >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TGE)
+                    Geography_Major_Actor = Actor.getActorVar(rk_VB_Geography_Major_Actor)
+                ElseIf tagTHI >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_THI)
+                    History_Major_Actor = Actor.getActorVar(rk_VB_History_Major_Actor)
+                ElseIf tagTLA >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TLA)
+                    Law_Major_Actor = Actor.getActorVar(rk_VB_Law_Major_Actor)
+                ElseIf tagTMA >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TMA)
+                    Mathematics_Major_Actor = Actor.getActorVar(rk_VB_Mathematics_Major_Actor)
+                ElseIf tagTME >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TME)
+                    Medicine_Major_Actor = Actor.getActorVar(rk_VB_Medicine_Major_Actor)
+                ElseIf tagTMU >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TMU)
+                    Music_Major_Actor = Actor.getActorVar(rk_VB_Music_Major_Actor)
+                ElseIf tagTPH >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TPH)
+                    Philosophy_Major_Actor = Actor.getActorVar(rk_VB_Philosophy_Major_Actor)
+                ElseIf tagTPS >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TPS)
+                    Psychology_Major_Actor = Actor.getActorVar(rk_VB_Psychology_Major_Actor)
+                ElseIf tagTPOL >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TPOL)
+                    Political_Sciences_Major_Actor = Actor.getActorVar(rk_VB_Political_Sciences_Major_Actor)
+                ElseIf tagTSM >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TSM)
+                    SalesMarketing_Major_Actor = Actor.getActorVar(rk_VB_SalesMarketing_Major_Actor)
+                ElseIf tagTDM >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TDM)
+                    Dental_Major_Actor = Actor.getActorVar(rk_VB_Dental_Major_Actor)
+                ElseIf tagTVE >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TVE)
+                    Veterinary_Major_Actor = Actor.getActorVar(rk_VB_Veterinary_Major_Actor)
+                ElseIf tagTTT >= 1
+                    AcID = Actor.getActorVar(rk_VB_AcIdTeach_TTT)
+                    TravelTourism_Major_Actor = Actor.getActorVar(rk_VB_TravelTourism_Major_Actor)
+                EndIf
+                //Actor = getPerson(rk_VB_tag_Major)
+            EndIf
+            Actor2 = getPerson(rk_VB_tag_Student)
+            tagTAR = Actor2.getActorVar(rk_VB_tag_TAR)
+            tagTCE = Actor2.getActorVar(rk_VB_tag_TCE)
+            tagTCL = Actor2.getActorVar(rk_VB_tag_TCL)
+            tagTCS = Actor2.getActorVar(rk_VB_tag_TCS)
+            tagTEC = Actor2.getActorVar(rk_VB_tag_TEC)
+            tagTED = Actor2.getActorVar(rk_VB_tag_TED)
+            tagTEN = Actor2.getActorVar(rk_VB_tag_TEN)
+            tagTGE = Actor2.getActorVar(rk_VB_tag_TGE)
+            tagTHI = Actor2.getActorVar(rk_VB_tag_THI)
+            tagTLA = Actor2.getActorVar(rk_VB_tag_TLA)
+            tagTMA = Actor2.getActorVar(rk_VB_tag_TMA)
+            tagTME = Actor2.getActorVar(rk_VB_tag_TME)
+            tagTMU = Actor2.getActorVar(rk_VB_tag_TMU)
+            tagTPH = Actor2.getActorVar(rk_VB_tag_TPH)
+            tagTPS = Actor2.getActorVar(rk_VB_tag_TPS)
+            tagTPOL = Actor2.getActorVar(rk_VB_tag_TPOL)
+            tagTSM = Actor2.getActorVar(rk_VB_tag_TSM)
+            tagTDM = Actor2.getActorVar(rk_VB_tag_TDM)
+            tagTVE = Actor2.getActorVar(rk_VB_tag_TVE)
+            tagTTT = Actor2.getActorVar(rk_VB_tag_TTT)
+            If isModEnabled(rk_vin_Base) && Actor2.isValid()
+                If tagTAR >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TAR)
+                    Architecture_Major_Actor = Actor2.getActorVar(rk_VB_Architecture_Major_Actor)
+                ElseIf tagTCE >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TCE)
+                    Chemical_Engineering_Major_Actor = Actor2.getActorVar(rk_VB_Chemical_Engineering_Major_Actor)
+                ElseIf tagTCL >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TCL)
+                    Classics_Major_Actor = Actor2.getActorVar(rk_VB_Classics_Major_Actor)
+                ElseIf tagTCS >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TCS)
+                    Computer_Science_Major_Actor = Actor2.getActorVar(rk_VB_Computer_Science_Major_Actor)
+                ElseIf tagTEC >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TEC)
+                    Economics_Major_Actor = Actor2.getActorVar(rk_VB_Economics_Major_Actor)
+                ElseIf tagTED >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TED)
+                    Education_Major_Actor = Actor2.getActorVar(rk_VB_Education_Major_Actor)
+                ElseIf tagTEN >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TEN)
+                    English_Major_Actor = Actor2.getActorVar(rk_VB_English_Major_Actor)
+                ElseIf tagTGE >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TGE)
+                    Geography_Major_Actor = Actor2.getActorVar(rk_VB_Geography_Major_Actor)
+                ElseIf tagTHI >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_THI)
+                    History_Major_Actor = Actor2.getActorVar(rk_VB_History_Major_Actor)
+                ElseIf tagTLA >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TLA)
+                    Law_Major_Actor = Actor2.getActorVar(rk_VB_Law_Major_Actor)
+                ElseIf tagTMA >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TMA)
+                    Mathematics_Major_Actor = Actor2.getActorVar(rk_VB_Mathematics_Major_Actor)
+                ElseIf tagTME >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TME)
+                    Medicine_Major_Actor = Actor2.getActorVar(rk_VB_Medicine_Major_Actor)
+                ElseIf tagTMU >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TMU)
+                    Music_Major_Actor = Actor2.getActorVar(rk_VB_Music_Major_Actor)
+                ElseIf tagTPH >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TPH)
+                    Philosophy_Major_Actor = Actor2.getActorVar(rk_VB_Philosophy_Major_Actor)
+                ElseIf tagTPS >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TPS)
+                    Psychology_Major_Actor = Actor2.getActorVar(rk_VB_Psychology_Major_Actor)
+                ElseIf tagTPOL >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TPOL)
+                    Political_Sciences_Major_Actor = Actor2.getActorVar(rk_VB_Political_Sciences_Major_Actor)
+                ElseIf tagTSM >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TSM)
+                    SalesMarketing_Major_Actor = Actor2.getActorVar(rk_VB_SalesMarketing_Major_Actor)
+                ElseIf tagTDM >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TDM)
+                    Dental_Major_Actor = Actor2.getActorVar(rk_VB_Dental_Major_Actor)
+                ElseIf tagTVE >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TVE)
+                    Veterinary_Major_Actor = Actor2.getActorVar(rk_VB_Veterinary_Major_Actor)
+                ElseIf tagTTT >= 1
+                    AcID = Actor2.getActorVar(rk_VB_AcIdCC_TTT)
+                    TravelTourism_Major_Actor = Actor2.getActorVar(rk_VB_TravelTourism_Major_Actor)
+                EndIf
+            EndIf
+            CActor = getPerson(rk_VB_tag_Student)
+            While CActor.isSameAs(Actor2)
+                CActor = getPerson(rk_VB_tag_Student)
+                tagTAR = CActor.getActorVar(rk_VB_tag_TAR)
+                tagTCE = CActor.getActorVar(rk_VB_tag_TCE)
+                tagTCL = CActor.getActorVar(rk_VB_tag_TCL)
+                tagTCS = CActor.getActorVar(rk_VB_tag_TCS)
+                tagTEC = CActor.getActorVar(rk_VB_tag_TEC)
+                tagTED = CActor.getActorVar(rk_VB_tag_TED)
+                tagTEN = CActor.getActorVar(rk_VB_tag_TEN)
+                tagTGE = CActor.getActorVar(rk_VB_tag_TGE)
+                tagTHI = CActor.getActorVar(rk_VB_tag_THI)
+                tagTLA = CActor.getActorVar(rk_VB_tag_TLA)
+                tagTMA = CActor.getActorVar(rk_VB_tag_TMA)
+                tagTME = CActor.getActorVar(rk_VB_tag_TME)
+                tagTMU = CActor.getActorVar(rk_VB_tag_TMU)
+                tagTPH = CActor.getActorVar(rk_VB_tag_TPH)
+                tagTPS = CActor.getActorVar(rk_VB_tag_TPS)
+                tagTPOL = CActor.getActorVar(rk_VB_tag_TPOL)
+                tagTSM = CActor.getActorVar(rk_VB_tag_TSM)
+                tagTDM = CActor.getActorVar(rk_VB_tag_TDM)
+                tagTVE = CActor.getActorVar(rk_VB_tag_TVE)
+                tagTTT = CActor.getActorVar(rk_VB_tag_TTT)
+                If CActor.isValid()
+                    If tagTAR >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TAR)
+                        Architecture_Major_Actor = CActor.getActorVar(rk_VB_Architecture_Major_Actor)
+                    ElseIf tagTCE >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TCE)
+                        Chemical_Engineering_Major_Actor = CActor.getActorVar(rk_VB_Chemical_Engineering_Major_Actor)
+                    ElseIf tagTCL >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TCL)
+                        Classics_Major_Actor = CActor.getActorVar(rk_VB_Classics_Major_Actor)
+                    ElseIf tagTCS >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TCS)
+                        Computer_Science_Major_Actor = CActor.getActorVar(rk_VB_Computer_Science_Major_Actor)
+                    ElseIf tagTEC >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TEC)
+                        Economics_Major_Actor = CActor.getActorVar(rk_VB_Economics_Major_Actor)
+                    ElseIf tagTED >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TED)
+                        Education_Major_Actor = CActor.getActorVar(rk_VB_Education_Major_Actor)
+                    ElseIf tagTEN >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TEN)
+                        English_Major_Actor = CActor.getActorVar(rk_VB_English_Major_Actor)
+                    ElseIf tagTGE >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TGE)
+                        Geography_Major_Actor = CActor.getActorVar(rk_VB_Geography_Major_Actor)
+                    ElseIf tagTHI >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_THI)
+                        History_Major_Actor = CActor.getActorVar(rk_VB_History_Major_Actor)
+                    ElseIf tagTLA >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TLA)
+                        Law_Major_Actor = CActor.getActorVar(rk_VB_Law_Major_Actor)
+                    ElseIf tagTMA >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TMA)
+                        Mathematics_Major_Actor = CActor.getActorVar(rk_VB_Mathematics_Major_Actor)
+                    ElseIf tagTME >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TME)
+                        Medicine_Major_Actor = CActor.getActorVar(rk_VB_Medicine_Major_Actor)
+                    ElseIf tagTMU >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TMU)
+                        Music_Major_Actor = CActor.getActorVar(rk_VB_Music_Major_Actor)
+                    ElseIf tagTPH >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TPH)
+                        Philosophy_Major_Actor = CActor.getActorVar(rk_VB_Philosophy_Major_Actor)
+                    ElseIf tagTPS >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TPS)
+                        Psychology_Major_Actor = CActor.getActorVar(rk_VB_Psychology_Major_Actor)
+                    ElseIf tagTPOL >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TPOL)
+                        Political_Sciences_Major_Actor = CActor.getActorVar(rk_VB_Political_Sciences_Major_Actor)
+                    ElseIf tagTSM >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TSM)
+                        SalesMarketing_Major_Actor = CActor.getActorVar(rk_VB_SalesMarketing_Major_Actor)
+                    ElseIf tagTDM >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TDM)
+                        Dental_Major_Actor = CActor.getActorVar(rk_VB_Dental_Major_Actor)
+                    ElseIf tagTVE >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TVE)
+                        Veterinary_Major_Actor = CActor.getActorVar(rk_VB_Veterinary_Major_Actor)
+                    ElseIf tagTTT >= 1
+                        AcID = CActor.getActorVar(rk_VB_AcIdCC_TTT)
+                        TravelTourism_Major_Actor = CActor.getActorVar(rk_VB_TravelTourism_Major_Actor)
+                    EndIf
+                EndIf
+            EndWhile
+            TotalTourD = teachers_pet + coursemates_dating + coursemate_dating_another + teacher_sex_cms + teacher_sex_repeat + coursemate_bet + coursemate_affair
+            If TotalTourD == 7
+                Player.setActorVar(rk_VB_TempoPopUpteachers_pet, 0)
+                Player.setActorVar(rk_VB_TempoPopUpcoursemates_dating, 0)
+                Player.setActorVar(rk_VB_TempoPopUpcoursemate_dating_another, 0)
+                Player.setActorVar(rk_VB_TempoPopUpteacher_sex_cms, 0)
+                Player.setActorVar(rk_VB_TempoPopUpteacher_sex_repeat, 0)
+                Player.setActorVar(rk_VB_TempoPopUpcoursemate_bet, 0)
+                Player.setActorVar(rk_VB_TempoPopUpcoursemate_affair, 0)
+            EndIf
+            While saChoisi
+                teachers_pet = Player.getActorVar(rk_VB_TempoPopUpteachers_pet)
+                coursemates_dating = Player.getActorVar(rk_VB_TempoPopUpcoursemates_dating)
+                coursemate_dating_another = Player.getActorVar(rk_VB_TempoPopUpcoursemate_dating_another)
+                teacher_sex_cms = Player.getActorVar(rk_VB_TempoPopUpteacher_sex_cms)
+                teacher_sex_repeat = Player.getActorVar(rk_VB_TempoPopUpteacher_sex_repeat)
+                coursemate_bet = Player.getActorVar(rk_VB_TempoPopUpcoursemate_bet)
+                coursemate_affair = Player.getActorVar(rk_VB_TempoPopUpcoursemate_affair)
+                If saChoisi
+                    HistARouler = random(1, 14)
+                    HistARouler = HistARouler.round()
+                EndIf
+                If HistARouler <= 7
+                    If HistARouler == 1 && teachers_pet < 1
+                        Player.setActorVar(rk_VB_TempoPopUpteachers_pet, 1)
+                        saChoisi = false
+                        followUp(teachers_pet)
+                    ElseIf HistARouler == 2 && coursemates_dating < 1
+                        Player.setActorVar(rk_VB_TempoPopUpcoursemates_dating, 1)
+                        saChoisi = false
+                        followUp(coursemates_dating)
+                    ElseIf HistARouler == 3 && coursemate_dating_another < 1
+                        Player.setActorVar(rk_VB_TempoPopUpcoursemate_dating_another, 1)
+                        saChoisi = false
+                        followUp(coursemate_dating_another)
+                    ElseIf HistARouler == 4 && coursemate_bet < 1
+                        Player.setActorVar(rk_VB_TempoPopUpcoursemate_bet, 1)
+                        saChoisi = false
+                        followUp(coursemate_bet)
+                    ElseIf HistARouler == 5 && coursemate_affair < 1
+                        Player.setActorVar(rk_VB_TempoPopUpcoursemate_affair, 1)
+                        saChoisi = false
+                        followUp(coursemate_affair)
+                    ElseIf HistARouler == 6 && teacher_sex_cms < 1
+                        Player.setActorVar(rk_VB_TempoPopUpteacher_sex_cms, 1)
+                        saChoisi = false
+                        followUp(teacher_sex_cms)
+                    ElseIf HistARouler == 7 && teacher_sex_repeat < 1
+                        rk_VB_TempoPopattend_lectures.setGlobal(1)
+                        Player.setActorVar(rk_VB_TempoPopUpteacher_sex_repeat, 1)
+                        saChoisi = false
+                        followUp(teacher_sex_repeat)
+                    Else
+                        saChoisi = false
+                    EndIf
+                    SceneEnd()
+                Else
+                    saChoisi = false
+                EndIf
+            EndWhile
             If random(0, 100) < 33 && random(0, 100) < interpersonal
                 If random(0, 100) < 33
                     Actor2 = getSpecific(Dating)
+                    copinepresent = true
                 EndIf
-                If !Actor2.isValid()
-                    Actor2 = getSpecific(Coursemate)
-                EndIf
-                
                 If Actor2.isValid() && Actor2:rapportwithplayer > 0
                     Actor2.dress()
                     secondScreen(Actor2)
                     Actor2.show()
                     "Just as I was getting ready to attend the lecture, I received a text from <Actor2.name> asking to hang out instead. I'd love to, but it would mean I would have to skip the lecture."
-                    0:: "Skip the <Actor.Major> lecture and hang out with <Actor2.name>"
+                    0:: "Skip the <TextMajorChosen> lecture and hang out with <Actor2.name>"
                     1:: "Turn <Actor2.name> down"
                     
                     If 0
+                        If copinepresent
+                            Actor2:rapportwithplayer += 2
+                            Actor2:attractiontoplayer += 2
+                        Else
+                            Actor2:rapportwithplayer += random(0, 2)
+                            Actor2:attractiontoplayer += random(0, 2)
+                        EndIf
                         secondScreen()
                         Actor2.show()
                         Actor2.startDate()
+                        nyvaspas = false
                         "I decided to skip the lecture and hang out with <Actor2.name> instead."
                     Else
                         secondScreen()
                         Actor2.hide()
-                        nyvaspas = true
                         "I decided to go ahead and attend the lecture. I could always hang out with <Actor2.name> another time."
                         Actor2:rapportwithplayer -= 2
                         Actor2:attractiontoplayer -= 2
@@ -392,10 +685,14 @@ OTHER: none
                 EndIf        
             EndIf
             If nyvaspas
+                dressFormal()
+                Actor.dress()
+                Actor.show(2)
+                Actor2.show(4)
+                Actor2.dress()
+                CActor.dress()
+                CActor.show(5)
                 If Actor:interpersonal < random(0, 45)
-                    dressFormal()
-                    Actor.dress()
-                    Actor.show(2)
                     "What a boring lecture! I hate this <TextMajorChosen> class. The lecturer, Dr <Actor.name_last>, is knowledgeable but just rubbish at teaching."
                     0:: "Try to focus"
                     1:: "Play with my phone"
@@ -403,239 +700,135 @@ OTHER: none
                     If 0
                         "Let's just try my best to concentrate here. Boring or not, I don't want to fail this class."
                         mood -= random(0, 25)
-                        
-                        If choiceCourseMajor == 1
+                        If rkVBchoiceCourseMajor == 1
                             Player.modifyActorVar(rk_VB_Architecture_Major_Level, 0.25)
-                        ElseIf choiceCourseMajor == 2
+                        ElseIf rkVBchoiceCourseMajor == 2
                             Player.modifyActorVar(rk_VB_Chemical_Engineering_Major_Level, 0.25)
-                        ElseIf choiceCourseMajor == 3
+                        ElseIf rkVBchoiceCourseMajor == 3
                             Player.modifyActorVar(rk_VB_Classics_Major_Level, 0.25)
-                        ElseIf choiceCourseMajor == 31
+                        ElseIf rkVBchoiceCourseMajor == 31
                             Player.modifyActorVar(rk_VB_Dental_Major_Level, 0.25) 
-                        ElseIf choiceCourseMajor == 4
+                        ElseIf rkVBchoiceCourseMajor == 4
                             Player.modifyActorVar(rk_VB_Computer_Science_Major_Level, 0.25)
-                        ElseIf choiceCourseMajor == 5
+                        ElseIf rkVBchoiceCourseMajor == 5
                             Player.modifyActorVar(rk_VB_Economics_Major_Level, 0.25)
-                        ElseIf choiceCourseMajor == 6
+                        ElseIf rkVBchoiceCourseMajor == 6
                             Player.modifyActorVar(rk_VB_Education_Major_Level, 0.25)
-                        ElseIf choiceCourseMajor == 7
-                        
+                        ElseIf rkVBchoiceCourseMajor == 7
                             Player.modifyActorVar(rk_VB_English_Major_Level, 0.25)
-                            
-                        ElseIf choiceCourseMajor == 8
-                        
+                        ElseIf rkVBchoiceCourseMajor == 8
                             Player.modifyActorVar(rk_VB_Geography_Major_Level, 0.25)
-                            
-                        ElseIf choiceCourseMajor == 9
-                        
+                        ElseIf rkVBchoiceCourseMajor == 9
                             Player.modifyActorVar(rk_VB_History_Major_Level, 0.25)
-                            
-                        ElseIf choiceCourseMajor == 10
-                        
+                        ElseIf rkVBchoiceCourseMajor == 10
                             Player.modifyActorVar(rk_VB_Law_Major_Level, 0.25)
-                            
-                        ElseIf choiceCourseMajor == 11
-                        
+                        ElseIf rkVBchoiceCourseMajor == 11
                             Player.modifyActorVar(rk_VB_Mathematics_Major_Level, 0.25)
-                            
-                        ElseIf choiceCourseMajor == 12
-                        
+                        ElseIf rkVBchoiceCourseMajor == 12
                             Player.modifyActorVar(rk_VB_Medicine_Major_Level, 0.25)
-                            
-                        ElseIf choiceCourseMajor == 13
-                        
+                        ElseIf rkVBchoiceCourseMajor == 13
                             Player.modifyActorVar(rk_VB_Music_Major_Level, 0.25)
-                            
-                        ElseIf choiceCourseMajor == 14
-                        
+                        ElseIf rkVBchoiceCourseMajor == 14
                             Player.modifyActorVar(rk_VB_Philosophy_Major_Level, 0.25)
-                            
-                        ElseIf choiceCourseMajor == 15
-                        
+                        ElseIf rkVBchoiceCourseMajor == 15
                             Player.modifyActorVar(rk_VB_Psychology_Major_Level, 0.25)
-                            
-                        ElseIf choiceCourseMajor == 16
-                        
+                        ElseIf rkVBchoiceCourseMajor == 16
                             Player.modifyActorVar(rk_VB_Political_Sciences_Major_Level, 0.25)
-                        ElseIf choiceCourseMajor == 60
-                        
+                        ElseIf rkVBchoiceCourseMajor == 60
                             Player.modifyActorVar(rk_VB_SalesMarketing_Major_Level, 0.25)
-                        ElseIf choiceCourseMajor == 80
-                        
+                        ElseIf rkVBchoiceCourseMajor == 80
                             Player.modifyActorVar(rk_VB_TravelTourism_Major_Level, 0.25) 
-                        ElseIf choiceCourseMajor == 90
-                        
+                        ElseIf rkVBchoiceCourseMajor == 90
                             Player.modifyActorVar(rk_VB_Veterinary_Major_Level, 0.25) 
                         EndIf
-                        
                     Else
                         "Damn it, I give up! There's no way I can concentrate with Dr <Actor.name_last>'s monotone voice. Let's just play with my phone a bit, saving myself from falling asleep at least!"
+                        Player.animate(browse)
                         intelligence -= random(0, 0.25)
-                        
-                        If choiceCourseMajor == 1
-                        
+                        If rkVBchoiceCourseMajor == 1
                             Player.modifyActorVar(rk_VB_Architecture_Major_Level, -0.25)
-                        
-                        ElseIf choiceCourseMajor == 2
-                        
+                        ElseIf rkVBchoiceCourseMajor == 2
                             Player.modifyActorVar(rk_VB_Chemical_Engineering_Major_Level, -0.25)
-                            
-                        ElseIf choiceCourseMajor == 3
-                        
+                        ElseIf rkVBchoiceCourseMajor == 3
                             Player.modifyActorVar(rk_VB_Classics_Major_Level, -0.25)
-                        ElseIf choiceCourseMajor == 31
-                        
+                        ElseIf rkVBchoiceCourseMajor == 31
                             Player.modifyActorVar(rk_VB_Dental_Major_Level, -0.25)
-                            
-                        ElseIf choiceCourseMajor == 4
-                        
+                        ElseIf rkVBchoiceCourseMajor == 4
                             Player.modifyActorVar(rk_VB_Computer_Science_Major_Level, -0.25)
-                            
-                        ElseIf choiceCourseMajor == 5
-                        
+                        ElseIf rkVBchoiceCourseMajor == 5
                             Player.modifyActorVar(rk_VB_Economics_Major_Level, -0.25)
-                            
-                        ElseIf choiceCourseMajor == 6
-                        
+                        ElseIf rkVBchoiceCourseMajor == 6
                             Player.modifyActorVar(rk_VB_Education_Major_Level, -0.25)
-                            
-                        ElseIf choiceCourseMajor == 7
-                        
+                        ElseIf rkVBchoiceCourseMajor == 7
                             Player.modifyActorVar(rk_VB_English_Major_Level, -0.25)
-                            
-                        ElseIf choiceCourseMajor == 8
-                        
+                        ElseIf rkVBchoiceCourseMajor == 8
                             Player.modifyActorVar(rk_VB_Geography_Major_Level, -0.25)
-                            
-                        ElseIf choiceCourseMajor == 9
-                        
+                        ElseIf rkVBchoiceCourseMajor == 9
                             Player.modifyActorVar(rk_VB_History_Major_Level, -0.25)
-                            
-                        ElseIf choiceCourseMajor == 10
-                        
+                        ElseIf rkVBchoiceCourseMajor == 10
                             Player.modifyActorVar(rk_VB_Law_Major_Level, -0.25)
-                            
-                        ElseIf choiceCourseMajor == 11
-                        
+                        ElseIf rkVBchoiceCourseMajor == 11
                             Player.modifyActorVar(rk_VB_Mathematics_Major_Level, -0.25)
-                            
-                        ElseIf choiceCourseMajor == 12
-                        
+                        ElseIf rkVBchoiceCourseMajor == 12
                             Player.modifyActorVar(rk_VB_Medicine_Major_Level, -0.25)
-                            
-                        ElseIf choiceCourseMajor == 13
-                        
+                        ElseIf rkVBchoiceCourseMajor == 13
                             Player.modifyActorVar(rk_VB_Music_Major_Level, -0.25)
-                            
-                        ElseIf choiceCourseMajor == 14
-                        
+                        ElseIf rkVBchoiceCourseMajor == 14
                             Player.modifyActorVar(rk_VB_Philosophy_Major_Level, -0.25)
-                            
-                        ElseIf choiceCourseMajor == 15
-                        
+                        ElseIf rkVBchoiceCourseMajor == 15
                             Player.modifyActorVar(rk_VB_Psychology_Major_Level, -0.25)
-                            
-                        ElseIf choiceCourseMajor == 16
-                        
+                        ElseIf rkVBchoiceCourseMajor == 16
                             Player.modifyActorVar(rk_VB_Political_Sciences_Major_Level, -0.25)
-                        ElseIf choiceCourseMajor == 60
-                        
+                        ElseIf rkVBchoiceCourseMajor == 60
                             Player.modifyActorVar(rk_VB_SalesMarketing_Major_Level, -0.25)
-                        ElseIf choiceCourseMajor == 80
-                        
+                        ElseIf rkVBchoiceCourseMajor == 80
                             Player.modifyActorVar(rk_VB_TravelTourism_Major_Level, -0.25) 
-                        ElseIf choiceCourseMajor == 90
-                        
+                        ElseIf rkVBchoiceCourseMajor == 90
                             Player.modifyActorVar(rk_VB_Veterinary_Major_Level, -0.25) 
-                            
                         EndIf
-                        
                     EndIf
-                    
                 ElseIf intelligence < random(0, 50)
-                    
-                    dressFormal()
-                    Actor.dress()
-                    Actor.show(2)
-                    
-                    If choiceCourseMajor == 1
-                        
+                    If rkVBchoiceCourseMajor == 1
                         Player.modifyActorVar(rk_VB_Architecture_Major_Level, -0.05)
-                        
-                    ElseIf choiceCourseMajor == 2
-                        
+                    ElseIf rkVBchoiceCourseMajor == 2
                         Player.modifyActorVar(rk_VB_Chemical_Engineering_Major_Level, -0.05)
-                            
-                    ElseIf choiceCourseMajor == 3
-                        
+                    ElseIf rkVBchoiceCourseMajor == 3
                         Player.modifyActorVar(rk_VB_Classics_Major_Level, -0.05)
-                    ElseIf choiceCourseMajor == 31
-                        
+                    ElseIf rkVBchoiceCourseMajor == 31
                         Player.modifyActorVar(rk_VB_Dental_Major_Level, -0.05)
-                            
-                    ElseIf choiceCourseMajor == 4
-                        
+                    ElseIf rkVBchoiceCourseMajor == 4
                         Player.modifyActorVar(rk_VB_Computer_Science_Major_Level, -0.05)
-                            
-                    ElseIf choiceCourseMajor == 5
-                        
+                    ElseIf rkVBchoiceCourseMajor == 5
                         Player.modifyActorVar(rk_VB_Economics_Major_Level, -0.05)
-                            
-                    ElseIf choiceCourseMajor == 6
-                        
+                    ElseIf rkVBchoiceCourseMajor == 6
                         Player.modifyActorVar(rk_VB_Education_Major_Level, -0.05)
-                            
-                    ElseIf choiceCourseMajor == 7
-                        
+                    ElseIf rkVBchoiceCourseMajor == 7
                         Player.modifyActorVar(rk_VB_English_Major_Level, -0.05)
-                            
-                    ElseIf choiceCourseMajor == 8
-                        
+                    ElseIf rkVBchoiceCourseMajor == 8
                         Player.modifyActorVar(rk_VB_Geography_Major_Level, -0.05)
-                            
-                    ElseIf choiceCourseMajor == 9
-                        
+                    ElseIf rkVBchoiceCourseMajor == 9
                         Player.modifyActorVar(rk_VB_History_Major_Level, -0.05)
-                            
-                    ElseIf choiceCourseMajor == 10
-                        
+                    ElseIf rkVBchoiceCourseMajor == 10
                         Player.modifyActorVar(rk_VB_Law_Major_Level, -0.05)
-                            
-                    ElseIf choiceCourseMajor == 11
-                        
+                    ElseIf rkVBchoiceCourseMajor == 11
                         Player.modifyActorVar(rk_VB_Mathematics_Major_Level, -0.05)
-                            
-                    ElseIf choiceCourseMajor == 12
-                        
+                    ElseIf rkVBchoiceCourseMajor == 12
                         Player.modifyActorVar(rk_VB_Medicine_Major_Level, -0.05)
-                            
-                    ElseIf choiceCourseMajor == 13
-                        
+                    ElseIf rkVBchoiceCourseMajor == 13
                         Player.modifyActorVar(rk_VB_Music_Major_Level, -0.05)
-                            
-                    ElseIf choiceCourseMajor == 14
-                        
+                    ElseIf rkVBchoiceCourseMajor == 14
                         Player.modifyActorVar(rk_VB_Philosophy_Major_Level, -0.05)
-                            
-                    ElseIf choiceCourseMajor == 15
-                        
+                    ElseIf rkVBchoiceCourseMajor == 15
                         Player.modifyActorVar(rk_VB_Psychology_Major_Level, -0.05)
-                            
-                    ElseIf choiceCourseMajor == 16
-                        
+                    ElseIf rkVBchoiceCourseMajor == 16
                         Player.modifyActorVar(rk_VB_Political_Sciences_Major_Level, -0.05)
-                    ElseIf choiceCourseMajor == 60
-                        
+                    ElseIf rkVBchoiceCourseMajor == 60
                         Player.modifyActorVar(rk_VB_SalesMarketing_Major_Level, -0.05)
-                    ElseIf choiceCourseMajor == 80
-                        
+                    ElseIf rkVBchoiceCourseMajor == 80
                         Player.modifyActorVar(rk_VB_TravelTourism_Major_Level, -0.05) 
-                    ElseIf choiceCourseMajor == 90
-                        
+                    ElseIf rkVBchoiceCourseMajor == 90
                         Player.modifyActorVar(rk_VB_Veterinary_Major_Level, -0.05)
-                            
                     EndIf
-                    
                     "Gosh, I'm really struggling with this <TextMajorChosen> class. It's such a complicated subject that I could barely understand a thing. If this keeps going, I'm afraid I might fail the exam."
                     0:: "Ask Dr <Actor.name_last> for help"
                     1:: "Do more reading"
@@ -655,333 +848,202 @@ OTHER: none
                             EndIf        
                         EndIf
                     EndIf
-                    
-                ElseIf random(70, 100) < Actor:interpersonal
-                
-                    dressFormal()
-                    Actor.dress()
-                    Actor.show(2)
+                ElseIf Actor:interpersonal > random(70, 100)
                     "What an interesting lecture! I love this <TextMajorChosen> class. The lecturer, Dr <Actor.name_last>, is not only knowledgeable but also has a great sense of humour."
                     0:: "Just pay attention"
                     1:: "Ask questions"
                 
                     If 0
-                    
                         "I decided to follow every words of Dr <Actor.name_last> and pretend to be passionate about the subject."
                         Actor:rapportwithplayer += random(0, 2)
                         intelligence += random(0, 0.25)
-                    
-                        If choiceCourseMajor == 1
-                        
+                        If rkVBchoiceCourseMajor == 1
                             Player.modifyActorVar(rk_VB_Architecture_Major_Level, 0.5)
-                        
-                        ElseIf choiceCourseMajor == 2
-                        
+                        ElseIf rkVBchoiceCourseMajor == 2
                             Player.modifyActorVar(rk_VB_Chemical_Engineering_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 3
-                        
+                        ElseIf rkVBchoiceCourseMajor == 3
                             Player.modifyActorVar(rk_VB_Classics_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 31
-                        
+                        ElseIf rkVBchoiceCourseMajor == 31
                             Player.modifyActorVar(rk_VB_Dental_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 4
-                        
+                        ElseIf rkVBchoiceCourseMajor == 4
                             Player.modifyActorVar(rk_VB_Computer_Science_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 5
-                        
+                        ElseIf rkVBchoiceCourseMajor == 5
                             Player.modifyActorVar(rk_VB_Economics_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 6
-                        
+                        ElseIf rkVBchoiceCourseMajor == 6
                             Player.modifyActorVar(rk_VB_Education_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 7
-                        
+                        ElseIf rkVBchoiceCourseMajor == 7
                             Player.modifyActorVar(rk_VB_English_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 8
-                        
+                        ElseIf rkVBchoiceCourseMajor == 8
                             Player.modifyActorVar(rk_VB_Geography_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 9
-                        
+                        ElseIf rkVBchoiceCourseMajor == 9
                             Player.modifyActorVar(rk_VB_History_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 10
-                        
+                        ElseIf rkVBchoiceCourseMajor == 10
                             Player.modifyActorVar(rk_VB_Law_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 11
-                        
+                        ElseIf rkVBchoiceCourseMajor == 11
                             Player.modifyActorVar(rk_VB_Mathematics_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 12
-                        
+                        ElseIf rkVBchoiceCourseMajor == 12
                             Player.modifyActorVar(rk_VB_Medicine_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 13
-                        
+                        ElseIf rkVBchoiceCourseMajor == 13
                             Player.modifyActorVar(rk_VB_Music_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 14
-                        
+                        ElseIf rkVBchoiceCourseMajor == 14
                             Player.modifyActorVar(rk_VB_Philosophy_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 15
-                        
+                        ElseIf rkVBchoiceCourseMajor == 15
                             Player.modifyActorVar(rk_VB_Psychology_Major_Level, 0.5)
-                            
-                        ElseIf choiceCourseMajor == 16
-                        
+                        ElseIf rkVBchoiceCourseMajor == 16
                             Player.modifyActorVar(rk_VB_Political_Sciences_Major_Level, 0.5)
-                        
-                        ElseIf choiceCourseMajor == 60
-                        
+                        ElseIf rkVBchoiceCourseMajor == 60
                             Player.modifyActorVar(rk_VB_SalesMarketing_Major_Level, 0.5)
-                        ElseIf choiceCourseMajor == 80
-                        
+                        ElseIf rkVBchoiceCourseMajor == 80
                             Player.modifyActorVar(rk_VB_TravelTourism_Major_Level, 0.5) 
-                        ElseIf choiceCourseMajor == 90
-                        
+                        ElseIf rkVBchoiceCourseMajor == 90
                             Player.modifyActorVar(rk_VB_Veterinary_Major_Level, 0.5)
-                            
                         EndIf
-                    
                     Else
-                    
                         "I decided to contribute to the class even more by asking good questions. Dr <Actor.name_last> is clearly happy that one of <Actor.his_or_her> students are so passionate about the subject matter."
                         Actor:rapportwithplayer += random(0, 2)
                         intelligence += random(0, 0.5)
-                        
-                        If choiceCourseMajor == 1
-                        
+                        If rkVBchoiceCourseMajor == 1
                             Player.modifyActorVar(rk_VB_Architecture_Major_Level, 1)
-                        
-                        ElseIf choiceCourseMajor == 2
-                        
+                        ElseIf rkVBchoiceCourseMajor == 2
                             Player.modifyActorVar(rk_VB_Chemical_Engineering_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 3
-                        
+                        ElseIf rkVBchoiceCourseMajor == 3
                             Player.modifyActorVar(rk_VB_Classics_Major_Level, 1)
-                        ElseIf choiceCourseMajor == 31
-                        
+                        ElseIf rkVBchoiceCourseMajor == 31
                             Player.modifyActorVar(rk_VB_Dental_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 4
-                        
+                        ElseIf rkVBchoiceCourseMajor == 4
                             Player.modifyActorVar(rk_VB_Computer_Science_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 5
-                        
+                        ElseIf rkVBchoiceCourseMajor == 5
                             Player.modifyActorVar(rk_VB_Economics_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 6
-                        
+                        ElseIf rkVBchoiceCourseMajor == 6
                             Player.modifyActorVar(rk_VB_Education_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 7
-                        
+                        ElseIf rkVBchoiceCourseMajor == 7
                             Player.modifyActorVar(rk_VB_English_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 8
-                        
+                        ElseIf rkVBchoiceCourseMajor == 8
                             Player.modifyActorVar(rk_VB_Geography_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 9
-                        
+                        ElseIf rkVBchoiceCourseMajor == 9
                             Player.modifyActorVar(rk_VB_History_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 10
-                        
+                        ElseIf rkVBchoiceCourseMajor == 10
                             Player.modifyActorVar(rk_VB_Law_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 11
-                        
+                        ElseIf rkVBchoiceCourseMajor == 11
                             Player.modifyActorVar(rk_VB_Mathematics_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 12
-                        
+                        ElseIf rkVBchoiceCourseMajor == 12
                             Player.modifyActorVar(rk_VB_Medicine_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 13
-                        
+                        ElseIf rkVBchoiceCourseMajor == 13
                             Player.modifyActorVar(rk_VB_Music_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 14
-                        
+                        ElseIf rkVBchoiceCourseMajor == 14
                             Player.modifyActorVar(rk_VB_Philosophy_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 15
-                        
+                        ElseIf rkVBchoiceCourseMajor == 15
                             Player.modifyActorVar(rk_VB_Psychology_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 16
-                        
+                        ElseIf rkVBchoiceCourseMajor == 16
                             Player.modifyActorVar(rk_VB_Political_Sciences_Major_Level, 1)
-                        ElseIf choiceCourseMajor == 60
-                        
+                        ElseIf rkVBchoiceCourseMajor == 60
                             Player.modifyActorVar(rk_VB_SalesMarketing_Major_Level, 1)
-                        ElseIf choiceCourseMajor == 80
-                        
+                        ElseIf rkVBchoiceCourseMajor == 80
                             Player.modifyActorVar(rk_VB_TravelTourism_Major_Level, 1) 
-                        ElseIf choiceCourseMajor == 90
-                        
+                        ElseIf rkVBchoiceCourseMajor == 90
                             Player.modifyActorVar(rk_VB_Veterinary_Major_Level, 1)
-                            
                         EndIf
-                        
                     EndIf
-                    
                 Else
-                
-                    CActor = getSpecific(Coursemate)
-                    CActor2 = getSpecific(Coursemate)
-                    
-                    If CActor:rapportwithplayer > 0 && CActor2:rapportwithplayer > 0
-                    
-                        Actor.dress()
-                        Actor.show(2)
-                        Actor2.dress()
-                        Actor2.show(3)
-                        "We were just handed an assignment by the lecturer, to be done in pairs. Two of my classmates <CActor.name> and <CActor2.name>, are both asking me to work with them ..."
+                    If CActor:rapportwithplayer > 0 && Actor2:rapportwithplayer > 0
+                        "We were just handed an assignment by the lecturer Dr <Actor.name_last>, to be done in pairs. Two of my classmates <CActor.name> and <Actor2.name>, are both asking me to work with them ..."
                         0:: "Work with <CActor.name>"
-                        1:: "Work with <CActor2.name>"
+                        1:: "Work with <Actor2.name>"
                 
                         If 0
                            CActor:rapportwithplayer += random(0, 2)
-                           CActor2:rapportwithplayer -= random(0, 2)
+                           Actor2:rapportwithplayer -= random(0, 2)
                         Else
-                            CActor2:rapportwithplayer += random(0, 2)
+                            Actor2:rapportwithplayer += random(0, 2)
                             CActor:rapportwithplayer -= random(0, 2)    
                         EndIf
-                        
-                        If choiceCourseMajor == 1
-                        
+                        If rkVBchoiceCourseMajor == 1
                             Player.modifyActorVar(rk_VB_Architecture_Major_Level, 1)
-                        
-                        ElseIf choiceCourseMajor == 2
-                        
+                        ElseIf rkVBchoiceCourseMajor == 2
                             Player.modifyActorVar(rk_VB_Chemical_Engineering_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 3
-                        
+                        ElseIf rkVBchoiceCourseMajor == 3
                             Player.modifyActorVar(rk_VB_Classics_Major_Level, 1)
-                        ElseIf choiceCourseMajor == 31
-                        
+                        ElseIf rkVBchoiceCourseMajor == 31
                             Player.modifyActorVar(rk_VB_Dental_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 4
-                        
+                        ElseIf rkVBchoiceCourseMajor == 4
                             Player.modifyActorVar(rk_VB_Computer_Science_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 5
-                        
+                        ElseIf rkVBchoiceCourseMajor == 5
                             Player.modifyActorVar(rk_VB_Economics_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 6
-                        
+                        ElseIf rkVBchoiceCourseMajor == 6
                             Player.modifyActorVar(rk_VB_Education_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 7
-                        
+                        ElseIf rkVBchoiceCourseMajor == 7
                             Player.modifyActorVar(rk_VB_English_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 8
-                        
+                        ElseIf rkVBchoiceCourseMajor == 8
                             Player.modifyActorVar(rk_VB_Geography_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 9
-                        
+                        ElseIf rkVBchoiceCourseMajor == 9
                             Player.modifyActorVar(rk_VB_History_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 10
-                        
+                        ElseIf rkVBchoiceCourseMajor == 10
                             Player.modifyActorVar(rk_VB_Law_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 11
-                        
+                        ElseIf rkVBchoiceCourseMajor == 11
                             Player.modifyActorVar(rk_VB_Mathematics_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 12
-                        
+                        ElseIf rkVBchoiceCourseMajor == 12
                             Player.modifyActorVar(rk_VB_Medicine_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 13
-                        
+                        ElseIf rkVBchoiceCourseMajor == 13
                             Player.modifyActorVar(rk_VB_Music_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 14
-                        
+                        ElseIf rkVBchoiceCourseMajor == 14
                             Player.modifyActorVar(rk_VB_Philosophy_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 15
-                        
+                        ElseIf rkVBchoiceCourseMajor == 15
                             Player.modifyActorVar(rk_VB_Psychology_Major_Level, 1)
-                            
-                        ElseIf choiceCourseMajor == 16
-                        
+                        ElseIf rkVBchoiceCourseMajor == 16
                             Player.modifyActorVar(rk_VB_Political_Sciences_Major_Level, 1)
-                        ElseIf choiceCourseMajor == 60
-                        
+                        ElseIf rkVBchoiceCourseMajor == 60
                             Player.modifyActorVar(rk_VB_SalesMarketing_Major_Level, 1)
-                        ElseIf choiceCourseMajor == 80
-                        
+                        ElseIf rkVBchoiceCourseMajor == 80
                             Player.modifyActorVar(rk_VB_TravelTourism_Major_Level, 1) 
-                        ElseIf choiceCourseMajor == 90
-                        
+                        ElseIf rkVBchoiceCourseMajor == 90
                             Player.modifyActorVar(rk_VB_Veterinary_Major_Level, 1)
                         EndIf
                     Else
-                        "A lecturer decided to give us a few book chapters and countless papers to read before the next lecture. There's no way I can read them all!"
+                        "Dr <Actor.name_last> decided to give us a few book chapters and countless papers to read before the next lecture. There's no way I can read them all!"
                         0:: "Try my best"
                         1:: "Just give up"
                     
                         If 0
                             intelligence += random(0, 0.25)
-                            If choiceCourseMajor == 1
+                            If rkVBchoiceCourseMajor == 1
                                 Player.modifyActorVar(rk_VB_Architecture_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 2
+                            ElseIf rkVBchoiceCourseMajor == 2
                                 Player.modifyActorVar(rk_VB_Chemical_Engineering_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 3
+                            ElseIf rkVBchoiceCourseMajor == 3
                                 Player.modifyActorVar(rk_VB_Classics_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 31
+                            ElseIf rkVBchoiceCourseMajor == 31
                                 Player.modifyActorVar(rk_VB_Dental_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 4
+                            ElseIf rkVBchoiceCourseMajor == 4
                                 Player.modifyActorVar(rk_VB_Computer_Science_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 5
+                            ElseIf rkVBchoiceCourseMajor == 5
                                 Player.modifyActorVar(rk_VB_Economics_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 6
+                            ElseIf rkVBchoiceCourseMajor == 6
                                 Player.modifyActorVar(rk_VB_Education_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 7
+                            ElseIf rkVBchoiceCourseMajor == 7
                                 Player.modifyActorVar(rk_VB_English_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 8
+                            ElseIf rkVBchoiceCourseMajor == 8
                                 Player.modifyActorVar(rk_VB_Geography_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 9
+                            ElseIf rkVBchoiceCourseMajor == 9
                                 Player.modifyActorVar(rk_VB_History_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 10
+                            ElseIf rkVBchoiceCourseMajor == 10
                                 Player.modifyActorVar(rk_VB_Law_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 11
+                            ElseIf rkVBchoiceCourseMajor == 11
                                 Player.modifyActorVar(rk_VB_Mathematics_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 12
+                            ElseIf rkVBchoiceCourseMajor == 12
                                 Player.modifyActorVar(rk_VB_Medicine_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 13
+                            ElseIf rkVBchoiceCourseMajor == 13
                                 Player.modifyActorVar(rk_VB_Music_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 14
+                            ElseIf rkVBchoiceCourseMajor == 14
                                 Player.modifyActorVar(rk_VB_Philosophy_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 15
+                            ElseIf rkVBchoiceCourseMajor == 15
                                 Player.modifyActorVar(rk_VB_Psychology_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 16
+                            ElseIf rkVBchoiceCourseMajor == 16
                                 Player.modifyActorVar(rk_VB_Political_Sciences_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 60
+                            ElseIf rkVBchoiceCourseMajor == 60
                                 Player.modifyActorVar(rk_VB_SalesMarketing_Major_Level, 1)
-                            ElseIf choiceCourseMajor == 80
+                            ElseIf rkVBchoiceCourseMajor == 80
                                 Player.modifyActorVar(rk_VB_TravelTourism_Major_Level, 1) 
-                            ElseIf choiceCourseMajor == 90
+                            ElseIf rkVBchoiceCourseMajor == 90
                                 Player.modifyActorVar(rk_VB_Veterinary_Major_Level, 1)
                             EndIf
                         EndIf
@@ -991,4 +1053,47 @@ OTHER: none
         Else
             "I decided to not attend at any of these courses ..."
         EndIf
+        TotalTourF = porn_uni_lecturer + rk_VB_University_Museum + clinical_trial + porn_uni_coursemate
+        If TotalTourF == 4
+            Player.setActorVar(rk_VB_TempoPopUpporn_uni_lecturer, 0)
+            Player.setActorVar(rk_VB_TempoPopUp_University_Museum, 0)
+            Player.setActorVar(rk_VB_TempoPopUpclinical_trial, 0)
+            Player.setActorVar(rk_VB_TempoPopUpporn_uni_coursemate, 0)
+        EndIf
+        While saChoisiBot
+            porn_uni_lecturer = Player.getActorVar(rk_VB_TempoPopUpporn_uni_lecturer)
+            clinical_trial = Player.getActorVar(rk_VB_TempoPopUp_University_Museum)
+            porn_uni_coursemate = Player.getActorVar(rk_VB_TempoPopUpclinical_trial)
+            rk_VB_University_Museum = Player.getActorVar(rk_VB_TempoPopUpporn_uni_coursemate)
+            If saChoisiBot
+                HistARouler1 = random(1, 10)
+                HistARouler1 = HistARouler1.round()
+            EndIf
+            "HistARouler1 = <HistARouler1>"
+            If HistARouler1 <= 4
+                If HistARouler1 == 1 && porn_uni_lecturer < 1 && pornfame > 1
+                    Player.setActorVar(rk_VB_TempoPopUpporn_uni_lecturer, 1)
+                    saChoisiBot = false
+                    followUp(porn_uni_lecturer)
+                ElseIf HistARouler1 == 2 && clinical_trial < 1
+                    Player.setActorVar(rk_VB_TempoPopUpclinical_trial, 1)
+                    saChoisiBot = false
+                    followUp(clinical_trial)
+                ElseIf HistARouler1 == 3 && porn_uni_coursemate < 1
+                    Player.setActorVar(rk_VB_TempoPopUpporn_uni_coursemate, 1)
+                    saChoisiBot = false
+                    followUp(porn_uni_coursemate)
+                ElseIf HistARouler1 == 4 && rk_VB_University_Museum < 1
+                    Player.setActorVar(rk_VB_TempoPopUp_University_Museum, 1)
+                    saChoisiBot = false
+                    followUp(rk_VB_University_Museum)
+                Else
+                    saChoisiBot = false
+                EndIf
+                SceneEnd()
+            Else
+                saChoisiBot = false
+            EndIf
+        EndWhile
+        Player.animate()
     SceneEnd() // Improved by Raddeck

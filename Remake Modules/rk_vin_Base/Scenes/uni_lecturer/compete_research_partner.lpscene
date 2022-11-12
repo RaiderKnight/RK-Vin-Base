@@ -2,7 +2,7 @@ WHAT: conduct_research
 WHERE: university:work
 WHEN: 0-24
 WHO: Actor = getSpecific(Lecturer); Actor2 = getSpecific(Lecturer); If Actor:rapportwithplayer > 0 && Actor2:rapportwithplayer > 0
-OTHER: Random(0, 100) < intelligence
+OTHER: random(0, 100) < intelligence
 
     SceneStart()
         dressFormal()
@@ -15,11 +15,11 @@ OTHER: Random(0, 100) < intelligence
         1:: "Work with <Actor2.name>"
         
         If 0
-            Actor:rapportwithplayer += Random(0, 2)
-            Actor2:rapportwithplayer -= Random(0, 2)
+            Actor:rapportwithplayer += random(0, 2)
+            Actor2:rapportwithplayer -= random(0, 2)
         Else
-            Actor2:rapportwithplayer += Random(0, 2)
-            Actor:rapportwithplayer -= Random(0, 2)    
-        Endif
+            Actor2:rapportwithplayer += random(0, 2)
+            Actor:rapportwithplayer -= random(0, 2)    
+        EndIf
     SceneEnd() // Improved by Raddeck
     timeout(200, compete_research_partner)

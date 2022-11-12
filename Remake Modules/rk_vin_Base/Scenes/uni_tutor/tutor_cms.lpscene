@@ -5,9 +5,10 @@ WHO: Actor = getPerson(tag_Tutor)
 OTHER: none
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         "Should I have a private tutoring session with <Actor.name> today?"
         0:: "Yes"
         1:: "No"
@@ -17,15 +18,14 @@ OTHER: none
             Actor.show()
             "<Actor.name> showed up and we had a tutoring session."
             intelligence += 0.25
-            
             If isModEnabled(vin_NTR)
                 Random
                     Actor2 = getRelative()
                     Actor2 = getSpecific(Dating)
-                endRandom
+                EndRandom
                 If Actor2.isValid() && Actor.isInterestedIn(Actor2) && Actor2.isInterestedIn(Actor) && Actor2:perversion > 50 && Actor:perversion > 50
-                    Actor:: "Let's take a short break."
-                    Player:: "I'll head out for a bit of fresh air then."
+                    Actor(Happy):: "Let's take a short break."
+                    Player(Happy):: "I'll head out for a bit of fresh air then."
                     masochist += 1
                     setBackgroundCustom(livingroom)
                     Actor.hide()
@@ -38,20 +38,17 @@ OTHER: none
                         "Let's relax a while longer out here. The tutor can wait."
                         setBackground(home)
                         Actor.show()
-                        Player:: "I hope I didn't keep you waiting for too long. Sorry I lost track of the time."
-                        Actor:: "It's okay, let's continue our session."
+                        Player(Happy):: "I hope I didn't keep you waiting for too long. Sorry I lost track of the time."
+                        Actor(Happy):: "It's okay, let's continue our session."
                     Else
                         setBackground(home)
                         Player(Surprised):: "What the ..."
                         Sex(Actor, Actor2)
-                        If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
-                        EndIf
                         If Actor2.isRelative()
                             "My tutor is fucking my <Actor2.relationship>!"
                         Else
                             "My tutor is fucking my <Actor2.boyfriend_or_girlfriend>!"
-                        Endif
+                        EndIf
                         "What should I do about this?"
                         0:: "Stay quiet and pretend nothing happens"
                         1:: "Make a fuss and fire the tutor"
@@ -59,14 +56,17 @@ OTHER: none
                         If 0
                             masochist += 1
                             "I'm a bit aroused by the sight actually ..."
+                            arousal += 1
                         Else
-                            Player:: "Get out of my room now!"
+                            Player(Furious):: "Get out of my room now!"
                             Actor:rapportwithplayer -= 50
+                            Actor2:rapportwithplayer -= 10
+                            mood -= 5
                             Actor.setActorVar(tag_Tutor, 0)
-                        Endif
-                    Endif
-                Endif
-            Endif
-        Endif
+                        EndIf
+                    EndIf
+                EndIf
+            EndIf
+        EndIf
     SceneEnd() // Improved by Raddeck
     timeout(168, tutor_cms)

@@ -1,16 +1,147 @@
 WHAT: attend_lectures
 WHERE: university:school
 WHEN: 0-24
-WHO: Actor = getSpecific(Lecturer)
+WHO: Actor = getPerson(rk_VB_tag_Major)
 OTHER: none
 
     SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         dressFormal()
+        choiceCourseMajor = rk_VB_choiceCourseMajor.getGlobal()
+        MajorTeacher = rk_VB_Major_Teacher.getGlobal()
+        tagTAR = Actor.getActorVar(rk_VB_tag_TAR)
+        tagTCE = Actor.getActorVar(rk_VB_tag_TCE)
+        tagTCL = Actor.getActorVar(rk_VB_tag_TCL)
+        tagTCS = Actor.getActorVar(rk_VB_tag_TCS)
+        tagTEC = Actor.getActorVar(rk_VB_tag_TEC)
+        tagTED = Actor.getActorVar(rk_VB_tag_TED)
+        tagTEN = Actor.getActorVar(rk_VB_tag_TEN)
+        tagTGE = Actor.getActorVar(rk_VB_tag_TGE)
+        tagTHI = Actor.getActorVar(rk_VB_tag_THI)
+        tagTLA = Actor.getActorVar(rk_VB_tag_TLA)
+        tagTMA = Actor.getActorVar(rk_VB_tag_TMA)
+        tagTME = Actor.getActorVar(rk_VB_tag_TME)
+        tagTMU = Actor.getActorVar(rk_VB_tag_TMU)
+        tagTPH = Actor.getActorVar(rk_VB_tag_TPH)
+        tagTPS = Actor.getActorVar(rk_VB_tag_TPS)
+        tagTPOL = Actor.getActorVar(rk_VB_tag_TPOL)
+        tagTSM = Actor.getActorVar(rk_VB_tag_TSM)
+        tagTDM = Actor.getActorVar(rk_VB_tag_TDM)
+        tagTVE = Actor.getActorVar(rk_VB_tag_TVE)
+        tagTTT = Actor.getActorVar(rk_VB_tag_TTT)
+        If Actor.isValid()
+            If tagTAR >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TAR)
+                Architecture_Major_Actor = Actor.getActorVar(rk_VB_Architecture_Major_Actor)
+            ElseIf tagTCE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TCE)
+                Chemical_Engineering_Major_Actor = Actor.getActorVar(rk_VB_Chemical_Engineering_Major_Actor)
+            ElseIf tagTCL >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TCL)
+                Classics_Major_Actor = Actor.getActorVar(rk_VB_Classics_Major_Actor)
+            ElseIf tagTCS >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TCS)
+                Computer_Science_Major_Actor = Actor.getActorVar(rk_VB_Computer_Science_Major_Actor)
+            ElseIf tagTEC >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TEC)
+                Economics_Major_Actor = Actor.getActorVar(rk_VB_Economics_Major_Actor)
+            ElseIf tagTED >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TED)
+                Education_Major_Actor = Actor.getActorVar(rk_VB_Education_Major_Actor)
+            ElseIf tagTEN >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TEN)
+                English_Major_Actor = Actor.getActorVar(rk_VB_English_Major_Actor)
+            ElseIf tagTGE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TGE)
+                Geography_Major_Actor = Actor.getActorVar(rk_VB_Geography_Major_Actor)
+            ElseIf tagTHI >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_THI)
+                History_Major_Actor = Actor.getActorVar(rk_VB_History_Major_Actor)
+            ElseIf tagTLA >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TLA)
+                Law_Major_Actor = Actor.getActorVar(rk_VB_Law_Major_Actor)
+            ElseIf tagTMA >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TMA)
+                Mathematics_Major_Actor = Actor.getActorVar(rk_VB_Mathematics_Major_Actor)
+            ElseIf tagTME >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TME)
+                Medicine_Major_Actor = Actor.getActorVar(rk_VB_Medicine_Major_Actor)
+            ElseIf tagTMU >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TMU)
+                Music_Major_Actor = Actor.getActorVar(rk_VB_Music_Major_Actor)
+            ElseIf tagTPH >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TPH)
+                Philosophy_Major_Actor = Actor.getActorVar(rk_VB_Philosophy_Major_Actor)
+            ElseIf tagTPS >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TPS)
+                Psychology_Major_Actor = Actor.getActorVar(rk_VB_Psychology_Major_Actor)
+            ElseIf tagTPOL >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TPOL)
+                Political_Sciences_Major_Actor = Actor.getActorVar(rk_VB_Political_Sciences_Major_Actor)
+            ElseIf tagTSM >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TSM)
+                SalesMarketing_Major_Actor = Actor.getActorVar(rk_VB_SalesMarketing_Major_Actor)
+            ElseIf tagTDM >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TDM)
+                Dental_Major_Actor = Actor.getActorVar(rk_VB_Dental_Major_Actor)
+            ElseIf tagTVE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TVE)
+                Veterinary_Major_Actor = Actor.getActorVar(rk_VB_Veterinary_Major_Actor)
+            ElseIf tagTTT >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdTeach_TTT)
+                TravelTourism_Major_Actor = Actor.getActorVar(rk_VB_TravelTourism_Major_Actor)
+            EndIf
+            //Actor = getPerson(rk_VB_tag_Major)
+        EndIf
+        If isModEnabled(rk_vin_Base)
+            If choiceCourseMajor == 1
+                TextMajorChosen = "architecture"
+            ElseIf choiceCourseMajor == 2
+                TextMajorChosen = "chemical engineering"
+            ElseIf choiceCourseMajor == 3
+                TextMajorChosen = "classics"
+            ElseIf choiceCourseMajor == 4
+                TextMajorChosen = "computer science"
+            ElseIf choiceCourseMajor == 31
+                TextMajorChosen = "dental"
+            ElseIf choiceCourseMajor == 5
+                TextMajorChosen = "economics"
+            ElseIf choiceCourseMajor == 6
+                TextMajorChosen = "education"
+            ElseIf choiceCourseMajor == 7
+                TextMajorChosen = "English"
+            ElseIf choiceCourseMajor == 8
+                TextMajorChosen = "geography"
+            ElseIf choiceCourseMajor == 9
+                TextMajorChosen = "history"
+            ElseIf choiceCourseMajor == 10
+                TextMajorChosen = "law"
+            ElseIf choiceCourseMajor == 11
+                TextMajorChosen = "mathematics"
+            ElseIf choiceCourseMajor == 12
+                TextMajorChosen = "medecine"
+            ElseIf choiceCourseMajor == 13
+                TextMajorChosen = "music"
+            ElseIf choiceCourseMajor == 14
+                TextMajorChosen = "philosophy"
+            ElseIf choiceCourseMajor == 15
+                TextMajorChosen = "psychology"
+            ElseIf choiceCourseMajor == 16
+                TextMajorChosen = "political sciences"
+            ElseIf choiceCourseMajor == 60
+                TextMajorChosen = "sales and marketing"
+            ElseIf choiceCourseMajor == 80
+                TextMajorChosen = "travel and tourism"
+            ElseIf choiceCourseMajor == 90
+                TextMajorChosen = "veterinary"
+            EndIf
+        EndIf
         Actor.dress()
         Actor.show(2)
-        "It's every student's fantasy to fuck a lecturer but is Dr <Actor.name_last>, teaching <Actor.Major>, someone that I want to sleep with?"
+        "It's every student's fantasy to fuck a lecturer but is Dr <Actor.name_last>, teaching <TextMajorChosen>, someone that I want to sleep with?"
         0:: "Get close to Dr <Actor.name_last>"
         1:: "Get out"
         
@@ -25,8 +156,13 @@ OTHER: none
                 Actor:attractiontoplayer += 1
                 If !Actor.isInterestedIn(Player)
                     Actor(Annoyed)::"Are you flirting with me? Don't make any illusion, I don't make out with my students ..."
-                    Actor:attractiontoplayer -= Random(0, 5)
-                    Actor:rapportwithplayer -=  Random(0, 1)
+                    If attractiveness > 75 && Actor:perversion > 35
+                        Actor:attractiontoplayer += random(0, 2)
+                        Actor:rapportwithplayer +=  random(0, 1)
+                    Else
+                        Actor:attractiontoplayer -= random(0, 5)
+                        Actor:rapportwithplayer -=  random(0, 1)
+                    EndIf
                 ElseIf Actor:attractiontoplayer > 50 && Actor:arousal > 25 && Actor:perversion > 50
                     Actor(Flirty):: "I know what you want! I can't resist this temptation anymore. Let's fuck right here, right now."
                     0:: "Fuck <Actor.him_or_her> on university grounds"

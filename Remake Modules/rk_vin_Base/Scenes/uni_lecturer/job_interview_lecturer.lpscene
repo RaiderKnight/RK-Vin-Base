@@ -5,14 +5,16 @@ WHO: none
 OTHER: none
 
     SceneStart()
-        
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Classics_Major_Ses_Done = rk_VB_Classics_Major_Ses_Done.getGlobal()
         Education_Major_Ses_Done = rk_VB_Education_Major_Ses_Done.getGlobal()
         English_Major_Ses_Done = rk_VB_English_Major_Ses_Done.getGlobal()
         Tuition = CostOfLiving*[1000 + [intelligence*20]]
         TuitionConverted = Tuition.convertToLocalCurrency(true)
         JobRestrictionEnable = rk_VB_JobRestrictionEnable.getGlobal()
-        
         "Do I want to apply for a teaching post at this university? The salary per month for someone of my qualification is around <TuitionConverted>."
         0:: "Yes"
         1:: "No"
@@ -23,12 +25,11 @@ OTHER: none
                     JoboptionsEnable = true
                 Else
                     NotEnoughK = true
-                Endif
+                EndIf
             Else
                 JoboptionsEnable = true
-            Endif
-            
-            If JoboptionsEnable
+            EndIf
+            If JoboptionsEnable && isModEnabled(rk_vin_Base)
                 moveJobs()
                 Tuition.setSalary()
                 "Yeah, teaching is a good career."
@@ -41,19 +42,21 @@ OTHER: none
                 "My application was successful. I cannot wait to start the course!"
                 "The Department of <Player.Major> organized a welcome drink event a day before the start of the semester. I just had to go, this is the perfect chance to meet my colleagues and students."
                 setBackground(bar)
+                rk_VB_job_Teacher_Uni.setGlobal(1)
                 "Now arrived at this famous party..." // Edit Raddeck
                 dressFormal()
                 Player.dress()
-                Total = Random(10, 25)
+                Total = random(10, 25)
                 count = 0
                 While count < Total
                     Actor = generatePerson()
-                    If Random(0, 100) < 95
-                        Actor:age => Random(18, 22)
+                    If random(0, 100) < 95
+                        Actor:age => random(18, 22)
                         Actor.randomizeHairs()
+                        Actor.randomizeRace()
                         Actor.randomizeFace()
-                    Endif
-                    
+                    EndIf
+                    Actor.setActorVar(rk_VB_tag_Pstudent, 1)
                     Actor.setSameMajor()
                     Actor.dress()
                     Actor.show(2)
@@ -79,7 +82,10 @@ OTHER: none
                                 "As soon as we gets to the bathroom, <Actor.he_or_she> takes the time to lock the door before showing me <Actor.his_or_her> prowess."
                                 Actor.strip()
                                 Player.strip()
-                                sex(Actor, Player)
+                                Sex(Actor, Player)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
                                 Player(Flirty):: "Wow, you're good at fuck, I hope it was mutual?"
                                 Actor(Happy):: "Totally!"
                                 Actor:rapportwithplayer += random(1, 2)
@@ -102,13 +108,13 @@ OTHER: none
                                         Actor:rapportwithplayer -= random(1, 4)
                                         Actor:attractiontoplayer -= random(0, 2)
                                         Actor(Sad)::"Fine!"
-                                    Endif
-                                Endif
-                            Endif
+                                    EndIf
+                                EndIf
+                            EndIf
                         Else
                             Player(Sad)::"You're going to be disappointed my dear!"
                             Actor(Grin):: "We'll see!"
-                        Endif
+                        EndIf
                         Actor.hide()
                         Actor.saveAndDelete()
                     Else // End edit Raddeck
@@ -116,18 +122,20 @@ OTHER: none
                         Player(Happy):: "Nice to meet you, <Actor.name>. I'm Dr <Player.name_last>."
                         Actor.hide()
                         Actor.saveAndDelete()
-                    Endif
+                    EndIf
                     count += 1
-                Endwhile
+                EndWhile
                 
-                Total = Random(5, 8)
+                Total = random(5, 8)
                 count = 0
                 While count < Total
                     Actor = generatePerson()
-                    Actor:age => Random(27, 70)
+                    Actor:age => random(27, 70)
                     Actor.randomizeHairs()
+                    Actor.randomizeRace()
                     Actor.randomizeFace()
                     Actor.setSubject()
+                    Actor.setActorVar(rk_VB_tag_Prof, 1)
                     Actor.dress()
                     Actor.show(2)
                     "One of the fellow lecturers approached me."
@@ -146,7 +154,10 @@ OTHER: none
                             setBackground(bedroom)
                             Actor.strip()
                             Player.strip()
-                            sex(Actor, Player)
+                            Sex(Actor, Player)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
                             Player(Flirty):: "Wow, you're good at fuck, I hope it was mutual?"
                             Actor(Happy):: "Totally!"
                             Actor:rapportwithplayer += random(1, 2)
@@ -163,13 +174,13 @@ OTHER: none
                                 Actor.saveAndDelete()
                                 Actor:rapportwithplayer += random(1, 4)
                                 Actor:attractiontoplayer += random(0, 2)
-                            Endif
+                            EndIf
                             Player(Happy):: "Let's go back to the party without anyone noticing..."
                         Else
                             Actor(Sad)::"I understand..."
                             Actor:rapportwithplayer -= random(0, 1)
                             Actor:attractiontoplayer -= random(0, 1)
-                        Endif
+                        EndIf
                     Else
                         Actor(Happy):: "Hi there, I'm Dr <Actor.name> <Actor.name_last>. I teach the <Actor.major> module."
                         Player(Happy):: "Nice to meet you, Dr <Actor.name_last>. I'm <Player.name>. I'm looking forward to working with you."
@@ -182,14 +193,14 @@ OTHER: none
                             exchangeContact(Actor)
                             Actor.hide()
                             Actor.saveAndDelete()
-                        Endif // End edit Raddeck
-                    Endif
+                        EndIf // End edit Raddeck
+                    EndIf
                     count += 1
-                Endwhile
+                EndWhile
                 "Eventually, the event wound down. I'm glad to have met many of my students and teachers. I cannot wait for my first day tomorrow."
-            Endif
+            EndIf
             If NotEnoughK
                 "You can't teach people if you don't have the knowledge. To become a teacher, you must have taken these 3 courses: Classics, Education and English!" // Edit Raddeck
-            Endif
-        Endif
+            EndIf
+        EndIf
     SceneEnd() // Improved by Raddeck

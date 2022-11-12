@@ -1,12 +1,11 @@
 WHAT: all
 WHERE: home
 WHEN: 0 - 24
-WHO: Actor = getSpecific(Neighbour); If !Actor.isAsexual() && Random(75, 500) < Actor:perversion 
+WHO: Actor = getSpecific(Neighbour); If !Actor.isAsexual() && random(75, 500) < Actor:perversion 
 OTHER: isAtHome()
 
-    // If you have a neighbour with high perversion, you may overhear them having an org y next door and be convinced to join
+    
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         FacebookFriend = rk_VB_FacebookFriend.getGlobal()
@@ -21,13 +20,13 @@ OTHER: isAtHome()
 
         If 0
             "Good for <Actor.him_or_her> I guess. I can't ban my neighbours from sex! Must be having a time of <Actor.his_or_her> life!"
-        Elseif 1
+        ElseIf 1
             Player(Angry):: "For god sake, keep it down. Do you want the entire building to know what you're up to?"
-            Actor:rapportwithplayer -= Random(0, 5)
-            masochist -= Random(0, 1)
+            Actor:rapportwithplayer -= random(0, 5)
+            masochist -= random(0, 1)
         Else
-            perversion += Random(0, 0.5)
-            "My curiousity got the better of me and I just had to see this ..."
+            perversion += random(0, 0.5)
+            "My curiosity got the better of me and I just had to see this ..."
             karma -= 1
             "I came over and found my neighbour's front door wide open, apparently it's a free for all party. With ease, I managed to get a pretty good view of what was going on ..."
             setBackgroundCustom(livingroom)
@@ -39,21 +38,21 @@ OTHER: isAtHome()
                 Actor2 = generatePersonTemporary()
                 While !Actor2.isSameGender(Actor)
                     Actor2 = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor2.show()
                 "And a guest, also naked ..."
                 
                 Actor3 = generatePersonTemporary()
                 While !Actor3.isSameGender(Actor)
                     Actor3 = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor3.show()
                 "And another guest ..."
 
                 Actor4 = generatePersonTemporary()
                 While Actor4.isSameGender(Actor)
                     Actor4 = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor4.show()
                 
                 "The final guest is the lone <Actor4.man_or_woman> in the party ... lucky <Actor4.guy_or_girl>!"
@@ -63,21 +62,21 @@ OTHER: isAtHome()
                 Actor2 = generatePersonTemporary()
                 While !Actor2.isSameGender(Actor)
                     Actor2 = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor2.show()
                 "And a guest, also naked ..."
                 
                 Actor3 = generatePersonTemporary()
                 While !Actor3.isSameGender(Actor)
                     Actor3 = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor3.show()
                 "And another guest ..."
 
                 Actor4 = generatePersonTemporary()
                 While !Actor4.isSameGender(Actor)
                     Actor4 = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor4.show()
                 "And the last one"
 
@@ -90,8 +89,8 @@ OTHER: isAtHome()
                     "A bunch of naked and drunk ladies of course lead to a lot of steamy lesbian sex."
                     Sex(Actor, Actor2)
                     Sex(Actor3, Actor4)
-                Endif            
-            Endif
+                EndIf            
+            EndIf
             "All of this looks like a lot of fun actually ... I'm feeling rather tempted to join them ..."
             0:: "Offer to join them"
             1:: "Enough"
@@ -103,13 +102,13 @@ OTHER: isAtHome()
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -5)
                 EndIf
-                Actor:rapportwithplayer += Random(0, 10)
-                Actor:attractiontoplayer += Random(0, 10)
-                Player:perversion += Random(0, 1)
+                Actor:rapportwithplayer += random(0, 10)
+                Actor:attractiontoplayer += random(0, 10)
+                Player:perversion += random(0, 1)
             Else
                 "I should get out of here before I get caught."
-            Endif
-        Endif
+            EndIf
+        EndIf
 
     SceneEnd()
     timeout(300, neighbour_orgy) // Improved by Raddeck

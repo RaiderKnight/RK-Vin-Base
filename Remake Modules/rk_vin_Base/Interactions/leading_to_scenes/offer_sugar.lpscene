@@ -5,32 +5,29 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Monage = Actor:age + 10
         "What kind of sugar dating arrangement with <Actor.name> do I have in mind?"
-        0:: age > 40 ::"<Actor.name> as the <Actor.sugardaddy_or_sugarmomma>"
-        1:: age < 22 ::"Me as the <Player.sugardaddy_or_sugarmomma>"
+        0:: Monage > age ::"<Actor.name> as the <Actor.sugardaddy_or_sugarmomma>"
+        1:: age > Monage ::"Me as the <Player.sugardaddy_or_sugarmomma>"
         99::"I changed my mind!"
     
         If 0
-        
             SugarParent = SugarParent.getGlobal()
             If SugarParent > 0
-            
-                "I should keep in mind that I already have a sugar dating arrangement going on. If <Actor.name> ends up as my <Actor.sugardaddy_or_sugarmomma>, it's almost certain that <Actor.he_or_she> will want our arrangement to be exclusive and demand I get rid of the other arrangement. I can't have the cake and eat it too!"
-            
-            Endif
-            
+                "I should keep in mind that I already have a sugar dating arrangement going on."
+                "If <Actor.name> ends up as my <Actor.sugardaddy_or_sugarmomma>, it's almost certain that <Actor.he_or_she> will want our arrangement to be exclusive and demand I get rid of the other arrangement. I can't have the cake and eat it too!"
+            EndIf
             If Actor.isInterestedIn(Player) && Actor:intelligence + Actor:interpersonal + Actor:perversion + attractiveness - Actor:attractiveness + Actor:age - age > 150
-                
                 Actor(Flirty):: "Well, I'm no stranger to being a <Actor.sugardaddy_or_sugarmomma> and I like how direct you are to approach me."
                 Actor(Flirty):: "How about a first date to sort out our arrangement?"
                 0:: "Yes"
                 1:: "No"
             
                 If 0
-                
                     "Why not? I'm sure <Actor.he_or_she> will be extra generous on the first date."
                     Loc = findNearbyBuilding(restaurant)
                     moveTo(Loc)
@@ -39,56 +36,46 @@ OTHER: none
                     1:: "No"
                 
                     If 0
-                    
                         Loc = findNearbyBuilding(hotel)
                         moveTo(Loc)
                         setBackground(home)
                         Actor.makePermanent()
-                        "Wow, this is a nice hotel suite! Must have cost a fortune. And I know very well what <Actor.name> is expecting from me for <Actor.his_or_her> generousity."
+                        "Wow, this is a nice hotel suite! Must have cost a fortune. And I know very well what <Actor.name> is expecting from me for <Actor.his_or_her> generosity."
                         Sex(Actor, Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
                         EndIf
-                        perversion += Random(0, 0.5)
+                        perversion += random(0, 0.5)
                         Actor.show(2)
-                        "The sex wasn't too bad. We spent the night together. The morning after, <Actor.name> paid for breakfast, and before heading off to work, told me that <Actor.he_or_she> will call me soon and left me a generous envelope. Needless to say, <Actor.name> is now my <Actor.sugardaddy_or_sugarmommy>."
-                        money += Random(100, 500)
+                        "The sex wasn't too bad. We spent the night together. The morning after, <Actor.name> paid for breakfast, and before heading off to work, told me that <Actor.he_or_she> will call me soon and left me a generous envelope."
+                        "Needless to say, <Actor.name> is now my <Actor.sugardaddy_or_sugarmommy>."
+                        money += random(100, 500)
                         SugarParent = Actor.getID()
                         SugarParent.setGlobal(SugarParent)
                         mood += 5
                         Actor:rapportwithplayer += 2
                         Actor:attractiontoplayer += 2
-                        
                     Else
-                    
                         "I turned down <Actor.name>'s offer to go back to the hotel. <Actor.He_or_She> was obviously disappointed and needless to say, never got in contact with me again."
                         mood -= 1
                         Actor:rapportwithplayer -= 2
                         Actor:attractiontoplayer -= 2
-                        
-                    Endif
-                    
+                    EndIf
                 Else
-                
                     "Ew, on second thought, even for money, I can't sleep with someone that old and ugly."
-                
-                Endif
-                
+                EndIf
             Else
-            
                 Actor(Sarcastic):: "Sorry, but you must have mistaken me for some millionaire with cash to burn. I must say I'm a bit flattered though." 
                 mood += 1
-                
-            Endif
-            
+            EndIf
         Else
-        
             SugarBabe = SugarBabe.getGlobal()
             If SugarBabe > 0
             
-                "I should keep in mind that I already have a sugar dating arrangement going on. If <Actor.name> ends up as my <Actor.sugardick_or_sugarbabe>, I'll probably need to get rid of the other arrangement. Two sugarbabes at the same time are just way out of my budget."
+                "I should keep in mind that I already have a sugar dating arrangement going on. If <Actor.name> ends up as my <Actor.sugardick_or_sugarbabe>, I'll probably need to get rid of the other arrangement."
+                "Two sugarbabes at the same time are just way out of my budget."
             
-            Endif
+            EndIf
             
             If Actor.isInterestedIn(Player) && Actor:perversion - Actor:intelligence + Actor:attractiontoplayer > 50
                 
@@ -103,30 +90,26 @@ OTHER: none
                 moveTo(Loc)         
                 setBackground(home)
                 Actor.makePermanent()
-                "This hotel suite cost me a fortune. And I hope that <Actor.name> knows what I'm expecting from <Actor.him_or_her> for my generousity."
+                "This hotel suite cost me a fortune. And I hope that <Actor.name> knows what I'm expecting from <Actor.him_or_her> for my generosity."
                 Sex(Player, Actor)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -1)
                 EndIf
-                perversion += Random(0, 0.5)
+                perversion += random(0, 0.5)
                 Actor.show(2)
-                "We spent the night together. The morning after, I paid for breakfast, and before heading off to work, I told <Actor.name> that I will call <Actor.him_or_her> soon and left <Actor.him_or_her> a generous envelope. Needless to say, <Actor.name> is now my sugarbabe."
-                money -= Random(100, 500)
+                "We spent the night together..."
+                "The morning after, I paid for breakfast, and before heading off to work, I told <Actor.name> that I will call <Actor.him_or_her> soon and left <Actor.him_or_her> a generous envelope. Needless to say, <Actor.name> is now my sugarbabe."
+                money -= random(100, 500)
                 mood += 5
                 Actor:rapportwithplayer += 2
                 Actor:attractiontoplayer += 2
                 SugarBabe = Actor.getID()
                 SugarBabe.setGlobal(SugarBabe)
-                
             Else
-        
                 Actor(Angry):: "I'm not that cheap and love cannot be bought. Pretty sure there are websites you can go to for this kind of things - you don't need to approach random people so shamelessly showing off your money."
-                Actor:rapportwithplayer -= Random(1, 5)
-                Actor:attractiontoplayer -= Random(1, 5)
+                Actor:rapportwithplayer -= random(1, 5)
+                Actor:attractiontoplayer -= random(1, 5)
                 mood -= 5
-        
-            Endif
-        
-        Endif
-    
+            EndIf
+        EndIf
     SceneEnd() // Scene improved by Raddeck

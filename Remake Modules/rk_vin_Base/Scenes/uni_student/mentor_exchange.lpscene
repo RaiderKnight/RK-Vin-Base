@@ -4,7 +4,6 @@ WHEN: 0 - 24
 WHO: none
 OTHER: none
 
-    // New action to "Mentor a foreign exchange student" (you can pick where they come from, but whether they have the stereotypes i.e. BBC, big Latina ass, etc depends on what you set if you have the Interracial module enabled). This person will stay in your city for one in-game month. If you don't participate in Greek life and live at home, the university may ask you to provide 'homestay' accommodation for this student as well (where they'll meet your relatives). Aside from the usual random / companion events, there are some specific events that can trigger featuring this exchange student when you take the mentor action, where you can simply gain some karma and interpersonal or end up hooking up with them but can also end up asking them to transfer permanently to your university (depends on their rapport with you, always succeeds if you've managed to turn them into your BF / GF already). 
     
     SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
@@ -33,23 +32,23 @@ OTHER: none
                         Actor.hide()
                         Actor.deletePerson()
                         "Initially I thought we would stay in touch but the distance eventually killed off any contact between us."                    
-                    Endif
+                    EndIf
                 Else
                     Actor.hide()
                     Actor.deletePerson()
                     "Initially I thought we would stay in touch but the distance eventually killed off any contact between us."
-                Endif
+                EndIf
             Else
                 Nothing = false
                 Frat = getSpecific(Fraternity)
-                If !Frat.isValid() && Random(0, 100) < 20 // fucks Relative
+                If !Frat.isValid() && random(0, 100) < 20 // fucks Relative
                     Actor2 = getSpecific(Relative)
                     If Actor2.isValid() && Actor2.livesWithPlayer()
                         setBackgroundCustom(livingroom)
                         Actor2.dress()
                         Actor2.show()
-                        "Since <Actor.name> is living in my house as part of the university's 'homestay' programme, <Actor.he_or_she> soon meets with my <Actor2.relationship> who also lives with me."
-                        If Actor.isInterestedIn(Actor2) && Actor2.isInterestedIn(Actor) && Random(150, 350) < Actor:perversion + Actor:attractiveness + Actor2:perversion + Actor2:attractiveness
+                        "Since <Actor.name> is living in my house as part of the university's 'homestay' program, <Actor.he_or_she> soon meets with my <Actor2.relationship> who also lives with me."
+                        If Actor.isInterestedIn(Actor2) && Actor2.isInterestedIn(Actor) && random(150, 350) < Actor:perversion + Actor:attractiveness + Actor2:perversion + Actor2:attractiveness
                             "They seem to get along well ... too well. I could feel some sexual tension building between them."
                             0:: "Never leave them alone"
                             1:: "Whatever happens happens"
@@ -60,22 +59,22 @@ OTHER: none
                                 "Perhaps I shouldn't be shocked as it's partly my fault. But I came home one day to see them all over each other ..."
                                 Sex(Actor2, Actor)
                                 Actor:attractiontoplayer -= 3
-                            Endif
+                            EndIf
                         Else
                             "They seem to get along well and my <Actor2.relationship> also was happy to introduce <Actor.name> to many aspects of my country's culture."
                             Actor:rapportwithplayer += 3
                             Actor:attractiontoplayer += 3
                             Actor2:rapportwithplayer += 3
                             "The experience of having an exotic guest in our home also brings me somewhat closer to my own <Actor2.relationship> funnily enough."
-                        Endif
+                        EndIf
                     Else
                         Nothing = true
-                    Endif
-                Elseif !Frat.isValid() && Random(0, 100) < 25 // masturbates
+                    EndIf
+                ElseIf !Frat.isValid() && random(0, 100) < 25 // masturbates
                     moveTo(home)
-                    setBakground(home)
+                    setBackground(home)
                     Actor.strip()
-                    "Since <Actor.name> is living in my house as part of the university's 'homestay' programme, I walk past <Actor.his_or_her> bedroom every time I go to the bathroom."
+                    "Since <Actor.name> is living in my house as part of the university's 'homestay' program, I walk past <Actor.his_or_her> bedroom every time I go to the bathroom."
                     "Usually, I just overhear <Actor.him_or_her> Skyping <Actor.his_or_her> parents from home or catching up on some cheesy television dramas in <Actor.his_or_her> language."
                     "This time, I hear something else entirely though, and I'm pretty sure what it is ... I suppose there's a certain need that's universal around the world."
                     0:: "Peep on <Actor.name>'s sexy alone time"
@@ -102,18 +101,19 @@ OTHER: none
                                 Actor:: "Please, leave me alone!"
                                 Actor:attractiontoplayer -= 5
                                 Actor:rapportwithplayer -= 5
-                            Endif
-                        Endif
-                    Endif
-                Elseif Random(0, 100) < 33 // help with assignment
+                            EndIf
+                        EndIf
+                    EndIf
+                ElseIf random(0, 100) < 33 // help with assignment
                     setBackground(library)
                     "<Actor.name> is asking for my help with an individual assignment given in class. Due to the language barrier, <Actor.he_or_she> doesn't even understand the requirements fully, let alone standing any chance of getting a high mark for the assignment."
                     0:: "Help <Actor.him_or_her>"
                     1:: "No, it's an individual assignment, not a group project"
                     
                     If 0
-                        Player:: "Of course."
-                        "I guess this is one of those grey areas. On one hand, individual assignments aren't meant to done with another classmate's help. On the other hand, <Actor.name> is being faced with an unfair disadvantage compared to other students due to the language barrier. Two wrongs make a right in this case, I suppose."
+                        Player(Happy):: "Of course."
+                        "I guess this is one of those grey areas. On one hand, individual assignments aren't meant to done with another classmate's help."
+                        "On the other hand, <Actor.name> is being faced with an unfair disadvantage compared to other students due to the language barrier. Two wrongs make a right in this case, I suppose."
                         Actor:attractiontoplayer += 3
                         Actor:rapportwithplayer += 3
                         "With my help, <Actor.name> should manage to get a respectable mark for the assignment, better than some of the local students even."
@@ -132,7 +132,7 @@ OTHER: none
                                 "Of course, I'm only half-interested in the cuisine conversation as I have something else on my mind."
                                 "Soon, I started to flirt with <Actor.name>."
                                 If Actor:attractiontoplayer > 20
-                                    "Even with the language barrier, I guess seduction is a universal language and <Actor.he_or_she> got the mesage soon enough and responded in kind."
+                                    "Even with the language barrier, I guess seduction is a universal language and <Actor.he_or_she> got the message soon enough and responded in kind."
                                     Sex(Player, Actor)
                                     If HungerEnable > 0
                                         Player.modifyActorVar(rk_VB_Hunger, -2)
@@ -143,27 +143,27 @@ OTHER: none
                                     "<Actor.name> doesn't seem to get my flirting at all, I don't know if it's due to the cultural or language difference, or <Actor.he_or_she> is just playing dumb."
                                     Actor:attractiontoplayer -= 3
                                     Actor:rapportwithplayer -= 3
-                                Endif                            
+                                EndIf                            
                             Else
                                 Actor:rapportwithplayer += 3                            
-                            Endif
-                        Endif
+                            EndIf
+                        EndIf
                     Else
-                        Player:: "Sorry, but it's cheating if I help you. Individual assignments are meant to done alone."
+                        Player(Sad):: "Sorry, but it's cheating if I help you. Individual assignments are meant to done alone."
                         Actor:attractiontoplayer -= 3
                         Actor:rapportwithplayer -= 3                    
-                    Endif
-                Elseif Random(0, 100) < 50 // cockblock
+                    EndIf
+                ElseIf random(0, 100) < 50 // cockblock
                     setBackground(fraternity)
                     "I was invited to a house party so I decided to bring <Actor.name> along. After all, what better opportunity to learn about this country's student culture than this?"
                     Actor2 = generatePersonTemporary()
                     While !Actor.isInterestedIn(Actor2)
                         Actor2 = generatePersonTemporary()
-                    endWhile
+                    EndWhile
                     Actor2.makeInterested(Actor)
                     Actor2.dress()
                     Actor2.show()
-                    "At the party, another student, who was roommates with the party's host, called <Actor2.name> quickly became smitten by the exotic charm of my foreign exchange mentee. And I couldn't tell if <Actor.he_or_she>'s also interested or not."
+                    "At the party, another student, who was roommates with the party's host, called <Actor2.name> quickly became smitten by the exotic charm of my foreign exchange mentor. And I couldn't tell if <Actor.he_or_she>'s also interested or not."
                     0:: "Try to separate them"
                     1:: "I don't mind"
                     
@@ -179,19 +179,19 @@ OTHER: none
                         Sex(Actor, Actor2)
                         Actor:attractiontoplayer -= 3
                         Actor:rapportwithplayer += 3                     
-                    Endif
-                Endif           
-                
+                    EndIf
+                EndIf
                 If Nothing
                     "I spent some time with <Actor.name>, helping <Actor.him_or_her> with any difficulties <Actor.he_or_she> has due to the language or culture barriers."
                     Actor:rapportwithplayer += 3
                     Actor:attractiontoplayer += 3
                     interpersonal += 0.5
-                Endif
-            Endif
+                EndIf
+            EndIf
         Else
             "My university has partnerships with universities around the world to exchange students, where a student from a foreign university would come to this country and study at my university for semester, and vice versa."
-            "Foreign exchange students face some unique challenges adapting to a new country, a new culture, new education system and new friends, so the university also seeks volunteers among its local students to mentor these international students and help them fit in with the new environment. Usually, they match students based on department as well and I'll see this international student in class no matter what."
+            "Foreign exchange students face some unique challenges adapting to a new country, a new culture, new education system and new friends, so the university also seeks volunteers among its local students to mentor these international students and help them fit in with the new environment."
+            "Usually, they match students based on department as well and I'll see this international student in class no matter what."
             0:: "Get matched with an international student"
             1:: "I'm busy enough with my own studies"
             
@@ -206,63 +206,49 @@ OTHER: none
                 
                 If 0
                     setRaceGenerated(black)
-                Elseif 1
+                ElseIf 1
                     setRaceGenerated(indian)    
-                Elseif 2
+                ElseIf 2
                     setRaceGenerated(arab)        
-                Elseif 3
+                ElseIf 3
                     setRaceGenerated(latin)    
-                Elseif 4
+                ElseIf 4
                     setRaceGenerated(asian)    
                 Else
                     setRaceGenerated(white)    
-                Endif
-                        
+                EndIf
                 "Eventually, I was given a profile of an international student about to arrive from such a university."
                 Actor = generatePersonTemporary()
                 While !Actor.isInterestedIn(Player)
                     Actor = generatePersonTemporary()
-                Endwhile
-                
+                EndWhile
                 If isModEnabled(vin_Interracial)
                     If Actor.isEthnic(black) && Actor.isMale() && !isTimingOut(strt_black_m)
                         Actor.blendPreset(strt_black_m)
-                        
-                    Elseif Actor.isEthnic(black) && !Actor.isMale() && !isTimingOut(strt_black_f)
+                    ElseIf Actor.isEthnic(black) && !Actor.isMale() && !isTimingOut(strt_black_f)
                         Actor.blendPreset(strt_black_f)
-
-                    Elseif Actor.isEthnic(indian) && Actor.isMale() && !isTimingOut(strt_indian_m)
+                    ElseIf Actor.isEthnic(indian) && Actor.isMale() && !isTimingOut(strt_indian_m)
                         Actor.blendPreset(strt_indian_m)
-                        
-                    Elseif Actor.isEthnic(indian) && !Actor.isMale() && !isTimingOut(strt_indian_f)
+                    ElseIf Actor.isEthnic(indian) && !Actor.isMale() && !isTimingOut(strt_indian_f)
                         Actor.blendPreset(strt_indian_f)
-                        
-                    Elseif Actor.isEthnic(arab) && Actor.isMale() && !isTimingOut(strt_arab_m)
+                    ElseIf Actor.isEthnic(arab) && Actor.isMale() && !isTimingOut(strt_arab_m)
                         Actor.blendPreset(strt_arab_m)
-                        
-                    Elseif Actor.isEthnic(arab) && !Actor.isMale() && !isTimingOut(strt_arab_f)
+                    ElseIf Actor.isEthnic(arab) && !Actor.isMale() && !isTimingOut(strt_arab_f)
                         Actor.blendPreset(strt_arab_f)
-
-                    Elseif Actor.isEthnic(latin) && Actor.isMale() && !isTimingOut(strt_latin_m)
+                    ElseIf Actor.isEthnic(latin) && Actor.isMale() && !isTimingOut(strt_latin_m)
                         Actor.blendPreset(strt_latin_m)
-                        
-                    Elseif Actor.isEthnic(latin) && !Actor.isMale() && !isTimingOut(strt_latin_f)
+                    ElseIf Actor.isEthnic(latin) && !Actor.isMale() && !isTimingOut(strt_latin_f)
                         Actor.blendPreset(strt_latin_f)
-                        
-                    Elseif Actor.isEthnic(asian) && Actor.isMale() && !isTimingOut(strt_asian_m)
+                    ElseIf Actor.isEthnic(asian) && Actor.isMale() && !isTimingOut(strt_asian_m)
                         Actor.blendPreset(strt_asian_m)
-                        
-                    Elseif Actor.isEthnic(asian) && !Actor.isMale() && !isTimingOut(strt_asian_f)
+                    ElseIf Actor.isEthnic(asian) && !Actor.isMale() && !isTimingOut(strt_asian_f)
                         Actor.blendPreset(strt_asian_f)
-
-                    Elseif Actor.isEthnic(white) && Actor.isMale() && !isTimingOut(strt_white_m)
+                    ElseIf Actor.isEthnic(white) && Actor.isMale() && !isTimingOut(strt_white_m)
                         Actor.blendPreset(strt_white_m)
-                        
-                    Elseif Actor.isEthnic(white) && !Actor.isMale() && !isTimingOut(strt_white_f)
+                    ElseIf Actor.isEthnic(white) && !Actor.isMale() && !isTimingOut(strt_white_f)
                         Actor.blendPreset(strt_white_f)
-                    Endif
-                Endif
-
+                    EndIf
+                EndIf
                 Actor.dress()
                 secondScreen(Actor)
                 Actor.show()
@@ -275,26 +261,112 @@ OTHER: none
                         Actor.ModifyRaceFetish(Player, 0, 100)
                         If Actor.isInterestedIn(Player)
                             Actor.makeInterested(Player)
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                     secondScreen()
+                    choiceCourseMajor = rk_VB_choiceCourseMajor.getGlobal()
                     Actor.show()
                     "A couple of weeks later, <Actor.name> arrived in my city, jet-lagged from a long flight and I picked <Actor.him_or_her> up at the airport."
                     Actor:rapportwithplayer += 10
                     Actor.makePermanent()
-                    Actor.setSameMajor()
+                    //Actor.setSameMajor()
+                    AcID = Actor.getID()
+                    Actor.setActorVar(rk_VB_tag_Student, 1)
+                    If choiceCourseMajor == 1
+                        Actor.setActorVar(rk_VB_Architecture_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TAR, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TAR, AcID)
+                    ElseIf choiceCourseMajor == 2
+                        Actor.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TCE, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TCE, AcID)
+                    ElseIf choiceCourseMajor == 3
+                        Actor.setActorVar(rk_VB_Classics_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TCL, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TCL, AcID)
+                    ElseIf choiceCourseMajor == 31
+                        Actor.setActorVar(rk_VB_Dental_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TDM, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TDM, AcID)
+                    ElseIf choiceCourseMajor == 4
+                        Actor.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TCS, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TCS, AcID)
+                    ElseIf choiceCourseMajor == 5
+                        Actor.setActorVar(rk_VB_Economics_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TEC, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TEC, AcID)
+                    ElseIf choiceCourseMajor == 6
+                        Actor.setActorVar(rk_VB_Education_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TED, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TED, AcID)
+                    ElseIf choiceCourseMajor == 7
+                        Actor.setActorVar(rk_VB_English_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TEN, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TEN, AcID)
+                    ElseIf choiceCourseMajor == 8
+                        Actor.setActorVar(rk_VB_Geography_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TGE, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TGE, AcID)
+                    ElseIf choiceCourseMajor == 9
+                        Actor.setActorVar(rk_VB_History_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_THI, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_THI, AcID)
+                    ElseIf choiceCourseMajor == 10
+                        Actor.setActorVar(rk_VB_Law_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TLA, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TLA, AcID)
+                    ElseIf choiceCourseMajor == 11
+                        Actor.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TMA, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TMA, AcID)
+                    ElseIf choiceCourseMajor == 12
+                        Actor.setActorVar(rk_VB_Medicine_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TME, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TME, AcID)
+                    ElseIf choiceCourseMajor == 13
+                        Actor.setActorVar(rk_VB_Music_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TMU, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TMU, AcID)
+                    ElseIf choiceCourseMajor == 14
+                        Actor.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TPH, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TPH, AcID)
+                    ElseIf choiceCourseMajor == 15
+                        Actor.setActorVar(rk_VB_Psychology_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TPS, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TPS, AcID)
+                    ElseIf choiceCourseMajor == 16
+                        Actor.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TPOL, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
+                    ElseIf choiceCourseMajor == 60
+                        Actor.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TSM, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TSM, AcID)
+                    ElseIf choiceCourseMajor == 80
+                        Actor.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TTT, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TTT, AcID)
+                    ElseIf choiceCourseMajor == 90
+                        Actor.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
+                        Actor.setActorVar(rk_VB_tag_TVE, 1)
+                        Actor.setActorVar(rk_VB_AcIdCC_TVE, AcID)
+                    EndIf
                     "I quickly helped <Actor.name> sort out a local SIM card to put in <Actor.his_or_her> phone and of course, my number was the first added on there."
                     exchangeContact(Actor)
+                    rk_VB_FacebookFriend.setGlobal(AcID)
                     Actor2 = getSpecific(Fraternity)
                     If Actor2.isValid()
                         "Since I'm part of a <Player.fraternity_or_sorority> and short-term international students don't really have a way to join a <Player.fraternity_or_sorority>, accommodation for <Actor.name> was sorted by the university instead and <Actor.he_or_she> will stay in one of the normal dorms."
                     Else
-                        "Since I live at home while attending university, the university encourages me to also provide 'homestay' accommodation for <Actor2.name> for the duration of the semester. They think this is a good way for the exchange student to fully immerse in the local culture."
+                        "Since I live at home while attending university, the university encourages me to also provide 'homestay' accommodation for <Actor2.name> for the duration of the semester."
+                        "They think this is a good way for the exchange student to fully immerse in the local culture."
                         "I do have a spare room at the moment, so no reason for me to refuse."
-                    Endif
+                    EndIf
                     Arrival = HoursElapsed*1
                     Actor.setActorVar(tag_Exchange, Arrival)
-                Endif
-            Endif
-        Endif
+                EndIf
+            EndIf
+        EndIf
     SceneEnd() // Improved by Raddeck

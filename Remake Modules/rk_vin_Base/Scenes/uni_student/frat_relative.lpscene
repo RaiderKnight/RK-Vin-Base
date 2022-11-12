@@ -19,22 +19,20 @@ OTHER: none
         Actor = Actor2.generatePersonTemporaryMatchRace()
         While !Player.isInterestedIn(Actor)
             Actor = Actor2.generatePersonTemporaryMatchRace()
-        Endwhile
+        EndWhile
         Actor.makeInterested(Player)
-        
         If isModEnabled(vin_OldYoung)
             Actor:age => age + likes_older*0.5
-            Actor:age += Random(-5, 5)
-            Actor:attractiveness => Random(70, 100)
+            Actor:age += random(-5, 5)
+            Actor:attractiveness => random(70, 100)
             Actor.randomizeFace()
+            Actor.randomizeRace()
             Actor.randomizeHairs()
             Actor:likes_older => 2*[age - Actor:age]
         Else
-            Actor:age => Actor2:age + Random(5, 50)
-        Endif
-        
-        Actor:attractiontoplayer += Random(25, 50)
-        
+            Actor:age => Actor2:age + random(5, 50)
+        EndIf
+        Actor:attractiontoplayer += random(25, 50)
         Actor.makePermanent()
         If Actor:age - Actor2:age < 18
             addNpcRelationship(ParentSiblingSiblingChild, Actor, Actor2)
@@ -42,28 +40,29 @@ OTHER: none
                 rela = "uncle"
             Else
                 rela = "aunt"
-            Endif
-        Elseif Actor:age - Actor2:age < 40
+            EndIf
+        ElseIf Actor:age - Actor2:age < 40
             addNpcRelationship(ParentChild, Actor, Actor2)
             If Actor.isMale()
                 rela = "dad"
             Else
                 rela = "mom"
-            Endif    
+            EndIf    
         Else
             addNpcRelationship(GrandParentGrandChild, Actor, Actor2)
             If Actor.isMale()
                 rela = "grandpa"
             Else
                 rela = "grandma"
-            Endif        
-        Endif
+            EndIf        
+        EndIf
         
         Actor.dress()
         Actor.show()
         Actor.moveToPersonStand(Player, 100)
         
-        Actor2:: "Oh no, <rela>, I told you not to visit me here. I'm in a <Actor2.fraternity_or_sorority>, it's not exactly family-friendly. It's embarassing to have a family member visit me in front of my <Actor2.brothers_or_sisters>. Why didn't you call me in advance? We could have met in a restaurant downtown or something."
+        Actor2:: "Oh no, <rela>, I told you not to visit me here. I'm in a <Actor2.fraternity_or_sorority>, it's not exactly family-friendly."
+        Actor2::"It's embarrassing to have a family member visit me in front of my <Actor2.brothers_or_sisters>. Why didn't you call me in advance? We could have met in a restaurant downtown or something."
         Actor:: "Sorry, I thought you wanted to give you a nice surprise."
         Actor2:: "Anyway, <Player.name>, this is my <rela>."
         Player:: "Nice to meet you too ..."
@@ -71,7 +70,7 @@ OTHER: none
         If isModEnabled(vin_OldYoung)
             "I must admit: <Actor2.name>'s <rela> is a rather hot older <Actor.gentleman_or_lady> ... and I happen to always have a thing for older <Actor.men_or_women>."
             "I could swear <Actor.he_or_she> is checking me out too"
-        Endif
+        EndIf
         Actor.moveToPerson(Player)
         "<Actor2.name>'s <rela> decided to sit down with us to watch TV together ..."
         Actor2:: "<Player.name>, I hope you don't mind if I leave you in my <rela>'s company for a couple minutes? I need to go to the bathroom."
@@ -79,7 +78,7 @@ OTHER: none
         Actor2.hide()
         If isModEnabled(vin_OldYoung)
             "Well, <Actor2.name>, little does <Actor2.he_or_she> know, I can do a lot more than 'not minding' <Actor2.his_or_her> <rela> in <Actor2.his_or_her> absence ..."
-        Endif
+        EndIf
         "Should I try anything with my <Actor2.fraternity_or_sorority> <Actor2.brother_or_sister>'s <rela>?"
         0:: "Make my move with <Actor2.name>'s <rela>"
         1:: "Just watch TV in peace"
@@ -103,9 +102,9 @@ OTHER: none
                 EndIf
             Else
                 "It's too risky with <Actor2.name> possibly returning from the bathroom at any moment and catching us in our act."        
-            Endif
+            EndIf
             Actor2.show()
             "Before <Actor2.name> returned from the bathroom, we managed to swap numbers to continue 'getting to know each other' when <Actor2.he_or_she> isn't around. I wonder how my <Actor2.fraternity_or_sorority> <Actor2.brother_or_sister> would react to me hooking up with <Actor2.his_or_her> <rela>."
-        Endif
+        EndIf
     SceneEnd() // Improved by Raddeck
     timeout(200, frat_relative)

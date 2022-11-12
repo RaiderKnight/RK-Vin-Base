@@ -1,11 +1,10 @@
 WHAT: deliver_lectures
 WHERE: university:work
 WHEN: 0-24
-WHO: Actor = getSpecific(Coursemate); If !Actor.isDating() && Random(20, 100) < Actor:attractiontoplayer
+WHO: Actor = getPerson(rk_VB_tag_Pstudent); If !Actor.isDating() && random(20, 100) < Actor:attractiontoplayer
 OTHER: none
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -14,20 +13,79 @@ OTHER: none
         Actor.show(2)
         "One of my students <Actor.name> is clearly checking me out ... I think <Actor.he_or_she> might have a crush on me."
         0:: "Flirt with my eyes"
-        1:: "Avoid eye contact"
+        1:: "Leave my phone number with <Actor.him_or_her>, incognito!"
+        2::"Let's ask <Actor.him_or_her> if <Actor.he_or_she> wants to fuck!"
+        3:: "Avoid eye contact"
         
         If 0
             "I made sure that <Actor.name> knows the feeling is mutual, literally tearing <Actor.his_or_her> clothes off with my eyes for the whole lecture."
-            Actor:attractiontoplayer += Random(0, 2)
-            If !Actor.isContactExchanged() && Actor:attractiontoplayer > 35
+            Actor:attractiontoplayer += random(0, 2)
+            If Actor:attractiontoplayer > 35
                 "After class ..."
                 "I was packing my things up after class when <Actor.name> passed by and dropped a piece of paper on my table, winked at me and walked off."
                 "It's <Actor.his_or_her> number with the message 'Text me!'. <Actor.He_or_She> isn't shy, is <Actor.he_or_she>?"
-                exchangeContact(Actor)
-            Endif
+                If !Actor.isContactExchanged()
+                    exchangeContact(Actor)
+                EndIf
+            EndIf
+            If Actor:attractiontoplayer > 50
+                Actor(Flirty):: "You know you want me! I can't resist this temptation anymore. Let's fuck right here, right now."
+                0:: "Fuck <Actor.him_or_her> on university grounds"
+                1:: "Take <Actor.him_or_her> home first"
+                2:: "That's going too far"
+                
+                If 0
+                    Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                ElseIf 2
+                    Player(Serene):: "Sorry, but I can't do that or I'll get fired for having an affair with a student."
+                Else
+                    moveTo(home)
+                    setBackground(home)
+                    Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                EndIf
+            EndIf
+        ElseIf 1
+            "I made sure that <Actor.name> knows the feeling is mutual, literally tearing <Actor.his_or_her> clothes off with my eyes for the whole lecture."
+            Actor:attractiontoplayer += random(0, 2)
+            "Once the class was focused on their work, I took the opportunity to give <Actor.him_or_her> my phone number without anyone seeing me and hoping that <Actor.he_or_she> would understand the message..."
+            If [random(0, 100) > 40 && Actor:attractiontoplayer > 35] || [Actor:arousal > 15 && Actor:perversion > 50]
+                If !Actor.isContactExchanged()
+                    exchangeContact(Actor)
+                EndIf
+                Actor:attractiontoplayer += random(0, 2)
+            EndIf
+        ElseIf 2
+            Player(Flirty):: "I know you want me! I can't resist this temptation anymore. Let's fuck right here, right now."
+            If Actor:attractiontoplayer > 45 && Actor:arousal > 15 && Actor:perversion > 50
+                Actor(Flirty):: "Sure!"
+                Actor.strip()
+                Player.strip()
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            ElseIf Actor:attractiontoplayer > 45 && Actor:arousal > 15
+                moveTo(home)
+                setBackground(home)
+                Actor.strip()
+                Player.strip()
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            Else
+                Actor(Serene):: "Sorry, but I can't do that and I'm not interested, you're just beautiful!"
+                Actor:rapportwithplayer -= random(0, 2.5)
+            EndIf
         Else
             "<Actor.name> is probably just one of those college <Actor.assholes_or_sluts> that took a <Actor.fraternity_or_sorority> bet on banging a lecturer. Let's not fall for this."
-            Actor:attractiontoplayer -= Random(0, 2)
-        Endif
+            Actor:attractiontoplayer -= random(0, 2)
+        EndIf
     SceneEnd() // Scene improved by Raddeck
     timeout(100, student_crush)

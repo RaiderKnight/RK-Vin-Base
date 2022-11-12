@@ -1,8 +1,8 @@
 WHAT: all
 WHERE: work
 WHEN: 14 - 24
-WHO: Actor = getSpecific(Dating); Actor2 = getSpecific(Boss); If !Actor.isMale() && Actor.isColleague() && Actor2.isMale()
-OTHER: Player.isMale() && Random(50, 100) < perversion && isTimingOut(sr_fso_work_dare1_cms) && isModEnabled(vin_NTR)
+WHO: Actor = getSpecific(Dating); Actor2 = getSpecific(Boss); If Actor.isColleague()
+OTHER: random(50, 100) < perversion && isTimingOut(sr_fso_work_dare1_cms) && isModEnabled(vin_NTR)
 
     SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
@@ -13,7 +13,6 @@ OTHER: Player.isMale() && Random(50, 100) < perversion && isTimingOut(sr_fso_wor
         dressFormal()
         Actor.dress()
         Actor.show()
-        
         Actor2.dress()
         Actor2.show()
         Flash = getActorVar(tag_sr_fso_work_flash)
@@ -25,7 +24,6 @@ OTHER: Player.isMale() && Random(50, 100) < perversion && isTimingOut(sr_fso_wor
             Actor:: "Pretty much the same as usual. Nothing exciting, but nothing bad at least."
             Player: "Want to take a break with me?" 
             Actor:: "Sure."
-            
             Player.moveToPersonStand(Actor2, 100)
             Actor.moveToPersonStand(Actor2, 100)
             "<Actor.name> and I went to the boss's desk."
@@ -46,20 +44,23 @@ OTHER: Player.isMale() && Random(50, 100) < perversion && isTimingOut(sr_fso_wor
                     Actor.stripOne()
                     count += 1
                     "Off this goes ..."
-                Endwhile
+                EndWhile
                 
                 "Finally ..."
                 Filter(Solo)
                 Sex(Actor)
             EndIf
-
             "The boss says that watching and taking pictures of that got him turned on and he wants to finger your <Actor.boyfriend_or_girlfriend>."
             0:: "Sure"
             1:: "No"
             
             If 0
                 Player.modifyActorVar(rk_VB_Boss_Sucker, 2)
-                Filter(FingerPussy)
+                If Actor.isMale()
+                    Filter(FingerPussy)
+                Else
+                    Filter(Handjob)
+                EndIf
                 Sex(Actor2, Actor)
                 Actor2:rapportwithplayer += 3
                 jobperformance += 5

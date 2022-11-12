@@ -1,21 +1,101 @@
 WHAT: all
 WHERE: university:school
 WHEN: 0-24
-WHO: Actor = getSpecific(Coursemate)
-OTHER: pornfame > 0
+WHO: Actor = getPerson(rk_VB_tag_Student)
+OTHER: pornfame > 1
 
-    // If you're a unversity student who's also a por nstar, you're working on an assignment in a pair with another coursemate, who admits they've watched your videos. Depending on their interpersonal and perversion, they may be direct about having some fun as a break or be shy about it and wait for you to offer. When done once, they'll try to work in pairs with you again in the future.
     
-    // On the other hand, if they're the same gender as you, this coursemate working in pairs with you may express their admiration for the skill you've shown in your por n performances instead. They ask you to teach them to improve their ability to satisfy a partner. This lesson could be done with their current partner, or you could suggest another practice target (who could become their partner afterwards unless already yours). After this first lesson, from time to time, they may continue to ask you to have fun with them and their partner, up to you whether you want to demand money for such service.
-
     SceneStart()
+        choiceCourseMajor = rk_VB_choiceCourseMajor.getGlobal()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-    
+        tagTAR = Actor.getActorVar(rk_VB_tag_TAR)
+        tagTCE = Actor.getActorVar(rk_VB_tag_TCE)
+        tagTCL = Actor.getActorVar(rk_VB_tag_TCL)
+        tagTCS = Actor.getActorVar(rk_VB_tag_TCS)
+        tagTEC = Actor.getActorVar(rk_VB_tag_TEC)
+        tagTED = Actor.getActorVar(rk_VB_tag_TED)
+        tagTEN = Actor.getActorVar(rk_VB_tag_TEN)
+        tagTGE = Actor.getActorVar(rk_VB_tag_TGE)
+        tagTHI = Actor.getActorVar(rk_VB_tag_THI)
+        tagTLA = Actor.getActorVar(rk_VB_tag_TLA)
+        tagTMA = Actor.getActorVar(rk_VB_tag_TMA)
+        tagTME = Actor.getActorVar(rk_VB_tag_TME)
+        tagTMU = Actor.getActorVar(rk_VB_tag_TMU)
+        tagTPH = Actor.getActorVar(rk_VB_tag_TPH)
+        tagTPS = Actor.getActorVar(rk_VB_tag_TPS)
+        tagTPOL = Actor.getActorVar(rk_VB_tag_TPOL)
+        tagTSM = Actor.getActorVar(rk_VB_tag_TSM)
+        tagTDM = Actor.getActorVar(rk_VB_tag_TDM)
+        tagTVE = Actor.getActorVar(rk_VB_tag_TVE)
+        tagTTT = Actor.getActorVar(rk_VB_tag_TTT)
+        If isModEnabled(rk_vin_Base) && Actor.isValid()
+            If tagTAR >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TAR)
+                Architecture_Major_Actor = Actor.getActorVar(rk_VB_Architecture_Major_Actor)
+            ElseIf tagTCE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TCE)
+                Chemical_Engineering_Major_Actor = Actor.getActorVar(rk_VB_Chemical_Engineering_Major_Actor)
+            ElseIf tagTCL >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TCL)
+                Classics_Major_Actor = Actor.getActorVar(rk_VB_Classics_Major_Actor)
+            ElseIf tagTCS >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TCS)
+                Computer_Science_Major_Actor = Actor.getActorVar(rk_VB_Computer_Science_Major_Actor)
+            ElseIf tagTEC >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TEC)
+                Economics_Major_Actor = Actor.getActorVar(rk_VB_Economics_Major_Actor)
+            ElseIf tagTED >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TED)
+                Education_Major_Actor = Actor.getActorVar(rk_VB_Education_Major_Actor)
+            ElseIf tagTEN >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TEN)
+                English_Major_Actor = Actor.getActorVar(rk_VB_English_Major_Actor)
+            ElseIf tagTGE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TGE)
+                Geography_Major_Actor = Actor.getActorVar(rk_VB_Geography_Major_Actor)
+            ElseIf tagTHI >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_THI)
+                History_Major_Actor = Actor.getActorVar(rk_VB_History_Major_Actor)
+            ElseIf tagTLA >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TLA)
+                Law_Major_Actor = Actor.getActorVar(rk_VB_Law_Major_Actor)
+            ElseIf tagTMA >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TMA)
+                Mathematics_Major_Actor = Actor.getActorVar(rk_VB_Mathematics_Major_Actor)
+            ElseIf tagTME >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TME)
+                Medicine_Major_Actor = Actor.getActorVar(rk_VB_Medicine_Major_Actor)
+            ElseIf tagTMU >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TMU)
+                Music_Major_Actor = Actor.getActorVar(rk_VB_Music_Major_Actor)
+            ElseIf tagTPH >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TPH)
+                Philosophy_Major_Actor = Actor.getActorVar(rk_VB_Philosophy_Major_Actor)
+            ElseIf tagTPS >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TPS)
+                Psychology_Major_Actor = Actor.getActorVar(rk_VB_Psychology_Major_Actor)
+            ElseIf tagTPOL >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TPOL)
+                Political_Sciences_Major_Actor = Actor.getActorVar(rk_VB_Political_Sciences_Major_Actor)
+            ElseIf tagTSM >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TSM)
+                SalesMarketing_Major_Actor = Actor.getActorVar(rk_VB_SalesMarketing_Major_Actor)
+            ElseIf tagTDM >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TDM)
+                Dental_Major_Actor = Actor.getActorVar(rk_VB_Dental_Major_Actor)
+            ElseIf tagTVE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TVE)
+                Veterinary_Major_Actor = Actor.getActorVar(rk_VB_Veterinary_Major_Actor)
+            ElseIf tagTTT >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TTT)
+                TravelTourism_Major_Actor = Actor.getActorVar(rk_VB_TravelTourism_Major_Actor)
+            EndIf
+            //Actor = getPerson(rk_VB_tag_Student)
+        EndIf
         Fan = Actor.getActorVar(tag_pornfan)
-    
         If Fan == 0
             Actor.dress()
             Actor.show()
@@ -32,8 +112,7 @@ OTHER: pornfame > 0
             "With that awkward conversation out of the way for now, we went back to working on the assignment ..."
             "Two hours later ..."
             Player:: "Let's have a break. I'm not good at concentrating on something for so long."
-            
-            If Actor.isSameGender(Player) && Random(0, 100) < 50 && !Actor.isAsexual()
+            If Actor.isSameGender(Player) && random(0, 100) < 50 && !Actor.isAsexual()
                 Actor:: "You know ... ever since I came across that video of yours, I couldn't stop thinking about it ..."
                 Actor:: "You were so good at it. It was clear that your co-star was enjoying it so much."
                 Actor2 = Actor.getRelatedPerson(Spouses, Dating)
@@ -41,8 +120,8 @@ OTHER: pornfame > 0
                     Actor2 = generatePersonTemporary()
                     While !Actor.isInterestedIn(Actor2)
                         Actor2 = generatePersonTemporary()
-                    Endwhile
-                Endif
+                    EndWhile
+                EndIf
                 Actor:: "I'm pretty bad at it ... I could never get my <Actor2.boyfriend_or_girlfriend> to cum."
                 0:: "Well, good to know ..."
                 1:: "Offer to teach <Actor.him_or_her>"
@@ -56,9 +135,9 @@ OTHER: pornfame > 0
                     
                     If 1
                         "Who do I have in mind?"
-                        selectNpc()
-                        Actor2 = getSelectedNpc()
-                    Endif
+                        selectNPC()
+                        Actor2 = getSelectedNPC()
+                    EndIf
                     
                     Actor2.dress()
                     Actor2.show()
@@ -67,7 +146,6 @@ OTHER: pornfame > 0
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -2)
                     EndIf
-                    
                     Player:: "Looks like <Actor2.name> is ready for another round. Now, <Actor.name>, why don't you show me how much you've learned?"
                     Sex(Actor2, Actor)
                     Actor.setActorVar(tag_pornfan, 2)
@@ -75,12 +153,12 @@ OTHER: pornfame > 0
                     
                     If Actor2.isTemporary()
                         Actor2.makePermanent()
-                    Endif
+                    EndIf
                     If !Actor2.isDating() && !Actor.hasRelationship(Dating, Spouses)
                         addNpcRelationship(Dating, Actor2, Actor)
-                    Endif
-                Endif        
-            Elseif Actor.isInterestedIn(Player)
+                    EndIf
+                EndIf        
+            ElseIf Actor.isInterestedIn(Player)
                 If Actor:interpersonal + Actor:perversion > 100
                     Actor:: "You know ... ever since I came across that video of yours, I couldn't stop thinking about it ..."
                     Actor:: "Why don't we have some fun right now? Sex is a great stress relief."
@@ -93,7 +171,7 @@ OTHER: pornfame > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         Actor.setActorVar(tag_pornfan, 1)
-                    Endif
+                    EndIf
                 Else
                     Actor:: "..."
                     "<Actor.name> seems tongue-tied around me but I did notice <Actor.him_or_her> checking me out a lot for the last two hours."
@@ -104,19 +182,18 @@ OTHER: pornfame > 0
                     If 0
                         Player:: "It's okay ... I know you probably masturbated fantasizing about me ..."
                         Player:: "Now that it's just the two of us here together and we have some free time, that doesn't have to be a fantasy anymore."
-                        "<Actor.name> was stil nervous, no doubt unsure if <Actor.he_or_she> could handle a real professional in bed. To my pleasant surprise though, <Actor.he_or_she> ended up putting in an admirable effort." 
+                        "<Actor.name> was still nervous, no doubt unsure if <Actor.he_or_she> could handle a real professional in bed. To my pleasant surprise though, <Actor.he_or_she> ended up putting in an admirable effort." 
                         Sex(Actor, Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         Actor.setActorVar(tag_pornfan, 1)
-                    Endif                
-                Endif
+                    EndIf                
+                EndIf
             Else
                 "After the break, we got back into it and completed the assignment while any further discussing of my porn career."
-            Endif
-        
-        Elseif Fan == 1
+            EndIf
+        ElseIf Fan == 1
             Actor.dress()
             Actor.show()
             "One of my classmates <Actor.name> knew about my porn career. In fact, the last time we worked together for a course assignment, we ended up fucking."
@@ -134,7 +211,7 @@ OTHER: pornfame > 0
             Else
                 "It was fun last time, but this time, I'd rather just do the assignment without even having to mention what I do for a living outside of the classroom."
                 timeout(300, porn_uni_coursemate)
-            Endif
+            EndIf
         Else
             Actor:perversion += 5
             Actor.dress()
@@ -153,8 +230,8 @@ OTHER: pornfame > 0
             Else
                 If 1
                     "I'll come over, but not for free. Sex is my job after all."
-                    money += Random(200, 400)
-                Endif
+                    money += random(200, 400)
+                EndIf
                 setBackgroundCustom(kitchen)
                 Actor2.dress()
                 Actor2.show()
@@ -167,8 +244,7 @@ OTHER: pornfame > 0
                 EndIf
                 Actor:rapportwithplayer += 5
                 Actor2:rapportwithplayer += 5
-            Endif
-        Endif
-    
+            EndIf
+        EndIf
     SceneEnd() // Improved by Raddeck
     timeout(100, porn_uni_coursemate)

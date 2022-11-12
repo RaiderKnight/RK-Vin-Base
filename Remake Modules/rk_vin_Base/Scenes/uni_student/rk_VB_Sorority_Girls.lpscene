@@ -1,10 +1,93 @@
 WHAT: all
 WHERE: fraternity
 WHEN: 0-24
-WHO: Actor = getSpecific(Coursemate); If !Actor.isMale() && !Actor.isDating() && !Actor.hasRelationship(Spouses, Dating)
+WHO: Actor = getPerson(rk_VB_tag_Student); If !Actor.isMale() && !Actor.isDating() && !Actor.hasRelationship(Spouses, Dating)
 OTHER: Player.isFemale()
 
     SceneStart()
+        tagTAR = Actor.getActorVar(rk_VB_tag_TAR)
+        tagTCE = Actor.getActorVar(rk_VB_tag_TCE)
+        tagTCL = Actor.getActorVar(rk_VB_tag_TCL)
+        tagTCS = Actor.getActorVar(rk_VB_tag_TCS)
+        tagTEC = Actor.getActorVar(rk_VB_tag_TEC)
+        tagTED = Actor.getActorVar(rk_VB_tag_TED)
+        tagTEN = Actor.getActorVar(rk_VB_tag_TEN)
+        tagTGE = Actor.getActorVar(rk_VB_tag_TGE)
+        tagTHI = Actor.getActorVar(rk_VB_tag_THI)
+        tagTLA = Actor.getActorVar(rk_VB_tag_TLA)
+        tagTMA = Actor.getActorVar(rk_VB_tag_TMA)
+        tagTME = Actor.getActorVar(rk_VB_tag_TME)
+        tagTMU = Actor.getActorVar(rk_VB_tag_TMU)
+        tagTPH = Actor.getActorVar(rk_VB_tag_TPH)
+        tagTPS = Actor.getActorVar(rk_VB_tag_TPS)
+        tagTPOL = Actor.getActorVar(rk_VB_tag_TPOL)
+        tagTSM = Actor.getActorVar(rk_VB_tag_TSM)
+        tagTDM = Actor.getActorVar(rk_VB_tag_TDM)
+        tagTVE = Actor.getActorVar(rk_VB_tag_TVE)
+        tagTTT = Actor.getActorVar(rk_VB_tag_TTT)
+        If Actor.isValid()
+            If tagTAR >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TAR)
+                Architecture_Major_Actor = Actor.getActorVar(rk_VB_Architecture_Major_Actor)
+            ElseIf tagTCE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TCE)
+                Chemical_Engineering_Major_Actor = Actor.getActorVar(rk_VB_Chemical_Engineering_Major_Actor)
+            ElseIf tagTCL >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TCL)
+                Classics_Major_Actor = Actor.getActorVar(rk_VB_Classics_Major_Actor)
+            ElseIf tagTCS >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TCS)
+                Computer_Science_Major_Actor = Actor.getActorVar(rk_VB_Computer_Science_Major_Actor)
+            ElseIf tagTEC >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TEC)
+                Economics_Major_Actor = Actor.getActorVar(rk_VB_Economics_Major_Actor)
+            ElseIf tagTED >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TED)
+                Education_Major_Actor = Actor.getActorVar(rk_VB_Education_Major_Actor)
+            ElseIf tagTEN >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TEN)
+                English_Major_Actor = Actor.getActorVar(rk_VB_English_Major_Actor)
+            ElseIf tagTGE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TGE)
+                Geography_Major_Actor = Actor.getActorVar(rk_VB_Geography_Major_Actor)
+            ElseIf tagTHI >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_THI)
+                History_Major_Actor = Actor.getActorVar(rk_VB_History_Major_Actor)
+            ElseIf tagTLA >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TLA)
+                Law_Major_Actor = Actor.getActorVar(rk_VB_Law_Major_Actor)
+            ElseIf tagTMA >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TMA)
+                Mathematics_Major_Actor = Actor.getActorVar(rk_VB_Mathematics_Major_Actor)
+            ElseIf tagTME >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TME)
+                Medicine_Major_Actor = Actor.getActorVar(rk_VB_Medicine_Major_Actor)
+            ElseIf tagTMU >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TMU)
+                Music_Major_Actor = Actor.getActorVar(rk_VB_Music_Major_Actor)
+            ElseIf tagTPH >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TPH)
+                Philosophy_Major_Actor = Actor.getActorVar(rk_VB_Philosophy_Major_Actor)
+            ElseIf tagTPS >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TPS)
+                Psychology_Major_Actor = Actor.getActorVar(rk_VB_Psychology_Major_Actor)
+            ElseIf tagTPOL >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TPOL)
+                Political_Sciences_Major_Actor = Actor.getActorVar(rk_VB_Political_Sciences_Major_Actor)
+            ElseIf tagTSM >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TSM)
+                SalesMarketing_Major_Actor = Actor.getActorVar(rk_VB_SalesMarketing_Major_Actor)
+            ElseIf tagTDM >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TDM)
+                Dental_Major_Actor = Actor.getActorVar(rk_VB_Dental_Major_Actor)
+            ElseIf tagTVE >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TVE)
+                Veterinary_Major_Actor = Actor.getActorVar(rk_VB_Veterinary_Major_Actor)
+            ElseIf tagTTT >= 1
+                AcID = Actor.getActorVar(rk_VB_AcIdCC_TTT)
+                TravelTourism_Major_Actor = Actor.getActorVar(rk_VB_TravelTourism_Major_Actor)
+            EndIf
+        EndIf
         // Based on a stories from Cristiano Caffieri - Copyright 2019 Cristiano Caffieri
         rk_money_value = Player.getActorVar(rk_money_value)
         Hunger = Player.getActorVar(rk_VB_Hunger)
@@ -15,11 +98,11 @@ OTHER: Player.isFemale()
         HeadHouse = generatePersonTemporary()
         While HeadHouse.isSameGender(Actor)
             HeadHouse = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor3 = generatePersonTemporary()
         While !Actor3.isSameGender(Actor)
             Actor3 = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor3:age => 67
         "I'm looking at the window and I see my friend <Actor.name> <Actor.name_last> walking..."
         Actor.show()
@@ -85,22 +168,22 @@ OTHER: Player.isFemale()
                     ActorSharedCash = true
                 Else
                     Player(Sad)::"Sorry, I'm not interested!"
-                Endif
+                EndIf
             Else
                 Actor3(Flirty)::"Are you trying to kill me? Nah, 1 girl is enough!"
-            Endif
+            EndIf
             Actor.animate()
-        Endif    
+        EndIf    
         If ActorSharedCash
             "After a while, I finally arrived at his house."
             Player.show()
-        Endif
+        EndIf
         setBackground(bedroom)
         If ActorSharedCash
             "When <Actor3.name> showed us into the bedroom I took a deep breath. It was huge and the furnishings were luxurious."
         Else
             "When <Actor3.name> showed her into the bedroom once again she took a deep breath. It was huge and the furnishings were luxurious."
-        Endif
+        EndIf
         Actor3(Curious)::"Why don’t we take a shower first,..."
         "He led the way to the bathroom which was almost as big as the bedroom. There was a large shower cabinet, a Jacuzzi tub, and what could only be described as a miniature gym."
         Actor.animate()
@@ -109,23 +192,23 @@ OTHER: Player.isFemale()
         setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
         If ActorSharedCash
             Player.strip()
-        Endif
+        EndIf
         Actor3.strip()
         Actor.strip()
         If ActorSharedCash
             "<Actor3.name> gasped when we very sensuously removed our top and short skirt and revealed a pair of our beautiful 18-year-old tits and other equally pleasing accessories."
             Filter(Shower)
             "We decided to take a shower..."
-            sex(Actor3, Actor, Player)
+            Sex(Actor3, Actor, Player)
             "Soon he was sponging us front, back and between our long, slender legs. We didn't want to admit it but we were getting more and more excited."
             Player:arousal += 5
         Else
             "<Actor3.name> gasped when she very sensuously removed her top and short skirt and revealed a pair of beautiful 18-year-old tits and other equally pleasing accessories."
             Filter(Shower)
             "We decided to take a shower..."
-            sex(Actor3, Actor)
+            Sex(Actor3, Actor)
             "Soon he was sponging her front, back and between her long, slender legs. She didn't want to admit it but she was getting more and more excited."
-        Endif
+        EndIf
         Actor:arousal += 5
         Actor3:arousal += 5
         If ActorSharedCash
@@ -134,7 +217,7 @@ OTHER: Player.isFemale()
         Else
             "Naturally, she had to take her turn and as she lathered up his balls and cock, he got bigger and bigger."
             "Once out of the shower... they went back to his bedroom... and began to having sex!"
-        Endif
+        EndIf
         setBackground(bedroom)
         If ActorSharedCash
             "He took our hands and led us over to the bed. We lay on the spotless white covers and he bent over <Actor.name> and began to nibble on her nipples so gently and do the same to me."
@@ -150,7 +233,7 @@ OTHER: Player.isFemale()
             "<Actor3.name> took several big breaths again and we started to worry about a possible heart attack."
             "As he didn’t seem to be expiring anytime soon we began to licked and plunged it deep into our mouth going up and down and fingering his nut sack as we did so."
             Filter(Blowjob)
-            sex(Player, Actor, Actor3)
+            Sex(Player, Actor, Actor3)
             If HungerEnable > 0
                 Player.setActorVar(rk_VB_Hunger, -2)
             EndIf
@@ -164,27 +247,27 @@ OTHER: Player.isFemale()
             "<Actor3.name> took several big breaths again and she started to worry about a possible heart attack."
             "As he didn’t seem to be expiring anytime soon she plunged it deep into her mouth going up and down and fingering his nut sack as she did so."
             Filter(Blowjob)
-            sex(Actor, Actor3)
-        Endif
+            Sex(Actor, Actor3)
+        EndIf
         Actor3(Curious)::"Oh! I'm about to cum..."
         If ActorSharedCash
             "We pulled back and worked out his goo with our hands. There was quite a lot and it shot all over the sparkling white bed covers."
             "And he soon had our legs in the air and his face buried between them. He did everything very gently and when he opened up our slit and the tip of his tongue made contact with the lips, it sent lightning bolts throughout our body."
             Filter(Licking)
-            sex(Actor3, Actor, Player)
+            Sex(Actor3, Actor, Player)
             If HungerEnable > 0
                 Player.setActorVar(rk_VB_Hunger, -2)
             EndIf
             "<Actor3.name> worked it with his fingers and his long smooth pussies flicker until we could hardly stand it anymore. Our body was beginning to get warm all over, we started to tremble, and grabbing onto his wrists we went into an earth moving orgasm."
             "<Actor.name> flung our arms across the bed causing our tits to bounce from side to side – and this really excited <Actor3.name>."
             Filter(Fingering)
-            sex(Actor3, Actor, Player)
+            Sex(Actor3, Actor, Player)
             If HungerEnable > 0
                 Player.setActorVar(rk_VB_Hunger, -2)
             EndIf
             "The next thing we knew he’d driven his cock into our tight little cunt and was pounding it like a 25-year-old."
             "He was breathing a bit heavy but he kept up the pace and we were taking short breaths, anticipating that at any moment he was going to shoot his load on us."
-            sex(Actor3, Actor, Player)
+            Sex(Actor3, Actor, Player)
             If HungerEnable > 0
                 Player.setActorVar(rk_VB_Hunger, -3)
             EndIf
@@ -201,14 +284,14 @@ OTHER: Player.isFemale()
             "She pulled back and worked out his goo with her hand. There was quite a lot and it shot all over the sparkling white bed covers."
             "And he soon had her legs in the air and his face buried between them. He did everything very gently and when he opened up her slit and the tip of his tongue made contact with the lips, it sent lightning bolts throughout her body."
             Filter(Licking)
-            sex(Actor3, Actor)
+            Sex(Actor3, Actor)
             "<Actor3.name> worked it with his fingers and his long smooth pussy flicker until she could hardly stand it anymore. Her body was beginning to get warm all over, she started to tremble, and grabbing onto his wrists she went into an earth moving orgasm."
             "<Actor.name> flung her arms across the bed causing her tits to bounce from side to side – and this really excited <Actor3.name>."
             Filter(Fingering)
-            sex(Actor3, Actor)
+            Sex(Actor3, Actor)
             "The next thing she knew he’d driven his cock into her tight little cunt and was pounding it like a 25-year-old."
             "He was breathing a bit heavy but he kept up the pace and she was taking short breaths, anticipating that at any moment he was going to shoot his load."
-            sex(Actor3, Actor)
+            Sex(Actor3, Actor)
             "When he did cream her pie she hung onto his shoulders as he made those last powerful strokes that ignited her nerve endings and sent her into a sensational climax."
             "After their sex session, they put their clothes back on!"
             Actor.dress()
@@ -217,7 +300,7 @@ OTHER: Player.isFemale()
             "Note in hand she left the house and headed back to college in the chauffeur driven limo."
             passTime(1.5, 3)
             "After a few minutes, she finally arrived at the college..."
-        Endif
+        EndIf
         Player.hide()
         setBackground(fraternity)
         "When she presented her written proof to <HeadHouse.name> and her committee they laughed hysterically,..."
@@ -236,7 +319,6 @@ OTHER: Player.isFemale()
         HeadHouse.moveToPersonStand(Player, 100)
         housemother.show()
         housemother.moveToPersonStand(Player, 50)
-        
         "Several weeks later during lunch, <HeadHouse.name> was once again trying to bring up the subject of her fucking an old man when a hand-delivered envelope arrived and the housemother handed it to <Actor.name>."
         "When she opened she gasped,"
         Actor(Shocked)::"Oh my god <Actor3.name>’s passed away – he had a heart attack."
@@ -273,6 +355,6 @@ OTHER: Player.isFemale()
             Actor(Happy)::"No, he left me his whole fucking estate worth 200 million,..."
             Actor(Happy)::"And I have you girls to thank!"
             Actor:mood += 50
-        Endif
+        EndIf
     SceneEnd()
     timeout(2000, rk_VB_Sorority_Girls)

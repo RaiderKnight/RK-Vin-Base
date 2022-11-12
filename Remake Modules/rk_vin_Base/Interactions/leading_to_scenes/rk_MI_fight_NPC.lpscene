@@ -5,6 +5,7 @@ WHO: none
 OTHER: none
 
     SceneStart()
+        FiniLeShow = false
         NPCID = rk_MI_fight_NPC_ID.getGlobal()
         Insult_NPCTemp = rk_VB_Insult_NPCTemp.getGlobal()
         gangrID = vi_darkalley_gangr_ID1.getGlobal()
@@ -55,7 +56,7 @@ OTHER: none
             If Player.isNaked()
                 Player.dress()
             EndIf
-            "So, I break down my neighbor's door and go to his rescue"
+            "So, I break down my neighbour's door and go to his rescue"
             Player.animate(socialize)
             Player(Angry)::"Hey, motherfucker! What the fuck do you think you're doing!"
             Actor = getSpecific(gangrID)
@@ -78,154 +79,156 @@ OTHER: none
             Player(Furious)::"Hey ugly face, let's fight!"
             Actor(Curious)::"What, WTF!"
         EndIf 
-        Actor:rapportwithplayer -= random(2, 5)
-        Actor:attractiontoplayer -= random(2, 5)
-        If gangr_Fight == 0
-            ISuccess = random(0, 100)
-        EndIf
-        jsuisfourre = false
-        If ISuccess > 75 && WHERE != home && WHERE != prison
-            jsuisfourre = true
-        EndIf
-        If jsuisfourre
-            bataillefini = true
-            If random(1, 5) >= 2
-                Actor.stripOne()
+        If isModEnabled(rk_vin_Base)
+            Actor:rapportwithplayer -= random(2, 5)
+            Actor:attractiontoplayer -= random(2, 5)
+            If gangr_Fight == 0
+                ISuccess = random(0, 100)
             EndIf
-            Actor(Shocked)::"WTF! Help, I'm under attack!"
-            "<Actor.He_or_She> runs out and screams..."
-            Actor99 = generatePersonTemporary()
-            Actor99.hide()
-            Actor.animate(fightlost)
-            Actor(Evil)::"THAT <Player.GUY_or_GIRL>, WANTS TO BEAT ME!"
-            "As a matter of fact, everyone turns around and I hear someone say <Actor99.he_or_she> called the police..."
-            "Ah shit!..."
-            Actor.hide()
-            Actor.delete()
-            If sneak <= random(50, 100)
-                PoliceMan = generatePersonTemporary()
-                Actor1 = generatePersonTemporary()
-                PoliceMan.dressUniform(Police)
-                PoliceMan.show(2)
-                Actor1.dressUniform(Police)
-                Actor1.show(4)
-                "Sure enough, the cops promptly arrived at the scene."
-                PoliceMan(Furious)::"'Hands in the air, now! You're under arrest for assault on a civilian"
-                0:: "Run"
-                1:: "Surrender"
-            
-                If 0
+            jsuisfourre = false
+            If ISuccess > 75 && WHERE != home && WHERE != prison
+                jsuisfourre = true
+            EndIf
+            If jsuisfourre
+                bataillefini = true
+                If random(1, 5) >= 2
+                    Actor.stripOne()
+                EndIf
+                Actor(Shocked)::"WTF! Help, I'm under attack!"
+                "<Actor.He_or_She> runs out and screams..."
+                Actor99 = generatePersonTemporary()
+                Actor99.hide()
+                Actor.animate(fightlost)
+                Actor(Evil)::"THAT <Player.GUY_or_GIRL>, WANTS TO BEAT ME!"
+                "As a matter of fact, everyone turns around and I hear someone say <Actor99.he_or_she> called the police..."
+                "Ah shit!..."
+                Actor.hide()
+                Actor.delete()
+                If sneak <= random(50, 100)
+                    PoliceMan = generatePersonTemporary()
+                    Actor1 = generatePersonTemporary()
+                    PoliceMan.dressUniform(Police)
+                    PoliceMan.show(2)
+                    Actor1.dressUniform(Police)
+                    Actor1.show(4)
+                    "Sure enough, the cops promptly arrived at the scene."
+                    PoliceMan(Furious)::"'Hands in the air, now! You're under arrest for assault on a civilian"
+                    0:: "Run"
+                    1:: "Surrender"
+                
+                    If 0
+                        If isModEnabled(rk_MoreInteractions)
+                            setBackground3D(Modules/rk_MoreInteractions/World/gl_street1.lpworld)
+                        Else
+                            setBackground3D(Modules/rk_vin_Base/World/gl_street1.lpworld)
+                        EndIf
+                        If fitness > random(0, 100)
+                            Actor1.hide()
+                            PoliceMan.hide()
+                            "I managed to lose the cops. Phew, that was close."
+                            sneak += 1
+                            mood += 2
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -10)
+                            EndIf
+                            moveTo(home)
+                        Else
+                            PoliceMan.dressUniform(Police)
+                            PoliceMan.show(2)
+                            Actor1.dressUniform(Police)
+                            Actor1.show(4)
+                            PoliceMan(Furious)::"'Hands in the air, don't move...!'"
+                            Player(Angry):: "You will not taking me alive."
+                            0:: "Run"
+                            1:: "Surrender"
+                        
+                            If 0
+                                If fitness > random(0, 30)
+                                    "I managed to lose the cops. Phew, that was close."
+                                    sneak += 1
+                                    mood += 2
+                                    If HungerEnable > 0
+                                        Player.modifyActorVar(rk_VB_Hunger, -10)
+                                    EndIf
+                                    moveTo(home)
+                                Else
+                                    Player(Angry):: "You will not taking me alive."
+                                    copfired = 0
+                                    While copfired < 5
+                                        If copfired > 0
+                                            PoliceMan(Angry)::"HEY YOU THERE, I ASKED YOU TO STOP!"
+                                        EndIf
+                                        "Pow!"
+                                        Player.hide()
+                                        "A cop fired <PoliceMan.his_or_her> gun..."
+                                        If fitness > random(0, 30)
+                                            "I managed to dodge the shot. Phew, that was close."
+                                            sneak += 1
+                                            mood += 1
+                                            copfired += 1
+                                        ElseIf copfired >= 5
+                                            Actor1.hide()
+                                            PoliceMan.hide()
+                                            "I managed to lose the cops. Phew, that was close."
+                                            sneak += 3
+                                            mood += 2
+                                            copfired = 6
+                                            If HungerEnable > 0
+                                                Player.modifyActorVar(rk_VB_Hunger, -10)
+                                            EndIf
+                                        Else
+                                            "The cop fired <PoliceMan.his_or_her> gun. It was a perfect shot ..."
+                                            followUp(death)
+                                        EndIf
+                                    EndWhile
+                                EndIf
+                            Else
+                                If Insult_NPCTemp == 1
+                                    rk_VB_Insult_NPCTemp.setGlobal(0)
+                                    rk_MI_fight_NPC_ID.setGlobal(0)
+                                EndIf
+                                Player.animate(fightlost)
+                                Player(Scared):: "Please, don't shoot!"
+                                "I put my hands up and surrendered to the overwhelming number of cops."
+                                sentence += random(1, 5) 
+                                AddSent = Player:sentence 
+                                Player.modifyActorVar(rk_VB_TotalSentences, AddSent) 
+                                followUp(imprisoned)
+                            EndIf 
+                        EndIf
+                    Else
+                        If Insult_NPCTemp == 1
+                            rk_VB_Insult_NPCTemp.setGlobal(0)
+                            rk_MI_fight_NPC_ID.setGlobal(0)
+                        EndIf
+                        Player.animate(fightlost)
+                        Player(Scared):: "Please, don't shoot!"
+                        "I put my hands up and surrendered to the overwhelming number of cops."
+                        sneak -= 5
+                        mood -= 5
+                        sentence += random(2, 10)
+                        AddSent = Player:sentence 
+                        Player.modifyActorVar(rk_VB_TotalSentences, AddSent) 
+                        followUp(imprisoned)
+                    EndIf
+                Else
                     If isModEnabled(rk_MoreInteractions)
                         setBackground3D(Modules/rk_MoreInteractions/World/gl_street1.lpworld)
                     Else
                         setBackground3D(Modules/rk_vin_Base/World/gl_street1.lpworld)
                     EndIf
-                    If fitness > random(0, 100)
-                        Actor1.hide()
-                        PoliceMan.hide()
-                        "I managed to lose the cops. Phew, that was close."
-                        sneak += 1
-                        mood += 2
-                        If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -10)
-                        EndIf
-                        moveTo(home)
-                    Else
-                        PoliceMan.dressUniform(Police)
-                        PoliceMan.show(2)
-                        Actor1.dressUniform(Police)
-                        Actor1.show(4)
-                        PoliceMan(Furious)::"'Hands in the air, don't move...!'"
-                        Player(Angry):: "You will not taking me alive."
-                        0:: "Run"
-                        1:: "Surrender"
-                    
-                        If 0
-                            If fitness > random(0, 30)
-                                "I managed to lose the cops. Phew, that was close."
-                                sneak += 1
-                                mood += 2
-                                If HungerEnable > 0
-                                    Player.modifyActorVar(rk_VB_Hunger, -10)
-                                EndIf
-                                moveTo(home)
-                            Else
-                                Player(Angry):: "You will not taking me alive."
-                                copfired = 0
-                                While copfired < 5
-                                    If copfired > 0
-                                        PoliceMan(Angry)::"HEY YOU THERE, I ASKED YOU TO STOP!"
-                                    EndIf
-                                    "Pow!"
-                                    Player.hide()
-                                    "A cop fired <PoliceMan.his_or_her> gun..."
-                                    If fitness > random(0, 30)
-                                        "I managed to dodge the shot. Phew, that was close."
-                                        sneak += 1
-                                        mood += 1
-                                        copfired += 1
-                                    ElseIf copfired >= 5
-                                        Actor1.hide()
-                                        PoliceMan.hide()
-                                        "I managed to lose the cops. Phew, that was close."
-                                        sneak += 3
-                                        mood += 2
-                                        copfired = 6
-                                        If HungerEnable > 0
-                                            Player.modifyActorVar(rk_VB_Hunger, -10)
-                                        EndIf
-                                    Else
-                                        "The cop fired <PoliceMan.his_or_her> gun. It was a perfect shot ..."
-                                        followUp(death)
-                                    EndIf
-                                EndWhile
-                            EndIf
-                        Else
-                            If Insult_NPCTemp == 1
-                                rk_VB_Insult_NPCTemp.setGlobal(0)
-                                rk_MI_fight_NPC_ID.setGlobal(0)
-                            EndIf
-                            Player.animate(fightlost)
-                            Player(Scared):: "Please, don't shoot!"
-                            "I put my hands up and surrendered to the overwhelming number of cops."
-                            sentence += random(1, 5) 
-                            AddSent = Player:sentence 
-                            Player.modifyActorVar(rk_VB_TotalSentences, AddSent) 
-                            followUp(imprisoned)
-                        EndIf 
+                    Actor1.hide()
+                    PoliceMan.hide()
+                    "I managed to lose the cops. Phew, that was close."
+                    sneak += 1
+                    mood += 2
+                    energy -= 10
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -10)
                     EndIf
-                Else
-                    If Insult_NPCTemp == 1
-                        rk_VB_Insult_NPCTemp.setGlobal(0)
-                        rk_MI_fight_NPC_ID.setGlobal(0)
-                    EndIf
-                    Player.animate(fightlost)
-                    Player(Scared):: "Please, don't shoot!"
-                    "I put my hands up and surrendered to the overwhelming number of cops."
-                    sneak -= 5
-                    mood -= 5
-                    sentence += random(2, 10)
-                    AddSent = Player:sentence 
-                    Player.modifyActorVar(rk_VB_TotalSentences, AddSent) 
-                    followUp(imprisoned)
+                    "I assaulted this person. I wonder if there will be any consequences in the future." 
+                    sneak += 1
                 EndIf
-            Else
-                If isModEnabled(rk_MoreInteractions)
-                    setBackground3D(Modules/rk_MoreInteractions/World/gl_street1.lpworld)
-                Else
-                    setBackground3D(Modules/rk_vin_Base/World/gl_street1.lpworld)
-                EndIf
-                Actor1.hide()
-                PoliceMan.hide()
-                "I managed to lose the cops. Phew, that was close."
-                sneak += 1
-                mood += 2
-                energy -= 10
-                If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -10)
-                EndIf
-                "I assaulted this person. I wonder if there will be any consequences in the future." 
-                sneak += 1
             EndIf
         EndIf
         If !bataillefini && [isModEnabled(rk_vin_Base) || isModEnabled(rk_MoreInteractions)]
@@ -265,6 +268,7 @@ OTHER: none
                     If Roundcount >= 20 || AEnerg < 50 && Roundcount >= 5
                         Actor(Pain)::"Ok for now, consider yourself lucky...!"
                         FightInAction = false
+                        FiniLeShow = true
                     Else
                         Actor(Evil)::"Fuck off little pussy...c'mon come..."
                     EndIf
@@ -438,179 +442,181 @@ OTHER: none
             Else TempStatP > TempStatA
                 IlAPerdu = true
             EndIf
-            If VraiLoser
-                Actor.animate()
-                "<Actor.name> win the fight, <Actor.he_or_she> beat me all the way..."
-                "Suddenly everything goes black ... you lost your consciousness."
-                Player.animate(knockedout)
-                Actor:rapportwithplayer -= 5
-                Actor:attractiontoplayer -= 1
-                If gangr_Fight == 2
-                    vi_darkalley_gangr_Fight.setGlobal(0)
-                    vi_darkalley_gangr_mbrRaper.setGlobal(2)
-                    followUp(vi_darkalley_gangrape)
-                ElseIf gangr_Fight == 3
-                    vi_darkalley_gangr_Fight.setGlobal(0)
-                    vi_darkalley_gangr_mbrRaper.setGlobal(3)
-                    followUp(wi_darkalley_rape)
-                ElseIf gangr_Fight == 4
-                    vi_darkalley_gangr_Fight.setGlobal(0)
-                    vi_darkalley_gangr_mbrRaper.setGlobal(4)
-                    followUp(wi_darkalley_rape_cms)
-                ElseIf gangr_Fight == 5
-                    vi_darkalley_gangr_Fight.setGlobal(0)
-                    vi_darkalley_gangr_mbrRaper.setGlobal(5)
-                    followUp(wi_darkalley_rape_ntr)
-                ElseIf gangr_Fight == 6
-                    vi_darkalley_gangr_Fight.setGlobal(0)
-                    vi_darkalley_gangr_mbrRaper.setGlobal(6)
-                    followUp(vi_darkalley_gangrape_cms)
-                ElseIf gangr_Fight == 7
-                    vi_darkalley_gangr_Fight.setGlobal(0)
-                    vi_darkalley_gangr_mbrRaper.setGlobal(7)
-                    followUp(wi_homeinvader_rape_family)
-                ElseIf gangr_Fight == 8
-                    vi_darkalley_gangr_Fight.setGlobal(0)
-                    vi_darkalley_gangr_mbrRaper.setGlobal(8)
-                    followUp(wi_homeinvader_rape_neighbour)
-                ElseIf gangr_Fight == 9
-                    vi_darkalley_gangr_Fight.setGlobal(0)
-                    vi_darkalley_gangr_mbrRaper.setGlobal(9)
-                    followUp(wi_homeinvader_rape_ntr)
-                ElseIf isModEnabled(vin_NonConsensual) && Actor:arousal > 10 && Actor:perversion > 50
-                    Actor(Angry)::"I'm not done with you, <Player.scum_or_bitch>!"
-                    "<Actor.name> stripped off all my clothes and started fucking me right here!"
-                    Player.strip()
-                    Actor.dressExcept(Outerwear, Bottom, Bottom_Under)
-                    Filter(Aggressive)
-                    SexNoAffair(Actor, Player)
-                    If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -3)
-                    EndIf
-                    Actor.setActorVar(tag_Rapist, 1)
-                    passTime(0.50, 1.50)
-                    Actor.hide()
-                    "After a few minutes, I woke up but I'm still a little stunned…"
-                    Player.animate()
-                    "As you try to stand up you notice that you are naked ... and your whole body hurts. It feels like you have been beaten up."
-                    Player.show()
-                    "You feel something running down your <Player.ass_or_pussy>..."
-                    "You touch your <Player.ass_or_pussy> to see what it is ..."
-                    "It's cum, a lot of cum! It gushes literally out of your <Player.ass_or_pussy>, running down both legs ..."
-                    Player(Disgusted)::"WTF..."
-                    "I wiped a bit and put my clothes back on..."
-                    Player.dress()
-                    mood => 0
-                    energy => 5
-                ElseIf random(0, 100) > 60
-                    ActorLooting = random(1, 10)
-                    ActorLooting = ActorLooting.round()
-                    ActorLootingCash = random(10, 200)
-                    ActorLootingCash_loc = ActorLootingCash.convertToLocalCurrency()
-                    If ActorLooting > 6
-                        "<Actor.name> stoled you <ActorLootingCash_loc> from your pockets."
-                        money -= ActorLootingCash
-                    EndIf
-                    Actor.hide()
-                    Actor:rapportwithplayer -= 50
-                    Actor:attractiontoplayer -= 50
-                    passTime(0.15, 0.50)
-                Else
-                    "After a few minutes, I woke up but I'm still a little stunned…"
-                EndIf
-                Player.closeEyes(false)
-                Player.animate()
-                mood => 5
-                energy => 5
-                If Insult_NPCTemp == 1
-                    rk_VB_Insult_NPCTemp.setGlobal(0)
-                    rk_MI_fight_NPC_ID.setGlobal(0)
-                ElseIf gangr_Fight == 1
-                    vi_darkalley_gangr_ID1.setGlobal(0)
-                    vi_darkalley_gangr_Fight.setGlobal(0)
-                EndIf
-                "Going back home..."
-                moveTo(home)
-                SceneEnd()
-            EndIf
-            If IlAPerdu
-                Player.animate()
-                muscle += random(1, 5)
-                martial += random(1, 5)
-                fitness += random(1, 5)
-                vi_darkalley_gangr_mbrRaper.setGlobal(0)
-                "I win the fight, <Actor.he_or_she> will stay quiet for a few..."
-                If gangr_Fight == 2
-                    "The other two ran away when they saw their friend fall knocked out."
-                EndIf
-                JeLoot = false
-                JeFuck = false
-                Actor.animate(knockedout)
-                Actor.closeEyes(true)
-                IlAPerduKnock = true
-                While IlAPerduKnock
-                    
-                    "What should I do?"
-                    0:: !JeLoot::"Loot <Actor.him_or_her>"
-                    1::!JeFuck::"Fuck <Actor.him_or_her>"
-                    99::"Nothing"
-                       
-                    If 0
-                        JeLoot = true
-                        FindMoney = random(5, 500)
-                        FindMoney_Loc = FindMoney.convertToLocalCurrency()
-                        FindWeedg = random(2, 7) 
-                        WeedVar = random(1, 4)
-                        WeedVar = WeedVar.round()
-                        If WeedVar == 1
-                            VarWeed = "<FindWeedg>g of Sunset Sherbet"
-                            Player.modifyActorVar(stock_SSweed, FindWeedg)
-                        ElseIf WeedVar == 2
-                            divideWeed = FindWeedg/2
-                            divideWeed2 = FindWeedg/2
-                            VarWeed = "<divideWeed>g of Bruce Banner and <divideWeed2>g of Gorilla Glue"
-                            Player.modifyActorVar(stock_BBweed, divideWeed)
-                            Player.modifyActorVar(stock_GGweed, divideWeed2)
-                        ElseIf WeedVar == 3
-                            divideWeed = FindWeedg/2
-                            divideWeed1 = FindWeedg/2
-                            divideWeed2 = FindWeedg/2
-                            VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
-                            Player.modifyActorVar(stock_SSweed, divideWeed)
-                            Player.modifyActorVar(stock_GGweed, divideWeed2)
-                            Player.modifyActorVar(stock_AK47weed, divideWeed1)
-                        ElseIf WeedVar == 4
-                            divideWeed = FindWeedg/2
-                            divideWeed1 = FindWeedg/2
-                            divideWeed2 = FindWeedg/2
-                            divideWeed3 = FindWeedg/2
-                            VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed3>g of Pineapple Express, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
-                            Player.modifyActorVar(stock_SSweed, divideWeed)
-                            Player.modifyActorVar(stock_AK47weed, divideWeed1)
-                            Player.modifyActorVar(stock_GGweed, divideWeed2)
-                            Player.modifyActorVar(stock_PEweed, divideWeed3)
-                        EndIf
-                        "You find <FindMoney_Loc> and <FindWeedg>g of weeds! <VarWeed>."
-                        mood += 1
-                        money += FindMoney
-                    ElseIf 1
-                        perversion += random(1, 2)
-                        masochist += random(0, 1)
-                        JeFuck = true
-                        Player.dressExcept(Outerwear, Bottom)
-                        Actor.strip()
+            If !FiniLeShow
+                If VraiLoser
+                    Actor.animate()
+                    "<Actor.name> win the fight, <Actor.he_or_she> beat me all the way..."
+                    "Suddenly everything goes black ... you lost your consciousness."
+                    Player.animate(knockedout)
+                    Actor:rapportwithplayer -= 5
+                    Actor:attractiontoplayer -= 1
+                    If gangr_Fight == 2
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(2)
+                        followUp(vi_darkalley_gangrape)
+                    ElseIf gangr_Fight == 3
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(3)
+                        followUp(wi_darkalley_rape)
+                    ElseIf gangr_Fight == 4
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(4)
+                        followUp(wi_darkalley_rape_cms)
+                    ElseIf gangr_Fight == 5
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(5)
+                        followUp(wi_darkalley_rape_ntr)
+                    ElseIf gangr_Fight == 6
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(6)
+                        followUp(vi_darkalley_gangrape_cms)
+                    ElseIf gangr_Fight == 7
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(7)
+                        followUp(wi_homeinvader_rape_family)
+                    ElseIf gangr_Fight == 8
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(8)
+                        followUp(wi_homeinvader_rape_neighbour)
+                    ElseIf gangr_Fight == 9
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(9)
+                        followUp(wi_homeinvader_rape_ntr)
+                    ElseIf isModEnabled(vin_NonConsensual) && Actor:arousal > 10 && Actor:perversion > 50
+                        Actor(Angry)::"I'm not done with you, <Player.scum_or_bitch>!"
+                        "<Actor.name> stripped off all my clothes and started fucking me right here!"
+                        Player.strip()
+                        Actor.dressExcept(Outerwear, Bottom, Bottom_Under)
                         Filter(Aggressive)
-                        SexNoAffair(Player, Actor)
+                        SexNoAffair(Actor, Player)
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                            Player.modifyActorVar(rk_VB_Hunger, -3)
                         EndIf
+                        Actor.setActorVar(tag_Rapist, 1)
                         passTime(0.50, 1.50)
+                        Actor.hide()
+                        "After a few minutes, I woke up but I'm still a little stunned…"
+                        Player.animate()
+                        "As you try to stand up you notice that you are naked ... and your whole body hurts. It feels like you have been beaten up."
+                        Player.show()
+                        "You feel something running down your <Player.ass_or_pussy>..."
+                        "You touch your <Player.ass_or_pussy> to see what it is ..."
+                        "It's cum, a lot of cum! It gushes literally out of your <Player.ass_or_pussy>, running down both legs ..."
+                        Player(Disgusted)::"WTF..."
+                        "I wiped a bit and put my clothes back on..."
+                        Player.dress()
+                        mood => 0
+                        energy => 5
+                    ElseIf random(0, 100) > 60
+                        ActorLooting = random(1, 10)
+                        ActorLooting = ActorLooting.round()
+                        ActorLootingCash = random(10, 200)
+                        ActorLootingCash_loc = ActorLootingCash.convertToLocalCurrency()
+                        If ActorLooting > 6
+                            "<Actor.name> stole you <ActorLootingCash_loc> from your pockets."
+                            money -= ActorLootingCash
+                        EndIf
+                        Actor.hide()
+                        Actor:rapportwithplayer -= 50
+                        Actor:attractiontoplayer -= 50
+                        passTime(0.15, 0.50)
                     Else
-                        IlAPerduKnock = false
+                        "After a few minutes, I woke up but I'm still a little stunned…"
                     EndIf
+                    Player.closeEyes(false)
+                    Player.animate()
+                    mood => 5
+                    energy => 5
+                    If Insult_NPCTemp == 1
+                        rk_VB_Insult_NPCTemp.setGlobal(0)
+                        rk_MI_fight_NPC_ID.setGlobal(0)
+                    ElseIf gangr_Fight == 1
+                        vi_darkalley_gangr_ID1.setGlobal(0)
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                    EndIf
+                    "Going back home..."
+                    moveTo(home)
+                    SceneEnd()
+                EndIf
+                If IlAPerdu
+                    Player.animate()
+                    muscle += random(1, 5)
+                    martial += random(1, 5)
+                    fitness += random(1, 5)
+                    vi_darkalley_gangr_mbrRaper.setGlobal(0)
+                    "I win the fight, <Actor.he_or_she> will stay quiet for a few..."
+                    If gangr_Fight == 2
+                        "The other two ran away when they saw their friend fall knocked out."
+                    EndIf
+                    JeLoot = false
+                    JeFuck = false
                     Actor.animate(knockedout)
                     Actor.closeEyes(true)
-                EndWhile
+                    IlAPerduKnock = true
+                    While IlAPerduKnock
+                        
+                        "What should I do?"
+                        0:: !JeLoot::"Loot <Actor.him_or_her>"
+                        1::!JeFuck::"Fuck <Actor.him_or_her>"
+                        99::"Nothing"
+                           
+                        If 0
+                            JeLoot = true
+                            FindMoney = random(5, 500)
+                            FindMoney_Loc = FindMoney.convertToLocalCurrency()
+                            FindWeedg = random(2, 7) 
+                            WeedVar = random(1, 4)
+                            WeedVar = WeedVar.round()
+                            If WeedVar == 1
+                                VarWeed = "<FindWeedg>g of Sunset Sherbet"
+                                Player.modifyActorVar(stock_SSweed, FindWeedg)
+                            ElseIf WeedVar == 2
+                                divideWeed = FindWeedg/2
+                                divideWeed2 = FindWeedg/2
+                                VarWeed = "<divideWeed>g of Bruce Banner and <divideWeed2>g of Gorilla Glue"
+                                Player.modifyActorVar(stock_BBweed, divideWeed)
+                                Player.modifyActorVar(stock_GGweed, divideWeed2)
+                            ElseIf WeedVar == 3
+                                divideWeed = FindWeedg/2
+                                divideWeed1 = FindWeedg/2
+                                divideWeed2 = FindWeedg/2
+                                VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
+                                Player.modifyActorVar(stock_SSweed, divideWeed)
+                                Player.modifyActorVar(stock_GGweed, divideWeed2)
+                                Player.modifyActorVar(stock_AK47weed, divideWeed1)
+                            ElseIf WeedVar == 4
+                                divideWeed = FindWeedg/2
+                                divideWeed1 = FindWeedg/2
+                                divideWeed2 = FindWeedg/2
+                                divideWeed3 = FindWeedg/2
+                                VarWeed = "<divideWeed>g of Sunset Sherbet, <divideWeed3>g of Pineapple Express, <divideWeed1>g of AK 47 and <divideWeed2>g of Gorilla Glue"
+                                Player.modifyActorVar(stock_SSweed, divideWeed)
+                                Player.modifyActorVar(stock_AK47weed, divideWeed1)
+                                Player.modifyActorVar(stock_GGweed, divideWeed2)
+                                Player.modifyActorVar(stock_PEweed, divideWeed3)
+                            EndIf
+                            "You find <FindMoney_Loc> and <FindWeedg>g of weeds! <VarWeed>."
+                            mood += 1
+                            money += FindMoney
+                        ElseIf 1
+                            perversion += random(1, 2)
+                            masochist += random(0, 1)
+                            JeFuck = true
+                            Player.dressExcept(Outerwear, Bottom)
+                            Actor.strip()
+                            Filter(Aggressive)
+                            SexNoAffair(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            passTime(0.50, 1.50)
+                        Else
+                            IlAPerduKnock = false
+                        EndIf
+                        Actor.animate(knockedout)
+                        Actor.closeEyes(true)
+                    EndWhile
+                EndIf
             EndIf
         EndIf
         If Insult_NPCTemp == 1

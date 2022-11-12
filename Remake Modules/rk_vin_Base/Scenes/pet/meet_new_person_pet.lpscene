@@ -2,23 +2,179 @@ WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_ho
 WHERE: all, -fraternity, -work
 WHEN: 7-19
 WHO: none
-OTHER: isWithCompanionCreature(); If CurrentCompanion.isCreatureType(Dog) && Random(0, 150) < CurrentCompanion:attractiveness
+OTHER: isWithCompanionCreature(); If CurrentCompanion.isCreatureType(Dog) && random(0, 150) < CurrentCompanion:attractiveness
 
 
     New_Person = generatePersonTemporary()
-    sceneStart()
-    
+    SceneStart()
+        choiceCourseMajor = rk_VB_choiceCourseMajor.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         New_Person.dress()
         If WHERE == home
             If isAtHome()
                 New_Person.addNeighbour()
             Else
                 New_Person.addDatingFriend()
-            Endif
-        Elseif WHERE == university:work || WHERE == university:school
+            EndIf
+        ElseIf WHERE == university:work 
             New_Person.setDifferentMajor()
-        Endif
-    
+            Actor.setActorVar(rk_VB_tag_Pstudent, 1)
+        ElseIf WHERE == university && EnrollDegree >= 1
+            If isModEnabled(rk_vin_Base)
+                If choiceCourseMajor == 1
+                    choiceCourseMajorT = 1
+                    TextMajorChosen = "architecture"
+                ElseIf choiceCourseMajor == 2
+                    choiceCourseMajorT = 2
+                    TextMajorChosen = "chemical engineering"
+                ElseIf choiceCourseMajor == 3
+                    choiceCourseMajorT = 3
+                    TextMajorChosen = "classics"
+                ElseIf choiceCourseMajor == 4
+                    choiceCourseMajorT = 4
+                    TextMajorChosen = "computer science"
+                ElseIf choiceCourseMajor == 31
+                    choiceCourseMajorT = 17
+                    TextMajorChosen = "dental"
+                ElseIf choiceCourseMajor == 5
+                    choiceCourseMajorT = 5
+                    TextMajorChosen = "economics"
+                ElseIf choiceCourseMajor == 6
+                    choiceCourseMajorT = 6
+                    TextMajorChosen = "education"
+                ElseIf choiceCourseMajor == 7
+                    choiceCourseMajorT = 7
+                    TextMajorChosen = "English"
+                ElseIf choiceCourseMajor == 8
+                    choiceCourseMajorT = 8
+                    TextMajorChosen = "geography"
+                ElseIf choiceCourseMajor == 9
+                    choiceCourseMajorT = 9
+                    TextMajorChosen = "history"
+                ElseIf choiceCourseMajor == 10
+                    choiceCourseMajorT = 10
+                    TextMajorChosen = "law"
+                ElseIf choiceCourseMajor == 11
+                    choiceCourseMajorT = 11
+                    TextMajorChosen = "mathematics"
+                ElseIf choiceCourseMajor == 12
+                    choiceCourseMajorT = 12
+                    TextMajorChosen = "medicine"
+                ElseIf choiceCourseMajor == 13
+                    choiceCourseMajorT = 13
+                    TextMajorChosen = "music"
+                ElseIf choiceCourseMajor == 14
+                    choiceCourseMajorT = 14
+                    TextMajorChosen = "philosophy"
+                ElseIf choiceCourseMajor == 15
+                    choiceCourseMajorT = 15
+                    TextMajorChosen = "psychology"
+                ElseIf choiceCourseMajor == 16
+                    choiceCourseMajorT = 16
+                    TextMajorChosen = "political sciences"
+                ElseIf choiceCourseMajor == 60
+                    choiceCourseMajorT = 18
+                    TextMajorChosen = "sales and marketing"
+                ElseIf choiceCourseMajor == 80
+                    choiceCourseMajorT = 19
+                    TextMajorChosen = "travel and tourism"
+                ElseIf choiceCourseMajor == 90
+                    choiceCourseMajorT = 20
+                    TextMajorChosen = "veterinary"
+                EndIf
+                //New_Person.setDifferentMajor()
+                AcID = New_Person.getID()
+                New_Person.setActorVar(rk_VB_tag_Student, 1)
+                ChoixDsonCours = random(1, 20)
+                ChoixDsonCours = ChoixDsonCours.round()
+                While ChoixDsonCours == choiceCourseMajorT
+                    If choiceCourseMajorT == 1
+                        New_Person.setActorVar(rk_VB_Architecture_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TAR, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TAR, AcID)
+                    ElseIf choiceCourseMajorT == 2
+                        New_Person.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TCE, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TCE, AcID)
+                    ElseIf choiceCourseMajorT == 3
+                        New_Person.setActorVar(rk_VB_Classics_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TCL, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TCL, AcID)
+                    ElseIf choiceCourseMajorT == 17
+                        New_Person.setActorVar(rk_VB_Dental_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TDM, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TDM, AcID)
+                    ElseIf choiceCourseMajorT == 4
+                        New_Person.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TCS, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TCS, AcID)
+                    ElseIf choiceCourseMajorT == 5
+                        New_Person.setActorVar(rk_VB_Economics_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TEC, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TEC, AcID)
+                    ElseIf choiceCourseMajorT == 6
+                        New_Person.setActorVar(rk_VB_Education_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TED, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TED, AcID)
+                    ElseIf choiceCourseMajorT == 7
+                        New_Person.setActorVar(rk_VB_English_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TEN, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TEN, AcID)
+                    ElseIf choiceCourseMajorT == 8
+                        New_Person.setActorVar(rk_VB_Geography_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TGE, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TGE, AcID)
+                    ElseIf choiceCourseMajorT == 9
+                        New_Person.setActorVar(rk_VB_History_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_THI, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_THI, AcID)
+                    ElseIf choiceCourseMajorT == 10
+                        New_Person.setActorVar(rk_VB_Law_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TLA, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TLA, AcID)
+                    ElseIf choiceCourseMajorT == 11
+                        New_Person.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TMA, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TMA, AcID)
+                    ElseIf choiceCourseMajorT == 12
+                        New_Person.setActorVar(rk_VB_Medicine_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TME, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TME, AcID)
+                    ElseIf choiceCourseMajorT == 13
+                        New_Person.setActorVar(rk_VB_Music_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TMU, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TMU, AcID)
+                    ElseIf choiceCourseMajorT == 14
+                        New_Person.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TPH, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TPH, AcID)
+                    ElseIf choiceCourseMajorT == 15
+                        New_Person.setActorVar(rk_VB_Psychology_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TPS, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TPS, AcID)
+                    ElseIf choiceCourseMajorT == 16
+                        New_Person.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TPOL, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
+                    ElseIf choiceCourseMajorT == 18
+                        New_Person.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TSM, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TSM, AcID)
+                    ElseIf choiceCourseMajorT == 19
+                        New_Person.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TTT, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TTT, AcID)
+                    ElseIf choiceCourseMajorT == 20
+                        New_Person.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
+                        New_Person.setActorVar(rk_VB_tag_TVE, 1)
+                        New_Person.setActorVar(rk_VB_AcIdCC_TVE, AcID)
+                    EndIf
+                EndWhile
+            EndIf
+        EndIf
         New_Person.show(2)
         New_Person(Excited):: "That's a cute dog. Can I pet <CurrentCompanion.him_or_her> for a bit?"
         0:: "Of course"
@@ -34,8 +190,8 @@ OTHER: isWithCompanionCreature(); If CurrentCompanion.isCreatureType(Dog) && Ran
             If 0
                 Player(Happy):: "<CurrentCompanion.He_or_She> is <CurrentCompanion.name>. You seem to really love dogs. I do too ... I'm <Player.name> by the way."
                 "And so I continued to engage in a friendly conversation with this chance encounter. <New_Person.He_or_She> introduced <New_Person.himself_or_herself> as <New_Person.name>. <New_Person.He_or_She> is clearly a dog enthusiast and just seems like an interesting person overall."
-                New_Person:rapportwithplayer += Random(0, 30)
-                New_Person:attractiontoplayer += Random(0, 30)
+                New_Person:rapportwithplayer += random(0, 30)
+                New_Person:attractiontoplayer += random(0, 30)
                 "Maybe we should exchange contacts so that we can hang out another day. We have got along very well so far."
                 0:: "Exchange numbers"
                 1:: "Maybe not"
@@ -44,13 +200,12 @@ OTHER: isWithCompanionCreature(); If CurrentCompanion.isCreatureType(Dog) && Ran
                     "We agreed to exchange contacts so that we can meet again. It's amazing how many new friends you can make by just walking around with your cute dog."
                     New_Person.makePermanent()
                     exchangeContact(New_Person)
-                Endif
+                EndIf
             Else
                 Player(Happy):: "<CurrentCompanion.He_or_She> is <CurrentCompanion.name>. Sorry, but we've got to head back now."            
-            Endif
+            EndIf
         Else
             New_Person(Sad):: "That's a shame ... I hope I didn't come across as weird or anything. I'm just too excited about dogs sometimes."
-        Endif
-
-    sceneEnd() // Improved by Raddeck
+        EndIf
+    SceneEnd() // Improved by Raddeck
     timeout(400, meet_new_person_pet)
