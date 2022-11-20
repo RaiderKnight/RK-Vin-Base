@@ -13,7 +13,6 @@ OTHER: none
         If energy < 2
             "You don't have enough energy...."
         ElseIf WHERE == prison
-        
             "What should I do?"
             3::"Brush my teeth"
             5::"Groom"
@@ -160,7 +159,7 @@ OTHER: none
             If 0
                 Player.show()
                 Player.strip()
-                Filter(Shower)
+                Filter(shower)
                 "I decided to take a shower..."
                 sex(Player)
                 mood += 5
@@ -207,22 +206,21 @@ OTHER: none
                         value = Player.getMorphValue(XY__FBMHeavy)
                     Else
                         value = Player.getMorphValue(Genesis8Female__FBMHeavy)
-                    Endif
+                    EndIf
                     value = 100*value
                     XBodyFat = 50+value
                     Player.setActorVar(BodyFat, XBodyFat)
-                Endif
+                EndIf
                 
                 "You get on the scales and check your weight ... "
                 "..."
                 
                 If XBodyFat < 46
                     XBodyFat = 46
-                Endif
+                EndIf
                     
-                XBodyFat -= Random(0,1)
-                XBodyFat += Random(0,1)
-                
+                XBodyFat -= random(0,1)
+                XBodyFat += random(0,1)
                 XLBS = XBodyFat*2.20462
                 "<XLBS> lbs / <XBodyFat> kg"
                 
@@ -233,25 +231,25 @@ OTHER: none
                             value = CurrentCompanion.getMorphValue(XY__FBMHeavy)
                         Else
                             value = CurrentCompanion.getMorphValue(Genesis8Female__FBMHeavy)
-                        Endif
+                        EndIf
                         value = 100*value
                         CCBodyFat = 50+value
                         CurrentCompanion.setActorVar(BodyFat, CCBodyFat)
-                    Endif
+                    EndIf
                     
                     CurrentCompanion(Curious):: "Let me get on the scales too."
                     CurrentCompanion():: "..."
                     
                     If CCBodyFat < 46
                         CCBodyFat = 46
-                    Endif
+                    EndIf
                 
-                    CCBodyFat -= Random(0,1)
-                    CCBodyFat += Random(0,1)
+                    CCBodyFat -= random(0,1)
+                    CCBodyFat += random(0,1)
                     
                     CCLBS = CCBodyFat*2.20462
                     "<CCLBS> lbs / <CCBodyFat> kg"
-                Endif
+                EndIf
                 passTime(0.5,1)
                 
             ElseIf 5

@@ -5,7 +5,7 @@ WHO: Actor = getRelative(Parent); If !Actor.isMale() && Actor:perversion > 50 &&
 OTHER: isAtHome() && Player:age < 25
 
     SceneStart()
-        If isModEnabled(rk_vin_Base)
+        If isModEnabled(rk_vin_Base) || isModEnabled(rk_MoreInteractions)
             FightingLost = false
             IlAPerdu = false
             VraiLoser = false
@@ -454,7 +454,7 @@ OTHER: isAtHome() && Player:age < 25
             Else TempStatP > TempStatA
                 IlAPerdu = true
             EndIf
-            If !FiniLeShow && isModEnabled(rk_vin_Base)
+            If !FiniLeShow && [isModEnabled(rk_vin_Base) || isModEnabled(rk_MoreInteractions)]
                 If VraiLoser
                     John.animate()
                     "<John.name> win the fight, <John.he_or_she> beat me all the way..."

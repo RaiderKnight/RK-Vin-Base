@@ -10,7 +10,7 @@ OTHER: none
         Player.moveToPersonStand(Actor, 30)
         "I quickly groped <Actor.name> private parts."
         perversion += 0.5
-        If ActorisInterestedIn(Player) && Actor:perversion + Actor:arousal > 65
+        If Actor.isInterestedIn(Player) && Actor:perversion + Actor:arousal > 65
             Actor:attractiontoplayer += 0.5
             Actor:perversion += 0.5
             Actor(Flirty):: "I must say that you have long hands. Wanna show me what you can do with them?"
@@ -22,8 +22,8 @@ OTHER: none
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
-            Endif
-        Elseif Actor.hadSex() || Random(40, 100) < Actor:attractiontoplayer + perversion
+            EndIf
+        ElseIf Actor.hadSex() || Random(40, 100) < Actor:attractiontoplayer + perversion
             "<Actor.name> didn't say a word but smiled at me. <Actor.He_or_She> definitely enjoyed my groping."
             Actor:attractiontoplayer += 0.5
             Actor:perversion += 0.5
@@ -33,6 +33,6 @@ OTHER: none
             Actor:attractiontoplayer -= 1
             If WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != stripclub && WHERE != prison
                 followUp(public_indecency)
-            Endif
-        Endif
+            EndIf
+        EndIf
     SceneEnd() // Created by Raddeck

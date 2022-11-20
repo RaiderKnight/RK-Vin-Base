@@ -5,12 +5,17 @@ WHO: none
 OTHER: none
 
     SceneStart()
+        Fratroom = rk_has_Fratroom.getGlobal()
+        Totale = Player.getActorVar(rk_VB_NombreAmisFrat)
         "Am I sure I want out of my <Player.fraternity_or_sorority>?"
         0:: "Yes"
         1:: "No"
         
         If 0
+            rk_has_Fratroom.setGlobal(0)
+            Player:rk_VB_GoGreekLife => 0
             "Greek life wasn't for me. It's time to focus on academic performance and less on socializing."
             quitFraternity()
-        Endif
+            Player.setActorVar(rk_VB_NombreAmisFrat, 0)
+        EndIf
     SceneEnd() // Improved by Raddeck
