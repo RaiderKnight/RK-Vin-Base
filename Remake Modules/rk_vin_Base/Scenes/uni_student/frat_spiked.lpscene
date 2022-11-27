@@ -1,11 +1,20 @@
-WHAT: all, -sleep, -nap
+WHAT: all, -sleep_hotel, -nap_hotel, -rk_VB_small_sleep
 WHERE: fraternity
 WHEN: 18-24
-WHO: Actor = getSpecific(Fraternity); If Actor:perversion > 50 && Actor:masochist < 0 && !Actor.isAsexual()
+WHO: Actor = getPerson(rk_VB_tag_Student); If Actor:perversion > 50 && Actor:masochist < 0 && !Actor.isAsexual()
 OTHER: none
 
 
     SceneStart()
+        If !Player.isMale()
+            While Actor.isValid() && Actor.isMale()
+                Actor = getPerson(rk_VB_tag_ExeSoroS)
+            EndWhile
+        Else
+            While Actor.isValid() && !Actor.isMale()
+                Actor = getPerson(rk_VB_tag_ExeFratF)
+            EndWhile
+        EndIf
         choiceCourseMajor = rk_VB_choiceCourseMajor.getGlobal()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
@@ -75,104 +84,100 @@ OTHER: none
         Actor.dress()
         Actor.show()
         "I'm currently at yet another party thrown by my <Player.fraternity_or_sorority>. As expected, drinks are flowing and there's hardly anyone still sober left."
-        Actor2 = getSpecific(Fraternity)
-        While !Actor.isInterestedIn(Actor2)
-            Actor2 = generatePersonTemporary()
+        Actor2 = getPerson(rk_VB_tag_Student)
+        If !Actor2.isValid()
+            Actor2 = generatePerson()
+            While !Actor.isInterestedIn(Actor2)
+                Actor2 = generatePerson()
+            EndWhile
             Actor2:age => random(18, 22)
             Actor2.randomizeHairs()
             Actor2.randomizeFace()
             Actor2.randomizeRace()
-        EndWhile
-        If Actor2.isTemporary()
             Actor2.makePermanent()
-            //Actor2.setDifferentMajor()
             AcID = Actor2.getID()
+            If choiceCourseMajor == 1
+                Actor2.setActorVar(rk_VB_Architecture_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TAR, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TAR, AcID)
+            ElseIf choiceCourseMajor == 2
+                Actor2.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TCE, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TCE, AcID)
+            ElseIf choiceCourseMajor == 3
+                Actor2.setActorVar(rk_VB_Classics_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TCL, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TCL, AcID)
+            ElseIf choiceCourseMajor == 31
+                Actor2.setActorVar(rk_VB_Dental_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TDM, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TDM, AcID)
+            ElseIf choiceCourseMajor == 4
+                Actor2.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TCS, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TCS, AcID)
+            ElseIf choiceCourseMajor == 5
+                Actor2.setActorVar(rk_VB_Economics_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TEC, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TEC, AcID)
+            ElseIf choiceCourseMajor == 6
+                Actor2.setActorVar(rk_VB_Education_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TED, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TED, AcID)
+            ElseIf choiceCourseMajor == 7
+                Actor2.setActorVar(rk_VB_English_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TEN, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TEN, AcID)
+            ElseIf choiceCourseMajor == 8
+                Actor2.setActorVar(rk_VB_Geography_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TGE, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TGE, AcID)
+            ElseIf choiceCourseMajor == 9
+                Actor2.setActorVar(rk_VB_History_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_THI, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_THI, AcID)
+            ElseIf choiceCourseMajor == 10
+                Actor2.setActorVar(rk_VB_Law_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TLA, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TLA, AcID)
+            ElseIf choiceCourseMajor == 11
+                Actor2.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TMA, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TMA, AcID)
+            ElseIf choiceCourseMajor == 12
+                Actor2.setActorVar(rk_VB_Medicine_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TME, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TME, AcID)
+            ElseIf choiceCourseMajor == 13
+                Actor2.setActorVar(rk_VB_Music_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TMU, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TMU, AcID)
+            ElseIf choiceCourseMajor == 14
+                Actor2.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TPH, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TPH, AcID)
+            ElseIf choiceCourseMajor == 15
+                Actor2.setActorVar(rk_VB_Psychology_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TPS, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TPS, AcID)
+            ElseIf choiceCourseMajor == 16
+                Actor2.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TPOL, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
+            ElseIf choiceCourseMajor == 60
+                Actor2.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TSM, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TSM, AcID)
+            ElseIf choiceCourseMajor == 80
+                Actor2.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TTT, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TTT, AcID)
+            ElseIf choiceCourseMajor == 90
+                Actor2.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
+                Actor2.setActorVar(rk_VB_tag_TVE, 1)
+                Actor2.setActorVar(rk_VB_AcIdCC_TVE, AcID)
+            EndIf
             Actor2.setActorVar(rk_VB_tag_Student, 1)
-            ChoixDsonCours = random(1, 20)
-            ChoixDsonCours = ChoixDsonCours.round()
-            While ChoixDsonCours == choiceCourseMajorT
-                If choiceCourseMajorT == 1
-                    Actor2.setActorVar(rk_VB_Architecture_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TAR, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TAR, AcID)
-                ElseIf choiceCourseMajorT == 2
-                    Actor2.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TCE, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TCE, AcID)
-                ElseIf choiceCourseMajorT == 3
-                    Actor2.setActorVar(rk_VB_Classics_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TCL, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TCL, AcID)
-                ElseIf choiceCourseMajorT == 17
-                    Actor2.setActorVar(rk_VB_Dental_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TDM, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TDM, AcID)
-                ElseIf choiceCourseMajorT == 4
-                    Actor2.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TCS, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TCS, AcID)
-                ElseIf choiceCourseMajorT == 5
-                    Actor2.setActorVar(rk_VB_Economics_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TEC, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TEC, AcID)
-                ElseIf choiceCourseMajorT == 6
-                    Actor2.setActorVar(rk_VB_Education_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TED, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TED, AcID)
-                ElseIf choiceCourseMajorT == 7
-                    Actor2.setActorVar(rk_VB_English_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TEN, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TEN, AcID)
-                ElseIf choiceCourseMajorT == 8
-                    Actor2.setActorVar(rk_VB_Geography_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TGE, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TGE, AcID)
-                ElseIf choiceCourseMajorT == 9
-                    Actor2.setActorVar(rk_VB_History_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_THI, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_THI, AcID)
-                ElseIf choiceCourseMajorT == 10
-                    Actor2.setActorVar(rk_VB_Law_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TLA, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TLA, AcID)
-                ElseIf choiceCourseMajorT == 11
-                    Actor2.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TMA, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TMA, AcID)
-                ElseIf choiceCourseMajorT == 12
-                    Actor2.setActorVar(rk_VB_Medicine_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TME, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TME, AcID)
-                ElseIf choiceCourseMajorT == 13
-                    Actor2.setActorVar(rk_VB_Music_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TMU, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TMU, AcID)
-                ElseIf choiceCourseMajorT == 14
-                    Actor2.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TPH, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TPH, AcID)
-                ElseIf choiceCourseMajorT == 15
-                    Actor2.setActorVar(rk_VB_Psychology_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TPS, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TPS, AcID)
-                ElseIf choiceCourseMajorT == 16
-                    Actor2.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TPOL, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
-                ElseIf choiceCourseMajorT == 18
-                    Actor2.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TSM, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TSM, AcID)
-                ElseIf choiceCourseMajorT == 19
-                    Actor2.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TTT, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TTT, AcID)
-                ElseIf choiceCourseMajorT == 20
-                    Actor2.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
-                    Actor2.setActorVar(rk_VB_tag_TVE, 1)
-                    Actor2.setActorVar(rk_VB_AcIdCC_TVE, AcID)
-                EndIf
-            EndWhile
         EndIf
         Actor2.dress()
         Actor2.show()
@@ -284,6 +289,9 @@ OTHER: none
                     EndIf
                 EndIf
             EndIf
+        EndIf
+        If Actor2.isValid()
+            Actor2.saveAndDelete()
         EndIf
     SceneEnd() // Improved by Raddeck
     timeout(200, frat_spiked)

@@ -5,15 +5,15 @@ WHO: none
 OTHER: none
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         PoliceMan = generatePersonTemporary()
         PoliceMan.dressUniform(Police)
         PoliceMan.hide()
         Actor = getSpecific(Criminal)
         dressFormal()
-        
         If Actor.isValid()
             setBackground(restaurant)
             Boss = getSpecific(CrimeBoss)
@@ -29,7 +29,6 @@ OTHER: none
                 Actor.dressUniform(Crime)
                 Actor.show(3)
                 Boss(Evil):: "<Actor.name> will be your partner for this. Try not to get you both busted, will you?"
-                
                 Random
                     Job = 0 // Bank robbery
                     Job = 1 // Debt Collection
@@ -39,8 +38,7 @@ OTHER: none
                     Job = 5 // Official Sex Tape
                     Job = 6 // Fuck
                     Job = 7 // Watch
-                endRandom
-                
+                EndRandom
                 If Job == 0 // BANK ROBBERY
                     Boss(Evil):: "We found out that a bank branch is holding an unusually large reverse of cash. The security there is lackluster."
                     Boss(Evil):: "You're going there and you're going to rob it, plain and simple."
@@ -183,7 +181,7 @@ OTHER: none
                     
                 Elseif Job == 1 // DEBT COLLECTION
                     Boss(Evil):: "One of the local business owners have been paying us for years for protection ... With the increased presence of the cops in the area, the owner has become a bit too ... bold and stopped paying."
-                    Boss(Evil):: "You will go there and show that piece of shit how foolish it is to not honor an arrangement with our Family."
+                    Boss(Evil):: "You will go there and show that piece of shit how foolish it is to not honour an arrangement with our Family."
                     
                     Player(Evil):: "Of course, Boss. I won't disappoint you."
                     karma -= 5
@@ -281,7 +279,7 @@ OTHER: none
                     Actor2.randomizeFace()
                     Actor2.randomizeHairs()
                     Boss(Evil):: "The <Actor2.heir_or_heiress> to one of the biggest business empires in the city is a party animal who frequents high-society bars and nightclubs late into the night."
-                    Boss(Evil):: "You will go find <Actor2.him_or_her> and kidnap <Actor2.him_or_her>. I bet the rich daddy would pay any price to have the spoit <Actor.brat_or_slut> back."
+                    Boss(Evil):: "You will go find <Actor2.him_or_her> and kidnap <Actor2.him_or_her>. I bet the rich daddy would pay any price to have to spoil this <Actor.brat_or_slut> back."
                     
                     Player(Evil):: "Of course, Boss. I won't disappoint you."
                     karma -= 5
@@ -291,7 +289,8 @@ OTHER: none
                     setBackground(bar)
                     Actor2.dress()
                     Actor2.show(2)
-                    Actor(Evil):: "That's the target, sitting by the bar. <Actor2.He_or_She> has two bodyguards with <Actor2.him_or_her> though. There's a perfect spot behind the bar for ambush. I will be waiting for you to lure <Actor2.him_or_her> out there! Try to earn <Actor2.his_or_her> trust ... or lust."
+                    Actor(Evil):: "That's the target, sitting by the bar. <Actor2.He_or_She> has two bodyguards with <Actor2.him_or_her> though. There's a perfect spot behind the bar for ambush."
+                    Actor(Evil):: "I will be waiting for you to lure <Actor2.him_or_her> out there! Try to earn <Actor2.his_or_her> trust ... or lust."
                     Actor.hide()
                     Player(Happy):: "Excuse me, was there anyone sitting here?"
                     Actor2(Happy):: "No ... go ahead."
@@ -301,10 +300,10 @@ OTHER: none
                     
                     "Half an hour later ..."
                     If 0 && Random(0, 100) < Actor2:rapportwithplayer + interpersonal
-                        Actor2(Surprised):: "Wow! That's amazing that you already traveled so much all over the world."
+                        Actor2(Surprised):: "Wow! That's amazing that you already travelled so much all over the world."
                         Actor2(Sad):: "My father would never allow me that freedom ..."
                         "<Actor2.name> totally bought into the stories I've been telling <Actor2.him_or_her> to make me look like the coolest human on earth. It's time to act."
-                        Player(Happy):: "You know what? I can't take you traveling around the world with me, but I have some good stuffs in my car right now ... I'll be happy to get high with you."
+                        Player(Happy):: "You know what? I can't take you travelling around the world with me, but I have some good stuffs in my car right now ... I'll be happy to get high with you."
                         Actor2(Sad):: "I don't know ... my father wouldn't allow me to go anywhere without these bodyguards."
                         Player(Happy):: "Come on! Don't be so boring ..."
                         "Peer pressure is the true downfall of rich kids ..."
@@ -358,7 +357,8 @@ OTHER: none
                     Actor2 = generatePersonTemporary()
                     Actor2.dress()
                     Actor2.show(2)
-                    Actor(Evil):: "That's the target, walking down a dark alley ... as if <Actor2.he_or_she> is asking to be an easy target. I'll keep guard here to warn you of any cops! You sneak behid <Actor2.him_or_her> and once within range, shoot the <Actor2.bastard_or_bitch> to death, okay?"
+                    Actor(Evil):: "That's the target, walking down a dark alley ... as if <Actor2.he_or_she> is asking to be an easy target. I'll keep guard here to warn you of any cops!"
+                    Actor(Evil):: "You sneak behind <Actor2.him_or_her> and once within range, shoot the <Actor2.bastard_or_bitch> to death, okay?"
                     Actor.hide()
                     Player.animate(sneak)
                     "Alright, I must be very quiet here as to not alert <Actor2.him_or_her> ..."
@@ -550,7 +550,8 @@ OTHER: none
                     Actor3 = generatePersonTemporary()
                     Actor3.dress()
                     Actor3.show(3)
-                    Actor(Evil):: "That's the district chief and <Actor2.his_or_her> lover ... not so discreet, eh? I'll keep guard here! You sneak behind them and follow them to their room and once they get down and dirty, snap a few lovely family photos, okay?"
+                    Actor(Evil):: "That's the district chief and <Actor2.his_or_her> lover ... not so discreet, eh? I'll keep guard here!"
+                    Actor(Evil):: "You sneak behind them and follow them to their room and once they get down and dirty, snap a few lovely family photos, okay?"
                     Actor.hide()
                     Player.animate(sneak)
                     "Alright, I must be very quiet here as to not alert <Actor2.him_or_her> ..."
@@ -646,7 +647,7 @@ OTHER: none
                     If Random(0, 100) < 50
                         "The shift goes rather uneventful. After a couple of hours all the snow is packed in little bags and I can finally go home..."
                     Else
-                        "Near the end of my shift I notice one of the working girls moving her hand suspiciously under the table. Then she even starts fumbeling at her panties."
+                        "Near the end of my shift I notice one of the working girls moving her hand suspiciously under the table. Then she even starts fumbling at her panties."
                         "I decide to confront her about her suspicious behaviour."
                         Player:: "What the heck do you think you are doing there?!"
                         Actor2:: "Noth...nothing!"                   
@@ -709,7 +710,7 @@ OTHER: none
                                     "The girl didn't have any other choice but give me her number."
                                 Endif
                         Elseif 1
-                            "I don't think that girl would be so stupid to hide the stuff inside of her. And I may be a criminal, but atleast I got some decency"
+                            "I don't think that girl would be so stupid to hide the stuff inside of her. And I may be a criminal, but at least I got some decency"
                             "I briefly warn the girl to stop messing around and then let her continue her work. The rest of the shift is rather uneventful and after a boring while you can finally call it a day and go home."
                             
                             If Random(0, 100) < 50
@@ -778,7 +779,8 @@ OTHER: none
                     Boss.dress()
                     Boss.show(2)
                     Boss(Evil):: "So, you want to join our Family? Have you actually thought this through or are you just another wasting my time?"
-                    Boss(Evil):: "Remember, the oath of allegiance to our Family is an oath till death. Once you're part of the Family, you're always one of us. If you want out, we'll hunt you down and make sure you die a painful death. Wouldn't want to risk you working with the government against us, would we?"
+                    Boss(Evil):: "Remember, the oath of allegiance to our Family is an oath till death. Once you're part of the Family, you're always one of us."
+                    Boss(Evil):: " If you want out, we'll hunt you down and make sure you die a painful death. Wouldn't want to risk you working with the government against us, would we?"
                     Boss(Evil):: "We look after each other. If you ever get busted on the job, we'll make sure you won't end up in prison. Although if you're useless enough to get caught frequently, maybe we'll just leave you rot ..."
                     Boss(Evil):: "And most importantly: you do the job and get the share that I decide to give you, no arguments or negotiations."
                     Boss(Evil):: "So, still interested?"
@@ -789,9 +791,10 @@ OTHER: none
                 1:: "No"
                 
                 If 0
-                    Player(Happy):: "I'll be honored to swear my life to the Family, <Boss.Sir_or_Madam>."
+                    Player(Happy):: "I'll be honoured to swear my life to the Family, <Boss.Sir_or_Madam>."
                     Boss(Happy):: "Finally! Let's not waste any more time and get your initiation over and done with, shall we?"
-                    "My initiation ritual first involves me being led into the presence of other Mafia members and presented by the Boss. The Family's strict rules were read out before my finger was pricked with a needle by the Bos. A few drops of my blood were spilled on a card bearing the Family's patron saint, which was then set on fire. The burning card is passed rapidly from hand to hand, while I took the oath of loyalty to the Family."
+                    "My initiation ritual first involves me being led into the presence of other Mafia members and presented by the Boss. The Family's strict rules were read out before my finger was pricked with a needle by the Boss."
+                    "A few drops of my blood were spilled on a card bearing the Family's patron saint, which was then set on fire. The burning card is passed rapidly from hand to hand, while I took the oath of loyalty to the Family."
                     "Now that I'm officially a member of the family, let's introduce myself to the rest."
                     karma -= 5
                     Boss.hide()

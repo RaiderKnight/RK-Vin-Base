@@ -1,12 +1,21 @@
-WHAT: all, -sleep, -nap
+WHAT: all, -sleep_hotel, -nap_hotel, -rk_VB_small_sleep
 WHERE: fraternity
 WHEN: 8-21
-WHO: Actor2 = getSpecific(Fraternity); Actor = getRelative(); If Actor:rapportwithplayer > 10
+WHO: Actor2 = getPerson(rk_VB_tag_Student); Actor = getRelative(); If Actor:rapportwithplayer > 10
 OTHER: none
 
     // Similarly, one of your relatives is visiting you and gets some interest from a frat bro / sorority sis you're living with.
     
     SceneStart()
+        If !Player.isMale()
+            While Actor2.isValid() && Actor2.isMale()
+                Actor2 = getPerson(rk_VB_tag_ExeSoroS)
+            EndWhile
+        Else
+            While Actor2.isValid() && !Actor2.isMale()
+                Actor2 = getPerson(rk_VB_tag_ExeFratF)
+            EndWhile
+        EndIf
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -19,8 +28,8 @@ OTHER: none
         Actor.dress()
         Actor.show()
         Actor.moveToPersonStand(Player, 100)
-        "Oh for God's sake, it's my <Actor.relationship> ... anywhere but here, this is too embarassing in front of my <Actor2.fraternity_or_sorority> <Actor2.brother_or_sister>"
-        Player(Embarrassed):: "Oh no, <Actor.relationship>, I told you not to visit me here. I'm in a <Actor2.fraternity_or_sorority>, it's not exactly family-friendly. It's embarassing to have a family member visit me in front of my <Actor2.brothers_or_sisters>."
+        "Oh for God's sake, it's my <Actor.relationship> ... anywhere but here, this is too embarrassing in front of my <Actor2.fraternity_or_sorority> <Actor2.brother_or_sister>"
+        Player(Embarrassed):: "Oh no, <Actor.relationship>, I told you not to visit me here. I'm in a <Actor2.fraternity_or_sorority>, it's not exactly family-friendly. It's embarrassing to have a family member visit me in front of my <Actor2.brothers_or_sisters>."
         Player(Embarrassed)::"Why didn't you call me in advance? We could have met in a restaurant downtown or something."
         Actor(Sad):: "Sorry, I thought you wanted to give you a nice surprise."
         Player(Happy):: "Anyway, <Actor2.name>, this is my <Actor.relationship>."

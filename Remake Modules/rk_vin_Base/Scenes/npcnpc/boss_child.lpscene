@@ -5,7 +5,6 @@ WHO: Actor = getSpecific(Boss); If Actor:age > 40 && !Actor.hasRelationship(Pare
 OTHER: none
 
     SceneStart()
-        
         Boss_Sucker = Player.getActorVar(rk_VB_Boss_Sucker)
         Actor2 = Actor.generatePersonMatchRace()
         Actor2.matchLastName(Actor)
@@ -26,14 +25,11 @@ OTHER: none
                 exchangeContact(Actor2)
                 jobperformance += Random(0, 5)
                 Player.modifyActorVar(rk_VB_Boss_Sucker, 1)
-                
             Else
                 "Unfortunately, the arrogant <Actor2.prince_or_princess> had no time for company with a lowly peasant like me. <Actor2.He_or_She> probably thought I was trying to hit on <Actor2.him_or_her> too. Let's just hope <Actor.he_or_she> won't bad-mouth me in front of the boss ..."
                 jobperformance -= Random(0, 10)
                 Player.modifyActorVar(rk_VB_Boss_Sucker, -1)
-                
             Endif
         Endif
-    
     SceneEnd() // Improved by Raddeck
     timeout(1000, boss_child)

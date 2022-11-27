@@ -1,19 +1,16 @@
-WHAT: all, -sleep, -sleep_hotel
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all, -work
 WHEN: 9-20
-WHO: Friend = getPerson(true); If Friend:rapportwithplayer > Random(0, 10) && Friend:fitness > 60
-OTHER: !IsWithCompanion() && Random(0, 100) < fitness
+WHO: Friend = getPerson(true); If Friend:rapportwithplayer > random(0, 10) && Friend:fitness > 60
+OTHER: !isWithCompanion() && random(0, 100) < fitness
 
     
     Friendsentence = Friend.getActorVar(rk_VB_Sentence)
     If Friendsentence <= 0
-
-        sceneStart()
-    
+        SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         Friend.dress()
-        
         "My phone rang ... It's <Friend.name> calling."
         secondScreen(Friend)
         Friend.show(2)
@@ -23,7 +20,6 @@ OTHER: !IsWithCompanion() && Random(0, 100) < fitness
         1:: "No"
         
         If 0
-        
             Player(Happy):: "Of course. I'll see you in a bit!"
             mood += 1
             Friend(Happy):: "See you soon!"
@@ -35,32 +31,27 @@ OTHER: !IsWithCompanion() && Random(0, 100) < fitness
             Player.dress()
             Friend.show()
             "We had a good workout."
-            Friend:rapportwithplayer += Random(0, 2)
-            fitness += Random(0, 0.25)
-            energy -= Random(0, 25)
-            mood += Random(0, 10)
+            Friend:rapportwithplayer += random(0, 2)
+            fitness += random(0, 0.25)
+            energy -= random(0, 25)
+            mood += random(0, 10)
             "Should I ask <Friend.name> to continue hanging out after the workout finishes?"
             0:: "Yes"
             1:: "No"
             
             If 0
             
-                Friend.StartDate()
+                Friend.startDate()
                 
-            Endif
+            EndIf
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -10)
             EndIf
-        
             followUp(sb_VB_weight_loss)
-            
         Else
-        
             Player(Sad):: "Sorry, I'm busy today. Maybe next time ..."
             Friend(Sad):: "Oh? That's a shame. I'll see you around then."
-            
-        Endif
-        sceneEnd() // Scene improved by Raddeck
-        
-    Endif
+        EndIf
+        SceneEnd() // Scene improved by Raddeck
+    EndIf
     timeout(400, invite_workout)

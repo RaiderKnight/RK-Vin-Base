@@ -1,8 +1,8 @@
-WHAT: all, -sleep, -sleep_hotel
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all, -work
 WHEN: 12-24
-WHO: Friend = getPerson(true); If Friend:rapportwithplayer > 10 && Friend:age > Random(18, 21) && !Friend.IsDating()
-OTHER: !IsWithCompanion() && Random(0, 200) < 75
+WHO: Friend = getPerson(true); If Friend:rapportwithplayer > 10 && Friend:age > random(18, 21) && !Friend.IsDating()
+OTHER: !IsWithCompanion() && random(0, 200) < 75
 
     sceneStart()
         TimeToSleep = false
@@ -37,7 +37,7 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                 Player(Happy)::"Sure, I will take care of you..."
             Else
                 Player(Happy)::"Sure, I'm waiting for you..."
-            Endif
+            EndIf
             SecondScreen(Friend)
             Friend.show(2)
             Friend(Happy):: "Cool, you're the best! I'll see you in a bit!"
@@ -46,11 +46,11 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
             If !isAtHome()
                 "I decide to go back to my house to meet <Friend.name>..."
                 moveTo(home)
-            Endif
+            EndIf
             SecondScreen()
             Player.show()
             Actor2 = getCreature(Dog)
-            Friend:rapportwithplayer += Random(0.5, 2)
+            Friend:rapportwithplayer += random(0.5, 2)
             passTime(0.25, 1)
             Friend:intoxication => 85
             "After a few minutes, <Friend.name> finally arrived..."
@@ -82,36 +82,36 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                         rk_VB_CWF_Temp_Story.setGlobal(1)
                     Else
                         FuckOff = true
-                    Endif
+                    EndIf
                 Else
                     Friend(Shocked):: "WTF...!"
                     FuckOff = true
-                Endif
+                EndIf
                 If !ExhibStory
                     If !Player.isEquipped(Bottom) || Player.isNaked()
                         FuckOff = true
                         Friend(Shocked):: "WTF, not funny...!"
-                    Endif
-                Endif
+                    EndIf
+                EndIf
                 If FuckOff
                     If Friend.isInterestedIn(Player)
                         If Friend:intoxication > 70
                             Friend(Shocked):: "I may be drunk but I'm not drunk enough to handle what I see, I think I will leave you alone with your <Player.dick_or_pussy>...!"
                         Else
                             Friend(Shocked):: "I can't handle what I see, I think I will leave you alone with your <Player.dick_or_pussy>...!"
-                        Endif
+                        EndIf
                     Else
                         If Friend:intoxication > 70
                             Friend(Shocked):: "I may be drunk but I'm not drunk enough to handle what I see, damn creep!"
                         Else
                             Friend(Shocked):: "I can't handle what I see, I think I will leave you alone with your <Player.dick_or_pussy>... Damn creep!"
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                     "And then <Friend.name> runs away without saying a word..."
-                    Friend:rapportwithplayer -= Random(0, 4)
-                    Friend:attractiontoplayer -= Random(0, 4)
+                    Friend:rapportwithplayer -= random(0, 4)
+                    Friend:attractiontoplayer -= random(0, 4)
                     Friend.hide()
-                Endif
+                EndIf
                 If ExhibStory
                     "What do I say to <Friend.him_or_her>?"
                     rk_VB_CWF_Temp_Story.setGlobal(1)
@@ -123,18 +123,18 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                         Friend:perversion += 1
                         Friend:arousal += 1
                         perversion += 1
-                    Endif
-                Endif
+                    EndIf
+                EndIf
             Else
                 rk_VB_CWF_Temp_Story.setGlobal(1)
-            Endif
+            EndIf
             tempStoryCWF = rk_VB_CWF_Temp_Story.getGlobal()
             If tempStoryCWF == 1
                 setBackgroundCustom(livingroom)
                 counter = 0
                 ate = false
                 hadSex = false    
-                Vanilla = IsModEnabled(vin_VanillaRealistic)
+                Vanilla = isModEnabled(vin_VanillaRealistic)
                 ActorAskForIt1 = false
                 ActorAskForIt2 = false
                 ActorAskForIt3 = 0
@@ -147,8 +147,8 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                         0:: "Chat"
                         1:: !ate && stock_snack > 0.8:: "Eat a snack something together"
                         2:: stock_movie > 0.8 :: "Watch a movie"
-                        21:: "Watch TV" //Edit Raddeck
-                        22:: stock_movie > 0.8 :: "Watch a porn movie" //Edit Raddeck
+                        21:: "Watch TV"
+                        22:: stock_movie > 0.8 :: "Watch a porn movie"
                         3:: stock_alcohol >= 1.8 :: "Drink alcohol"
                         4:: "Kiss <Friend.him_or_her>"
                         50:: "Offer sex"
@@ -169,7 +169,7 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                 Friend:rapportwithplayer += 1
                                 passTime(0.1, 0.2)
                                 
-                            Elseif 1
+                            ElseIf 1
                                 Friend:intoxication -= 10
                                 "We made some quick snacks and enjoyed them together ..."
                                 ate = true
@@ -183,7 +183,7 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                 energy += 5
                                 passTime(0.2, 0.4)
                                 
-                            Elseif 2
+                            ElseIf 2
                                 Friend:intoxication -= 3
                                 setBackgroundCustom(livingroom)
                                 Player.animate(sofawatch)
@@ -201,7 +201,7 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                 Player.animate()
                                 Friend.animate()
                                 
-                            Elseif 21
+                            ElseIf 21
                                 Friend:intoxication -= 3
                                 Player.show()
                                 Friend.show()
@@ -220,7 +220,7 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                 passTime(1, 2)
                                 Player.animate()
                                 Friend.animate()
-                            Elseif 22
+                            ElseIf 22
                                 Friend:intoxication -= 5
                                 setBackgroundCustom(livingroom)
                                 Player.animate(sofawatch)
@@ -234,8 +234,8 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                     Friend:arousal += 1
                                     Friend:perversion += 1
                                 Else
-                                    Friend:attractiontoplayer -= Random(0,10)
-                                    Friend:rapportwithplayer -= Random(0,10)
+                                    Friend:attractiontoplayer -= random(0,10)
+                                    Friend:rapportwithplayer -= random(0,10)
                                     Friend:arousal -= 1
                                     Friend:perversion -= 1
                                 EndIf
@@ -248,13 +248,13 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                 Player.animate()
                                 Friend.animate()
                                 
-                            Elseif 3
+                            ElseIf 3
                                 Player.animate(drinkglass)
                                 Friend.animate(drinkglass)
                                 "We had a drink together ..."
                                 "We had a drink alcohol together ..."
-                                Player:intoxication += Random(0,10)
-                                Friend:intoxication += Random(0,10)
+                                Player:intoxication += random(0,10)
+                                Friend:intoxication += random(0,10)
                                 stock_alcohol -= 2
                                 passTime(0.1, 0.2)
                                 Player.animate()
@@ -262,29 +262,29 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                 If UrgeToPeeEnable > 0
                                     Player.modifyActorVar(rk_VB_UrgeToPee, 1)
                                 EndIf
-                            Elseif 4
+                            ElseIf 4
                                 Friend:intoxication -= 2
                                 Kissed = true
                                 MeKissed = true
-                            Elseif 50
+                            ElseIf 50
                                 "What should I ask?"
                                 51::"Ask for a blowjob"
                                 52::"Ask for a Handjob"
                                 53::"Ask if <Friend.he_or_she> want a blowjob"
                                 54::"Ask if <Friend.he_or_she> want a Handjob"
                                 60::"Ask if <Friend.he_or_she> wants to fuck"
-                                99::"Nevermind!"
+                                99::"Never mind!"
                                 
                                 If 51
                                     If Friend.isInterestedIn(Player) && Friend:arousal > 15
                                         Friend(Happy)::"Sure, let's go..."
-                                        Player:perversion += Random(0, 1)
+                                        Player:perversion += random(0, 1)
                                         Player.strip()
                                         If !Player.isMale()
                                             Filter(LickPussy)
                                         Else
                                             Filter(Blowjob)
-                                        Endif
+                                        EndIf
                                         Sex(Friend, Player)
                                         Friend.show(2)
                                         "The blowjob was amazing. I put my clothes back on afterwards and we continued our date."
@@ -297,17 +297,17 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                         passTime(0.2, 1.5)
                                     Else
                                         "Unfortunately for me, <Friend.name> didn't seem interested to give me a blowjob."
-                                    Endif
-                                Elseif 52
+                                    EndIf
+                                ElseIf 52
                                     If Friend.isInterestedIn(Player) && Friend:arousal > 15
                                         Friend(Happy)::"Sure, let's go..."
-                                        Player:perversion += Random(0, 1)
+                                        Player:perversion += random(0, 1)
                                         Player.strip()
                                         If !Player.isMale()
                                             Filter(Fingering)
                                         Else
                                             Filter(Handjob)
-                                        Endif
+                                        EndIf
                                         Sex(Friend, Player)
                                         Friend.show(2)
                                         "The handjob was amazing. I put my clothes back on afterwards and we continued our date."
@@ -320,17 +320,17 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                         passTime(0.2, 1.5)
                                     Else
                                         "Unfortunately for me, <Friend.name> didn't seem interested to give me a handjob."
-                                    Endif
-                                If 53
+                                    EndIf
+                                ElseIf 53
                                     If Friend.isInterestedIn(Player) && Friend:arousal > 15
                                         Friend(Happy)::"Sure, let's go..."
-                                        Player:perversion += Random(0, 1)
+                                        Player:perversion += random(0, 1)
                                         Friend.strip()
                                         If !Friend.isMale()
                                             Filter(LickPussy)
                                         Else
                                             Filter(Blowjob)
-                                        Endif
+                                        EndIf
                                         Sex(Player, Friend)
                                         Friend.show(2)
                                         "<Friend.His_or_Her> <Friend.cock_or_vagina> was tasty and <Friend.slimy_or_juicy>, the must... <Friend.He_or_She> put <Friend.his_or_her> clothes back on afterwards and we continued our date."
@@ -343,17 +343,17 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                         passTime(0.2, 1.5)
                                     Else
                                         "Unfortunately for me, <Friend.name> didn't seem interested to give me a blowjob."
-                                    Endif
-                                Elseif 54
+                                    EndIf
+                                ElseIf 54
                                     If Friend.isInterestedIn(Player) && Friend:arousal > 15
                                         Friend(Happy)::"Sure, let's go..."
-                                        Player:perversion += Random(0, 1)
+                                        Player:perversion += random(0, 1)
                                         Friend.strip()
                                         If !Friend.isMale()
                                             Filter(Fingering)
                                         Else
                                             Filter(Handjob)
-                                        Endif
+                                        EndIf
                                         Sex(Player, Friend)
                                         Friend.show(2)
                                         "<Friend.His_or_Her> <Friend.cock_or_vagina> was <Friend.hard_or_soft> and <Friend.slimy_or_juicy>. <Friend.He_or_She> put <Friend.his_or_her> clothes back on afterwards and we continued our date."
@@ -366,11 +366,11 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                         passTime(0.2, 1.5)
                                     Else
                                         "Unfortunately for me, <Friend.name> didn't seem interested to give me a handjob."
-                                    Endif
-                                Elseif 60
+                                    EndIf
+                                ElseIf 60
                                     If Friend.isInterestedIn(Player) && Friend:arousal > 15
                                         Friend(Happy)::"Sure, let's go..."
-                                        Player:perversion += Random(0, 1)
+                                        Player:perversion += random(0, 1)
                                         Player.strip()
                                         Friend.strip()
                                         Sex(Player, Friend)
@@ -386,16 +386,16 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                         passTime(0.2, 1.5)
                                     Else
                                         "Unfortunately for me, <Friend.name> didn't seem interested to fuck."
-                                    Endif
-                                Endif
+                                    EndIf
+                                EndIf
                             ElseIf 60
                                 Friend.closeEyes(true)
                                 Friend.animate(na_sleep)
                                 "<Friend.name> takes a little nap and she is sleeping like a baby..."
                                 passTime(1, 2.5)
-                                Friend:intoxication -= Random(25, 50)
+                                Friend:intoxication -= random(25, 50)
                                 counter += 5
-                            Endif // End me
+                            EndIf // End me
                             If TimeToSleep || counter > 10
                                 "After a while, we were both exhausted and went to bed together for the night."
                                 passTime(4, 8)
@@ -403,21 +403,21 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                 "The next morning ..."
                                 Friend(Happy):: "I've gotta go now! Thanks for letting me stay the night. I can't wait to see you again soon!"
                                 Player(Happy):: "Alright! Thank you for staying, Goodbye!"
-                                energy += Random(50, 100)
+                                energy += random(50, 100)
                                 "Then <Friend.name> left to <Friend.his_or_her> house..."
-                                Friend:attractiontoplayer += Random(0, 1)
+                                Friend:attractiontoplayer += random(0, 1)
                                 DrunkFriendisHere = false
                                 Friendlefthere = false
                                 rk_VB_CWF_Temp_Story.setGlobal(0)
                                 Friend.hide()
                                 SceneEnd()
-                            Endif
-                            If [!TimeToSleep && Kissed] || [!TimeToSleep && Friend.isInterestedIn(Player) && !hadSex && Friend:attractiontoplayer > Random(0, 200)]
+                            EndIf
+                            If [!TimeToSleep && Kissed] || [!TimeToSleep && Friend.isInterestedIn(Player) && !hadSex && Friend:attractiontoplayer > random(0, 200)]
                                 If MeKissed
                                     "I decided to kiss <Friend.him_or_her> ..."
                                 Else
                                     "<Friend.name> decided to kiss me..."
-                                Endif
+                                EndIf
                                 Player(Kiss):: "..."
                                 AnimatePair(Player, Friend, Kissing)
                                 Friend(Kiss):: "..."
@@ -427,13 +427,13 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                 1:: "Stop"
                             
                                 If 0
-                                    If [Friend.isInterestedIn(Player) && [Friend.IsDominantSex(Player) || Friend:attractiontoplayer + Friend:perversion > Random(50, 200) || Friend:intoxication > 80]]
+                                    If [Friend.isInterestedIn(Player) && [Friend.IsDominantSex(Player) || Friend:attractiontoplayer + Friend:perversion > random(50, 200) || Friend:intoxication > 80]]
                                         "Our kiss got more and more steamy and soon we were making out, our hands all over each other."
                                         If TfGame() && Friend.isMale()
                                             "I'm a man trapped inside a woman's body. I don't think I'm gay, but here I am, about to hook up with my male date."
-                                        Endif
+                                        EndIf
                                         hadSex = true
-                                        Player:perversion += Random(0, 1)
+                                        Player:perversion += random(0, 1)
                                         Player.strip()
                                         Friend.strip()
                                         Sex(Player, Friend)
@@ -448,27 +448,27 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                         Friend:intoxication -= 25
                                     Else
                                         "Unfortunately for me, <Friend.name> didn't seem interested in letting things escalate any further and pulled away."
-                                    Endif
+                                    EndIf
                                 Else
                                     "I decided to stop it there and not go any further."
-                                Endif
-                            Elseif !TimeToSleep && Random(0, 100) < 10
+                                EndIf
+                            ElseIf !TimeToSleep && random(0, 100) < 10
                                 "After a while, we were both exhausted and went to bed together for the night."
                                 passTime(4, 8)
                                 "The next morning ..."
                                 Friend(Happy):: "I've gotta go now! Thanks for letting me stay the night. I can't wait to see you again soon!"
                                 Player(Happy):: "Alright! Thank you for staying, Goodbye!"
-                                energy += Random(50, 100)
+                                energy += random(50, 100)
                                 "Then <Friend.name> left to <Friend.his_or_her> house..."
-                                Friend:attractiontoplayer += Random(0, 1)
+                                Friend:attractiontoplayer += random(0, 1)
                                 DrunkFriendisHere = false
                                 Friend.hide()
                                 Friendlefthere = false
                                 Player.setActorVar(rk_VB_CWF_Temp_Story, 0)
                                 SceneEnd()
-                            Endif
+                            EndIf
                         EndIf
-                        If !TimeToSleep && isModEnabled(vin_Bestiality) && Actor2.isValid() && Friend:arousal > 15 && Friend:perversion > 70 && Random(0, 100) > 70
+                        If !TimeToSleep && isModEnabled(vin_Bestiality) && Actor2.isValid() && Friend:arousal > 15 && Friend:perversion > 70 && random(0, 100) > 70
                             Friend.strip()
                             Actor2.show()
                             Friend.moveToPerson(Player)
@@ -479,7 +479,7 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                             If 0
                                 Friend.show()
                                 Actor2.show()
-                                perversion += Random(0, 2)
+                                perversion += random(0, 2)
                                 Sex(Friend, Actor2)
                                 passTime(0.25, 1)
                                 arousal += 1
@@ -489,7 +489,7 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                 Friend:intoxication -= 50
                                 counter += 3
                             EndIf
-                        ElseIf !TimeToSleep && Friend:arousal > 15 && Friend:perversion > 70 && Random(0, 100) > 70
+                        ElseIf !TimeToSleep && Friend:arousal > 15 && Friend:perversion > 70 && random(0, 100) > 70
                             Friend.strip()
                             Friend.moveToPerson(Player)
                             Friend(Flirty)::"Hey, look! I'm so wasted, I fuck myself, Uh !"
@@ -498,7 +498,7 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                     
                             If 0
                                 Friend.show()
-                                perversion += Random(0, 2)
+                                perversion += random(0, 2)
                                 Filter(Solo)
                                 Sex(Friend)
                                 passTime(0.25, 1)
@@ -518,13 +518,13 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                 
                                 If 0
                                     Player(Happy)::"Sure, let's see if it's true..."
-                                    Player:perversion += Random(0, 1)
+                                    Player:perversion += random(0, 1)
                                     Player.strip()
                                     If !Player.isMale()
                                         Filter(Fingering)
                                     Else
                                         Filter(Handjob)
-                                    Endif
+                                    EndIf
                                     Sex(Player, Friend) // Need to do the opposite????
                                     Friend.show(2)
                                     "The handjob was amazing. I put my clothes back on afterwards and we continued our date."
@@ -535,15 +535,15 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                     EndIf
                                     passTime(0.2, 1.5)
                                     ActorAskForIt1 = true
-                                    Friend:attractiontoplayer += Random(0, 1)
-                                    Friend:rapportwithplayer += Random(0, 1)
+                                    Friend:attractiontoplayer += random(0, 1)
+                                    Friend:rapportwithplayer += random(0, 1)
                                     Friend:intoxication -= 15
                                 Else
                                     "Unfortunately, I told <Friend.name> that I was not in the mood for this!"
-                                    Friend:attractiontoplayer -= Random(0, 1)
-                                    Friend:rapportwithplayer -= Random(0, 1)
-                                Endif
-                            Elseif Friend.isInterestedIn(Player) && [random(0, 100) > 20.5 && random(0, 100) < 50] && !ActorAskForIt2
+                                    Friend:attractiontoplayer -= random(0, 1)
+                                    Friend:rapportwithplayer -= random(0, 1)
+                                EndIf
+                            ElseIf Friend.isInterestedIn(Player) && [random(0, 100) > 20.5 && random(0, 100) < 50] && !ActorAskForIt2
                                 Friend(Grin)::"Do you want a blowjob, I love licking <Player.dick_or_pussy>...!"
                                 "What I should say?"
                                 0::"Yes"
@@ -551,13 +551,13 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                 
                                 If 0
                                     Player(Happy)::"Sure, let's go..."
-                                    Player:perversion += Random(0, 1)
+                                    Player:perversion += random(0, 1)
                                     Player.strip()
                                     If !Player.isMale()
                                         Filter(LickPussy)
                                     Else
                                         Filter(Blowjob)
-                                    Endif
+                                    EndIf
                                     Sex(Player, Friend) // Need to do the opposite????
                                     Friend.show(2)
                                     "The blowjob was amazing. I put my clothes back on afterwards and we continued our date."
@@ -568,15 +568,15 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                     EndIf
                                     passTime(0.2, 1.5)
                                     ActorAskForIt2 = true
-                                    Friend:attractiontoplayer += Random(0, 1)
-                                    Friend:rapportwithplayer += Random(0, 1)
+                                    Friend:attractiontoplayer += random(0, 1)
+                                    Friend:rapportwithplayer += random(0, 1)
                                     Friend:intoxication -= 15
                                 Else
                                     "Unfortunately, I told <Friend.name> that I was not in the mood for this!"
-                                    Friend:attractiontoplayer -= Random(0, 1)
-                                    Friend:rapportwithplayer -= Random(0, 1)
-                                Endif
-                            Elseif Friend.isInterestedIn(Player) && ActorAskForIt3 <= 2
+                                    Friend:attractiontoplayer -= random(0, 1)
+                                    Friend:rapportwithplayer -= random(0, 1)
+                                EndIf
+                            ElseIf Friend.isInterestedIn(Player) && ActorAskForIt3 <= 2
                                 Friend(Grin)::"Do you want to smoke a joint...!"
                                 "What I should say?"
                                 0::"Yes"
@@ -586,10 +586,10 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                     Player.animate(smoke)
                                     Friend.animate(smoke)
                                     "We smoked weed together ..."
-                                    Player:intoxication += Random(5,15)
-                                    Friend:intoxication += Random(5,15)
-                                    Player:mood += Random(3,10)
-                                    Friend:mood += Random(3,10)
+                                    Player:intoxication += random(5,15)
+                                    Friend:intoxication += random(5,15)
+                                    Player:mood += random(3,10)
+                                    Friend:mood += random(3,10)
                                     Friend:attractiontoplayer += 1
                                     Friend:rapportwithplayer += 5
                                     If HungerEnable > 0
@@ -599,8 +599,8 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                     passTime(1, 2)
                                     Player.animate()
                                     Friend.animate()
-                                Endif
-                            Elseif Friend.isInterestedIn(Player) && Friend:arousal > 15 && ActorAskForIt4 <= 3
+                                EndIf
+                            ElseIf Friend.isInterestedIn(Player) && Friend:arousal > 15 && ActorAskForIt4 <= 3
                                 Friend(Grin)::"Do you want to fuck...!"
                                 "What I should say?"
                                 0::"Yes"
@@ -608,7 +608,7 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                 
                                 If 0
                                     Friend(Happy)::"Sure, let's go..."
-                                    Player:perversion += Random(0, 1)
+                                    Player:perversion += random(0, 1)
                                     Player.strip()
                                     Friend.strip()
                                     Sex(Player, Friend)
@@ -621,15 +621,15 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                     EndIf
                                     passTime(0.2, 1.5)
                                     ActorAskForIt4 += 1
-                                    Friend:attractiontoplayer += Random(0, 1)
-                                    Friend:rapportwithplayer += Random(0, 1)
+                                    Friend:attractiontoplayer += random(0, 1)
+                                    Friend:rapportwithplayer += random(0, 1)
                                     Friend:intoxication -= 25
                                 Else
                                     "Unfortunately, I told <Friend.name> that I was not in the mood for this!"
-                                    Friend:attractiontoplayer -= Random(0, 1)
-                                    Friend:rapportwithplayer -= Random(0, 1)
-                                Endif
-                            Endif
+                                    Friend:attractiontoplayer -= random(0, 1)
+                                    Friend:rapportwithplayer -= random(0, 1)
+                                EndIf
+                            EndIf
                         EndIf
                         If !TimeToSleep && random(0, 100) > 75 && Friend:intoxication > 75 && !Friend.isNaked()
                             "<Friend.name> suddenly fainted!"
@@ -649,9 +649,9 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                     "<Friend.He_or_She> didn't wake up, I still have time to remove another piece..."
                                     Friend.stripOne()
                                     "One clothe off..."
-                                Endif
-                            Endif
-                        Elseif !TimeToSleep && isModEnabled(vin_NonConsensual) && Friend:intoxication > 75 && Friend.isNaked()
+                                EndIf
+                            EndIf
+                        ElseIf !TimeToSleep && isModEnabled(vin_NonConsensual) && Friend:intoxication > 75 && Friend.isNaked()
                             "<Friend.name> suddenly fainted!"
                             "Do I take this moment to fuck <Friend.him_or_her>?"
                             0::"Yes"
@@ -666,15 +666,15 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                                 Player(Grin)::"You will wake up sticky..."
                                 Player.strip()
                                 sex(Player, Friend)
-                            Endif
-                        Endif
+                            EndIf
+                        EndIf
                         If !TimeToSleep && random(0, 100) > 75 && Friend:intoxication > 95
                             "<Friend.name> is completely hammered and vomiting on the floor."
                             Player(Shocked)::"Damn <Friend.name>..."
                             Player(Shocked)::"Please, next time do that in the toilet! You need a cold shower my dear friend..."
                             "I take <Friend.him_or_her> under the shower which makes <Friend.him_or_her> sober up a bit"
                             Friend:intoxication -= 50
-                        Endif
+                        EndIf
                     EndIf
                     Friend.closeEyes(false)
                     Friend.animate()
@@ -687,16 +687,16 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                     "The next morning ..."
                     Friend(Happy):: "I've gotta go now! Thanks for letting me stay the night. I can't wait to see you again soon!"
                     Player(Happy):: "Alright! Thank you for staying, Goodbye!"
-                    energy += Random(50, 100)
+                    energy += random(50, 100)
                     "Then <Friend.name> left to <Friend.his_or_her> house..."
-                    Friend:attractiontoplayer += Random(0, 1)
+                    Friend:attractiontoplayer += random(0, 1)
                     DrunkFriendisHere = false
                     rk_VB_CWF_Temp_Story.setGlobal(0)
                     Friend.hide()
                     Player.dress()
                     SceneEnd()
-                Endif
-            Endif
+                EndIf
+            EndIf
         Else
             Friend.animate(call)
             Player.animate(call)
@@ -705,13 +705,13 @@ OTHER: !IsWithCompanion() && Random(0, 200) < 75
                 Player(Sad)::"Sorry, I really can't, I was about to sleep because I have to work early tomorrow"
                 Player(Sad)::"Sorry, I'm busy today. Maybe next time ..."
             EndRandom
-            Friend:rapportwithplayer -= Random(0, 2)
+            Friend:rapportwithplayer -= random(0, 2)
             SecondScreen(Friend)
             Friend.show(2)
             Friend(Sad)::"Okay, I'll call someone else..."
             Friend.animate()
             Player.animate()
-            Friend:attractiontoplayer -= Random(0, 1)
+            Friend:attractiontoplayer -= random(0, 1)
         EndIf
     SceneEnd() // Scene made by: Raddeck
     timeout(250, rk_VB_Call_Wasted_Friend)

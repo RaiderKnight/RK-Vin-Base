@@ -10,15 +10,13 @@ OTHER: none
         Actor.show(2)
         Actor2.dress()
         Actor2.show(3)
-        
         "<Actor.name> and <Actor2.name> are two of my good friends. They are both single however, and I think they might make a good match."
         0:: "Set up a blind date"
-        1:: "Nevermind"
+        1:: "Never mind"
         
         If 0
         
             If Random(0, 100) < interpersonal
-            
                 "I managed to talk them into going on a blind date with each other, which went quite well. Who knows? This could be the start of something special."
                 karma += 2.5
                 Actor:rapportwithplayer += Random(0, 5)
@@ -26,9 +24,7 @@ OTHER: none
                 Actor:attractiontoplayer -= 30
                 Actor2:attractiontoplayer -= 30
                 addNpcRelationship(Dating, Actor, Actor2)
-                
                 If Actor:perversion + Actor2:perversion > 75
-                
                     Actor2.hide()
                     setBackground(coffee)
                     "A few days later, I was hanging out with <Actor.name> when <Actor.he_or_she> accidentally confessed that <Actor.he_or_she> had sex with <Actor2.name> on their first date! Wow, I know I'm a good matchmaker but this is certainly unexpected."

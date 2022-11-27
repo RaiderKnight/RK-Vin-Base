@@ -1,12 +1,21 @@
-WHAT: all, -sleep, -nap
+WHAT: all, -sleep_hotel, -nap_hotel, -rk_VB_small_sleep
 WHERE: fraternity
 WHEN: 8-21
-WHO: Actor2 = getSpecific(Fraternity)
+WHO: Actor2 = getPerson(rk_VB_tag_Student);
 OTHER: none
 
     // A relative of your frat bro / sorority sis is visiting them, you may choose to simply exchange numbers or seduce them right there and then. The type of relative is random normally but is influenced by your age gap preference instead if you have the Old-Young module enabled.
     
     SceneStart()
+        If !Player.isMale()
+            While Actor2.isValid() && Actor2.isMale()
+                Actor2 = getPerson(rk_VB_tag_ExeSoroS)
+            EndWhile
+        Else
+            While Actor2.isValid() && !Actor2.isMale()
+                Actor2 = getPerson(rk_VB_tag_ExeFratF)
+            EndWhile
+        EndIf
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()

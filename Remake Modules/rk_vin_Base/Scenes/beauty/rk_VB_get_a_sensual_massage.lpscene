@@ -20,7 +20,7 @@ OTHER: none
             Actor1 = generatePersonTemporary()
             Actor1.dress()
             Actor1.show(2)
-            Perversion += 1
+            perversion += 1
             If WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != sports_centre && WHERE != beauty
                 "I decided to go for a sensual massage today to release some stress. I was greeted by <Actor1.name>."
             Else
@@ -71,15 +71,15 @@ OTHER: none
                 If 0
                 
                     Actor.strip()
-                    Perversion += 0.5
+                    perversion += 0.5
                 ElseIf 1
                     Actor.strip()
                     Actor.dressExcept(Outerwear, Bottom, Foot, Headwear, Eyewear, Bottom_Under)
-                    Perversion += 0.5
+                    perversion += 0.5
                 ElseIf 2
                     Actor.strip()
                     Actor.dressExcept(Outerwear, Top, Headwear, Eyewear, Top_Under)
-                    Perversion += 0.25
+                    perversion += 0.25
                 EndIf
                 "<Actor.name> asks me what kind of surprise I would like to have after the massage?"
                 0:: "Blowjob"
@@ -135,12 +135,12 @@ OTHER: none
                     99::"Leave"
                     
                     If 0
-                        Perversion += 1
+                        perversion += 1
                         money -= 150
                         Actor.strip()
                         Player.strip()
                         "We stripped and started to make out!"
-                        sex(Actor, Player)
+                        Sex(Actor, Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
@@ -154,8 +154,8 @@ OTHER: none
                     If Actor.isInterestedIn(Player)
                         Actor(Happy):: "Of course, I'd love to exchange numbers."
                         exchangeContact(Actor)
-                        Actor:attractiontoplayer += Random(0, 3)
-                        Actor:rapportwithplayer += Random(0, 3)
+                        Actor:attractiontoplayer += random(0, 3)
+                        Actor:rapportwithplayer += random(0, 3)
                     Else
                         Actor(Sad):: "Sorry, but I don't normally exchange numbers with clients."
                     EndIf

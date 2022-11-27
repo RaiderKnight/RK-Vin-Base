@@ -2,7 +2,7 @@ WHAT: all
 WHERE: all
 WHEN: 6 - 22
 WHO: none
-OTHER: Random(20, 100) > 40
+OTHER: random(20, 100) > 40
 
     SceneStart()
     
@@ -48,15 +48,15 @@ OTHER: Random(20, 100) > 40
         If PostponedVB >= 12
             GovCall = true
             Player.setActorVar(TempDebtVB, TotalDebtVB)
-        Endif
+        EndIf
         If PostponedVC >= 12
             GovCall = true
             Player.setActorVar(TempDebtVC, TotalDebtVC)
-        Endif
+        EndIf
         If PostponedVM >= 12
             GovCall = true
             Player.setActorVar(TempDebtVM, TotalDebtVM)
-        Endif
+        EndIf
         If GovCall 
             Player.animate(call)
             "I receive a call from the Government Revenue Agency, probably because I haven't paid one of my bills for over a year. Otherwise, I don't see why they would call me ..."
@@ -101,12 +101,12 @@ OTHER: Random(20, 100) > 40
                         
                         If 0
                             DontReportVB = true
-                        Elseif 1
+                        ElseIf 1
                             DontReportVBmin = true
                         Else
                             ReportIT = true
-                        Endif
-                    Elseif 1
+                        EndIf
+                    ElseIf 1
                         "Should I pay ..."
                         0::money > TotalDebtVC ::"Overdue bills"
                         1::money > HalfDebtVC ::"Only the minimum payment"
@@ -114,12 +114,12 @@ OTHER: Random(20, 100) > 40
                         
                         If 0
                             DontReportVC = true
-                        Elseif 1
+                        ElseIf 1
                             DontReportVCmin = true
                         Else
                             ReportIT = true
-                        Endif
-                    Elseif 2
+                        EndIf
+                    ElseIf 2
                         "Should I pay ..."
                         0::money > TotalDebtVM ::"Overdue bills"
                         1::money > HalfDebtVM ::"Only the minimum payment"
@@ -127,21 +127,21 @@ OTHER: Random(20, 100) > 40
                         
                         If 0
                             DontReportVM = true
-                        Elseif 1
+                        ElseIf 1
                             DontReportVMmin = true
                         Else
                             ReportIT = true
-                        Endif
-                    Elseif 3
+                        EndIf
+                    ElseIf 3
                         PayAllBills = true
                     Else
                         ReportIT = true
-                    Endif
+                    EndIf
                 Else
                     ReportIT = true
-                Endif
+                EndIf
                 Agent1(Grin)::"Have a nice day!"
-            Elseif WarningPassedVB >= 40 || WarningPassedVC >= 40 || WarningPassedVM >= 40
+            ElseIf WarningPassedVB >= 40 || WarningPassedVC >= 40 || WarningPassedVM >= 40
                 Agent1(Grin)::"Thanks for answering your phone this confirms you are near your phone."
                 Agent1(Grin)::"I just want to let you know that you have reached the 40 days allowed, and you still have not submitted your minimum payment!"
                 Agent1(Grin)::"We have given you ample time to reduce your debt, but you did not seize this opportunity ..."
@@ -167,12 +167,12 @@ OTHER: Random(20, 100) > 40
                         
                         If 0
                             DontReportVB = true
-                        Elseif 1
+                        ElseIf 1
                             DontReportVBmin = true
                         Else
                             ReportIT = true
-                        Endif
-                    Elseif 1
+                        EndIf
+                    ElseIf 1
                         "Should I pay ..."
                         0::money > TotalDebtVC ::"Overdue bills"
                         1::money > HalfDebtVC ::"Only the minimum payment"
@@ -180,12 +180,12 @@ OTHER: Random(20, 100) > 40
                         
                         If 0
                             DontReportVC = true
-                        Elseif 1
+                        ElseIf 1
                             DontReportVCmin = true
                         Else
                             ReportIT = true
-                        Endif
-                    Elseif 2
+                        EndIf
+                    ElseIf 2
                         "Should I pay ..."
                         0::money > TotalDebtVM ::"Overdue bills"
                         1::money > HalfDebtVM ::"Only the minimum payment"
@@ -193,22 +193,22 @@ OTHER: Random(20, 100) > 40
                         
                         If 0
                             DontReportVM = true
-                        Elseif 1
+                        ElseIf 1
                             DontReportVMmin = true
                         Else
                             ReportIT = true
-                        Endif
-                    Elseif 3
+                        EndIf
+                    ElseIf 3
                         PayAllBills = true
                     Else
                         ReportIT = true
-                    Endif
+                    EndIf
                 Else
                     ReportIT = true
-                Endif
+                EndIf
                 Agent1(Grin)::"Have a nice day!"
                 CopsVisit = true
-            Elseif WarningPassedVB >= 30 || WarningPassedVC >= 30 || WarningPassedVM >= 30
+            ElseIf WarningPassedVB >= 30 || WarningPassedVC >= 30 || WarningPassedVM >= 30
                 Agent1(Grin)::"I just want to let you know that you have reached the 30 days allowed, and you still have not submitted your minimum payment!"
                 Agent1(Grin)::"We give you another 10 days to submit your minimum payment."
                 Player(Sad)::"Ok!"
@@ -232,12 +232,12 @@ OTHER: Random(20, 100) > 40
                         
                         If 0
                             DontReportVB = true
-                        Elseif 1
+                        ElseIf 1
                             DontReportVBmin = true
                         Else
                             ReportIT = true
-                        Endif
-                    Elseif 1
+                        EndIf
+                    ElseIf 1
                         "Should I pay ..."
                         0::money > TotalDebtVC ::"Overdue bills"
                         1::money > HalfDebtVC ::"Only the minimum payment"
@@ -245,12 +245,12 @@ OTHER: Random(20, 100) > 40
                         
                         If 0
                             DontReportVC = true
-                        Elseif 1
+                        ElseIf 1
                             DontReportVCmin = true
                         Else
                             ReportIT = true
-                        Endif
-                    Elseif 2
+                        EndIf
+                    ElseIf 2
                         "Should I pay ..."
                         0::money > TotalDebtVM ::"Overdue bills"
                         1::money > HalfDebtVM ::"Only the minimum payment"
@@ -258,31 +258,31 @@ OTHER: Random(20, 100) > 40
                         
                         If 0
                             DontReportVM = true
-                        Elseif 1
+                        ElseIf 1
                             DontReportVMmin = true
                         Else
                             ReportIT = true
-                        Endif
-                    Elseif 3
+                        EndIf
+                    ElseIf 3
                         PayAllBills = true
                     Else
                         ReportIT = true
-                    Endif
+                    EndIf
                 Else
                     ReportIT = true
-                Endif
+                EndIf
                 Agent1(Grin)::"Have a nice day!"
-            Endif
+            EndIf
             If ReportIT
                 Player(Happy)::"Ok, I will send a payment soon ..."
                 If PostponedVB >= 12 && WarningDeptDateVB <= 0
                     Player.setActorVar(rk_VB_WarningDeptDateVB, AgeP)
-                Elseif PostponedVC >= 12 && WarningDeptDateVC <= 0
+                ElseIf PostponedVC >= 12 && WarningDeptDateVC <= 0
                     Player.setActorVar(rk_VB_WarningDeptDateVC, AgeP)
-                Elseif PostponedVM >= 12 && WarningDeptDateVM <= 0
+                ElseIf PostponedVM >= 12 && WarningDeptDateVM <= 0
                     Player.setActorVar(rk_VB_WarningDeptDateVM, AgeP)
-                Endif
-            Endif
+                EndIf
+            EndIf
             If DontReportVB || DontReportVC || DontReportVM
                 If DontReportVB
                     money -= TotalDebtVB
@@ -291,7 +291,7 @@ OTHER: Random(20, 100) > 40
                     Player.setActorVar(rk_VB_WarningDeptDateVB, 0)
                     "<TotalDebtVB_loc> less in my pockets ... "
                     Player.setActorVar(rk_VB_TempDebtVB, 0)
-                Endif
+                EndIf
                 If DontReportVC
                     money -= TotalDebtVC
                     Player.setActorVar(rk_VB_TotalDebtVC, 0)
@@ -299,7 +299,7 @@ OTHER: Random(20, 100) > 40
                     Player.setActorVar(rk_VB_WarningDeptDateVC, 0)
                     "<TotalDebtVC_loc> less in my pockets ... "
                     Player.setActorVar(rk_VB_TempDebtVC, 0)
-                Endif
+                EndIf
                 If DontReportVM
                     money -= TotalDebtVM
                     Player.setActorVar(rk_VB_TotalDebtVM, 0)
@@ -307,8 +307,8 @@ OTHER: Random(20, 100) > 40
                     Player.setActorVar(rk_VB_WarningDeptDateVM, 0)
                     "<TotalDebtVM_loc> less in my pockets ... "
                     Player.setActorVar(rk_VB_TempDebtVM, 0)
-                Endif
-            Endif
+                EndIf
+            EndIf
             If DontReportVBmin || DontReportVCmin || DontReportVMmin
                 If DontReportVBmin
                     money -= HalfDebtVB
@@ -316,22 +316,22 @@ OTHER: Random(20, 100) > 40
                     Player.setActorVar(rk_VB_TotalDebtVB, Result)
                     Player.setActorVar(rk_VB_PostponedVB, 0)
                     "<HalfDebtVB_loc> less in my pockets ... "
-                Endif
+                EndIf
                 If DontReportVCmin
                     money -= HalfDebtVC
                     Result = TotalDebtVC - HalfDebtVC
                     Player.setActorVar(rk_VB_TotalDebtVC, Result)
                     Player.setActorVar(rk_VB_PostponedVC, 0)
                     "<HalfDebtVC_loc> less in my pockets ... "
-                Endif
+                EndIf
                 If DontReportVMmin
                     money -= HalfDebtVM
                     Result = TotalDebtVM - HalfDebtVM
                     Player.setActorVar(rk_VB_TotalDebtVM, Result)
                     Player.setActorVar(rk_VB_PostponedVM, 0)
                     "<HalfDebtVM_loc> less in my pockets ... "
-                Endif
-            Endif
+                EndIf
+            EndIf
             If PayAllBills
                 money -= TotalDebtAllV
                 Player.setActorVar(rk_VB_TotalDebtVB, 0)
@@ -348,9 +348,9 @@ OTHER: Random(20, 100) > 40
                 Player.setActorVar(rk_VB_TempDebtVB, 0)
                 Player.setActorVar(rk_VB_TempDebtVC, 0)
                 Player.setActorVar(rk_VB_TempDebtVM, 0)
-            Endif
+            EndIf
             Player.animate()
-        Endif
+        EndIf
         If CopsVisit
             Cop1 = generatePersonTemporary()
             Cop2 = generatePersonTemporary()
@@ -372,7 +372,7 @@ OTHER: Random(20, 100) > 40
             1:: "<TextCop>"
             
             If 0
-                If fitness > Random(0, 30)
+                If fitness > random(0, 30)
                     "I managed to lose the cops. Phew, that was close."
                     sneak += 1
                     mood += 2
@@ -390,7 +390,7 @@ OTHER: Random(20, 100) > 40
                         "Pow!"
                         Player.hide()
                         "A cop fired <PoliceMan.his_or_her> gun..."
-                        If Random(0, 30) < fitness
+                        If random(0, 30) < fitness
                             "I managed to dodge the shot. Phew, that was close."
                             sneak += 1
                             mood += 1
@@ -437,8 +437,8 @@ OTHER: Random(20, 100) > 40
                                     Player.setActorVar(rk_VB_PostponedVB, 0)
                                     Player.setActorVar(rk_VB_TotalDebtVB, 0)
                                     MonthToAddS += 30
-                                Endif
-                            Endif
+                                EndIf
+                            EndIf
                             If WarningDeptDateVC >= 40
                                 Cop2(Serene)::"You didn't pay your car debt ..."
                                 Cop2(Serene)::"Can you have at least pay the minimum payment <HalfDebtVB_loc>?"
@@ -460,8 +460,8 @@ OTHER: Random(20, 100) > 40
                                     Player.setActorVar(rk_VB_PostponedVC, 0)
                                     Player.setActorVar(rk_VB_TotalDebtVC, 0)
                                     MonthToAddS += 30
-                                Endif
-                            Endif
+                                EndIf
+                            EndIf
                             If WarningDeptDateVM >= 40
                                 Cop2(Serene)::"You didn't pay your motorcycle debt ..."
                                 Cop2(Serene)::"Can you have at least pay the minimum payment <HalfDebtVM_loc>?"
@@ -483,8 +483,8 @@ OTHER: Random(20, 100) > 40
                                     Player.setActorVar(rk_VB_PostponedVM, 0)
                                     Player.setActorVar(rk_VB_TotalDebtVM, 0)
                                     MonthToAddS += 30
-                                Endif
-                            Endif
+                                EndIf
+                            EndIf
                             Player.modifyActorVar(rk_VB_SmallOffenceCount, 1)
                             If MonthToAddS > 30
                                 Cop1(Grin)::"Yeap! You have won a free vacation in our wonderful prison for <MonthToAddS> day(s)!"
@@ -494,7 +494,7 @@ OTHER: Random(20, 100) > 40
                                 sentence += 30
                                 Cop1(Grin)::"Because you have run instead of not moving ... You have won a free vacation in our wonderful prison for <MonthToAddS> day(s)!"
                                 Player.modifyActorVar(rk_VB_TotalSentences, 30)
-                            Endif
+                            EndIf
                             Player.setActorVar(rk_VB_TempDebtVB, 0)
                             Player.setActorVar(rk_VB_TempDebtVC, 0)
                             Player.setActorVar(rk_VB_TempDebtVM, 0)
@@ -504,7 +504,7 @@ OTHER: Random(20, 100) > 40
                             copfired = 5
                         EndIf
                     EndWhile
-                Endif
+                EndIf
             Else
                 Cop1.show()
                 Cop2.show()
@@ -538,8 +538,8 @@ OTHER: Random(20, 100) > 40
                         Player.setActorVar(rk_VB_PostponedVB, 0)
                         Player.setActorVar(rk_VB_TotalDebtVB, 0)
                         MonthToAddS += 30
-                    Endif
-                Endif
+                    EndIf
+                EndIf
                 If WarningDeptDateVC >= 40
                     Cop2(Serene)::"You didn't pay your car debt ..."
                     Cop2(Serene)::"Can you have at least pay the minimum payment <HalfDebtVB_loc>?"
@@ -561,8 +561,8 @@ OTHER: Random(20, 100) > 40
                         Player.setActorVar(rk_VB_PostponedVC, 0)
                         Player.setActorVar(rk_VB_TotalDebtVC, 0)
                         MonthToAddS += 30
-                    Endif
-                Endif
+                    EndIf
+                EndIf
                 If WarningDeptDateVM >= 40
                     Cop2(Serene)::"You didn't pay your motorcycle debt ..."
                     Cop2(Serene)::"Can you have at least pay the minimum payment <HalfDebtVM_loc>?"
@@ -584,8 +584,8 @@ OTHER: Random(20, 100) > 40
                         Player.setActorVar(rk_VB_PostponedVM, 0)
                         Player.setActorVar(rk_VB_TotalDebtVM, 0)
                         MonthToAddS += 30
-                    Endif
-                Endif
+                    EndIf
+                EndIf
                 If MonthToAddS > 10
                     Cop1(Grin)::"Yeap! You have won a free vacation in our wonderful prison for <MonthToAddS> day(s)!"
                     sentence += MonthToAddS
@@ -598,7 +598,7 @@ OTHER: Random(20, 100) > 40
                     Cop2.hide()
                 Else
                     Cop1(Grin)::"Because you have paid most of your debt ... You are free to go, ... for the moment!"
-                Endif
-            Endif
-        Endif
+                EndIf
+            EndIf
+        EndIf
     SceneEnd()

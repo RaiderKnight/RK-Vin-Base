@@ -1,26 +1,24 @@
 WHAT: all, -work_hourly
-WHERE: restaurant, hairdresser
+WHERE: restaurant, hairdresser, cafe, pub
 WHEN: 0-24
 WHO: none
-OTHER: !Player.isAsexual() && Random(0, 100) < perversion
+OTHER: !Player.isAsexual() && random(0, 100) < perversion
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         Actor = generatePersonTemporary()
         While !Player.isInterestedIn(Actor)
             Actor = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor.dress()
         Actor.show()
         Actor.moveToPerson(Player)
-        
         If WHERE == restaurant
             "I find myself being served by a <Actor.handsome_or_beautiful> <Actor.waiter_or_waitress> called <Actor.name>."
         Else
-            "While getting my hair done, I can't help but notice how hot my haidresser, <Actor.name> is."
-        Endif
+            "While getting my hair done, I can't help but notice how hot my hairdresser, <Actor.name> is."
+        EndIf
         "Should I make my interest known?"
         0:: "Flirt"
         1:: "Stay silent"
@@ -31,7 +29,7 @@ OTHER: !Player.isAsexual() && Random(0, 100) < perversion
                 Actor(Embarrassed):: "You're flattering me ..."
             Else
                 Actor(Angry):: "Please stop ... you're making me uncomfortable."
-            Endif
+            EndIf
             "Should I be even bolder with my advance?"
             0:: "Propose sex"
             1:: "Stop at harmless flirting"
@@ -46,21 +44,21 @@ OTHER: !Player.isAsexual() && Random(0, 100) < perversion
                         Actor:: "Fine then ... I must admit I'm a bit of an exhibitionist myself."
                         Actor:: "I'd better compensate me if I end up losing my job over this though!"
                     Else
-                        Actor:: "We shoudn't do it here. Let's go to the bathroom first."
+                        Actor:: "We shouldn't do it here. Let's go to the bathroom first."
                         setBackground(toilets)
-                    Endif
+                    EndIf
                     Sex(Player, Actor)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
                     EndIf
-                    If !wasCondomUsedDuringLastSex() && Random(0,100)<=3
+                    If !wasCondomUsedDuringLastSex() && random(0,100)<=3
                         contractSTD()
                         "Oh no, I have a STD."
                     EndIf
                 Else
                     Actor:: "I'm sorry, but that's so inappropriate. I'll have to call the manager!"
-                Endif
-            Endif
-        Endif
+                EndIf
+            EndIf
+        EndIf
     SceneEnd() // Improved by Raddeck
     timeout(300, flirt_customer_service_cms)

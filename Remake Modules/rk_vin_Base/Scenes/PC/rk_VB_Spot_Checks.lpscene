@@ -12,26 +12,26 @@ OTHER:
     UrgeToPeeCons = rk_VB_UrgeToPeeCons.getGlobal()
     rk_VB_bomb_threat_cms = rk_VB_bomb_threat_cms.getGlobal()
     rk_VB_bomb_threat_home = rk_VB_bomb_threat_home.getGlobal()
+    Friend = getPerson(rk_VB_ActArrestTagF)
     While Friend.isValid()
         ActArrestTagF = Friend.getActorVar(rk_VB_ActArrestTagF)
     EndWhile
-    Friend = getPerson(rk_VB_ActArrestTagF)
     MeToF = Friend.getActorVar(rk_VB_MeToF)
     FPrison = Friend.getActorVar(tag_FPrison)
     Fsentence = Friend.getActorVar(rk_VB_ActSentence)
     Friendsentence = Friend.getActorVar(rk_VB_Sentence)
+    Dating = getPerson(rk_VB_ActArrestTagD)
     While Dating.isValid()
         ActArrestTagD = Dating.getActorVar(rk_VB_ActArrestTagD)
     EndWhile
-    Dating = getPerson(rk_VB_ActArrestTagD)
     MeToD = Dating.getActorVar(rk_VB_MeToD)
     DPrison = Dating.getActorVar(tag_DPrison)
     Dsentence = Dating.getActorVar(rk_VB_ActSentence)
     Datingsentence = Dating.getActorVar(rk_VB_Sentence)
+    Relative = getPerson(rk_VB_ActArrestTagR)
     While Relative.isValid()
         ActArrestTagR = Relative.getActorVar(rk_VB_ActArrestTagR)
     EndWhile
-    Relative = getPerson(rk_VB_ActArrestTagR)
     MeToR = Relative.getActorVar(rk_VB_MeToR)
     RPrison = Relative.getActorVar(tag_RPrison)
     Rsentence = Relative.getActorVar(rk_VB_ActSentence)
@@ -84,5 +84,20 @@ OTHER:
     EndIf
     If rk_VB_bomb_threat_home == 1 && !isAtHome()
         followUp(rk_VB_Spot_Checks_Result)
+    EndIf
+    napsleep = rk_VB_na_sleep.getGlobal()
+    hasUniRoom = rk_has_Fratroom.getGlobal()
+    RentUnivRoom = rk_VB_RentUnivRoom.getGlobal()
+    If hasUniRoom == 1
+        If napsleep == 1
+            rk_VB_na_sleep.setGlobal(0)
+            followUp(rk_VB_GoToMy_FratRoom)
+        EndIf
+    EndIf
+    If RentUnivRoom == 1
+        If napsleep == 1
+            rk_VB_na_sleep.setGlobal(0)
+            followUp(rk_VB_BackToMy_UNRentRoom)
+        EndIf
     EndIf
     

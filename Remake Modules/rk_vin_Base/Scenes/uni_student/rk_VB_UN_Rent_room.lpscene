@@ -20,9 +20,13 @@ OTHER: none
             UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
             RentUnivRoom = rk_VB_RentUnivRoom.getGlobal()
             Verif = getRent()
-            If PlayerHasHome() || Verif > 0 || RentUnivRoom > 0
+            PTTY = false
+            If PlayerHasHome
+                PTTY = true
+            EndIf
+            If PTTY || RentUnivRoom > 0
                 "You already have a place to live! Let me show you..."
-                moveTo(home)
+                followUp(rk_VB_Go_Back_Home)
             Else
                 Chambre = random(1, 16)
                 Chambre = Chambre.round()
@@ -115,7 +119,7 @@ OTHER: none
                     EndIf
                     If Player.isNaked()
                         GonnaGetFucked = true
-                    ElseIf [!Player.isEquipped(Top) && !Player.isEquipped(Top_Under)] || [!Player.isEquipped(Bottom) && !Player.isEquipped(Bottom_Under)]
+                    ElseIf [!Player.isEquipped(Top) && !Player.isEquipped(Top_Under) && !Player.isEquipped(Outerwear) && !Player.isMale()] || [!Player.isEquipped(Bottom) && !Player.isEquipped(Bottom_Under)]
                         GonnaGetFucked = true
                         GonnaGetFucked2 = true
                     EndIf
@@ -132,7 +136,7 @@ OTHER: none
                             Landlord.animate(socialize)
                             Player.animate(write)
                             "I decided to sign the lease at the current rent. It wasn't too bad a deal after all."
-                            moveHome()
+                            //moveHome()
                             Player:haveUniRoom => 1
                             Landlord.setLandlord()
                             Rent.setRent()
@@ -278,6 +282,7 @@ OTHER: none
                         hadSex = false
                         Chatting = 0
                         Drink1 = 0
+                        partir = false
                         While choice < 99
                             Kissed = false
                             "What should I suggest to do?"
@@ -294,6 +299,7 @@ OTHER: none
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -1)
                                 EndIf
+                                partir = true
                                 followUp(rk_VB_Go_Back_Home)
                             Else
                                 If 0
@@ -496,7 +502,7 @@ OTHER: none
                                     EndIf
                                 EndIf
                             EndIf
-                            If Landlord.isInterestedIn(Player) && Landlord:arousal > 15 && random(0, 100) < 20 && !ActorAskForIt1
+                            If Landlord.isInterestedIn(Player) && Landlord:arousal > 15 && random(0, 100) < 20 && !ActorAskForIt1 && !partir
                                 Landlord(Grin)::"Do you want a handjob, I'm a expert!"
                                 "What I should say?"
                                 0::"Yes"
@@ -529,7 +535,7 @@ OTHER: none
                                     Landlord:rapportwithplayer -= random(0, 1)
                                 EndIf
                             
-                            ElseIf Landlord.isInterestedIn(Player) && Landlord:arousal > 15 && [random(0, 100) > 20.5 && random(0, 100) < 50] && !ActorAskForIt2
+                            ElseIf Landlord.isInterestedIn(Player) && Landlord:arousal > 15 && [random(0, 100) > 20.5 && random(0, 100) < 50] && !ActorAskForIt2 && !partir
                                 Landlord(Grin)::"Do you want a blowjob, I love licking <Player.dick_or_pussy>...!"
                                 "What I should say?"
                                 0::"Yes"
@@ -561,7 +567,7 @@ OTHER: none
                                     Landlord:attractiontoplayer -= random(0, 1)
                                     Landlord:rapportwithplayer -= random(0, 1)
                                 EndIf
-                            ElseIf Landlord.isInterestedIn(Player) && Landlord:arousal > 15 && ActorAskForIt3 < 5
+                            ElseIf Landlord.isInterestedIn(Player) && Landlord:arousal > 15 && ActorAskForIt3 < 5 && !partir
                                 WhichIntox = random(0, 100)
                                 If WhichIntox > 50
                                     Landlord(Grin)::"Do you want to drink alcohol...!"
@@ -615,7 +621,7 @@ OTHER: none
                                         Landlord.animate()
                                     EndIf
                                 EndIf
-                            ElseIf Landlord.isInterestedIn(Player) && Landlord:arousal > 15 && ActorAskForIt4 < 5
+                            ElseIf Landlord.isInterestedIn(Player) && Landlord:arousal > 15 && ActorAskForIt4 < 5 && !partir
                                 Landlord(Grin)::"Do you want to fuck...!"
                                 "What I should say?"
                                 0::"Yes"
@@ -646,7 +652,7 @@ OTHER: none
                                 EndIf
                             EndIf
                             
-                            If Kissed || [Landlord.isInterestedIn(Player) && !hadSex && Landlord:attractiontoplayer > random(0, 200)]
+                            If Kissed || [Landlord.isInterestedIn(Player) && !hadSex && Landlord:attractiontoplayer > random(0, 200)] && !partir
                                 Player(Kiss):: "..."
                                 animatePair(Player, Landlord, Kissing)
                                 Landlord(Kiss):: "..."
@@ -686,7 +692,7 @@ OTHER: none
                                     "I decided to stop it there and not go any further."
                                 EndIf
                                     
-                            ElseIf random(0, 100) < 20
+                            ElseIf random(0, 100) < 20 && !partir
                                 Player(Happy):: "I've gotta go now. Thank you for inviting me."
                                 Landlord(Happy):: "Alright. Thank you for staying. Goodbye!"
                                 "Should I ask to exchange our numbers?"
@@ -740,19 +746,15 @@ OTHER: none
                             Landlord:arousal += 1
                             WantToFucked += 1
                         ElseIf Landlord.isInterestedIn(Player)
-                        
                             HornyLandlordTxt = "uncomfortable and I think you should wear something before someone rape you..."
                             Landlord:attractiontoplayer += random(0, 2)
                             Landlord:rapportwithplayer += random(0, 2)
                             Landlord:arousal += 1
-                        
                         Else
-                        
                             HornyLandlordTxt = "very uncomfortable and I think you should consult a doctor... now leave before I call the cops!"
                             Landlord:attractiontoplayer -= random(0, 5)
                             Landlord:rapportwithplayer -= random(0, 5)
                             CopsWantToFucked = true
-                        
                         EndIf
                         If GonnaGetFucked2
                             Landlord(Curious):: "Quick question before you leave, can you tell me why you're half naked, it's making me <HornyLandlordTxt>"
@@ -766,9 +768,7 @@ OTHER: none
                         99::"Just leave!"
                         
                         If 0
-                        
                             If WantToFucked > 0
-                                
                                 Landlord:perversion += 1
                                 perversion += 1
                                 Landlord(Flirty)::"So I'm I... Let's play!"

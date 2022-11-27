@@ -7,21 +7,25 @@ OTHER: none
     SceneStart()
         If isModEnabled(rk_vin_Base) || isModEnabled(rk_Home_Inventories)
             clearGetList()
+            ETMaison = false
+            If !PlayerHasHome()
+                ETMaison = true
+            EndIf
+            hasUniRoom = rk_has_Fratroom.getGlobal()
+            GUnRoom = rk_VB_setBackgroundRoom.getGlobal()
             hasLivingroom = RE_has_lvingroom.getGlobal()
             hasKitchen = RE_has_kitchen.getGlobal()
             hasOfficeroom = RE_has_officeroom.getGlobal()
             hasSecBedroom = RE_has_secondbedroom.getGlobal()
             hasThirdBedroom = RE_has_thirdbedroom.getGlobal()
-            If !PlayerHasHome()
-                SceneStart()
+            If hasUniRoom == 0 || !ETMaison
                 "You need to find a personal home first!"
-                SceneEnd()
             Else
                 "What do I want to verify?"
                 0::isModEnabled(rk_vin_Base) || isModEnabled(rk_ShopAddons) || isModEnabled(rk_EroticShop)::"Check adult toy box"
                 1::isModEnabled(rk_vin_Base) || isModEnabled(rk_ShopAddons) || isModEnabled(rk_SeaFoodShop) || isModEnabled(rk_IceCreamShop)::"Check freezer"
                 2::"Check garage"
-                3::isModEnabled(rk_vin_Base) || isModEnabled(rk_MoneyMaker) || isModEnabled(rk_ShopAddons) ||  isModEnabled(rk_JewelryShop)::"Check jewelry box"
+                3::isModEnabled(rk_vin_Base) || isModEnabled(rk_MoneyMaker) || isModEnabled(rk_ShopAddons) ||  isModEnabled(rk_JewelryShop)::"Check jewellery box"
                 4::hasKitchen > 0::"Check kitchen"
                 5::hasLivingroom > 0 ::"Check living room"
                 12::"Check my bedroom"

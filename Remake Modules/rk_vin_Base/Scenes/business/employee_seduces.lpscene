@@ -9,7 +9,7 @@ OTHER: none
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        "The best thing about being a business owner is that some of the more attractive employees tend to be a lot more flirtatous to me than the case if I wasn't their boss."
+        "The best thing about being a business owner is that some of the more attractive employees tend to be a lot more flirtatious to me than the case if I wasn't their boss."
         "One employee in particular, <Actor.name>, has been flirting intensely with me recently. <Actor.He_or_She> almost a have a brown nose, if you know what I mean..."
         Actor:attractiontoplayer += 3
         "However, I couldn't tell if <Actor.he_or_she> is just acting that way to give me false hope and benefit from any bias I might give <Actor.him_or_her> at work. I don't know if <Actor.he_or_she> would chicken out if things actually get heated."
@@ -184,7 +184,7 @@ OTHER: none
                                 99::"I changed my mind!"
                                 
                                 If 0
-                                    "I manage to strip off <Actor.his_or_her> feets!"
+                                    "I manage to strip off <Actor.his_or_her> feet!"
                                     Actor.stripOne(Foot)
                                     StrippingA += 1
                                 ElseIf 1
@@ -196,25 +196,18 @@ OTHER: none
                                     Actor.stripOne(Outerwear)
                                     StrippingA += 1
                                 ElseIf 3
-                                
                                     "I manage to take off <Actor.his_or_her> top clothes!"
                                     Actor.stripOne(Top)
-                                    
-                                
                                 ElseIf 4
                                 
-                                    "I manage to take off <Actor.his_or_her> headwear!"
+                                    "I manage to take off <Actor.his_or_her> heads wear!"
                                     Actor.stripOne(Headwear)
-                                    
                                 ElseIf 5
                                 
-                                    "I manage to take off <Actor.his_or_her> eyewear!"
+                                    "I manage to take off <Actor.his_or_her> eyes wear!"
                                     Actor.stripOne(Eyewear)
-                                    
                                 EndIf
-                            
                             ElseIf 1
-                            
                                 StealChance = random(1, 10)
                                 StealChance = StealChance.round()
                                 MoneyFoundSmall = random(1, 200)
@@ -224,7 +217,6 @@ OTHER: none
                                 karma -= 1
                                 
                                 If StealChance == 1
-                                
                                     "I found <MoneyFoundSmall_loc> inside <Actor.his_or_her> pockets and <Actor.his_or_her> stuffs..."
                                     money += MoneyFoundSmall
                                     mood += 5
@@ -241,7 +233,6 @@ OTHER: none
                                     mood += 1
                                     
                                 ElseIf StealChance == 4
-                                
                                     "I found 6 condoms and 20 pills inside <Actor.his_or_her> pockets and <Actor.his_or_her> stuffs..."
                                     stock_condom += 6
                                     stock_pill += 20
@@ -276,11 +267,11 @@ OTHER: none
                             ElseIf 2
                                 karma -= 5
                                 "Seeing that <Actor.his_or_her> is too drunk to account for what is going on around <Actor.him_or_her>, I take this opportunity to rape <Actor.his_or_her> outright ... "
-                                Player:perversion += random(2, 5)
+                                perversion += random(2, 5)
                                 "So I pull down <Actor.his_or_her> pants and start have fun with that wasted <Actor.guy_or_girl>..."
                                 Actor.makeInterested(Player)
                                 Sex(Player, Actor)
-                                Player:arousal -= 10
+                                arousal -= 10
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf

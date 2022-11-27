@@ -1,4 +1,4 @@
-WHAT: all, -sleep, -nap
+WHAT: all, -sleep_hotel, -nap_hotel, -rk_VB_small_sleep
 WHERE: fraternity
 WHEN: 18-24
 WHO: none
@@ -77,537 +77,598 @@ OTHER: none
         1:: "Chicken out"
         
         If 0
-            Guest1 = getSpecific(Fraternity)
-            If !Guest1.isValid() || Guest1.isSameGender(Player)
-                Guest1 = generatePersonTemporary()
-                While Guest1.isSameGender(Player)
-                    Guest1 = generatePersonTemporary()
+            Guest1 = getPerson(rk_VB_tag_Student)
+            If !Player.isMale()
+                While Guest1.isValid() && Guest1.isMale()
+                    Guest1 = getPerson(rk_VB_tag_ExeSoroS)
                 EndWhile
-                Guest1.makePermanent()
-                Guest1:age => random(18, 22)
-                Guest1.randomizeHairs()
-                Guest1.randomizeRace()
-                Guest1.randomizeFace()
-                //Guest1.setDifferentMajor()
-                If isModEnabled(rk_vin_Base)
-                    AcID = Guest1.getID()
-                    Guest1.setActorVar(rk_VB_tag_Student, 1)
-                    ChoixDsonCours = random(1, 20)
-                    ChoixDsonCours = ChoixDsonCours.round()
-                    While ChoixDsonCours == choiceCourseMajorT
-                        If choiceCourseMajorT == 1
-                            Guest1.setActorVar(rk_VB_Architecture_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TAR, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TAR, AcID)
-                        ElseIf choiceCourseMajorT == 2
-                            Guest1.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TCE, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TCE, AcID)
-                        ElseIf choiceCourseMajorT == 3
-                            Guest1.setActorVar(rk_VB_Classics_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TCL, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TCL, AcID)
-                        ElseIf choiceCourseMajorT == 17
-                            Guest1.setActorVar(rk_VB_Dental_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TDM, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TDM, AcID)
-                        ElseIf choiceCourseMajorT == 4
-                            Guest1.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TCS, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TCS, AcID)
-                        ElseIf choiceCourseMajorT == 5
-                            Guest1.setActorVar(rk_VB_Economics_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TEC, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TEC, AcID)
-                        ElseIf choiceCourseMajorT == 6
-                            Guest1.setActorVar(rk_VB_Education_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TED, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TED, AcID)
-                        ElseIf choiceCourseMajorT == 7
-                            Guest1.setActorVar(rk_VB_English_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TEN, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TEN, AcID)
-                        ElseIf choiceCourseMajorT == 8
-                            Guest1.setActorVar(rk_VB_Geography_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TGE, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TGE, AcID)
-                        ElseIf choiceCourseMajorT == 9
-                            Guest1.setActorVar(rk_VB_History_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_THI, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_THI, AcID)
-                        ElseIf choiceCourseMajorT == 10
-                            Guest1.setActorVar(rk_VB_Law_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TLA, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TLA, AcID)
-                        ElseIf choiceCourseMajorT == 11
-                            Guest1.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TMA, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TMA, AcID)
-                        ElseIf choiceCourseMajorT == 12
-                            Guest1.setActorVar(rk_VB_Medicine_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TME, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TME, AcID)
-                        ElseIf choiceCourseMajorT == 13
-                            Guest1.setActorVar(rk_VB_Music_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TMU, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TMU, AcID)
-                        ElseIf choiceCourseMajorT == 14
-                            Guest1.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TPH, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TPH, AcID)
-                        ElseIf choiceCourseMajorT == 15
-                            Guest1.setActorVar(rk_VB_Psychology_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TPS, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TPS, AcID)
-                        ElseIf choiceCourseMajorT == 16
-                            Guest1.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TPOL, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
-                        ElseIf choiceCourseMajorT == 18
-                            Guest1.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TSM, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TSM, AcID)
-                        ElseIf choiceCourseMajorT == 19
-                            Guest1.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TTT, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TTT, AcID)
-                        ElseIf choiceCourseMajorT == 20
-                            Guest1.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
-                            Guest1.setActorVar(rk_VB_tag_TVE, 1)
-                            Guest1.setActorVar(rk_VB_AcIdCC_TVE, AcID)
-                        EndIf
-                    EndWhile
-                EndIf
+            Else
+                While Guest1.isValid() && !Guest1.isMale()
+                    Guest1 = getPerson(rk_VB_tag_ExeFratF)
+                EndWhile
             EndIf
             Guest1.dress()
             "<Guest1.name> showed up."
             Guest1.show(1)
-            Guest2 = getSpecific(Fraternity)
-            If !Guest2.isValid() || Guest2.isSameGender(Player)
-                Guest2 = generatePersonTemporary()
-                While Guest2.isSameGender(Player)
-                    Guest2 = generatePersonTemporary()
+            Guest2 = getPerson(rk_VB_tag_Student)
+            If !Player.isMale()
+                While Guest2.isValid() && Guest2.isMale()
+                    Guest2 = getPerson(rk_VB_tag_ExeSoroS)
                 EndWhile
-                Guest2.makePermanent()
-                Guest2:age => random(18, 22)
-                Guest2.randomizeHairs()
-                Guest2.randomizeRace()
-                Guest2.randomizeFace()
-                //Guest2.setDifferentMajor()
-                If isModEnabled(rk_vin_Base)
-                    AcID = Guest2.getID()
-                    Guest2.setActorVar(rk_VB_tag_Student, 1)
-                    ChoixDsonCours = random(1, 20)
-                    ChoixDsonCours = ChoixDsonCours.round()
-                    While ChoixDsonCours == choiceCourseMajorT
-                        If choiceCourseMajorT == 1
-                            Guest2.setActorVar(rk_VB_Architecture_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TAR, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TAR, AcID)
-                        ElseIf choiceCourseMajorT == 2
-                            Guest2.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TCE, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TCE, AcID)
-                        ElseIf choiceCourseMajorT == 3
-                            Guest2.setActorVar(rk_VB_Classics_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TCL, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TCL, AcID)
-                        ElseIf choiceCourseMajorT == 17
-                            Guest2.setActorVar(rk_VB_Dental_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TDM, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TDM, AcID)
-                        ElseIf choiceCourseMajorT == 4
-                            Guest2.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TCS, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TCS, AcID)
-                        ElseIf choiceCourseMajorT == 5
-                            Guest2.setActorVar(rk_VB_Economics_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TEC, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TEC, AcID)
-                        ElseIf choiceCourseMajorT == 6
-                            Guest2.setActorVar(rk_VB_Education_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TED, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TED, AcID)
-                        ElseIf choiceCourseMajorT == 7
-                            Guest2.setActorVar(rk_VB_English_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TEN, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TEN, AcID)
-                        ElseIf choiceCourseMajorT == 8
-                            Guest2.setActorVar(rk_VB_Geography_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TGE, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TGE, AcID)
-                        ElseIf choiceCourseMajorT == 9
-                            Guest2.setActorVar(rk_VB_History_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_THI, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_THI, AcID)
-                        ElseIf choiceCourseMajorT == 10
-                            Guest2.setActorVar(rk_VB_Law_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TLA, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TLA, AcID)
-                        ElseIf choiceCourseMajorT == 11
-                            Guest2.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TMA, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TMA, AcID)
-                        ElseIf choiceCourseMajorT == 12
-                            Guest2.setActorVar(rk_VB_Medicine_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TME, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TME, AcID)
-                        ElseIf choiceCourseMajorT == 13
-                            Guest2.setActorVar(rk_VB_Music_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TMU, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TMU, AcID)
-                        ElseIf choiceCourseMajorT == 14
-                            Guest2.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TPH, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TPH, AcID)
-                        ElseIf choiceCourseMajorT == 15
-                            Guest2.setActorVar(rk_VB_Psychology_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TPS, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TPS, AcID)
-                        ElseIf choiceCourseMajorT == 16
-                            Guest2.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TPOL, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
-                        ElseIf choiceCourseMajorT == 18
-                            Guest2.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TSM, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TSM, AcID)
-                        ElseIf choiceCourseMajorT == 19
-                            Guest2.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TTT, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TTT, AcID)
-                        ElseIf choiceCourseMajorT == 20
-                            Guest2.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
-                            Guest2.setActorVar(rk_VB_tag_TVE, 1)
-                            Guest2.setActorVar(rk_VB_AcIdCC_TVE, AcID)
-                        EndIf
-                    EndWhile
-                EndIf
+            Else
+                While Guest2.isValid() && !Guest2.isMale()
+                    Guest2 = getPerson(rk_VB_tag_ExeFratF)
+                EndWhile
             EndIf
             Guest2.dress()     
             "<Guest2.name> came in."
             Guest2.show(2)
-            Guest3 = getSpecific(Fraternity)
-            If !Guest3.isValid() || Guest3.isSameGender(Player)
-                Guest3 = generatePersonTemporary()
-                While Guest3.isSameGender(Player)
-                    Guest3 = generatePersonTemporary()
+            Guest3 = getPerson(rk_VB_tag_Student)
+            If !Player.isMale()
+                While Guest3.isValid() && Guest3.isMale()
+                    Guest3 = getPerson(rk_VB_tag_ExeSoroS)
                 EndWhile
-                Guest3:age => random(18, 22)
-                Guest3.randomizeHairs()
-                Guest3.randomizeRace()
-                Guest3.randomizeFace()
-                //Guest3.setDifferentMajor()
-                If isModEnabled(rk_vin_Base)
-                    Guest3.makePermanent()
-                    AcID = Guest3.getID()
-                    Guest3.setActorVar(rk_VB_tag_Student, 1)
-                    ChoixDsonCours = random(1, 20)
-                    ChoixDsonCours = ChoixDsonCours.round()
-                    While ChoixDsonCours == choiceCourseMajorT
-                        If choiceCourseMajorT == 1
-                            Guest3.setActorVar(rk_VB_Architecture_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TAR, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TAR, AcID)
-                        ElseIf choiceCourseMajorT == 2
-                            Guest3.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TCE, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TCE, AcID)
-                        ElseIf choiceCourseMajorT == 3
-                            Guest3.setActorVar(rk_VB_Classics_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TCL, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TCL, AcID)
-                        ElseIf choiceCourseMajorT == 17
-                            Guest3.setActorVar(rk_VB_Dental_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TDM, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TDM, AcID)
-                        ElseIf choiceCourseMajorT == 4
-                            Guest3.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TCS, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TCS, AcID)
-                        ElseIf choiceCourseMajorT == 5
-                            Guest3.setActorVar(rk_VB_Economics_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TEC, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TEC, AcID)
-                        ElseIf choiceCourseMajorT == 6
-                            Guest3.setActorVar(rk_VB_Education_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TED, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TED, AcID)
-                        ElseIf choiceCourseMajorT == 7
-                            Guest3.setActorVar(rk_VB_English_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TEN, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TEN, AcID)
-                        ElseIf choiceCourseMajorT == 8
-                            Guest3.setActorVar(rk_VB_Geography_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TGE, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TGE, AcID)
-                        ElseIf choiceCourseMajorT == 9
-                            Guest3.setActorVar(rk_VB_History_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_THI, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_THI, AcID)
-                        ElseIf choiceCourseMajorT == 10
-                            Guest3.setActorVar(rk_VB_Law_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TLA, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TLA, AcID)
-                        ElseIf choiceCourseMajorT == 11
-                            Guest3.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TMA, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TMA, AcID)
-                        ElseIf choiceCourseMajorT == 12
-                            Guest3.setActorVar(rk_VB_Medicine_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TME, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TME, AcID)
-                        ElseIf choiceCourseMajorT == 13
-                            Guest3.setActorVar(rk_VB_Music_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TMU, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TMU, AcID)
-                        ElseIf choiceCourseMajorT == 14
-                            Guest3.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TPH, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TPH, AcID)
-                        ElseIf choiceCourseMajorT == 15
-                            Guest3.setActorVar(rk_VB_Psychology_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TPS, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TPS, AcID)
-                        ElseIf choiceCourseMajorT == 16
-                            Guest3.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TPOL, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
-                        ElseIf choiceCourseMajorT == 18
-                            Guest3.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TSM, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TSM, AcID)
-                        ElseIf choiceCourseMajorT == 19
-                            Guest3.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TTT, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TTT, AcID)
-                        ElseIf choiceCourseMajorT == 20
-                            Guest3.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
-                            Guest3.setActorVar(rk_VB_tag_TVE, 1)
-                            Guest3.setActorVar(rk_VB_AcIdCC_TVE, AcID)
-                        EndIf
-                    EndWhile
-                EndIf
+            Else
+                While Guest3.isValid() && !Guest3.isMale()
+                    Guest3 = getPerson(rk_VB_tag_ExeFratF)
+                EndWhile
             EndIf
             Guest3.dress()
             "<Guest3.name> arrived."
             Guest3.show(3)
-            Guest4 = getSpecific(Fraternity)
-            If !Guest4.isValid() || Guest4.isSameGender(Player)
-                Guest4 = generatePersonTemporary()
-                While Guest4.isSameGender(Player)
-                    Guest4 = generatePersonTemporary()
+            Guest4 = getPerson(rk_VB_tag_Student)
+            If !Player.isMale()
+                While Guest4.isValid() && Guest4.isMale()
+                    Guest4 = getPerson(rk_VB_tag_ExeSoroS)
                 EndWhile
-                Guest4:age => random(18, 22)
-                Guest4.randomizeHairs()
-                Guest4.randomizeRace()
-                Guest4.randomizeFace()
-                //Guest4.setDifferentMajor()
-                If isModEnabled(rk_vin_Base)
-                    Guest4.makePermanent()
-                    AcID = Guest4.getID()
-                    Guest4.setActorVar(rk_VB_tag_Student, 1)
-                    ChoixDsonCours = random(1, 20)
-                    ChoixDsonCours = ChoixDsonCours.round()
-                    While ChoixDsonCours == choiceCourseMajorT
-                        If choiceCourseMajorT == 1
-                            Guest4.setActorVar(rk_VB_Architecture_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TAR, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TAR, AcID)
-                        ElseIf choiceCourseMajorT == 2
-                            Guest4.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TCE, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TCE, AcID)
-                        ElseIf choiceCourseMajorT == 3
-                            Guest4.setActorVar(rk_VB_Classics_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TCL, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TCL, AcID)
-                        ElseIf choiceCourseMajorT == 17
-                            Guest4.setActorVar(rk_VB_Dental_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TDM, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TDM, AcID)
-                        ElseIf choiceCourseMajorT == 4
-                            Guest4.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TCS, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TCS, AcID)
-                        ElseIf choiceCourseMajorT == 5
-                            Guest4.setActorVar(rk_VB_Economics_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TEC, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TEC, AcID)
-                        ElseIf choiceCourseMajorT == 6
-                            Guest4.setActorVar(rk_VB_Education_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TED, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TED, AcID)
-                        ElseIf choiceCourseMajorT == 7
-                            Guest4.setActorVar(rk_VB_English_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TEN, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TEN, AcID)
-                        ElseIf choiceCourseMajorT == 8
-                            Guest4.setActorVar(rk_VB_Geography_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TGE, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TGE, AcID)
-                        ElseIf choiceCourseMajorT == 9
-                            Guest4.setActorVar(rk_VB_History_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_THI, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_THI, AcID)
-                        ElseIf choiceCourseMajorT == 10
-                            Guest4.setActorVar(rk_VB_Law_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TLA, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TLA, AcID)
-                        ElseIf choiceCourseMajorT == 11
-                            Guest4.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TMA, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TMA, AcID)
-                        ElseIf choiceCourseMajorT == 12
-                            Guest4.setActorVar(rk_VB_Medicine_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TME, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TME, AcID)
-                        ElseIf choiceCourseMajorT == 13
-                            Guest4.setActorVar(rk_VB_Music_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TMU, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TMU, AcID)
-                        ElseIf choiceCourseMajorT == 14
-                            Guest4.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TPH, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TPH, AcID)
-                        ElseIf choiceCourseMajorT == 15
-                            Guest4.setActorVar(rk_VB_Psychology_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TPS, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TPS, AcID)
-                        ElseIf choiceCourseMajorT == 16
-                            Guest4.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TPOL, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
-                        ElseIf choiceCourseMajorT == 18
-                            Guest4.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TSM, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TSM, AcID)
-                        ElseIf choiceCourseMajorT == 19
-                            Guest4.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TTT, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TTT, AcID)
-                        ElseIf choiceCourseMajorT == 20
-                            Guest4.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
-                            Guest4.setActorVar(rk_VB_tag_TVE, 1)
-                            Guest4.setActorVar(rk_VB_AcIdCC_TVE, AcID)
-                        EndIf
-                    EndWhile
-                EndIf
-            EndIf        
+            Else
+                While Guest4.isValid() && !Guest4.isMale()
+                    Guest4 = getPerson(rk_VB_tag_ExeFratF)
+                EndWhile
+            EndIf
             Guest4.dress()
             "Another guest invited was <Guest4.name>."
             Guest4.show(4)
-            Guest5 = getSpecific(Fraternity)
-            If !Guest5.isValid() || Guest5.isSameGender(Player)
-                Guest5 = generatePersonTemporary()
-                While Guest5.isSameGender(Player)
-                    Guest5 = generatePersonTemporary()
+            Guest5 = getPerson(rk_VB_tag_Student)
+            If !Player.isMale()
+                While Guest5.isValid() && Guest5.isMale()
+                    Guest5 = getPerson(rk_VB_tag_ExeSoroS)
                 EndWhile
-                Guest5:age => random(18, 22)
-                Guest5.randomizeHairs()
-                Guest5.randomizeRace()
-                Guest5.randomizeFace()
-                //Guest5.setDifferentMajor()
-                If isModEnabled(rk_vin_Base)
-                    Guest5.makePermanent()
-                    AcID = Guest5.getID()
-                    Guest5.setActorVar(rk_VB_tag_Student, 1)
-                    ChoixDsonCours = random(1, 20)
-                    ChoixDsonCours = ChoixDsonCours.round()
-                    While ChoixDsonCours == choiceCourseMajorT
-                        If choiceCourseMajorT == 1
-                            Guest5.setActorVar(rk_VB_Architecture_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TAR, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TAR, AcID)
-                        ElseIf choiceCourseMajorT == 2
-                            Guest5.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TCE, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TCE, AcID)
-                        ElseIf choiceCourseMajorT == 3
-                            Guest5.setActorVar(rk_VB_Classics_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TCL, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TCL, AcID)
-                        ElseIf choiceCourseMajorT == 17
-                            Guest5.setActorVar(rk_VB_Dental_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TDM, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TDM, AcID)
-                        ElseIf choiceCourseMajorT == 4
-                            Guest5.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TCS, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TCS, AcID)
-                        ElseIf choiceCourseMajorT == 5
-                            Guest5.setActorVar(rk_VB_Economics_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TEC, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TEC, AcID)
-                        ElseIf choiceCourseMajorT == 6
-                            Guest5.setActorVar(rk_VB_Education_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TED, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TED, AcID)
-                        ElseIf choiceCourseMajorT == 7
-                            Guest5.setActorVar(rk_VB_English_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TEN, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TEN, AcID)
-                        ElseIf choiceCourseMajorT == 8
-                            Guest5.setActorVar(rk_VB_Geography_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TGE, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TGE, AcID)
-                        ElseIf choiceCourseMajorT == 9
-                            Guest5.setActorVar(rk_VB_History_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_THI, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_THI, AcID)
-                        ElseIf choiceCourseMajorT == 10
-                            Guest5.setActorVar(rk_VB_Law_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TLA, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TLA, AcID)
-                        ElseIf choiceCourseMajorT == 11
-                            Guest5.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TMA, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TMA, AcID)
-                        ElseIf choiceCourseMajorT == 12
-                            Guest5.setActorVar(rk_VB_Medicine_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TME, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TME, AcID)
-                        ElseIf choiceCourseMajorT == 13
-                            Guest5.setActorVar(rk_VB_Music_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TMU, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TMU, AcID)
-                        ElseIf choiceCourseMajorT == 14
-                            Guest5.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TPH, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TPH, AcID)
-                        ElseIf choiceCourseMajorT == 15
-                            Guest5.setActorVar(rk_VB_Psychology_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TPS, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TPS, AcID)
-                        ElseIf choiceCourseMajorT == 16
-                            Guest5.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TPOL, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
-                        ElseIf choiceCourseMajorT == 18
-                            Guest5.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TSM, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TSM, AcID)
-                        ElseIf choiceCourseMajorT == 19
-                            Guest5.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TTT, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TTT, AcID)
-                        ElseIf choiceCourseMajorT == 20
-                            Guest5.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
-                            Guest5.setActorVar(rk_VB_tag_TVE, 1)
-                            Guest5.setActorVar(rk_VB_AcIdCC_TVE, AcID)
-                        EndIf
-                    EndWhile
-                EndIf
-            EndIf        
+            Else
+                While Guest5.isValid() && !Guest5.isMale()
+                    Guest5 = getPerson(rk_VB_tag_ExeFratF)
+                EndWhile
+            EndIf
             Guest5.dress()
-            "<Guest5.name> was the final guest to arrive at the party."
+            "<Guest5.name> was the final frat guest to arrive at the party."
             Guest5.show(5)
+            If !Player.isMale()
+                Guest3(Happy)::"Girls! Guys are arriving ...!"
+            Else
+                Guest3(Happy)::"Guys! Girls are arriving ...!"
+            EndIf
+            If !Player.isMale()
+                Guest11.generatePersonTemporary()
+                While !Guest11.isMale()
+                    Guest11.generatePersonTemporary()
+                EndWhile
+                Guest21.generatePersonTemporary()
+                While !Guest21.isMale()
+                    Guest21.generatePersonTemporary()
+                EndWhile
+                Guest31.generatePersonTemporary()
+                While !Guest31.isMale()
+                    Guest31.generatePersonTemporary()
+                EndWhile
+                Guest41.generatePersonTemporary()
+                While !Guest41.isMale()
+                    Guest41.generatePersonTemporary()
+                EndWhile
+                Guest51.generatePersonTemporary()
+                While !Guest51.isMale()
+                    Guest51.generatePersonTemporary()
+                EndWhile
+                Guest11.setActorVar(rk_VB_tag_ExeFratF, 1)
+                Guest21.setActorVar(rk_VB_tag_ExeFratF, 1)
+                Guest31.setActorVar(rk_VB_tag_ExeFratF, 1)
+                Guest41.setActorVar(rk_VB_tag_ExeFratF, 1)
+                Guest51.setActorVar(rk_VB_tag_ExeFratF, 1)
+            Else
+                Guest11.generatePersonTemporary()
+                While Guest11.isMale()
+                    Guest11.generatePersonTemporary()
+                EndWhile
+                Guest21.generatePersonTemporary()
+                While Guest21.isMale()
+                    Guest21.generatePersonTemporary()
+                EndWhile
+                Guest31.generatePersonTemporary()
+                While Guest31.isMale()
+                    Guest31.generatePersonTemporary()
+                EndWhile
+                Guest41.generatePersonTemporary()
+                While Guest41.isMale()
+                    Guest41.generatePersonTemporary()
+                EndWhile
+                Guest51.generatePersonTemporary()
+                While Guest51.isMale()
+                    Guest51.generatePersonTemporary()
+                EndWhile
+                Guest11.setActorVar(rk_VB_tag_ExeSoroS, 1)
+                Guest21.setActorVar(rk_VB_tag_ExeSoroS, 1)
+                Guest31.setActorVar(rk_VB_tag_ExeSoroS, 1)
+                Guest41.setActorVar(rk_VB_tag_ExeSoroS, 1)
+                Guest51.setActorVar(rk_VB_tag_ExeSoroS, 1)
+            EndIf
+            Guest11.setActorVar(rk_VB_tag_Student, 1)
+            Guest21.setActorVar(rk_VB_tag_Student, 1)
+            Guest31.setActorVar(rk_VB_tag_Student, 1)
+            Guest41.setActorVar(rk_VB_tag_Student, 1)
+            Guest51.setActorVar(rk_VB_tag_Student, 1)
+            
+            AcID1 = Guest11.getID()
+            AcID2 = Guest21.getID()
+            AcID3 = Guest31.getID()
+            AcID4 = Guest41.getID()
+            AcID5 = Guest51.getID()
+            
+            ChoixDsonCours1 = random(1, 20)
+            ChoixDsonCours1 = ChoixDsonCours1.round()
+            ChoixDsonCours2 = random(1, 20)
+            ChoixDsonCours2 = ChoixDsonCours2.round()
+            ChoixDsonCours3 = random(1, 20)
+            ChoixDsonCours3 = ChoixDsonCours3.round()
+            ChoixDsonCours4 = random(1, 20)
+            ChoixDsonCours4 = ChoixDsonCours4.round()
+            ChoixDsonCours5 = random(1, 20)
+            ChoixDsonCours5 = ChoixDsonCours5.round()
+            
+            If ChoixDsonCours1 == 1
+                Guest11.setActorVar(rk_VB_Architecture_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TAR, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TAR, AcID)
+            ElseIf ChoixDsonCours1 == 2
+                Guest11.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TCE, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TCE, AcID)
+            ElseIf ChoixDsonCours1 == 3
+                Guest11.setActorVar(rk_VB_Classics_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TCL, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TCL, AcID)
+            ElseIf ChoixDsonCours1 == 31
+                Guest11.setActorVar(rk_VB_Dental_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TDM, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TDM, AcID)
+            ElseIf ChoixDsonCours1 == 4
+                Guest11.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TCS, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TCS, AcID)
+            ElseIf ChoixDsonCours1 == 5
+                Guest11.setActorVar(rk_VB_Economics_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TEC, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TEC, AcID)
+            ElseIf ChoixDsonCours1 == 6
+                Guest11.setActorVar(rk_VB_Education_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TED, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TED, AcID)
+            ElseIf ChoixDsonCours1 == 7
+                Guest11.setActorVar(rk_VB_English_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TEN, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TEN, AcID)
+            ElseIf ChoixDsonCours1 == 8
+                Guest11.setActorVar(rk_VB_Geography_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TGE, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TGE, AcID)
+            ElseIf ChoixDsonCours1 == 9
+                Guest11.setActorVar(rk_VB_History_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_THI, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_THI, AcID)
+            ElseIf ChoixDsonCours1 == 10
+                Guest11.setActorVar(rk_VB_Law_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TLA, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TLA, AcID)
+            ElseIf ChoixDsonCours1 == 11
+                Guest11.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TMA, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TMA, AcID)
+            ElseIf ChoixDsonCours1 == 12
+                Guest11.setActorVar(rk_VB_Medicine_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TME, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TME, AcID)
+            ElseIf ChoixDsonCours1 == 13
+                Guest11.setActorVar(rk_VB_Music_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TMU, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TMU, AcID)
+            ElseIf ChoixDsonCours1 == 14
+                Guest11.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TPH, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TPH, AcID)
+            ElseIf ChoixDsonCours1 == 15
+                Guest11.setActorVar(rk_VB_Psychology_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TPS, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TPS, AcID)
+            ElseIf ChoixDsonCours1 == 16
+                Guest11.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TPOL, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
+            ElseIf ChoixDsonCours1 == 60
+                Guest11.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TSM, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TSM, AcID)
+            ElseIf ChoixDsonCours1 == 80
+                Guest11.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TTT, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TTT, AcID)
+            ElseIf ChoixDsonCours1 == 90
+                Guest11.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
+                Guest11.setActorVar(rk_VB_tag_TVE, 1)
+                Guest11.setActorVar(rk_VB_AcIdCC_TVE, AcID)
+            EndIf
+            
+            If ChoixDsonCours2 == 1
+                Guest21.setActorVar(rk_VB_Architecture_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TAR, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TAR, AcID)
+            ElseIf ChoixDsonCours2 == 2
+                Guest21.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TCE, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TCE, AcID)
+            ElseIf ChoixDsonCours2 == 3
+                Guest21.setActorVar(rk_VB_Classics_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TCL, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TCL, AcID)
+            ElseIf ChoixDsonCours2 == 31
+                Guest21.setActorVar(rk_VB_Dental_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TDM, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TDM, AcID)
+            ElseIf ChoixDsonCours2 == 4
+                Guest21.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TCS, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TCS, AcID)
+            ElseIf ChoixDsonCours2 == 5
+                Guest21.setActorVar(rk_VB_Economics_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TEC, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TEC, AcID)
+            ElseIf ChoixDsonCours2 == 6
+                Guest21.setActorVar(rk_VB_Education_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TED, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TED, AcID)
+            ElseIf ChoixDsonCours2 == 7
+                Guest21.setActorVar(rk_VB_English_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TEN, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TEN, AcID)
+            ElseIf ChoixDsonCours2 == 8
+                Guest21.setActorVar(rk_VB_Geography_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TGE, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TGE, AcID)
+            ElseIf ChoixDsonCours2 == 9
+                Guest21.setActorVar(rk_VB_History_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_THI, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_THI, AcID)
+            ElseIf ChoixDsonCours2 == 10
+                Guest21.setActorVar(rk_VB_Law_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TLA, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TLA, AcID)
+            ElseIf ChoixDsonCours2 == 11
+                Guest21.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TMA, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TMA, AcID)
+            ElseIf ChoixDsonCours2 == 12
+                Guest21.setActorVar(rk_VB_Medicine_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TME, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TME, AcID)
+            ElseIf ChoixDsonCours2 == 13
+                Guest21.setActorVar(rk_VB_Music_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TMU, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TMU, AcID)
+            ElseIf ChoixDsonCours2 == 14
+                Guest21.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TPH, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TPH, AcID)
+            ElseIf ChoixDsonCours2 == 15
+                Guest21.setActorVar(rk_VB_Psychology_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TPS, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TPS, AcID)
+            ElseIf ChoixDsonCours2 == 16
+                Guest21.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TPOL, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
+            ElseIf ChoixDsonCours2 == 60
+                Guest21.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TSM, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TSM, AcID)
+            ElseIf ChoixDsonCours2 == 80
+                Guest21.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TTT, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TTT, AcID)
+            ElseIf ChoixDsonCours2 == 90
+                Guest21.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
+                Guest21.setActorVar(rk_VB_tag_TVE, 1)
+                Guest21.setActorVar(rk_VB_AcIdCC_TVE, AcID)
+            EndIf
+
+            If ChoixDsonCours3 == 1
+                Guest31.setActorVar(rk_VB_Architecture_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TAR, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TAR, AcID)
+            ElseIf ChoixDsonCours3 == 2
+                Guest31.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TCE, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TCE, AcID)
+            ElseIf ChoixDsonCours3 == 3
+                Guest31.setActorVar(rk_VB_Classics_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TCL, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TCL, AcID)
+            ElseIf ChoixDsonCours3 == 31
+                Guest31.setActorVar(rk_VB_Dental_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TDM, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TDM, AcID)
+            ElseIf ChoixDsonCours3 == 4
+                Guest31.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TCS, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TCS, AcID)
+            ElseIf ChoixDsonCours3 == 5
+                Guest31.setActorVar(rk_VB_Economics_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TEC, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TEC, AcID)
+            ElseIf ChoixDsonCours3 == 6
+                Guest31.setActorVar(rk_VB_Education_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TED, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TED, AcID)
+            ElseIf ChoixDsonCours3 == 7
+                Guest31.setActorVar(rk_VB_English_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TEN, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TEN, AcID)
+            ElseIf ChoixDsonCours3 == 8
+                Guest31.setActorVar(rk_VB_Geography_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TGE, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TGE, AcID)
+            ElseIf ChoixDsonCours3 == 9
+                Guest31.setActorVar(rk_VB_History_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_THI, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_THI, AcID)
+            ElseIf ChoixDsonCours3 == 10
+                Guest31.setActorVar(rk_VB_Law_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TLA, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TLA, AcID)
+            ElseIf ChoixDsonCours3 == 11
+                Guest31.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TMA, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TMA, AcID)
+            ElseIf ChoixDsonCours3 == 12
+                Guest31.setActorVar(rk_VB_Medicine_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TME, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TME, AcID)
+            ElseIf ChoixDsonCours3 == 13
+                Guest31.setActorVar(rk_VB_Music_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TMU, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TMU, AcID)
+            ElseIf ChoixDsonCours3 == 14
+                Guest31.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TPH, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TPH, AcID)
+            ElseIf ChoixDsonCours3 == 15
+                Guest31.setActorVar(rk_VB_Psychology_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TPS, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TPS, AcID)
+            ElseIf ChoixDsonCours3 == 16
+                Guest31.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TPOL, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
+            ElseIf ChoixDsonCours3 == 60
+                Guest31.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TSM, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TSM, AcID)
+            ElseIf ChoixDsonCours3 == 80
+                Guest31.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TTT, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TTT, AcID)
+            ElseIf ChoixDsonCours3 == 90
+                Guest31.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
+                Guest31.setActorVar(rk_VB_tag_TVE, 1)
+                Guest31.setActorVar(rk_VB_AcIdCC_TVE, AcID)
+            EndIf
+
+            If ChoixDsonCours4 == 1
+                Guest41.setActorVar(rk_VB_Architecture_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TAR, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TAR, AcID)
+            ElseIf ChoixDsonCours4 == 2
+                Guest41.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TCE, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TCE, AcID)
+            ElseIf ChoixDsonCours4 == 3
+                Guest41.setActorVar(rk_VB_Classics_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TCL, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TCL, AcID)
+            ElseIf ChoixDsonCours4 == 31
+                Guest41.setActorVar(rk_VB_Dental_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TDM, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TDM, AcID)
+            ElseIf ChoixDsonCours4 == 4
+                Guest41.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TCS, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TCS, AcID)
+            ElseIf ChoixDsonCours4 == 5
+                Guest41.setActorVar(rk_VB_Economics_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TEC, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TEC, AcID)
+            ElseIf ChoixDsonCours4 == 6
+                Guest41.setActorVar(rk_VB_Education_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TED, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TED, AcID)
+            ElseIf ChoixDsonCours4 == 7
+                Guest41.setActorVar(rk_VB_English_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TEN, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TEN, AcID)
+            ElseIf ChoixDsonCours4 == 8
+                Guest41.setActorVar(rk_VB_Geography_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TGE, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TGE, AcID)
+            ElseIf ChoixDsonCours4 == 9
+                Guest41.setActorVar(rk_VB_History_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_THI, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_THI, AcID)
+            ElseIf ChoixDsonCours4 == 10
+                Guest41.setActorVar(rk_VB_Law_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TLA, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TLA, AcID)
+            ElseIf ChoixDsonCours4 == 11
+                Guest41.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TMA, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TMA, AcID)
+            ElseIf ChoixDsonCours4 == 12
+                Guest41.setActorVar(rk_VB_Medicine_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TME, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TME, AcID)
+            ElseIf ChoixDsonCours4 == 13
+                Guest41.setActorVar(rk_VB_Music_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TMU, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TMU, AcID)
+            ElseIf ChoixDsonCours4 == 14
+                Guest41.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TPH, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TPH, AcID)
+            ElseIf ChoixDsonCours4 == 15
+                Guest41.setActorVar(rk_VB_Psychology_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TPS, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TPS, AcID)
+            ElseIf ChoixDsonCours4 == 16
+                Guest41.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TPOL, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
+            ElseIf ChoixDsonCours4 == 60
+                Guest41.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TSM, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TSM, AcID)
+            ElseIf ChoixDsonCours4 == 80
+                Guest41.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TTT, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TTT, AcID)
+            ElseIf ChoixDsonCours4 == 90
+                Guest41.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
+                Guest41.setActorVar(rk_VB_tag_TVE, 1)
+                Guest41.setActorVar(rk_VB_AcIdCC_TVE, AcID)
+            EndIf
+
+            If ChoixDsonCours5 == 1
+                Guest51.setActorVar(rk_VB_Architecture_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TAR, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TAR, AcID)
+            ElseIf ChoixDsonCours5 == 2
+                Guest51.setActorVar(rk_VB_Chemical_Engineering_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TCE, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TCE, AcID)
+            ElseIf ChoixDsonCours5 == 3
+                Guest51.setActorVar(rk_VB_Classics_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TCL, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TCL, AcID)
+            ElseIf ChoixDsonCours5 == 31
+                Guest51.setActorVar(rk_VB_Dental_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TDM, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TDM, AcID)
+            ElseIf ChoixDsonCours5 == 4
+                Guest51.setActorVar(rk_VB_Computer_Science_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TCS, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TCS, AcID)
+            ElseIf ChoixDsonCours5 == 5
+                Guest51.setActorVar(rk_VB_Economics_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TEC, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TEC, AcID)
+            ElseIf ChoixDsonCours5 == 6
+                Guest51.setActorVar(rk_VB_Education_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TED, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TED, AcID)
+            ElseIf ChoixDsonCours5 == 7
+                Guest51.setActorVar(rk_VB_English_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TEN, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TEN, AcID)
+            ElseIf ChoixDsonCours5 == 8
+                Guest51.setActorVar(rk_VB_Geography_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TGE, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TGE, AcID)
+            ElseIf ChoixDsonCours5 == 9
+                Guest51.setActorVar(rk_VB_History_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_THI, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_THI, AcID)
+            ElseIf ChoixDsonCours5 == 10
+                Guest51.setActorVar(rk_VB_Law_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TLA, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TLA, AcID)
+            ElseIf ChoixDsonCours5 == 11
+                Guest51.setActorVar(rk_VB_Mathematics_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TMA, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TMA, AcID)
+            ElseIf ChoixDsonCours5 == 12
+                Guest51.setActorVar(rk_VB_Medicine_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TME, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TME, AcID)
+            ElseIf ChoixDsonCours5 == 13
+                Guest51.setActorVar(rk_VB_Music_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TMU, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TMU, AcID)
+            ElseIf ChoixDsonCours5 == 14
+                Guest51.setActorVar(rk_VB_Philosophy_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TPH, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TPH, AcID)
+            ElseIf ChoixDsonCours5 == 15
+                Guest51.setActorVar(rk_VB_Psychology_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TPS, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TPS, AcID)
+            ElseIf ChoixDsonCours5 == 16
+                Guest51.setActorVar(rk_VB_Political_Sciences_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TPOL, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TPOL, AcID)
+            ElseIf ChoixDsonCours5 == 60
+                Guest51.setActorVar(rk_VB_SalesMarketing_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TSM, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TSM, AcID)
+            ElseIf ChoixDsonCours5 == 80
+                Guest51.setActorVar(rk_VB_TravelTourism_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TTT, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TTT, AcID)
+            ElseIf ChoixDsonCours5 == 90
+                Guest51.setActorVar(rk_VB_Veterinary_Major_Actor, 1)
+                Guest51.setActorVar(rk_VB_tag_TVE, 1)
+                Guest51.setActorVar(rk_VB_AcIdCC_TVE, AcID)
+            EndIf
+
+            Guest11:age => random(18, 22)
+            Guest11.randomizeHairs()
+            Guest11.randomizeFace()
+            Guest11.randomizeRace()
+            
+            Guest21:age => random(18, 22)
+            Guest21.randomizeHairs()
+            Guest21.randomizeFace()
+            Guest21.randomizeRace()
+            
+            Guest31:age => random(18, 22)
+            Guest31.randomizeHairs()
+            Guest31.randomizeFace()
+            Guest31.randomizeRace()
+            
+            Guest41:age => random(18, 22)
+            Guest41.randomizeHairs()
+            Guest41.randomizeFace()
+            Guest41.randomizeRace()
+            
+            Guest51:age => random(18, 22)
+            Guest51.randomizeHairs()
+            Guest51.randomizeFace()
+            Guest51.randomizeRace()
+            
+            Guest11.makePermanent()
+            Guest21.makePermanent()
+            Guest31.makePermanent()
+            Guest41.makePermanent()
+            Guest51.makePermanent()
+            Guest11.show()
+            Guest21.show()
+            Guest31.show()
+            Guest41.show()
+            Guest51.show()
             "Everyone is here now. The party has started!"
-            Guest1.hide()
-            Guest2.hide()
-            Guest3.hide()
-            Guest4.hide()
-            Guest5.hide()
             PartyOngoing = true
             While PartyOngoing
                 passTime(0.15, 0.5)
@@ -617,6 +678,11 @@ OTHER: none
                 Guest3:intoxication += random(0, 20)
                 Guest4:intoxication += random(0, 20)
                 Guest5:intoxication += random(0, 20)
+                Guest11:intoxication += random(0, 20)
+                Guest21:intoxication += random(0, 20)
+                Guest31:intoxication += random(0, 20)
+                Guest41:intoxication += random(0, 20)
+                Guest51:intoxication += random(0, 20)
                 "What should I do now?"
                 0:: "Drink alone"
                 1:: "Stand with <Guest1.name>"
@@ -624,6 +690,11 @@ OTHER: none
                 3:: "Stand with <Guest3.name>"
                 4:: "Stand with <Guest4.name>"
                 5:: "Stand with <Guest5.name>"
+                6:: "Stand with <Guest11.name>"
+                7:: "Stand with <Guest21.name>"
+                8:: "Stand with <Guest31.name>"
+                9:: "Stand with <Guest41.name>"
+                10:: "Stand with <Guest51.name>"
                 
                 If 0
                     intoxication += random(0, 25)
@@ -642,6 +713,16 @@ OTHER: none
                         SitWith = Guest4
                     ElseIf 5
                         SitWith = Guest5
+                    ElseIf 6
+                        SitWith = Guest11
+                    ElseIf 7
+                        SitWith = Guest21
+                    ElseIf 8
+                        SitWith = Guest31
+                    ElseIf 9
+                        SitWith = Guest41
+                    ElseIf 10
+                        SitWith = Guest51
                     EndIf
                     SitWith.show(2)
                     "I spent some time chatting with <SitWith.name>"

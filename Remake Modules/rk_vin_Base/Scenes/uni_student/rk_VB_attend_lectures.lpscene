@@ -140,26 +140,26 @@ OTHER: none
         
         If isModEnabled(rk_vin_Base)
             "Now, which lectures should I attend?"
-            0:: Architecture_Major_Ses_Done <= 0 && Architecture_Major_Ses >= 1 && Session_TAR >= 1 ::"Architecture"
-            1:: Chemical_Engineering_Major_Ses_Done <= 0 && Chemical_Engineering_Major_Ses >= 1 && Session_TCE >= 1 ::"Chemical Engineering"
-            2:: Classics_Major_Ses_Done <= 0 && Classics_Major_Ses >= 1 && Session_TCL >= 1 ::"Classics"
-            3:: Computer_Science_Major_Ses_Done <= 0 && Computer_Science_Major_Ses >= 1 && Session_TCS >= 1 ::"Computer Science"
-            31:: Dental_Major_Ses_Done <= 0 && Dental_Major_Ses >= 1 && Session_TDM >= 1 ::"Dental"
-            4:: Economics_Major_Ses_Done <= 0 && Economics_Major_Ses >= 1 && Session_TEC >= 1 ::"Economics"
-            5:: Education_Major_Ses_Done <= 0 && Education_Major_Ses >= 1 && Session_TED >= 1 ::"Education"
-            6:: English_Major_Ses_Done <= 0 && English_Major_Ses >= 1 && Session_TEN >= 1 ::"English"
-            7:: Geography_Major_Ses_Done <= 0 && Geography_Major_Ses >= 1 && Session_TGE >= 1 ::"Geography"
-            8:: History_Major_Ses_Done <= 0 && History_Major_Ses >= 1 && Session_THI >= 1 ::"History"
-            9:: Law_Major_Ses_Done <= 0 && Law_Major_Ses >= 1 && Session_TLA >= 1 ::"Law"
-            10:: Mathematics_Major_Ses_Done <= 0 && Mathematics_Major_Ses >= 1 && Session_TMA >= 1 ::"Mathematics"
-            11:: Medicine_Major_Ses_Done <= 0 && Medicine_Major_Ses >= 1 && Session_TME >= 1 ::"Medicine"
-            12:: Music_Major_Ses_Done <= 0 && Music_Major_Ses >= 1 && Session_TMU >= 1 ::"Music"
-            13:: Philosophy_Major_Ses_Done <= 0 && Philosophy_Major_Ses >= 1 && Session_TPH >= 1 ::"Philosophy"
-            14:: Psychology_Major_Ses_Done <= 0 && Psychology_Major_Ses >= 1 && Session_TPS >= 1 ::"Psychology"
-            15:: Political_Sciences_Major_Ses_Done <= 0 && Political_Sciences_Major_Ses >= 1 && Session_TPOL >= 1 ::"Political Sciences"
-            60:: SalesMarketing_Major_Ses_Done <= 0 && SalesMarketing_Major_Ses >= 1 && Session_TSM >= 1 ::"Sales and Marketing"
-            80:: TravelTourism_Major_Ses_Done <= 0 && TravelTourism_Major_Ses >= 1 && Session_TTT >= 1 ::"Travel and Tourism"
-            90:: Veterinary_Major_Ses_Done <= 0 && Veterinary_Major_Ses >= 1 && Session_TVE >= 1 ::"Veterinary"
+            0:: Architecture_Major_Ses_Done <= 0 && Architecture_Major_Ses <= 3 && Session_TAR >= 1 ::"Architecture"
+            1:: Chemical_Engineering_Major_Ses_Done <= 0 && Chemical_Engineering_Major_Ses <= 4 && Session_TCE >= 1::"Chemical Engineering"
+            2:: Classics_Major_Ses_Done <= 0 && Classics_Major_Ses <= 2 && Session_TCL >= 1::"Classics"
+            3:: Computer_Science_Major_Ses_Done <= 0 && Computer_Science_Major_Ses <= 3 && Session_TCS >= 1::"Computer Science"
+            31:: Dental_Major_Ses_Done <= 0 && Dental_Major_Ses <= 4 && Session_TDM >= 1 ::"Dental"
+            4:: Economics_Major_Ses_Done <= 0 && Economics_Major_Ses <= 2 && Session_TEC >= 1 ::"Economics"
+            5:: Education_Major_Ses_Done <= 0 && Education_Major_Ses <= 2 && Session_TED >= 1 ::"Education"
+            6:: English_Major_Ses_Done <= 0 && English_Major_Ses <= 0 && Session_TEN >= 1 ::"English"
+            7:: Geography_Major_Ses_Done <= 0 && Geography_Major_Ses <= 0 && Session_TGE >= 1 ::"Geography"
+            8:: History_Major_Ses_Done <= 0 && History_Major_Ses <= 0 && Session_THI >= 1::"History"
+            9:: Law_Major_Ses_Done <= 0 && Law_Major_Ses <= 2 && Session_TLA >= 1 ::"Law"
+            10:: Mathematics_Major_Ses_Done <= 0 && Mathematics_Major_Ses <= 2 && Session_TMA >= 1::"Mathematics"
+            11:: Medicine_Major_Ses_Done <= 0 && Medicine_Major_Ses <= 4 && Session_TME >= 1::"Medicine"
+            12:: Music_Major_Ses_Done <= 0 && Music_Major_Ses <= 2 && Session_TMU >= 1::"Music"
+            13:: Philosophy_Major_Ses_Done <= 0 && Philosophy_Major_Ses <= 0 && Session_TPH >= 1::"Philosophy"
+            14:: Psychology_Major_Ses_Done <= 0 && Psychology_Major_Ses <= 4 && Session_TPS >= 1::"Psychology"
+            15:: Political_Sciences_Major_Ses_Done <= 0 && Political_Sciences_Major_Ses <= 2 && Session_TPOL >= 1::"Political Sciences"
+            60:: SalesMarketing_Major_Ses_Done <= 0 && SalesMarketing_Major_Ses <= 1 && Session_TSM >= 1 ::"Sales and Marketing"
+            80:: TravelTourism_Major_Ses_Done <= 0 && TravelTourism_Major_Ses <= 1 && Session_TTT >= 1 ::"Travel and Tourism"
+            90:: Veterinary_Major_Ses_Done <= 0 && Veterinary_Major_Ses <= 4 && Session_TVE >= 1 ::"Veterinary"
             99::"Go back!"
             
             If 0
@@ -268,68 +268,68 @@ OTHER: none
         If DoIAttemd
             passTime(0.75, 1)
             ReadyForExam = false
-            If rkVBchoiceCourseMajor == 1 && Architecture_Major_Level > 40
+            If rkVBchoiceCourseMajor == 1 && Architecture_Major_Level > 40 && Architecture_Major_Ses <= 4
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 2 && Chemical_Engineering_Major_Level > 50
+            If rkVBchoiceCourseMajor == 2 && Chemical_Engineering_Major_Level > 50 && Chemical_Engineering_Major_Ses <= 5
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 3 && Classics_Major_Level > 30
+            If rkVBchoiceCourseMajor == 3 && Classics_Major_Level > 30 && Classics_Major_Ses <= 3
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 31 && Dental_Major_Level > 50
+            If rkVBchoiceCourseMajor == 31 && Dental_Major_Level > 50 && Dental_Major_Ses <= 5
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 4 && Computer_Science_Major_Level > 40
+            If rkVBchoiceCourseMajor == 4 && Computer_Science_Major_Level > 40 && Computer_Science_Major_Ses <= 4
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 5 && Economics_Major_Level > 30
+            If rkVBchoiceCourseMajor == 5 && Economics_Major_Level > 30 && Economics_Major_Ses <= 3
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 6 && Education_Major_Level > 30
+            If rkVBchoiceCourseMajor == 6 && Education_Major_Level > 30 && Education_Major_Ses <= 3
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 7 && English_Major_Level > 10
+            If rkVBchoiceCourseMajor == 7 && English_Major_Level > 10 && English_Major_Ses <= 1
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 8 && Geography_Major_Level > 10
+            If rkVBchoiceCourseMajor == 8 && Geography_Major_Level > 10 && Geography_Major_Ses <= 1
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 9 && History_Major_Level > 10
+            If rkVBchoiceCourseMajor == 9 && History_Major_Level > 10 && History_Major_Ses <= 1
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 10 && Law_Major_Level > 30
+            If rkVBchoiceCourseMajor == 10 && Law_Major_Level > 30 && Law_Major_Ses <= 3
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 11 && Mathematics_Major_Level > 30
+            If rkVBchoiceCourseMajor == 11 && Mathematics_Major_Level > 30 && Mathematics_Major_Ses <= 3
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 12 && Medicine_Major_Level > 50
+            If rkVBchoiceCourseMajor == 12 && Medicine_Major_Level > 50 && Medicine_Major_Ses <= 4
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 13 && Music_Major_Level > 30
+            If rkVBchoiceCourseMajor == 13 && Music_Major_Level > 30 && Music_Major_Ses <= 3
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 14 && Philosophy_Major_Level > 10
+            If rkVBchoiceCourseMajor == 14 && Philosophy_Major_Level > 10 && Philosophy_Major_Ses <= 1
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 15 && Psychology_Major_Level > 50
+            If rkVBchoiceCourseMajor == 15 && Psychology_Major_Level > 50 && Psychology_Major_Ses <= 5
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 16 && Political_Sciences_Major_Level > 30
+            If rkVBchoiceCourseMajor == 16 && Political_Sciences_Major_Level > 30 && Political_Sciences_Major_Ses <= 3
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 60 && SalesMarketing_Major_Level > 20
+            If rkVBchoiceCourseMajor == 60 && SalesMarketing_Major_Level > 20 && SalesMarketing_Major_Ses <= 2
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 80 && TravelTourism_Major_Level > 20
+            If rkVBchoiceCourseMajor == 80 && TravelTourism_Major_Level > 20 && TravelTourism_Major_Ses <= 2
                 ReadyForExam = true
             EndIf
-            If rkVBchoiceCourseMajor == 90 && Veterinary_Major_Level > 50
+            If rkVBchoiceCourseMajor == 90 && Veterinary_Major_Level > 50 && Veterinary_Major_Ses <= 5
                 ReadyForExam = true
             EndIf
             If ReadyForExam
-                "You are ready to passed an exam ..."
+                "== You are ready to passed an exam =="
             EndIf
             MajorTeacher = rk_VB_Major_Teacher.getGlobal()
             Actor = getPerson(rk_VB_tag_Major)
@@ -588,6 +588,43 @@ OTHER: none
                     EndIf
                 EndIf
             EndWhile
+            If random(0, 100) < 33 && random(0, 100) < interpersonal
+                If random(0, 100) < 33
+                    Actor2 = getSpecific(Dating)
+                    copinepresent = true
+                EndIf
+                If Actor2.isValid() && Actor2:rapportwithplayer > 0
+                    Actor2.dress()
+                    secondScreen(Actor2)
+                    Actor2.show()
+                    "Just as I was getting ready to attend the lecture, I received a text from <Actor2.name> asking to hang out instead. I'd love to, but it would mean I would have to skip the lecture."
+                    0:: "Skip the <TextMajorChosen> lecture and hang out with <Actor2.name>"
+                    1:: "Turn <Actor2.name> down"
+                    
+                    If 0
+                        If copinepresent
+                            Actor2:rapportwithplayer += 2
+                            Actor2:attractiontoplayer += 2
+                        Else
+                            Actor2:rapportwithplayer += random(0, 2)
+                            Actor2:attractiontoplayer += random(0, 2)
+                        EndIf
+                        secondScreen()
+                        Actor2.show()
+                        Actor2.startDate()
+                        nyvaspas = false
+                        "I decided to skip the lecture and hang out with <Actor2.name> instead."
+                        intelligence -= random(0, 1)
+                    Else
+                        secondScreen()
+                        Actor2.hide()
+                        "I decided to go ahead and attend the lecture. I could always hang out with <Actor2.name> another time."
+                        Actor2:rapportwithplayer -= 2
+                        Actor2:attractiontoplayer -= 2
+                        interpersonal -= 0.2
+                    EndIf
+                EndIf        
+            EndIf
             TotalTourD = teachers_pet + coursemates_dating + coursemate_dating_another + teacher_sex_cms + teacher_sex_repeat + coursemate_bet + coursemate_affair
             If TotalTourD == 7
                 Player.setActorVar(rk_VB_TempoPopUpteachers_pet, 0)
@@ -598,6 +635,7 @@ OTHER: none
                 Player.setActorVar(rk_VB_TempoPopUpcoursemate_bet, 0)
                 Player.setActorVar(rk_VB_TempoPopUpcoursemate_affair, 0)
             EndIf
+            
             While saChoisi
                 teachers_pet = Player.getActorVar(rk_VB_TempoPopUpteachers_pet)
                 coursemates_dating = Player.getActorVar(rk_VB_TempoPopUpcoursemates_dating)
@@ -643,47 +681,10 @@ OTHER: none
                     Else
                         saChoisi = false
                     EndIf
-                    SceneEnd()
                 Else
                     saChoisi = false
                 EndIf
             EndWhile
-            If random(0, 100) < 33 && random(0, 100) < interpersonal
-                If random(0, 100) < 33
-                    Actor2 = getSpecific(Dating)
-                    copinepresent = true
-                EndIf
-                If Actor2.isValid() && Actor2:rapportwithplayer > 0
-                    Actor2.dress()
-                    secondScreen(Actor2)
-                    Actor2.show()
-                    "Just as I was getting ready to attend the lecture, I received a text from <Actor2.name> asking to hang out instead. I'd love to, but it would mean I would have to skip the lecture."
-                    0:: "Skip the <TextMajorChosen> lecture and hang out with <Actor2.name>"
-                    1:: "Turn <Actor2.name> down"
-                    
-                    If 0
-                        If copinepresent
-                            Actor2:rapportwithplayer += 2
-                            Actor2:attractiontoplayer += 2
-                        Else
-                            Actor2:rapportwithplayer += random(0, 2)
-                            Actor2:attractiontoplayer += random(0, 2)
-                        EndIf
-                        secondScreen()
-                        Actor2.show()
-                        Actor2.startDate()
-                        nyvaspas = false
-                        "I decided to skip the lecture and hang out with <Actor2.name> instead."
-                    Else
-                        secondScreen()
-                        Actor2.hide()
-                        "I decided to go ahead and attend the lecture. I could always hang out with <Actor2.name> another time."
-                        Actor2:rapportwithplayer -= 2
-                        Actor2:attractiontoplayer -= 2
-                        interpersonal -= 0.2
-                    EndIf
-                EndIf        
-            EndIf
             If nyvaspas
                 dressFormal()
                 Actor.dress()
@@ -698,53 +699,54 @@ OTHER: none
                     1:: "Play with my phone"
                 
                     If 0
+                        intelligence += random(0, 1)
                         "Let's just try my best to concentrate here. Boring or not, I don't want to fail this class."
                         mood -= random(0, 25)
                         If rkVBchoiceCourseMajor == 1
-                            Player.modifyActorVar(rk_VB_Architecture_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_Architecture_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 2
-                            Player.modifyActorVar(rk_VB_Chemical_Engineering_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_Chemical_Engineering_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 3
-                            Player.modifyActorVar(rk_VB_Classics_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_Classics_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 31
-                            Player.modifyActorVar(rk_VB_Dental_Major_Level, 0.25) 
+                            Player.modifyActorVar(rk_VB_Dental_Major_Level, 0.50) 
                         ElseIf rkVBchoiceCourseMajor == 4
-                            Player.modifyActorVar(rk_VB_Computer_Science_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_Computer_Science_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 5
-                            Player.modifyActorVar(rk_VB_Economics_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_Economics_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 6
-                            Player.modifyActorVar(rk_VB_Education_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_Education_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 7
-                            Player.modifyActorVar(rk_VB_English_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_English_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 8
-                            Player.modifyActorVar(rk_VB_Geography_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_Geography_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 9
-                            Player.modifyActorVar(rk_VB_History_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_History_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 10
-                            Player.modifyActorVar(rk_VB_Law_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_Law_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 11
-                            Player.modifyActorVar(rk_VB_Mathematics_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_Mathematics_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 12
-                            Player.modifyActorVar(rk_VB_Medicine_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_Medicine_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 13
-                            Player.modifyActorVar(rk_VB_Music_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_Music_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 14
-                            Player.modifyActorVar(rk_VB_Philosophy_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_Philosophy_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 15
-                            Player.modifyActorVar(rk_VB_Psychology_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_Psychology_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 16
-                            Player.modifyActorVar(rk_VB_Political_Sciences_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_Political_Sciences_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 60
-                            Player.modifyActorVar(rk_VB_SalesMarketing_Major_Level, 0.25)
+                            Player.modifyActorVar(rk_VB_SalesMarketing_Major_Level, 0.50)
                         ElseIf rkVBchoiceCourseMajor == 80
-                            Player.modifyActorVar(rk_VB_TravelTourism_Major_Level, 0.25) 
+                            Player.modifyActorVar(rk_VB_TravelTourism_Major_Level, 0.50) 
                         ElseIf rkVBchoiceCourseMajor == 90
-                            Player.modifyActorVar(rk_VB_Veterinary_Major_Level, 0.25) 
+                            Player.modifyActorVar(rk_VB_Veterinary_Major_Level, 0.50) 
                         EndIf
                     Else
-                        "Damn it, I give up! There's no way I can concentrate with Dr <Actor.name_last>'s monotone voice. Let's just play with my phone a bit, saving myself from falling asleep at least!"
                         Player.animate(browse)
-                        intelligence -= random(0, 0.25)
+                        "Damn it, I give up! There's no way I can concentrate with Dr <Actor.name_last>'s monotone voice. Let's just play with my phone a bit, saving myself from falling asleep at least!"
+                        intelligence -= random(0, 0.50)
                         If rkVBchoiceCourseMajor == 1
                             Player.modifyActorVar(rk_VB_Architecture_Major_Level, -0.25)
                         ElseIf rkVBchoiceCourseMajor == 2
@@ -834,6 +836,7 @@ OTHER: none
                     1:: "Do more reading"
                 
                     If 0
+                        intelligence += random(0, 1)
                         "I decided to come up to Dr <Actor.name_last> after class and admitted my struggles with the subject matter."
                         Actor(Happy):: "I hope that clears things up a bit for you. If you have any more questions, you can come see me during my office hours and I'll be happy to help."
                         0:: "Can I ask you questions via text instead?"
@@ -843,10 +846,14 @@ OTHER: none
                             If random(0, 200) < Actor:attractiontoplayer + Actor:rapportwithplayer + Actor:perversion + interpersonal
                                 Actor(Happy):: "Well, that's quite an unprofessional form of communication with a student, but I guess it's efficient. Fine, you can contact me via this number."
                                 exchangeContact(Actor)
+                                Actor:rapportwithplayer += random(0, 1)
+                                Actor:attractiontoplayer += random(0, 1)
                             Else
                                 Actor(Surprised):: "That's rather ... inappropriate. As I said, just come see me in my office if you need me."
                             EndIf        
                         EndIf
+                    Else
+                        intelligence += random(0, 0.5)
                     EndIf
                 ElseIf Actor:interpersonal > random(70, 100)
                     "What an interesting lecture! I love this <TextMajorChosen> class. The lecturer, Dr <Actor.name_last>, is not only knowledgeable but also has a great sense of humour."
@@ -856,7 +863,7 @@ OTHER: none
                     If 0
                         "I decided to follow every words of Dr <Actor.name_last> and pretend to be passionate about the subject."
                         Actor:rapportwithplayer += random(0, 2)
-                        intelligence += random(0, 0.25)
+                        intelligence += random(0, 0.50)
                         If rkVBchoiceCourseMajor == 1
                             Player.modifyActorVar(rk_VB_Architecture_Major_Level, 0.5)
                         ElseIf rkVBchoiceCourseMajor == 2
@@ -945,17 +952,22 @@ OTHER: none
                         EndIf
                     EndIf
                 Else
+                    intelligence += random(0, 1)
                     If CActor:rapportwithplayer > 0 && Actor2:rapportwithplayer > 0
                         "We were just handed an assignment by the lecturer Dr <Actor.name_last>, to be done in pairs. Two of my classmates <CActor.name> and <Actor2.name>, are both asking me to work with them ..."
                         0:: "Work with <CActor.name>"
                         1:: "Work with <Actor2.name>"
+                        2:: "Work with both of them"
                 
                         If 0
                            CActor:rapportwithplayer += random(0, 2)
                            Actor2:rapportwithplayer -= random(0, 2)
+                        ElseIf 1
+                            Actor2:rapportwithplayer += random(0, 2)
+                            CActor:rapportwithplayer -= random(0, 2) 
                         Else
                             Actor2:rapportwithplayer += random(0, 2)
-                            CActor:rapportwithplayer -= random(0, 2)    
+                            CActor:rapportwithplayer += random(0, 2)   
                         EndIf
                         If rkVBchoiceCourseMajor == 1
                             Player.modifyActorVar(rk_VB_Architecture_Major_Level, 1)
@@ -1004,7 +1016,7 @@ OTHER: none
                         1:: "Just give up"
                     
                         If 0
-                            intelligence += random(0, 0.25)
+                            intelligence += random(0, 0.50)
                             If rkVBchoiceCourseMajor == 1
                                 Player.modifyActorVar(rk_VB_Architecture_Major_Level, 1)
                             ElseIf rkVBchoiceCourseMajor == 2
@@ -1050,9 +1062,135 @@ OTHER: none
                     EndIf
                 EndIf
             EndIf
+            jesuisnu = false
+            If Player.isNaked() || Player.isNude()
+                jesuisnu = true
+            ElseIf [!Player.isEquipped(Top) && !Player.isEquipped(Top_Under) && !Player.isEquipped(Outerwear) && !Player.isMale()] || [!Player.isEquipped(Bottom) && !Player.isEquipped(Bottom_Under)]
+                jesuisnu = true
+            EndIf
+            If jesuisnu && Actor:perversion > 50 && Actor:arousal > 25 && Actor.isInterestedIn(Player)
+                Actor(Flirty)::"Can you tell me why you came to my class dressed like that?"
+                Actor(Flirty)::"Looking at you, I just want to fuck you!"
+                "What should I say?"
+                0::"Do you want to play?"
+                1::"Glad you like but I'm not in the mood to fuck"
+                
+                If 0
+                    Actor(Flirty)::"I'm not supposed to do that, but yeah, let's play sex together!"
+                    Actor.strip()
+                    Player.strip()
+                    Sex(Player, Actor)
+                    Actor:rapportwithplayer += random(0, 2)
+                    Actor:attractiontoplayer += random(0, 2)
+                    If rkVBchoiceCourseMajor == 1
+                        Player.modifyActorVar(rk_VB_Architecture_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 2
+                        Player.modifyActorVar(rk_VB_Chemical_Engineering_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 3
+                        Player.modifyActorVar(rk_VB_Classics_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 31
+                        Player.modifyActorVar(rk_VB_Dental_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 4
+                        Player.modifyActorVar(rk_VB_Computer_Science_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 5
+                        Player.modifyActorVar(rk_VB_Economics_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 6
+                        Player.modifyActorVar(rk_VB_Education_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 7
+                        Player.modifyActorVar(rk_VB_English_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 8
+                        Player.modifyActorVar(rk_VB_Geography_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 9
+                        Player.modifyActorVar(rk_VB_History_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 10
+                        Player.modifyActorVar(rk_VB_Law_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 11
+                        Player.modifyActorVar(rk_VB_Mathematics_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 12
+                        Player.modifyActorVar(rk_VB_Medicine_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 13
+                        Player.modifyActorVar(rk_VB_Music_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 14
+                        Player.modifyActorVar(rk_VB_Philosophy_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 15
+                        Player.modifyActorVar(rk_VB_Psychology_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 16
+                        Player.modifyActorVar(rk_VB_Political_Sciences_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 60
+                        Player.modifyActorVar(rk_VB_SalesMarketing_Major_Level, 1)
+                    ElseIf rkVBchoiceCourseMajor == 80
+                        Player.modifyActorVar(rk_VB_TravelTourism_Major_Level, 1) 
+                    ElseIf rkVBchoiceCourseMajor == 90
+                        Player.modifyActorVar(rk_VB_Veterinary_Major_Level, 1)
+                    EndIf
+                EndIf
+                If !Actor.isContactExchanged()
+                    Actor(Flirty)::"Let's exchange our numbers, so I can call you another time!"
+                    "What should I say?"
+                    0::"Sure"
+                    1::"Refuse"
+                    
+                    If 0
+                        "We exchanged phone numbers and went our separate ways!"
+                        exchangeContact(Actor)
+                        Actor:rapportwithplayer += random(0, 2)
+                        Actor:attractiontoplayer += random(0, 2)
+                    Else
+                        Player(Embarrassed)::"Sorry but I don't want to go any further, I just want to fuck!"
+                        Actor(Sad)::"Ok fine!"
+                        Actor:rapportwithplayer -= random(0, 1)
+                        Actor:attractiontoplayer -= random(0, 1)
+                    EndIf
+                EndIf
+            ElseIf jesuisnu && Actor2:perversion > 50 && Actor2:arousal > 25 && CActor:perversion > 50 && CActor:arousal > 25 && CActor.isInterestedIn(Player) && Actor2.isInterestedIn(Player)
+                CActor(Flirty)::"If you came to the class dressed like that, is it because you want to get fuck?"
+                CActor(Flirty)::"If so, we are ready to fuck you right here, if you want!"
+                "What should I say?"
+                0::"Sure let's do it?"
+                1::"Glad you like but I'm not in the mood to fuck"
+                
+                If 0
+                    CActor.strip()
+                    Player.strip()
+                    Sex(CActor, Player, Actor2)
+                    CActor:rapportwithplayer += random(0, 2)
+                    CActor:attractiontoplayer += random(0, 2)
+                    Actor2:rapportwithplayer += random(0, 2)
+                    Actor2:attractiontoplayer += random(0, 2)
+                EndIf
+            ElseIf jesuisnu && CActor:perversion > 50 && CActor:arousal > 25 && CActor.isInterestedIn(Player)
+                CActor(Flirty)::"If you came to the class dressed like that, is it because you want to get fuck?"
+                CActor(Flirty)::"If so, I'm willing to fuck you right here!"
+                "What should I say?"
+                0::"Sure let's do it?"
+                1::"Glad you like but I'm not in the mood to fuck"
+                
+                If 0
+                    CActor.strip()
+                    Player.strip()
+                    Sex(CActor, Player)
+                    CActor:rapportwithplayer += random(0, 2)
+                    CActor:attractiontoplayer += random(0, 2)
+                EndIf
+            ElseIf jesuisnu && Actor2:perversion > 50 && Actor2:arousal > 25 && Actor2.isInterestedIn(Player)
+                Actor2(Flirty)::"If you came to the class dressed like that, is it because you want to get fuck?"
+                Actor2(Flirty)::"If so, I'm willing to fuck you right here!"
+                "What should I say?"
+                0::"Sure let's do it?"
+                1::"Glad you like but I'm not in the mood to fuck"
+                
+                If 0
+                    Actor2.strip()
+                    Player.strip()
+                    Sex(Actor2, Player)
+                    Actor2:rapportwithplayer += random(0, 2)
+                    Actor2:attractiontoplayer += random(0, 2)
+                EndIf
+            EndIf
         Else
             "I decided to not attend at any of these courses ..."
         EndIf
+        Player.animate()
         TotalTourF = porn_uni_lecturer + rk_VB_University_Museum + clinical_trial + porn_uni_coursemate
         If TotalTourF == 4
             Player.setActorVar(rk_VB_TempoPopUpporn_uni_lecturer, 0)
@@ -1069,7 +1207,7 @@ OTHER: none
                 HistARouler1 = random(1, 10)
                 HistARouler1 = HistARouler1.round()
             EndIf
-            "HistARouler1 = <HistARouler1>"
+            //"DEBUG:HistARouler1 = <HistARouler1>"
             If HistARouler1 <= 4
                 If HistARouler1 == 1 && porn_uni_lecturer < 1 && pornfame > 1
                     Player.setActorVar(rk_VB_TempoPopUpporn_uni_lecturer, 1)

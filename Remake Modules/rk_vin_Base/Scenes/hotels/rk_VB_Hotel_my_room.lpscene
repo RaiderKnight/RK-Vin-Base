@@ -4,8 +4,7 @@ WHEN: 0 - 24
 WHO: none
 OTHER: none
 
-    SceneStart()
-        
+    
         RoomVisitChoice = rk_VB_RoomVisitChoice.getGlobal()
         ResetTrueA = false
         HotGotoR = false
@@ -18,7 +17,7 @@ OTHER: none
         HotelRentlastday = Player.getActorVar(rk_VB_setHotelRentlastday)
         tag_HLandlord = Landlord.getActorVar(rk_VB_tag_HLandlord)
         If isModEnabled(rk_vin_Base)
-            MaPC = Player:age*365
+            MaPC = age*365
             If HotelRentlastday <= 0
                 HotelRentdayP = HotelRentlastday + MaPC
             Else
@@ -37,7 +36,7 @@ OTHER: none
                 Landlord.setActorVar(rk_VB_tag_HLandlord, 0)
                 rk_VB_RoomVisitChoice.setGlobal(0)
             EndIf
-            "I decided to go to my room...."
+            //"I decided to go to my room...."
             If RentHotelRoom == 0
                 "I didn't rent any room, or my room is not available anymore, I have to rent for another day..."
             Else
@@ -107,4 +106,4 @@ OTHER: none
                 Endif
             Endif
         Endif
-    SceneEnd()
+    

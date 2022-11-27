@@ -1,4 +1,4 @@
-WHAT: all
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: home
 WHEN: 0 - 24
 WHO: Actor = getCompanion(); Actor2 = getRelative(); If Actor2.livesWithPlayer() && !Actor.isDating() && !Actor.hasRelationship(Spouses, Dating) && Actor.isInterestedIn(Actor2) && Actor2.isInterestedIn(Actor) && Actor.isInterestedInRace(Actor2) && !Actor2.isInterestedInRace(Actor) && !Actor.isSameEthnic(Actor2)
@@ -41,17 +41,17 @@ OTHER: isAtHome()
                 
                 If Actor.isEthnic(black)
                     Fetish = 1*Actor2:likes_black
-                Elseif Actor.isEthnic(indian)
+                ElseIf Actor.isEthnic(indian)
                     Fetish = 1*Actor2:likes_indian            
-                Elseif Actor.isEthnic(arab)
+                ElseIf Actor.isEthnic(arab)
                     Fetish = 1*Actor2:likes_arab            
-                Elseif Actor.isEthnic(latin)
+                ElseIf Actor.isEthnic(latin)
                     Fetish = 1*Actor2:likes_latin            
-                Elseif Actor.isEthnic(asian)
+                ElseIf Actor.isEthnic(asian)
                     Fetish = 1*Actor2:likes_asian            
-                Elseif Actor.isEthnic(white)
+                ElseIf Actor.isEthnic(white)
                     Fetish = 1*Actor2:likes_white            
-                Endif
+                EndIf
                 
                 If Random(20, 150) < Fetish + Actor:interpersonal + Actor:attractiveness
                     "Despite my <Actor2.relationship>'s initial reservation about being basically tricked into going on a date with a <Actorr> <Actor.man_or_woman>, <Actor.name>'s charm soon won <Actor2.him_or_her> over and quickly overcame any previous prejudice <Actor2.he_or_she> might have held against those sharing the same ethnic background."
@@ -67,8 +67,8 @@ OTHER: isAtHome()
                     "Unfortunately for my overly confident friend <Actor.name>, my <Actor2.relationship>'s prejudice against people from <Actor.his_or_her> ethnic background was just too strong for <Actor.him_or_her> to ever stand a chance."
                     "The date ended up just being super awkward for both and led nowhere."
                     "Well, at least my <Actor2.relationship> didn't just yell racist things about <Actorr> people at <Actor.name> before storming out dramatically or anything like that." 
-                Endif
-            Endif
-        Endif
+                EndIf
+            EndIf
+        EndIf
     SceneEnd() // Improved by raddeck
     timeout(300, racist_relative)

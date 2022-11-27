@@ -1,4 +1,4 @@
-WHAT: all
+WHAT: all, -sleep_hotel, -nap_hotel, -rk_VB_small_sleep
 WHERE: fraternity
 WHEN: 0 - 24
 WHO: none
@@ -29,6 +29,7 @@ OTHER:
         tagTDM = Actor.getActorVar(rk_VB_tag_TDM)
         tagTVE = Actor.getActorVar(rk_VB_tag_TVE)
         tagTTT = Actor.getActorVar(rk_VB_tag_TTT)
+        PourTrois = false
         If Actor.isValid()
             If tagTAR >= 1
                 AcID = Actor.getActorVar(rk_VB_AcIdTeach_TAR)
@@ -147,17 +148,28 @@ OTHER:
         
         If 0
             If random(0, 100) < 50
-                Actor2 = getSpecific(Fraternity)
+                Actor2 = getSpecific(rk_VB_tag_Student)
+                If !Player.isMale()
+                    While Actor2.isValid() && Actor2.isMale()
+                        Actor2 = getPerson(rk_VB_tag_ExeSoroS)
+                    EndWhile
+                Else
+                    While Actor2.isValid() && !Actor2.isMale()
+                        Actor2 = getPerson(rk_VB_tag_ExeFratF)
+                    EndWhile
+                EndIf
                 If Actor2.isValid()
                     Actor2.dressUniform(sexwork)
                     Actor2.show()
                     "Another <Actor2.brother_or_sister> <Actor2.name> will join me today. Apparently, this particular professor requested a threesome and was willing to pay double for it. Fine by me ..."
+                    PourTrois = true
                 EndIf
             EndIf
-            
             setBackground(home)
             "Soon, the professor arrives at our <Player.fraternity_or_sorority>, making sure to not be seen before going into my bedroom."
-            
+            dressFormal()
+            Actor.dress()
+            Actor.show()
             If random(0, 100) < 20 && Actor.isValid()
                 "Oh no, it's Dr <Actor.name> <Actor.name_last>, my <TextMajorChosen> lecturer ... This could have ended up awkward but thankfully, the cheeky <Actor.bastard_or_bitch> acted the whole time like <Actor.he_or_she> didn't know me."
                 "I won't really know the consequences of this until I see <Actor.him_or_her> in class though ... Would <Actor.he_or_she> want to make this into a long-term affair in class?"
@@ -171,9 +183,6 @@ OTHER:
                 Actor.randomizeRace()
                 Actor.randomizeHairs()
             EndIf
-            dressFormal()
-            Actor.dress()
-            Actor.show()
             "Let's get to work for my <Player.fraternity_or_sorority>!"
             If Actor2.isValid()
                 Sex(Actor, Actor2, Player)

@@ -1,10 +1,19 @@
-WHAT: all
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: fraternity
 WHEN: 0 - 24
-WHO: Actor = getSpecific(Fraternity); If !Actor.isDating() && !Actor.isAsexual() && random(50, 300) < Actor:perversion 
-OTHER: isAtHome()
+WHO: Actor = getPerson(rk_VB_tag_Student); If !Actor.isDating() && !Actor.isAsexual() && random(50, 300) < Actor:perversion 
+OTHER:
 
     SceneStart()
+        If !Player.isMale()
+            While Actor.isValid() && Actor.isMale()
+                Actor = getPerson(rk_VB_tag_ExeSoroS)
+            EndWhile
+        Else
+            While Actor.isValid() && !Actor.isMale()
+                Actor = getPerson(rk_VB_tag_ExeFratF)
+            EndWhile
+        EndIf
         FightingLost = false
         IlAPerdu = false
         VraiLoser = false
@@ -14,6 +23,7 @@ OTHER: isAtHome()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         personal_vids = Player.getActorVar(rk_VB_personal_vids)
         FiniLeShow = false
+        Actor.show()
         "What's that sound? If it is what I think it is, then <Actor.brother_or_sister> <Actor.name> is getting very intimate with a lover. They are moaning very loudly."
         0:: "Ignore"
         1:: masochist < 50:: "Complain"
@@ -26,8 +36,8 @@ OTHER: isAtHome()
             Player(Angry):: "For god's sake, keep it down. I'm trying to study here."
             masochist -= random(0, 1)
             mood += 3
-            arousal -= 1 // Edit Raddeck
-            perversion -= 1 // Edit Raddeck
+            arousal -= 1
+            perversion -= 1
         Else
             perversion += random(0, 0.5)
             "My curiosity got the better of me and I just had to see this ..."
@@ -43,7 +53,7 @@ OTHER: isAtHome()
                         Actor2 = generatePersonTemporary()
                     EndWhile
                 EndIf
-                "Do I film them to blackmail them later?" // Edit Raddeck
+                "Do I film them to blackmail them later?"
                 0:: "Yes"
                 1:: "No"
                 
@@ -57,7 +67,7 @@ OTHER: isAtHome()
                 Actor.show(2)
                 Actor2.show(3)
                 Player.show(0)
-                If filmed // Edit Raddeck
+                If filmed
                     "One more video added to my Personal xxx videos collection."
                     Player.modifyActorVar(rk_VB_personal_vids, 1)
                     Player.animate()
@@ -76,8 +86,8 @@ OTHER: isAtHome()
                         EndIf
                         Actor:rapportwithplayer += random(0, 10)
                         Actor:attractiontoplayer += random(0, 10)
-                        Actor2:rapportwithplayer += random(0, 10) // Edit Raddeck
-                        Actor2:attractiontoplayer += random(0, 10) // Edit Raddeck
+                        Actor2:rapportwithplayer += random(0, 10)
+                        Actor2:attractiontoplayer += random(0, 10)
                         Player:perversion += random(0, 1)
                     Else  // Start edit Raddeck
                         Actor(Shocked):: "What are you doing here? Get out and close the door pervert!"

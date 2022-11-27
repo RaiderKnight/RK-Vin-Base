@@ -4,93 +4,93 @@ WHEN: 0 - 24
 WHO: none
 OTHER: none
 
-        Chambreur = rk_VB_setBackgroundRoom.getGlobal()
+    Chambreur = rk_VB_setBackgroundRoom.getGlobal()
+    hasUniRoom = rk_has_Fratroom.getGlobal()
+    If hasUniRoom <= 0
+        rk_has_Fratroom.setGlobal(1)
+        Chambre = random(1, 16)
+        Chambre = Chambre.round()
+        If Chambre == 1
+            rk_VB_setBackgroundRoom.setGlobal(1)
+        ElseIf Chambre == 2
+            rk_VB_setBackgroundRoom.setGlobal(2)
+        ElseIf Chambre == 3
+            rk_VB_setBackgroundRoom.setGlobal(3)
+        ElseIf Chambre == 4
+            rk_VB_setBackgroundRoom.setGlobal(4)
+        ElseIf Chambre == 5
+            rk_VB_setBackgroundRoom.setGlobal(5)
+        ElseIf Chambre == 6
+            rk_VB_setBackgroundRoom.setGlobal(6)
+        ElseIf Chambre == 7
+            rk_VB_setBackgroundRoom.setGlobal(7)
+        ElseIf Chambre == 8
+            rk_VB_setBackgroundRoom.setGlobal(8)
+        ElseIf Chambre == 9
+            rk_VB_setBackgroundRoom.setGlobal(9)
+        ElseIf Chambre == 10
+            rk_VB_setBackgroundRoom.setGlobal(10)
+        ElseIf Chambre == 11
+            rk_VB_setBackgroundRoom.setGlobal(11)
+        ElseIf Chambre == 12
+            rk_VB_setBackgroundRoom.setGlobal(12)
+        ElseIf Chambre == 13
+            rk_VB_setBackgroundRoom.setGlobal(13)
+        ElseIf Chambre == 14
+            rk_VB_setBackgroundRoom.setGlobal(14)
+        ElseIf Chambre == 15
+            rk_VB_setBackgroundRoom.setGlobal(15)
+        ElseIf Chambre == 16
+            rk_VB_setBackgroundRoom.setGlobal(16)
+        EndIf
+    EndIf
+    If isModEnabled(rk_vin_Base)
+        clearGetList()
         hasUniRoom = rk_has_Fratroom.getGlobal()
-        If hasUniRoom <= 0
-            rk_has_Fratroom.setGlobal(1)
-            Chambre = random(1, 16)
-            Chambre = Chambre.round()
-            If Chambre == 1
-                rk_VB_setBackgroundRoom.setGlobal(1)
-            ElseIf Chambre == 2
-                rk_VB_setBackgroundRoom.setGlobal(2)
-            ElseIf Chambre == 3
-                rk_VB_setBackgroundRoom.setGlobal(3)
-            ElseIf Chambre == 4
-                rk_VB_setBackgroundRoom.setGlobal(4)
-            ElseIf Chambre == 5
-                rk_VB_setBackgroundRoom.setGlobal(5)
-            ElseIf Chambre == 6
-                rk_VB_setBackgroundRoom.setGlobal(6)
-            ElseIf Chambre == 7
-                rk_VB_setBackgroundRoom.setGlobal(7)
-            ElseIf Chambre == 8
-                rk_VB_setBackgroundRoom.setGlobal(8)
-            ElseIf Chambre == 9
-                rk_VB_setBackgroundRoom.setGlobal(9)
-            ElseIf Chambre == 10
-                rk_VB_setBackgroundRoom.setGlobal(10)
-            ElseIf Chambre == 11
-                rk_VB_setBackgroundRoom.setGlobal(11)
-            ElseIf Chambre == 12
-                rk_VB_setBackgroundRoom.setGlobal(12)
-            ElseIf Chambre == 13
-                rk_VB_setBackgroundRoom.setGlobal(13)
-            ElseIf Chambre == 14
-                rk_VB_setBackgroundRoom.setGlobal(14)
-            ElseIf Chambre == 15
-                rk_VB_setBackgroundRoom.setGlobal(15)
-            ElseIf Chambre == 16
-                rk_VB_setBackgroundRoom.setGlobal(16)
+        Chambreur = rk_VB_setBackgroundRoom.getGlobal()
+        If Chambreur == 1
+            setBackground3D(Modules\vin_Base\Bedrooms\0.lpworld)
+        ElseIf Chambreur == 2
+            setBackground3D(Modules\vin_Base\Bedrooms\1.lpworld)
+        ElseIf Chambreur == 3
+            setBackground3D(Modules\vin_Base\Bedrooms\2.lpworld)
+        ElseIf Chambreur == 4
+            setBackground3D(Modules\vin_Base\Bedrooms\3.lpworld)
+        ElseIf Chambreur == 5
+            setBackground3D(Modules\vin_Base\Bedrooms\4.lpworld)
+        ElseIf Chambreur == 6
+            setBackground3D(Modules\vin_Base\Bedrooms\5.lpworld)
+        ElseIf Chambreur == 7
+            setBackground3D(Modules\vin_Base\Bedrooms\6.lpworld)
+        ElseIf Chambreur == 8
+            setBackground3D(Modules\vin_Base\Bedrooms\7.lpworld)
+        ElseIf Chambreur == 9
+            setBackground3D(Modules\vin_Base\Bedrooms\8.lpworld)
+        ElseIf Chambreur == 10
+            setBackground3D(Modules\vin_Base\Bedrooms\9.lpworld)
+        ElseIf Chambreur == 11
+            setBackground3D(Modules\vin_Base\Bedrooms\10.lpworld)
+        ElseIf Chambreur == 12
+            setBackground3D(Modules\vin_Base\Bedrooms\11.lpworld)
+        ElseIf Chambreur == 13
+            setBackground3D(Modules\vin_Base\Bedrooms\12.lpworld)
+        ElseIf Chambreur == 14
+            setBackground3D(Modules\vin_Base\Bedrooms\13.lpworld)
+        ElseIf Chambreur == 15
+            setBackground3D(Modules\vin_Base\Bedrooms\14.lpworld)
+        ElseIf Chambreur == 16
+            setBackground3D(Modules\vin_Base\Bedrooms\15.lpworld)
+        EndIf
+        Player.show(0,20,0)  
+        cameraFocus(Player)
+        Actor = getCreature()
+        If Actor.isValid() && Actor.isCreatureType(Dog)
+            chance = random(0, 6)
+            If chance >= 3
+                Actor.show()
+            Else
+                Actor.hide()
             EndIf
         EndIf
-        If isModEnabled(rk_vin_Base)
-            clearGetList()
-            hasUniRoom = rk_has_Fratroom.getGlobal()
-            Chambreur = rk_VB_setBackgroundRoom.getGlobal()
-            If Chambreur == 1
-                setBackground3D(Modules\vin_Base\Bedrooms\0.lpworld)
-            ElseIf Chambreur == 2
-                setBackground3D(Modules\vin_Base\Bedrooms\1.lpworld)
-            ElseIf Chambreur == 3
-                setBackground3D(Modules\vin_Base\Bedrooms\2.lpworld)
-            ElseIf Chambreur == 4
-                setBackground3D(Modules\vin_Base\Bedrooms\3.lpworld)
-            ElseIf Chambreur == 5
-                setBackground3D(Modules\vin_Base\Bedrooms\4.lpworld)
-            ElseIf Chambreur == 6
-                setBackground3D(Modules\vin_Base\Bedrooms\5.lpworld)
-            ElseIf Chambreur == 7
-                setBackground3D(Modules\vin_Base\Bedrooms\6.lpworld)
-            ElseIf Chambreur == 8
-                setBackground3D(Modules\vin_Base\Bedrooms\7.lpworld)
-            ElseIf Chambreur == 9
-                setBackground3D(Modules\vin_Base\Bedrooms\8.lpworld)
-            ElseIf Chambreur == 10
-                setBackground3D(Modules\vin_Base\Bedrooms\9.lpworld)
-            ElseIf Chambreur == 11
-                setBackground3D(Modules\vin_Base\Bedrooms\10.lpworld)
-            ElseIf Chambreur == 12
-                setBackground3D(Modules\vin_Base\Bedrooms\11.lpworld)
-            ElseIf Chambreur == 13
-                setBackground3D(Modules\vin_Base\Bedrooms\12.lpworld)
-            ElseIf Chambreur == 14
-                setBackground3D(Modules\vin_Base\Bedrooms\13.lpworld)
-            ElseIf Chambreur == 15
-                setBackground3D(Modules\vin_Base\Bedrooms\14.lpworld)
-            ElseIf Chambreur == 16
-                setBackground3D(Modules\vin_Base\Bedrooms\15.lpworld)
-            EndIf
-            Player.show(0,20,0)  
-            cameraFocus(Player)
-            Actor = getCreature()
-            If Actor.isValid() && Actor.isCreatureType(Dog)
-                chance = random(0, 6)
-                If chance >= 3
-                    Actor.show()
-                Else
-                    Actor.hide()
-                EndIf
-            EndIf
-        EndIf
+    EndIf
         

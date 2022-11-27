@@ -11,13 +11,11 @@ OTHER: none
         FKPrison = MateRandom.getActorVar(tag_FKPrison)
         ActArrestTagFK = MateRandom.getActorVar(rk_VB_ActArrestTagFK)
         MateRandom = getPerson(rk_VB_ActArrestTagFK)
-        
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         setBackground(prison)
-        
         PoliceMan = generatePersonTemporary()
         If Player.isFemale() && !Player.isGay() || Player.isMale()
             While PoliceMan.isMale() || PoliceMan.isTrans()
@@ -27,45 +25,34 @@ OTHER: none
             EndWhile
             PoliceMan.randomizeHairs()
             PoliceMan.randomizeFace()
-            
         ElseIf Player.isMale() && !Player.isGay() || Player.isFemale()
             While !PoliceMan.isMale() || PoliceMan.isTrans()
                 PoliceMan = generatePersonTemporary()
             EndWhile
             PoliceMan.randomizeHairs()
             PoliceMan.randomizeFace()
-
         Else
             PoliceMan.randomizeHairs()
             PoliceMan.randomizeFace()
         EndIf
         
-        PoliceMan.SetJob(Police)
+        PoliceMan.setJob(Police)
         PoliceMan.dressUniform(police)
         PoliceMan.show(2)
         PoliceMan.moveToPersonStand(Player, 50)
         perversion += 1
-
         "Arrived at the cell. the policeman tells me ..."
         MateRandom.show()
         If MeToFK == ActArrestTagFK
-            
             PoliceMan(Grin)::"You have an hour to do your business ..."
             PoliceMan.hide()
-        
             If Player:attractiveness > 50
-            
-                MateRandom(Happy)::"Good, they sent me a pretty <Player.ass_or_pussy> this time!"
-
-            Elseif Player:attractiveness < 49.8
-            
-                MateRandom(Sad)::"Again, they sent me a used <Player.ass_or_pussy>, alright then, we'll see!"
-            
-            Endif
-            
+                Materandom(Happy)::"Good, they sent me a pretty <Player.ass_or_pussy> this time!"
+            ElseIf Player:attractiveness < 49.8
+                Materandom(Sad)::"Again, they sent me a used <Player.ass_or_pussy>, alright then, we'll see!"
+            EndIf
             If MateRandom:attractiveness < 20
-    
-                MateRandom(Happy)::"Undress yourself let's start right away. The guards don't give us a lot of time!"
+                Materandom(Happy)::"Undress yourself let's start right away. The guards don't give us a lot of time!"
                 mood -= 3
                 "Damn, this prisoner is fucking ugly! What should I do?"
                 0::"Accept to fuck with <MateRandom.him_or_her>"
@@ -74,14 +61,14 @@ OTHER: none
                 If 0
                 
                     Player(Grin)::"Yeah, sure! You look nice too!"
-                    MateRandom(Happy)::"Show me that body ..."
+                    Materandom(Happy)::"Show me that body ..."
                     Player.strip()
-                    MateRandom(Happy)::"Oh yeah ..."
+                    Materandom(Happy)::"Oh yeah ..."
                     "We undress and started to have sex ..."
                     
-                    If MateRandom:masochist > Player:masochist
+                    If MateRandom:masochist > masochist
                     
-                        MateRandom(Evil)::"Come here little <Player.hunk_or_bitch>!"
+                        Materandom(Evil)::"Come here little <Player.hunk_or_bitch>!"
                         "Before I knew what was happening, I was pushed face down on the bed ..."
                         Filter(Aggressive)
                         TalkNonConsensual()
@@ -92,31 +79,24 @@ OTHER: none
                         energy -= 10
                         
                     Else
-                    
                         SexNoAffair(MateRandom, Player)
                         If HungerEnable > 0
                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         energy -= 10
-                        
-                    Endif
-                    MateRandom(Sad)::"That was amazing! Ok I guess you have to leave, I wish to see you again!"
+                    EndIf
+                    Materandom(Sad)::"That was amazing! Ok I guess you have to leave, I wish to see you again!"
                     Player.dress()
-                    
                 Else
-                    
                     "I call the guard to let me get out of the cell ..."
                     "While waiting for the guard, I stretch out time and talk to <MateRandom.him_or_her> about anything ..."
                     PoliceMan.show()
                     "Once, the guard in front of the cell, I say to <MateRandom.name> ..."
                     Player(Sad)::"Sorry, but I don't know what I have, but I feel sick, I really need to go!"
-                    MateRandom(Sad)::"Oh! ok, I wish to see you again!"
-                    
-                Endif
-                
-            Elseif MateRandom:attractiveness < 50
-            
-                MateRandom(Happy)::"Undress yourself let's start right away. The guards don't give us a lot of time!"
+                    Materandom(Sad)::"Oh! ok, I wish to see you again!"
+                EndIf
+            ElseIf MateRandom:attractiveness < 50
+                Materandom(Happy)::"Undress yourself let's start right away. The guards don't give us a lot of time!"
                 mood += (0, 3)
                 "Ok, this prisoner <MateRandom.he_or_she>'s not so pretty! What should I do?"
                 0::"Accept to fuck with <MateRandom.him_or_her>"
@@ -125,14 +105,14 @@ OTHER: none
                 If 0
                 
                     Player(Grin)::"Yeah, sure! You look nice too!"
-                    MateRandom(Happy)::"Show me that body ..."
+                    Materandom(Happy)::"Show me that body ..."
                     Player.strip()
                     
                     "We undress and started to have sex ..."
                     
-                    If MateRandom:masochist > Player:masochist
+                    If MateRandom:masochist > masochist
                     
-                        MateRandom(Evil)::"Come here little <MateRandom.hunk_or_bitch>!"
+                        Materandom(Evil)::"Come here little <MateRandom.hunk_or_bitch>!"
                         "Before I knew what was happening, I was pushed face down on the bed ..."
                         Filter(Aggressive)
                         TalkNonConsensual()
@@ -150,8 +130,8 @@ OTHER: none
                         EndIf
                         energy -= 10
                         
-                    Endif
-                    MateRandom(Sad)::"That was amazing! Ok I guess you have to leave, I wish to see you again!"
+                    EndIf
+                    Materandom(Sad)::"That was amazing! Ok I guess you have to leave, I wish to see you again!"
                     Player.dress()
                     
                 Else
@@ -161,39 +141,39 @@ OTHER: none
                     PoliceMan.show()
                     "Once, the guard in front of the cell, I say to <MateRandom.name> ..."
                     Player(Sad)::"Sorry, but I don't know what I have, but I feel sick, I really need to go!"
-                    MateRandom(Sad)::"Oh! ok, I wish to see you again!"
+                    Materandom(Sad)::"Oh! ok, I wish to see you again!"
                     
-                Endif
+                EndIf
                 
-            Elseif MateRandom:attractiveness < 75.8
+            ElseIf MateRandom:attractiveness < 75.8
             
                 mood += (1, 3)
                 "Cool, they brought me to a pretty prisoner. I wish she would like to fuck with me. Sometimes they reject us for no reason but it's really rare."
-                ANoToFck = Random(0, 100)
-                ANoToFck1o2 = Random(0, 100)
+                ANoToFck = random(0, 100)
+                ANoToFck1o2 = random(0, 100)
                 
                 If ANoToFck >= 80
                 
                     PoliceMan.show()
-                    MateRandom(Sad)::"I don't want to fuck today, if you let <Player.him_or_her> enter, I will eat <Player.him_or_her> ..." 
+                    Materandom(Sad)::"I don't want to fuck today, if you let <Player.him_or_her> enter, I will eat <Player.him_or_her> ..." 
                     "Then the prisoner started to masturbate in front of us ..."
                     Filter(solo)
                     sex(MateRandom)
                     "The policeman tells me to come back another time, because today might not be a good day!"
                     mood -= 3
                 
-                Elseif Player:attractiveness > 50
+                ElseIf Player:attractiveness > 50
                 
-                    MateRandom(Happy)::"Undress yourself let's start right away. The guards don't give us a lot of time!"
+                    Materandom(Happy)::"Undress yourself let's start right away. The guards don't give us a lot of time!"
                     Player(Grin)::"Yeah, sure! You are pretty too!"
-                    MateRandom(Happy)::"Show me that body ..."
+                    Materandom(Happy)::"Show me that body ..."
                     Player.strip()
                     
                     "We undress and started to have sex ..."
                     
-                    If MateRandom:masochist > Player:masochist
+                    If MateRandom:masochist > masochist
                     
-                        MateRandom(Evil)::"Come here little <MateRandom.hunk_or_bitch>!"
+                        Materandom(Evil)::"Come here little <MateRandom.hunk_or_bitch>!"
                         "Before I knew what was happening, I was pushed face down on the bed ..."
                         Filter(Aggressive)
                         TalkNonConsensual()
@@ -211,21 +191,21 @@ OTHER: none
                         EndIf
                         energy -= 10
                         
-                    Endif
-                    MateRandom(Sad)::"That was amazing! Ok I guess you have to leave, I wish to see you again!"
+                    EndIf
+                    Materandom(Sad)::"That was amazing! Ok I guess you have to leave, I wish to see you again!"
                     Player.dress()
                     
-                Elseif Player:attractiveness < 49.8 && ANoToFck1o2 > 50
+                ElseIf Player:attractiveness < 49.8 && ANoToFck1o2 > 50
                 
                     Player(Grin)::"Yeah, sure! You look nice too!"
-                    MateRandom(Happy)::"Show me that body ..."
+                    Materandom(Happy)::"Show me that body ..."
                     Player.strip()
                     
                     "We undress and started to have sex ..."
                     
-                    If MateRandom:masochist > Player:masochist
+                    If MateRandom:masochist > masochist
                     
-                        MateRandom(Evil)::"Come here little <MateRandom.hunk_or_bitch>!"
+                        Materandom(Evil)::"Come here little <MateRandom.hunk_or_bitch>!"
                         "Before I knew what was happening, I was pushed face down on the bed ..."
                         Filter(Aggressive)
                         TalkNonConsensual()
@@ -243,52 +223,52 @@ OTHER: none
                         EndIf
                         energy -= 10
                         
-                    Endif
-                    MateRandom(Sad)::"That was amazing! Ok I guess you have to leave, I wish to see you again!"
+                    EndIf
+                    Materandom(Sad)::"That was amazing! Ok I guess you have to leave, I wish to see you again!"
                     Player.dress()
                     
                 Else
                 
                     PoliceMan.show()
-                    MateRandom(Sad)::"I don't want to fuck today, if you let <Player.him_or_her> enter, I will eat <Player.him_or_her> ..." 
+                    Materandom(Sad)::"I don't want to fuck today, if you let <Player.him_or_her> enter, I will eat <Player.him_or_her> ..." 
                     "Then the prisoner started to masturbate in front of us ..."
                     Filter(solo)
                     sex(MateRandom)
                     "The policeman tells me to come back another time, because today might not be a good day!"
                     mood -= 3
                 
-                Endif
+                EndIf
                 
-            Elseif MateRandom:attractiveness > 76
+            ElseIf MateRandom:attractiveness > 76
             
                 mood += (3, 5)
                 "Wow, I'm really lucky they brought me to the prettiest prisoner in this prison ... Look at these shapes ..."
                 "But the downfall with them is that they easily reject us for no reason, but attractiveness matters a lot to them ..."
-                ANoToFck = Random(0, 100)
-                ANoToFck1o2 = Random(0, 100)
+                ANoToFck = random(0, 100)
+                ANoToFck1o2 = random(0, 100)
                 
                 If ANoToFck >= 80
                 
                     PoliceMan.show()
-                    MateRandom(Sad)::"I don't want to fuck today, if you let <Player.him_or_her> enter, I will eat <Player.him_or_her> ..." 
+                    Materandom(Sad)::"I don't want to fuck today, if you let <Player.him_or_her> enter, I will eat <Player.him_or_her> ..." 
                     "Then the prisoner started to masturbate in front of us ..."
                     Filter(solo)
                     sex(MateRandom)
                     "The policeman tells me to come back another time, because today might not be a good day!"
                     mood -= 3
                 
-                Elseif Player:attractiveness > 50
+                ElseIf Player:attractiveness > 50
                 
-                    MateRandom(Happy)::"Undress yourself let's start right away. The guards don't give us a lot of time!"
+                    Materandom(Happy)::"Undress yourself let's start right away. The guards don't give us a lot of time!"
                     Player(Grin)::"Yeah, sure! You are very pretty too!"
-                    MateRandom(Happy)::"Show me that body ..."
+                    Materandom(Happy)::"Show me that body ..."
                     Player.strip()
                     
                     "We undress and started to have sex ..."
                     
-                    If MateRandom:masochist > Player:masochist
+                    If MateRandom:masochist > masochist
                     
-                        MateRandom(Evil)::"Come here little <MateRandom.hunk_or_bitch>!"
+                        Materandom(Evil)::"Come here little <MateRandom.hunk_or_bitch>!"
                         "Before I knew what was happening, I was pushed face down on the bed ..."
                         Filter(Aggressive)
                         TalkNonConsensual()
@@ -306,21 +286,21 @@ OTHER: none
                         EndIf
                         energy -= 10
                         
-                    Endif
-                    MateRandom(Sad)::"That was amazing! Ok I guess you have to leave, I wish to see you again!"
+                    EndIf
+                    Materandom(Sad)::"That was amazing! Ok I guess you have to leave, I wish to see you again!"
                     Player.dress()
                     
-                Elseif Player:attractiveness < 49.8 && ANoToFck1o2 > 50
+                ElseIf Player:attractiveness < 49.8 && ANoToFck1o2 > 50
                 
                     Player(Grin)::"Yeah, sure! You look nice too!"
-                    MateRandom(Happy)::"Show me that body ..."
+                    Materandom(Happy)::"Show me that body ..."
                     Player.strip()
                     
                     "We undress and started to have sex ..."
                     
-                    If MateRandom:masochist > Player:masochist
+                    If MateRandom:masochist > masochist
                     
-                        MateRandom(Evil)::"Come here little <MateRandom.hunk_or_bitch>!"
+                        Materandom(Evil)::"Come here little <MateRandom.hunk_or_bitch>!"
                         "Before I knew what was happening, I was pushed face down on the bed ..."
                         Filter(Aggressive)
                         TalkNonConsensual()
@@ -338,27 +318,23 @@ OTHER: none
                         EndIf
                         energy -= 10
                         
-                    Endif
-                    MateRandom(Sad)::"That was amazing! Ok I guess you have to leave, I wish to see you again!"
+                    EndIf
+                    Materandom(Sad)::"That was amazing! Ok I guess you have to leave, I wish to see you again!"
                     Player.dress()
                     
                 Else
                 
                     PoliceMan.show()
-                    MateRandom(Sad)::"I don't want to fuck today, if you let <Player.him_or_her> enter, I will eat <Player.him_or_her> ..." 
+                    Materandom(Sad)::"I don't want to fuck today, if you let <Player.him_or_her> enter, I will eat <Player.him_or_her> ..." 
                     "The policeman tells me to come back another time, because today might not be a good day!"
                     "Then the prisoner started to masturbate in front of us ..."
                     Filter(solo)
-                    sex(MateRandom)
+                    Sex(MateRandom)
                     mood -= 3
-                
-                Endif
-                
-            Endif
-        
+                EndIf
+            EndIf
         Else
-        
-            EventSpecFK = Random(1, 3)
+            EventSpecFK = random(1, 3)
             EventSpecFK = EventSpecFK.round()
             policeman1 = generatePersonTemporary()
             policeman3 = generatePersonTemporary()
@@ -369,21 +345,18 @@ OTHER: none
             policeman3.randomizeFace()
             policeman4.randomizeHairs()
             policeman4.randomizeFace()
-            
             If EventSpecFK == 1 
                 sex(policeman1, MateRandom)
-            Elseif EventSpecFK == 2 
+            ElseIf EventSpecFK == 2 
                 sex(policeman1, MateRandom, policeman3)
-            Elseif EventSpecFK == 3 
+            ElseIf EventSpecFK == 3 
                 sex(policeman1, MateRandom, policeman3, policeman4)
-            Endif
+            EndIf
             "The policeman tells me to come back another time, because today might not be a good day!"
             mood -= 3
-            
-        Endif
+        EndIf
         MateRandom.DeletePerson()
         MateRandom.setActorVar(rk_VB_MeToFK, 0)
         MateRandom.setActorVar(tag_FKPrison, 0)
         MateRandom.setActorVar(rk_VB_ActArrestTagFK, 0)
-        
     SceneEnd()

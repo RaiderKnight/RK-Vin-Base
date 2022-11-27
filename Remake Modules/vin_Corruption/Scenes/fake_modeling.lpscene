@@ -1,8 +1,8 @@
-WHAT: all
-WHERE: all, -home
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
+WHERE: all, -home, -fraternity, -university
 WHEN: 8 - 21 
 WHO: none
-OTHER: Random(0, 100) < attractiveness && !Player.isProstitute() && modelfame == 0 && !isWithCompanion()
+OTHER: random(0, 100) < attractiveness && !Player.isProstitute() && modelfame == 0 && !isWithCompanion()
 
     SceneStart()
     
@@ -21,7 +21,7 @@ OTHER: Random(0, 100) < attractiveness && !Player.isProstitute() && modelfame ==
         
         If 0
             "This is a once-in-a-lifetime opportunity ... I've always wanted to be a model ..."
-            Actor:: "Please, follow me ..."
+            Actor(Serene):: "Please, follow me ..."
             setBackground(home)
             "The agency office turns out to be rather small and more like a cheap motel room than an office."
             Actor:: "As I said, you have the look we're looking for ... what remains to be seen is whether you have the drive and determination to do whatever it takes to survive and thrive in this cutthroat industry ..."
@@ -45,9 +45,9 @@ OTHER: Random(0, 100) < attractiveness && !Player.isProstitute() && modelfame ==
             Else
                 Actor:: "It's your loss ..."
                 perversion -= 1
-            Endif
+            EndIf
         Else
             "I'm not that keen on becoming a model. Besides, this is too out of the blue, I'm a little bit suspicious ..."
-        Endif
+        EndIf
     SceneEnd()
     timeout(500, fake_modeling)

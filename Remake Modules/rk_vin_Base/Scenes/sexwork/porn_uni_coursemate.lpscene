@@ -2,7 +2,7 @@ WHAT: all
 WHERE: university:school
 WHEN: 0-24
 WHO: Actor = getPerson(rk_VB_tag_Student)
-OTHER: pornfame > 1
+OTHER: pornfame > 10
 
     
     SceneStart()
@@ -102,63 +102,83 @@ OTHER: pornfame > 1
             "I was assigned to work in a pair with <Actor.name> for an assignment, who invited me to <Actor.his_or_her> place to do the work together."
             setBackground(home)
             "As we were working together, I couldn't help but notice that <Actor.he_or_she> acts a bit strange around me ..."
-            Player:: "What's wrong, <Actor.name>? I'm not bothering you somehow, am I?"
+            Player(Curious):: "What's wrong, <Actor.name>? I'm not bothering you somehow, am I?"
             Actor:: "No, not at all ... It's just that ..."
             Actor:: "To be honest, I saw one of your videos ... the adult ones ..."
             Player:: "Oh ...."
             "I guess there's no point denying it ..."
             Player:: "Yeah, it's one of the few options I had to make ends meet while financing my education ..."
             Actor:: "Oh no, don't get me wrong ... I'm not judging at all ..."
+            Actor.animate(browse)
+            Player.animate(browse)
             "With that awkward conversation out of the way for now, we went back to working on the assignment ..."
             "Two hours later ..."
+            Player.animate()
             Player:: "Let's have a break. I'm not good at concentrating on something for so long."
-            If Actor.isSameGender(Player) && random(0, 100) < 50 && !Actor.isAsexual()
+            Actor.animate()
+            Actor2 = Actor.getRelatedPerson(Spouses, Dating)
+            If !Actor2.isValid()
+                Actor2 = generatePersonTemporary()
+                While !Actor.isInterestedIn(Actor2)
+                    Actor2 = generatePersonTemporary()
+                EndWhile
+            EndIf
+            If Actor2.isValid() && Actor.isSameGender(Player) && random(0, 100) < 50 && !Actor.isAsexual()
                 Actor:: "You know ... ever since I came across that video of yours, I couldn't stop thinking about it ..."
                 Actor:: "You were so good at it. It was clear that your co-star was enjoying it so much."
-                Actor2 = Actor.getRelatedPerson(Spouses, Dating)
-                If !Actor2.isValid()
-                    Actor2 = generatePersonTemporary()
-                    While !Actor.isInterestedIn(Actor2)
-                        Actor2 = generatePersonTemporary()
-                    EndWhile
-                EndIf
                 Actor:: "I'm pretty bad at it ... I could never get my <Actor2.boyfriend_or_girlfriend> to cum."
                 0:: "Well, good to know ..."
                 1:: "Offer to teach <Actor.him_or_her>"
                 
                 If 0
-                    Player:: "You'll get better with experience, I'm sure ..."
+                    Player(Happy):: "You'll get better with experience, I'm sure ..."
                 Else
-                    Actor:: "Really? That's so nice of you. Maybe I can call my <Actor2.boyfriend_or_girlfriend> <Actor2.name> over to watch and learn from how you satisfy <Actor2.him_or_her>?"
+                    YRefuse = false
+                    sablonde = false
+                    Actor(Happy):: "Really? That's so nice of you. Maybe I can call my <Actor2.boyfriend_or_girlfriend> <Actor2.name> over to watch and learn from how you satisfy <Actor2.him_or_her>?"
                     0:: "Use <Actor.name>'s <Actor2.boyfriend_or_girlfriend> as target practice"
                     1:: "Suggest my own target practice"
                     
-                    If 1
+                    If 0
+                        If !Actor.isInterestedIn(Player) || Actor:rapportwithplayer < 25 || Actor2:perversion < 50
+                            YRefuse = true
+                            Actor(Happy)::"No fucking way, I will never share my <Actor2.boyfriend_or_girlfriend> with someone else!"
+                            Player(Happy)::"Ok fine, I'll find someone else"
+                        Else
+                            Actor(Happy)::"Cool, <Actor2.he_or_she>'s a real pervert, you'll see!"
+                            Player(Happy)::"That will be a perfect candidate!"
+                            sablonde = true
+                        EndIf
+                    ElseIf 1
+                        YRefuse = true
+                    EndIf
+                    If YRefuse
                         "Who do I have in mind?"
                         selectNPC()
                         Actor2 = getSelectedNPC()
                     EndIf
-                    
-                    Actor2.dress()
-                    Actor2.show()
-                    "Soon <Actor2.name> arrived and I put my pornstar skill on show, while my eager student <Actor.name> watched and learned."
-                    Sex(Actor2, Player)
-                    If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -2)
-                    EndIf
-                    Player:: "Looks like <Actor2.name> is ready for another round. Now, <Actor.name>, why don't you show me how much you've learned?"
-                    Sex(Actor2, Actor)
-                    Actor.setActorVar(tag_pornfan, 2)
-                    "<Actor.name> was definitely a quick learner. <Actor.He_or_She> already improved so much just from watching me having a go first."
-                    
-                    If Actor2.isTemporary()
-                        Actor2.makePermanent()
-                    EndIf
-                    If !Actor2.isDating() && !Actor.hasRelationship(Dating, Spouses)
-                        addNpcRelationship(Dating, Actor2, Actor)
+                    If Actor2.isValid() || sablonde
+                        Actor2.dress()
+                        Actor2.show()
+                        "Soon <Actor2.name> arrived and I put my pornstar skill on show, while my eager student <Actor.name> watched and learned."
+                        Sex(Actor2, Player)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
+                        Player:: "Looks like <Actor2.name> is ready for another round. Now, <Actor.name>, why don't you show me how much you've learned?"
+                        Sex(Actor2, Actor)
+                        Actor.setActorVar(tag_pornfan, 2)
+                        "<Actor.name> was definitely a quick learner. <Actor.He_or_She> already improved so much just from watching me having a go first."
+                        
+                        If Actor2.isTemporary()
+                            Actor2.makePermanent()
+                        EndIf
+                        If !Actor2.isDating() && !Actor.hasRelationship(Dating, Spouses)
+                            addNpcRelationship(Dating, Actor2, Actor)
+                        EndIf
                     EndIf
                 EndIf        
-            ElseIf Actor.isInterestedIn(Player)
+            ElseIf Actor.isInterestedIn(Player) && Actor:arousal > 25
                 If Actor:interpersonal + Actor:perversion > 100
                     Actor:: "You know ... ever since I came across that video of yours, I couldn't stop thinking about it ..."
                     Actor:: "Why don't we have some fun right now? Sex is a great stress relief."

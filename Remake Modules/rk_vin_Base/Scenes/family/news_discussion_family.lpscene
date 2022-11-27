@@ -1,8 +1,8 @@
-WHAT: all, -sleep, -nap
+WHAT: all, -sleep, -nap, -rk_VB_small_sleep
 WHERE: home
 WHEN: 0-24
-WHO: Actor = getRelative(); If Actor.livesWithPlayer() && Random(50, 200) < Actor:intelligence
-OTHER: isAtHome() && Random(0, 200) < intelligence
+WHO: Actor = getRelative(); If Actor.livesWithPlayer() && random(50, 200) < Actor:intelligence
+OTHER: isAtHome() && random(0, 200) < intelligence
 
     SceneStart()
     
@@ -21,20 +21,14 @@ OTHER: isAtHome() && Random(0, 200) < intelligence
         
             "I tried my best to show off my knowledge of current affairs to engage in a sophisticated discussion with <Actor.name>."
             
-            If Random(0, 100) < intelligence
-            
+            If random(0, 100) < intelligence
                 Actor(Happy):: "It's rare nowadays for someone to be so knowledgeable about everything going on in the world. Proud of you, <Actor.callplayer>"
-                Actor:rapportwithplayer += Random(0, 2)
-                
+                Actor:rapportwithplayer += random(0, 2)
             Else
-            
                 "Unfortunately, my knowledge of world affairs really wasn't deep enough to hold an intelligent conversation about it. From <Actor.his_or_her> facial expression, I could tell that <Actor.he_or_she> saw right through me as ignorant but pretentious."
-                Actor:rapportwithplayer -= Random(0, 1)
+                Actor:rapportwithplayer -= random(0, 1)
                 mood -= 2
-                
-            Endif
-            
-        Endif
-        
+            EndIf
+        EndIf
         SceneEnd()  // Scene improved by Raddeck
     timeout(500, news_discussion_family)

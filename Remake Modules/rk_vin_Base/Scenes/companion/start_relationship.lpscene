@@ -13,14 +13,14 @@ OTHER: none
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         Companion = getCompanion()
         CurrentCompanion.show(2)
-        If !CurrentCompanion.isRelative() && !CurrentCompanion.isDating() && !CurrentCompanion.hasRelationship(Spouses, Dating) && CurrentCompanion.IsInterestedIn(Player) && CurrentCompanion:attractiontoplayer > Random(30, 60)  
+        If !CurrentCompanion.isRelative() && !CurrentCompanion.isDating() && !CurrentCompanion.hasRelationship(Spouses, Dating) && CurrentCompanion.isInterestedIn(Player) && CurrentCompanion:attractiontoplayer > Random(30, 60)  
             If CurrentCompanion.isCreature()
                 "I can't propose a romantic relationship to an animal!"
             ElseIf !Player.IsInterestedIn(CurrentCompanion)
                 CurrentCompanion(Curious):: "Not now, I'm not really interested...!"
             Else
                 passTime(0.2, 0.5)
-                If Player.IsDominantSex(CurrentCompanion) || [interpersonal > Random(70, 100) && masochist < -30] || !CurrentCompanion.isInterestedIn(Player)
+                If Player.isDominantSex(CurrentCompanion) || [interpersonal > Random(70, 100) && masochist < -30] || !CurrentCompanion.isInterestedIn(Player)
                     "I have spent a decent amount of time to get to know <CurrentCompanion.name>. However, have I ever imagined <CurrentCompanion.him_or_her> as my <CurrentCompanion.boyfriend_or_girlfriend>?"
                     0:: "Yes"
                     1:: "No"
@@ -119,7 +119,7 @@ OTHER: none
                 
             Endif
         Else
-            "Maybe later, <CurrentCompanion.name> doesn't seem interrested in being in a relationship right now...!"
+            "Maybe later, <CurrentCompanion.name> doesn't seem interested in being in a relationship right now...!"
         Endif
     SceneEnd() // Scene improved by: Raddeck
     //timeout(96, start_relationship)

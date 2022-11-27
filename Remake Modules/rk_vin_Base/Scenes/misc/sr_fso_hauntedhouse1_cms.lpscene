@@ -1,4 +1,4 @@
-WHAT: all, -sleep, -nap
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all
 WHEN: 0 - 24
 WHO: Actor = getCompanion(); If !Actor.isMale() && Actor.isDating() && Actor:perversion > 45
@@ -11,19 +11,19 @@ OTHER: Player.isMale() && isModEnabled(vin_NTR)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        "I randomly receieved a invite to a adult only haunted house event and an after party on my phone from a friend I know. I wonder what could happen."
+        "I randomly received a invite to a adult only haunted house event and an after party on my phone from a friend I know. I wonder what could happen."
         0:: "I think I'll ask <Actor.name> to be my date there and perhaps I can talk her into something..."
         1:: "I think I'll skip the event, but I'll ask <Actor.name> if they want to go."
         2:: "I think I'll skip the event. No reason to go, nor do I think <Actor.name> would want to go without me honestly."
 
         If 0
             "What should I try to do with <Actor.name> to do at the event?"
-            0:: "I'll try to get her to let me bang her secrectly somewhere in the house."
+            0:: "I'll try to get her to let me bang her secretly somewhere in the house."
             1:: "I'll take a video of her streaking nude throughout the haunted house event! This sounds like a great idea to try to convince her to do!"
-            2:: "I'll get her durnk and groped by the guests...maybe let them go further."
+            2:: "I'll get her drunk and groped by the guests...maybe let them go further."
             
             If 0
-                "After an hour into the party me and <Actor.name> snuck off to have sex!"
+                "After an hour into the party me and <Actor.name> sneak off to have sex!"
                 Sex(Player, Actor)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
@@ -51,7 +51,7 @@ OTHER: Player.isMale() && isModEnabled(vin_NTR)
                     EndIf
                 EndIf
             ElseIf 1
-                "After me and <Actor.name> learned the layout of the haunted house I had her strip and I brought out my phone. I then began filming and following her as she snuck throughout the house nude."
+                "After me and <Actor.name> learned the layout of the haunted house I had her strip and I brought out my phone. I then began filming and following her as she sneak throughout the house nude."
                 Actor.strip()
                 Actor:: "Babe this is turning me on so badly!"
                 Filter(Solo)
@@ -63,7 +63,7 @@ OTHER: Player.isMale() && isModEnabled(vin_NTR)
                 If 0
                     "I smirked and put a blindfold on <Actor.name> and told her my plan."
                     "I then waved over the man and told him he can play with her, but he needs to do so as sneakily as he can."
-                    "He didn't know that I told her the stranger was going to mess with her, but I thought it would enchance the mood if he pretended to be me."
+                    "He didn't know that I told her the stranger was going to mess with her, but I thought it would enhance the mood if he pretended to be me."
                     Actor3 = generatePersonTemporary()
                     While !Actor3.isMale()
                         Actor3 = generatePersonTemporary()
@@ -74,7 +74,7 @@ OTHER: Player.isMale() && isModEnabled(vin_NTR)
                     Sex(Actor3, Actor)
                     
                     "After he had sex with <Actor.name> he thanked me silently and slipped me a small amount of cash as additional thanks."
-                    Actor:: "Haha that was something for sure! That was pretty kinky getting me 'accidently' fucked by a stranger."
+                    Actor:: "Haha that was something for sure! That was pretty kinky getting me 'accidentally' fucked by a stranger."
                     Player:: "I enjoy netorase it is quite hot to see, and you do netorase so damn well. I love you!"
                     Actor:: "I love you too!"
                     money += 100
@@ -99,8 +99,8 @@ OTHER: Player.isMale() && isModEnabled(vin_NTR)
                 "She began grinding against <Actor3.name> and this quickly escalated to her being fingered right there!"
                 Filter(FingerPussy)
                 Sex(Actor3, Actor)
-                "<Actor.name> looked at me still drunk but chohrient enough to be asking if I want to let it go further."
-                0:: "I nodded yes to her knowing full well she was about to have sex right there infront of everyone on the dance floor."
+                "<Actor.name> looked at me still drunk but coherent enough to be asking if I want to let it go further."
+                0:: "I nodded yes to her knowing full well she was about to have sex right there in front of everyone on the dance floor."
                 1:: "I shook my head no, she understood"
                 
                 If 0
@@ -120,13 +120,13 @@ OTHER: Player.isMale() && isModEnabled(vin_NTR)
             EndIf
         ElseIf 1
             "I showed the invite to <Actor.name> and told them they could go if they wanted."
-            Actor:: "Thanks love! I'll bring you back a giftback!" 
+            Actor:: "Thanks love! I'll bring you back a gift back!" 
             Player:: "love you, stay safe!"
-            "<Actor.name> enjoyed the party and gave me a giftbag from the party next time I saw them. They recommended I go with them next time."
+            "<Actor.name> enjoyed the party and gave me a gift back from the party next time I saw them. They recommended I go with them next time."
             Player:: "Alright, I'll think about it love!"
         Else
             "I decided not to go to the event, nor did I tell anyone about it."
         EndIf
     
     SceneEnd() // Improved by Raddeck
-    Timeout(500, sr_fso_hauntedhouse1_cms)
+    timeout(500, sr_fso_hauntedhouse1_cms)

@@ -1,4 +1,4 @@
-WHAT: all, -sleep, -nap
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: home
 WHEN: 8-20
 WHO: Actor = getPerson(true); If !Actor.isRelative() && Actor.isInterestedIn(Player) && Actor:perversion > 70 && Actor:attractiontoplayer > 30
@@ -13,7 +13,7 @@ OTHER: isAtHome()
         1:: "Tell <Actor.him_or_her> off"
         
         If 0
-            perversion += Random(0, 0.25)
+            perversion += random(0, 0.25)
             "As much as it's a perverted gift ... It's a gift after all. I can't be so rude."
             "I texted <Actor.name> to thank <Actor.him_or_her> for the gift."
             "That night ..."
@@ -22,13 +22,13 @@ OTHER: isAtHome()
             1:: "Resist the temptation"
             
             If 0
-                perversion += Random(0, 0.25)
+                perversion += random(0, 0.25)
                 "I guess nobody needs to know about this ... I only masturbate with this toy for the sake of ... cancer prevention."
-            Endif
+            EndIf
         Else
             "I immediately texted <Actor.name>, making it clear such a gift is totally inappropriate and not welcome."
-            Actor:attractiontoplayer -= Random(0, 1)
-        Endif
+            Actor:attractiontoplayer -= random(0, 1)
+        EndIf
     
     SceneEnd()
     timeout(200, co_vi_gift)

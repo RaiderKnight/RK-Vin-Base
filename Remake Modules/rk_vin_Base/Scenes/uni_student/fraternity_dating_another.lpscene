@@ -1,10 +1,19 @@
 WHAT: all, -sleep, -nap
 WHERE: fraternity
 WHEN: 0-24
-WHO: Actor = getSpecific(Fraternity); If !Actor.isDating() && !Actor.isAsexual() && !Actor.hasRelationship(Spouses, Dating)
+WHO: Actor = getPerson(rk_VB_tag_Student); If !Actor.isDating() && !Actor.isAsexual() && !Actor.hasRelationship(Spouses, Dating)
 OTHER: none
 
     SceneStart()
+        If !Player.isMale()
+            While Actor.isValid() && Actor.isMale()
+                Actor = getPerson(rk_VB_tag_ExeSoroS)
+            EndWhile
+        Else
+            While Actor.isValid() && !Actor.isMale()
+                Actor = getPerson(rk_VB_tag_ExeFratF)
+            EndWhile
+        EndIf
         Actor.dress()
         Actor.show(2)
         Actor2 = generatePersonTemporary()

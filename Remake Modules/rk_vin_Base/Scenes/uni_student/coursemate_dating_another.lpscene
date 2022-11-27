@@ -152,22 +152,18 @@ OTHER: none
             EndIf
         EndIf
         Actor.dress()
-        Actor.show(2)
-        Actor2 = generatePersonTemporary()
-        While !Actor.isInterestedIn(Actor2)
+        Actor.show()
+        //ChoixDsonCours = random(1, 20)
+        //ChoixDsonCours = ChoixDsonCours.round()
+        TrouveLeBon2 = true
+        While TrouveLeBon2
+            ChoixDsonCours = random(1, 20)
+            ChoixDsonCours = ChoixDsonCours.round()
+            TrouveLeBon2 = false
             Actor2 = generatePersonTemporary()
-        EndWhile
-        Actor2.makePermanent()
-        Actor2:age => random(18, 22)
-        Actor2.randomizeHairs()
-        Actor2.randomizeRace()
-        Actor2.randomizeFace()
-        //Actor2.setDifferentMajor()
-        AcID = Actor2.getID()
-        Actor2.setActorVar(rk_VB_tag_Student, 1)
-        ChoixDsonCours = random(1, 20)
-        ChoixDsonCours = ChoixDsonCours.round()
-        While ChoixDsonCours == choiceCourseMajorT
+            While !Actor.isInterestedIn(Actor2)
+                Actor2 = generatePersonTemporary()
+            EndWhile
             If choiceCourseMajorT == 1
                 Actor2.setActorVar(rk_VB_Architecture_Major_Actor, 1)
                 Actor2.setActorVar(rk_VB_tag_TAR, 1)
@@ -250,8 +246,17 @@ OTHER: none
                 Actor2.setActorVar(rk_VB_AcIdCC_TVE, AcID)
             EndIf
         EndWhile
+        Actor2:age => random(18, 22)
+        Actor2.randomizeHairs()
+        Actor2.randomizeRace()
+        Actor2.randomizeFace()
+        //Actor2.setDifferentMajor()
+        AcID = Actor2.getID()
+        Actor2.setActorVar(rk_VB_tag_Student, 1)
+        Actor2.makePermanent()
+        Actor.moveToPersonStand(Actor2, 40)
         Actor2.dress()
-        Actor2.show(3)
+        Actor2.show()
         Jealousy = Player.getActorVar(rk_VB_Jealousy) // My general jealousy
         JealousTowardIDA = Actor.getActorVar(rk_VB_PlayerJealousTowardIDA)
         JealousTowardIDA2 = Actor2.getActorVar(rk_VB_PlayerJealousTowardIDA)

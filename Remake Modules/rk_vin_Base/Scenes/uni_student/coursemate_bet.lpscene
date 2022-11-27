@@ -5,6 +5,8 @@ WHO: Actor = getPerson(rk_VB_tag_Major); Actor2 = getPerson(rk_VB_tag_Student); 
 OTHER: Actor.isInterestedIn(Player)
 
     SceneStart()
+        VasTen = false
+        perdu = false
         choiceCourseMajor = rk_VB_choiceCourseMajor.getGlobal()
         MajorTeacher = rk_VB_Major_Teacher.getGlobal()
         tagTAR = Actor.getActorVar(rk_VB_tag_TAR)
@@ -225,6 +227,8 @@ OTHER: Actor.isInterestedIn(Player)
             dressFormal()
             Actor.dress()
             Actor.show()
+            npcpari = 100
+            npcpariloc = npcpari.convertToLocalCurrency()
             "I was sitting next to my classmate <Actor2.name> during Dr <Actor.name> <Actor.name_last>'s <TextMajorChosen> class when <Actor2.he_or_she> whispers something into my ear."
             Actor2(Sarcastic):: "To be honest, I hate this subject. I'm only here to admire the Dr <Actor.name_last>'s hotness."
             0:: "Yeah, <Actor.he_or_she>'s pretty hot for a university lecturer"
@@ -233,13 +237,14 @@ OTHER: Actor.isInterestedIn(Player)
             If 0
                 Player(Happy):: "Dr <Actor.name_last> is definitely easy on the eye."
                 Actor2(Happy):: "How about a friendly bet of who can take <Actor.him_or_her> to bed first?"
-                0:: "Bet"
+                0:: "Bet <npcpariloc>"
                 1:: "You're crazy!"
                 
                 If 0
+                    Actor:attractiontoplayer += random(0, 1)
+                    Actor:rapportwithplayer += random(0, 1)
                     Player(Happy):: "Sure, but only if I get the first shot."
                     Actor2(Happy):: "Deal!"
-                    money -= 50
                     Actor2.hide()
                     Player.moveToPersonStand(Actor, 50)
                     "I decided to come up to Dr <Actor.name_last>'s office after class and showed my interest in more advanced reading materials about the subject matter."
@@ -261,7 +266,7 @@ OTHER: Actor.isInterestedIn(Player)
                             Player(Happy):: "So, how about that? You accept defeat yet?"
                             Actor2(Happy):: "Fair play, you got to fuck <Actor.him_or_her> first. But I won't be far behind, I can assure you."
                             Player(Happy):: "Yeah, maybe, but that's not the bet. Now pay up!"
-                            money += 100
+                            money += npcpari
                         Else
                             Ahead = true
                             Actor(Annoyed):: "Excuse me, but your behaviour is totally inappropriate. Please leave my office at once!"
@@ -270,12 +275,16 @@ OTHER: Actor.isInterestedIn(Player)
                             Player(Sad):: "<Actor.He_or_She> is very serious and professional, you won't stand a chance either."
                             Actor2(Happy):: "Watch and learn!"
                         EndIf
+                        Actor:attractiontoplayer += random(0, 1)
+                        Actor:rapportwithplayer += random(0, 1)
                     Else
                         Ahead = true
                         Actor.hide()
                     EndIf     
                 Else
                     Player(Sad):: "Sorry, not my type of competition. You go ahead."
+                    Actor:attractiontoplayer -= random(0, 1)
+                    Actor:rapportwithplayer -= random(0, 1)
                     Ahead = true
                 EndIf
                 If Ahead
@@ -286,10 +295,60 @@ OTHER: Actor.isInterestedIn(Player)
                     If Actor2:attractiveness + Actor:perversion > random(50, 150)
                         Actor(Flirty):: "I know what you want! I'm strictly prohibited from having a sexual relationship with students but I can't resist this temptation anymore ..."
                         Sex(Actor2, Actor)
+                        Actor.hide()
+                        perdu = true
                     Else
                         Actor(Annoyed):: "Excuse me, but your behaviour is totally inappropriate. Please leave my office at once!"
+                        VasTen = true
                     EndIf
                     Player.show()
+                    Actor2.show()
+                    Actor2.moveToPersonStand(Player, 50)
+                    If perdu
+                        Actor2(Happy):: "So, how about that? You accept defeat yet?"
+                        Player(Happy):: "Fair play! But I won't be far behind, I can assure you."
+                        Actor2(Happy):: "Yeah, maybe, but that's not the bet. Now pay up!"
+                        money -= 100
+                        VasTen = true
+                    EndIf
+                    If VasTen
+                        If !perdu
+                            Player(Grin):: "Looks like it doesn't work for you either!"
+                            Actor2(Annoyed)::"Fair play, another day we should try with another teacher!"
+                            Player(Happy):: "Yeah, that was fun!"
+                        EndIf
+                        If Actor2:arousal > 25 && Actor2:perversion > 50 && Actor2.isInterestedIn(Player)
+                            Actor2(Flirty)::"Would you like to go to the park, we can have a little 69 in the back of a bush, the bet got me horny!"
+                            0::"Accept the offer"
+                            1::"Refuse the offer"
+                            
+                            If 0
+                                Player(Sarcastic)::"Sure, 69 is my favourite number!"
+                                Actor2(Happy)::"Cool, let's go!"
+                                arousal += random(0, 1)
+                                Actor2:arousal += random(0, 1)
+                                OverwriteCurrentLocation(park)
+                                "Once we arrived at the park, we hid behind a bush, and started our 69"
+                                perversion += random(0, 1)
+                                Actor2:perversion += random(0, 1)
+                                Actor2.strip()
+                                Player.strip()
+                                Filter(69)
+                                Sex(Player, Actor2)
+                                If HungerEnable > 0
+                                    Player.modifyActorVar(rk_VB_Hunger, -2)
+                                EndIf
+                                Actor2:attractiontoplayer += random(0, 2)
+                                Actor2:rapportwithplayer += random(0, 2)
+                            Else
+                                Player(Sad)::"Sorry, but, I really need to leave now!"
+                                Actor2(Curious)::"Oh well fine! Up to you!"
+                                Actor2:attractiontoplayer -= random(0, 1)
+                                Actor2:rapportwithplayer -= random(0, 1)
+                                Actor2.hide()
+                            EndIf
+                        EndIf
+                    EndIf
                 EndIf
             Else
                 "I don't really see it myself, but I guess to each their own."

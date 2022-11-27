@@ -1,8 +1,8 @@
-WHAT: rk_VB_Visit_Internet, rk_VB_Use_Computer, -sleep, -nap
+WHAT: rk_VB_Visit_Internet, rk_VB_Use_Computer, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: home
 WHEN: 8 - 22
-WHO: Actor = getSpecific(Dating)
-OTHER: Random(35, 100) < perversion && isModEnabled(vin_NTR) && isWithCompanion()
+WHO: Actor = getSpecific(Dating);
+OTHER: random(35, 100) < perversion && isModEnabled(vin_NTR) && isWithCompanion()
 
 
     // Summery - player asks their gf/wife to put on a show at a hangout, a few choices are there.
@@ -19,60 +19,60 @@ OTHER: Random(35, 100) < perversion && isModEnabled(vin_NTR) && isWithCompanion(
         If Actor7.isValid() && Actor7.isInterestedIn(Actor) && Actor7:rapportwithplayer > 20
             Actor7.dress()
             Actor7.hide()
-        Endif
+        EndIf
         Actor6 = getPerson(true)
         If Actor6.isValid() && Actor6.isInterestedIn(Actor) && Actor6:rapportwithplayer > 20
             Actor6.dress()
             Actor6.hide()
-        Endif
+        EndIf
         Actor5 = getPerson(true)
         If Actor5.isValid() && Actor5.isInterestedIn(Actor) && Actor5:rapportwithplayer > 20
             Actor5.dress()
             Actor5.hide()
-        Endif
+        EndIf
         Actor3 = getPerson(true)
         If Actor3.isValid() && Actor3.isInterestedIn(Actor) && Actor3:rapportwithplayer > 20
             Actor3.dress()
             Actor3.hide()
-        Endif
+        EndIf
         Actor4 = getPerson(true)
         If Actor4.isValid() && Actor4.isInterestedIn(Actor) && Actor4:rapportwithplayer > 20
             Actor4.dress()
             Actor4.hide()
-        Endif
+        EndIf
         
         Actor7G = generatePersonTemporary()
         While Actor7G.isSameGender(Actor) && !Actor7G.isInterestedIn(Actor)
             Actor7G = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor7G.dress()
         Actor7G.hide()
         
         Actor6G = generatePersonTemporary()
         While Actor6G.isSameGender(Actor) && !Actor6G.isInterestedIn(Actor)
             Actor6G = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor6G.dress()
         Actor6G.hide()
         
         Actor5G = generatePersonTemporary()
         While Actor5G.isSameGender(Actor) && !Actor5G.isInterestedIn(Actor)
             Actor5G = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor5G.dress()
         Actor5G.hide()
         
         Actor3G = generatePersonTemporary()
         While Actor3G.isSameGender(Actor) && !Actor3G.isInterestedIn(Actor)
                 Actor3G = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor3G.dress()
         Actor3G.hide()
         
         Actor4G = generatePersonTemporary()
         While Actor4G.isSameGender(Actor) && !Actor4G.isInterestedIn(Actor)
             Actor4G = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor4G.dress()
         Actor4G.hide()
         
@@ -85,11 +85,11 @@ OTHER: Random(35, 100) < perversion && isModEnabled(vin_NTR) && isWithCompanion(
             LetsPlay = true
         Else
             Actor(Sad)::"Not really feeling like playing that now!"
-        Endif
+        EndIf
         
         If LetsPlay
             "What I should ask?"
-            0:: Actor2.isValid() && isModEnabled(vin_Bestiality):: "Let the dog 'accidently' getting onto you."
+            0:: Actor2.isValid() && isModEnabled(vin_Bestiality):: "Let the dog 'accidentally' getting onto you."
             1:: Actor7.isValid()::"Inviting my friends and flash them"
             2:: Actor7.isValid()::"Inviting my friends and have sex with them while I watch" 
             3:: Actor7.isValid()::"Inviting your friends and flash them"
@@ -97,7 +97,7 @@ OTHER: Random(35, 100) < perversion && isModEnabled(vin_NTR) && isWithCompanion(
             99:: "I changed my mind!"
 
             If 0
-                Player(Serene):: "The challenge is to wear a <Actor.towel_or_skirt> without underwear and then let the dog 'accidently' getting onto you!" 
+                Player(Serene):: "The challenge is to wear a <Actor.towel_or_skirt> without underwear and then let the dog 'accidentally' getting onto you!" 
                 If ActorLD > 50
                     Actor:: "You are really naughty! Damn...Ok. I'll do it!"
                     Actor2.show()
@@ -111,8 +111,7 @@ OTHER: Random(35, 100) < perversion && isModEnabled(vin_NTR) && isWithCompanion(
                     Actor:mood -= 5
                     Actor:perversion += 1
                 EndIf
-            Elseif 1
-                // It was inviting some friends over and then having my lover flash them.
+            ElseIf 1
                 Player(Serene):: "The challenge is to strip naked, then I invite some of my friends and you show off to them?"
                 If ActorLD > 50
                     Actor.strip()
@@ -125,7 +124,7 @@ OTHER: Random(35, 100) < perversion && isModEnabled(vin_NTR) && isWithCompanion(
                     Actor6.show()
                     Actor7.show()
                     Actor7:arousal += 25
-                    "After my friends arrived they noticed mym nude lover and couldn't help but ask how I managed to get <Actor.him_or_her> to do that. To which <Actor.he_or_she> responded it is a secret!" 
+                    "After my friends arrived they noticed my nude lover and couldn't help but ask how I managed to get <Actor.him_or_her> to do that. To which <Actor.he_or_she> responded it is a secret!" 
                     "The little session with friends finally ends but suddenly one of my friends asks me if <Actor7.he_or_she> can fuck with my <Actor.boyfriend_or_girlfriend>."
                     0:: "Yes"
                     1:: "No"
@@ -142,13 +141,12 @@ OTHER: Random(35, 100) < perversion && isModEnabled(vin_NTR) && isWithCompanion(
                             "What a fun night."
                         Else
                             Actor(Sad):: "Oh god! No way!"
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                 Else
                     Actor(Sad):: "Oh god! No way!"
-                Endif
-            Elseif 2
-                // It was setting up my girl to have sex with a few male friends of hers while I watched.
+                EndIf
+            ElseIf 2
                 Player(Serene):: "The challenge is to strip naked, then I invite some of my friends and you get fucked by those interested?"
                 If ActorLD > 50
                     Actor.strip()
@@ -230,14 +228,13 @@ OTHER: Random(35, 100) < perversion && isModEnabled(vin_NTR) && isWithCompanion(
                                     If HungerEnable > 0
                                         Player.modifyActorVar(rk_VB_Hunger, -2)
                                     EndIf
-                                Endif
+                                EndIf
                                 count += 5
-                            Endif
+                            EndIf
                             count += 1
                         EndWhile
-                    Endif
-            Elseif 3
-                // It was inviting some friends over and then having my lover flash them.
+                    EndIf
+            ElseIf 3
                 Player(Serene):: "The challenge is to strip naked, then you invite some of your friends and you show off to them?"
                 If ActorLD > 50
                     Actor.strip()
@@ -267,13 +264,12 @@ OTHER: Random(35, 100) < perversion && isModEnabled(vin_NTR) && isWithCompanion(
                             "What a fun night."
                         Else
                             Actor:: "Oh god! No way!"
-                        Endif
-                    Endif
+                        EndIf
+                    EndIf
                 Else
                     Actor:: "Oh god! No way!"
-                Endif
-            Elseif 4
-                // It was setting up my girl to have sex with a few male friends of hers while I watched.
+                EndIf
+            ElseIf 4
                 Player(Serene):: "The challenge is to strip naked, then you invite some of your friends and you get fucked by those interested?"
                 If ActorLD > 50
                     Actor.strip()
@@ -350,16 +346,16 @@ OTHER: Random(35, 100) < perversion && isModEnabled(vin_NTR) && isWithCompanion(
                                     If HungerEnable > 0
                                         Player.modifyActorVar(rk_VB_Hunger, -2)
                                     EndIf
-                                Endif
+                                EndIf
                                 count += 5
-                            Endif
+                            EndIf
                             count += 1
                         EndWhile
-                    Endif
+                    EndIf
                 Else
                     Actor(Disgusted):: "Oh god! No way!"
-                Endif
-            Endif
+                EndIf
+            EndIf
             Actor3.delete()
             Actor4.delete()
             Actor5.delete()
@@ -370,6 +366,6 @@ OTHER: Random(35, 100) < perversion && isModEnabled(vin_NTR) && isWithCompanion(
             Actor5G.delete()
             Actor6G.delete()
             Actor7G.delete()
-        Endif
+        EndIf
     SceneEnd()
     timeout(174, sr_fso_hangoutdare2_cms) // Scene improved by Raddeck

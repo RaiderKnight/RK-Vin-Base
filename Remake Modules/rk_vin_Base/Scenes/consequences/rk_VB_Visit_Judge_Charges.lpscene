@@ -32,7 +32,7 @@ OTHER:
             Player.setActorVar(rk_VB_GoodCitizenProofLvl, 100)
         Else
             GoodCitizenProof = GoodCitizenProofLvl
-        Endif
+        EndIf
         Judge = generatePersonTemporary()
         Judge.hide()
         LastTimeSeeJudge = Player.getActorVar(rk_VB_LastTimeSeeJudge)
@@ -40,16 +40,16 @@ OTHER:
         "I decided to go see a judge to erase some of my charges or at least clean my criminal records a bit ..."
         If Did30Passed <= 30
             "You saw the judge a few days ago, you will have to wait a little longer before visiting <Judge.him_or_her>."
-        Elseif TotalCharges > 0
-            ChargeD = Random(300, 1000)
-            ChargeB = Random(1000, 2000)
-            ChargeSD = Random(500, 2000)
-            ChargeI = Random(5000, 10000)
-            ChargePI = Random(500, 1000)
-            ChargeK = Random(5000, 10000)
-            ChargeP = Random(500, 1000)
-            ChargeRA = Random(5000, 10000)
-            ChargeRO = Random(500, 1000)
+        ElseIf TotalCharges > 0
+            ChargeD = random(300, 1000)
+            ChargeB = random(1000, 2000)
+            ChargeSD = random(500, 2000)
+            ChargeI = random(5000, 10000)
+            ChargePI = random(500, 1000)
+            ChargeK = random(5000, 10000)
+            ChargeP = random(500, 1000)
+            ChargeRA = random(5000, 10000)
+            ChargeRO = random(500, 1000)
             ChargeD_loc = ChargeD.convertToLocalCurrency()
             ChargeB_loc = ChargeB.convertToLocalCurrency()
             ChargeSD_loc = ChargeSD.convertToLocalCurrency()
@@ -59,7 +59,7 @@ OTHER:
             ChargeP_loc = ChargeP.convertToLocalCurrency()
             ChargeRA_loc = ChargeRA.convertToLocalCurrency()
             ChargeRO_loc = ChargeRO.convertToLocalCurrency()
-            If Random(0, 100) > 50
+            If random(0, 100) > 50
                 // setBackground3D(Modules/rk_vin_Base/World/xxxxxxxxxxxxx.lpworld)
                 Player.setActorVar(rk_VB_LastTimeSeeJudge, 0)
                 Judge.show()
@@ -71,12 +71,12 @@ OTHER:
                 Judge.show()
                 Judge(Serene)::"Your criminal record shows that you have been charged ... "
                 0::"========== Total Charges: <TotalCharges> =========="
-                0::BestiCount > 0 && isModEnabled(vin_Bestiality)::"<BestiCount> time(s) for bestialities"
+                0::BestiCount > 0 && isModEnabled(vin_Bestiality)::"<BestiCount> time(s) for bestiality"
                 0::SellDrugCount > 0 ::"<SellDrugCount> time(s) for selling drugs"
                 0::PublicIndCount > 0 ::"<PublicIndCount> time(s) for public indecencies"
                 0::IncestCount > 0 && isModEnabled(vin_Incest)::"<IncestCount> time(s) for incest"
                 0::KillCount > 0 ::"<KillCount> time(s) for murder"
-                0::ProstCount > 0 ::"<ProstCount> time(s) for prostution/pimping"
+                0::ProstCount > 0 ::"<ProstCount> time(s) for prostitution/pimping"
                 0::RapeCount > 0 && isModEnabled(vin_NonConsensual)::"<RapeCount> time(s) for raping"
                 0::RobberyCount > 0 ::"<RobberyCount> time(s) for robbery/steal"
                 0::SexAssaultCount > 0 && isModEnabled(vin_NonConsensual)::"<SexAssaultCount> time(s) for Sexual Assault"
@@ -87,43 +87,43 @@ OTHER:
                 If BestiCount > 10
                     NoGood = true
                     GoodCitizenProof -= 10
-                Endif
+                EndIf
                 If SellDrugCount > 10
                     NoGood = true
                     GoodCitizenProof -= 10
-                Endif
+                EndIf
                 If PublicIndCount > 10
                     NoGood = true
                     GoodCitizenProof -= 10
-                Endif
+                EndIf
                 If IncestCount > 0
                     NoGood = true
                     GoodCitizenProof -= 10
-                Endif
+                EndIf
                 If KillCount > 10
                     NoGood = true
                     GoodCitizenProof -= 10
-                Endif
+                EndIf
                 If ProstCount > 10
                     NoGood = true
                     GoodCitizenProof -= 10
-                Endif
+                EndIf
                 If RapeCount > 10
                     NoGood = true
                     GoodCitizenProof -= 10
-                Endif
+                EndIf
                 If RobberyCount > 10
                     NoGood = true
                     GoodCitizenProof -= 10
-                Endif
+                EndIf
                 If SexAssaultCount > 10
                     NoGood = true
                     GoodCitizenProof -= 10
-                Endif
+                EndIf
                 If SmallOffenceCount > 10
                     NoGood = true
                     GoodCitizenProof -= 10
-                Endif
+                EndIf
                 Player.setActorVar(rk_VB_GoodCitizenProofLvl, GoodCitizenProof)
                 DaysGivenB = false
                 BonusFuck = false
@@ -131,7 +131,7 @@ OTHER:
                 RGoodCitizenProof = TempGoodCitizenProofLvl - GoodCitizenProofLvl
                 If RGoodCitizenProof > 0
                     Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 10)
-                Endif
+                EndIf
                 GoodCitizenProofLvl = Player.getActorVar(rk_VB_GoodCitizenProofLvl)
                 If NoGood
                     If Judge:arousal > 15 && IncestCount <= 0 && TotalCharges <= 50 && Judge.isInterestedIn(Player) && GoodCitizenProofLvl > 50 
@@ -161,13 +161,13 @@ OTHER:
                                 Player.modifyActorVar(rk_VB_Hunger, -3)
                             EndIf
                             energy -= 10
-                            Judge:rapportwithplayer += Random(0, 1)
-                            If Player:attractiveness > 55 && Random(0,100) >= 50
+                            Judge:rapportwithplayer += random(0, 1)
+                            If Player:attractiveness > 55 && random(0,100) >= 50
                                 DaysGivenB = true
-                            Endif
+                            EndIf
                             doggyP.hide()
                             IFuckedJ = true
-                        Elseif 1
+                        ElseIf 1
                             Guard1 = generatePersonTemporary()
                             Guard1.dressUniform(Police)
                             Guard2 = generatePersonTemporary()
@@ -210,7 +210,7 @@ OTHER:
                                 While !Guard5.isMale()
                                     Guard5 = generatePersonTemporary()
                                 EndWhile
-                            Endif
+                            EndIf
                             Judge.animate(call)
                             "The judge makes a call and suddenly 5 guards walk into the <Judge.his_or_her> office and ..."
                             Guard1.show()
@@ -358,19 +358,19 @@ OTHER:
                                 Else
                                     Judge(Sad)::"No time for that today, my friend! I got a lot of work to do ..."
                                     Guard3(Grin)::"Alright Judge!"
-                                Endif
-                            Endif
+                                EndIf
+                            EndIf
                             Guard1.hide()
                             Guard2.hide()
                             Guard3.hide()
                             Guard4.hide()
                             Guard5.hide()
-                            Judge:rapportwithplayer += Random(0, 1)
-                            If Player:attractiveness > 55 && Random(0,100) >= 50
+                            Judge:rapportwithplayer += random(0, 1)
+                            If Player:attractiveness > 55 && random(0,100) >= 50
                                 DaysGivenB = true
-                            Endif
+                            EndIf
                             IFuckedJ = true
-                        Elseif 2
+                        ElseIf 2
                             Judge(Happy)::"So, you like it hard! No problem ..."
                             Judge(Evil)::"Strip right away and do all I ask!"
                             Player.strip()
@@ -383,11 +383,11 @@ OTHER:
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -3)
                             EndIf
-                            If Player:attractiveness > 65 && Random(0,100) >= 80
+                            If Player:attractiveness > 65 && random(0,100) >= 80
                                 DaysGivenB = true
-                            Endif
+                            EndIf
                             IFuckedJ = true
-                        Elseif 3
+                        ElseIf 3
                             "We stripped and <Judge.he_or_she> started to caressing me ..."
                             perversion += 1
                             Judge.strip()
@@ -397,12 +397,12 @@ OTHER:
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
                             energy -= 10
-                            Judge:rapportwithplayer += Random(0, 1)
-                            If Player:attractiveness > 75 && Random(0,100) >= 60
+                            Judge:rapportwithplayer += random(0, 1)
+                            If Player:attractiveness > 75 && random(0,100) >= 60
                                 DaysGivenB = true
-                            Endif
+                            EndIf
                             IFuckedJ = true
-                        Endif
+                        EndIf
                     Else
                         Judge(Serene)::"Based on your criminal record, you are not eligible for a charge reduction. You need to prove us that you want to became a good citizen ..."
                         0::"Do hard labour (+20)"
@@ -418,7 +418,7 @@ OTHER:
                             karma += 1
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 20)
                             passTime(1, 1,25)
-                        Elseif 1
+                        ElseIf 1
                             "I decided to work 3 hours for free ..."
                             jobexperience += 1
                             mood -= 5
@@ -426,16 +426,16 @@ OTHER:
                             karma += 1
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 10)
                             passTime(3, 3,25)
-                        Elseif 2
+                        ElseIf 2
                             If Judge:arousal > 15 && Judge.isInterestedIn(Player) && Judge:attractiontoplayer > 10
                                 Judge(Flirty)::"All the way baby ..."
-                            Elseif Judge.isInterestedIn(Player) && Judge:attractiontoplayer > 10
-                                Judge(Flirty)::"Maybe when the weeks will have two sunday ... Sorry, it's against my principles!"
+                            ElseIf Judge.isInterestedIn(Player) && Judge:attractiontoplayer > 10
+                                Judge(Flirty)::"Maybe when the weeks will have two Sunday ... Sorry, it's against my principles!"
                             Else
-                                Judge(Evil)::"I am the law, you are maybe cute but you can't bribe me so easily, especialy with sex!"
-                            Endif
-                        Endif
-                    Endif
+                                Judge(Evil)::"I am the law, you are maybe cute but you can't bribe me so easily, especially with sex!"
+                            EndIf
+                        EndIf
+                    EndIf
                 Else
                     SPFees = 0.01
                     SPFeesB = ChargeB*SPFees
@@ -557,12 +557,12 @@ OTHER:
                     TotalPriceD_loc = TotalPriceD.convertToLocalCurrency()
                     GoodCitizenProofLvl = Player.getActorVar(rk_VB_GoodCitizenProofLvl)
                     "Which charge I would like to reduce?"
-                    0::BestiCount > 0 && isModEnabled(vin_Bestiality)::"Bestialities"
+                    0::BestiCount > 0 && isModEnabled(vin_Bestiality)::"Bestiality"
                     1::SellDrugCount > 0 ::"Selling drugs"
                     2::PublicIndCount > 0 ::"Public indecencies"
                     3::IncestCount > 0 && isModEnabled(vin_Incest) ::"Incest"
                     4::KillCount > 0 ::"Murder"
-                    5::ProstCount > 0 ::"Prostution/Pimping"
+                    5::ProstCount > 0 ::"Prostitution/Pimping"
                     6::RapeCount > 0 && isModEnabled(vin_NonConsensual)::"Raping"
                     7::RobberyCount > 0 ::"Robbery/Steal"
                     8::SmallOffenceCount > 0 ::"Small Offence"
@@ -578,30 +578,30 @@ OTHER:
                         
                         If 0
                             Player.modifyActorVar(rk_VB_BestiCount, -1)
-                            Judge(Happy)::"I have reduced your bestialities charge(s) by one count"
+                            Judge(Happy)::"I have reduced your Bestiality charge(s) by one count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 10)
                             money -= ChargeBa
-                        Elseif 1
+                        ElseIf 1
                             Player.modifyActorVar(rk_VB_BestiCount, -2)
-                            Judge(Happy)::"I have reduced your bestialities charge(s) by 2 count"
+                            Judge(Happy)::"I have reduced your Bestiality charge(s) by 2 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 20)
                             money -= ChargeB1
-                        Elseif 2
+                        ElseIf 2
                             Player.modifyActorVar(rk_VB_BestiCount, -3)
-                            Judge(Happy)::"I have reduced your bestialities charge(s) by 3 count"
+                            Judge(Happy)::"I have reduced your Bestiality charge(s) by 3 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= ChargeB2
-                        Elseif 3
+                        ElseIf 3
                             Player.setActorVar(rk_VB_BestiCount, 0)
-                            Judge(Happy)::"I have erased all your bestialities charge(s)"
+                            Judge(Happy)::"I have erased all your Bestiality charge(s)"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= TotalPriceB 
-                        Endif
-                    Elseif 1
+                        EndIf
+                    ElseIf 1
                         "I have been charged <SellDrugCount> time(s) for that crime, what I should ask?"
                         0::SellDrugCount >= 1 && money >= ChargeSDa::"1 count for <ChargeSDa_loc>"
                         1::SellDrugCount >= 2 && money >= ChargeSD1::"2 counts for <ChargeSD1_loc>"
@@ -615,26 +615,26 @@ OTHER:
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 10)
                             money -= ChargeSDa
-                        Elseif 1
+                        ElseIf 1
                             Player.modifyActorVar(rk_VB_SellDrugCount, -2)
                             Judge(Happy)::"I have reduced your selling drug charge(s) by 2 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 20)
                             money -= ChargeSD1
-                        Elseif 2
+                        ElseIf 2
                             Player.modifyActorVar(rk_VB_SellDrugCount, -3)
                             Judge(Happy)::"I have reduced your selling drug charge(s) by 3 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= ChargeSD2
-                        Elseif 3
+                        ElseIf 3
                             Player.setActorVar(rk_VB_SellDrugCount, 0)
                             Judge(Happy)::"I have erased all your selling drug charge(s)"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= TotalPriceSD   
-                        Endif
-                    Elseif 2
+                        EndIf
+                    ElseIf 2
                         "I have been charged <PublicIndCount> time(s) for that crime, what I should ask?"
                         0::PublicIndCount >= 1 && money >= ChargePIa::"1 count for <ChargePIa_loc>"
                         1::PublicIndCount >= 2 && money >= ChargePI1::"2 counts for <ChargePI1_loc>"
@@ -648,26 +648,26 @@ OTHER:
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 10)
                             money -= ChargePIa
-                        Elseif 1
+                        ElseIf 1
                             Player.modifyActorVar(rk_VB_PublicIndCount, -2)
                             Judge(Happy)::"I have reduced your public indecencies charge(s) by 2 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 20)
                             money -= ChargePI1
-                        Elseif 2
+                        ElseIf 2
                             Player.modifyActorVar(rk_VB_PublicIndCount, -3)
                             Judge(Happy)::"I have reduced your public indecencies charge(s) by 3 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= ChargePI2
-                        Elseif 3
+                        ElseIf 3
                             Player.setActorVar(rk_VB_PublicIndCount, 0)
                             Judge(Happy)::"I have erased all your public indecencies charge(s)"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= TotalPricePI  
-                        Endif
-                    Elseif 3
+                        EndIf
+                    ElseIf 3
                         "I have been charged <IncestCount> time(s) for that crime, what I should ask?"
                         0::IncestCount >= 1 && money >= ChargeIa::"1 count for <ChargeIa_loc>"
                         1::IncestCount >= 2 && money >= ChargeI1::"2 counts for <ChargeI1_loc>"
@@ -681,26 +681,26 @@ OTHER:
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 10)
                             money -= ChargeIa
-                        Elseif 1
+                        ElseIf 1
                             Player.modifyActorVar(rk_VB_IncestCount, -2)
                             Judge(Happy)::"I have reduced your incest charge(s) by 2 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 20)
                             money -= ChargeI1
-                        Elseif 2
+                        ElseIf 2
                             Player.modifyActorVar(rk_VB_IncestCount, -3)
                             Judge(Happy)::"I have reduced your incest charge(s) by 3 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= ChargeI2
-                        Elseif 3
+                        ElseIf 3
                             Player.setActorVar(rk_VB_IncestCount, 0)
                             Judge(Happy)::"I have erased all your incest charge(s)"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= TotalPriceI
-                        Endif
-                    Elseif 4
+                        EndIf
+                    ElseIf 4
                         "I have been charged <KillCount> time(s) for that crime, what I should ask?"
                         0::KillCount >= 1 && money >= ChargeKa::"1 count for <ChargeKa_loc>"
                         1::KillCount >= 2 && money >= ChargeK1::"2 counts for <ChargeK1_loc>"
@@ -714,26 +714,26 @@ OTHER:
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 10)
                             money -= ChargeKa
-                        Elseif 1
+                        ElseIf 1
                             Player.modifyActorVar(rk_VB_KillCount, -2)
                             Judge(Happy)::"I have reduced your murder charge(s) by 2 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 20)
                             money -= ChargeK1
-                        Elseif 2
+                        ElseIf 2
                             Player.modifyActorVar(rk_VB_KillCount, -3)
                             Judge(Happy)::"I have reduced your murder charge(s) by 3 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= ChargeK2
-                        Elseif 3
+                        ElseIf 3
                             Player.setActorVar(rk_VB_KillCount, 0)
                             Judge(Happy)::"I have erased all your murder charge(s)"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= TotalPriceK
-                        Endif
-                    Elseif 5
+                        EndIf
+                    ElseIf 5
                         "I have been charged <ProstCount> time(s) for that crime, what I should ask?"
                         0::ProstCount >= 1 && money >= ChargePa::"1 count for <ChargePa_loc>"
                         1::ProstCount >= 2 && money >= ChargeP1::"2 counts for <ChargeP1_loc>"
@@ -743,30 +743,30 @@ OTHER:
                         
                         If 0
                             Player.modifyActorVar(rk_VB_ProstCount, -1)
-                            Judge(Happy)::"I have reduced your prostution/pimping charge(s) by one count"
+                            Judge(Happy)::"I have reduced your Prostitution/pimping charge(s) by one count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 10)
                             money -= ChargePa
-                        Elseif 1
+                        ElseIf 1
                             Player.modifyActorVar(rk_VB_ProstCount, -2)
-                            Judge(Happy)::"I have reduced your prostution/pimping charge(s) by 2 count"
+                            Judge(Happy)::"I have reduced your Prostitution/pimping charge(s) by 2 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 20)
                             money -= ChargeP1
-                        Elseif 2
+                        ElseIf 2
                             Player.modifyActorVar(rk_VB_ProstCount, -3)
-                            Judge(Happy)::"I have reduced your prostution/pimping charge(s) by 3 count"
+                            Judge(Happy)::"I have reduced your Prostitution/pimping charge(s) by 3 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= ChargeP2
-                        Elseif 3
+                        ElseIf 3
                             Player.setActorVar(rk_VB_ProstCount, 0)
-                            Judge(Happy)::"I have erased all your prostution/pimping charge(s)"
+                            Judge(Happy)::"I have erased all your Prostitution/pimping charge(s)"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= TotalPriceP
-                        Endif
-                    Elseif 6
+                        EndIf
+                    ElseIf 6
                         "I have been charged <RapeCount> time(s) for that crime, what I should ask?"
                         0::RapeCount >= 1 && money >= ChargeRAa::"1 count for <ChargeRAa_loc>"
                         1::RapeCount >= 2 && money >= ChargeRA1::"2 counts for <ChargeRA1_loc>"
@@ -780,27 +780,27 @@ OTHER:
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 10)
                             money -= ChargeRAa
-                        Elseif 1
+                        ElseIf 1
                             Player.modifyActorVar(rk_VB_RapeCount, -2)
                             Judge(Happy)::"I have reduced your raping charge(s) by 2 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 20)
                             money -= ChargeRA1
-                        Elseif 2
+                        ElseIf 2
                             Player.modifyActorVar(rk_VB_RapeCount, -3)
                             Judge(Happy)::"I have reduced your raping charge(s) by 3 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= ChargeRA2
-                        Elseif 3
+                        ElseIf 3
                             Player.setActorVar(rk_VB_RapeCount, 0)
                             Judge(Happy)::"I have erased all your raping charge(s)"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             Player.setActorVar(tag_Rapist, 0)
                             money -= TotalPriceRA  
-                        Endif
-                    Elseif 7
+                        EndIf
+                    ElseIf 7
                         "I have been charged <RobberyCount> time(s) for that crime, what I should ask?"
                         0::RobberyCount >= 1 && money >= ChargeROa::"1 count for <ChargeROa_loc>"
                         1::RobberyCount >= 2 && money >= ChargeRO1::"2 counts for <ChargeRO1_loc>"
@@ -814,26 +814,26 @@ OTHER:
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 10)
                             money -= ChargeROa
-                        Elseif 1
+                        ElseIf 1
                             Player.modifyActorVar(rk_VB_RobberyCount, -2)
                             Judge(Happy)::"I have reduced your robbery/steal charge(s) by 2 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 20)
                             money -= ChargeRO1
-                        Elseif 2
+                        ElseIf 2
                             Player.modifyActorVar(rk_VB_RobberyCount, -3)
                             Judge(Happy)::"I have reduced your robbery/steal charge(s) by 3 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= ChargeRO2
-                        Elseif 3
+                        ElseIf 3
                             Player.setActorVar(rk_VB_RobberyCount, 0)
                             Judge(Happy)::"I have erased all your robbery/steal charge(s)"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= TotalPriceRO
-                        Endif
-                    Elseif 8
+                        EndIf
+                    ElseIf 8
                         "I have been charged <SmallOffenceCount> time(s) for that crime, what I should ask?"
                         0::SmallOffenceCount >= 1 && money >= ChargeDa::"1 count for <ChargeDa_loc>"
                         1::SmallOffenceCount >= 2 && money >= ChargeD1::"2 counts for <ChargeD1_loc>"
@@ -846,26 +846,26 @@ OTHER:
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 10)
                             money -= ChargeDa
-                        Elseif 1
+                        ElseIf 1
                             Player.modifyActorVar(rk_VB_SmallOffenceCount, -2)
                             Judge(Happy)::"I have erased all your small offence charge(s) by 2 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 20)
                             money -= ChargeD1
-                        Elseif 2
+                        ElseIf 2
                             Player.modifyActorVar(rk_VB_SmallOffenceCount, -3)
                             Judge(Happy)::"I have erased all your small offence charge(s) by 3 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= ChargeD2
-                        Elseif 3
+                        ElseIf 3
                             Player.modifyActorVar(rk_VB_SmallOffenceCount, -3)
                             Judge(Happy)::"I have erased all your small offence charge(s)"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= TotalPriceD
-                        Endif
-                    Elseif 9
+                        EndIf
+                    ElseIf 9
                         "I have been charged <SexAssaultCount> time(s) for that crime, what I should ask?"
                         0::SexAssaultCount >= 1 && money >= ChargeRAa::"1 count for <ChargeDa_loc>"
                         1::SexAssaultCount >= 2 && money >= ChargeRA1::"2 counts for <ChargeD1_loc>"
@@ -878,90 +878,90 @@ OTHER:
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 10)
                             money -= ChargeRAa
-                        Elseif 1
+                        ElseIf 1
                             Player.modifyActorVar(rk_VB_SexAssaultCount, -2)
                             Judge(Happy)::"I have erased all your sexual assault charge(s) by 2 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 20)
                             money -= ChargeRA1
-                        Elseif 2
+                        ElseIf 2
                             Player.modifyActorVar(rk_VB_SexAssaultCount, -3)
                             Judge(Happy)::"I have erased all your sexual assault charge(s) by 3 count"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= ChargeRA2
-                        Elseif 3
+                        ElseIf 3
                             Player.modifyActorVar(rk_VB_SexAssaultCount, -3)
                             Judge(Happy)::"I have erased all your sexual assault charge(s)"
                             Player(Happy)::"Thanks, very nice to you!"
                             Player.modifyActorVar(rk_VB_GoodCitizenProofLvl, 30)
                             money -= TotalPriceRA
-                        Endif
-                    Endif
-                Endif
+                        EndIf
+                    EndIf
+                EndIf
                 Player.setActorVar(rk_VB_LastTimeSeeJudge, AgeP)
             Else
                 Judge(Sad)::"Sorry, but I have a lot of works at the moment, come later ...."
-            Endif
+            EndIf
         Else
             "Your criminal record is white as snow. You can live in peace, on justice side ... until your next time ..."
-        Endif
+        EndIf
         If DaysGivenB
             Judge(Happy)::"Ok, the fuck was better than I thought ...."
-            LotteryC = Random(1, 10)
+            LotteryC = random(1, 10)
             LotteryC = LotteryC.round()
-            LotteryC1 = Random(1, 3)
+            LotteryC1 = random(1, 3)
             LotteryC1 = LotteryC1.round()
-            LotteryC2 = Random(4, 6)
+            LotteryC2 = random(4, 6)
             LotteryC2 = LotteryC2.round()
-            LotteryC3 = Random(7, 10)
+            LotteryC3 = random(7, 10)
             LotteryC3 = LotteryC3.round()
-            LotteryC4 = Random(1, 5)
+            LotteryC4 = random(1, 5)
             LotteryC4 = LotteryC4.round()
-            LotteryC5 = Random(6, 10)
+            LotteryC5 = random(6, 10)
             LotteryC5 = LotteryC5.round()
             Judge(Happy)::"Ok, let me see what I can do for you ..."
             If BestiCount > 0
                 Player.modifyActorVar(rk_VB_BestiCount, -1)
-                Judge(Happy)::"I have reduced your bestialities charge(s) by one count"
+                Judge(Happy)::"I have reduced your bestiality charge(s) by one count"
                 Player(Happy)::"Thanks, very nice to you!"
-            Elseif SellDrugCount > 0
+            ElseIf SellDrugCount > 0
                 Player.modifyActorVar(rk_VB_SellDrugCount, -1)
                 Judge(Happy)::"I have reduced your selling drug charge(s) by one count"
                 Player(Happy)::"Thanks, very nice to you!"
-            Elseif PublicIndCount > 0
+            ElseIf PublicIndCount > 0
                 Player.modifyActorVar(rk_VB_PublicIndCount, -1)
                 Judge(Happy)::"I have reduced your public indecencies charge(s) by one count"
                 Player(Happy)::"Thanks, very nice to you!"
-            Elseif IncestCount > 0
+            ElseIf IncestCount > 0
                 Player.modifyActorVar(rk_VB_IncestCount, -1)
                 Judge(Happy)::"I have reduced your incest charge(s) by one count"
                 Player(Happy)::"Thanks, very nice to you!"
-            Elseif KillCount > 0
+            ElseIf KillCount > 0
                 Player.modifyActorVar(rk_VB_KillCount, -1)
                 Judge(Happy)::"I have reduced your murder charge(s) by one count"
                 Player(Happy)::"Thanks, very nice to you!"
-            Elseif ProstCount > 0
+            ElseIf ProstCount > 0
                 Player.modifyActorVar(rk_VB_ProstCount, -1)
-                Judge(Happy)::"I have reduced your prostution/pimping charge(s) by one count"
+                Judge(Happy)::"I have reduced your Prostitution/pimping charge(s) by one count"
                 Player(Happy)::"Thanks, very nice to you!"
-            Elseif RapeCount > 0
+            ElseIf RapeCount > 0
                 Player.modifyActorVar(rk_VB_RapeCount, -1)
                 Judge(Happy)::"I have reduced your raping charge(s) by one count"
                 Player(Happy)::"Thanks, very nice to you!"
-            Elseif RobberyCount > 0
+            ElseIf RobberyCount > 0
                 Player.modifyActorVar(rk_VB_RobberyCount, -1)
                 Judge(Happy)::"I have reduced your robbery/steal charge(s) by one count"
                 Player(Happy)::"Thanks, very nice to you!"
-            Elseif SmallOffenceCount > 0
+            ElseIf SmallOffenceCount > 0
                 Player.modifyActorVar(rk_VB_SmallOffenceCount, -1)
                 Judge(Happy)::"I have reduced your small offence charge(s) by one count"
                 Player(Happy)::"Thanks, very nice to you!"
-            Elseif SexAssaultCount > 0
+            ElseIf SexAssaultCount > 0
                 Player.modifyActorVar(rk_VB_SexAssaultCount, -1)
                 Judge(Happy)::"I have reduced your sexual assault charge(s) by one count"
                 Player(Happy)::"Thanks, very nice to you!"
-            Endif
+            EndIf
             If BonusFuck
                 BonusFuck1 = false
                 BonusFuck2 = false
@@ -969,46 +969,46 @@ OTHER:
                 BonusFuck4 = false
                 BonusFuck5 = false
                 BonusFuck6 = false
-                GetBonusFuck = Random(1, 3)
+                GetBonusFuck = random(1, 3)
                 GetBonusFuck = GetBonusFuck.round()
                 Judge(Happy)::"Also, the fuck with the guards ... that was amazing so, let me see if I can do something more ..."
                 If GetBonusFuck == 1
                     If BestiCount > 0 && LotteryC == 1
-                        ChoosedCharges = "bestialities"
+                        ChoosedCharges = "bestiality"
                         Player.modifyActorVar(rk_VB_BestiCount, -1)
-                    Elseif SellDrugCount > 0 && LotteryC == 2
+                    ElseIf SellDrugCount > 0 && LotteryC == 2
                         ChoosedCharges = "selling drugs"
                         Player.modifyActorVar(rk_VB_SellDrugCount, -1)
-                    Elseif PublicIndCount > 0 && LotteryC == 3
+                    ElseIf PublicIndCount > 0 && LotteryC == 3
                         ChoosedCharges = "public indecencies"
                         Player.modifyActorVar(rk_VB_PublicIndCount, -1)
-                    Elseif IncestCount > 0 && LotteryC == 4
+                    ElseIf IncestCount > 0 && LotteryC == 4
                         ChoosedCharges = "incest"
                         Player.modifyActorVar(rk_VB_IncestCount, -1)
-                    Elseif KillCount > 0 && LotteryC == 5
+                    ElseIf KillCount > 0 && LotteryC == 5
                         ChoosedCharges = "murder"
                         Player.modifyActorVar(rk_VB_KillCount, -1)
-                    Elseif ProstCount > 0 && LotteryC == 6
-                        ChoosedCharges = "prostution/Pimping"
+                    ElseIf ProstCount > 0 && LotteryC == 6
+                        ChoosedCharges = "Prostitution/Pimping"
                         Player.modifyActorVar(rk_VB_ProstCount, -1)
-                    Elseif RapeCount > 0 && LotteryC == 7
+                    ElseIf RapeCount > 0 && LotteryC == 7
                         ChoosedCharges = "raping"
                         Player.modifyActorVar(rk_VB_RapeCount, -1)
-                    Elseif RobberyCount > 0 && LotteryC == 8
+                    ElseIf RobberyCount > 0 && LotteryC == 8
                         ChoosedCharges = "robbery/Steal"
                         Player.modifyActorVar(rk_VB_RobberyCount, -1)
-                    Elseif SmallOffenceCount > 0 && LotteryC == 9
+                    ElseIf SmallOffenceCount > 0 && LotteryC == 9
                         ChoosedCharges = "small Offence"
                         Player.modifyActorVar(rk_VB_SmallOffenceCount, -1)
-                    Elseif SexAssaultCount > 0 && LotteryC == 10
+                    ElseIf SexAssaultCount > 0 && LotteryC == 10
                         ChoosedCharges = "sexual assault"
                         Player.modifyActorVar(rk_VB_SexAssaultCount, -1)
                     Else
                         BonusFuck1 = true
-                    Endif
+                    EndIf
                     If BonusFuck1
                         Judge(Sad)::"I didn't find a way to reduced any charge(s), try another time maybe, ..."
-                        CashExc = Random(200, 500)
+                        CashExc = random(200, 500)
                         CashExc_loc = CashExc.convertToLocalCurrency()
                         money += CashExc
                         Judge(Sad)::"Here's <CashExc_loc> in exchange for the sex ..."
@@ -1017,52 +1017,52 @@ OTHER:
                         Judge(Happy)::"I have reduced your <ChoosedCharges> charge(s) by one count"
                         Player(Happy)::"Thanks, very grateful!"
                         mood += 10
-                    Endif
-                Elseif GetBonusFuck == 2
+                    EndIf
+                ElseIf GetBonusFuck == 2
                     If BestiCount > 0 && LotteryC4 == 1
-                        ChoosedCharges1 = "bestialities"
+                        ChoosedCharges1 = "bestiality"
                         Player.modifyActorVar(rk_VB_BestiCount, -1)
-                    Elseif SellDrugCount > 0 && LotteryC4 == 2
+                    ElseIf SellDrugCount > 0 && LotteryC4 == 2
                         ChoosedCharges1 = "selling drugs"
                         Player.modifyActorVar(rk_VB_SellDrugCount, -1)
-                    Elseif PublicIndCount > 0 && LotteryC4 == 3
+                    ElseIf PublicIndCount > 0 && LotteryC4 == 3
                         ChoosedCharges1 = "public indecencies"
                         Player.modifyActorVar(rk_VB_PublicIndCount, -1)
-                    Elseif IncestCount > 0 && LotteryC4 == 4
+                    ElseIf IncestCount > 0 && LotteryC4 == 4
                         ChoosedCharges1 = "incest"
                         Player.modifyActorVar(rk_VB_IncestCount, -1)
-                    Elseif KillCount > 0 && LotteryC4 == 5
+                    ElseIf KillCount > 0 && LotteryC4 == 5
                         ChoosedCharges1 = "murder"
                         Player.modifyActorVar(rk_VB_KillCount, -1)
                     Else
                         BonusFuck2 = true
-                    Endif
+                    EndIf
                     If ProstCount > 0 && LotteryC5 == 6
-                        ChoosedCharges2 = "prostution/Pimping"
+                        ChoosedCharges2 = "Prostitution/Pimping"
                         Player.modifyActorVar(rk_VB_ProstCount, -1)
-                    Elseif RapeCount > 0 && LotteryC5 == 7
+                    ElseIf RapeCount > 0 && LotteryC5 == 7
                         ChoosedCharges2 = "raping"
                         Player.modifyActorVar(rk_VB_RapeCount, -1)
-                    Elseif RobberyCount > 0 && LotteryC5 == 8
+                    ElseIf RobberyCount > 0 && LotteryC5 == 8
                         ChoosedCharges2 = "robbery/Steal"
                         Player.modifyActorVar(rk_VB_RobberyCount, -1)
-                    Elseif SmallOffenceCount > 0 && LotteryC5 == 9
+                    ElseIf SmallOffenceCount > 0 && LotteryC5 == 9
                         ChoosedCharges2 = "small offence"
                         Player.modifyActorVar(rk_VB_SmallOffenceCount, -1)
-                    Elseif SexAssaultCount > 0 && LotteryC5 == 10
+                    ElseIf SexAssaultCount > 0 && LotteryC5 == 10
                         ChoosedCharges2 = "sexual assault"
                         Player.modifyActorVar(rk_VB_SexAssaultCount, -1)
                     Else
                         BonusFuck3 = true
-                    Endif
+                    EndIf
                     If BonusFuck2 && BonusFuck3
                         Judge(Sad)::"I didn't find a way to reduced any charge(s), try another time maybe, ..."
-                        CashExc = Random(200, 500)
+                        CashExc = random(200, 500)
                         CashExc_loc = CashExc.convertToLocalCurrency()
                         money += CashExc
                         Judge(Sad)::"Here's <CashExc_loc> in exchange for the sex ..."
                         Player(Happy)::"Thanks, at least you tried!"
-                    Elseif BonusFuck2 || BonusFuck3
+                    ElseIf BonusFuck2 || BonusFuck3
                         If BonusFuck2
                             Judge(Happy)::"I have reduced your <ChoosedCharges1> charge(s) by one count"
                             Player(Happy)::"Thanks, very grateful!"
@@ -1071,93 +1071,93 @@ OTHER:
                             Judge(Happy)::"I have reduced your <ChoosedCharges2> charge(s) by one count"
                             Player(Happy)::"Thanks, very grateful!"
                             mood += 10
-                        Endif
+                        EndIf
                     Else
                         Judge(Happy)::"I have reduced your <ChoosedCharges2> and <ChoosedCharges3> charge(s) by one count"
                         Player(Happy)::"Thanks, very grateful!"
                         mood += 10
-                    Endif
-                Elseif GetBonusFuck == 3
+                    EndIf
+                ElseIf GetBonusFuck == 3
                     If BestiCount > 0 && LotteryC1 == 1
-                        ChoosedCharges3 = "Bestialities"
+                        ChoosedCharges3 = "Bestiality"
                         Player.modifyActorVar(rk_VB_BestiCount, -1)
-                    Elseif SellDrugCount > 0 && LotteryC1 == 2
+                    ElseIf SellDrugCount > 0 && LotteryC1 == 2
                         ChoosedCharges3 = "Selling drugs"
                         Player.modifyActorVar(rk_VB_SellDrugCount, -1)
-                    Elseif PublicIndCount > 0 && LotteryC1 == 3
+                    ElseIf PublicIndCount > 0 && LotteryC1 == 3
                         ChoosedCharges3 = "Public indecencies"
                         Player.modifyActorVar(rk_VB_PublicIndCount, -1)
                     Else
                         BonusFuck4 = true
-                    Endif
+                    EndIf
                     If IncestCount > 0 && LotteryC2 == 4
                         ChoosedCharges4 = "Incest"
                         Player.modifyActorVar(rk_VB_IncestCount, -1)
-                    Elseif KillCount > 0 && LotteryC2 == 5
+                    ElseIf KillCount > 0 && LotteryC2 == 5
                         ChoosedCharges4 = "Murder"
                         Player.modifyActorVar(rk_VB_KillCount, -1)
-                    Elseif ProstCount > 0 && LotteryC2 == 6
-                        ChoosedCharges4 = "Prostution/Pimping"
+                    ElseIf ProstCount > 0 && LotteryC2 == 6
+                        ChoosedCharges4 = "Prostitution/Pimping"
                         Player.modifyActorVar(rk_VB_ProstCount, -1)
                     Else
                         BonusFuck5 = true
-                    Endif
+                    EndIf
                     If RapeCount > 0 && LotteryC3 == 7
                         ChoosedCharges5 = "Raping"
                         Player.modifyActorVar(rk_VB_RapeCount, -1)
-                    Elseif RobberyCount > 0 && LotteryC3 == 8
+                    ElseIf RobberyCount > 0 && LotteryC3 == 8
                         ChoosedCharges5 = "Robbery/Steal"
                         Player.modifyActorVar(rk_VB_RobberyCount, -1)
-                    Elseif SmallOffenceCount > 0 && LotteryC3 == 9
+                    ElseIf SmallOffenceCount > 0 && LotteryC3 == 9
                         ChoosedCharges5 = "Small Offence"
                         Player.modifyActorVar(rk_VB_SmallOffenceCount, -1)
-                    Elseif SexAssaultCount > 0 && LotteryC3 == 10
+                    ElseIf SexAssaultCount > 0 && LotteryC3 == 10
                         ChoosedCharges5 = "sexual assault"
                         Player.modifyActorVar(rk_VB_SexAssaultCount, -1)
                     Else
                         BonusFuck6 = true
-                    Endif
+                    EndIf
                     If BonusFuck4 && BonusFuck5 && BonusFuck6
                         Judge(Sad)::"I didn't find a way to reduced any charge(s), try another time maybe, ..."
-                        CashExc = Random(200, 500)
+                        CashExc = random(200, 500)
                         CashExc_loc = CashExc.convertToLocalCurrency()
                         money += CashExc
                         Judge(Sad)::"Here's <CashExc_loc> in exchange for the sex ..."
                         Player(Happy)::"Thanks, at least you tried!"
-                    Elseif BonusFuck4 || BonusFuck5 || BonusFuck6
+                    ElseIf BonusFuck4 || BonusFuck5 || BonusFuck6
                         If BonusFuck4 && BonusFuck5
                             Judge(Happy)::"I have reduced your <ChoosedCharges5> charge(s) by one count"
                             Player(Happy)::"Thanks, very grateful!"
-                        Elseif BonusFuck4 && BonusFuck6
+                        ElseIf BonusFuck4 && BonusFuck6
                             Judge(Happy)::"I have reduced your <ChoosedCharges4> charge(s) by one count"
                             Player(Happy)::"Thanks, very grateful!"
-                        Elseif BonusFuck5 && BonusFuck6
+                        ElseIf BonusFuck5 && BonusFuck6
                             Judge(Happy)::"I have reduced your <ChoosedCharges3> charge(s) by one count"
                             Player(Happy)::"Thanks, very grateful!"
-                        Elseif BonusFuck4
+                        ElseIf BonusFuck4
                             Judge(Happy)::"I have reduced your <ChoosedCharges4> and <ChoosedCharges5> charge(s) by one count"
                             Player(Happy)::"Thanks, very grateful!"
-                        Elseif BonusFuck5
+                        ElseIf BonusFuck5
                             Judge(Happy)::"I have reduced your <ChoosedCharges3> and <ChoosedCharges5> charge(s) by one count"
                             Player(Happy)::"Thanks, very grateful!"
-                        Elseif BonusFuck6
+                        ElseIf BonusFuck6
                             Judge(Happy)::"I have reduced your <ChoosedCharges3> and <ChoosedCharges4> charge(s) by one count"
                             Player(Happy)::"Thanks, very grateful!"
                         Else
                             Judge(Happy)::"I have reduced your <ChoosedCharges3>, <ChoosedCharges4> and <ChoosedCharges5> charge(s) by one count"
                             Player(Happy)::"Thanks, very grateful!"
-                        Endif
+                        EndIf
                         mood += 5
                     Else
                         Judge(Happy)::"I have reduced your <ChoosedCharges2> and <ChoosedCharges3> charge(s) by one count"
                         Player(Happy)::"Thanks, very grateful!"
                         mood += 5
-                    Endif
-                Endif
-            Endif
-        Elseif IFuckedJ && Judge.isInterestedIn(Player) && Judge:attractiontoplayer > 10 && Random(20, 100) > 50
+                    EndIf
+                EndIf
+            EndIf
+        ElseIf IFuckedJ && Judge.isInterestedIn(Player) && Judge:attractiontoplayer > 10 && random(20, 100) > 50
             Judge(Happy)::"Ok, the best I can do is to ..."
-            PriceExtra = Random(1000, 5000)
+            PriceExtra = random(1000, 5000)
             PriceExtra_loc = PriceExtra.convertToLocalCurrency()
             Judge(Happy)::"Give me <PriceExtra> and I will reduce one of your charges ..."
             "Do I accept to pay?"
@@ -1171,31 +1171,31 @@ OTHER:
                     Player.modifyActorVar(rk_VB_SellDrugCount, -1)
                     Player(Happy)::"Thanks, very nice to you!"
                     mood += 5
-                Elseif PublicIndCount > 0
+                ElseIf PublicIndCount > 0
                     Judge(Happy)::"I have reduced your public indecencies charge(s) by one count"
                     Player.modifyActorVar(rk_VB_PublicIndCount, -1)
                     Player(Happy)::"Thanks, very nice to you!"
                     mood += 5
-                Elseif ProstCount > 0
-                    Judge(Happy)::"I have reduced your prostution/pimping charge(s) by one count"
+                ElseIf ProstCount > 0
+                    Judge(Happy)::"I have reduced your Prostitution/pimping charge(s) by one count"
                     Player.modifyActorVar(rk_VB_ProstCount, -1)
                     Player(Happy)::"Thanks, very nice to you!"
                     mood += 5
-                Elseif RobberyCount > 0
+                ElseIf RobberyCount > 0
                     Judge(Happy)::"I have reduced your robbery/steal charge(s) by one count"
                     Player.modifyActorVar(rk_VB_RobberyCount, -1)
                     Player(Happy)::"Thanks, very nice to you!"
                     mood += 5
-                Elseif SmallOffenceCount > 0
+                ElseIf SmallOffenceCount > 0
                     Judge(Happy)::"I have reduced your small offence charge(s) by one count"
                     Player.modifyActorVar(rk_VB_SmallOffenceCount, -1)
                     Player(Happy)::"Thanks, very nice to you!"
                     mood += 5
                 Else
                     Judge(Sad)::"I can't do nothing for you at this moment, your charges are too serious ..."
-                Endif
-            Endif
-        Elseif IFuckedJ
+                EndIf
+            EndIf
+        ElseIf IFuckedJ
             Judge(Evil)::"I am the law, the fuck was good but you can't bribe me so easily!"
-        Endif
+        EndIf
     SceneEnd()

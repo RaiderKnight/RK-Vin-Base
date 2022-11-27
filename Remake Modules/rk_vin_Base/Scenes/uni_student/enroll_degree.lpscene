@@ -5,6 +5,7 @@ WHO: none
 OTHER: none
 
     SceneStart()
+        NochooseCourse = false
         rkVBchoiceCourseMajor = rk_VB_choiceCourseMajor.getGlobal()
         // tag_Major = Actor.getActorVar(rk_VB_tagger_Major)
         AmisEcolID = Actor.getActorVar(rk_VB_AmisEcolID)
@@ -160,27 +161,24 @@ OTHER: none
         rk_VB_tag_TDM = Actor.getActorVar(rk_VB_tag_TDM)
         rk_VB_tag_TVE = Actor.getActorVar(rk_VB_tag_TVE)
         rk_VB_tag_TTT = Actor.getActorVar(rk_VB_tag_TTT)
-        If TuitionPriceEqualEnable > 0
+        Tuition1 = 500*CostOfLiving
+        TuitionConverted1 = Tuition1.convertToLocalCurrency(true)
+        Tuition2 = 1000*CostOfLiving
+        TuitionConverted2 = Tuition2.convertToLocalCurrency(true)
+        Tuition3 = 1500*CostOfLiving
+        TuitionConverted3 = Tuition3.convertToLocalCurrency(true)
+        Tuition4 = 2000*CostOfLiving
+        TuitionConverted4 = Tuition4.convertToLocalCurrency(true)
+        Tuition5 = 2500*CostOfLiving
+        TuitionConverted5 = Tuition5.convertToLocalCurrency(true)
+        If TuitionPriceEqualEnable == 1
             "Thanks to the government's restrictions, the tuition for all courses work out at around <TuitionConverted> per month."
         EndIf
         "Do I want to apply for a degree course at this university?"
-        0:: [money > Tuition] || [TuitionPriceEqualEnable > 0] :: "Yes"
+        0:: money > Tuition1 :: "Yes"
         1:: "No"
         
         If 0
-            moveSchools()
-            If TuitionPriceEqualEnable <= 0
-                Tuition1 = 500*CostOfLiving
-                TuitionConverted1 = Tuition1.convertToLocalCurrency(true)
-                Tuition2 = 1000*CostOfLiving
-                TuitionConverted2 = Tuition2.convertToLocalCurrency(true)
-                Tuition3 = 1500*CostOfLiving
-                TuitionConverted3 = Tuition3.convertToLocalCurrency(true)
-                Tuition4 = 2000*CostOfLiving
-                TuitionConverted4 = Tuition4.convertToLocalCurrency(true)
-                Tuition5 = 2500*CostOfLiving
-                TuitionConverted5 = Tuition5.convertToLocalCurrency(true)
-            EndIf
             choiceCourseMajor = 0
             chooseCourse = false
             While !chooseCourse
@@ -251,47 +249,33 @@ OTHER: none
                 Veterinary_Major_Ses = rk_VB_Veterinary_Major_Ses.getGlobal()
                 TravelTourism_Major_Ses = rk_VB_TravelTourism_Major_Ses.getGlobal()
                 "Now, what should I go for as my major?"
-                0:: Architecture_Major_Ses_Done <= 0 && Session_TAR <= 0 ::"Architecture (4 sessions - <TuitionConverted4>/session)"
-                1:: Chemical_Engineering_Major_Ses_Done <= 0 && Session_TCE <= 0 ::"Chemical Engineering (5 sessions - <TuitionConverted5>/session)"
-                2:: Classics_Major_Ses_Done <= 0 && Session_TCL <= 0 ::"Classics (3 sessions - <TuitionConverted3>/session)"
-                3:: Computer_Science_Major_Ses_Done <= 0 && Session_TCS <= 0 ::"Computer Science (4 sessions - <TuitionConverted4>/session)"
-                31:: Dental_Major_Ses_Done <= 0 && Session_TDM <= 0 ::"Dental (5 sessions - <TuitionConverted5>/session)"
-                4:: Economics_Major_Ses_Done <= 0 && Session_TEC <= 0 ::"Economics (3 sessions - <TuitionConverted3>/session)"
-                5:: Education_Major_Ses_Done <= 0 && Session_TED <= 0 ::"Education (3 sessions - <TuitionConverted3>/session)"
-                6:: English_Major_Ses_Done <= 0 && Session_TEN <= 0 ::"English (1 session - <TuitionConverted1>/session)"
-                7:: Geography_Major_Ses_Done <= 0 && Session_TGE <= 0 ::"Geography (1 session - <TuitionConverted1>/session)"
-                8:: History_Major_Ses_Done <= 0 && Session_THI <= 0 ::"History (1 session - <TuitionConverted1>/session)"
-                9:: Law_Major_Ses_Done <= 0 && Session_TLA <= 0 ::"Law (3 sessions - <TuitionConverted3>/session)"
-                10:: Mathematics_Major_Ses_Done <= 0 && Session_TMA <= 0 ::"Mathematics (3 sessions - <TuitionConverted3>/session)"
-                11:: Medicine_Major_Ses_Done <= 0 && Session_TME <= 0 ::"Medicine (5 sessions - <TuitionConverted5>/session)"
-                12:: Music_Major_Ses_Done <= 0 && Session_TMU <= 0 ::"Music (3 sessions - <TuitionConverted3>/session)"
-                13:: Philosophy_Major_Ses_Done <= 0 && Session_TPH <= 0 ::"Philosophy (1 session - <TuitionConverted1>/session)"
-                14:: Psychology_Major_Ses_Done <= 0 && Session_TPS <= 0 ::"Psychology (5 sessions - <TuitionConverted5>/session)"
-                15:: Political_Sciences_Major_Ses_Done <= 0 && Session_TPOL <= 0 ::"Political Sciences (3 sessions - <TuitionConverted3>/session)"
-                60:: SalesMarketing_Major_Ses_Done <= 0 && Session_TSM <= 0 ::"Sales and Marketing (2 sessions - <TuitionConverted2>/session)"
-                80:: TravelTourism_Major_Ses_Done <= 0 && Session_TTT <= 0 ::"Travel and Tourism (2 sessions - <TuitionConverted2>/session)"
-                90:: Veterinary_Major_Ses_Done <= 0 && Session_TVE <= 0 ::"Veterinary (5 sessions - <TuitionConverted5>/session)"
+                0:: money > Tuition4 && Architecture_Major_Ses_Done <= 0 && Session_TAR <= 0 && Architecture_Major_Ses <= 3 ::"Architecture (<Architecture_Major_Ses>/4 sessions - <TuitionConverted4>/session)"
+                1:: money > Tuition5 && Chemical_Engineering_Major_Ses_Done <= 0 && Session_TCE <= 0 && Chemical_Engineering_Major_Ses <= 4 ::"Chemical Engineering (<Chemical_Engineering_Major_Ses>/5 sessions - <TuitionConverted5>/session)"
+                2:: money > Tuition3 && Classics_Major_Ses_Done <= 0 && Session_TCL <= 0 && Classics_Major_Ses <= 2 ::"Classics (<Classics_Major_Ses>/3 sessions - <TuitionConverted3>/session)"
+                3:: money > Tuition4 && Computer_Science_Major_Ses_Done <= 0 && Session_TCS <= 0 && Computer_Science_Major_Ses <= 3 ::"Computer Science (<Computer_Science_Major_Ses>/4 sessions - <TuitionConverted4>/session)"
+                31:: money > Tuition5 && Dental_Major_Ses_Done <= 0 && Session_TDM <= 0 && Dental_Major_Ses <= 4 ::"Dental (<Dental_Major_Ses>/5 sessions - <TuitionConverted5>/session)"
+                4:: money > Tuition3 && Economics_Major_Ses_Done <= 0 && Session_TEC <= 0 && Economics_Major_Ses <= 2 ::"Economics (<Economics_Major_Ses>/3 sessions - <TuitionConverted3>/session)"
+                5:: money > Tuition3 && Education_Major_Ses_Done <= 0 && Session_TED <= 0 && Education_Major_Ses <= 2 ::"Education (<Education_Major_Ses>/3 sessions - <TuitionConverted3>/session)"
+                6:: money > Tuition1 && English_Major_Ses_Done <= 0 && Session_TEN <= 0 && English_Major_Ses <= 0 ::"English (<English_Major_Ses>/1 session - <TuitionConverted1>/session)"
+                7:: money > Tuition1 && Geography_Major_Ses_Done <= 0 && Session_TGE <= 0 && Geography_Major_Ses <= 0 ::"Geography (<Geography_Major_Ses>/1 session - <TuitionConverted1>/session)"
+                8:: money > Tuition1 && History_Major_Ses_Done <= 0 && Session_THI <= 0 && History_Major_Ses <= 0 ::"History (<History_Major_Ses>/1 session - <TuitionConverted1>/session)"
+                9:: money > Tuition3 && Law_Major_Ses_Done <= 0 && Session_TLA <= 0 && Law_Major_Ses <= 2 ::"Law (<Law_Major_Ses>/3 sessions - <TuitionConverted3>/session)"
+                10:: money > Tuition3 && Mathematics_Major_Ses_Done <= 0 && Session_TMA <= 0 && Mathematics_Major_Ses <= 2 ::"Mathematics (<Mathematics_Major_Ses>/3 sessions - <TuitionConverted3>/session)"
+                11:: money > Tuition5 && Medicine_Major_Ses_Done <= 0 && Session_TME <= 0 && Medicine_Major_Ses <= 4 ::"Medicine (<Medicine_Major_Ses>/5 sessions - <TuitionConverted5>/session)"
+                12:: money > Tuition3 && Music_Major_Ses_Done <= 0 && Session_TMU <= 0 && Music_Major_Ses <= 2 ::"Music (<Music_Major_Ses>/3 sessions - <TuitionConverted3>/session)"
+                13:: money > Tuition1 && Philosophy_Major_Ses_Done <= 0 && Session_TPH <= 0 && Philosophy_Major_Ses <= 0 ::"Philosophy (<Philosophy_Major_Ses>/1 session - <TuitionConverted1>/session)"
+                14:: money > Tuition5 && Psychology_Major_Ses_Done <= 0 && Session_TPS <= 0 && Psychology_Major_Ses <= 4 ::"Psychology (<Psychology_Major_Ses>/5 sessions - <TuitionConverted5>/session)"
+                15:: money > Tuition3 && Political_Sciences_Major_Ses_Done <= 0 && Session_TPOL <= 0 && Political_Sciences_Major_Ses <= 2 ::"Political Sciences (<Political_Sciences_Major_Ses>/3 sessions - <TuitionConverted3>/session)"
+                60:: money > Tuition2 && SalesMarketing_Major_Ses_Done <= 0 && Session_TSM <= 0 && SalesMarketing_Major_Ses <= 1 ::"Sales and Marketing (<SalesMarketing_Major_Ses>/2 sessions - <TuitionConverted2>/session)"
+                80:: money > Tuition2 && TravelTourism_Major_Ses_Done <= 0 && Session_TTT <= 0 && TravelTourism_Major_Ses <= 1 ::"Travel and Tourism (<TravelTourism_Major_Ses>/2 sessions - <TuitionConverted2>/session)"
+                90:: money > Tuition5 && Veterinary_Major_Ses_Done <= 0 && Session_TVE <= 0 && Veterinary_Major_Ses <= 4 ::"Veterinary (<Veterinary_Major_Ses>/5 sessions - <TuitionConverted5>/session)"
+                99:: "I changed my mind!"
                 
                 If 0
-                    If Architecture_Major_Ses == 0 || Architecture_Major_Ses == 1
-                        rk_VB_Architecture_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TAR, 1)
-                        chooseCourse = true
-                    ElseIf Architecture_Major_Ses == 2
-                        rk_VB_Architecture_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TAR, 1)
-                        chooseCourse = true
-                    ElseIf Architecture_Major_Ses == 3
-                        rk_VB_Architecture_Major_Ses.setGlobal(3)
-                        Player.setActorVar(rk_VB_Session_TAR, 1)
-                        chooseCourse = true
-                    ElseIf Architecture_Major_Ses == 4
-                        rk_VB_Architecture_Major_Ses.setGlobal(4)
-                        Player.setActorVar(rk_VB_Session_TAR, 1)
-                        chooseCourse = true
-                    EndIf
+                    Player.setActorVar(rk_VB_Session_TAR, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
                     Else
@@ -302,30 +286,10 @@ OTHER: none
                     choiceCourseMajor => 1
                     rk_VB_choiceCourseMajor.setGlobal(1)
                 ElseIf 1
-                    If Chemical_Engineering_Major_Ses == 0 || Chemical_Engineering_Major_Ses == 1
-                        rk_VB_Chemical_Engineering_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TCE, 1)
-                        chooseCourse = true
-                    ElseIf Chemical_Engineering_Major_Ses == 2
-                        rk_VB_Chemical_Engineering_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TCE, 1)
-                        chooseCourse = true
-                    ElseIf Chemical_Engineering_Major_Ses == 3
-                        rk_VB_Chemical_Engineering_Major_Ses.setGlobal(3)
-                        Player.setActorVar(rk_VB_Session_TCE, 1)
-                        chooseCourse = true
-                    ElseIf Chemical_Engineering_Major_Ses == 4
-                    
-                        rk_VB_Chemical_Engineering_Major_Ses.setGlobal(4)
-                        Player.setActorVar(rk_VB_Session_TCE, 1)
-                        chooseCourse = true
-                    ElseIf Chemical_Engineering_Major_Ses == 5
-                        rk_VB_Chemical_Engineering_Major_Ses.setGlobal(5)
-                        Player.setActorVar(rk_VB_Session_TCE, 1)
-                        chooseCourse = true
-                    EndIf
+                    Player.setActorVar(rk_VB_Session_TCE, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
                     Else
@@ -336,25 +300,10 @@ OTHER: none
                     choiceCourseMajor => 2
                     rk_VB_choiceCourseMajor.setGlobal(2)
                 ElseIf 2
-                    If Classics_Major_Ses == 0 || Classics_Major_Ses == 1
-                        rk_VB_Classics_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TCL, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Classics_Major_Ses == 2
-                    
-                        rk_VB_Classics_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TCL, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Classics_Major_Ses == 3
-                    
-                        rk_VB_Classics_Major_Ses.setGlobal(3)
-                        Player.setActorVar(rk_VB_Session_TCL, 1)
-                        chooseCourse = true
-                    EndIf
+                    Player.setActorVar(rk_VB_Session_TCL, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
                     Else
@@ -365,112 +314,38 @@ OTHER: none
                     choiceCourseMajor => 3
                     rk_VB_choiceCourseMajor.setGlobal(3)
                 ElseIf 3
-                    If Computer_Science_Major_Ses == 0 || Computer_Science_Major_Ses == 1
-                    
-                        rk_VB_Computer_Science_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TCS, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Computer_Science_Major_Ses == 2
-                    
-                        rk_VB_Computer_Science_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TCS, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Computer_Science_Major_Ses == 3
-                    
-                        rk_VB_Computer_Science_Major_Ses.setGlobal(3)
-                        Player.setActorVar(rk_VB_Session_TCS, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Computer_Science_Major_Ses == 4
-                    
-                        rk_VB_Computer_Science_Major_Ses.setGlobal(4)
-                        Player.setActorVar(rk_VB_Session_TCS, 1)
-                        chooseCourse = true
-                        
-                    EndIf
-                
+                    Player.setActorVar(rk_VB_Session_TCS, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
-                
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
-                        
                     Else
-                    
                         money -= Tuition4
                         Tuition4.setTuition()
-                        
                     EndIf
                     TextMajorChosen = "computer science"
                     choiceCourseMajor => 4
                     rk_VB_choiceCourseMajor.setGlobal(4)
                 ElseIf 31
-                    If Dental_Major_Ses == 0 || Dental_Major_Ses == 1
-                    
-                        rk_VB_Dental_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TDM, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Dental_Major_Ses == 2
-                    
-                        rk_VB_Dental_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TDM, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Dental_Major_Ses == 3
-                    
-                        rk_VB_Dental_Major_Ses.setGlobal(3)
-                        Player.setActorVar(rk_VB_Session_TDM, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Dental_Major_Ses == 4
-                    
-                        rk_VB_Dental_Major_Ses.setGlobal(4)
-                        Player.setActorVar(rk_VB_Session_TDM, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Dental_Major_Ses == 5
-                    
-                        rk_VB_Dental_Major_Ses.setGlobal(5)
-                        Player.setActorVar(rk_VB_Session_TDM, 1)
-                        chooseCourse = true
-                        
-                    EndIf
-                
+                    Player.setActorVar(rk_VB_Session_TDM, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
-                
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
-                        
                     Else
-                    
                         money -= Tuition5
                         Tuition5.setTuition()
-                        
                     EndIf
                     TextMajorChosen = "Dental"
                     choiceCourseMajor => 31
                     rk_VB_choiceCourseMajor.setGlobal(31)
                 ElseIf 4
-                
-                    If Economics_Major_Ses == 0 || Economics_Major_Ses == 1
-                        rk_VB_Economics_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TEC, 1)
-                        chooseCourse = true
-                    ElseIf Economics_Major_Ses == 2
-                        rk_VB_Economics_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TEC, 1)
-                        chooseCourse = true
-                    ElseIf Economics_Major_Ses == 3
-                        rk_VB_Economics_Major_Ses.setGlobal(3)
-                        Player.setActorVar(rk_VB_Session_TEC, 1)
-                        chooseCourse = true
-                    EndIf
+                    Player.setActorVar(rk_VB_Session_TEC, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
                     Else
@@ -481,21 +356,10 @@ OTHER: none
                     choiceCourseMajor => 5
                     rk_VB_choiceCourseMajor.setGlobal(5)
                 ElseIf 5
-                    If Education_Major_Ses == 0 || Education_Major_Ses == 1
-                        rk_VB_Education_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TED, 1)
-                        chooseCourse = true
-                    ElseIf Education_Major_Ses == 2
-                        rk_VB_Education_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TED, 1)
-                        chooseCourse = true
-                    ElseIf Education_Major_Ses == 3
-                        rk_VB_Education_Major_Ses.setGlobal(3)
-                        Player.setActorVar(rk_VB_Session_TED, 1)
-                        chooseCourse = true
-                    EndIf
+                    Player.setActorVar(rk_VB_Session_TED, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
                     Else
@@ -506,13 +370,10 @@ OTHER: none
                     choiceCourseMajor => 6
                     rk_VB_choiceCourseMajor.setGlobal(6)
                 ElseIf 6
-                    If English_Major_Ses == 0 || English_Major_Ses == 1
-                        rk_VB_English_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TEN, 1)
-                        chooseCourse = true
-                    EndIf
+                    Player.setActorVar(rk_VB_Session_TEN, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
                     Else
@@ -523,13 +384,10 @@ OTHER: none
                     choiceCourseMajor => 7
                     rk_VB_choiceCourseMajor.setGlobal(7)
                 ElseIf 7
-                    If Geography_Major_Ses == 0 || Geography_Major_Ses == 1
-                        rk_VB_Geography_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TGE, 1)
-                        chooseCourse = true
-                    EndIf
+                    Player.setActorVar(rk_VB_Session_TGE, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
                     Else
@@ -540,38 +398,28 @@ OTHER: none
                     choiceCourseMajor => 8
                     rk_VB_choiceCourseMajor.setGlobal(8)
                 ElseIf 8
-                    If History_Major_Ses == 0 || History_Major_Ses == 1
-                        rk_VB_History_Major_Ses.setGlobal(1)
+                    If History_Major_Ses_Done == 1
+                        "You have already completed this course!"
+                    Else
                         Player.setActorVar(rk_VB_Session_THI, 1)
                         chooseCourse = true
+                        "I pay for the course and go home!"
+                        If TuitionPriceEqualEnable == 1
+                            money -= Tuition
+                            Tuition.setTuition()
+                        Else
+                            money -= Tuition1
+                            Tuition1.setTuition()
+                        EndIf
+                        TextMajorChosen = "history"
+                        choiceCourseMajor => 9
+                        rk_VB_choiceCourseMajor.setGlobal(9)
                     EndIf
-                    "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
-                        money -= Tuition
-                        Tuition.setTuition()
-                    Else
-                        money -= Tuition1
-                        Tuition1.setTuition()
-                    EndIf
-                    TextMajorChosen = "history"
-                    choiceCourseMajor => 9
-                    rk_VB_choiceCourseMajor.setGlobal(9)
                 ElseIf 9 
-                    If Law_Major_Ses == 0 || Law_Major_Ses == 1
-                        rk_VB_Law_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TLA, 1)
-                        chooseCourse = true
-                    ElseIf Law_Major_Ses == 2
-                        rk_VB_Law_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TLA, 1)
-                        chooseCourse = true
-                    ElseIf Law_Major_Ses == 3
-                        rk_VB_Law_Major_Ses.setGlobal(3)
-                        Player.setActorVar(rk_VB_Session_TLA, 1)
-                        chooseCourse = true
-                    EndIf
+                    Player.setActorVar(rk_VB_Session_TLA, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
                     Else
@@ -582,21 +430,10 @@ OTHER: none
                     choiceCourseMajor => 10
                     rk_VB_choiceCourseMajor.setGlobal(10)
                 ElseIf 10
-                    If Mathematics_Major_Ses == 0 || Mathematics_Major_Ses == 1
-                        rk_VB_Mathematics_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TMA, 1)
-                        chooseCourse = true
-                    ElseIf Mathematics_Major_Ses == 2
-                        rk_VB_Mathematics_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TMA, 1)
-                        chooseCourse = true
-                    ElseIf Mathematics_Major_Ses == 3
-                        rk_VB_Mathematics_Major_Ses.setGlobal(3)
-                        Player.setActorVar(rk_VB_Session_TMA, 1)
-                        chooseCourse = true
-                    EndIf
+                    Player.setActorVar(rk_VB_Session_TMA, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
                     Else
@@ -607,146 +444,52 @@ OTHER: none
                     choiceCourseMajor => 11
                     rk_VB_choiceCourseMajor.setGlobal(11)
                 ElseIf 11
-                    If Medicine_Major_Ses == 0 || Medicine_Major_Ses == 1
-                        rk_VB_Medicine_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TME, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Medicine_Major_Ses == 2
-                    
-                        rk_VB_Medicine_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TME, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Medicine_Major_Ses == 3
-                    
-                        rk_VB_Medicine_Major_Ses.setGlobal(3)
-                        Player.setActorVar(rk_VB_Session_TME, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Medicine_Major_Ses == 4
-                    
-                        rk_VB_Medicine_Major_Ses.setGlobal(4)
-                        Player.setActorVar(rk_VB_Session_TME, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Medicine_Major_Ses == 5
-                    
-                        rk_VB_Medicine_Major_Ses.setGlobal(5)
-                        Player.setActorVar(rk_VB_Session_TME, 1)
-                        chooseCourse = true
-                        
-                    EndIf
-                
+                    Player.setActorVar(rk_VB_Session_TME, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
-                
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
-                        
                     Else
-                    
                         money -= Tuition5
                         Tuition5.setTuition()
-                        
                     EndIf
                     TextMajorChosen = "medecine"
                     choiceCourseMajor => 12
                     rk_VB_choiceCourseMajor.setGlobal(12)
                 ElseIf 12
-                
-                    If Music_Major_Ses == 0 || Music_Major_Ses == 1
-                    
-                        rk_VB_Music_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TMU, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Music_Major_Ses == 2
-                    
-                        rk_VB_Music_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TMU, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Music_Major_Ses == 3
-                    
-                        rk_VB_Music_Major_Ses.setGlobal(3)
-                        Player.setActorVar(rk_VB_Session_TMU, 1)
-                        chooseCourse = true
-                        
-                    EndIf
-                
+                    Player.setActorVar(rk_VB_Session_TMU, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
-                
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
-                        
                     Else
-                    
                         money -= Tuition3
                         Tuition3.setTuition()
-                        
                     EndIf
                     TextMajorChosen = "music"
                     choiceCourseMajor => 13
                     rk_VB_choiceCourseMajor.setGlobal(13)
                 ElseIf 13
-                
-                    If Philosophy_Major_Ses == 0 || Philosophy_Major_Ses == 1
-                    
-                        rk_VB_Philosophy_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TPH, 1)
-                        chooseCourse = true
-                        
-                    EndIf
-                
+                    Player.setActorVar(rk_VB_Session_TPH, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
-                
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
-                        
                     Else
-                    
                         money -= Tuition1
                         Tuition1.setTuition()
-                        
                     EndIf
                     TextMajorChosen = "philosophy"
                     choiceCourseMajor => 14
                     rk_VB_choiceCourseMajor.setGlobal(14)
                 ElseIf 14
-                
-                    If Psychology_Major_Ses == 0 || Psychology_Major_Ses == 1
-                    
-                        rk_VB_Psychology_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TPS, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Psychology_Major_Ses == 2
-                    
-                        rk_VB_Psychology_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TPS, 1)
-                        chooseCourse = true
-                    
-                    ElseIf Psychology_Major_Ses == 3
-                        rk_VB_Psychology_Major_Ses.setGlobal(3)
-                        Player.setActorVar(rk_VB_Session_TPS, 1)
-                        chooseCourse = true
-                    ElseIf Psychology_Major_Ses == 4
-                    
-                        rk_VB_Psychology_Major_Ses.setGlobal(4)
-                        Player.setActorVar(rk_VB_Session_TPS, 1)
-                        chooseCourse = true
-                        chooseCourse = true
-                    ElseIf Psychology_Major_Ses == 5
-                    
-                        rk_VB_Psychology_Major_Ses.setGlobal(5)
-                        Player.setActorVar(rk_VB_Session_TPS, 1)
-                        chooseCourse = true
-                    EndIf
+                    Player.setActorVar(rk_VB_Session_TPS, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
                     Else
@@ -757,21 +500,10 @@ OTHER: none
                     choiceCourseMajor => 15
                     rk_VB_choiceCourseMajor.setGlobal(15)
                 ElseIf 15
-                    If Political_Sciences_Major_Ses == 0 || Political_Sciences_Major_Ses == 1
-                        rk_VB_Political_Sciences_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TPOL, 1)
-                        chooseCourse = true
-                    ElseIf Political_Sciences_Major_Ses == 2
-                        rk_VB_Political_Sciences_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TPOL, 1)
-                        chooseCourse = true
-                    ElseIf Political_Sciences_Major_Ses == 3
-                        rk_VB_Political_Sciences_Major_Ses.setGlobal(3)
-                        Player.setActorVar(rk_VB_Session_TPOL, 1)
-                        chooseCourse = true
-                    EndIf
+                    Player.setActorVar(rk_VB_Session_TPOL, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
                     Else
@@ -782,17 +514,10 @@ OTHER: none
                     choiceCourseMajor => 16
                     rk_VB_choiceCourseMajor.setGlobal(16)
                 ElseIf 60
-                    If SalesMarketing_Major_Ses == 0 || SalesMarketing_Major_Ses == 1
-                        rk_VB_SalesMarketing_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TSM, 1)
-                        chooseCourse = true
-                    ElseIf SalesMarketing_Major_Ses == 2
-                        rk_VB_SalesMarketing_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TSM, 1)
-                        chooseCourse = true
-                    EndIf
+                    Player.setActorVar(rk_VB_Session_TSM, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
                     Else
@@ -803,17 +528,10 @@ OTHER: none
                     choiceCourseMajor => 60
                     rk_VB_choiceCourseMajor.setGlobal(60)
                 ElseIf 80
-                    If TravelTourism_Major_Ses == 0 || TravelTourism_Major_Ses == 1
-                        rk_VB_TravelTourism_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TTT, 1)
-                        chooseCourse = true
-                    ElseIf TravelTourism_Major_Ses == 2
-                        rk_VB_TravelTourism_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TTT, 1)
-                        chooseCourse = true
-                    EndIf
+                    Player.setActorVar(rk_VB_Session_TTT, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
                     Else
@@ -824,29 +542,10 @@ OTHER: none
                     choiceCourseMajor => 80
                     rk_VB_choiceCourseMajor.setGlobal(80)
                 ElseIf 90
-                    If Veterinary_Major_Ses == 0 || Veterinary_Major_Ses == 1
-                        rk_VB_Veterinary_Major_Ses.setGlobal(1)
-                        Player.setActorVar(rk_VB_Session_TVE, 1)
-                        chooseCourse = true
-                    ElseIf Veterinary_Major_Ses == 2
-                        rk_VB_Veterinary_Major_Ses.setGlobal(2)
-                        Player.setActorVar(rk_VB_Session_TVE, 1)
-                        chooseCourse = true
-                    ElseIf Veterinary_Major_Ses == 3
-                        rk_VB_Veterinary_Major_Ses.setGlobal(3)
-                        Player.setActorVar(rk_VB_Session_TVE, 1)
-                        chooseCourse = true
-                    ElseIf Veterinary_Major_Ses == 4
-                        rk_VB_Veterinary_Major_Ses.setGlobal(4)
-                        Player.setActorVar(rk_VB_Session_TVE, 1)
-                        chooseCourse = true
-                    ElseIf Veterinary_Major_Ses == 5
-                        rk_VB_Veterinary_Major_Ses.setGlobal(5)
-                        Player.setActorVar(rk_VB_Session_TVE, 1)
-                        chooseCourse = true
-                    EndIf
+                    Player.setActorVar(rk_VB_Session_TVE, 1)
+                    chooseCourse = true
                     "I pay for the course and go home!"
-                    If TuitionPriceEqualEnable > 0
+                    If TuitionPriceEqualEnable == 1
                         money -= Tuition
                         Tuition.setTuition()
                     Else
@@ -856,9 +555,13 @@ OTHER: none
                     TextMajorChosen = "Veterinary"
                     choiceCourseMajor => 90
                     rk_VB_choiceCourseMajor.setGlobal(90)
+                Else
+                    chooseCourse = true
+                    NochooseCourse = true
                 EndIf
             EndWhile
-            If chooseCourse
+            If chooseCourse && !NochooseCourse
+                moveSchools()
                 //"== Because their is no way to add new majors, to prevent bugs you need to choose a 'virtual' major. =="
                 //chooseMajor()
                 //setMajor()
@@ -972,6 +675,7 @@ OTHER: none
                     Actor.animate(socialize)
                     Actor.moveToPersonStand(Player, 50)
                     "A future classmate approached me."
+                    faceEachOther(Actor, Player)
                     Actor(Happy):: "Hi there, I'm <Actor.name>. Nice to meet you!"
                     Player(Happy):: "Nice to meet you, <Actor.name>. I'm <Player.name>."
                     0:: "Offer to add <Actor.him_or_her> on Facebook"
@@ -1093,6 +797,7 @@ OTHER: none
                     Actor.moveToPersonStand(Player, 50)
                     Actor.animate(socialize)
                     "One of my future lecturers approached me."
+                    faceEachOther(Actor, Player)
                     Actor(Happy):: "Hi there, I'm Dr <Actor.name> <Actor.name_last>. I teach the <TextMajorChosen> module."
                     Player(Happy):: "Nice to meet you, Dr <Actor.name_last>. I'm <Player.name>. I'm looking forward to your class."
                     Actor(Happy):: "Great!"

@@ -5,7 +5,6 @@ WHO: Actor = getSpecific(Dating); If Random(0, 200) < Actor:attractiontoplayer
 OTHER: none
 
     SceneStart()
-    
         preferentialtreatment = Player.getActorVar(rk_VB_preferentialtreatment)
         "In prison, I'm only allowed the occasional conjugal visit from my <Actor.boyfriend_or_girlfriend> <Actor.name>."
         Actor.dress()
@@ -18,9 +17,7 @@ OTHER: none
         
             Sex(Player, Actor)
             Actor:attractiontoplayer += Random(0, 1)
-        
             If Random(0, 100) < 10 && isModEnabled(vin_NTR) && preferentialtreatment < 1
-            
                 Player.show(0)
                 Actor.show(2)
                 Actor2 = generatePersonTemporary()
@@ -35,16 +32,12 @@ OTHER: none
                 1:: "Fuck you!"
             
                 If 0
-                
                     masochist += Random(0, 1)
                     Sex(Actor2, Actor)
-                    
                 Else
-                
                     masochist -= Random(0, 1)
                     Actor2(Angry):: "Then I suggest you get used to never seeing your <Actor.boyfriend_or_girlfriend> again!"
                     timeout(2000, prison_conjugal)
-                    
                 Endif
                 
             Elseif preferentialtreatment > 0
@@ -68,10 +61,7 @@ OTHER: none
                 Sex(Actor, Player)
                 mood += 3
                 timeout(2000, prison_conjugal) 
-
             Endif
-            
         Endif    
-    
     SceneEnd()
     timeout(300, prison_conjugal) // scene improved by Raddeck

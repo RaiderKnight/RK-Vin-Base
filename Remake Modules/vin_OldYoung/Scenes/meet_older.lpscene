@@ -1,10 +1,9 @@
-WHAT: all
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel
 WHERE: all, -home, -work, -prison, -fraternity
 WHEN: 0 - 24
 WHO: none
 OTHER: likes_older > 10 && !Player.isAsexual() && !isAtHome()
 
-    // Randomly triggered scene for a younger player character that prefers older where a DILF / MILF (depending on your gender & sexual orientation) approaches you
     
     SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
@@ -17,7 +16,6 @@ OTHER: likes_older > 10 && !Player.isAsexual() && !isAtHome()
             Actor = generatePersonTemporary()
         EndWhile
         Actor.makeInterested(Player)
-        
         Actor:age => age + likes_older*0.5
         Actor:age += random(-5, 5)
         Actor:attractiveness => random(70, 100)

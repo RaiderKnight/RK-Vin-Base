@@ -2,7 +2,7 @@ WHAT: all
 WHERE: prison
 WHEN: 0-24
 WHO: none
-OTHER: Random(0, 100) > energy + mood
+OTHER: random(0, 100) > energy + mood
 
     SceneStart()
         preferentialtreatment = Player.getActorVar(rk_VB_preferentialtreatment)
@@ -18,7 +18,7 @@ OTHER: Random(0, 100) > energy + mood
             "We stripped and start having sex right here..."
             mood += 25
             perversion += 2
-            massochist += 1
+            masochist += 1
             Sex(Actor, Player)
             Player.setActorVar(rk_VB_preferentialtreatment, 1)
         ElseIf 2
@@ -28,8 +28,7 @@ OTHER: Random(0, 100) > energy + mood
             Actor2 = generatePersonTemporary()
             While !Actor2.isSameGender(Player)
                 Actor2 = generatePersonTemporary()
-            Endwhile
-            
+            EndWhile
             Actor2.show(2)
             Actor2(Happy):: "Thank you for standing against the prison guard ... You're my hero! And I'm sure others feel the same too."
             masochist -= 2

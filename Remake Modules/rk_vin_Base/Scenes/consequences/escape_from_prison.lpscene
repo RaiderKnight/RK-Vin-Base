@@ -19,7 +19,7 @@ OTHER: none
         
             Player.animate(sneak)
             "I took advantage of a careless moment of the guards to simply sneak away from the labour site."
-            SneakGame()
+            sneakGame()
             If Random(30, 1000) < sneak
             
                 "Just a bit more and I'll be out of their sights."
@@ -106,18 +106,13 @@ OTHER: none
                     Endif
                     
                 Else
-                
                     Player.animate(fightlost)
                     Player(Sad):: "Please, don't shoot. I surrender!"
                     "My prison escape was a complete failure. All it did was to add some time to my sentence. Oh well, at least I keep myself alive to try another day."
                     sentence *= 1.15
                     sneak -= 5
                     mood -= 5
-                    
                 Endif
-                
             Endif
-            
         Endif
-        
     SceneEnd() // scene improved by Raddeck

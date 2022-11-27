@@ -1,10 +1,19 @@
-WHAT: all, -sleep, -nap
+WHAT: all, -sleep_hotel, -nap_hotel, -rk_VB_small_sleep
 WHERE: fraternity
 WHEN: 0-24
-WHO: Actor = getSpecific(Fraternity); If Actor.isInterestedIn(Player) && random(20, 70) < Actor:attractiontoplayer && random(50, 100) < Actor:attractiveness
+WHO: Actor = getPerson(rk_VB_tag_Student); If Actor.isInterestedIn(Player) && random(20, 70) < Actor:attractiontoplayer && random(50, 100) < Actor:attractiveness
 OTHER: none
 
     SceneStart()
+        If !Player.isMale()
+            While Actor.isValid() && Actor.isMale()
+                Actor = getPerson(rk_VB_tag_ExeSoroS)
+            EndWhile
+        Else
+            While Actor.isValid() && !Actor.isMale()
+                Actor = getPerson(rk_VB_tag_ExeFratF)
+            EndWhile
+        EndIf
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -12,24 +21,48 @@ OTHER: none
         Actor.dress()
         Actor.show(2)
         "<Actor.name> and I are left alone in the chapter house today, watching TV together. Everyone else went on a trip."
-        "I must admit: I'm quite attracted to <Actor.name>, even though we're sworn <Actor.brothers_or_sisters>. Worse, I think <Actor.name> feels the same way for me."
-        0:: "Kiss <Actor.him_or_her>"
-        1:: "We can't be <Player.gay_or_lesbians>"
+        "I know <Actor.he_or_she> looks at me a lot, especially my ass! Should I try to seduce <Actor.him_or_her>?"
+        0:: "Start to kiss <Actor.him_or_her>"
+        1:: "I'm not a <Player.gay_or_lesbians>"
         
         If 0
+            "I must admit: I'm quite attracted to <Actor.name>, even though we're sworn <Actor.brothers_or_sisters>. Worse, I think <Actor.name> feels the same way for me."
             animatePair(Player, Actor, Kissing)
             Player(Kiss):: "..."
             Actor(Kiss):: "..."
             "Things are escalating very quickly ..."
-            0:: "Let it happen"
-            1:: "Stop it there"
-            
-            If 0
+            If !Actor.isInterestedIn(Player) && Actor:rapportwithplayer > 35 && Actor:arousal > 25 && Actor:perversion > 35
+                Actor(Shocked):: "What the fuck <Actor.bro_or_sister>??"
+                Player(Sad)::"Sorry, I let myself go!"
+                Actor(Flirty):: "In fact liked it!"
+                Actor:rapportwithplayer += random(1, 3)
+                Actor:rapportwithplayer += random(1, 3)
+                Actor(Flirty):: "I'm not gay but I've always wanted to try <Player.sucking_or_licking> a <Player.dick_or_pussy>! If you promise not to tell anyone, I'm ready to do a 69 with you!"
+                Player(Sad)::"Sure, trust me! Let's do it!"
                 Actor.strip()
                 Player.strip()
+                Filter(69)
                 Sex(Player, Actor)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
+                EndIf
+            ElseIf !Actor.isInterestedIn(Player)
+                Actor(Shocked):: "What the fuck <Actor.bro_or_sister>??"
+                Actor(Shocked):: "Never do that again stupid <Actor.ass_or_slut>!"
+                Actor:rapportwithplayer -= random(1, 3)
+                Actor:rapportwithplayer -= random(1, 3)
+                Player(Sad)::"Sorry, I let myself go!"
+            Else
+                0:: "Let it happen"
+                1:: "Stop it there"
+            
+                If 0
+                    Actor.strip()
+                    Player.strip()
+                    Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
                 EndIf
             EndIf
         Else

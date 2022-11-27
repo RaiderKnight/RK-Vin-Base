@@ -1,11 +1,10 @@
 WHAT: none
 WHERE: none
-WHEN: 8 - 22
+WHEN: 0 - 24
 WHO: none
 OTHER: none
 
-    // Summary - player convinces their dating companion to sext with one of their own friends while the player watches.
-
+    
     SceneStart(()
 
         Actor = getCompanion()
@@ -45,7 +44,7 @@ OTHER: none
                 If 0
                     Actor2.strip()
                     SexNoAffair(Actor2, Actor)  
-                Elseif 1
+                ElseIf 1
                     Actor2.strip()
                     Player.strip()
                     SexNoAffair(Player, Actor2, Actor)
@@ -58,7 +57,7 @@ OTHER: none
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -2)
                     EndIf
-                Endif
+                EndIf
                 Actor:attractiontoplayer += 1
                 "Once I finish filming my <Actor.boyfriend_or_girlfriend>, we decide to send a copy to <Actor2.name>"
                 Player.modifyActorVar(rk_VB_personal_vids, 1)
@@ -69,7 +68,7 @@ OTHER: none
                     "<Actor2.name> sent a nude back."
                     Filter(Solo)
                     Sex(Actor2)
-                Elseif Actor2:perversion > 60 && Actor2:masochist < -50 && choice == 1
+                ElseIf Actor2:perversion > 60 && Actor2:masochist < -50 && choice == 1
                     "<Actor2.name> invites <Actor.name> over to have sex." 
                     0:: "Allow it"
                     1:: "Put a stop to it"
@@ -84,8 +83,8 @@ OTHER: none
                         Actor2.strip()
                         Sex(Actor2, Actor)
                         Actor2:rapportwithplayer += 2
-                    Endif
-                Elseif Actor2:perversion > 40 && Actor2:masochist < -25
+                    EndIf
+                ElseIf Actor2:perversion > 40 && Actor2:masochist < -25
                     TempVids = personal_vids - 1
                     Actor2(Happy):: "Send another!"
                     0::TempVids > 0:: "Send another"
@@ -94,19 +93,19 @@ OTHER: none
                     
                     If 0
                         "Another nude was sent to <Actor2.name>"
-                    Elseif 1
+                    ElseIf 1
                         followUp(sr_fso_phonedare2_cms)
-                    Endif
+                    EndIf
                     Actor2:rapportwithplayer += 2
                 Else
                     "No response from <Actor2.name>."
-                Endif
+                EndIf
             Else
                 Actor(Sad):: "No way, I'm not doing that."
                 Actor:arousal -= 1
                 Actor:perversion -= 1
-            Endif
-        Endif
+            EndIf
+        EndIf
     
     SceneEnd() // Scene improved by Raddeck
-    timeout(164, sr_fso_phonedare2_cms) // Scene improved by Raddeck
+    //timeout(164, sr_fso_phonedare2_cms)

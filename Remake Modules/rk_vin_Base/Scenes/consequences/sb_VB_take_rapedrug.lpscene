@@ -5,35 +5,34 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         If isModEnabled(vin_NonConsensual) && !isWithCompanion()
             If Player.isAtHome()
-                If Random(0,100) > 95
+                If random(0,100) > 95
                     followUp(vi_homeinvader_rape)
                 Else
                     "You took a rape drug ... now your mind is clouded and you are very sleepy ..."
                     "You passed out for some time ..."
-                    passtime(3,8)
-                Endif
+                    passTime(3,8)
+                EndIf
             Else
-                If Random(0,100) > 75
+                If random(0,100) > 75
                     "You took a rape drug ... now your mind is clouded and you are very sleepy ..."
                     Player(Angry):: "Argl ..."
                     "I need to go home very fast ... "
                     followUp(vi_darkalley_rape)
                     
-                Elseif Random(0,100) > 75
+                ElseIf random(0,100) > 75
                     "You took a rape drug ... now your mind is clouded and you are very sleepy ..."
                     Player(Angry):: "Argl ..."
                     "I need to go home very fast ... "
                     Actor = generatePersonTemporary()
                     While Actor.isInterestedIn(Actor)
                         Actor = generatePersonTemporary()
-                    Endwhile
+                    EndWhile
                     Actor.dress()
                     "I'm losing control of my body - wait, where am I? ..."
                     "Everything went black ..."
@@ -47,34 +46,26 @@ OTHER: none
                     Filter(Aggressive)
                     TalkNonConsensual()
                     SexNoAffair(Actor, Player)
-                    passtime(3,8)
+                    passTime(3,8)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -3)
                     EndIf
                 Else
-                
                     "You took a rape drug ... now your mind is clouded and you are very sleepy ..."
                     Player(Angry):: "Argl ..."
                     "Maybe this wasn't the best idea ..."
                     "You passed out for some time ..."
-                    passtime(3,8)
-                    
-                Endif
-                
+                    passTime(3,8)
+                EndIf
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -1)
                 EndIf
-                
-            Endif
-            
+            EndIf
         Else
-        
             "You took a rape drug ... now your mind is clouded and you are very sleepy ..."
             "Maybe this wasn't the best idea ..."
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -1)
             EndIf
-            
-        Endif
-    
+        EndIf
     SceneEnd()

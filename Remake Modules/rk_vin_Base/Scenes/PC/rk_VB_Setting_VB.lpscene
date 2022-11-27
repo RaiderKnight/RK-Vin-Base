@@ -5,7 +5,6 @@ WHO: none
 OTHER: none
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -37,7 +36,7 @@ OTHER: none
             EndIf
         EndIf
         If isModEnabled(nn_VB_HomeExpander) && isModEnabled(nn_HomeExpander)
-            "There is 2 HomeExpander module who are currently enabled. You only need one version, nn_HomeExpander or nn_VB_HomeExpander."
+            "There is 2 HomeExpander module who are currently enabled. You only need one version, nn_HomeExpander (for LifePlay only) or nn_VB_HomeExpander (for the Remake only)."
             0:: "Open Mod Manager"
             1:: "Do nothing!"
             
@@ -47,27 +46,27 @@ OTHER: none
         EndIf
         CheckingSetting = true
         While CheckingSetting
-        
+            //89::"---------------------------------"
+            //90::"Stuff in hand to store - Debugger"
             0::"-- Setting for Vin_Base --"
             1::"Enable/disable Hunger"
             2::"Enable/disable Urge to pee"
-            3::"Enable Same tuition price for all courses"
-            4::"Enable job restrictions"
+            3::"Enable/disable Same tuition price for all courses"
+            4::"Enable/disable job restrictions"
             20::"Reset Major"
             30::"Set racial stereotypes"
-            89::"---------------------------------"
-            90::"Stuff in hand to store - Debugger"
             99::"Go back!"
             
             If 1
-                If HungerEnable >= 0
+                HungerEnable = rk_VB_EnableHunger.getGlobal()
+                If HungerEnable == 1
                     "Hunger level is enable"
                 Else
                     "Hunger level is disable"
-                Endif
+                EndIf
                 "What should I do?"
-                1::"Enable hunger"
-                2::"Disable hunger"
+                1::HungerEnable == 0::"Enable hunger"
+                2::HungerEnable == 1::"Disable hunger"
                 3::"Reset hunger stats"
                 99::"Go back!"
     
@@ -80,74 +79,97 @@ OTHER: none
                     "Hunger is now disabled!"
                     rk_VB_EnableHunger.setGlobal(0)
                 ElseIf 3
-                    "Hunger is now reseted!"
+                    "Hunger is now reset!"
                     rk_VB_EnableHunger.setGlobal(0)
                     Player.setActorVar(rk_VB_Hunger, 0)
                     rk_VB_EnableHunger.clearGlobal()
                 EndIf
             ElseIf 2
-                If UrgeToPeeEnable >= 0
-                    "Hunger level is enable"
+                UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+                If UrgeToPeeEnable == 1
+                    "Urge to pee level is enable"
                 Else
-                    "Hunger level is disable"
-                Endif
+                    "Urge to pee level is disable"
+                EndIf
                 "What should I do?"
-                1::"Enable the urge to pee"
-                2::"Disable the urge to pee"
-                3::"Reset the urge to pee stats"
+                1::UrgeToPeeEnable == 0::"Enable the urge to pee"
+                2::UrgeToPeeEnable == 1::"Disable the urge to pee"
+                3::"Enable/Disable Watersports"
+                90::"Reset the urge to pee stats"
                 99::"Go back!"
             
                 If 1
-                
                     "The urge to pee is now enabled!"
                     rk_VB_UrgeToPeeEnable.setGlobal(1)
-                
                 ElseIf 2
-                
                     "The urge to pee is now disabled!"
                     rk_VB_UrgeToPeeEnable.setGlobal(0)
-                
                 ElseIf 3
-                
-                    "The urge to pee is now reseted!"
+                    EnableWatersports = rk_VB_UrgeToPeeEnableWatersports.getGlobal()
+                    If EnableWatersports >= 1
+                        "Watersports is enabled, do you want to disable it?"
+                    Else
+                        "Watersports is disabled, do you want to enable it?"
+                    EndIf
+                    0::EnableWatersports >= 0::"Enable"
+                    1::EnableWatersports >= 1::"Disable"
+                    99::"Go back!"
+                    
+                    If 0
+                        "When enabled, your Watersports stats start at 0"
+                        rk_VB_UrgeToPeeEnableWatersports.setGlobal(1)
+                        likes_watersports = Player.getActorVar(rk_VB_likes_watersports)
+                        If likes_watersports < 0
+                            Player.setActorVar(rk_VB_likes_watersports, 0)
+                        Else
+                            "Already over 0"
+                        EndIf
+                    Else
+                        "When disabled, your Watersports stats start at -100"
+                        rk_VB_UrgeToPeeEnableWatersports.setGlobal(0)
+                        If likes_watersports > 0
+                            Player.setActorVar(rk_VB_likes_watersports, -100)
+                        Else
+                            "Already under 0"
+                        EndIf
+                    EndIf
+                ElseIf 90
+                    "The urge to pee is now reset!"
                     rk_VB_UrgeToPeeEnable.setGlobal(0)
                     Player.setActorVar(rk_VB_UrgeToPee, 0)
                     rk_VB_UrgeToPeeEnable.clearGlobal()
-                
                 EndIf
                 
             ElseIf 3
-                If TuitionPriceEqualEnable >= 0
+                TuitionPriceEqualEnable = rk_VB_TuitionPriceEqualEnable.getGlobal()
+                If TuitionPriceEqualEnable >= 1
                     "Same tuition price is enable"
                 Else
                     "Same tuition price is disable"
-                Endif
+                EndIf
                 "What should I do?"
-                1::"Enable same tuition price for all courses"
-                2::"Disable same tuition price for all courses"
+                1::TuitionPriceEqualEnable >= 0::"Enable same tuition price for all courses"
+                2::TuitionPriceEqualEnable >= 1::"Disable same tuition price for all courses"
                 99::"Go back!"
             
                 If 1
-                
                     "Same tuition price for all courses is now enabled!"
                     rk_VB_TuitionPriceEqualEnable.setGlobal(1)
-                
                 ElseIf 2
-                
                     "Same tuition price for all courses is now disabled!"
                     rk_VB_TuitionPriceEqualEnable.setGlobal(0)
-                
                 EndIf
             ElseIf 4
-                If JobRestrictionEnable >= 0
+                JobRestrictionEnable = rk_VB_JobRestrictionEnable.getGlobal()
+                If JobRestrictionEnable >= 1
                     "Job restrictions is enable"
                 Else
                     "Job restrictions is disable"
-                Endif
+                EndIf
                 "If you enable this option: For some jobs, you will need to have completed the university course related to that job."
                 "What should I do?"
-                1::"Enable job restrictions"
-                2::"Disable job restrictions"
+                1::JobRestrictionEnable >= 0::"Enable job restrictions"
+                2::JobRestrictionEnable >= 1::"Disable job restrictions"
                 99::"Go back!"
             
                 If 1
@@ -161,14 +183,10 @@ OTHER: none
                 followUp(rk_VB_Reset_Major)
             ElseIf 30
                 followUp(set_stereotypes)
-            ElseIf 90
-                followUp(rk_VB_HandSwitchInv_VB)
+                //ElseIf 90
+                //followUp(rk_VB_HandSwitchInv_VB)
             Else
-            
                 CheckingSetting = false
-                
             EndIf
-            
         EndWhile
-
     SceneEnd()

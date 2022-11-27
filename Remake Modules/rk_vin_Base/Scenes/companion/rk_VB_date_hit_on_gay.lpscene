@@ -9,18 +9,18 @@ OTHER:
         Actor2 = generatePersonTemporary()
         While !Actor2.isMale()
             Actor2 = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor2.dress()
         Actor2.show(2)
         Actor2.makeInterested(Actor)
-        Actor2.movetoPersonStand(Actor, 100)
+        Actor2.moveToPersonStand(Actor, 100)
         Actor2:: "You're so beautiful. I'm <Actor2.name>. I'm sorry if I'm being too forward but I can't help but wonder if you're also into guys ..."
         "Oh, so <Actor2.name> is a gay. He was certainly straight to the point."
         If Actor.isInterestedIn(Actor2)
             Actor:: "Actually, I am. But I'm here with someone right now."
         Else
             Actor:: "Sorry, but I'm straight ... I think ... Anyway, I'm here with someone right now."
-        Endif
+        EndIf
         "It was obvious that <Actor.name> found himself being somewhat attracted to his gay admirer, but he seemed reluctant with me being there."
         0:: "Kill off their conversation"
         1:: "Encourage <Actor.name> and allow him some time with <Actor2.name>"
@@ -43,7 +43,7 @@ OTHER:
             "Eventually, they even made out right there on the dance floor."
             If !Actor.isInterestedIn(Actor2)
                 "So much for <Actor.name> claiming to be straight ..."
-            Endif
+            EndIf
             "Things are getting very heated."
             Player.show()
             Actor:: "<Player.name>, <Actor2.name> invited me to have some more drinks at his place. I'll see you tomorrow, okay?"
@@ -56,7 +56,7 @@ OTHER:
                 Player:: "<Actor.name>, don't forget you only met this guy an hour ago. You shouldn't trust him enough to go alone with him somewhere already."
                 Player:: "What if he is some kind of kidnapper or psycho?"
                 Actor:: "You're right. I was getting too carried away."
-            Elseif 1
+            ElseIf 1
                 Player:: "It's okay. Don't wory. Have fun!"
                 Actor.hide()
                 Actor2.hide()
@@ -66,7 +66,7 @@ OTHER:
             Else
                 Player:: "Actually, I could drive you two there."
                 Actor2:: "That'll be great. Thank you, <Player.name>."
-                "I'm surprised that <Actor2.name> seemed unconcerned by my apparent cockblocking, or in this case, clam jam, attempt."
+                "I'm surprised that <Actor2.name> seemed unconcerned by my apparent cock blocking, or in this case, clam jam, attempt."
                 setBackground(street)
                 Actor2:: "That's my apartment here. Come inside, you two."
                 setBackgroundCustom(livingroom)
@@ -74,7 +74,7 @@ OTHER:
                 Actor2.animate(drinkglass)
                 Player.animate(drinkglass)
                 "Once inside, we had some more drinks."
-                Player:intoxication += 30
+                intoxication += 30
                 Actor:intoxication += 15
                 Actor2:intoxication += 15
                 animatePair(Kissing, Actor, Actor2)
@@ -83,7 +83,7 @@ OTHER:
                 Sex(Actor2, Actor)
                 If !Actor.isInterestedIn(Actor2) && Random(0, 200) < Actor:perversion + Actor2:perversion
                     Actor.makeInterested(Actor2)
-                Endif
+                EndIf
                 "I can't believe I just froze and watched the whole thing. This is now either the most awkward situation or a big opportunity ..."
                 0:: "Leave and let them spend the night with each other"
                 1:: "Try to join them"
@@ -101,7 +101,7 @@ OTHER:
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -3)
                         EndIf
-                    Elseif Actor2.isInterestedIn(Player)
+                    ElseIf Actor2.isInterestedIn(Player)
                         Actor2:: "People like you are so predictable, I bet you only drove us because you were fantasizing about a threesome, didn't you?"
                         Actor2:: "Oh well, lucky for you, I never said I didn't like pussies at all, just not as much as dicks. I'm greedy like that."
                         Sex(Player, Actor, Actor2)
@@ -113,9 +113,9 @@ OTHER:
                         Actor2:: "Sorry, but no pussies are allowed here ... Only hardcore gay sex my friend!"
                         endDate()
                         "I had no choice but go home and leave the two gay lovers to it."                    
-                    Endif
-                Endif
-            Endif
-        Endif
+                    EndIf
+                EndIf
+            EndIf
+        EndIf
     SceneEnd() // Scene made by Raddeck
     timeout(100, rk_VB_date_hit_on_gay)

@@ -62,11 +62,11 @@ OTHER: !isWithCompanion() && 70 < random(0, 100) && EnrollDegree >= 1
             Actor.show()
             Actor.strip()
             Actor.dressExcept(Bottom, Outerwear, Bottom_Under)
-            Filter(solo)
+            Filter(Solo)
             Sex(Actor)
             Actor.hide()
             "The idea of <Actor.him_or_her> <Actor.jerking_or_fingering> <Actor.himself_or_herself> off excited me and made my <Player.pants_or_panties> wet."
-            If arousal > 25
+            If arousal > 25 && [[Actor.isMale() && Player.isInterestedInMen()] || [!Actor.isMale() && Player.isInterestedInWomen()] || [!Actor.isTrans() && Player.isInterestedInTrans()]]
                 If !Player.isMale()
                     "That's too much! I stripped and fingered my pussy and I came about the same time as <Actor.he_or_she> did."
                 Else                
@@ -74,7 +74,7 @@ OTHER: !isWithCompanion() && 70 < random(0, 100) && EnrollDegree >= 1
                 EndIf
                 Player.strip()
                 Player.dressExcept(Bottom, Outerwear, Bottom_Under)
-                Filter(solo)
+                Filter(Solo)
                 Sex(Player)
                 arousal -= 5
                 Player.dress()
@@ -216,12 +216,16 @@ OTHER: !isWithCompanion() && 70 < random(0, 100) && EnrollDegree >= 1
                 Actor.dressExcept(Top, Top_Under, Outerwear)
                 "<Actor.He_or_She> do the same and ..." 
                 "<Actor.He_or_She> dropped to <Actor.his_or_her> knees in the front of me and started <Player.licking_or_sucking> my tits..."
-                Player(Kiss)::"..."
-                animatePair(Actor, Player, Kissing)
-                Actor(Kiss)::"..."
-                "After a few minutes, we decide to take off our clothes!"
+                If !Player.isMale()
+                    Filter(LickBoobs)
+                    Sex(Actor, Player)
+                Else
+                    Player(Kiss)::"..."
+                    animatePair(Actor, Player, Kissing)
+                EndIf
                 Player.strip()
                 Actor.strip()
+                "After a few minutes, we decide to take off our clothes!"
                 "Then <Actor.he_or_she> slipped the device over <Actor.his_or_her> <Actor.cock_or_pussy> and <Actor.he_or_she> shoved the <Player.fleshlight_or_vibrator> up my <Player.cock_or_pussy>."
                 If !Actor.isMale()
                     "As we went through every functions we both got more and more excited. I came first which made <Actor.him_or_her> speed up the process and then <Actor.he_or_she> yelled when <Actor.he_or_she> came."
@@ -230,10 +234,21 @@ OTHER: !isWithCompanion() && 70 < random(0, 100) && EnrollDegree >= 1
                 EndIf
                 If !Player.isMale()
                     Filter(Vibrator)
+                    Sex(Actor)
+                    Actor(Flirty)::"Now, your turn!"
+                    Actor.moveToPersonStand(Player, 40)
+                    faceEachOther(Actor, Player)
+                    Filter(Vibrator)
+                    Sex(Player)
                 Else
                     Filter(Fleshlight)
+                    Sex(Actor)
+                    Actor(Flirty)::"Now, your turn!"
+                    Actor.moveToPersonStand(Player, 40)
+                    faceEachOther(Actor, Player)
+                    Filter(Fleshlight)
+                    Sex(Player)
                 EndIf
-                Sex(Actor, Player)
                 "Still tingling from the effects of the <Player.fleshlight_or_vibrator> I had a strong desire to fuck..."
                 "So we lay down on the carpet and we immediately started to fuck!"
                 Sex(Player, Actor)

@@ -1,10 +1,9 @@
-WHAT: all, -sleep, -nap
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all, -home
 WHEN: 0 - 24
 WHO: Actor = getCompanion(); Actor2 = getPerson(tag_orcchief); If !Actor.isMale() && Actor.isDating() && Actor.isRace(Orc)
 OTHER: PercentageOrcs > 0 && PercentageElves > 0 && Player.isMale() && isModEnabled(vin_NTR)
 
-    //Summery - Assuming the player has joined the alternate orc tribe they will be given the option to further "loan" their Orc girlfriend/wife to the other tribe.
     
     SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
@@ -24,7 +23,7 @@ OTHER: PercentageOrcs > 0 && PercentageElves > 0 && Player.isMale() && isModEnab
         3:: "If you are not up to it we could do one of these ideas later."
         
         If 0 
-            "I came up with a plan to expose <Actor.name> to the cheiftan and his council members. I would have <Actor.name> show off to me at a clothing store with the changing room door open."
+            "I came up with a plan to expose <Actor.name> to the chieftan and his council members. I would have <Actor.name> show off to me at a clothing store with the changing room door open."
             setBackground(clothes)
             Actor.show()
             "I then talk her into exposing herself to me at a clothing store for his eyes with the other orcs happening to see it from a hiding spot."
@@ -36,7 +35,7 @@ OTHER: PercentageOrcs > 0 && PercentageElves > 0 && Player.isMale() && isModEnab
             Actor4 = generateCreatureTemporary(Dog)
             Actor3.show()
             Actor4.show()
-            "While she was gathering firewood I used some of the diguise magic to hide myself and then I helped the wolves sneak up to her and take her down."
+            "While she was gathering firewood I used some of the disguise magic to hide myself and then I helped the wolves sneak up to her and take her down."
             "The wolves then have sex with her one on one then in a threesome." 
             Sex(Actor3, Actor4, Actor)
 
@@ -59,6 +58,5 @@ OTHER: PercentageOrcs > 0 && PercentageElves > 0 && Player.isMale() && isModEnab
         Else
             "I decided not to do anything yet about this. But next time they proposition me about this perhaps I will."
         EndIf
-    
     SceneEnd() // Improved by Raddeck
     timeout (1000, sr_fso_orctribebetrayal_cms)

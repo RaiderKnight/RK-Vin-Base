@@ -5,28 +5,51 @@ WHO: none
 OTHER: none
 
     SceneStart()
+        DefaultPee = false
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         UrgeToPeeCons = rk_VB_UrgeToPeeCons.getGlobal()
         likes_watersports = Player.getActorVar(rk_VB_likes_watersports)
-        Alikes_watersports = Actor.getActorVar(rk_VB_likes_watersports)
         Actor = generatePerson()
+        Alikes_watersports = Actor.getActorVar(rk_VB_likes_watersports)
         Actor = hide()
+        cameraFocus(Player)
         If Alikes_watersports <= 0
             Actwaterspo = random(0, 100)
             Actor.setActorVar(rk_VB_likes_watersports, Actwaterspo)
         EndIf
-        If UrgeToPeeEnable < 0
-            "I decided to pee right here!"
-            Player.setActorVar(rk_VB_UrgeToPee, 0)
-            "Ah, what a relief!"
-            masochist -= 1
-            mood += 3
+        "I decided to pee right here!"
+        Player.strip()
+        Player.setActorVar(rk_VB_UrgeToPee, 0)
+        animatePair(Actor, Player, Watersports)
+        "Ah, what a relief!"
+        masochist -= 1
+        mood += 3
+        If UrgeToPeeEnable == 1
             If Actor:masochist <= 0 || Actor:likes_bondage > 50 || Alikes_watersports > 50
+                Actor.dress()
+                Actor.show()
+                Actor(Flirty)::"Oh yeah! horny <Player.boy_or_girl>! If you let me pee on you, I'll fuck you right after!"
+                0::"Yeah, sure!"
+                1::"No thanks!"
+                
+                If 0
+                    Actor.strip()
+                    Actor(Flirty)::"Nice!"
+                    animatePair(Actor, Player, Watersports)
+                    perversion += 1
+                    masochist -= 1
+                    Sex(Actor, Player)
+                    Player.modifyActorVar(rk_VB_likes_watersports, 1)
+                    Actor.modifyActorVar(rk_VB_likes_watersports, 1)
+                    "That was amazing!"
+                EndIf
+            ElseIf Actor:likes_bondage > 50 || Alikes_watersports > 50
+                Actor.dress()
                 Actor.show()
                 Player.modifyActorVar(rk_VB_likes_watersports, 1)
                 Actor.modifyActorVar(rk_VB_likes_watersports, 1)
-                "Do you want me to wipe your <Player.penis_or_pussy> with my mouth?"
+                Actor(Flirty)::"Do you want me to wipe your <Player.penis_or_pussy> with my mouth?"
                 0::"Yeah, sure!"
                 1::"No thanks!"
                 
@@ -34,19 +57,25 @@ OTHER: none
                     perversion += 1
                     masochist -= 1
                     Filter(Blowjob)
-                    sex(Actor, Player)
+                    Sex(Actor, Player)
                     Player.modifyActorVar(rk_VB_likes_watersports, 1)
                     Actor.modifyActorVar(rk_VB_likes_watersports, 1)
                     "That was amazing!"
                 EndIf
             Else
-                Actor.show()
-                Actor(Angry):: "What the fuck! That's so inappropriate! Why did you pee here, idiot!"
-                Actor:attractiontoplayer -= 1
-                Actor:rapportwithplayer -= 1
-                If WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != stripclub && WHERE != prison
-                   followUp(public_indecency)
-                Endif
+                DefaultPee = true
+            EndIf
+        Else
+            DefaultPee = true
+        EndIf
+        If DefaultPee
+            Actor.dress()
+            Actor.show()
+            Actor(Angry):: "What the fuck! That's so inappropriate! Why did you pee here, idiot!"
+            Actor:attractiontoplayer -= 1
+            Actor:rapportwithplayer -= 1
+            If WHERE != home && WHERE != brothel && WHERE != stripclub && WHERE != prison && WHERE != fraternity
+               followUp(public_indecency)
             EndIf
         EndIf
     SceneEnd()

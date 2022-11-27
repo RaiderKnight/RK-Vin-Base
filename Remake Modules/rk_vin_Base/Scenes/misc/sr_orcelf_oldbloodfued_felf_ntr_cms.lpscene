@@ -34,7 +34,7 @@ OTHER: PercentageOrcs > 0 && PercentageElves > 0 && Player.isMale() && random(0,
         Actor3.show()
 
         "They tell you that the elf you are with is from a family that was a sworn enemy to their own and caused terrible tragedies."
-        "They demand that for honor sake you allow them to breed her."
+        "They demand that for honour sake you allow them to breed her."
         0:: "Try to fight them off"
         1:: "Toss her to them"
         
@@ -53,19 +53,15 @@ OTHER: PercentageOrcs > 0 && PercentageElves > 0 && Player.isMale() && random(0,
             Actor:attractiontoplayer -= 10
             karma -= 10
         EndIf
-        
         "Seeing it as a way to keep the one she loved safe from the orcs, <Actor.name> surrendered to her fate without a fight ..."
         "They also give her a drug that nullifies birth control before they have sex."
         Sex(Actor1, Actor)
         Sex(Actor2, Actor)
         Sex(Actor3, Actor)
-        
         Sex(Actor1, Actor2, Actor3, Actor)
-        
         If random(0, 100) < 30
             Actor1.makePermanent()
             Actor.impregnate(Actor1)
         EndIf
-
     SceneEnd()
     timeout(200, sr_orcelf_oldbloodfued_felf_ntr_cms) // Improved by Raddeck

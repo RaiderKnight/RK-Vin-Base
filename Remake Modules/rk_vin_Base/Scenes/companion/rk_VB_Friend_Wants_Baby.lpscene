@@ -1,7 +1,7 @@
-WHAT: all 
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all
 WHEN: 0 - 20
-WHO: Actor = getPerson(true); Actor2 = getSpecific(Dating); if Actor.WantsBabies() && Actor.isInterestedIn(Player) && !Actor.isMale() && Actor.isOnPeriod() && !Actor.isPregnant() && Actor:perversion > 50
+WHO: Actor = getPerson(true); Actor2 = getSpecific(Dating); if Actor.wantsBabies() && Actor.isInterestedIn(Player) && !Actor.isMale() && Actor.isOnPeriod() && !Actor.isPregnant() && Actor:perversion > 50
 OTHER: Player.isMale() && isModEnabled(vin_Pregnancy)
 
     SceneStart()
@@ -36,8 +36,8 @@ OTHER: Player.isMale() && isModEnabled(vin_Pregnancy)
             Player(Happy)::"Hey, hi <Actor.name>! What's up?"
             Actor(Excited)::"Hi <Player.name>! Uhh! I'd like to meet you, it's important!"
             Player(Curious)::"Okay? Is everything ok?"
-            Actor(Happy)::"Yeah, it's just... I want to ask you a favor but, I'd rather ask you face to face."
-            If isWithCompanion() && Actor2.isvalid()
+            Actor(Happy)::"Yeah, it's just... I want to ask you a favour but, I'd rather ask you face to face."
+            If isWithCompanion() && Actor2.isValid()
                 Actor2.dress()
                 Actor2.show()
                 Player(Sad)::"But I'm with my <Actor2.boyfriend_or_girlfriend>?"
@@ -49,9 +49,9 @@ OTHER: Player.isMale() && isModEnabled(vin_Pregnancy)
                 Elseif !Actor2.isMale()
                     Actor(Flirty)::"I prefer to see you alone..."
                     Player(Curious)::"Okay, I'll ask my <Actor2.boyfriend_or_girlfriend>??"
-                    Player(Curious)::"Hey honey I have to go away for an hour or two, <Actor.name> wants me to do <Actor.him_or_her> a favor!"
+                    Player(Curious)::"Hey honey I have to go away for an hour or two, <Actor.name> wants me to do <Actor.him_or_her> a favour!"
                     If Actor2:masochist < masochist || !Actor2.isInterestedIn(Actor)
-                        Actor2(Curious):: "What kind of favor?"
+                        Actor2(Curious):: "What kind of favour?"
                         Player(Curious):: "I don't know, I didn't ask her ...."
                         Actor2(Curious):: "Ah! Make it quick!"
                         Actor2:attractiontoplayer += Random(-1, 1)
@@ -344,11 +344,11 @@ OTHER: Player.isMale() && isModEnabled(vin_Pregnancy)
             EndIf
             If RefuseA2
                 If toolowA2
-                    Player(Sad)::"Sorry <Actor.name> but your offer is too low and no offense, but you are not my type!"
+                    Player(Sad)::"Sorry <Actor.name> but your offer is too low and no offence, but you are not my type!"
                 Elseif WeAreGay
                     Player(Sad)::"Sorry <Actor.name> but your not our type!"
                 Else
-                    Player(Sad)::"Sorry <Actor.name> but I am not interested in your offer! No offense, but you are not my type!"
+                    Player(Sad)::"Sorry <Actor.name> but I am not interested in your offer! No offence, but you are not my type!"
                 EndIf
                 Actor(Sad)::"Ok, that's fine, I get it!"
                 Actor:arousal -= Random(0, 5)

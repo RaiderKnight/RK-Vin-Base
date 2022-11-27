@@ -19,14 +19,14 @@ OTHER: none
             If !Player.isMale()
                 While Actor.isMale()
                     Actor = generatePersonTemporary()
-                Endwhile
+                EndWhile
             Else
                 While !Actor.isMale()
                     Actor = generatePersonTemporary()
-                Endwhile
-            Endif
+                EndWhile
+            EndIf
             Filter(Solo)
-            sex(Actor)
+            Sex(Actor)
             Actor.show(2)
             Player.show(0)
             arousal += 1
@@ -44,27 +44,27 @@ OTHER: none
                         "Eventually, <Actor.he_or_she> looked..."
                         perversion += 1
                         Filter(Solo)
-                        sex(Player)
+                        Sex(Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
                         EndIf
                     Else
                         "<Actor.He_or_She> doesn't liked the show I guess, <Actor.he_or_she> was looking elsewhere!"
                         mood -= 1
-                    Endif
-                Elseif 1
-                    Filter(Blowjob)
-                    sex(Player, Actor)
+                    EndIf
+                ElseIf 1
+                    Filter(Oral)
+                    Sex(Player, Actor)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
                     EndIf
-                Elseif 2
-                    Filter(Blowjob)
-                    sex(Actor, Player)
+                ElseIf 2
+                    Filter(Oral)
+                    Sex(Actor, Player)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -1)
                     EndIf
-                Endif
+                EndIf
             Else
                 0:: "Offer <Actor.him_or_her> a show"
                 1:: "Nah"
@@ -75,16 +75,16 @@ OTHER: none
                         "Eventually, <Actor.he_or_she> looked..."
                         perversion += 1
                         Filter(Solo)
-                        sex(Player)
+                        Sex(Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
                         EndIf
                     Else
                         "<Actor.He_or_She> doesn't liked the show I guess, <Actor.he_or_she> was looking elsewhere!"
                         mood -= 1
-                    Endif
-                Endif
-            Endif
-        Endif
+                    EndIf
+                EndIf
+            EndIf
+        EndIf
     SceneEnd()
     timeout(300, prison_sex) // scene improved by Raddeck

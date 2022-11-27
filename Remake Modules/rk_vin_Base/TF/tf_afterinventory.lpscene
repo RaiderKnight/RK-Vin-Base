@@ -5,12 +5,11 @@ WHO: none
 OTHER: none
 
     If TfGame()
-        
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         setBackground(home)
         SceneStart()
-        OldPlayer = getSpecific(OldPlayer)
+        oldPlayer = getSpecific(OldPlayer)
         "I struggled hard to put on the women's clothes."
         Player(Sad):: "I guess that has to do ..."
         "Let's head to the hospital and hopefully figure out what's going on right now ..."
@@ -18,7 +17,7 @@ OTHER: none
         Actor = generatePersonTemporary()
         While !Actor.isMale()
             Actor = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor.dress()
         Actor.show(2)
         Actor(Flirty):: "..."
@@ -26,11 +25,9 @@ OTHER: none
         arousal -= 2
         mood -= 1
         perversion -= 1
-        
         "Although to be fair, I would probably check out <Player.name> myself as a guy." 
-        "Let's learn from the girls that rejected me in the past and not give this guy any attention whatsover. I have more important things to do right now."
+        "Let's learn from the girls who rejected me in the past and not pay any attention to this guy. I have more important things to do right now."
         Actor.hide()
-        
         "Finally, I arrived at the hospital. I hope a doctor would be able to help me."
         setBackground(hospital)
         "A few hours later ..."
@@ -42,8 +39,7 @@ OTHER: none
         Actor.dressExcept(Outerwear)
         Actor.dress(Doctor-Coat_M)
         Actor.show(2)
-        
-        Actor(Happy):: "Hi Miss . How can I help you today?"
+        Actor(Happy):: "Hi Miss! How can I help you today?"
         Player(Sad)::"You might not believe me but I was a man yesterday, I woke up this morning as a woman, it's totally impossible. I suspect something happened to me last night but I don't remember ..."
         Actor(Curious):: "OK, that's the first time I hear something like that ! That's nearly impossible to perform such a perfect sex reassignment operation in one night without any bandage, but let's see."
         "A few minutes later ..."
@@ -77,7 +73,7 @@ OTHER: none
             "But if I'm truly <Player.name> now, I can't be jealous of myself, can I?"
             Player(Sad):: "Sorry babe, I just had a long day and just want to get some early sleep. We'll hang out tomorrow, okay?" 
             Actor.hide()
-        Endif
+        EndIf
         setBackground(home)
         "Eventually, I'm back in my room ... I didn't even bother with dinner. Let's just head to bed."
         Player.strip()
@@ -95,8 +91,8 @@ OTHER: none
                 EndIf
                 perversion += Random(0, 1)
                 Player.show(0)
-            Endif
-        Endif
+            EndIf
+        EndIf
         "Exhausted, I drifted off to sleep ..."
         Player.closeEyes(true)
         "Zzzzzzzzzzzzzzz ..."
@@ -114,4 +110,4 @@ OTHER: none
         "(Pay attention to the tutorial tooltips top-left of your screen which will explain the various mechanics of the game)"
         SceneEnd()
         ResetTutorials()
-    Endif    // Improved by Raddeck
+    EndIf    // Improved by Raddeck

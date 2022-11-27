@@ -7,15 +7,20 @@ OTHER: none
     SceneStart()
         visit_neighbor = rk_VB_visit_neighbor.getGlobal()
         visit_neighbor2 = rk_VB_visit_neighbor2.getGlobal()
-        ISvisit_neighbor2 = true
-        If visit_neighbor2 == 1
-            ISvisit_neighbor2 = false
-            Actor = getSpecific(PassedOn)
-        Endif
         NeighbourR = false
         NeighbourL = false
         NeighbourN = false
         AIsThere = false
+        Actor = getSpecific(Neighbour)
+        "I decided to check on my neighbour..."
+        If Actor.isValid() && Actor.isNeighbour()
+            NeighbourR = true
+        ElseIf Actor.isValid() && Actor.isLandlord()
+            NeighbourL = true
+        Else
+            Actor = getPerson(rk_VB_Tag_Neighbour)
+            NeighbourN = true
+        EndIf
         Hunger = Player.getActorVar(rk_VB_Hunger) 
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         stock_musicalinstrument_LR = Player.getActorVar(stock_musicalinstrument_LR)
@@ -26,78 +31,66 @@ OTHER: none
         stock_musicalinstrument_TB = Player.getActorVar(stock_musicalinstrument_TB)
         stock_musicalinstruments = stock_musicalinstrument_LR + stock_musicalinstrument_MB + stock_musicalinstrument_O + stock_musicalinstrument_SB + stock_musicalinstrument_SR + stock_musicalinstrument_TB + stock_musicalinstrument
         contiStory = false
-        If ISvisit_neighbor2
-            rk_VB_visit_neighbor2.setGlobal(0)
-            "I decided to check on my neighbor..."
-            If Actor.isValid() && Actor.isNeighbour()
-                NeighbourR = true
-            Elseif Actor.isValid() && Actor.isLandlord()
-                NeighbourL = true
-            Else
-                NeighbourN = true
-            Endif
-            If !Actor.isContactExchanged() && !NeighbourN
-                exchangeContact(Actor)
-            Endif
-        Endif
-        IsThereA = Random(0, 10)
-        If !Actor.isValid() && ISvisit_neighbor2
-            "I haven't met any neighbors so far. Maybe I should do a little more socializing!"
-        Endif
+        IsThereA = random(0, 10)
+        IsThereA = IsThereA.round()
+        If !Actor.isValid() && visit_neighbor2 == 0
+            "I haven't met any neighbours so far. Maybe I should do a little more socializing!"
+        EndIf
         NeighbourR1 = false
         NeighbourL1 = false
         NeighbourN1 = false
         contiStory2 = false
         visitingNeigh = true
         While visitingNeigh
-            
             "Who do I want to visit?"
-            0::"A random neighbor"
+            0::"A random neighbour"
             1::"The landlord"
-            2::"The new neighbor who just move in"
+            2::"The new neighbour who just move in"
             99::"I changed my mind!"
             
             If 0
                 NeighbourR1 = true
                 Actor = getSpecific(Neighbour)
-            Elseif 1
+            ElseIf 1
                 NeighbourL1 = true
                 Actor = getSpecific(Landlord)
-            Elseif 2
+            ElseIf 2
                 NeighbourN1 = true
                 Actor = generatePersonTemporary()
+                Actor.setActorVar(rk_VB_Tag_Neighbour, 1)
                 Actor.addNeighbour()
             Else
                 visitingNeigh = false
-            Endif
-            If IsThereA > 5
-                "I knock on <Actor.his_or_her> door and after a while the door opens..."
+            EndIf
+            If Actor.isValid() && IsThereA > 4
+                "I knock on the door and after a while the door opens..."
                 Actor.dress()
                 Actor.show()
                 AIsThere = true
                 visitingNeigh = false
             Else
-                "I knock on <Actor.his_or_her> door but it seems <Actor.he_or_she> is not there..."
-                "Should I try an another neighbor?"
+                "I knock on the door but it seems no one is there..."
+                "Should I try an another neighbour?"
                 0::"Yes"
                 1::"No"
                 
                 If 1
                     visitingNeigh = false
-                Endif
+                EndIf
             EndIf
         EndWhile
         If AIsThere
-            Actor.dress()
-            Actor.show()
             Player(Happy)::"Hey there! I thought you might like some company, what are you doing right now?"
             If Actor.isInterestedIn(Player)
                 Actor(Happy)::"Sure, come on in, let's chat, it's been a while!"
                 contiStory = true
+                If !Actor.isContactExchanged() && !NeighbourN
+                    exchangeContact(Actor)
+                EndIf
             Else
                 Actor(Sad)::"Sorry but I'm very busy!"
                 Player(Sad)::"Ok, maybe another time!"
-            Endif
+            EndIf
         EndIf
         If contiStory
             doingSomeTWA = true
@@ -123,58 +116,58 @@ OTHER: none
                 If 0
                     "We chatted for a while..."
                     If interpersonal < 50
-                        Actor:rapportwithplayer -= Random(0, 1)
+                        Actor:rapportwithplayer -= random(0, 1)
                         "<Actor.He_or_She> seem kind of bored about what I said."
                     Else
-                        Actor:rapportwithplayer += Random(0, 2)
-                    Endif
+                        Actor:rapportwithplayer += random(0, 2)
+                    EndIf
                     chattingA = true
-                Elseif 1
-                    "We talked for quite a while about cooking ang recipes ..."
+                ElseIf 1
+                    "We talked for quite a while about cooking and recipes ..."
                     If Actor:cooking < 50
-                        Actor:rapportwithplayer -= Random(0, 1)
+                        Actor:rapportwithplayer -= random(0, 1)
                         "I think <Actor.he_or_she> is not interested in my recipes at all!"
                     Else
-                        Actor:rapportwithplayer += Random(0, 2)
-                    Endif
+                        Actor:rapportwithplayer += random(0, 2)
+                    EndIf
                     cookingA = true
-                Elseif 2
+                ElseIf 2
                     "We talked for quite a while about dance moves and styles that we liked..." 
                     If Actor:dance < 50
-                        Actor:rapportwithplayer -= Random(0, 3)
+                        Actor:rapportwithplayer -= random(0, 3)
                         "<Actor.He_or_She> has no clue what I was talking about. <Actor.He_or_She>'s clearly not a big fan of dance!"
                     Else
-                        Actor:rapportwithplayer += Random(0, 2)
-                    Endif
+                        Actor:rapportwithplayer += random(0, 2)
+                    EndIf
                     dancestyl = true
-                Elseif 3
+                ElseIf 3
                     "We discussed sport in general and hobby that we practice at the moment." 
                     If Actor:fitness < 50 || Actor:muscle < 50 || Actor:martial < 50
-                        Actor:rapportwithplayer -= Random(0, 3)
+                        Actor:rapportwithplayer -= random(0, 3)
                         Actor(Curious)::"I prefer seeing people doing sports than doing it..." 
                     Else
-                        Actor:rapportwithplayer += Random(0, 2)
-                    Endif
+                        Actor:rapportwithplayer += random(0, 2)
+                    EndIf
                     fitnessA = true
-                Elseif 4
+                ElseIf 4
                     "We talked for quite a while about serious subject of life, the pros and cons ..." 
                     If Actor:intelligence < 50
-                        Actor:rapportwithplayer -= Random(0, 3)
+                        Actor:rapportwithplayer -= random(0, 3)
                         "<Actor.He_or_She> has no clue what I was talking about."
                     Else
-                        Actor:rapportwithplayer += Random(0, 2)
-                    Endif
+                        Actor:rapportwithplayer += random(0, 2)
+                    EndIf
                     seriousA = true
-                Elseif 5
+                ElseIf 5
                     "We talked for quite a while about the band and the different songs we liked..." 
                     If Actor:music < 50
-                        Actor:rapportwithplayer -= Random(0, 3)
+                        Actor:rapportwithplayer -= random(0, 3)
                         "<Actor.He_or_She> has no clue what I was talking about. <Actor.He_or_She>'s clearly not a fan of music!"
                     Else
-                        Actor:rapportwithplayer += Random(0, 2)
-                    Endif
+                        Actor:rapportwithplayer += random(0, 2)
+                    EndIf
                     musicA = true
-                Elseif 6
+                ElseIf 6
                     Player(Curious)::"Tell me something about you!"
                     If Actor:interpersonal < 50 || Actor:rapportwithplayer < 35
                         Actor(Serene):: "I'm not in the mood to talk about me..."
@@ -183,10 +176,10 @@ OTHER: none
                             "<Actor.He_or_She> shared stories about <Actor.his_or_her> friends and some funny situations <Actor.he_or_she> had..."
                             "<Actor.He_or_She> shared stories about <Actor.his_or_her> family and some funny situations <Actor.he_or_she> had..."
                         EndRandom
-                        Actor:rapportwithplayer += Random(0, 2)
+                        Actor:rapportwithplayer += random(0, 2)
                     EndIf
                     Discov = true
-                Elseif 98
+                ElseIf 98
                     doingSomeTWA = false
                     contiStory2 = true
                 Else
@@ -195,7 +188,7 @@ OTHER: none
                     Actor.hide()
                     doingSomeTWA = false
                 EndIf
-                Actor:attractiontoplayer += Random(0, 1)
+                Actor:attractiontoplayer += random(0, 1)
             EndWhile
         EndIf
         visit_neighbor = rk_VB_visit_neighbor.getGlobal()
@@ -208,9 +201,10 @@ OTHER: none
                 rk_VB_visit_neighbor.setGlobal(1)
                 passOn(Actor)
                 followUp(rk_VB_Flirt_NPC)
-            Endif
+                SceneEnd()
+            EndIf
         EndIf
-        If !Actor.isContactExchanged()
+        If AIsThere && !Actor.isContactExchanged()
             "Should I ask for <Actor.his_or_her> phone number?"
             0:: "Yes"
             1:: "I don't want to see <Actor.him_or_her> again."
@@ -221,17 +215,17 @@ OTHER: none
                     "<Actor.name> happily accepted, we exchanged numbers and part our way."
                     Actor.makePermanent()
                     exchangeContact(Actor)
-                    Actor:attractiontoplayer += Random(0, 1)
-                    Actor:rapportwithplayer += Random(0, 1)
+                    Actor:attractiontoplayer += random(0, 1)
+                    Actor:rapportwithplayer += random(0, 1)
                 Else 
                     "<Actor.name> refused to exchange <Actor.his_or_her> numbers." 
-                Endif
-            Elseif 1
-                Actor.DeletePerson()
+                EndIf
+            ElseIf 1
+                Actor.deletePerson()
             Else  
                 "I decided not to."
-            Endif
-        Endif
+            EndIf
+        EndIf
         If HungerEnable > 0
             Player.modifyActorVar(rk_VB_Hunger, -1)
         EndIf
