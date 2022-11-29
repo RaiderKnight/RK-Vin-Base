@@ -1,0 +1,68 @@
+WHAT: none
+WHERE: none
+WHEN: 0-24
+WHO: none
+OTHER:
+
+    
+    SceneStart()
+        "Whose lactation status should I check?"
+        0:: !Player.isMale():: "Myself"
+        1:: "A contact"
+        
+        If 0
+            Actor = Player
+        Else
+            selectNPC()
+            Actor = getSelectedNPC()
+            If Actor.isMale()
+                "The selected contact is male! Can't lactate."
+                Actor.delete()
+            EndIf
+        EndIf
+        If Actor.isValid()
+            "Checking lactation status for <Actor.name> ..."
+            Start = Actor.getActorVar(LactStart)
+            End = Actor.getActorVar(LactEnd)
+            Current = HoursElapsed - 1
+            
+            If End < HoursElapsed
+                "Not currently lactating and no upcoming lactation period"
+            ElseIf Start > HoursElapsed
+                DaysLeft = 1*[Start - HoursElapsed]/24
+                "Will start lactating in <DaysLeft> in-game days."
+                Duration = 1*[End - Start]/24
+                "After which, will continue to lactate for <Duration> in-game days."
+            Else
+                "Currently lactating"
+                DaysLeft = 1*[End - HoursElapsed]/24
+                "Will continue to lactate for <DaysLeft> more in-game days."
+            EndIf
+            "Should any changes be made to this?"
+            0:: "No change"
+            1:: "Remove all current and upcoming lactation periods"
+            2:: "Start lactating now for 10 days"
+            3:: "Start lactating now for 100 days"
+            4:: "Start lactating now for 1000 days"
+            
+            If 0
+                "No changes were made."
+            ElseIf 1
+                Actor.setActorVar(LactStart, 0)
+                Actor.setActorVar(LactEnd, 0)
+                "All current and future lactation periods removed."
+            ElseIf 2
+                Actor.setActorVar(LactStart, Current)
+                NewEnd = HoursElapsed + 240
+                Actor.setActorVar(LactEnd, NewEnd)
+            ElseIf 3
+                Actor.setActorVar(LactStart, Current)
+                NewEnd = HoursElapsed + 2400
+                Actor.setActorVar(LactEnd, NewEnd)
+            Else
+                Actor.setActorVar(LactStart, Current)
+                NewEnd = HoursElapsed + 24000
+                Actor.setActorVar(LactEnd, NewEnd)            
+            EndIf
+        EndIf
+    SceneEnd()

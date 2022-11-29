@@ -1,19 +1,18 @@
-WHAT: all, -sleep, -nap, -sleep_hotel, -nap_hotel
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all
 WHEN: 0 - 24
 WHO: Dating = getSpecific(Dating); Boss = getSpecific(Boss); If Boss.isContactExchanged() && Boss:attractiontoplayer > 20 && Dating:attractiontoplayer > 40
 OTHER: !isWithCompanion() && !OpenRelationship()
 
     SceneStart()
-        
         Boss_Sucker = Player.getActorVar(rk_VB_Boss_Sucker)
         Dating.dress()
         Boss.dress()
-        
         Dating.show(2)
         Boss.show(3)
         
-        "<Dating.name> and my boss <Boss.name> clearly don't like each other. <Dating.name> has not stopped accusing <Boss.name> of harboring romantic intention on me, while <Boss.name> thinks my relationship with <Dating.name> is having a negative impact on my work performance."
+        "<Dating.name> and my boss <Boss.name> clearly don't like each other."
+        "<Dating.name> has not stopped accusing <Boss.name> of harbouring romantic intention on me, while <Boss.name> thinks my relationship with <Dating.name> is having a negative impact on my work performance."
         0:: "Spend more time with <Dating.name>, my <Dating.boyfriend_or_girlfriend>"
         1:: "Spend more time at work"
         2:: "Try to mediate"

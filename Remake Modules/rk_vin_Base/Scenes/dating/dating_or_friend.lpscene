@@ -1,4 +1,4 @@
-WHAT: all, -sleep, -nap, -sleep_hotel, -nap_hotel
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all
 WHEN: 0 - 24
 WHO: Dating = getSpecific(Dating); Friend = getPerson(true); If Friend:rapportwithplayer > 40 && !Friend.isInterestedIn(Player) && Dating:attractiontoplayer > 40 && [Dating:intelligence - Friend:intelligence > Random(20, 100) || Friend:intelligence - Dating:intelligence > Random(20, 100)]
@@ -12,7 +12,8 @@ OTHER: !isWithCompanion()
         Dating.show(2)
         Friend.show(3)
     
-        "Unfortunately, sometimes two of the most important people in your life don't get along: <Dating.name> and <Friend.name> clearly don't like each other. <Dating.name> has not stopped accusing <Friend.name> of being a bad influence on me, while <Friend.name> thinks I can do much better than a <Dating.boyfriend_or_girlfriend> like <Dating.name>."
+        "Unfortunately, sometimes two of the most important people in your life don't get along: <Dating.name> and <Friend.name> clearly don't like each other."
+        "<Dating.name> has not stopped accusing <Friend.name> of being a bad influence on me, while <Friend.name> thinks I can do much better than a <Dating.boyfriend_or_girlfriend> like <Dating.name>."
         0:: "Spend more time with <Dating.name>, my <Dating.boyfriend_or_girlfriend>"
         1:: "Spend more time with <Friend.name>, my close friend"
         2:: "Try to mediate"
@@ -56,7 +57,7 @@ OTHER: !isWithCompanion()
                             EndIf
                         
                         Else
-                            "Unfortunately, as fantastic as the idea appears in my head, I didn't even get close to convicing them to go for it."
+                            "Unfortunately, as fantastic as the idea appears in my head, I didn't even get close to convincing them to go for it."
                             mood -= 1
                             
                         Endif

@@ -1,11 +1,11 @@
-WHAT: all, -sleep, -sleep_hotel, -organize_a_house_party
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep, -organize_a_house_party
 WHERE: all
 WHEN: 18-22
 WHO: Host = getRelative(Sibling, StepSibling, Cousin); If Host.livesWithPlayer() && Host:rapportwithplayer > 20 && Random(50, 500) < Host:interpersonal
-OTHER: !IsWithCompanion()
+OTHER: !isWithCompanion()
 
 
-    sceneStart()
+    SceneStart()
     
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
@@ -205,11 +205,11 @@ OTHER: !IsWithCompanion()
                         EndIf
                     Endif
                     
-                    If SitWith.IsInterestedIn(Player) && [SitWith:attractiontoplayer > 50 || intoxication > 70]
+                    If SitWith.isInterestedIn(Player) && [SitWith:attractiontoplayer > 50 || intoxication > 70]
                         KissBack = false
                         
-                        If SitWith.IsDominantSex(Player) && SitWith:perversion + SitWith:attractiontoplayer > Random(0, 200)
-                            AnimatePair(Player, SitWith, Kissing)
+                        If SitWith.isDominantSex(Player) && SitWith:perversion + SitWith:attractiontoplayer > Random(0, 200)
+                            animatePair(Player, SitWith, Kissing)
                             "All of a sudden, <SitWith.name> grabbed me and leaned in for a kiss"
                             SitWith(Kiss):: "..."
                             0:: "Kiss back"
@@ -238,7 +238,7 @@ OTHER: !IsWithCompanion()
                                     "<SitWith.name> pulled away from my advances. Embarrassed, I retreated, pretending for the rest of the party as if nothing happened ..."
                                 Endif
                             Else
-                                "Perhaps not ... It would be extremely embarassing to be rejected in front of everyone."
+                                "Perhaps not ... It would be extremely embarrassing to be rejected in front of everyone."
                             Endif
                         Endif
                         
@@ -259,7 +259,7 @@ OTHER: !IsWithCompanion()
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -2)
                                 EndIf
-                                "The sex was amazing. We put our clothes back on and went back to rejoin the party. We must have made plenty of noises, the look on everyone else's faces suggested as much."
+                                "The sex was amazing. We put our clothes back on and went back to rejoin the party. We must have made plenty of noises, the look on everyone else faces suggested as much."
                             Elseif 1
                                 "As much as I'd love to have <SitWith.him_or_her> right here. It was not my house and I didn't want to upset <Host.name>."
                                 Player(Flirty):: "Hey, not here. Let's go back to my place ..."

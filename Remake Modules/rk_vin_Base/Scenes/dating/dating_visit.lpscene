@@ -1,8 +1,8 @@
-WHAT: all
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: home
 WHEN: 18 - 22
 WHO: Dating = getSpecific(Dating); If Random(0, 200) < Dating:perversion + Dating:attractiontoplayer
-OTHER: !isWithCompanion() && IsAtHome() && DatingHasHome()
+OTHER: !isWithCompanion() && isAtHome() && DatingHasHome()
 
     SceneStart()
     
@@ -30,7 +30,7 @@ OTHER: !isWithCompanion() && IsAtHome() && DatingHasHome()
                 Dating:attractiontoplayer += Random(0, 2)
                 "After sex, we took a shower together and went to sleep, cozying up to each other all night."
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
                             
             Else

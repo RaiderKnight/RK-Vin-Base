@@ -1,12 +1,10 @@
-WHAT: all, -sleep_hotel, -nap_hotel
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all, -home
 WHEN: 8 - 22
 WHO: Actor = getRelative(Cousin, Sibling, Child, StepSibling, StepChild); If Actor:rapportwithplayer > 30 && Actor:attractiveness < Actor:masochist*Random(0, 1)*Random(0, 1)
 OTHER: none
 
     SceneStart()
-    
-        
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         "My phone is ringing. It's my <Actor.relationship>, <Actor.name>. I wonder what <Actor.he_or_she> is calling me for ..."
@@ -20,12 +18,9 @@ OTHER: none
         2:: !livesWithMe:: "Pay <Actor.him_or_her> a visit to console <Actor.him_or_her>"
         
         If 0
-        
             Player(Sad):: "Oh no, that sucks. I'm so sorry to hear that ..."
             karma += 2.5
-            
         Else
-        
             Actor:rapportwithplayer += Random(0, 20)
             secondScreen()
             Loc = Actor.getBuilding(home)

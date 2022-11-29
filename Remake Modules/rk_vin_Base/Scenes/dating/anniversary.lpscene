@@ -1,11 +1,10 @@
-WHAT: all
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all
 WHEN: 16 - 24
 WHO: Dating = getSpecific(Dating)
 OTHER: none
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         "Today is the anniversary of me and <Dating.name>. We decided to go to a fancy restaurant together."
@@ -21,7 +20,6 @@ OTHER: none
         1:: "Say goodbye"
         
         If 0
-        
             Dating:attractiontoplayer += Random(0, 2)
             Dating:rapportwithplayer += Random(0, 2)
             moveTo(home)
@@ -34,13 +32,9 @@ OTHER: none
             EndIf
             
         Else
-        
             "I just don't feel like it today. After the dinner, we went back to our respective homes instead. <Dating.name> was clearly disappointed."
             Dating:attractiontoplayer -= Random(0, 10)
             Dating:rapportwithplayer += Random(0, 5)
-            
         Endif
-        
-        timeoutprecise(8760, anniversary)
-        
+        timeoutPrecise(8760, anniversary)
     SceneEnd() // Scene improved by Raddeck

@@ -1,4 +1,4 @@
-WHAT: all, -sleep, -nap
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: home
 WHEN: 0 - 24
 WHO: Dating = getRelative(); If Dating.isMale() && Dating.LivesWithPlayer() && Dating:perversion > Random(50, 100)
@@ -8,7 +8,7 @@ OTHER: !isWithCompanion() && isAtHome() && Random(0, 1000) < intelligence
 
         "By accident, I came across my <Dating.relationship>'s browser history, which was full of porn sites! In fact, I'm pretty sure watching porn is all <Dating.he_or_she> ever does when I'm not around. What should I do about this?"
         0:: "Nothing"
-        1:: "Be judgemental to <Dating.him_or_her>"
+        1:: "Be judging to <Dating.him_or_her>"
         2:: "Encourage <Dating.him_or_her> to seek professional help"
     
         If 0
@@ -18,7 +18,7 @@ OTHER: !isWithCompanion() && isAtHome() && Random(0, 1000) < intelligence
             
         Elseif 1
         
-            "I decided to take the moral high ground and be quite judgemental to <Dating.him_or_her> about <Dating.his_or_her> porn habits. I hope that being embarrassed would stop <Dating.him_or_her> from watching so much porn all the time."
+            "I decided to take the moral high ground and be quite judging to <Dating.him_or_her> about <Dating.his_or_her> porn habits. I hope that being embarrassed would stop <Dating.him_or_her> from watching so much porn all the time."
             Dating:rapportwithplayer -= Random(0, 2)
             karma -= 2.5
             mood -= 3
@@ -28,7 +28,7 @@ OTHER: !isWithCompanion() && isAtHome() && Random(0, 1000) < intelligence
             "It's clear my <Dating.relationship> has a bad porn addiction. <Dating.He_or_She> needs professional help!"
             Dating.dress()
             Dating.show(2)
-            Dating(Sad):: "Okay, I'm willing to give counseling a try."
+            Dating(Sad):: "Okay, I'm willing to give counselling a try."
             "After a few sessions, my <Dating.relationship>'s addiction seems to have reduced a bit and <Dating.he_or_she> thanked me for encouraging <Dating.him_or_her> to seek help in the first place."
             Dating:perversion -= Random(0, 2)
             Dating:rapportwithplayer += Random(0, 2)

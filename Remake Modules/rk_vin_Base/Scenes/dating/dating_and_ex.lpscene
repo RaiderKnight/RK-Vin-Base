@@ -1,4 +1,4 @@
-WHAT: all, -sleep, -nap, -sleep_hotel, -nap_hotel
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all
 WHEN: 0 - 24
 WHO: Dating = getSpecific(Dating); Ex = getSpecific(ExDating); If Ex.isContactExchanged() && Ex:attractiontoplayer > 40 && Dating:attractiontoplayer > 40
@@ -11,9 +11,10 @@ OTHER: !isWithCompanion() && !OpenRelationship()
         Ex.dress()
         Dating.show(2)
         Ex.show(3)
-        "<Dating.name> and my ex <Ex.name> clearly don't like each other. <Dating.name> has not stopped accusing <Ex.name> of still harboring romantic intention of getting back with me, while <Ex.name> couldn't believe I ended up with someone like <Dating.name> after <Ex.him_or_her>."
+        "<Dating.name> and my ex <Ex.name> clearly don't like each other."
+        "<Dating.name> has not stopped accusing <Ex.name> of still harbouring romantic intention of getting back with me, while <Ex.name> couldn't believe I ended up with someone like <Dating.name> after <Ex.him_or_her>."
         0:: "Spend more time with <Dating.name>, my <Dating.boyfriend_or_girlfriend>"
-        1:: "Be more flirtatous to <Ex.name>, my ex"
+        1:: "Be more flirtatious to <Ex.name>, my ex"
         2:: "Try to mediate"
     
         If 0
@@ -57,13 +58,13 @@ OTHER: !isWithCompanion() && !OpenRelationship()
                             EndIf
                     
                         Else
-                            "Unfortunately, as fantastic as the idea appears in my head, I didn't even get close to convicing them to go for it."
+                            "Unfortunately, as fantastic as the idea appears in my head, I didn't even get close to convincing them to go for it."
                         Endif
                         
                     Elseif 1
                         // From co_vi_strippoker.lpscene - sb_PartyAndNightlife
                         Player(Embarrassed):: "Okay then ... Let's play."
-                        Player(Flirty):: "Remember our usual rules: If anyone loses a round but has no clothes left, they have to touch themselves a bit for everyone else's enjoyment."
+                        Player(Flirty):: "Remember our usual rules: If anyone loses a round but has no clothes left, they have to touch themselves a bit for everyone else enjoyment."
                         Dating(Happy):: "Deal!"
                         Ex(Happy):: "Sounds good to me."
                         round = 0

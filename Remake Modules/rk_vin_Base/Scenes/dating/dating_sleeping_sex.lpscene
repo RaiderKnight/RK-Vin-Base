@@ -1,4 +1,4 @@
-WHAT: sleep, nap
+WHAT: -pickpocket, -go_to_the_bathroom, sleep, sleep_hotel, nap, nap_hotel, rk_VB_small_sleep
 WHERE: home
 WHEN: 5 - 12
 WHO: Actor = getSpecific(Dating); If Actor:attractiontoplayer > 0 && !Actor.isSameGender(Player)
@@ -25,7 +25,7 @@ OTHER: IsAtDatingHome()
                 Sex(Player, Actor)
                 Player.closeEyes(true)
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
                     
                 Actor.show(2)
@@ -38,7 +38,7 @@ OTHER: IsAtDatingHome()
                     TalkNonConsensual()
                     Sex(Player, Actor)
                     If HungerEnable > 0
-                        Player.modifyActorVar(rk_VB_Hunger, -1)
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
                     EndIf
                 Endif
             Else
@@ -56,7 +56,7 @@ OTHER: IsAtDatingHome()
                 Actor.closeEyes(true)
                 Sex(Actor, Player)
                 If HungerEnable > 0
-                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                    Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf
     
                 Actor.show(2)
@@ -72,7 +72,7 @@ OTHER: IsAtDatingHome()
                         TalkNonConsensual()
                         Sex(Actor, Player)
                         If HungerEnable > 0
-                            Player.modifyActorVar(rk_VB_Hunger, -1)
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                     Endif
                 Else

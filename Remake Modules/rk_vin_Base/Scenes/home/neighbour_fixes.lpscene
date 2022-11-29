@@ -1,4 +1,4 @@
-WHAT: all, -sleep, -nap
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: home
 WHEN: 0 - 24
 WHO: Actor = getSpecific(Neighbour); If Actor:intelligence < Random(0, 60) 
@@ -107,7 +107,7 @@ OTHER: isAtHome() && intelligence > Random(0, 100)
                                 1:: "Stop"
                                 
                                 If 0
-                                    If Actor.isInterestedIn(Player) && [Actor.IsDominantSex(Player) || Actor:attractiontoplayer + Actor:perversion > Random(50, 200) || Actor:intoxication > 80]
+                                    If Actor.isInterestedIn(Player) && [Actor.isDominantSex(Player) || Actor:attractiontoplayer + Actor:perversion > Random(50, 200) || Actor:intoxication > 80]
                                         "Our kiss got more and more steamy and soon we were making out, our hands all over each other."
                                         hadSex = true
                                         Player:perversion += Random(0, 1)

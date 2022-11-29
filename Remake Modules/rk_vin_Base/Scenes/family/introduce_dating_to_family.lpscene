@@ -1,4 +1,4 @@
-WHAT: all, -sleep, -nap, -sleep_hotel, -nap_hotel
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all
 WHEN: 0 - 24
 WHO: Actor = getSpecific(Dating); Actor2 = getRelative(); If !Actor.hasRelationship(Spouses) && Random(20, 500) < Actor:attractiontoplayer && Actor2:rapportwithplayer > -10 && !Actor.isExRelative()
@@ -8,13 +8,14 @@ OTHER: !isPlayerMarried()
     
         Actor.dress()
         Actor.show(2)
-        "I have been going out with <Actor.name> for a while and so far it looks like we might have a future together. Maybe I should start gradually introducing <Actor.him_or_her> to my family. I'm seeing my <Actor2.relationship> today, perhaps I should take <Actor.name> with me?"
+        "I have been going out with <Actor.name> for a while and so far it looks like we might have a future together."
+        "Maybe I should start gradually introducing <Actor.him_or_her> to my family. I'm seeing my <Actor2.relationship> today, perhaps I should take <Actor.name> with me?"
         0:: "Yes"
         1:: "No"
         
         If 0
         
-            "This is a perfect opportunity to show how commited I am to the relationship."
+            "This is a perfect opportunity to show how committed I am to the relationship."
             karma += 2.5
             Loc = Actor2.getBuilding(home)
             moveTo(Loc)

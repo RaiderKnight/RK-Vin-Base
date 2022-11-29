@@ -1,4 +1,4 @@
-WHAT: all, -sleep, -nap
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: home
 WHEN: 0 - 24
 WHO: Dating = getSpecific(Dating); Affair = getSpecific(Affair); Actor = getSpecific(Dating_Friend); If Actor:rapportwithplayer < 10 && Actor.isInterestedIn(Player) && Actor:perversion > 50 && random(0, 100) < Actor:intelligence - intelligence
@@ -79,7 +79,7 @@ OTHER: isAtDatingHome()
             Dating(Angry):: "<Actor.name> called me! <Actor.He_or_She> told me everything about your affair. What do you have to say for yourself?"      
             0:: "Deny"
             1:: "Confess and apologize"
-            2:: masochist < 0:: "Admit unapologetically"
+            2:: masochist < 0:: "Admit unreservedly"
     
             If 0
             
@@ -99,7 +99,7 @@ OTHER: isAtDatingHome()
                 
             ElseIf 1
             
-                Player(Crying):: "Baby! It was a terrible mistake. I didn't mean to hurt you. I have felt guilty about it everday since ... Please don't leave me - it will never happen again."
+                Player(Crying):: "Baby! It was a terrible mistake. I didn't mean to hurt you. I have felt guilty about it everyday since ... Please don't leave me - it will never happen again."
                 If Dating:attractiontoplayer + interpersonal > random(0, 200)
                     Dating(Sad):: "... Fine. For everything we've done together, I might as well give you one final chance. I hope I won't regret this later."
                     Dating:masochist += 1
@@ -122,7 +122,7 @@ OTHER: isAtDatingHome()
                     mood += 2
                     breakup = false
                 Else
-                    Dating(Furious):: "Now I get to see your true colors! Are you not at least a bit sorry? Yes, I'm indeed breaking up with you. Get the fuck out of my life."
+                    Dating(Furious):: "Now I get to see your true colours! Are you not at least a bit sorry? Yes, I'm indeed breaking up with you. Get the fuck out of my life."
                     breakup = true
                 EndIf
                 
@@ -132,7 +132,7 @@ OTHER: isAtDatingHome()
                 If Dating:masochist + karma < -50
                     Dating.animate(gun)
                     Dating.moveToPerson(Player)
-                    Dating(Furious):: "You betrayed me, you humilated me ... now you die!"
+                    Dating(Furious):: "You betrayed me, you humiliated me ... now you die!"
                     Bitchfired = 0
                     While Bitchfired < 3
                         If Bitchfired > 0
@@ -272,7 +272,7 @@ OTHER: isAtDatingHome()
                                 "A while later ..."
                                 Affair.dress()
                                 Affair.show(2)
-                                Affair(Evil):: "Hah, what a placemat of a <Dating.boyfriend_or_girlfriend> you have! I would love to see <Dating.his_or_her> face if <Dating.he_or_she> knew that you went off to me right away after the loser forgave you ..."
+                                Affair(Evil):: "Hah, what a dumb of a <Dating.boyfriend_or_girlfriend> you have! I would love to see <Dating.his_or_her> face if <Dating.he_or_she> knew that you went off to me right away after the loser forgave you ..."
                                 Sex(Affair, Player)
                                 If HungerEnable > 0
                                     Player.modifyActorVar(rk_VB_Hunger, -2)

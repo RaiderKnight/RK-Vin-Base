@@ -1,4 +1,4 @@
-WHAT: all, -sleep, -nap
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: home
 WHEN: 17 - 21
 WHO: Actor = getRelative(Parent, StepParent); Actor2 = getRelative(Sibling, StepSibling); If Random(10, 300) < Actor2:intelligence - Player:intelligence
@@ -11,7 +11,8 @@ OTHER: jobexperience < 40 && isAtHome()
         Actor.show(2)
         Actor2.dress()
         Actor2.show(3)
-        Actor(Happy):: "<Player.name>, have you heard that <Actor2.name> just got a promotion at work again? Meanwhile, look at you - are you still at that job with the terrible pay and no prospects? When are you going to get your life in order like your <Actor2.relationship>?"
+        Actor(Happy):: "<Player.name>, have you heard that <Actor2.name> just got a promotion at work again? Meanwhile, look at you - are you still at that job with the terrible pay and no prospects?"
+        Actor(Happy):: "When are you going to get your life in order like your <Actor2.relationship>?"
         0:: "Be defensive"
         1:: "Congratulate <Actor2.name>"
         
@@ -25,7 +26,7 @@ OTHER: jobexperience < 40 && isAtHome()
         
         Elseif masochist < 0
         
-            Player(Sarcastic):: "Wow, congratulations, big head. I'm proud of you! You're definitely the most duchebag sibling in this family."
+            Player(Sarcastic):: "Wow, congratulations, big head. I'm proud of you! You're definitely the most douchebag sibling in this family."
             Actor2:rapportwithplayer -= Random(1, 2)
             masochist += Random(0, 1)
             karma -= 1

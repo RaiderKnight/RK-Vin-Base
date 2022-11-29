@@ -1,4 +1,4 @@
-WHAT: all, -sleep_hotel, -nap_hotel
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all, -home
 WHEN: 8 - 22
 WHO: Actor = getRelative(Cousin, Sibling, Child, StepSibling, StepChild); If !Actor.isAsexual() && Actor:rapportwithplayer > 30 && Random(0, 500) < Actor:masochist - Actor:martial
@@ -80,7 +80,8 @@ OTHER: Random(0, 500) < martial - masochist
             Player(Sad):: "Let's get out of here, <Actor.name>. You have suffered enough in the hands of this <Actor2.asshole_or_bitch>."
             Actor2.hide()
             "A few hours later ..."
-            Actor(Happy):: "Thank you for standing up for me and being there for me. I feel so much better now with you here. You're right. I deserve so much better than that <Actor2.asshole_or_bitch> of a <Actor2.boyfriend_or_girlfriend>. I'll be strong and break up with <Actor2.him_or_her>."
+            Actor(Happy):: "Thank you for standing up for me and being there for me. I feel so much better now with you here. You're right."
+            Actor(Happy):: "I deserve so much better than that <Actor2.asshole_or_bitch> of a <Actor2.boyfriend_or_girlfriend>. I'll be strong and break up with <Actor2.him_or_her>."
             removeNpcRelationship(Actor, Actor2)
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -1)

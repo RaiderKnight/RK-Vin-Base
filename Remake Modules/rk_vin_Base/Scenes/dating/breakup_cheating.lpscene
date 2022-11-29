@@ -1,4 +1,4 @@
-WHAT: all, -sleep
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: home
 WHEN: 0-24
 WHO: Dating = getSpecific(Dating); Affair = getSpecific(Affair); If Dating:intelligence + Dating:interpersonal - Dating:masochist > random(0, 500)*actionDuration
@@ -106,7 +106,7 @@ OTHER: none
             Dating(Furious):: "I know about you and <Affair.name>. You <Player.asshole_or_slut>, you were sleeping around behind my back!"
             0:: "Deny"
             1:: "Confess and apologize"
-            2:: masochist < 0:: "Admit unapologetically"
+            2:: masochist < 0:: "Admit unreservedly"
         
             If 0
                 karma -= 2.5
@@ -124,7 +124,7 @@ OTHER: none
                 EndIf
             ElseIf 1
                 karma += 2.5
-                Player(Crying):: "Baby! It was a terrible mistake. I didn't mean to hurt you. I have felt guilty about it everday since ... Please don't leave me - it will never happen again."
+                Player(Crying):: "Baby! It was a terrible mistake. I didn't mean to hurt you. I have felt guilty about it everyday since ... Please don't leave me - it will never happen again."
                 If Dating:attractiontoplayer + interpersonal > random(0, 200)
                     Dating(Sad):: "... Fine. For everything we've done together, I might as well give you one final chance. I hope I won't regret this later."
                     Dating:masochist += 1
@@ -150,7 +150,7 @@ OTHER: none
                     
                 Else
                 
-                    Dating(Furious):: "Now I get to see your true colors! Are you not at least a bit sorry? Yes, I'm indeed breaking up with you. Get the fuck out of my life."       
+                    Dating(Furious):: "Now I get to see your true colours! Are you not at least a bit sorry? Yes, I'm indeed breaking up with you. Get the fuck out of my life."       
                     breakup = true
                     
                 EndIf

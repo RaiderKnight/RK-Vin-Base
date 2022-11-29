@@ -5,6 +5,10 @@ WHO: none
 OTHER: random(0, 100) < fitness && EnrollDegree >= 1
 
     SceneStart()
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         "There's a flyer asking for volunteers to take part in a clinical trial for a university research. I will be paid some pocket money for my troubles."
         0:: "Yes"
         1:: "No"
@@ -44,6 +48,9 @@ OTHER: random(0, 100) < fitness && EnrollDegree >= 1
                         Filter(Standing)
                     EndIf
                     Sex(Actor, Player)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf 
                     Actor(Grin)::"I think it's enough for today!"
                     Actor(Evil)::"Here's your money and don't even think to talk about what happen here or you will see!"
                     GBonus = 500

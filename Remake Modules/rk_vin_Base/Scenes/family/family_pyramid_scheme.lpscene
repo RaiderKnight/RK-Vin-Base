@@ -1,4 +1,4 @@
-WHAT: all, -sleep_hotel, -nap_hotel
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: home
 WHEN: 8 - 22
 WHO: Actor = getRelative(); If Actor:rapportwithplayer > -10 && Actor:intelligence < Random(0, 30)*Random(0, 1)
@@ -118,16 +118,14 @@ OTHER: none
         Stock_phones = Stock_phonesP + OStock_phones + SRStock_phones + LRStock_phones + MBStock_phones + SBStock_phones + KStock_phones + TBStock_phones + Stock_phone
         
         If [Stock_Computers <= 0 && Stock_phones <= 0] || [IBuyaComputer <= 0 && IBuyaPhone <= 0]
-        
             SceneEnd()
-        
         Else
-            
             Actor.dress()
             Actor.show(2)
             Actor(Happy):: "<Player.name>, do you have time now for a chat?"
             Player(Happy):: "Of course, <Actor.Relationship>. What is it?"
-            Actor(Happy):: "I recently became a distributor for Pyramid Supplements International. Our state-of-the-art R&D team recently came up with a new product: the Magnum XXX snake oil. I have used it for the last month and feel 10 years younger. Don't tell anyone else this but because we're family, I can give you a 50% discount."
+            Actor(Happy):: "I recently became a distributor for Pyramid Supplements International. Our state-of-the-art R&D team recently came up with a new product: the Magnum XXX snake oil."
+            Actor(Happy):: "I have used it for the last month and feel 10 years younger. Don't tell anyone else this but because we're family, I can give you a 50% discount."
             PSImoney = Random(50, 200)
             PSImoney_Loc = PSImoney.convertToLocalCurrency()
             Actor(Happy):: "It cost only <PSImoney_Loc>."
@@ -174,6 +172,5 @@ OTHER: none
             Endif
         
         Endif
-    
     SceneEnd()  // Scene improved by Raddeck
     timeout(1500, family_pyramid_scheme)

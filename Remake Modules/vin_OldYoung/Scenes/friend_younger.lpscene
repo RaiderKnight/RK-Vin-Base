@@ -1,13 +1,12 @@
-WHAT: all
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all
 WHEN: 0 - 24
-WHO: Actor2 = getCompanion(); If !Actor2.hasRelationship(ParentChild, ParentSiblingSiblingChild, GrandParentGrandChild) && [Actor2:rapportwithplayer > 20 || Actor2.isDating()] && !Actor2.isRelative()
+WHO: Actor2 = getCompanion(); If !Actor2.hasRelationship(ParentChild, ParentSiblingSiblingChild, GrandParentGrandChild) && [Actor2:rapportwithplayer > 20 || Actor2.isDating()] && !Actor2.isRelative() && !Actor2.isExRelative()
 OTHER: likes_older < -20 && !Player.isAsexual()
 
     // While hanging out with your friend / significant other, they might introduce you to their +18 child (from a previous relationship), niece / nephew / grandson / granddaughter who checks you out (depending on how far in the negative territory your likes_older stat goes)  
     
     SceneStart()
-    
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -18,16 +17,15 @@ OTHER: likes_older < -20 && !Player.isAsexual()
         Actor = Actor2.generatePersonTemporaryMatchRace()
         While !Player.isInterestedIn(Actor)
             Actor = Actor2.generatePersonTemporaryMatchRace()
-        Endwhile
+        EndWhile
         Actor.makeInterested(Player)
-        
         Actor:age => age + likes_older*0.5
-        Actor:age += Random(-5, 5)
-        Actor:attractiveness => Random(70, 100)
+        Actor:age += random(-5, 5)
+        Actor:attractiveness => random(70, 100)
         Actor.randomizeFace()
         Actor.randomizeHairs()
         Actor:likes_older => 2*[age - Actor:age]
-        Actor:attractiontoplayer += Random(25, 50)
+        Actor:attractiontoplayer += random(25, 50)
         
         Actor.makePermanent()
         If Actor2:age - Actor:age < 18
@@ -36,27 +34,25 @@ OTHER: likes_older < -20 && !Player.isAsexual()
                 rela = "nephew"
             Else
                 rela = "niece"
-            Endif
-        Elseif Actor2:age - Actor:age < 40
+            EndIf
+        ElseIf Actor2:age - Actor:age < 40
             addNpcRelationship(ParentChild, Actor2, Actor)
             If Actor.isMale()
                 rela = "son"
             Else
                 rela = "daughter"
-            Endif    
+            EndIf    
         Else
             addNpcRelationship(GrandParentGrandChild, Actor2, Actor)
             If Actor.isMale()
                 rela = "grandson"
             Else
                 rela = "granddaughter"
-            Endif        
-        Endif
-        
+            EndIf        
+        EndIf
         Actor.dress()
         Actor.show()
         Actor.moveToPersonStand(Player, 100)
-        
         Actor2:: "Oh, you're home. You haven't met <Player.name> yet, have you?"
         Actor:: "Nice to meet you, <Player.name>!"
         Actor2:: "<Player.name>, this is my <rela>."
@@ -91,9 +87,9 @@ OTHER: likes_older < -20 && !Player.isAsexual()
                 EndIf
             Else
                 "It's too risky with <Actor2.name> possibly returning from the bathroom at any moment and catching us in our act."        
-            Endif
+            EndIf
             Actor2.show()
             "Before <Actor2.name> returned from the bathroom, we managed to swap numbers to continue 'getting to know each other' when <Actor2.he_or_she> isn't around. I wonder how <Actor2.name> would react to me hooking up with <Actor2.his_or_her> <rela>."
-        Endif
+        EndIf
     SceneEnd() // Improved By Raddeck
     timeout(200, friend_younger)

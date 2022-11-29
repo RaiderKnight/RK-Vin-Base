@@ -1,10 +1,10 @@
-WHAT: all
+WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all
 WHEN: 0 - 24
-WHO: Actor = getCompanion(); If !Actor.isDating() && Actor.isInterestedIn(Player) && Player.isInterestedIn(Actor) && Actor:attractiontoplayer > 10
+WHO: Actor = getCompanion(); If !Actor.isDating() && Actor.isInterestedIn(Player) && Actor:attractiontoplayer > 10 && !Actor.isRelative() && !Actor.isExRelative()
 OTHER: none
 
-    // While on a date with someone whose interest in you is mutual, they may bring you back to their place to hook up, only for you to discover they live in an apartment with multiple roommates. If you go ahead and get laid anyway, depending on your date's perversion, they may then invite their roommates in to share you, or you catch their roommates peeping and take the initiative yourself.
+    
     
     SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
@@ -40,7 +40,7 @@ OTHER: none
                     EndIf
                     Actor2.randomizeFace()
                     Actor2.randomizeHairs()
-                    
+                    Actor2.randomizeRace()
                     Actor2.makePermanent()
                     addNpcRelationship(Roommates, Actor, Actor2)
                 EndIf
@@ -60,7 +60,7 @@ OTHER: none
                     EndIf
                     Actor3.randomizeFace()
                     Actor3.randomizeHairs()
-                    
+                    Actor3.randomizeRace()
                     Actor3.makePermanent()
                     addNpcRelationship(Roommates, Actor, Actor3)
                 EndIf
@@ -80,7 +80,7 @@ OTHER: none
                     EndIf
                     Actor4.randomizeFace()
                     Actor4.randomizeHairs()
-                    
+                    Actor4.randomizeRace()
                     Actor4.makePermanent()
                     addNpcRelationship(Roommates, Actor, Actor4)
                 EndIf

@@ -1,7 +1,7 @@
-WHAT: all
+WHAT: all, -pickpocket, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all, -home, -prison
 WHEN: 0 - 24
-WHO: Actor2 = getCompanion(); If !Player.isSameEthnic(Actor2) && !Actor2.hasRelationship(ParentChild, ParentSiblingSiblingChild, GrandParentGrandChild) && [Actor2:rapportwithplayer > 20 || Actor2.isDating()]
+WHO: Actor2 = getCompanion(); If !Player.isSameEthnic(Actor2) && !Actor2.hasRelationship(ParentChild, ParentSiblingSiblingChild, GrandParentGrandChild) && [Actor2:rapportwithplayer > 20 || Actor2.isDating()] && !Actor2.isRelative() && !Actor2.isExRelative()
 OTHER: !Player.isAsexual()
 
     
@@ -16,7 +16,7 @@ OTHER: !Player.isAsexual()
         Actor = Actor2.generatePersonTemporaryMatchRace()
         While !Player.isInterestedIn(Actor)
             Actor = Actor2.generatePersonTemporaryMatchRace()
-        Endwhile
+        EndWhile
         Actor.makeInterested(Player)
         Actor:age => age + random(10, 50) 
         Actor.randomizeFace()
@@ -104,7 +104,7 @@ OTHER: !Player.isAsexual()
         EndIf
         Actor.ModifyRaceFetish(Player, -200, -100)
         "Oh wow ... I didn't expect someone open-minded like <Actor2.name> to have such a racist <rela>."
-        Actor2(Sad):: "Please, <rela>, can you please stop with your racist preaching? You're just embarassing yourself!"
+        Actor2(Sad):: "Please, <rela>, can you please stop with your racist preaching? You're just embarrassing yourself!"
         "Angry that <Actor2.name> didn't take <Actor.his_or_her> advice about 'staying away from the <Player.race> <Player.guy_or_girl>', <Actor2.name>'s <rela> slammed the door and went into <Actor2.his_or_her> bedroom."
         Actor.hide()
         Actor2(Embarrassed):: "Look, <Player.name>, I'm so sorry about that. My <rela> has always been a big racist, I'm embarrassed by <Actor.him_or_her> sometimes ..."
@@ -168,7 +168,7 @@ OTHER: !Player.isAsexual()
                             Actor(Angry):: "If you would have watched the videos, you would have seen that it's '<Player.race> <Player.bastards_or_bitches>' are sex slaves every time, because that is what they deserve."
                             Actor(Angry):: "Now you! Get out of my house!"
                             "I did not persist and went home!"
-                            "But just before I left, Joe grabbed me by the arm and said:"
+                            "But just before I left, my <rela> grabbed me by the arm and said:"
                             Actor(Flirty)::"Here is my phone number! Call me when you're bored!"
                             Actor(Flirty)::"Forget what I said earlier, it was some kind of an apology for having you just to myself!"
                             Player(Flirty)::"Ok thanks, no problem!"
