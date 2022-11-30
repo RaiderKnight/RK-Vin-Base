@@ -10,11 +10,9 @@ OTHER: Player.isFemale()
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        
         "This place is crowded."
         "My <Actor.boyfriend_or_girlfriend> heads off to get some drinks and soon we lose each other in the crowd."
         "After searching him for a while, I find him talking to another woman!"
-        
         Player(Curious):: "Hmmm! Who's that with <Actor.name>"
         Actor2 = generatePersonTemporary()
         While !Actor2.isFemale()
@@ -26,7 +24,7 @@ OTHER: Player.isFemale()
         Player(Angry):: "What the fuck? Is he following her in the restroom?"
         Actor2.hide()
         Actor.hide()
-        Player:: "What I should do?" // Edit Raddeck
+        Player:: "What I should do?"
         0:: "Stay at the bar and wait for them to come out again"
         1:: "Go and see what they are up to."
         2:: "Storm out of the bar"
@@ -34,7 +32,7 @@ OTHER: Player.isFemale()
         If 0
             "I wait at the bar like a good partner and don't give in to my envious feelings. But I can't help fantasizing about the things my <Actor.boyfriend_or_girlfriend> and the mysterious woman are about to do in the restrooms."
             Player.hide()
-            setBackground(toilets)
+            setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
             Actor.show()
             Actor2.show()
             "Meanwhile in the bathroom ..."
@@ -49,7 +47,7 @@ OTHER: Player.isFemale()
             
             If 0
                 Actor:: "What do you mean?"
-                Player:: "Don't act so ignorant. I just can see it in front of my inner eye, how you fucked that sexy little slut in the bathroom stall. I fantasied about it, waiting here for you and it was sooo hot."
+                Player:: "Don't act so ignorant. I just can see it in front of my inner eye, how you fucked that sexy little slut in the bathroom stall. I fantasied about it, waiting here for you and it was so hot."
                 Actor:: "Oh you naughty little cuckquean bitch. I just love how kinky you are. Let's get out of here and I tell you every smutty little detail about how I made this woman squeal."
                 
                 moveTo(home)
@@ -67,13 +65,13 @@ OTHER: Player.isFemale()
                 Player(Grin):: "Did you have a great time fucking that bitch at the restrooms?"
                 masochist -= 1  // Edit Raddeck
                 "<Actor.name> and I start a great argument after I've confronted him with his highly suspicious trip to the bathroom."
-                "Of course he disputes all of my so called 'suspicions' and swears nothing naughty has happend with this woman."
+                "Of course he disputes all of my so called 'suspicions' and swears nothing naughty has happens with this woman."
                 Actor:attractiontoplayer -= 10
                 "After a while we abandon our fight, but our relationship and my trust in <Actor.name> has noticeably suffered."
             Endif
                
         Elseif 1
-            setBackground(toilets)
+            setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
             "I enter the restrooms and directly notice muffled sounds from the first stall."
             Player:: "I can see their feet!"
             "How could he cheat on me like this? Maybe he knew I would follow him! He wants me to watch."
@@ -160,7 +158,7 @@ OTHER: Player.isFemale()
             moveTo(home)
             setBackground(home)
             "Later that day my <Actor.boyfriend_or_girlfriend> and I have a great argument, and I confront him with the events at the bar."
-            "Of course he disputes all of my so called 'suspicions' and swears nothing naughty has happend with this woman."
+            "Of course he disputes all of my so called 'suspicions' and swears nothing naughty has happens with this woman."
             Actor:attractiontoplayer -= 10
             "After a while we abandon our fight, but our relationship and my trust in <Actor.name> has noticeably suffered."    
         Endif
