@@ -5,7 +5,6 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    
         personal_pics = Player.getActorVar(rk_VB_personal_pics)
         personal_vids = Player.getActorVar(rk_VB_personal_vids)
         Hunger = Player.getActorVar(rk_VB_Hunger)
@@ -136,19 +135,12 @@ OTHER: none
         Stock_phones = Stock_phonesP + OStock_phones + SRStock_phones + LRStock_phones + MBStock_phones + SBStock_phones + KStock_phones + TBStock_phones + Stock_phone + PockStock_phones
 
         If [Stock_Computers <= 0 && Stock_phones <= 0] || [IBuyaComputer <= 0 && IBuyaPhone <= 0]
-        
             "You don't have any device to go online... Go buy a computer or a phone at any shop!"
-        
         Else
-        
             If Stock_phones > 0 || IBuyaPhone > 0
-            
                 "You open your phone to visit websites...."
-            
             ElseIf Stock_Computers <= 0 || IBuyaComputer <= 0
-                
                 "You don't have any device to go online... Go buy a computer or a phone at any shop!"
-            
             Else
             
                 If [Stock_Computers >= 1 && Stock_phones >= 1] || [IBuyaComputer >= 1 && IBuyaPhone >= 1]
@@ -158,35 +150,21 @@ OTHER: none
                     1::"Mobile phone"
                     
                     If 0
-                        
                         "You open your computer to subscribe online..."
-                     
                     Else
-                    
                         "You open your phone to subscribe online..."
-                     
                     EndIf
-                
                 ElseIf Stock_phones >= 1 || IBuyaPhone >= 1
-                
                     "You open your phone to subscribe online..."
-
                 ElseIf Stock_Computers >= 1 || IBuyaComputer >= 1
-            
                     "You open your computer to subscribe online..."
-            
                 Else
-            
                    "You don't have any device to subscribe online!"
                     SceneEnd()
-                
                 EndIf
-            
             EndIf
-            
             CashOnlineBid = 100
             CashOnlineBid_loc = CashOnlineBid.convertToLocalCurrency()
-    
             "What do you want to do on internet?"
             1::"Browse the web"
             2::"Check social media"
@@ -199,13 +177,9 @@ OTHER: none
             99::"Go back"
     
             If 1
-            
                 "What I want to browse for?"
                 0::"Only browsing for fun"
                 1::"Use dating app"
-                2::"Age-gap dating app"
-                3::"Use fantasy dating app"
-                4::"Use interracial dating app"
                 20:: arousal > 50 ::"Look for CMS porn"
                 35:: arousal > 40 ::"Watch Porn Tube"
                 80::isModEnabled(vin_NonConsensual):: "Browse rape fetish website"
@@ -214,26 +188,14 @@ OTHER: none
                 99::"Go back"
                 
                 If 0
-                
                     Player.animate(browse)
                     "I decided to browse the web for a moment..."
                     intelligence += 0.1
                     mood += 1.5
                     energy -= 1
                     passTime(0.15, 1)
-                
                 ElseIf 1
-                    
                     followUp(dating_app)
-                
-                ElseIf 2
-                    
-                    followUp(oldyoung_dating_app)
-                
-                ElseIf 3
-                    followUp(fantasy_dating_app)
-                ElseIf 4
-                    followUp(interracial_dating_app)
                 ElseIf 20
                     followUp(search_porn_cms)
                 ElseIf 35

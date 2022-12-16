@@ -6,15 +6,20 @@ OTHER: none
 
     SceneStart()
         NouvAmi = false
-        Dating = getSpecific(Dating)
+        Dating = getSpecific(PassedOn)
         If Dating.isValid()
             Dating.show()
-        EndIf
-        If isWithCompanion()
-            // CurrentCompanion.show()
-            // For the moment
-            Dating = CurrentCompanion
-        EndIf
+        Else
+            If isWithCompanion()
+                Dating = CurrentCompanion
+                Dating.show()
+            Else
+                Dating = getSpecific(Dating)
+                If Dating.isValid()
+                    Dating.show()
+                EndIf
+            EndIf
+        EndIf 
         Actor2 = getCompanionCreature()
         If Actor2.isValid() && Actor2.isCreatureType(Dog)
             Actor2.hide()
@@ -101,13 +106,13 @@ OTHER: none
                     EndIf
                     If femaOui
                         Actor = generatePersonTemporary()
-                        While Actor.isMale()
+                        While Actor.isMale() && Actor.isTrans()
                             Actor = generatePersonTemporary()
                         EndWhile
                         Actor.dressUniform(sexwork)
                     ElseIf mascOui
                         Actor = generatePersonTemporary()
-                        While !Actor.isMale()
+                        While !Actor.isMale() && Actor.isTrans()
                             Actor = generatePersonTemporary()
                         EndWhile
                         Actor.dress()
@@ -196,7 +201,7 @@ OTHER: none
                             1::"No"
                             
                             If 1
-                                sceneEnd()
+                                SceneEnd()
                             EndIf
                         EndIf
                         If paiePoDat

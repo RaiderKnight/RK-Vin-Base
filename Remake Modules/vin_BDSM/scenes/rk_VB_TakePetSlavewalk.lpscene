@@ -223,7 +223,7 @@ OTHER:none
                     Actor.dressBondage(Collar)
                     Actor.show()
                     "I'm currently taking my slave <Actor.name> around in public like a little submissive pet."
-                    "Whether it's the our general demeanor or the collar on <Actor.his_or_her> neck that gives it away, it's clear as day to anyone who comes across us my total dominance over my slave."
+                    "Whether it's the our general demeanour or the collar on <Actor.his_or_her> neck that gives it away, it's clear as day to anyone who comes across us my total dominance over my slave."
                     If random(0, 100) < 25
                         Actor2 = generatePersonTemporary()
                         Actor2.dress()
@@ -256,15 +256,11 @@ OTHER:none
                         EndIf
                     ElseIf random(0, 100) < 33
                         Actor2 = generatePersonTemporary()
-                        While Actor2.isSameGender(Actor)
-                            Actor2 = generatePersonTemporary()
-                        EndWhile
                         Actor2.dress()
                         Actor2.show()
                         "Soon we were approached by some strangers."
-                        
                         Actor3 = generatePersonTemporary()
-                        While !Actor3.isSameGender(Actor2)
+                        While Actor3.isSameGender(Actor2)
                             Actor3 = generatePersonTemporary()
                         EndWhile
                         Actor3.dress()
@@ -279,29 +275,26 @@ OTHER:none
                             setBackground(home)
                             "I took the strangers' cash and soon we ended up in a hotel room together."
                             money += 300
-                            Player:: "Slave, you must satisfy my new friends' needs to the best of your ability. Do not disappoint me and make yourself worth the price I received. Don't you dare harm my business integrity!"
-                            Actor:: "Yes, of course, anything you want, <Player.Master_or_Mistress>. I'll pleasure our new patrons as best as I can on your behalf."
+                            Player(Serene):: "Slave, you must satisfy my new friends' needs to the best of your ability. Do not disappoint me and make yourself worth the price I received. Don't you dare harm my business integrity!"
+                            Actor(Happy):: "Yes, of course, anything you want, <Player.Master_or_Mistress>. I'll pleasure our new patrons as best as I can on your behalf."
                             Sex(Actor2, Actor3, Actor)           
                         EndIf            
                     Else
                         Actor2 = generatePersonTemporary()
-                        While Actor2.isSameGender(Actor)
-                            Actor2 = generatePersonTemporary()
-                        EndWhile
                         Actor2.dress()
                         Actor2.show()
                         "Soon we were approached by some strangers."
                         
                         Actor3 = generatePersonTemporary()
-                        While !Actor3.isSameGender(Actor)
+                        While !Actor3.isSameGender(Actor2)
                             Actor3 = generatePersonTemporary()
                         EndWhile
                         Actor3.show()
                         Actor3.dressBondage(Collar)
                         
                         "The collar on one of them makes it obvious: They are another pair of <Actor2.Master_or_Mistress> and slave, out and about in public just like us. Looks like we're in luck."
-                        Actor2:: "I'm glad to meet other people like us."
-                        Actor2:: "Your slave is a hot piece of meat. What do you say we swap our slaves for a night of fun?"
+                        Actor2(Happy):: "I'm glad to meet other people like us."
+                        Actor2(Happy):: "Your slave is a hot piece of meat. What do you say we swap our slaves for a night of fun?"
                         0:: "Swap slaves for sex"
                         1:: "Turn them down"
                         
@@ -310,7 +303,7 @@ OTHER:none
                             "Soon, the four of us ended up in a hotel room nearby."
                             "I let my fellow <Actor2.Master_or_Mistress> have a go at my slave first."
                             Sex(Actor2, Actor)
-                            "Then it was my turn to have a taste of another's slave."
+                            "Then it was my turn to have a taste of another slave."
                             Sex(Player, Actor3)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)

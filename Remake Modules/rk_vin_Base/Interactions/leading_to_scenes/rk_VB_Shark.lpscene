@@ -4,8 +4,8 @@ WHEN: 0 - 24
 WHO: none
 OTHER: none
 
-    sceneStart()
-        If isModEnabled(rk_vin_Base) || isModEnabled(rk_MoreInteractions)
+    SceneStart()
+        If isModEnabled(rk_vin_Base) || isModEnabled(rk_MoreInteractions_Badass)
             // The game don't let me know what the NPC is wearing, so we will begin with that...
             Hunger = Player.getActorVar(rk_VB_Hunger)
             HungerEnable = rk_VB_EnableHunger.getGlobal()
@@ -49,8 +49,8 @@ OTHER: none
                     If WHERE != home && WHERE != fraternity && WHERE != brothel && WHERE != stripclub && WHERE != prison
                         Actor(Wink)::"Sure, but let me get dressed again before someone calls the police..."
                         Actor(Flirty)::"Let's go somewhere more private"
-                        If isModEnabled(rk_MoreInteractions)
-                            setBackground3D(Modules/rk_MoreInteractions/World/DarkAlley.lpworld)
+                        If isModEnabled(rk_MoreInteractions_Badass)
+                            setBackground3D(Modules/rk_MoreInteractions_Badass/World/DarkAlley.lpworld)
                         Else
                             setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                         EndIf
@@ -59,7 +59,7 @@ OTHER: none
                         "We decided to go in the dark alley to get more privacy..."
                         Player.strip()
                         Actor.strip()
-                        sex(Player, Actor)
+                        Sex(Player, Actor)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
@@ -70,7 +70,7 @@ OTHER: none
                         "We undress and begin to fuck right here..."
                         Player.strip()
                         Actor.strip()
-                        sex(Player, Actor)
+                        Sex(Player, Actor)
                         If HungerEnable > 0 && WHERE != prison
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
@@ -100,8 +100,8 @@ OTHER: none
                         Actor(Shocked)::"WTF! Help, I'm under attack!"
                         "<Actor.He_or_She> runs out and screams..."
                     EndIf
-                    If isModEnabled(rk_MoreInteractions)
-                        setBackground3D(Modules/rk_MoreInteractions/World/DarkAlley.lpworld)
+                    If isModEnabled(rk_MoreInteractions_Badass)
+                        setBackground3D(Modules/rk_MoreInteractions_Badass/World/DarkAlley.lpworld)
                     Else
                         setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
                     EndIf

@@ -5,39 +5,18 @@ WHO: none
 OTHER: none
 
     SceneStart()
-
+        
         If Actor.isInterestedIn(Player)
-            "What I should suggest to <Dating.name>?"
+            "What I should suggest to <Actor.name>?"
             
             5:: "Propose to hired an escort for <Actor.him_or_her>"
             99::"I changed my mind"
     
-            If 0
-            
-                followUp()
-            
-            ElseIf 1
-            
-                followUp()
-                
-            ElseIf 2
-            
-                followUp()
-    
-            ElseIf 5
-            
-                followUp(ctf_jan03_cms)
-                
-            ElseIf 6
-            
-                followUp()
-    
+            If 5
+                passOn(Actor)
+                followUp(call_a_hooker)
             EndIf
-            
         Else
-        
             "..."
-        
         EndIf
-
     SceneEnd() // Scene improved by Raddeck

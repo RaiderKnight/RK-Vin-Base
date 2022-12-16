@@ -11,6 +11,8 @@ OTHER: none
         gangrID = vi_darkalley_gangr_ID1.getGlobal()
         gangr_Fight = vi_darkalley_gangr_Fight.getGlobal()
         mbr_Raper = vi_darkalley_gangr_mbrRaper.getGlobal()
+        SpermAttack = rk_VB_SpermAttack_npdID.getGlobal()
+        SpermAttackTo = rk_VB_SpermAttack.getGlobal()
         FightingLost = false
         IlAPerdu = false
         VraiLoser = false
@@ -73,6 +75,13 @@ OTHER: none
             Actor.moveToPersonStand(Player, 30)
             Actor.animate(socialize)
             Actor(Furious)::"Come, ugly face, let's fight!"
+        ElseIf SpermAttackTo == 1
+            Actor = getSpecific(SpermAttack)
+            Actor.show()
+            Actor.animate(socialize)
+            Actor(Furious)::"WTF!"
+            Actor(Furious)::"Come here ugly face, let's fight!"
+            Actor.moveToPersonStand(Player, 30)
         Else
             Player.moveToPersonStand(Actor, 30)
             Player.animate(socialize)
@@ -450,39 +459,7 @@ OTHER: none
                     Player.animate(knockedout)
                     Actor:rapportwithplayer -= 5
                     Actor:attractiontoplayer -= 1
-                    If gangr_Fight == 2
-                        vi_darkalley_gangr_Fight.setGlobal(0)
-                        vi_darkalley_gangr_mbrRaper.setGlobal(2)
-                        followUp(vi_darkalley_gangrape)
-                    ElseIf gangr_Fight == 3
-                        vi_darkalley_gangr_Fight.setGlobal(0)
-                        vi_darkalley_gangr_mbrRaper.setGlobal(3)
-                        followUp(wi_darkalley_rape)
-                    ElseIf gangr_Fight == 4
-                        vi_darkalley_gangr_Fight.setGlobal(0)
-                        vi_darkalley_gangr_mbrRaper.setGlobal(4)
-                        followUp(wi_darkalley_rape_cms)
-                    ElseIf gangr_Fight == 5
-                        vi_darkalley_gangr_Fight.setGlobal(0)
-                        vi_darkalley_gangr_mbrRaper.setGlobal(5)
-                        followUp(wi_darkalley_rape_ntr)
-                    ElseIf gangr_Fight == 6
-                        vi_darkalley_gangr_Fight.setGlobal(0)
-                        vi_darkalley_gangr_mbrRaper.setGlobal(6)
-                        followUp(vi_darkalley_gangrape_cms)
-                    ElseIf gangr_Fight == 7
-                        vi_darkalley_gangr_Fight.setGlobal(0)
-                        vi_darkalley_gangr_mbrRaper.setGlobal(7)
-                        followUp(wi_homeinvader_rape_family)
-                    ElseIf gangr_Fight == 8
-                        vi_darkalley_gangr_Fight.setGlobal(0)
-                        vi_darkalley_gangr_mbrRaper.setGlobal(8)
-                        followUp(wi_homeinvader_rape_neighbour)
-                    ElseIf gangr_Fight == 9
-                        vi_darkalley_gangr_Fight.setGlobal(0)
-                        vi_darkalley_gangr_mbrRaper.setGlobal(9)
-                        followUp(wi_homeinvader_rape_ntr)
-                    ElseIf isModEnabled(vin_NonConsensual) && Actor:arousal > 10 && Actor:perversion > 50
+                    If isModEnabled(vin_NonConsensual) && Actor:arousal > 10 && Actor:perversion > 50
                         Actor(Angry)::"I'm not done with you, <Player.scum_or_bitch>!"
                         "<Actor.name> stripped off all my clothes and started fucking me right here!"
                         Player.strip()
@@ -533,6 +510,41 @@ OTHER: none
                     ElseIf gangr_Fight == 1
                         vi_darkalley_gangr_ID1.setGlobal(0)
                         vi_darkalley_gangr_Fight.setGlobal(0)
+                    ElseIf gangr_Fight == 2
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(2)
+                        followUp(vi_darkalley_gangrape)
+                    ElseIf gangr_Fight == 3
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(3)
+                        followUp(wi_darkalley_rape)
+                    ElseIf gangr_Fight == 4
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(4)
+                        followUp(wi_darkalley_rape_cms)
+                    ElseIf gangr_Fight == 5
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(5)
+                        followUp(wi_darkalley_rape_ntr)
+                    ElseIf gangr_Fight == 6
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(6)
+                        followUp(vi_darkalley_gangrape_cms)
+                    ElseIf gangr_Fight == 7
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(7)
+                        followUp(wi_homeinvader_rape_family)
+                    ElseIf gangr_Fight == 8
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(8)
+                        followUp(wi_homeinvader_rape_neighbour)
+                    ElseIf gangr_Fight == 9
+                        vi_darkalley_gangr_Fight.setGlobal(0)
+                        vi_darkalley_gangr_mbrRaper.setGlobal(9)
+                        followUp(wi_homeinvader_rape_ntr)
+                    ElseIf SpermAttackTo == 1
+                        rk_VB_SpermAttack.setGlobal(0)
+                        rk_VB_SpermAttack_npdID.setGlobal(0)
                     EndIf
                     "Going back home..."
                     moveTo(home)
@@ -641,6 +653,9 @@ OTHER: none
             followUp(wi_homeinvader_rape_neighbour)
         ElseIf gangr_Fight == 9
             followUp(wi_homeinvader_rape_ntr)
+        ElseIf SpermAttackTo == 1
+            rk_VB_SpermAttack.setGlobal(0)
+            rk_VB_SpermAttack_npdID.setGlobal(0)
         EndIf
         Actor.hide()
         passTime(0.15, 0.5)

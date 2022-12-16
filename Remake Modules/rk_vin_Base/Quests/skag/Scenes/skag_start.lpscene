@@ -21,7 +21,7 @@ OTHER: none
         
         If !Actor.isValid() || Actor.isCreature() || Actor.isMale()
             "No valid NPC selected. Quest was not started."
-            QuestEnd()
+            questEnd()
         Else
             Actor.dress()
             Actor.show(2)
@@ -35,11 +35,10 @@ OTHER: none
             Else
                 selectNPC()
                 Actor2 = getSelectedNPC()       
-            Endif
-            
+            EndIf
             If !Actor2.isValid() || Actor2.isCreature() || Actor2.isMale()
                 "Not a valid person to corrupt <Actor.name>. Quest was not started."
-                QuestEnd()
+                questEnd()
             Else
                 AggA.setActorAlias(Actor2)
                 VicA.setActorAlias(Actor)
@@ -47,6 +46,6 @@ OTHER: none
                 B1.generateBuildingAlias(sports_centre)
                 B1.addObjective(skag_awaken)
                 skag_stage.setGlobal(1)
-            Endif        
-        Endif
+            EndIf        
+        EndIf
     SceneEnd() // Improved by Raddeck

@@ -8,7 +8,7 @@ OTHER: none
         If isModEnabled(rk_vin_Base) || isModEnabled(rk_Home_Inventories)
             clearGetList()
             ETMaison = false
-            If !PlayerHasHome()
+            If isAtHome() || PlayerHasHome() || isAtDatingHome()
                 ETMaison = true
             EndIf
             hasUniRoom = rk_has_Fratroom.getGlobal()
@@ -18,9 +18,16 @@ OTHER: none
             hasOfficeroom = RE_has_officeroom.getGlobal()
             hasSecBedroom = RE_has_secondbedroom.getGlobal()
             hasThirdBedroom = RE_has_thirdbedroom.getGlobal()
-            If hasUniRoom == 0 || !ETMaison
-                "You need to find a personal home first!"
+            If !ETMaison
+                If hasUniRoom == 0
+                    "You need to find a personal home first!"
+                Else
+                    conti = true
+                EndIf
             Else
+                conti = true
+            EndIf
+            If conti
                 "What do I want to verify?"
                 0::isModEnabled(rk_vin_Base) || isModEnabled(rk_ShopAddons) || isModEnabled(rk_EroticShop)::"Check adult toy box"
                 1::isModEnabled(rk_vin_Base) || isModEnabled(rk_ShopAddons) || isModEnabled(rk_SeaFoodShop) || isModEnabled(rk_IceCreamShop)::"Check freezer"

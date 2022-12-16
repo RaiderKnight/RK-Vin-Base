@@ -10,9 +10,13 @@ OTHER: none
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         UrgeToPeeCons = rk_VB_UrgeToPeeCons.getGlobal()
         likes_watersports = Player.getActorVar(rk_VB_likes_watersports)
-        Actor = generatePerson()
-        Alikes_watersports = Actor.getActorVar(rk_VB_likes_watersports)
-        Actor = hide()
+        If WHERE != home
+            Actor = generatePerson()
+            Alikes_watersports = Actor.getActorVar(rk_VB_likes_watersports)
+            Actor = hide()
+        ElseIf isWithCompanion()
+            Actor = getSpecific(Dating)
+        EndIf
         cameraFocus(Player)
         If Alikes_watersports <= 0
             Actwaterspo = random(0, 100)
@@ -21,7 +25,7 @@ OTHER: none
         "I decided to pee right here!"
         Player.strip()
         Player.setActorVar(rk_VB_UrgeToPee, 0)
-        animatePair(Actor, Player, Watersports)
+        animatePair(Player, Actor, Watersports)
         "Ah, what a relief!"
         masochist -= 1
         mood += 3
@@ -68,7 +72,7 @@ OTHER: none
         Else
             DefaultPee = true
         EndIf
-        If DefaultPee
+        If DefaultPee && Actor.isValid()
             Actor.dress()
             Actor.show()
             Actor(Angry):: "What the fuck! That's so inappropriate! Why did you pee here, idiot!"
@@ -78,4 +82,5 @@ OTHER: none
                followUp(public_indecency)
             EndIf
         EndIf
+        passTime(0.15, 0.20)
     SceneEnd()

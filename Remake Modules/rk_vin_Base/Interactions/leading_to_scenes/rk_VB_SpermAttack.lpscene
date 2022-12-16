@@ -1,0 +1,138 @@
+WHAT: none
+WHERE: none
+WHEN: 0 - 24
+WHO: none
+OTHER: none
+
+    SceneStart()
+        If isModEnabled(rk_vin_Base) || isModEnabled(rk_MoreInteractions_Badass)
+            DanFasse = false
+            SulChess = false
+            SulTorse = false
+            Suepied = false
+            Hunger = Player.getActorVar(rk_VB_Hunger)
+            HungerEnable = rk_VB_EnableHunger.getGlobal()
+            UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+            UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+            GotHerN = false
+            GetFucked = false
+            Player.moveToPersonStand(Actor, 30)
+            ISuccess = random(0, 50)
+            SkilAd = ISuccess + sneak
+            "What should I do?"
+            0::Player.isMale()::"Let's cum on <Actor.his_or_her> face"
+            1::Player.isMale()::"Let's cum on <Actor.his_or_her> chest"
+            2::Player.isMale()::"Let's cum on <Actor.his_or_her> stomach"
+            3::Player.isMale()::"Let's cum on <Actor.his_or_her> feet"
+            99::"Nothing"
+            
+            If 0
+                DanFasse = true
+            ElseIf 1
+                SulChess = true
+            ElseIf 2
+                SulTorse = true
+            ElseIf 3
+                Suepied = true
+            Else
+                "Ok, I give up, <Actor.he_or_she>'s too well dressed and tight...."
+                mood -= 1
+            EndIf
+            If DanFasse
+                "I decided to just cum on <Actor.him_or_her> face for fun!"
+                Filter(CumOnFace)
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                GotHerN = true
+            EndIf
+            If SulChess
+                "I decided to just cum on <Actor.him_or_her> chest for fun!"
+                Filter(CumOnChest)
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                GotHerN = true
+            EndIf
+            If SulTorse
+                "I decided to just cum on <Actor.him_or_her> stomach for fun!"
+                Filter(CumOnStomach)
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                GotHerN = true
+            EndIf
+            If Suepied
+                "I decided to just cum on <Actor.him_or_her> feet for fun!"
+                Filter(CumOnFeet)
+                Sex(Player, Actor)
+                If HungerEnable > 0
+                    Player.modifyActorVar(rk_VB_Hunger, -1)
+                EndIf
+                GotHerN = true
+            EndIf
+            If GotHerN
+                If Actor:arousal > 25 && Actor:perversion > 75 && Actor.isInterestedIn(Player)
+                    Actor(Flirty)::"Hey! Don't waste that! Next time ask me and I will play with your dick!"
+                    animatePair(Actor, Player, Kissing)
+                    Actor(Flirty)::"Let's go somewhere more private"
+                    If isModEnabled(rk_MoreInteractions_Badass)
+                        setBackground3D(Modules/rk_MoreInteractions_Badass/World/DarkAlley.lpworld)
+                    Else
+                        setBackground3D(Modules/rk_vin_Base/World/DarkAlley.lpworld)
+                    EndIf
+                    Actor:rapportwithplayer += random(0, 2)
+                    Actor:attractiontoplayer += random(0, 2)
+                    "We decided to go in the dark alley to get more privacy..."
+                    Player.strip()
+                    Actor.strip()
+                    Sex(Player, Actor)
+                    If HungerEnable > 0
+                        Player.modifyActorVar(rk_VB_Hunger, -2)
+                    EndIf
+                ElseIf Actor:arousal > 15 && Actor:perversion > 50 && Actor.isInterestedIn(Player)
+                    Actor(Wink)::"That was funny and your cum taste good!..."
+                    If !Actor.isContactExchanged()
+                        Actor(Wink)::"Let's exchange numbers so we can call each other later... right now I'm a little busy!"
+                        
+                    Else
+                        Actor(Wink)::"Next time, call me if you want to play instead of jerking off on me...!"
+                    EndIf
+                    Player(Happy)::"Ok cool!"
+                Else
+                    Actor(Furious)::"Hey! What the fuck is your problem, fucking disgusting pervert! Somebody call the cops!"
+                    ForceA = Actor:muscle
+                    ForceB = Actor:martial
+                    ForceAB = ForceA + ForceB
+                    If ForceAB < 50
+                        Actor(Shocked)::"Help, I'm under attack!"
+                        "<Actor.He_or_She> runs out and screams..."
+                        Actor(Evil)::"THAT <Player.GUY_or_GIRL>, JUST CUM ON ME!"
+                        "As a matter of fact, everyone turns around and I hear someone say <Actor99.he_or_she> called the police..."
+                        "Ah shit!..."
+                        Actor.hide()
+                        Actor.delete()
+                        followUp(rk_VB_SexAssault_Arrest)
+                    Else
+                        MIDa = Actor.getID()
+                        rk_VB_SpermAttack_npdID.setGlobal(MIDa)
+                        If [random(0, 100) > 40 || Actor:masochist <= 0] && WHERE == prison
+                            rk_VB_SpermAttack.setGlobal(1)
+                            followUp(rk_MI_NPC_fight)
+                            masochist += random(0, 1)
+                        ElseIf WHERE == prison
+                            Actor(Shocked)::"WTF! Help, I'm under attack!"
+                            Player(Evil)::"Shut up and enjoy! No one care about you in here, bitch!"
+                            masochist -= random(0, 1)
+                        Else
+                            Actor(Shocked)::"WTF! Help, I'm under attack!"
+                            Player(Evil)::"Shut up and enjoy! No one care about you in here, bitch!"
+                        EndIf
+                    EndIf
+                EndIf
+            EndIf
+        EndIf
+    SceneEnd() // Created by Raddeck

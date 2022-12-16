@@ -140,9 +140,12 @@ OTHER: none
                             1:: "That's too expensive"
                             
                             If 0
+                                Actor78 = getRelative(Parent)
                                 Bought = true
                                 moveHome()
-                                money -= TPrice
+                                If !Actor78.isValid() || [Actor78.isValid() && age >= 25]
+                                    money -= TPrice
+                                EndIf
                                 Zero = 0
                                 Zero.setRent()
                                 Player.setLandlord()

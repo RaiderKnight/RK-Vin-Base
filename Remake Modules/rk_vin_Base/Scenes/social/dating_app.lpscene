@@ -5,15 +5,16 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    
         "I've got some spare time. I could play around on a dating app ..."
-        0:: "Yes"
-        1:: "No"
+        0::"General dating app"
+        1::"Gay/Lesbian dating app"
+        2::"Age-gap dating app"
+        3::"Use fantasy dating app"
+        4::"Use interracial dating app"
         
         If 0
-        
             count = 0
-            While count < attractiveness*Random(0.01, 0.1)
+            While count < attractiveness*random(0.01, 0.1)
                 Actor = generatePerson()
                 Actor.dress()
                 Actor.show(2)
@@ -22,53 +23,41 @@ OTHER: none
                 1:: "Swipe left"
                 
                 If 0
-                
                     "Let's hope <Actor.he_or_she> also swipes right."
                     "A while later ..."
-                    
-                    If Random(0, 50) < Actor:attractiontoplayer
-                    
+                    If random(0, 50) < Actor:attractiontoplayer
                         "And ... it's a match. Should I exchange numbers with <Actor.him_or_her> so that we can go on a date?"
                         0:: "Yes"
                         1:: "No"
                         
                         If 0
-                        
                             "We chat for a bit before exchanging contacts hopefully to meet each other offline."
                             exchangeContact(Actor)
-                            
                         Else
-                        
                             "On second thought, <Actor.he_or_she> only looked good in that one photo."
-                            
-                        Endif
-                        
+                        EndIf
                     Else
-                    
                         "Still nothing ... <Actor.he_or_she> didn't find me attractive then."
                         mood -= 1
-                        
-                    Endif
-                    
+                    EndIf
                 Else
-                
                     "Nah, not my type."
-                    
-                Endif
-                
+                EndIf
                 Actor.hide()
                 count += 1
-                
-            Endwhile
-            
+            EndWhile
             "That's enough mate surfing for today!"
             energy -= 1
-            
+        ElseIf 1
+            followUp(gay_dating_app)
+        ElseIf 2
+            followUp(oldyoung_dating_app)
+        ElseIf 3
+            followUp(fantasy_dating_app)
+        ElseIf 4
+            followUp(interracial_dating_app)
         Else
-        
             "Dating apps are a waste of time. I'd rather go on a date with someone I met in real life."
-        
-        Endif   
-    
+        EndIf
     SceneEnd() // Improved by Raddeck
     // timeout(48, dating_app)

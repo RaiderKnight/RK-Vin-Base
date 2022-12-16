@@ -6,14 +6,19 @@ OTHER: none
 
     SceneStart()
         NouvAmi = false
-        Dating = getSpecific(Dating)
+        Dating = getSpecific(PassedOn)
         If Dating.isValid()
             Dating.show()
-        EndIf
-        If isWithCompanion()
-            // CurrentCompanion.show()
-            // For the moment
-            Dating = CurrentCompanion
+        Else
+            If isWithCompanion()
+                Dating = CurrentCompanion
+                Dating.show()
+            Else
+                Dating = getSpecific(Dating)
+                If Dating.isValid()
+                    Dating.show()
+                EndIf
+            EndIf
         EndIf
         Actor2 = getCompanionCreature()
         If Actor2.isValid() && Actor2.isCreatureType(Dog)
@@ -56,7 +61,7 @@ OTHER: none
         femaOui = false
         mascOui = false
         conti = false
-        conti3 = false
+        conti3 = true
         Agency = generatePersonTemporary()
         Agency.hide()
         Noway = false
@@ -101,6 +106,8 @@ OTHER: none
                     ElseIf 3
                         If Actor88.isValid()
                             passOn(Actor88)
+                        ElseIf Dating.isValid()
+                            passOn(Dating)
                         EndIf
                         followUp(rk_VB_call_a_hookxxFanta)
                     Else
@@ -141,13 +148,13 @@ OTHER: none
                         EndIf
                         If femaOui
                             Actor = generatePersonTemporary()
-                            While Actor.isMale()
+                            While Actor.isMale() && Actor.isTrans()
                                 Actor = generatePersonTemporary()
                             EndWhile
                             Actor.dressUniform(sexwork)
                         ElseIf mascOui
                             Actor = generatePersonTemporary()
-                            While !Actor.isMale()
+                            While !Actor.isMale() && Actor.isTrans()
                                 Actor = generatePersonTemporary()
                             EndWhile
                             Actor.dress()
@@ -346,6 +353,7 @@ OTHER: none
                         Else
                             money -= BeastP
                         EndIf
+                        ChercheCul = false
                     ElseIf 1
                         NowayDecu = true
                         ChercheCul = false
@@ -426,10 +434,12 @@ OTHER: none
                     If paiePoDat
                         Dating.strip()
                         Sex(Dating, Actor)
+                        addNpcRelationship(JohnSexWorker, Dating, Actor)
                     ElseIf paiePoDeu
                         Dating.strip()
                         Player.strip()
                         Sex(Dating, Actor, Player)
+                        addNpcRelationship(JohnSexWorker, Dating, Actor)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf

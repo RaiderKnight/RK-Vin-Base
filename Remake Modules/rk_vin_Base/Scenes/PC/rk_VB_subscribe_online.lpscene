@@ -129,15 +129,12 @@ OTHER: none
         Else
         
             If Stock_phones > 0 || IBuyaPhone > 0
-                
                 "You open your phone to visit websites...."
                 
             ElseIf Stock_Computers <= 0 || IBuyaComputer <= 0
-                    
                 "You don't have any device to go online... Go buy a computer or a phone at any shop!"
                 
             Else
-        
                 If [Stock_Computers >= 1 && Stock_phones >= 1] || [IBuyaComputer >= 1 && IBuyaPhone >= 1]
                     
                     "Which device you want to use?"
@@ -145,30 +142,19 @@ OTHER: none
                     1::"Mobile phone"
                     
                     If 0
-                        
                         "You open your computer to subscribe online..."
-                     
                     Else
-                    
                         "You open your phone to subscribe online..."
-                     
                     EndIf
                 
                 ElseIf Stock_phones >= 1 || IBuyaPhone >= 1
-                
                     "You open your phone to subscribe online..."
-
                 ElseIf Stock_Computers >= 1 || IBuyaComputer >= 1
-            
                     "You open your computer to subscribe online..."
-            
                 Else
-            
                    "You don't have any device to subscribe online!"
                     SceneEnd()
-                
                 EndIf
-            
             EndIf
         
             "What kind of website I would like to subscribe to?"
@@ -178,23 +164,23 @@ OTHER: none
                 
             If 0
             
-                "To be honest, with so much going on in my career, I'm not having enough free time to get laid that often. I recently found a website that specialised in sugarparent-sugarbabe arrangements, basically wealthy men and women like me paying for companionship and sex. Should I sign myself up?"
+                "To be honest, with so much going on in my career, I'm not having enough free time to get laid that often. I recently found a website that specialized in sugarparent-sugarbabe arrangements, basically wealthy men and women like me paying for companionship and sex. Should I sign myself up?"
                 0:: perversion > 20:: "Yes"
                 1:: "No"
                 
                 If 0
                 
                     "It's worth a try. It's not like I'm committing to anything just from signing up."
-                    If Random(0, 100) < jobexperience
+                    If random(0, 100) < jobexperience
                     
                         Actor = generatePersonTemporary()
                         While !Actor.isInterestedIn(Player) || !Player.isInterestedIn(Actor)
                             Actor = generatePersonTemporary()
-                        Endwhile
+                        EndWhile
                         Actor.blendPreset(twenties)
                         If Actor:age > age
                             Actor:age => 18
-                        Endif
+                        EndIf
                         Actor.randomizeFace()
                         Actor.randomizeHairs()
                         
@@ -221,15 +207,15 @@ OTHER: none
                             moveTo(Loc)                    
                             setBackground(home)
                             Actor.makePermanent()
-                            "This hotel suite cost me a fortune. And I hope that <Actor.name> knows what I'm expecting from <Actor.him_or_her> for my generousity."
+                            "This hotel suite cost me a fortune. And I hope that <Actor.name> knows what I'm expecting from <Actor.him_or_her> for my generosity."
                             Sex(Player, Actor)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -1)
                             EndIf
-                            perversion += Random(0, 0.5)
+                            perversion += random(0, 0.5)
                             Actor.show(2)
                             "We spent the night together. The morning after, I paid for breakfast, and before heading off to work, I told <Actor.name> that I will call <Actor.him_or_her> soon and left <Actor.him_or_her> a generous envelope. Needless to say, <Actor.name> is now my sugarbabe."
-                            money -= Random(100, 500)
+                            money -= random(100, 500)
                             SugarBabe = Actor.getID()
                             SugarBabe.setGlobal(SugarBabe)
                             
@@ -238,38 +224,38 @@ OTHER: none
                             "For that sort of money, I expected someone better looking ..."
                             //timeout(500, rk_VB_subscribe_online)
                             
-                        Endif
+                        EndIf
                         
                     Else
                     
                         "Unfortunately, I received no interest from any potential sugarbabes. It seemed there simply was just too much competition and I was not ... rich enough."
                         //timeout(500, rk_VB_subscribe_online)
                         
-                    Endif
+                    EndIf
                     
                 Else
                 
                     "No way. I'm not so desperate as to pay for sex and companionship."
                     //timeout(1000, rk_VB_subscribe_online)
                     
-                Endif
+                EndIf
             
-            Elseif 1
+            ElseIf 1
             
                 "To be honest, I'm not earning all that much and it's expensive to live here. After rent and basic expenses, I really don't have much left. Sometimes, looking at celebrities and executives, I wish I can afford some of same luxuries they get."
-                "I recently found a website that specialised in sugarparent-sugarbabe arrangements, basically wealthy older men and women pay for companionship and sex. Should I sign myself up?"
+                "I recently found a website that specialized in sugarparent-sugarbabe arrangements, basically wealthy older men and women pay for companionship and sex. Should I sign myself up?"
                 0:: perversion > 20:: "Yes"
                 1:: "No"
                 
                 If 0
                 
                     "It's worth a try. It's not like they will force me to do anything just from signing up."
-                    If Random(0, 100) < attractiveness 
+                    If random(0, 100) < attractiveness 
                     
                         Actor = generatePersonTemporary()
                         While !Actor.isInterestedIn(Player)
                             Actor = generatePersonTemporary()
-                        Endwhile
+                        EndWhile
                         Random
                             Actor.blendPreset(fourties)
                             Actor.blendPreset(fifties)
@@ -306,12 +292,12 @@ OTHER: none
                                 moveTo(Loc)
                                 setBackground(home)
                                 Actor.makePermanent()
-                                "Wow, this is a nice hotel suite! Must have cost a fortune. And I know very well what <Actor.name> is expecting from me for <Actor.his_or_her> generousity."
+                                "Wow, this is a nice hotel suite! Must have cost a fortune. And I know very well what <Actor.name> is expecting from me for <Actor.his_or_her> generosity."
                                 Sex(Actor, Player)
-                                perversion += Random(0, 0.5)
+                                perversion += random(0, 0.5)
                                 Actor.show(2)
                                 "The sex wasn't too bad. We spent the night together. The morning after, <Actor.name> paid for breakfast, and before heading off to work, told me that <Actor.he_or_she> will call me soon and left me a generous envelope. Needless to say, <Actor.name> is now my <Actor.sugardaddy_or_sugarmommy>."
-                                money += Random(100, 500)
+                                money += random(100, 500)
                                 Actor:rapportwithplayer += 2
                                 Actor:attractiontoplayer += 2
                                 SugarParent = Actor.getID()
@@ -327,14 +313,14 @@ OTHER: none
                                 Actor:attractiontoplayer -= 3
                                 //timeout(500, rk_VB_subscribe_online)
                                 
-                            Endif
+                            EndIf
                             
                         Else
                         
                             "Ew, even for money, I can't sleep with someone that old and ugly."
                             //timeout(500, rk_VB_subscribe_online)
                             
-                        Endif
+                        EndIf
                         
                     Else
                     
@@ -342,17 +328,17 @@ OTHER: none
                         mood -= 5
                         //timeout(500, rk_VB_subscribe_online)
                         
-                    Endif
+                    EndIf
                     
                 Else
                 
                     "No way. There are more self-respecting ways to make money than that. It's basically glorified prostitution."
                     //timeout(1000, rk_VB_subscribe_online)
                     
-                Endif
+                EndIf
                 
-            Endif
+            EndIf
         
-        Endif
+        EndIf
         
     SceneEnd()  // Scene improved by Raddeck
