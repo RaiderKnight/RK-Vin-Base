@@ -5,6 +5,7 @@ WHO: none
 OTHER: none
 
     SceneStart()
+        clearBackground3D()
         stock_viagra = Player.getActorVar(rk_VB_stock_viagra)
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
@@ -73,11 +74,45 @@ OTHER: none
                 energy -= 0.5
                 passTime(0.25, 0.5)
             ElseIf 10
-                followUp(rk_VB_masturbate)
+                //followUp(masturbate)
+                Masturb_TimesS = Player.getActorVar(VB_Masturb_TimesS)
+                SetMasturb_TimesS = Player.getActorVar(VB_SetMasturb_TimesS)
+                mauvaisEscl = 0
+                arousal -= 15
+                energy -= 5
+                NousSom = age*365
+                NousSom = NousSom.round()
+                NousSom1 = NousSom + 1
+                NousSom1 = NousSom1.round()
+                If isModEnabled(rk_vin_Base)
+                    If isTimingOut(rk_VB_masturbate)
+                        "It's too soon since the last time I played with my <Player.dick_or_pussy>. It takes at least 8 hours to recover..."  
+                    ElseIf [[!Player.isMale() && Masturb_TimesS >= 10] || [Player.isMale() && Masturb_TimesS >= 6]] && NousSom <= NousSom1
+                        "I played too many times with my <Player.dick_or_pussy> today.... I need to take a break!"
+                        Player.setActorVar(VB_Masturb_TimesS, 0)
+                        Player.setActorVar(VB_SetMasturb_TimesS, 0)
+                        timeoutPrecise(8, rk_VB_masturbate)
+                    Else
+                        Player.strip()
+                        Filter(Solo)
+                        Sex(Player)
+                        Player.modifyActorVar(VB_Masturb_TimesS, 1)
+                        If NousSom <= NousSom1 && SetMasturb_TimesS == 0
+                            Player.setActorVar(VB_SetMasturb_TimesS, NousSom)
+                        ElseIf NousSom >= NousSom1
+                            Player.setActorVar(VB_Masturb_TimesS, 0)
+                            Player.setActorVar(VB_SetMasturb_TimesS, 0)
+                        EndIf
+                        passTime(0.25, 1)
+                        If isModEnabled(vin_BDSM)
+                            rk_MN_EsclavMast.setGlobal(1)
+                        EndIf
+                    EndIf
+                EndIf
             ElseIf 11
                 Player.show()
                 Player.animate(drinkbottle)
-                "I decided to take chinese aphrodisiac..."
+                "I decided to take Chinese aphrodisiac..."
                 stock_chineseaphrodisiac -=1
                 mood +=10
                 arousal +=100
@@ -156,7 +191,7 @@ OTHER: none
             10:: !isWithCompanion()::"Get a sensual massage"
             11::"Go for a health check-up"
             12::"Masturbate"
-            13:: stock_chineseaphrodisiac > 0.8::"Take chinese aphrodisiac"
+            13:: stock_chineseaphrodisiac > 0.8::"Take Chinese aphrodisiac"
             14:: stock_rapedrug > 0::"Take rape drug yourself"
             15:: stock_viagra > 0 ::"Take a viagra pill"
             81:: UrgeToPeeEnable > 0 ::"Go take a pee!"
@@ -288,18 +323,57 @@ OTHER: none
                 passTime(0.05, 0.15)
                 Player.animate()
             ElseIf 9
+            
                 followUp(get_a_massage)
+                
             ElseIf 10
+            
                 followUp(rk_VB_get_a_sensual_massage)
+                
             ElseIf 11
+            
                 followUp(naked_with_doctor)
+                
             ElseIf 12
-                followUp(masturbate)
-                SceneEnd()
+                //followUp(masturbate)
+                Masturb_TimesS = Player.getActorVar(VB_Masturb_TimesS)
+                SetMasturb_TimesS = Player.getActorVar(VB_SetMasturb_TimesS)
+                mauvaisEscl = 0
+                arousal -= 15
+                energy -= 5
+                NousSom = age*365
+                NousSom = NousSom.round()
+                NousSom1 = NousSom + 1
+                NousSom1 = NousSom1.round()
+                If isModEnabled(rk_vin_Base)
+                    If isTimingOut(rk_VB_masturbate)
+                        "It's too soon since the last time I played with my <Player.dick_or_pussy>. It takes at least 8 hours to recover..."  
+                    ElseIf [[!Player.isMale() && Masturb_TimesS >= 10] || [Player.isMale() && Masturb_TimesS >= 6]] && NousSom <= NousSom1
+                        "I played too many times with my <Player.dick_or_pussy> today.... I need to take a break!"
+                        Player.setActorVar(VB_Masturb_TimesS, 0)
+                        Player.setActorVar(VB_SetMasturb_TimesS, 0)
+                        timeoutPrecise(8, rk_VB_masturbate)
+                    Else
+                        Player.strip()
+                        Filter(Solo)
+                        Sex(Player)
+                        Player.modifyActorVar(VB_Masturb_TimesS, 1)
+                        If NousSom <= NousSom1 && SetMasturb_TimesS == 0
+                            Player.setActorVar(VB_SetMasturb_TimesS, NousSom)
+                        ElseIf NousSom >= NousSom1
+                            Player.setActorVar(VB_Masturb_TimesS, 0)
+                            Player.setActorVar(VB_SetMasturb_TimesS, 0)
+                        EndIf
+                        passTime(0.25, 1)
+                        If isModEnabled(vin_BDSM)
+                            rk_MN_EsclavMast.setGlobal(1)
+                        EndIf
+                    EndIf
+                EndIf
             ElseIf 13
                 Player.show()
                 Player.animate(drinkbottle)
-                "I decided to take chinese aphrodisiac..."
+                "I decided to take Chinese aphrodisiac..."
                 stock_chineseaphrodisiac -=1
                 mood +=10
                 arousal +=100
@@ -309,8 +383,11 @@ OTHER: none
                 If isModEnabled(sb_BetterPregnancy)
                     "ATTENTION - I suggest to disable Better Pregnancy, this mod has been abandoned!"
                     followUp(take_rapedrug)
+                    
                 Else
+                
                     followUp(sb_VB_take_rapedrug)
+                    
                 EndIf
             ElseIf 15
                 stock_viagra = Player.getActorVar(rk_VB_stock_viagra)
@@ -328,5 +405,8 @@ OTHER: none
                 Player.animate()
             EndIf
         EndIf
+        
         followUp(rk_VB_Spot_Checks)
+        
+        clearBackground3D()
     SceneEnd()

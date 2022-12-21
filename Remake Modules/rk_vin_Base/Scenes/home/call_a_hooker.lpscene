@@ -84,11 +84,29 @@ OTHER: none
             paiePoMoeA = false
             While ChercheCul
                 If conti3
+                    MonPPU = false
+                    MonPPD = false
+                    conti = false
+                    Noway = false
+                    NowayDecu = false
+                    EtAlors = false
+                    conti6 = false
+                    conti7 = true
+                    tranOui = false
+                    paiePoDat = false
+                    paiePoDeu = false
+                    paiePoMoe = false
+                    paiePoDatA = false
+                    paiePoDeuA = false
+                    paiePoMoeA = false
+                    femaOui = false
+                    mascOui = false
+                
                     "What should I choose?"
                     0::"A woman"
                     1::"A man"
                     2::"A trans"
-                    3::"I want an elf, orc or a vampire"
+                    3:: isModEnabled(rk_vin_Fantasy)::"I want an elf, orc or a vampire"
                     99::"I changed my mind"
                     
                     If 0
@@ -110,6 +128,8 @@ OTHER: none
                             passOn(Dating)
                         EndIf
                         followUp(rk_VB_call_a_hookxxFanta)
+                        ChercheCul = false
+                        conti7 = false
                     Else
                         ChercheCul = false
                         Noway = true
@@ -148,13 +168,13 @@ OTHER: none
                         EndIf
                         If femaOui
                             Actor = generatePersonTemporary()
-                            While Actor.isMale() && Actor.isTrans()
+                            While !Actor.isFemale()
                                 Actor = generatePersonTemporary()
                             EndWhile
                             Actor.dressUniform(sexwork)
                         ElseIf mascOui
                             Actor = generatePersonTemporary()
-                            While !Actor.isMale() && Actor.isTrans()
+                            While !Actor.isMale() && !Actor.isTrans()
                                 Actor = generatePersonTemporary()
                             EndWhile
                             Actor.dress()
@@ -334,6 +354,8 @@ OTHER: none
                     ElseIf Actor.isEthnic(white) && !Actor.isMale() && !isTimingOut(strt_white_f)
                         Actor.blendPreset(strt_white_f)
                     EndIf
+                    Actor.show(2)
+                    "..."
                     secondScreen(Actor)
                     Actor.show()
                     If MonPPD
@@ -341,7 +363,7 @@ OTHER: none
                     Else
                         "This hooker charges <BeastPl> for <Actor.his_or_her> private services"
                     EndIf
-                    "Should I arrange to have sex with this <Actor.him_or_her>?"
+                    "Should I arrange to have sex with <Actor.him_or_her>?"
                     0:: money > BeastP9 ::"Yes"
                     1:: "Too expensive"
                     2:: "Check another one"
@@ -357,6 +379,7 @@ OTHER: none
                     ElseIf 1
                         NowayDecu = true
                         ChercheCul = false
+                        conti7 = false
                     EndIf
                     Actor.hide()
                     secondScreen()
@@ -387,7 +410,7 @@ OTHER: none
                 Else
                     "In no time at all, the hooker arrived and we got it on immediately."
                 EndIf
-                If Random(0, 100) < 10 || [Random(0, 100) < 25 && isModEnabled(vin_Interracial)]
+                If random(0, 100) < 10 || [random(0, 100) < 25 && isModEnabled(vin_Interracial)]
                     Freedom = false
                     "Within a few minutes of meeting this exotic fresh blood, I couldn't help but notice how much <Actor.he_or_she> struggles with the language and seems to know nothing about this country or anyone here."
                     "It was obvious as day that this prostitute has been a victim of human trafficking ..."
@@ -410,7 +433,7 @@ OTHER: none
                         karma += 30
                         Freedom = true
                     ElseIf 1
-                        If Random(0, 100) < interpersonal
+                        If random(0, 100) < interpersonal
                             "I threatened to expose to the local authorities what the escort agency is up to in terms of human trafficking unless they set <Actor.him_or_her> free. Thankfully, my tactic worked and I secured <Actor.his_or_her> freedom."
                             karma += 30
                             Freedom = true
@@ -512,6 +535,7 @@ OTHER: none
                         EndIf
                     Else
                         "I paid the hooker and <Actor2.he_or_she> left for another clients. Good service that was!"
+                        conti7 = false
                     EndIf
                 EndIf
             EndIf
@@ -521,7 +545,7 @@ OTHER: none
                 0::money > BeastP2 :: "Accept"
                 1:: "Refuse"
                 
-                If 1
+                If 0
                     conti7 = true
                     money -= BeastP2
                 Else
@@ -569,7 +593,8 @@ OTHER: none
             EndIf
             If Noway
                 SceneEnd()
-            ElseIf NowayDecu
+            EndIf
+            If NowayDecu
                 "No way. I'm not so desperate that I have to pay to get laid."
             EndIf
         EndIf
