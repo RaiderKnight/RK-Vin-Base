@@ -2,7 +2,7 @@ WHAT: all
 WHERE: sports_centre
 WHEN: 0 - 24
 WHO: none
-OTHER: !Player.isFemale() && Player:fertility > 0 && Random(70, 100) < fitness && Random(70, 100) < attractiveness
+OTHER: !Player.isFemale() && Player:fertility > 0 && random(70, 100) < fitness && random(70, 100) < attractiveness
 
     SceneStart()
 
@@ -13,7 +13,7 @@ OTHER: !Player.isFemale() && Player:fertility > 0 && Random(70, 100) < fitness &
         Actor = generatePersonTemporary()
         While !Actor.isFemale()
             Actor = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor.dress()
         Actor.show()
         "I was just about to leave the gym when I was suddenly approached by a woman I've never met before."
@@ -44,6 +44,6 @@ OTHER: !Player.isFemale() && Player:fertility > 0 && Random(70, 100) < fitness &
             exchangeContact(Actor)
         Else
             Player:: "Sorry, but that's a crazy idea ... Why would I want to impregnate a total stranger?"
-        Endif
+        EndIf
     SceneEnd() // Improved by Raddeck
     timeout(1000, stranger_proposes_baby)

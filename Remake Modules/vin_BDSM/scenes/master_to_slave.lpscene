@@ -37,7 +37,7 @@ OTHER:
             ElseIf 1
                 "Who should I invite to fuck my slave?"
                 selectNpc()
-                Actor2 = getSelectedNpc()
+                Actor2 = getSelectedNPC()
                 
                 If Actor2.isInterestedIn(Actor) && [Actor2:perversion > 50 || Actor2.hadSex()]
                     Actor2.dress()
@@ -54,7 +54,7 @@ OTHER:
                         1:: "I can 'train' <Actor4.him_or_her> for you"
                         
                         If 0
-                            "I decided to give <Actor2.name> some advices on how to gradually make <Actor2.his_or_her> <Actor4.boyfriend_or_girlfriend> more submissive."
+                            "I decided to give <Actor2.name> some advice on how to gradually make <Actor2.his_or_her> <Actor4.boyfriend_or_girlfriend> more submissive."
                             Actor4:masochist += 2
                         Else
                             Actor2:: "Of course, you're the expert after all ... Let me bring <Actor4.him_or_her> over for you to train."
@@ -123,12 +123,30 @@ OTHER:
                 Actor.dressBondage(Shincuffs)
                 Actor.dressBondage(Thighcuffs)
                 "I also left a sign next to <Actor.him_or_her> that simply said 'Enjoy!'"
+                fourrer = 0
                 count = 0
                 While count < 3
                     Actor2 = generatePersonTemporary()
-                    While !Actor.isInterestedIn(Actor2)
-                        Actor2 = generatePersonTemporary()
-                    EndWhile
+                    If Actor.isMale() && Actor2.isMale() && fourrer == 0
+                        While !Actor2.isMale() && !Actor.isInterestedIn(Actor2)
+                            Actor2 = generatePersonTemporary()
+                        EndWhile
+                        fourrer = 1
+                    Else
+                        While Actor2.isMale() && !Actor.isInterestedIn(Actor2)
+                            Actor2 = generatePersonTemporary()
+                        EndWhile
+                    EndIf
+                    If !Actor.isMale() && !Actor2.isMale() && fourrer == 0
+                        While Actor2.isMale() && !Actor.isInterestedIn(Actor2)
+                            Actor2 = generatePersonTemporary()
+                        EndWhile
+                        fourrer = 1
+                    Else
+                        While !Actor2.isMale() && !Actor.isInterestedIn(Actor2)
+                            Actor2 = generatePersonTemporary()
+                        EndWhile
+                    EndIf
                     Actor2.randomizeRace()
                     Actor2.randomizeFace()
                     Actor2.randomizeHairs()
@@ -169,6 +187,25 @@ OTHER:
             ElseIf 4
                 Actor3 = Actor.getRelatedPerson(Siblings, Cousins, ParentChild)
                 RelSlave = Actor3.getActorVar(tag_Slave)
+                If !Actor3.isValid()
+                    Actor3 = generatePersonTemporary()
+                    While !Actor3.isSameGender(Player) && !Actor3.isInterestedIn(Player)
+                        Actor3 = generatePersonTemporary()
+                    EndWhile
+                    Actor3.makeInterested(Player)
+                    Actor3:masochist => random(30, 100)
+                    Actor3.makePermanent()
+                    If Actor3:age - Actor:age > 18
+                        addNpcRelationship(ParentChild, Actor3, Actor)
+                    ElseIf Actor:age - Actor3:age > 18
+                        addNpcRelationship(ParentChild, Actor, Actor3)
+                    Else
+                        Random
+                            addNpcRelationship(Siblings, Actor, Actor3)
+                            addNpcRelationship(Cousins, Actor, Actor3)
+                        EndRandom
+                    EndIf
+                EndIf
                 If RelSlave > 0
                     "Of course, one of <Actor.name>'s family members, <Actor3.name> is another one of my slaves as well. <Actor3.He_or_She> should be around since they live together. Now that I'm done with <Actor.name>, should I demand that <Actor3.name> serve me as well?"
                     0:: "Demand my other slave <Actor3.name>'s presence"
@@ -178,26 +215,7 @@ OTHER:
                         Actor3.passOn()
                         followUp(master_to_slave)
                     EndIf
-                ElseIf !Actor3.isValid() || [Actor3:masochist > 25 && !Actor3.isMale() && Actor3.isInterestedIn(Player) && Player.isInterestedIn(Actor3)]
-                    If !Actor3.isValid()
-                        Actor3 = Actor.generatePersonTemporaryMatchRace()
-                        While !Actor3.isFemale()
-                            Actor3 = Actor.generatePersonTemporaryMatchRace()
-                        EndWhile
-                        Actor3.makeInterested(Player)
-                        Actor3:masochist => random(30, 100)
-                        Actor3.makePermanent()
-                        If Actor3:age - Actor:age > 18
-                            addNpcRelationship(ParentChild, Actor3, Actor)
-                        ElseIf Actor:age - Actor3:age > 18
-                            addNpcRelationship(ParentChild, Actor, Actor3)
-                        Else
-                            Random
-                                addNpcRelationship(Siblings, Actor, Actor3)
-                                addNpcRelationship(Cousins, Actor, Actor3)
-                            EndRandom
-                        EndIf
-                    EndIf
+                ElseIf Actor3:masochist > 25
                     Actor3.dress()
                     Actor3.show()
                     "Just as I was having my fun with my slave <Actor.name>, another member of <Actor.his_or_her> family <Actor3.name> made <Actor3.his_or_her> presence known. <Actor3.He_or_She> must have followed us and seen everything."
@@ -246,13 +264,14 @@ OTHER:
                     Actor.dressBondage(Collar)
                     "To show my newly recognized ownership of my new slave, I put a collar around <Actor.his_or_her> neck and forbid <Actor.him_or_her> from ever removing it."
                     Actor:masochist => 100
-                Else // Start edit Raddeck
+                Else
                     Actor:masochist -= 5
                     "Unfortunately, <Actor.name> still showed some resistance and didn't quite submit to me just yet."
                     "What should I do?"
                     0::arousal > 15::"Punish <Actor.him_or_her> gently"
                     1::perversion > 25::"Show <Actor.him_or_her> who's the master here..."
                     2::perversion > 50::"Pee on <Actor.him_or_her> and fuck <Actor.him_or_her>"
+                    3::perversion > 50::"Ask <Actor.him_or_her> to eat your ass"
                     99::"Do nothing!"
                     
                     If 0
@@ -274,7 +293,7 @@ OTHER:
                         EndIf
                         
                         Player(Grin)::"Now, clean my <Player.dick_or_pussy>!"
-                        Filter(Aggressive, Blowjob)
+                        Filter(Oral)
                         Sex(Actor, Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
@@ -298,13 +317,21 @@ OTHER:
                         EndIf
                         
                         Player(Grin)::"Now, clean my <Player.dick_or_pussy>!"
-                        Filter(Aggressive, Blowjob)
+                        Filter(Oral)
                         Sex(Actor, Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         Actor:masochist += 10
                         Actor:attractiontoplayer += random(-2, 3)
+                    ElseIf 3
+                        Player(Grin)::"Okay, you don't want to submit to your master, so I'm going to have to punish you little scum."
+                        Player(Evil)::"Do your beautiful docile dog and come lick my ass to make up for it!"
+                        Filter(Rimjob)
+                        Sex(Player, Actor)
+                        If HungerEnable > 0
+                            Player.modifyActorVar(rk_VB_Hunger, -2)
+                        EndIf
                     Else
                         "I'll give <Actor.him_or_her> some time to get used to it..."
                         Actor:attractiontoplayer += random(0, 2)

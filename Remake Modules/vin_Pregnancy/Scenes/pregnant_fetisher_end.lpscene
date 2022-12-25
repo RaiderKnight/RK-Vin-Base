@@ -22,7 +22,7 @@ OTHER: !Player.isPregnant()
             Actor.show()
             "His secretary set us up at a fine dining restaurant. It's rather unusual, previously we always met in hotel rooms."
             
-            If Random(50, 100) < Actor:attractiontoplayer
+            If random(50, 100) < Actor:attractiontoplayer
                 Actor.setActorVar(tag_pregfetisher, 0)
                 "At the dinner, to my shock, <Actor.name> confessed that he has developed genuine romantic feelings for me after being intimate with me so many times during our arrangement."
                 "And just like that, one of the richest men in the city asked me to be his girlfriend ..."
@@ -36,7 +36,7 @@ OTHER: !Player.isPregnant()
                     "Having a millionaire boyfriend will have some perks for sure, especially for a new mom like me."
                 Else
                     "Unfortunately for him, my feelings for him didn't change at all. I simply slept with him and satisfied his stupid pregnancy fetish for the money."
-                Endif
+                EndIf
             Else
                 "At the dinner, <Actor.name> said that despite having had the same arrangements with other women during their pregnancies, he enjoyed mine the most due to how sexually compatible we were."
                 "It was a shame that I had to eventually give birth, but there was no reason the arrangement would have to end like this."
@@ -53,15 +53,15 @@ OTHER: !Player.isPregnant()
                     EndIf
                     Player.impregnate(Actor)
                     "The money was transferred to my bank account afterwards. It was an even more generous sum than usual."
-                    money += Random(1000, 2000)
+                    money += random(1000, 2000)
                     Actor:attractiontoplayer += 5
                 Else
                     "I thanked him for the interest, but I thought it was time to move on with my life. I made enough money from the previous arrangement."
                     Actor.setActorVar(tag_pregfetisher, 0)
-                Endif
-            Endif
+                EndIf
+            EndIf
         Else
             Actor.setActorVar(tag_pregfetisher, 0)
             "I decided to put this chapter of my life behind me. I made my money."
-        Endif
+        EndIf
     SceneEnd() // Improved by Raddeck

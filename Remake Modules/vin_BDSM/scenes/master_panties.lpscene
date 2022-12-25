@@ -1,10 +1,9 @@
-WHAT: all
+WHAT: all, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all
 WHEN: 0-24
 WHO: Actor = getPerson(tag_Master); If Actor:perversion > 50 && random(0, 100) < 33
 OTHER:
 
-    // Your Master demands that you go about your everyday life without wearing panties. They then occasionally check and reward or punish you accordingly.
     
     SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
@@ -55,18 +54,36 @@ OTHER:
                 Player.dressBondage(Shincuffs)
                 Player.dressBondage(Thighcuffs)
                 "<Actor.He_or_She> also left a sign next to me that simply said 'Fuck <Player.him_or_her> hard! This slave dares to disobey <Player.his_or_her> <Actor.Master_or_Mistress>'"
+                fourrer = 0
                 count = 0
                 While count < 3
                     Actor2 = generatePersonTemporary()
-                    While !Actor2.isMale()
-                        Actor2 = generatePersonTemporary()
-                    EndWhile
+                    If Player.isMale() && Actor2.isMale() && fourrer == 0
+                        While !Actor2.isMale() && !Actor2.isInterestedIn(Player)
+                            Actor2 = generatePersonTemporary()
+                        EndWhile
+                        fourrer = 1
+                    Else
+                        While Actor2.isMale() && !Actor2.isInterestedIn(Player)
+                            Actor2 = generatePersonTemporary()
+                        EndWhile
+                    EndIf
+                    If !Player.isMale() && !Actor2.isMale() && fourrer == 0
+                        While Actor2.isMale() && !Actor2.isInterestedIn(Player)
+                            Actor2 = generatePersonTemporary()
+                        EndWhile
+                        fourrer = 1
+                    Else
+                        While !Actor2.isMale() && !Actor2.isInterestedIn(Player)
+                            Actor2 = generatePersonTemporary()
+                        EndWhile
+                    EndIf
                     Actor2.randomizeRace()
                     Actor2.randomizeFace()
                     Actor2.randomizeHairs()
                     Actor2.dress()
                     Actor2.show()
-
+                    
                     "A stranger passed by and took up the offer and immediately became violent with me."
                     Filter(Aggressive)
                     Sex(Actor2, Player)
@@ -81,7 +98,7 @@ OTHER:
             Else
                 masochist += 2
                 mood += 30
-                "Thankfully, I've remembered to not wear any <P;ayer.boxers_or_panties> today just as my <Actor.Master_or_Mistress> demanded."
+                "Thankfully, I've remembered to not wear any <Player.boxers_or_panties> today just as my <Actor.Master_or_Mistress> demanded."
                 "Pleased by my obedience, my <Actor.Master_or_Mistress> decided to reward me with some of <Actor.his_or_her> spare changes and a good fuck."
                 money += 20
                 Sex(Actor, Player)

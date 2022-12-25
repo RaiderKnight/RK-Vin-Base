@@ -2,9 +2,10 @@ WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_ho
 WHERE: all
 WHEN: 8 - 20
 WHO: none
-OTHER: isModEnabled(vin_NonConsensual) && [[Player.isFemale() && Player.isGay()] || [Player.isFemale() && !Player.isGay() && 80 > Random(0, 100)]]
+OTHER: isModEnabled(vin_NonConsensual) && [[Player.isFemale() && Player.isGay()] || [Player.isFemale() && !Player.isGay() && 80 > random(0, 100)]]
 
     SceneStart()
+        Player.animate()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -57,7 +58,7 @@ OTHER: isModEnabled(vin_NonConsensual) && [[Player.isFemale() && Player.isGay()]
             Actor = generatePersonTemporary()
             While Actor.isMale()
                 Actor = generatePersonTemporary()
-            Endwhile
+            EndWhile
             
             Actor.dress()
             Actor.show()
@@ -117,10 +118,7 @@ OTHER: isModEnabled(vin_NonConsensual) && [[Player.isFemale() && Player.isGay()]
                         Player.setNoRedress(false)
                         SceneEnd()
                     EndIf
-                
                 EndIf
-                
-                // Start edit Raddeck
                 If Actor.isInterestedIn(Player) && Actor:arousal > 25 && Actor:perversion > 50
                     Actor(Happy):: "Great, ... is it possible to stroke yourself, just a little! I want you to show us a little more emotion on your face!"
                     "What I should do?"
@@ -129,20 +127,15 @@ OTHER: isModEnabled(vin_NonConsensual) && [[Player.isFemale() && Player.isGay()]
                     2::"Masturbate"
                     
                     If 0
-                    
                         Player(Surprised)::"Uh, you know what, I think I'll stick to my erotic poses ..."
                         Actor:arousal -= 1
                         masochist -= 1
-                         
                     ElseIf 1
-                    
                         "To satisfy the audience, I decided to caress myself sensually!"
                         Actor:arousal += 0.5
                         Actor:perversion += 1
                         masochist += 0.5
-                    
                     Else
-                    
                         "To satisfy the artists and the teacher, I decided to masturbate without shame!"
                         masochist += 1
                         Filter(solo)
@@ -198,19 +191,19 @@ OTHER: isModEnabled(vin_NonConsensual) && [[Player.isFemale() && Player.isGay()]
                             Player(Shocked):: "Yeah, right!"
                             Actor(Wink)::"Sorry my dear, that was a bad joke!"
                             mood -= 5
-                            Actor:rapportwithplayer -= Random(0, 2)
+                            Actor:rapportwithplayer -= random(0, 2)
                         Endif
                     Endif
                 Endif
                 energy -= 5
-                CashPGives = Random(100, 500)
+                CashPGives = random(100, 500)
                 CashPGives_loc = CashPGives.convertToLocalCurrency()
                 Actor(Happy):: "Ok…That is all, class. I hope you don’t missed any pose. Don’t forget the homework for tomorrow… Thanks again, lovely girl."
                 Actor(Happy):: "So <Player.name>, here's <CashPGives_loc> for your good performance today."
                 money += CashPGives
                 Player.setNoRedress(false)
                 If GetFucked
-                    CashPEGives = Random(150, 250)
+                    CashPEGives = random(150, 250)
                     CashPEGives_loc = CashPEGives.convertToLocalCurrency()
                     Actor(Grin):: "Also, before I forget, I'll give you this extra <CashPEGives_loc> for letting me fuck you. "
                     
@@ -219,7 +212,7 @@ OTHER: isModEnabled(vin_NonConsensual) && [[Player.isFemale() && Player.isGay()]
                     1::"No"
                     
                     If 0
-                        CashGives = Random(500, 5000)
+                        CashGives = random(500, 5000)
                         CashGives_loc = CashGives.convertToLocalCurrency()
                         "I wait until everyone leaves the class and ask the teacher…"
                         Player(Wink)::"Well, since everyone is gone my little bitch, it's time to pay your debt my dear friend!"

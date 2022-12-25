@@ -9,7 +9,7 @@ OTHER:
     "It won't be an easy conversation to have and <Actor.name> may end up becoming very upset. Am I sure I want to try to convince her to have an abortion?"
     If !Actor.isDating()
         "The fact that I'm not even in a relationship with <Actor.name> makes this an even riskier conversation to have."
-    Endif
+    EndIf
     0:: "Yes"
     1:: "No"
     
@@ -19,8 +19,8 @@ OTHER:
             Actor2 = Actor.getRelatedPerson(Spouses, Dating)
             If Actor:masochist + Actor:attractiontoplayer > 100 && [!Actor2.isValid() || Actor.hadSex()] 
                 Success = true
-            Endif
-        Endif
+            EndIf
+        EndIf
         If Success || [Actor:masochist + Actor:attractiontoplayer > 100 && Actor.isDating()]
             Actor(Sad):: "I guess you're right ..."
             Loc = findNearbyBuilding(hospital)
@@ -31,13 +31,13 @@ OTHER:
             Actor:attractiontoplayer -= 10
             Actor:rapportwithplayer -= 10
         Else
-            Actor(Shocked):: "I can't believe what's coming out of your mouth! How heartlesss can you be?"
+            Actor(Shocked):: "I can't believe what's coming out of your mouth! How heartless can you be?"
             Actor(Sad):: "No way! I'm keeping the baby no matter what you think!"
             Actor:attractiontoplayer -= 30
             Actor:rapportwithplayer -= 30
-        Endif
+        EndIf
         karma -= 5
     Else
         "Let's think about this some more ..."
-    Endif
+    EndIf
     SceneEnd()

@@ -2,15 +2,13 @@ WHAT: all
 WHERE: home
 WHEN: 0 - 24
 WHO: none
-OTHER: !Player.isFemale() && Player:fertility > 0 && Random(50, 200) < fitness && Random(50, 200) < attractiveness && Random(50, 200) < intelligence
+OTHER: !Player.isFemale() && Player:fertility > 0 && random(50, 200) < fitness && random(50, 200) < attractiveness && random(50, 200) < intelligence
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        
         "I was approached by the organizer of a so-called 'Impregnation Party' where women wanting children come to get pregnant. They invite me to come as an impregnator spreading my seeds for the women."
         "Apparently, I met their genetic standards for fitness, attractiveness and intelligence. This shadowy organizer must have scouted me for a while."
         0:: "Come to the Impregnation Party"
@@ -25,7 +23,7 @@ OTHER: !Player.isFemale() && Player:fertility > 0 && Random(50, 200) < fitness &
                 Actor = generatePersonTemporary()
                 While !Actor.isFemale()
                     Actor = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor.dress()
                 Actor.show()
                 "The next woman that thinks I'm a suitable father for her child is <Actor.name>"
@@ -40,10 +38,10 @@ OTHER: !Player.isFemale() && Player:fertility > 0 && Random(50, 200) < fitness &
                         Player.modifyActorVar(rk_VB_Hunger, 3)
                     EndIf
                     Actor.impregnate(Player)
-                Endif
+                EndIf
                 Actor.delete()
                 count += 1
-            Endwhile
-        Endif
+            EndWhile
+        EndIf
     SceneEnd() // Improved by Raddeck
     timeout(1000, invited_impreg_party)

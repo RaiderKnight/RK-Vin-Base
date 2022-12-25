@@ -15,11 +15,11 @@ OTHER:
             "<Actor.name> and I made a pact to become pregnant together."
             Player.setWantsBabies(true)
             Actor.setWantsBabies(true)
-            If Random(0, 100) < 33 // double breeding party
+            If random(0, 100) < 33 // double breeding party
                 Actor.startDate()
                 followUp(double_breeding)
                 
-            Elseif Random(0, 100) < 50 // paying male prostitutes
+            ElseIf random(0, 100) < 50 // paying male prostitutes
                 "<Actor.name> suggests we should just get a male prostitute together to try and impregnate us?"
                 0:: "Yes"
                 1:: "No"
@@ -29,7 +29,7 @@ OTHER:
                     Actor2 = generatePersonTemporary()
                     While !Actor2.isMale()
                         Actor2 = generatePersonTemporary()
-                    Endwhile
+                    EndWhile
                     Actor2.dress()
                     Actor2.show()
                     Actor2:fertility_npc => 50
@@ -49,8 +49,8 @@ OTHER:
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
-                    Endif
-                Endif
+                    EndIf
+                EndIf
                 
             Else // going clubbing together to try your luck
                 "<Actor.name> suggests we should just go clubbing together to find two guys to try our luck?"
@@ -62,7 +62,7 @@ OTHER:
                     Actor2 = generatePersonTemporary()
                     While !Actor2.isMale()
                         Actor2 = generatePersonTemporary()
-                    Endwhile
+                    EndWhile
                     Actor2.dress()
                     Actor2.show()
                     Actor2:fertility_npc => 50
@@ -72,7 +72,7 @@ OTHER:
                     Actor3 = generatePersonTemporary()
                     While !Actor3.isMale()
                         Actor3 = generatePersonTemporary()
-                    Endwhile
+                    EndWhile
                     Actor3.dress()
                     Actor3.show()
                     Actor3:fertility_npc => 50
@@ -99,12 +99,11 @@ OTHER:
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
                         EndIf
-                    Endif
-                Endif    
-            Endif
+                    EndIf
+                EndIf    
+            EndIf
         Else
             "I'm not close enough to <Actor.name> to suggest this kind of things."
             "(Rapport must be more than 40)"
-        Endif
-    
+        EndIf
     SceneEnd() // Scene improved by Raddeck

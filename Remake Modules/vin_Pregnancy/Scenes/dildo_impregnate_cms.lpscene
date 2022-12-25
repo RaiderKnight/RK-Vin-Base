@@ -1,7 +1,7 @@
 WHAT: all
 WHERE: home
 WHEN: 0 - 24
-WHO: Actor = getRelative(); If !Actor.isMale() && Random(20, 100) < Actor:perversion && Actor:age < 45 && !Actor.isPregnant()
+WHO: Actor = getRelative(); If !Actor.isMale() && random(20, 100) < Actor:perversion && Actor:age < 45 && !Actor.isPregnant()
 OTHER: isModEnabled(vin_NonConsensual) && isModEnabled(vin_Incest) && [Player.isMale() || Player.isTrans()]
 
     SceneStart()
@@ -26,7 +26,7 @@ OTHER: isModEnabled(vin_NonConsensual) && isModEnabled(vin_Incest) && [Player.is
             Player.hide()
             Actor.show()
             "I should spy on <Actor.name> and see if my dear <Actor.relationship> actually uses that squirting dildo with my cum."
-            If Random(20, 100) < Actor:perversion
+            If random(20, 100) < Actor:perversion
                 "Looks like <Actor.he_or_she> is in a mood for some fun with the dildo, except this time it may carry some consequences."
                 Filter(Solo)
                 Sex(Actor)
@@ -37,10 +37,10 @@ OTHER: isModEnabled(vin_NonConsensual) && isModEnabled(vin_Incest) && [Player.is
                     "I'm half expecting her to announce a shock pregnancy soon ..."
                 Else
                     "Although she used the dildo, it's unlikely that the cum would work. It's been in there for too long."
-                Endif
+                EndIf
             Else
                 "Unfortunately, <Actor.name> wasn't in a mood to pleasure herself that night, so my cum went to waste."
-            Endif
-        Endif
+            EndIf
+        EndIf
     SceneEnd()
     timeout(500, dildo_impregnate_cms) // Improved by Raddeck

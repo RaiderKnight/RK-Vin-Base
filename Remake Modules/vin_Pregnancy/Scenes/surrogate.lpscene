@@ -12,13 +12,13 @@ OTHER: none
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         If Player.isPregnant()
             "I'm already pregnant ..."
-        Elseif fertility == 0
+        ElseIf fertility == 0
             "I'm not fertile at all to get  pregnant ..."
         Else
             Actor = generatePersonTemporary()
             While !Actor.isMale()
                 Actor = generatePersonTemporary()
-            Endwhile
+            EndWhile
             secondScreen(Actor)
             Actor.show()
             
@@ -51,17 +51,17 @@ OTHER: none
                     Else
                         Arti = true
                         "Left with no choice, <Actor.name> decided to go with the more scientific method after all ..."
-                    Endif
+                    EndIf
                 Else
                     Arti = true
-                Endif
+                EndIf
                 
                 If Arti
                     setBackground(hospital)
                     "A few weeks later, <Actor.name> and I underwent an artificial insemination procedure."
-                Endif
+                EndIf
                 Player.impregnate(Actor)
                 Surrogate.setGlobal(Price)
-            Endif     
-        Endif
+            EndIf     
+        EndIf
     SceneEnd() // Improved by Raddeck

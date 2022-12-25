@@ -1,7 +1,7 @@
 WHAT: all
 WHERE: home
 WHEN: 0-24
-WHO: Actor2 = getRelative(); Actor = Actor2.getRelatedPerson(Dating, Spouses); If Random(20, 100) < Actor2:likes_bondage && Actor2:perversion > 30 && Actor2.livesWithPlayer() && !Actor.isMale()
+WHO: Actor2 = getRelative(); Actor = Actor2.getRelatedPerson(Dating, Spouses); If Random(20, 100) < Actor2:likes_bondage && Actor2:perversion > 30 && Actor2.livesWithPlayer()
 OTHER:
 
     // A relative living with you put their SO in a blindfold and some other BDSM clothes. You can peek and get invited in if your relative has high perversion and rapport with you or trick them out of the room and lock them out. 
@@ -26,7 +26,7 @@ OTHER:
         2:: "Leave them be"
     
         If 0
-            SneakGame()
+            sneakGame()
             If Random(0, 100) < sneak
                 "I managed to stay still and watched the whole thing ..."
                 Sex(Actor2, Actor)
@@ -48,12 +48,12 @@ OTHER:
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
-                    Endif
+                    EndIf
                 Else
                     Actor2(Angry):: "What the fuck, <Actor2.callplayer>! Get out of here!"
-                Endif
-            Endif
-        Elseif 1
+                EndIf
+            EndIf
+        ElseIf 1
             "I moved back into the bathroom and shouted out"
             Player:: "<Actor2.name>, can you get the main door please? I have an important delivery but I'm stuck in the bathroom."
             Actor2:: "Sorry, baby, I'll be right back. My <Actor2.callplayer> is so annoying, honestly!"
@@ -68,6 +68,6 @@ OTHER:
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
-        Endif
+        EndIf
     SceneEnd() // scene improved by Raddeck
     timeout(300, have_blindfold_sex_relative)

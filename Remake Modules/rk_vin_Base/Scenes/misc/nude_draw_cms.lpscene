@@ -5,6 +5,7 @@ WHO: none
 OTHER: isModEnabled(vin_NonConsensual) && !Player.isMale()
 
     SceneStart()
+        Player.animate()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -27,7 +28,6 @@ OTHER: isModEnabled(vin_NonConsensual) && !Player.isMale()
             Actor8 = generatePersonTemporary()
             Actor9 = generatePersonTemporary()
             Actor10 = generatePersonTemporary()
-            Player.show(0,0,0)
             Actor1.dress()
             Actor2.dress()
             Actor3.dress()
@@ -51,33 +51,30 @@ OTHER: isModEnabled(vin_NonConsensual) && !Player.isMale()
             Actor8.show()
             Actor9.show()
             Actor10.show()
+            Player.show(0,0,0)
             "Others are coming ... "
-            // End edit Raddeck
-
             Actor = generatePersonTemporary()
             While !Actor.isMale()
                 Actor = generatePersonTemporary()
-            Endwhile
-            
+            EndWhile
             Actor.dress()
             Actor.show()
-            Actor.moveToPersonStand(Player, 50) // Edit Raddeck
+            Actor.moveToPersonStand(Player, 50)
             Actor(Happy):: "Thank you for coming, <Player.name>. My name is <Actor.name> and I am the teacher for this class."
             Actor(Serene):: "Your job is very simple: You only have to remove all your clothes and make some erotic poses, standing still while the students stares at you and draw."
-            Actor(Curious):: "Is it ok for you?" // Edit Raddeck
+            Actor(Curious):: "Is it ok for you?"
             0:: "Yes sure"
             1:: "No"
             
             If 0
                 Player.strip()
-                GetFucked = false // Edit Raddeck
+                GetFucked = false
                 Actor(Serene):: "Great, let’s begin then…"
                 Player.setNoRedress(true)
                 Actor:arousal += 0.25
                 Actor:perversion += 0.5
                 Player.show(0,0,0)
                 "The class begins and all the students stares at me, seeing my entire body naked while they draw."
-                // Start edit Raddeck
                 Actor1.animate(write)
                 Actor2.animate(write)
                 Actor3.animate(write)
@@ -88,17 +85,16 @@ OTHER: isModEnabled(vin_NonConsensual) && !Player.isMale()
                 Actor8.animate(write)
                 Actor9.animate(write)
                 Actor10.animate(write)
-                // End edit Raddeck
-                Actor.moveToPersonStand(Player, 20) // Edit Raddeck
+                Actor.moveToPersonStand(Player, 20)
                 "The teacher is starring at me in a creep way and is touching me, saying that he need to ajust my pose, but he is going in my private parts too…"
                 If Player.isFemale()
                     Filter(Stripsearch)
                     SexNoAffair(Actor, Player)
                 Else
-                    animatePair(Actor, Player, Stripsearch)
+                    Filter(Foreplay)
+                    SexNoAffair(Actor, Player)
+                    //animatePair(Actor, Player, Stripsearch)
                 EndIf
-                // Start edit Raddeck
-                
                 "Do I tell him to put his hands somewhere other than my genitals?"
                 0::"No"
                 1::"Yes"
@@ -116,9 +112,7 @@ OTHER: isModEnabled(vin_NonConsensual) && !Player.isMale()
                         Player.setNoRedress(false)
                         SceneEnd()
                     EndIf
-                
                 EndIf
-                
                 If Actor.isInterestedIn(Player) && Actor:arousal > 25 && Actor:perversion > 50
                     Actor(Happy):: "Great, ... is it possible to stroke yourself, just a little! I want you to show us a little more emotion on your face!"
                     "What I should do?"
@@ -136,7 +130,7 @@ OTHER: isModEnabled(vin_NonConsensual) && !Player.isMale()
                         Actor:arousal += 0.5
                         Actor:perversion += 1
                         masochist += 0.5
-                    
+                        
                     Else
                         "To satisfy the artists and the teacher, I decided to masturbate without shame!"
                         masochist += 1
@@ -148,65 +142,57 @@ OTHER: isModEnabled(vin_NonConsensual) && !Player.isMale()
                         Actor:perversion += 1
                         Actor:arousal += 1
                     
-                    Endif
-                Endif
+                    EndIf
+                EndIf
                 // End edit Raddeck
                 
                 If Actor.isInterestedIn(Player) && Actor:arousal > 25 && Actor:perversion > 50
                     Actor(Happy):: "Great, class. Knowing how to draw a gorgeous body, the next subject is human reproduction. All great artists need to learn that."
                     Player(Surprised):: "Wait, what do you mean by reproduction…"
-                    
                     If Player:masochist < Actor:masochist
-                    
                         Actor.strip()
-                        Actor:masochist += 1 // Edited by Raddeck
+                        Actor:masochist += 1
                         "Suddenly the teacher strips down, then he grabs me and insert his dick inside me, in front of everyone without my consent."
-                        "I'm to shy to resist, so be it!" // Edit Raddeck
-                        Player(Embarrassed)::"Okay, the party is started...." // Edit Raddeck
-                        mood -= 3 // Edit Raddeck
+                        "I'm to shy to resist, so be it!"
+                        Player(Embarrassed)::"Okay, the party is started...."
+                        mood -= 3
                         Sex(Actor, Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                         perversion += 2
                         GetFucked = true
-
-                    Else  
-                        
-                        // Edited by Raddeck
+                    Else
                         "Do I resist?"
                         0::"No"
                         1::"Yes"
                         
                         If 0
-                    
                             Actor.strip()
-                            Actor:masochist += 1 // Edited by Raddeck
+                            Actor:masochist += 1
                             "Suddenly the teacher strips down, then he grabs me and insert his d*ck inside me, in front of everyone without my consent."
-                            Player(Happy)::"Okay, the party is started...." // Edit Raddeck
-                            mood += 1 // Edit Raddeck
+                            Player(Happy)::"Okay, the party is started...."
+                            mood += 1
                             Sex(Actor, Player)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
                             perversion += 2
                             GetFucked = true
-                            
                         Else
-                        
                             Actor.strip()
-                            masochist -= 1 // Edited by Raddeck
+                            masochist -= 1
                             "Suddenly the teacher strips down, then he grabs me and ..."
                             Player(Shocked):: "No! wait… Are you kidding, if you think I will let you do that, you are dreaming?"
                             Actor(Embarrassed)::"No, no, that's not what you think, I just wanted to simulate the action ...!"
                             Player(Shocked):: "Yeah, right!"
                             Actor(Wink)::"Sorry miss, that was a bad joke!"
                             mood -= 5
-                            Actor:rapportwithplayer -= Random(0, 2)
+                            Actor:rapportwithplayer -= random(0, 2)
                             
-                        Endif
-                    Endif
-                Endif
+                        EndIf
+                    EndIf
+                EndIf
 
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -5)
@@ -214,7 +200,7 @@ OTHER: isModEnabled(vin_NonConsensual) && !Player.isMale()
                 energy -= 5
                 
                 // Start edit Raddeck
-                CashPGives = Random(100, 500)
+                CashPGives = random(100, 500)
                 CashPGives_loc = CashPGives.convertToLocalCurrency()
                 Actor(Happy):: "Ok…That's all, class. I hope you don’t missed any pose. Don’t forget the homework for tomorrow… Thanks again, lovely lady."
                 Actor(Happy):: "So <Player.name>, here's <CashPGives_loc> for your good performance today."
@@ -222,7 +208,7 @@ OTHER: isModEnabled(vin_NonConsensual) && !Player.isMale()
                 Player.setNoRedress(false)
                 If GetFucked
                 
-                    CashPEGives = Random(150, 250)
+                    CashPEGives = random(150, 250)
                     CashPEGives_loc = CashPEGives.convertToLocalCurrency()
                     Actor(Grin):: "Also, before I forget, I'll give you this extra <CashPEGives_loc> for letting me fuck you. "
                     Actor1.hide()
@@ -237,7 +223,7 @@ OTHER: isModEnabled(vin_NonConsensual) && !Player.isMale()
                     
                     If 0
                     
-                        CashGives = Random(500, 5000)
+                        CashGives = random(500, 5000)
                         CashGives_loc = CashGives.convertToLocalCurrency()
                         Actor6.hide()
                         Actor7.hide()
@@ -272,10 +258,10 @@ OTHER: isModEnabled(vin_NonConsensual) && !Player.isMale()
                             mood += 5
                             masochist -= 1
                             Actor.hide()
-                        Endif
-                    Endif
-                Endif // End edit Raddeck
-            Endif
-        Endif
+                        EndIf
+                    EndIf
+                EndIf // End edit Raddeck
+            EndIf
+        EndIf
     SceneEnd() // Improved by Raddeck
     timeout(1000, nude_draw_cms, rk_VB_nude_M_draw_cms, rk_VB_nude_Lesb_draw_cms, rk_VB_nude_gay_draw_cms)

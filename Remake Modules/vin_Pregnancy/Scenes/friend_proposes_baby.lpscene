@@ -1,11 +1,10 @@
 WHAT: all
 WHERE: all
 WHEN: 0 - 24
-WHO: Actor = getCompanion(); If !Actor.isPregnant() && !Actor.isMale() && !Actor.isDating() && Random(40, 100) < Actor:rapportwithplayer && Actor:fertility > 0 && !Actor.hasRelationship(Spouses, Dating, ParentChild) && Actor:likes_vaginal < 100
+WHO: Actor = getCompanion(); If !Actor.isPregnant() && !Actor.isMale() && !Actor.isDating() && random(40, 100) < Actor:rapportwithplayer && Actor:fertility > 0 && !Actor.hasRelationship(Spouses, Dating, ParentChild) && Actor:likes_vaginal < 100
 OTHER: !Player.isFemale() && Player:fertility > 0
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -22,7 +21,6 @@ OTHER: !Player.isFemale() && Player:fertility > 0
         1:: "No"
         
         If 0
-        
             perversion += 1
             Player(Happy):: "Of course, I'd love to help."
             Actor:likes_vaginal => 100
@@ -40,6 +38,6 @@ OTHER: !Player.isFemale() && Player:fertility > 0
             Actor.dress()
         Else
             Player(Sad):: "Sorry, but it would make our friendships too weird ..."
-        Endif
+        EndIf
     SceneEnd()
     timeout(500, friend_proposes_baby) // Improved by Raddeck

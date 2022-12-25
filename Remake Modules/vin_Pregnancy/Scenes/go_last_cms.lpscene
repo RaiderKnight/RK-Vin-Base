@@ -12,7 +12,8 @@ OTHER: isModEnabled(vin_NTR) && Player.isMale()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
         Actor.dress()
         Actor.show()
-        "Being quite an open-minded couple <Actor.name> and I have been invited to a party where she will be thoroughly bred by one guy after another while I watch before I actually have a go. This will give it the highest possibility that she will become pregnant by the end of the night."
+        "Being quite an open-minded couple <Actor.name> and I have been invited to a party where she will be thoroughly bred by one guy after another while I watch before I actually have a go."
+        "This will give it the highest possibility that she will become pregnant by the end of the night."
         "<Actor.name> seems quite interested in the idea."
         0:: "Attend the party"
         1:: "Maybe not"
@@ -29,14 +30,14 @@ OTHER: isModEnabled(vin_NTR) && Player.isMale()
                 Actor2 = generatePersonTemporary()
                 While !Actor2.isMale()
                     Actor2 = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor2:fertility = 100
                 Actor2.dress()
                 Actor2.show()
                 "The next guy to breed <Actor.name> is <Actor2.name>."
                 Sex(Actor2, Actor)
                 Actor2.hide()
-            Endwhile
+            EndWhile
             "Finally, now that <Actor.name> has been creampied again and again by multiple guys. It's my turn."
             Sex(Player, Actor)
             If HungerEnable > 0
@@ -44,9 +45,9 @@ OTHER: isModEnabled(vin_NTR) && Player.isMale()
             EndIf
             If !Actor.isPregnant()
                 Actor.impregnate(Player)
-            Endif
+            EndIf
             "With <Actor.name> full of cum from so many different guys, myself included, I have a funny feeling a baby was made tonight."
-        Endif
+        EndIf
     
     SceneEnd() // Improved by Raddeck
     timeout(500, go_last_cms)

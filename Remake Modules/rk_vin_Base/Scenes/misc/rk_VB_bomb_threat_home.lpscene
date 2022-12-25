@@ -40,7 +40,7 @@ OTHER: random(0, 100) > 90
         Player.animate(browse)
         "I was just checking my e-mail at work when I receive a strange call from an unknown caller ..."
         Actor(Serene)::"Hi! Can I talk to <Player.name> <Player.name_last>?"
-        Player(Curious)::"It's me, can I do for you <Actor.sir_or_miss>?"
+        Player(Curious)::"It's me, what can I do for you <Actor.sir_or_miss>?"
         Actor(Serene)::"Simply that I have installed a bomb in your house and I intend to detonate it if you do not do what I ask!"
         Player(Curious)::"Ok, what's going on! Is it a joke? That's not funny!"
         Actor(Serene)::"No, it's not a joke and you're going to listen!"
@@ -78,8 +78,10 @@ OTHER: random(0, 100) > 90
             If okfourronsTous
                 Player.animate()
                 "So I undressed naked and started to masturbate..."
+                Player.strip()
+                Player.setNoRedress(true)
                 Filter(Solo)
-                sex(Player)
+                Sex(Player)
                 Actor(Evil)::"Good good, now dance!"
                 "So I started to dance..."
                 Player.animate(dance)
@@ -91,10 +93,11 @@ OTHER: random(0, 100) > 90
                 Actor(Evil)::"That's good, you did it right!"
                 Player.animate()
                 Actor(Evil)::"Now, <Player.sir_or_miss> <Player.name_last>, you must go to the hotel and find room 33. You'll see a number written on the wall, that's the password to defuse the bomb."
+                Player.setNoRedress(false)
                 Player.dress()
                 "So I got dressed again, and left in the direction of the famous hotel..."
                 setBackground3D(Modules/rk_vin_Base/World/gl_street1.lpworld)
-                "Afte a while..."
+                "After a while..."
                 "When I arrived at the hotel, I finally found room 33..."
                 "The door is open, so I enter. Once inside I see a <Actor.guy_or_girl> who tells me.."
                 Random
@@ -122,7 +125,8 @@ OTHER: random(0, 100) > 90
                 Player(Sad)::"You pervert!"
                 Actor(Evil)::"Come on, get naked!"
                 "So I did..."
-                sexNoAffair(Actor, Player)
+                Player.strip()
+                SexNoAffair(Actor, Player)
                 If HungerEnable > 0
                     Player.modifyActorVar(rk_VB_Hunger, -2)
                 EndIf

@@ -5,7 +5,6 @@ WHO: Actor2 = getAnyRelative(Child); If Actor2:age < 14
 OTHER:
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -19,14 +18,14 @@ OTHER:
                 Actor4 = getCreature(Dog)
                 While !Actor.isInterestedIn(Actor4) && Actor4.isValid()
                     Actor4 = getCreature(Dog)
-                Endwhile    
+                EndWhile    
             EndIf
             
             If !Actor4.isValid()
                 Actor4 = getSpecific(Dating)
             EndIf
-            "I was lucky to get there earlier than expected" // Edit Raddeck
-            If Actor4.isValid() && Actor4.isCreature() && isModEnabled(vin_Bestiality) // Edit Raddeck
+            "I was lucky to get there earlier than expected"
+            If Actor4.isValid() && Actor4.isCreature() && isModEnabled(vin_Bestiality)
                 Player(Curious):: "What the fuck!"
                 setBackground(home)
                 Actor.show()
@@ -43,9 +42,9 @@ OTHER:
                     "I promptly fired the misbehaving babysitter. How dares <Actor.he_or_she> abuse my pet?"
                 ElseIf 1
                     Player(Flirty):: "I see you've discovered the pleasure of bestiality as well. I knew there was something special about you. That's why I hired you."
-                    Player(Flirty):: "But, if you want to play with my pet, you will have to play with me also." // Edit Raddeck
-                    Actor(Flirty):: "No problem..." // Edit Raddeck
-                    Player.strip() // Edit Raddeck
+                    Player(Flirty):: "But, if you want to play with my pet, you will have to play with me also."
+                    Actor(Flirty):: "No problem..."
+                    Player.strip()
                     Sex(Player, Actor, Actor4)
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -3)
@@ -57,17 +56,17 @@ OTHER:
                 Actor.show()
                 Filter(Solo)
                 Sex(Actor)
-                Actor.strip() // Edit Raddeck
+                Actor.strip()
                 "The babysitter is watching porn and masturbating while my kid is asleep"
                 0:: "Ignore it"
                 1:: "Threaten to fire <Actor.him_or_her>"
                 
                 If 1
-                    Player(Curious)::"What the fuck are you doing?" // Edit Raddeck
+                    Player(Curious)::"What the fuck are you doing?"
                     Actor(Shy):: "Please, don't fire me. I need the money for college. I'll do anything you want!"
-                    Player(Curious)::"Anything?" // Edit Raddeck
-                    Actor(Flirty):: "Anything..." // Edit Raddeck
-                    "What should I do?" // Edit Raddeck
+                    Player(Curious)::"Anything?"
+                    Actor(Flirty):: "Anything..."
+                    "What should I do?"
                     0:: "Demand sex"
                     1:: "Fire the babysitter"
                     2:: "Forgive"
@@ -179,11 +178,11 @@ OTHER:
                 1:: "Threaten to fire <Actor.him_or_her>"
                 
                 If 1
-                    ActorAngry = false // Edit Raddeck
-                    ActorAngry1 = false // Edit Raddeck
-                    ActorAngry2 = false // Edit Raddeck
-                    ActorAngry3 = false // Edit Raddeck
-                    Player(Curious)::"What the fuck are you doing in my bed?" // Edit Raddeck
+                    ActorAngry = false
+                    ActorAngry1 = false
+                    ActorAngry2 = false
+                    ActorAngry3 = false
+                    Player(Curious)::"What the fuck are you doing in my bed?"
                     Actor(Shy):: "Please, don't fire me. I need the money for college. I'll do anything you want!"
                     // Start edit Raddeck
                     If !Actor3.isInterestedIn(Player)
@@ -366,17 +365,17 @@ OTHER:
                 2:: "Surprise them and ignore"
                 
                 If 0
-                    Player(Angry)::"I have no choice but to fire you!" // Edit Raddeck
-                    Player(Angry)::"Thank you for everything, now leave!"  // Edit Raddeck
-                    Actor(Sad)::"Ok, don't get mad, I'm leaving!" // Edit Raddeck
+                    Player(Angry)::"I have no choice but to fire you!"
+                    Player(Angry)::"Thank you for everything, now leave!" 
+                    Actor(Sad)::"Ok, don't get mad, I'm leaving!"
                     Actor.setActorVar(tag_babysitter, 0)
                     "I promptly fired the misbehaving babysitter."
                     "I'll deal with my <Actor4.boyfriend_or_girlfriend> later ..."
-                    mood -= random(0, 5) // Edit Raddeck
+                    mood -= random(0, 5)
                 ElseIf 1
                     Player(Flirty):: "Having fun with the babysitter without me, are you?"
                     Actor4(Flirty):: "Why don't you come join us instead of standing there watching and complaining?"
-                    Actor3(Flirty):: "Yeah, what are you waiting for?" // Edit Raddeck
+                    Actor3(Flirty):: "Yeah, what are you waiting for?"
                     Player.strip()
                     Actor3.strip()
                     Actor4.strip()
@@ -403,8 +402,8 @@ OTHER:
                 EndIf
             Else
                 "I went back to see the sitter if <Actor.he_or_she> was doing <Actor.his_or_her> job correctly."
-                "And or as usual, <Actor.he_or_she> is doing <Actor.his_or_her> job right." // Edit Raddeck
-                mood += 3 // Edit Raddeck
+                "And or as usual, <Actor.he_or_she> is doing <Actor.his_or_her> job right."
+                mood += 3
             EndIf
         Else
             "My <Actor2.son_or_daughter> is only <Actor2:age> and needs a babysitter. I should hire one."

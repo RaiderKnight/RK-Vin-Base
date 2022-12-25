@@ -5,10 +5,12 @@ WHO: none
 OTHER: none
 
     SceneStart()
-    
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         Actor = getCompanionCreature()
-        If Actor.isCreatureType(Dog) && Random(0, 200) < Actor:interpersonal + Actor:fitness
-        
+        If Actor.isCreatureType(Dog) && random(0, 200) < Actor:interpersonal + Actor:fitness
             Actor.show(2)
             "<Actor.name> is wagging <Actor.his_or_her> tail. <Actor.He_or_She> seems to be in a mood to play fetch."
             0:: "Play catch with <Actor.him_or_her>"
@@ -16,27 +18,21 @@ OTHER: none
             
             If 0
                 Player(Happy):: "Good <Actor.boy_or_girl>! There, fetch that ..."
-                Actor:rapportwithplayer += Random(0, 1)
-                Actor:attractiontoplayer += Random(0, 1)
-                Actor:interpersonal += Random(0, 1)
-                Player:mood += Random(0, 5)
+                Actor:rapportwithplayer += random(0, 1)
+                Actor:attractiontoplayer += random(0, 1)
+                Actor:interpersonal += random(0, 1)
+                Player:mood += random(0, 5)
                 passTime(0.5, 1)
             Else
                 Player(Annoyed):: "Not now big <Actor.boy_or_girl>!"
-                Actor:rapportwithplayer -= Random(0, 1)
-                Actor:attractiontoplayer -= Random(0, 1)
-                Actor:interpersonal -= Random(0, 1)
-            Endif
-            
-        Elseif Actor.isCreatureType(Dog)
-        
+                Actor:rapportwithplayer -= random(0, 1)
+                Actor:attractiontoplayer -= random(0, 1)
+                Actor:interpersonal -= random(0, 1)
+            EndIf
+        ElseIf Actor.isCreatureType(Dog)
             "<Actor.name> don't want to play fetch!"
-        
         Else
-
             "You don't have dog!"
-        
-        Endif
-
+        EndIf
     SceneEnd() // Improved by Raddeck
     // timeout(24, pet_plays_fetch)

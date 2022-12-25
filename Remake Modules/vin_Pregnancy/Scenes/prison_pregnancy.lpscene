@@ -6,7 +6,6 @@ OTHER: !Player.isPregnant() && !Player.isMale()
 
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -14,7 +13,7 @@ OTHER: !Player.isPregnant() && !Player.isMale()
         Actor = generatePersonTemporary()
         While !Actor.isMale()
             Actor = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor.makeInterested(Player)
         dressFormal()
         Actor.dress()
@@ -24,7 +23,6 @@ OTHER: !Player.isPregnant() && !Player.isMale()
         1:: "Just an excuse to get laid ..."
         
         If 0
-        
             perversion += 1 // Edit by Raddeck
             Actor.makePermanent()
             Player.impregnate(Actor)
@@ -33,13 +31,11 @@ OTHER: !Player.isPregnant() && !Player.isMale()
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
-            
         Else
-        
             "I bet these sleazy lawyers suggest this to all their female clients ..."
             arousal -= 0.25 // Edit by Raddeck
             perversion -= 1 // Edit by Raddeck
-        Endif
+        EndIf
         
     SceneEnd() // Scene improved by Raddeck
     timeout(500, prison_pregnancy)

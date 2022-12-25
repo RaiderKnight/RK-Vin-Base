@@ -196,12 +196,30 @@ OTHER:
                 Actor3.dressBondage(Shincuffs)
                 Actor3.dressBondage(Thighcuffs)            
             EndIf
+            fourrer = 0
             count = 0
             While count < 4
                 Actor2 = generatePersonTemporary()
-                While !Actor.isInterestedIn(Actor2)
-                    Actor2 = generatePersonTemporary()
-                EndWhile
+                If Actor.isMale() && Actor2.isMale() && fourrer == 0
+                    While !Actor2.isMale() && !Actor.isInterestedIn(Actor2)
+                        Actor2 = generatePersonTemporary()
+                    EndWhile
+                    fourrer = 1
+                Else
+                    While Actor2.isMale() && !Actor.isInterestedIn(Actor2)
+                        Actor2 = generatePersonTemporary()
+                    EndWhile
+                EndIf
+                If !Actor.isMale() && !Actor2.isMale() && fourrer == 0
+                    While Actor2.isMale() && !Actor.isInterestedIn(Actor2)
+                        Actor2 = generatePersonTemporary()
+                    EndWhile
+                    fourrer = 1
+                Else
+                    While !Actor2.isMale() && !Actor.isInterestedIn(Actor2)
+                        Actor2 = generatePersonTemporary()
+                    EndWhile
+                EndIf
                 Actor2.randomizeRace()
                 Actor2.randomizeFace()
                 Actor2.randomizeHairs()

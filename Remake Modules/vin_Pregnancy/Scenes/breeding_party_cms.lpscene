@@ -24,9 +24,9 @@ OTHER: none
                 Player.modifyActorVar(rk_VB_UrgeToPee, 1.5)
             EndIf
             
-        Elseif Player.isMale()
+        ElseIf Player.isMale()
             Player(Sad):: "I can't get pregnant!"
-        Elseif !ForcedTrigger()
+        ElseIf !ForcedTrigger()
             "Since <CurrentCompanion.name> has said that <CurrentCompanion.he_or_she> really wants a baby, should I suggest to <CurrentCompanion.him_or_her> that we arrange a breeding party for <CurrentCompanion.him_or_her>?"
             0:: "Yes"
             1:: "No"
@@ -35,12 +35,12 @@ OTHER: none
                 Player(Flirty):: "A breeding party sounds like a wonderful idea!"
                 BreedingPartyYES = true
             Else
-                Player(Angry):: "Absolutely not! I refuse to be a cum-dumpster for random guys to impregnante!"
-            Endif
+                Player(Angry):: "Absolutely not! I refuse to be a cum-dumpster for random guys to impregnate!"
+            EndIf
         Else
             "Since <CurrentCompanion.name> has said that <CurrentCompanion.he_or_she> really wants a baby, I asked <CurrentCompanion.him_or_her> if we should arrange a breeding party for <CurrentCompanion.him_or_her>."
             BreedingPartyYES = true
-        Endif
+        EndIf
         
         If BreedingPartyYES
             "So we agreed to search for breeders for <CurrentCompanion.him_or_her>, but the most important part of which is that <CurrentCompanion.he_or_she> agreed to have sex without protection."
@@ -57,17 +57,17 @@ OTHER: none
                 Guest1 = getSelectedNPC()
                 If !Guest1.isValid()
                     "I can't quite decide on who to invite."
-                Elseif Guest1.isFemale()
+                ElseIf Guest1.isFemale()
                     "I should'nt invite woman."
                     Guest1.delete()
-                Elseif Guest1:perversion > 20 && Guest1:rapportwithplayer > 0 && Guest1.isMale()
+                ElseIf Guest1:perversion > 20 && Guest1:rapportwithplayer > 0 && Guest1.isMale()
                     Guest1.hide()
                     "<Guest1.name> happily accepted my invitation."
                 Else
                     Guest1.hide()
                     "<Guest1.name> turned down my invitation. Oh well ..."
                     Guest1.delete()
-                Endif
+                EndIf
 
                 "Who should be the second to invite?"
                 Player.hide()
@@ -75,17 +75,17 @@ OTHER: none
                 Guest2 = getSelectedNPC()
                 If !Guest2.isValid()
                     "I can't quite decide on who to invite."
-                Elseif Guest2.isFemale()
+                ElseIf Guest2.isFemale()
                     "I should'nt invite woman."
                     Guest2.delete()
-                Elseif Guest2:perversion > 20 && Guest2:rapportwithplayer > 0 && Guest2.isMale()
+                ElseIf Guest2:perversion > 20 && Guest2:rapportwithplayer > 0 && Guest2.isMale()
                     Guest2.hide()
                     "<Guest2.name> happily accepted my invitation."
                 Else
                     Guest2.hide()
                     "<Guest2.name> turned down my invitation. Oh well ..."
                     Guest2.delete()
-                Endif
+                EndIf
 
                 "Who should be the third to invite?"
                 Player.hide()
@@ -93,17 +93,17 @@ OTHER: none
                 Guest3 = getSelectedNPC()
                 If !Guest3.isValid()
                     "I can't quite decide on who to invite."
-                Elseif Guest3.isFemale()
-                    "I should'nt invite woman."
+                ElseIf Guest3.isFemale()
+                    "I shouldn't invite woman."
                     Guest3.delete()
-                Elseif Guest3:perversion > 20 && Guest3:rapportwithplayer > 0 && Guest3.isMale()
+                ElseIf Guest3:perversion > 20 && Guest3:rapportwithplayer > 0 && Guest3.isMale()
                     Guest3.hide()
                     "<Guest3.name> happily accepted my invitation."
                 Else
                     Guest3.hide()
                     "<Guest3.name> turned down my invitation. Oh well ..."
                     Guest3.delete()
-                Endif
+                EndIf
 
                 "Who should be the next to invite?"
                 Player.hide()
@@ -111,17 +111,17 @@ OTHER: none
                 Guest4 = getSelectedNPC()
                 If !Guest4.isValid()
                     "I can't quite decide on who to invite."
-                Elseif Guest4.isFemale()
-                    "I should'nt invite woman."
+                ElseIf Guest4.isFemale()
+                    "I shouldn't invite woman."
                     Guest4.delete()
-                Elseif Guest4:perversion > 20 && Guest4:rapportwithplayer > 0 && Guest4.isMale()
+                ElseIf Guest4:perversion > 20 && Guest4:rapportwithplayer > 0 && Guest4.isMale()
                     Guest4.hide()
                     "<Guest4.name> happily accepted my invitation."
                 Else
                     Guest4.hide()
                     "<Guest4.name> turned down my invitation. Oh well ..."
                     Guest4.delete()
-                Endif
+                EndIf
 
                 "Who should we also invite?"
                 Player.hide()
@@ -129,17 +129,17 @@ OTHER: none
                 Guest5 = getSelectedNPC()
                 If !Guest5.isValid()
                     "I can't quite decide on who to invite."
-                Elseif Guest5.isFemale()
-                    "I should'nt invite woman."
+                ElseIf Guest5.isFemale()
+                    "I shouldn't invite woman."
                     Guest5.delete()
-                Elseif Guest5:perversion > 20 && Guest5:rapportwithplayer > 0 && Guest5.isMale()
+                ElseIf Guest5:perversion > 20 && Guest5:rapportwithplayer > 0 && Guest5.isMale()
                     Guest5.hide()
                     "<Guest5.name> happily accepted my invitation."
                 Else
                     Guest5.hide()
                     "<Guest5.name> turned down my invitation. Oh well ..."
                     Guest5.delete()
-                Endif
+                EndIf
 
                 "Who should be the last one to invite?"
                 Player.hide()
@@ -147,17 +147,17 @@ OTHER: none
                 Guest6 = getSelectedNPC()
                 If !Guest6.isValid()
                     "I can't quite decide on who to invite."
-                Elseif Guest6.isFemale()
-                    "I should'nt invite woman."
+                ElseIf Guest6.isFemale()
+                    "I shouldn't invite woman."
                     Guest6.delete()
-                Elseif Guest6:perversion > 20 && Guest6:rapportwithplayer > 0 && Guest6.isMale()
+                ElseIf Guest6:perversion > 20 && Guest6:rapportwithplayer > 0 && Guest6.isMale()
                     Guest6.hide()
                     "<Guest6.name> happily accepted my invitation."
                 Else
                     Guest6.hide()
                     "<Guest6.name> turned down my invitation. Oh well ..."
                     Guest6.delete()
-                Endif
+                EndIf
                 
                 If !Guest1.isValid()
                     Player.hide()
@@ -170,7 +170,7 @@ OTHER: none
                     Guest1.dress()
                     "As I couldn't decide on anyone, <CurrentCompanion.name> went ahead and invited someone <CurrentCompanion.he_or_she> knew, called <Guest1.name>."
                     Guest1.hide()
-                Endif
+                EndIf
 
                 If !Guest2.isValid()
                     Guest2 = generatePersonTemporary()
@@ -180,7 +180,7 @@ OTHER: none
                     Guest2.dress()
                     "As I couldn't find enough guys, <CurrentCompanion.name> made a call and invited someone <CurrentCompanion.he_or_she> knew, called <Guest2.name>."
                     Guest2.hide()
-                Endif
+                EndIf
 
                 If !Guest3.isValid()
                     Guest3 = generatePersonTemporary()
@@ -190,7 +190,7 @@ OTHER: none
                     Guest3.dress()
                     "As I couldn't decide on anyone, <CurrentCompanion.name> went out and invited someone <CurrentCompanion.he_or_she> knew, called <Guest3.name>."
                     Guest3.hide()
-                Endif
+                EndIf
 
                 If !Guest4.isValid()
                     Guest4 = generatePersonTemporary()
@@ -200,7 +200,7 @@ OTHER: none
                     Guest4.dress()
                     "As I couldn't find enough guys, <CurrentCompanion.name> asked <Guest4.name> and invited him."
                     Guest4.hide()
-                Endif
+                EndIf
 
                 If !Guest5.isValid()
                     Guest5 = generatePersonTemporary()
@@ -208,9 +208,9 @@ OTHER: none
                     Guest5.randomizeHairs()
                     Guest5.show(2)
                     Guest5.dress()
-                    "As I couldn't decide on anyone, <CurrentCompanion.name> checked her facebook and invited someone called <Guest5.name>."
+                    "As I couldn't decide on anyone, <CurrentCompanion.name> checked her Facebook and invited someone called <Guest5.name>."
                     Guest5.hide()
-                Endif
+                EndIf
 
                 If !Guest6.isValid()
                     Guest6 = generatePersonTemporary()
@@ -220,9 +220,9 @@ OTHER: none
                     Guest6.dress()
                     "As I couldn't find enough guys, <CurrentCompanion.name> invited a friend <CurrentCompanion.he_or_she> knew from work, called <Guest6.name>."
                     Guest6.hide()
-                Endif
+                EndIf
                 
-            Elseif 1
+            ElseIf 1
 
                 CurrentCompanion(Flirty):: "Since it will be your baby, why don't you pick the lucky studs?"
                 Player:: "That's a great idea! I'll do it right now! Let's see ..."
@@ -234,7 +234,7 @@ OTHER: none
                     Guest1.show(2)
                     "<CurrentCompanion.name> went ahead and invited someone <CurrentCompanion.he_or_she> knew, named <Guest1.name>."
                     Guest1.hide()
-                Endif
+                EndIf
 
                 If !Guest2.isValid()
                     Guest2 = generatePersonTemporary()
@@ -244,7 +244,7 @@ OTHER: none
                     Guest2.show(2)
                     "For Stud Number 2, <CurrentCompanion.name> invited <Guest2.name>."
                     Guest2.hide()
-                Endif
+                EndIf
 
                 If !Guest3.isValid()
                     Guest3 = generatePersonTemporary()
@@ -254,7 +254,7 @@ OTHER: none
                     Guest3.show(2)
                     "Lucky Number 3 is <CurrentCompanion.name>'s friend <Guest3.name>."
                     Guest3.hide()
-                Endif
+                EndIf
 
                 If !Guest4.isValid()
                     Guest4 = generatePersonTemporary()
@@ -264,7 +264,7 @@ OTHER: none
                     Guest4.show(2)
                     "Sperm Donor #4 is <Guest4.name>."
                     Guest4.hide()
-                Endif
+                EndIf
 
                 If !Guest5.isValid()
                     Guest5 = generatePersonTemporary()
@@ -274,7 +274,7 @@ OTHER: none
                     Guest5.show(2)
                     "Breeder No. 5: <Guest5.name>."
                     Guest5.hide()
-                Endif
+                EndIf
 
                 If !Guest6.isValid()
                     Guest6 = generatePersonTemporary()
@@ -284,12 +284,11 @@ OTHER: none
                     Guest6.show(2)
                     "And last, but not least, <CurrentCompanion.name> invited <Guest6.name>."
                     Guest6.hide()
-                Endif
+                EndIf
                 
             Else
-                Player:: "<CurrentCompanion.name> let me take some nude pictures of you to intice some breeding studs."
+                Player:: "<CurrentCompanion.name> let me take some nude pictures of you to seduce some breeding studs."
                 CurrentCompanion(Flirty):: "Of course! Let them get a preview of the merchandise before they buy!"
-
                 CurrentCompanion(Flirty):: "What kind of pictures do you want to take of me?"
                 0:: "Let's take pictures of just your pussy."
                 1:: "I guess full body view would be nice. Without your face."
@@ -299,106 +298,112 @@ OTHER: none
 
                 If 0
                     Player.strip()
-                Elseif 1
+                ElseIf 1
                     Player.strip()
-                Elseif 2
+                ElseIf 2
                     Player.strip()
                     pornfame += 1
-                Elseif 3
+                ElseIf 3
                     Player.strip()
                     If perversion > 70
                         Player(Flirty):: "I'll play with myself and you take pictures! Show them everything!"
                         Sex(Player)
                         Player.show(4)
                         CurrentCompanion(Flirty):: "That was great!"
-                        pornfame += Random(0, 15)
+                        pornfame += random(0, 15)
                         
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, 1)
                         EndIf
 
-                    Elseif perversion > 50
+                    ElseIf perversion > 50
                         Player(Flirty):: "Let's go with some full body shots!"
                         Player(Flirty):: "Be sure to take some nice shots of me."
-                        pornfame += Random(0, 2)
+                        pornfame += random(0, 2)
                     Else
                         Player(Flirty):: "Let show some anonymous body parts!"
                         Player(Flirty):: "Be sure to take some nice shots of me."
-                        pornfame += Random(0, 2)
-                    Endif
+                        pornfame += random(0, 2)
+                    EndIf
                     pornfame += 1
-                    CurrentCompanion:masochist += Random(0, 5)
-                    CurrentCompanion:perversion += Random(0, 3)
-                    perversion += Random(0, 5)
-                    masochist -= Random(0, 5)
-                Elseif 4
+                    CurrentCompanion:masochist += random(0, 5)
+                    CurrentCompanion:perversion += random(0, 3)
+                    perversion += random(0, 5)
+                    masochist -= random(0, 5)
+                ElseIf 4
                     pornfame += 1
-                    CurrentCompanion:masochist += Random(0, 3)
-                    CurrentCompanion:perversion += Random(0, 1)
-                    perversion += Random(0, 3)
-                    masochist -= Random(0, 7)
-                Endif
+                    CurrentCompanion:masochist += random(0, 3)
+                    CurrentCompanion:perversion += random(0, 1)
+                    perversion += random(0, 3)
+                    masochist -= random(0, 7)
+                EndIf
 
                 If !Guest1.isValid()
                     Guest1 = generatePersonTemporary()
                     While !Guest1.isMale()
                         Guest1 = generatePersonTemporary()
-                    endWhile
+                    EndWhile
                     Guest1.randomizeFace()
                     Guest1.randomizeHairs()
-                Endif
+                    Guest1.randomizeRace()
+                EndIf
 
                 If !Guest2.isValid()
                     Guest2 = generatePersonTemporary()
                     While !Guest2.isMale()
                         Guest2 = generatePersonTemporary()
-                    endWhile
+                    EndWhile
                     Guest2.randomizeFace()
                     Guest2.randomizeHairs()
-                Endif
+                    Guest2.randomizeRace()
+                EndIf
 
                 If !Guest3.isValid()
                     Guest3 = generatePersonTemporary()
                     While !Guest3.isMale()
                         Guest3 = generatePersonTemporary()
-                    endWhile
+                    EndWhile
                     Guest3.randomizeFace()
+                    Guest3.randomizeRace()
                     Guest3.randomizeHairs()
-                Endif
+                EndIf
 
                 If !Guest4.isValid()
                     Guest4 = generatePersonTemporary()
                     While !Guest4.isMale()
                         Guest4 = generatePersonTemporary()
-                    endWhile
+                    EndWhile
                     Guest4.randomizeFace()
+                    Guest4.randomizeRace()
                     Guest4.randomizeHairs()
-                Endif
+                EndIf
 
                 If !Guest5.isValid()
                     Guest5 = generatePersonTemporary()
                     While !Guest5.isMale()
                         Guest5 = generatePersonTemporary()
-                    endWhile
+                    EndWhile
                     Guest5.randomizeFace()
+                    Guest5.randomizeRace()
                     Guest5.randomizeHairs()
-                Endif
+                EndIf
 
                 If !Guest6.isValid()
                     Guest6 = generatePersonTemporary()
                     While !Guest6.isMale()
                         Guest6 = generatePersonTemporary()
-                    endWhile
+                    EndWhile
                     Guest6.randomizeFace()
+                    Guest6.randomizeRace()
                     Guest6.randomizeHairs()
-                Endif
+                EndIf
                 
                 Player.dress()
                 Player.show()
                 
                 "After a while the posting was overflowing with responses and <CurrentCompanion.name> started to choose the best looking guys."
                 
-            Endif
+            EndIf
             Player.hide()
             CurrentCompanion.hide()
             
@@ -461,42 +466,42 @@ OTHER: none
                 Breeder4 = Guest4
                 Breeder5 = Guest5
                 Breeder6 = Guest6
-            Elseif 1
+            ElseIf 1
                 Breeder1 = Guest2
                 Breeder2 = Guest1
                 Breeder3 = Guest3
                 Breeder4 = Guest4
                 Breeder5 = Guest5
                 Breeder6 = Guest6
-            Elseif 2
+            ElseIf 2
                 Breeder1 = Guest3
                 Breeder2 = Guest2
                 Breeder3 = Guest1
                 Breeder4 = Guest4
                 Breeder5 = Guest5
                 Breeder6 = Guest6
-            Elseif 3
+            ElseIf 3
                 Breeder1 = Guest4
                 Breeder2 = Guest2
                 Breeder3 = Guest3
                 Breeder4 = Guest1
                 Breeder5 = Guest5
                 Breeder6 = Guest6
-            Elseif 4
+            ElseIf 4
                 Breeder1 = Guest5
                 Breeder2 = Guest2
                 Breeder3 = Guest3
                 Breeder4 = Guest4
                 Breeder5 = Guest1
                 Breeder6 = Guest6
-            Elseif 5
+            ElseIf 5
                 Breeder1 = Guest6
                 Breeder2 = Guest2
                 Breeder3 = Guest3
                 Breeder4 = Guest4
                 Breeder5 = Guest5
                 Breeder6 = Guest1
-            Endif
+            EndIf
             
             Player.show()
             Player.strip()
@@ -505,13 +510,13 @@ OTHER: none
                 NotPregnantBefore = true
             Else
                 NotPregnantBefore = false
-            Endif
+            EndIf
             
             Filter(Vaginal)
             Sex(Breeder1, Player)
                         
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, 1)
+                Player.modifyActorVar(rk_VB_Hunger, 2)
             EndIf
             Breeder1.hide()
             
@@ -520,13 +525,13 @@ OTHER: none
                 FatherID = Breeder1.getID()
                 Player.setActorVar(NTRChildFather, FatherID)
                 NotPregnantBefore = false
-            Endif
+            EndIf
             
             Filter(Vaginal)
             Sex(Breeder2, Player)
                         
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, 1)
+                Player.modifyActorVar(rk_VB_Hunger, 2)
             EndIf
             Breeder2.hide()
             
@@ -535,13 +540,13 @@ OTHER: none
                 FatherID = Breeder2.getID()
                 Player.setActorVar(NTRChildFather, FatherID)
                 NotPregnantBefore = false
-            Endif
+            EndIf
             
             Filter(Vaginal)
             Sex(Breeder3, Player)
                         
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, 1)
+                Player.modifyActorVar(rk_VB_Hunger, 2)
             EndIf
             Breeder3.hide()
             
@@ -550,13 +555,13 @@ OTHER: none
                 FatherID = Breeder3.getID()
                 Player.setActorVar(NTRChildFather, FatherID)
                 NotPregnantBefore = false
-            Endif
+            EndIf
             
             Filter(Vaginal)
             Sex(Breeder4, Player)
                         
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, 1)
+                Player.modifyActorVar(rk_VB_Hunger, 2)
             EndIf
             Breeder4.hide()
             
@@ -565,13 +570,13 @@ OTHER: none
                 FatherID = Breeder4.getID()
                 Player.setActorVar(NTRChildFather, FatherID)
                 NotPregnantBefore = false
-            Endif
+            EndIf
             
             Filter(Vaginal)
             Sex(Breeder5, Player)
                         
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, 1)
+                Player.modifyActorVar(rk_VB_Hunger, 2)
             EndIf
             Breeder5.hide()
             
@@ -580,13 +585,13 @@ OTHER: none
                 FatherID = Breeder5.getID()
                 Player.setActorVar(NTRChildFather, FatherID)
                 NotPregnantBefore = false
-            Endif
+            EndIf
             
             Filter(Vaginal)
             Sex(Breeder6, Player)
                         
             If HungerEnable > 0
-                Player.modifyActorVar(rk_VB_Hunger, 1)
+                Player.modifyActorVar(rk_VB_Hunger, 2)
             EndIf
             Breeder6.hide()
             
@@ -595,7 +600,7 @@ OTHER: none
                 FatherID = Breeder6.getID()
                 Player.setActorVar(NTRChildFather, FatherID)
                 NotPregnantBefore = false
-            Endif
+            EndIf
             
             Player.strip()
             Player.show()
@@ -606,7 +611,7 @@ OTHER: none
             
             If Player.isPregnant()
                 CurrentCompanion(Happy):: "I have a funny feeling that a baby was conceived tonight!"
-            Endif
-        Endif
+            EndIf
+        EndIf
         
     SceneEnd() // Improved by Raddeck

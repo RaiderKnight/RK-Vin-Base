@@ -5,6 +5,7 @@ WHO: none
 OTHER: isModEnabled(vin_NonConsensual) && Player.isMale()
 
     SceneStart()
+        Player.animate()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -54,7 +55,7 @@ OTHER: isModEnabled(vin_NonConsensual) && Player.isMale()
             Actor = generatePersonTemporary()
             While Actor.isMale()
                 Actor = generatePersonTemporary()
-            Endwhile
+            EndWhile
             
             Actor.dress()
             Actor.show()
@@ -200,7 +201,7 @@ OTHER: isModEnabled(vin_NonConsensual) && Player.isMale()
                             Player(Shocked):: "Yeah, right!"
                             Actor(Wink)::"Sorry mister, that was a bad joke!"
                             mood -= 5
-                            Actor:rapportwithplayer -= Random(0, 2)
+                            Actor:rapportwithplayer -= random(0, 2)
                         Endif
                     Endif
                 Endif
@@ -210,14 +211,14 @@ OTHER: isModEnabled(vin_NonConsensual) && Player.isMale()
                 energy -= 5
                 
                 // Start edit Raddeck
-                CashPGives = Random(100, 500)
+                CashPGives = random(100, 500)
                 CashPGives_loc = CashPGives.convertToLocalCurrency()
                 Actor(Happy):: "Ok…That's all, class. I hope you don’t missed any pose. Don’t forget the homework for tomorrow… Thanks again, lovely boy."
                 Actor(Happy):: "So <Player.name>, here's <CashPGives_loc> for your good performance today."
                 money += CashPGives
                 Player.setNoRedress(false)
                 If GetFucked
-                    CashPEGives = Random(150, 250)
+                    CashPEGives = random(150, 250)
                     CashPEGives_loc = CashPEGives.convertToLocalCurrency()
                     Actor(Grin):: "Also, before I forget, I'll give you this extra <CashPEGives_loc> for letting me fuck you. "
                     Actor1.hide()
@@ -230,7 +231,7 @@ OTHER: isModEnabled(vin_NonConsensual) && Player.isMale()
                     1::"No"
                     
                     If 0
-                        CashGives = Random(500, 5000)
+                        CashGives = random(500, 5000)
                         CashGives_loc = CashGives.convertToLocalCurrency()
                         Actor6.hide()
                         Actor7.hide()

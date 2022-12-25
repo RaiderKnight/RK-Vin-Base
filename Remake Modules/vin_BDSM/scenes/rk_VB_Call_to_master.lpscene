@@ -47,8 +47,8 @@ OTHER: none
                         "Since it happened that I was with <CurrentCompanion.name>, who was another of my <Actor.Master_or_Mistress>'s slaves, we came together to serve our <Actor.Master_or_Mistress>."
                         Actor3 = CurrentCompanion
                         Actor3.dressBondage(Collar)
-                    Endif
-                Endif
+                    EndIf
+                EndIf
                 
                 If !Actor3.isValid()
                     Actor3 = getPerson(tag_SlaveNpc)
@@ -56,8 +56,8 @@ OTHER: none
                         "Another of my <Actor.Master_or_Mistress>'s slaves, <Actor3.name>, was already there as well."
                         Actor3.show()
                         Actor3.dressBondage(Collar)
-                    Endif
-                Endif
+                    EndIf
+                EndIf
                 FetMe = true
                 While FetMe
                     If ChoiceDOM == 1
@@ -174,12 +174,30 @@ OTHER: none
                                 Actor3.dressBondage(Shincuffs)
                                 Actor3.dressBondage(Thighcuffs)            
                             EndIf
+                            fourrer = 0
                             count = 0
                             While count < 3
                                 Actor2 = generatePersonTemporary()
-                                While !Actor.isInterestedIn(Actor2)
-                                    Actor2 = generatePersonTemporary()
-                                EndWhile
+                                If Actor.isMale() && Actor2.isMale() && fourrer == 0
+                                    While !Actor2.isMale() && !Actor.isInterestedIn(Actor2)
+                                        Actor2 = generatePersonTemporary()
+                                    EndWhile
+                                    fourrer = 1
+                                Else
+                                    While Actor2.isMale() && !Actor.isInterestedIn(Actor2)
+                                        Actor2 = generatePersonTemporary()
+                                    EndWhile
+                                EndIf
+                                If !Actor.isMale() && !Actor2.isMale() && fourrer == 0
+                                    While Actor2.isMale() && !Actor.isInterestedIn(Actor2)
+                                        Actor2 = generatePersonTemporary()
+                                    EndWhile
+                                    fourrer = 1
+                                Else
+                                    While !Actor2.isMale() && !Actor.isInterestedIn(Actor2)
+                                        Actor2 = generatePersonTemporary()
+                                    EndWhile
+                                EndIf
                                 Actor2.randomizeRace()
                                 Actor2.randomizeFace()
                                 Actor2.randomizeHairs()
@@ -316,7 +334,7 @@ OTHER: none
                         EndIf
                         
                         Actor(Grin)::"Now, clean my <Actor.dick_or_pussy>!"
-                        If Player.isMale()
+                        If Actor.isMale()
                             Filter(Blowjob)
                         Else
                             Filter(Licking)

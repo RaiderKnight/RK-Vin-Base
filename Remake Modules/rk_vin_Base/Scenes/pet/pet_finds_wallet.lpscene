@@ -1,10 +1,22 @@
 WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: all, -home, -work
 WHEN: 0-24
-WHO: Actor = getCompanionCreature(); If Actor.isCreatureType(Dog) && Random(0, 200) < Actor:intelligence
+WHO: Actor = getCompanionCreature(); If Actor.isCreatureType(Dog) && random(0, 200) < Actor:intelligence
 OTHER: none
 
     SceneStart()
+        OnVaVoir = false
+        Poubelle = false
+        JeCheckP = false
+        PrendArg = false
+        Actor69 = generatePersonTemporary()
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        VienMonChien = false
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
+        MonExta = random(25, 100)
+        MonExtaloc = MonExta.convertToLocalCurrency()
         Actor:: "Wuff! Wuff! Wuff!"
         "<Actor.name> seems to be barking for my attention and is asking me to follow <Actor.him_or_her>."
         0:: "Follow <Actor.his_or_her> lead"
@@ -16,19 +28,195 @@ OTHER: none
             "A few moments later ..."
             "Hmm, what's this <Actor.name>?"
             Player(Happy):: "Ah, someone dropped their wallet. Good <Actor.boy_or_girl>!"
-            0:: "Take the cash"
-            1:: "Hand it in to a police station"
-            
-            If 0
-                "I feel slightly guilty, but I need the money."
-                money += Random(20, 200)
-                Player(Evil):: "Well done, <Actor.boy_or_girl>. Keeping sniffing out lost wallets like this and we'll be filthy rich in no time."
-            Else
-                "I feel good about doing this. It's the right thing to do."
-                mood += Random(0, 40)
-            Endif
+            jeCheck = true
+            While jeCheck
+                0:: !JeCheckP::"See who it belongs to"
+                1:: !PrendArg::"Take the cash"
+                2:: !Poubelle::"Get rid of it"
+                99:: "Hand it in to a police station"
+                
+                If 0
+                    secondScreen(Actor69)
+                    Actor69.show()
+                    "This wallet belongs to a certain person named <Actor69.name> <Actor69.name_last>, <Actor69.he_or_she> lives not far from here."
+                    "Should I go take it to <Actor69.him_or_her> in person?"
+                    Actor69.hide()
+                    secondScreen()
+                    0::"Yes"
+                    1::"No"
+                    
+                    If 0
+                        OnVaVoir = true
+                        jeCheck = false
+                    Else
+                        "Nope, I got another idea!"
+                    EndIf
+                    jeCheckP = true
+                ElseIf 1
+                    "I feel slightly guilty, but I need the money."
+                    money += random(20, 200)
+                    Player(Evil):: "Well done, <Actor.boy_or_girl>. Keeping sniffing out lost wallets like this and we'll be filthy rich in no time."
+                    karma -= 1
+                    PrendArg = true
+                    jeCheck = false
+                ElseIf 2
+                    "I feel slightly guilty, but that's the way it is..."
+                    "I decided to throw it in the trash. Anyway, I'm sure that someone who finds my wallet would do the same thing...."
+                    karma -= 1
+                    Poubelle = true
+                    jeCheck = false
+                Else
+                    "I feel good about doing this. It's the right thing to do."
+                    mood += random(0, 40)
+                    If !PrendArg
+                        karma += 1
+                    EndIf
+                    jeCheck = false
+                EndIf
+            EndWhile
+            If OnVaVoir && isModEnabled(rk_vin_Base)
+                "I decided to go see this famous person to give <Actor69.him_or_her> <Actor69.his_or_her> wallet!"
+                "I knocked at <Actor69.his_or_her> door and in no time <Actor69.he_or_she> opened the door..."
+                Actor69(Curious)::"What can I do for you <Player.Sir_or_Miss>?"
+                Player.moveToPersonStand(Actor69, 50)
+                Player(Happy)::"Hi, my dog found your wallet while I was walking <Actor.him_or_her> in the park."
+                Actor69(Surprised)::"Oh nice! Thanks!"
+                If !PrendArg
+                    Actor69(Surprised)::"Wow, my money is still in there!"
+                    Actor69:rapportwithplayer += random(0, 2)
+                    Actor69:attractiontoplayer += random(0, 2)
+                    Actor69(Happy)::"Because you didn't steal anything from me! Here is <MonExtaloc> for the service!"
+                    money += MonExta
+                    If attractiveness > 50 && Actor69.isInterestedIn(Player)
+                        Actor69(Flirty)::"Also since you're not ugly at all, would you like a little extra, I'm alone right now, we could fuck!"
+                        "What I should do?"
+                        0::"Accept <Actor69.his_or_her> offer"
+                        1::"Refuse <Actor69.his_or_her> offer"
+                        
+                        If 0
+                            Random
+                                setBackground3D(Modules/vin_Base/Bedrooms/0.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/1.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/2.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/3.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/4.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/5.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/6.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/7.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/8.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/9.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/10.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/11.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/12.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/13.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/14.lpworld)
+                                setBackground3D(Modules/vin_Base/Bedrooms/15.lpworld)
+                            EndRandom
+                            "<Actor69.He_or_She> invites me into <Actor69.his_or_her> home, once inside we immediately get down to business..."
+                            Player.strip()
+                            Actor69.strip()
+                            Sex(Player, Actor69)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                            If isModEnabled(vin_Bestiality)
+                                Actor.show()
+                                "Too occupied at fucking <Actor69.name>, I didn't notice that our intense love making session has got my pet dog <Actor.name> all excited."
+                                "It's clear that <Actor.he_or_she> got horny from watching us and wants a piece of the action. Unless satisfied, <Actor.he_or_she> will spend the night barking and won't let me sleep, I'm sure."
+                                "What should I do?"
+                                0:: "Relieve <Actor.name> myself"
+                                1:: "Ask <Actor69.name> if <Actor69.he_or_she>'s willing to have a threesome"
+                                99:: "Do nothing"
+                            
+                                If 0
+                                    Actor69.hide()
+                                    "Once <Actor69.he_or_she> was left, I called my dog to relieved <Actor.him_or_her>!"
+                                    VienMonChien = true
+                                ElseIf 1
+                                    Player(Flirty)::"Looks like we make my dog horny!"
+                                    If Actor69.isInterestedIn(Actor) && Actor69:perversion > 50
+                                        Actor69(Flirty)::"Ah! Yeah! Tell <Actor.him_or_her> to come over and we'll have a threesome!"
+                                        If !Actor.isMale()
+                                            Player(Flirty)::"Come here my beautiful that I release you a little the pressure which you have in your dripping pussy."
+                                        Else
+                                            Player(Flirty)::"Come here my dog so I can take the pressure off your balls."
+                                        EndIf
+                                        Actor.moveToPerson(Player)
+                                        Player.strip()
+                                        Actor69.strip()
+                                        Sex(Actor, Player, Actor69)
+                                        If HungerEnable > 0
+                                            Player.modifyActorVar(rk_VB_Hunger, -3)
+                                        EndIf
+                                        Actor69:rapportwithplayer += random(0, 2)
+                                        Actor69:attractiontoplayer += random(0, 2)
+                                    Else
+                                        Actor69(Shocked)::"Don't count on me to satisfy <Actor.him_or_her> like I did with you! If that's what you think!"
+                                        Player(Sarcastic)::"No, not at all!"
+                                        Actor69:rapportwithplayer -= random(0, 1)
+                                        Actor69:attractiontoplayer -= random(0, 1)
+                                    EndIf
+                                EndIf
+                            EndIf
+                        Else
+                            Player(Sad)::"Sorry but I have a busy day, I can't accept your offer!"
+                            Actor69:rapportwithplayer -= random(0, 2)
+                            Actor69:attractiontoplayer -= random(0, 2)
+                        EndIf
+                        If !Actor69.isContactExchanged() && Actor69.isInterestedIn(Player)
+                            Actor69(Flirty)::"Maybe we should exchange numbers to see each other later?"
+                            0::"Accept <Actor69.his_or_her> offer"
+                            1::"Refuse <Actor69.his_or_her> offer"
+                            
+                            If 0
+                                Actor69.makePermanent()
+                                exchangeContact(Actor69)
+                                Actor69:rapportwithplayer += random(0, 2)
+                                Actor69:attractiontoplayer += random(0, 2)
+                                Actor69(Happy)::"Anyway, thanks again! Have a nice day!"
+                                Actor69.hide()
+                            Else
+                                Actor69(Sad)::"Anyway, thanks to your dog! Have a nice day!"
+                                Actor69:rapportwithplayer -= random(0, 2)
+                                Actor69:attractiontoplayer -= random(0, 2)
+                                Actor69.hide()
+                            EndIf
+                        Else
+                            Actor69.makePermanent()
+                            exchangeContact(Actor69)
+                            Actor69:rapportwithplayer += random(0, 2)
+                            Actor69:attractiontoplayer += random(0, 2)
+                            Actor69(Sad)::"Anyway, thanks to your dog! Have a nice day!"
+                            Actor69.hide()
+                        EndIf
+                        If VienMonChien
+                            perversion += random(0, 1)
+                            Actor.show()
+                            Player.strip()
+                            If !Actor.isMale()
+                                Player(Flirty)::"Come here my beautiful that I release you a little the pressure which you have in your dripping pussy."
+                            Else
+                                Player(Flirty)::"Come here my dog so I can take the pressure off your balls."
+                            EndIf
+                            Actor.moveToPerson(Player)
+                            Sex(Player, Actor)
+                            If HungerEnable > 0
+                                Player.modifyActorVar(rk_VB_Hunger, -2)
+                            EndIf
+                        EndIf
+                    Else
+                        Actor69(Sad)::"Anyway, thanks! Have a nice day!"
+                    EndIf
+                Else
+                    Actor69(Shocked)::"My money is gone but at least all my other cards are in there!"
+                    Actor69:rapportwithplayer -= random(0, 2)
+                    Actor69:attractiontoplayer -= random(0, 2)
+                    Actor69(Sad)::"Anyway, thanks to your dog! Have a nice day!"
+                EndIf
+            EndIf
         Else
             "No way, the last thing I want right now is to be led to a dead body or something."
-        Endif
+        EndIf
+        Actor69.hide()
     SceneEnd() // Improved by Raddeck
     timeout(548, pet_finds_wallet)

@@ -2,7 +2,7 @@ WHAT: all
 WHERE: all, -work
 WHEN: 8 - 22
 WHO: none
-OTHER: Random(1, 150) < modelfame && Random(30, 100) < attractiveness && !Player.isMale()
+OTHER: random(1, 150) < modelfame && random(30, 100) < attractiveness
 
     SceneStart()
         Hunger = Player.getActorVar(rk_VB_Hunger)
@@ -17,10 +17,10 @@ OTHER: Random(1, 150) < modelfame && Random(30, 100) < attractiveness && !Player
         
         If 0
             Player(Sad):: "Sorry, but I have a holiday planned on the day of the shoot ..."
-        Elseif 3 || Random(0, 100) < choice*modelfame
+        ElseIf 3 || random(0, 100) < choice*modelfame
             "The company accepted my demands."
             Player.strip()
-            setbackground(modeling)
+            setBackground(modeling)
             "The day of the shoot ..."
             Actor = generatePersonTemporary()
             Player.dressBondage(Collar)
@@ -35,13 +35,13 @@ OTHER: Random(1, 150) < modelfame && Random(30, 100) < attractiveness && !Player
             Player.dressBondage()
             Actor(Happy):: "Yup, that's how you do it. This is going to look so great!"
             
-            money += Random(400, 1500)/choice
+            money += random(400, 1500)/choice
             modelfame += 0.25
             
             If Actor.isInterestedIn(Player) && Actor:perversion > 50
                 "Throughout the shoot today, I can't help but notice how flirty the photographer has been."
                 Actor(Flirty):: "You know, to get far in this business, only look is not enough. We have to have a certain 'friendly' attitude."
-                AnimatePair(Player, Actor, Kissing)
+                animatePair(Player, Actor, Kissing)
                 Actor(Kiss):: "Mwah"
                 Actor(Flirty):: "You have great skin ... Oh look, where's my manner? I just couldn't help myself but touching you."
                 "Touching is an understatement, this perverted photographer was basically groping me."
@@ -53,7 +53,7 @@ OTHER: Random(1, 150) < modelfame && Random(30, 100) < attractiveness && !Player
                     Player(Angry):: "Sorry, I'm not a 'casting couch' type of <Player.guy_or_girl>. Why don't you find yourself some other <Player.gigolo_or_whore>?"
                     Actor(Angry):: "No need to get so serious! With that attitude, you're going nowhere!"
                     modelfame -= 1
-                Elseif 1
+                ElseIf 1
                     Player(Flirty):: "You're not bad looking yourself. I'm surprised you're always behind the camera because you look like you could be in front of it."
                     "I guess some harmless flirting for career advancement is a good deal."
                     modelfame += 1
@@ -66,12 +66,11 @@ OTHER: Random(1, 150) < modelfame && Random(30, 100) < attractiveness && !Player
                         Player.modifyActorVar(rk_VB_Hunger, -2)
                     EndIf
                     modelfame += 3
-                Endif
-            Endif
+                EndIf
+            EndIf
         Else
             "Unfortunately, the company considered my rate too high and hired another model for the job instead."
             mood -= 1
-        Endif
-    
+        EndIf
     SceneEnd() // scene improved by Raddeck
     timeout(100, photoshoot_bdsm)

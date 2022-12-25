@@ -13,70 +13,56 @@ OTHER: none
         stock_DildoQuality = Player.getActorVar(stock_DildoQuality)
         stock_DildoLuxe = Player.getActorVar(stock_DildoLuxe)
         stock_DildoFinest = Player.getActorVar(stock_DildoFinest)
-            
         stock_DildoType = stock_DildoCheap + stock_DildoQuality + stock_DildoLuxe + stock_DildoFinest
             
         stock_FleshlightPilot = Player.getActorVar(stock_FleshlightPilot)
         stock_FleshlightGripIce = Player.getActorVar(stock_FleshlightGripIce)
         stock_FleshlightTenga = Player.getActorVar(stock_FleshlightTenga)
         stock_FleshLightJack = Player.getActorVar(stock_FleshLightJack)
-            
         stock_FleshlightType = stock_FleshLightJack + stock_FleshlightTenga + stock_FleshlightGripIce + stock_FleshlightPilot
             
         stock_AnalPlugBVibe = Player.getActorVar(stock_AnalPlugBVibe)
         stock_AnalPlugTrainer = Player.getActorVar(stock_AnalPlugTrainer)
         stock_AnalPlugUnbound = Player.getActorVar(stock_AnalPlugUnbound)
         stock_AnalPlugTango = Player.getActorVar(stock_AnalPlugTango)
-                
         stock_AnalPlugType = stock_AnalPlugBVibe + stock_AnalPlugTrainer + stock_AnalPlugUnbound + stock_AnalPlugTango
         
         stock_LubeJOH2O = Player.getActorVar(stock_LubeJOH2O)
         stock_LubeCoconut = Player.getActorVar(stock_LubeCoconut)
         stock_LubeSilicone = Player.getActorVar(stock_LubeSilicone)
         stock_LubeForia = Player.getActorVar(stock_LubeForia)
-                
         stock_LubricantType = stock_LubeJOH2O + stock_LubeCoconut + stock_LubeSilicone + stock_LubeForia + stock_LubeForia
             
         stock_SexDollInflatable = Player.getActorVar(stock_SexDollInflatable)
         stock_SexDollClassic = Player.getActorVar(stock_SexDollClassic)
         stock_SexDollTPE = Player.getActorVar(stock_SexDollTPE)
         stock_SexDollRobot = Player.getActorVar(stock_SexDollRobot)
-                
         stock_SexDollType = stock_SexDollInflatable + stock_SexDollClassic + stock_SexDollTPE + stock_SexDollRobot
             
         stock_LotionHoneydew = Player.getActorVar(stock_LotionHoneydew)
         stock_LotionRedFlower = Player.getActorVar(stock_LotionRedFlower)
         stock_LotionNaturale = Player.getActorVar(stock_LotionNaturale)
         stock_LotionTHC = Player.getActorVar(stock_LotionTHC)
-
         stock_MassageLotionType = stock_LotionHoneydew + stock_LotionRedFlower + stock_LotionNaturale + stock_LotionTHC
         
         stock_MasturbatorPocket = Player.getActorVar(stock_MasturbatorPocket)
         stock_MasturbatorBubble = Player.getActorVar(stock_MasturbatorBubble)
         stock_MasturbatorMega = Player.getActorVar(stock_MasturbatorMega)
         stock_Lovebotz = Player.getActorVar(stock_Lovebotz)
-        
         stock_MasturbatorType = stock_MasturbatorPocket + stock_MasturbatorBubble + stock_MasturbatorMega + stock_Lovebotz
-            
         AdultToyBox_inventory = stock_MasturbatorType + stock_MassageLotionType + stock_SexDollType + stock_LubricantType + stock_AnalPlugType + stock_FleshlightType + stock_DildoType
-           
         HisMale = player.isMale()
         SheFemale = player.isFemale()
         TranseX = player.isTrans()
         HisGay = player.isGay()
-        
         IBuySextoy = Player.getActorVar(rk_VB_IBuySextoy)
-           
         If AdultToyBox_inventory < 0 
             Player(Anxious)::"I got nothing inside my adult toy box!"
-        
-                    
+        ElseIf !isModEnabled(rk_vin_Base)
+            "What are you trying to do?"
         ElseIf SheFemale
-        
             followUp(rk_VB_play_sextoysF)
-
         ElseIf HisMale || TranseX || HisGay
-
             Player(Curious)::"Which type of toy or lotion I want to play with?"
             0:: stock_DildoType > 0::"<stock_DildoType> Dildo(s) available"
             1:: stock_FleshlightType > 0::"<stock_FleshlightType> Fleshlight(s) available"
@@ -88,32 +74,21 @@ OTHER: none
             99::"Nevermind, later !"
 
             If 0 
-        
                 If stock_DildoType < 0
                     Player(Anxious)::"Ok, I don't have any dildo to play with! I have to go shopping!"
-                    
                 Else
-                    
                     If !HisGay
-                    
                         Player(Confused)::"Do I really want to play with that?"
                         4::"Why not!"
                         99::"No, curiosity I suppose...!"
 
                         If 4
-                        
                             GoForIt = 1
-                        
                         EndIf
-                        
                     Else
-                        
                         GoForIt = 1
-                        
                     EndIf
-                
                     If GoForIt > 0
-
                         Player(Curious)::"Which one I will use?"
                         1:: stock_DildoCheap > 0::"Play with Leda Dildo"
                         2:: stock_DildoQuality > 0::"Play with Lelo Inez Gold Dildo"
@@ -122,7 +97,6 @@ OTHER: none
                         99:: "I change my mind!"
 
                         If 1
-                            
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -1)
                             EndIf
@@ -144,10 +118,9 @@ OTHER: none
                                     fitness += 0.005
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
-                                
                                 ElseIf 2
                                     Player.modifyActorVar(stock_DildoCheap, -0.009)
                                     Player.modifyActorVar(stock_LubeCoconut, -0.05)
@@ -156,10 +129,9 @@ OTHER: none
                                     fitness += 0.004
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
-                            
                                 ElseIf 3
                                     Player.modifyActorVar(stock_DildoCheap, -0.009)
                                     Player.modifyActorVar(stock_LubeSilicone, -0.05)
@@ -168,10 +140,9 @@ OTHER: none
                                     fitness += 0.003
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
-                            
                                 ElseIf 4
                                     Player.modifyActorVar(stock_DildoCheap, -0.009)
                                     Player.modifyActorVar(stock_LubeForia, -0.05)
@@ -180,10 +151,9 @@ OTHER: none
                                     fitness += 0.002
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
-                        
                                 ElseIf 99
                                     Player.modifyActorVar(stock_DildoCheap, -0.01)
                                     mood += 2
@@ -191,21 +161,16 @@ OTHER: none
                                     fitness += 0.005
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
-                                
-                                Endif
-                        
-                            Endif
-                            
+                                EndIf
+                            EndIf
                             If stock_DildoCheap <= 0
                                 Player.setActorVar(stock_DildoCheap, 0)
                                 Player.modifyActorVar(rk_VB_IBuySextoy, -1)
                             EndIf
-                    
                         ElseIf 2
-                            
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -1)
                             EndIf
@@ -227,7 +192,7 @@ OTHER: none
                                     fitness += 0.005
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
                                     
@@ -239,7 +204,7 @@ OTHER: none
                                     fitness += 0.004
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
                             
@@ -251,7 +216,7 @@ OTHER: none
                                     fitness += 0.003
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
                             
@@ -263,7 +228,7 @@ OTHER: none
                                     fitness += 0.002
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
                         
@@ -274,21 +239,16 @@ OTHER: none
                                     fitness += 0.005
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
-                                
-                                Endif
-                        
-                            Endif
-                            
+                                EndIf
+                            EndIf
                             If stock_DildoQuality <= 0
                                 Player.setActorVar(stock_DildoQuality, 0)
                                 Player.modifyActorVar(rk_VB_IBuySextoy, -1)
                             EndIf
-                    
                         ElseIf 3
-                            
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -1)
                             EndIf
@@ -310,7 +270,7 @@ OTHER: none
                                     fitness += 0.005
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
                                     
@@ -322,7 +282,7 @@ OTHER: none
                                     fitness += 0.004
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
                             
@@ -334,7 +294,7 @@ OTHER: none
                                     fitness += 0.003
                                     attractiveness += 0.0029
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
                             
@@ -346,7 +306,7 @@ OTHER: none
                                     fitness += 0.002
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
                         
@@ -357,25 +317,19 @@ OTHER: none
                                     fitness += 0.005
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
-                                
-                                Endif
-                        
-                            Endif
-                            
+                                EndIf
+                            EndIf
                             If stock_DildoLuxe <= 0
                                 Player.setActorVar(stock_DildoLuxe, 0)
                                 Player.modifyActorVar(rk_VB_IBuySextoy, -1)
                             EndIf
-                    
                         ElseIf 4
-                            
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -1)
                             EndIf
-                    
                             Player(Excited)::"Do I want lubrication before or is it better without?"
                             1:: stock_LubeJOH2O > 0::"Play with Pearl Royale Dildo and JO H2O Watermelon"
                             2:: stock_LubeCoconut > 0::"Play with Pearl Royale Dildo and Coconut Love Oil"
@@ -394,7 +348,7 @@ OTHER: none
                                     fitness += 0.005
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
                                     
@@ -406,7 +360,7 @@ OTHER: none
                                     fitness += 0.004
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
                             
@@ -418,7 +372,7 @@ OTHER: none
                                     fitness += 0.003
                                     attractiveness += 0.0029
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
                             
@@ -430,10 +384,9 @@ OTHER: none
                                     fitness += 0.002
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
-                        
                                 ElseIf 99
                                     Player.modifyActorVar(stock_DildoFinest, -0.005)
                                     mood += 2.35
@@ -441,30 +394,22 @@ OTHER: none
                                     fitness += 0.005
                                     attractiveness += 0.002
                                     Player.strip()
-                                    
+                                    Filter(Anal, Toys)
                                     Sex(Player)
                                     passTime(0.25, 0.5)
-                                
-                                Endif
-
-                            Endif
-
+                                EndIf
+                            EndIf
                             If stock_DildoFinest <= 0
                                 Player.setActorVar(stock_DildoFinest, 0)
                                 Player.modifyActorVar(rk_VB_IBuySextoy, -1)
                             EndIf
-                            
-                        Endif                       
-                    Endif   
-                Endif
-                
+                        EndIf                       
+                    EndIf   
+                EndIf
             ElseIf 1
-        
                 If stock_FleshlightType < 0
                     Player(Anxious)::"Ok, I don't have any fleshlight to play with! I have to go shopping!"
-               
                 Else
-        
                     1:: stock_FleshlightPilot > 0::"Play with Fleshlight Flight: Pilot"
                     2:: stock_FleshlightGripIce > 0::"Play with Fleshlight Fleshskins Grip Ice"
                     3:: stock_FleshlightTenga > 0::"Play with Tenga 3D Module"
@@ -545,22 +490,16 @@ OTHER: none
                                 Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
-                                
-                            Endif
-                        
-                        Endif
-
+                            EndIf
+                        EndIf
                         If stock_FleshlightPilot <= 0
                             Player.setActorVar(stock_FleshlightPilot, 0)
                             Player.modifyActorVar(rk_VB_IBuySextoy, -1)
                         EndIf
-                    
                     ElseIf 2
-                            
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
                         EndIf
-                        
                         Player(Excited)::"Do I want lubrication before or is it better without?"
                         1:: stock_LubeJOH2O > 0::"Play with my Fleshskins Grip Ice and JO H2O Watermelon"
                         2:: stock_LubeCoconut > 0::"Play with my Fleshskins Grip Ice and Coconut Love Oil"
@@ -629,22 +568,16 @@ OTHER: none
                                 Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
-                                
-                            Endif
-                        
-                        Endif
-
+                            EndIf
+                        EndIf
                         If stock_FleshlightGripIce <= 0
                             Player.setActorVar(stock_FleshlightGripIce, 0)
                             Player.modifyActorVar(rk_VB_IBuySextoy, -1)
                         EndIf
-                    
                     ElseIf 3
-                            
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
                         EndIf
-                        
                         Player(Excited)::"Do I want lubrication before or is it better without?"
                         1:: stock_LubeJOH2O > 0::"Play with my Tenga 3D and JO H2O Watermelon"
                         2:: stock_LubeCoconut > 0::"Play with my Tenga 3D and Coconut Love Oil"
@@ -712,22 +645,17 @@ OTHER: none
                                 Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
-                                
-                            Endif
-                        
-                        Endif
-
+                            EndIf
+                        EndIf
                         If stock_FleshlightTenga <= 0
                             Player.setActorVar(stock_FleshlightGripIce, 0)
                             Player.modifyActorVar(rk_VB_IBuySextoy, -1)
                         EndIf
                     
                     ElseIf 4
-                            
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
                         EndIf
-                        
                         Player(Excited)::"Do I want lubrication before or is it better without?"
                         1:: stock_LubeJOH2O > 0::"Play with fleshlight Girls&Boys and JO H2O Watermelon"
                         2:: stock_LubeCoconut > 0::"Play with fleshlight Girls&Boys and Coconut Love Oil"
@@ -797,18 +725,18 @@ OTHER: none
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
-                            Endif
+                            EndIf
                         
-                        Endif
+                        EndIf
 
                         If stock_FleshLightJack <= 0
                             Player.setActorVar(stock_FleshLightJack, 0)
                             Player.modifyActorVar(rk_VB_IBuySextoy, -1)
                         EndIf
                     
-                    Endif
+                    EndIf
 
-                Endif
+                EndIf
                 
             ElseIf 2
         
@@ -846,7 +774,7 @@ OTHER: none
                                 fitness += 0.005
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
@@ -858,7 +786,7 @@ OTHER: none
                                 fitness += 0.004
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                             
@@ -870,7 +798,7 @@ OTHER: none
                                 fitness += 0.003
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                             
@@ -882,7 +810,7 @@ OTHER: none
                                 fitness += 0.002
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                         
@@ -893,13 +821,13 @@ OTHER: none
                                 fitness += 0.005
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
-                            Endif
+                            EndIf
                         
-                        Endif
+                        EndIf
 
                         If stock_AnalPlugTrainer <= 0
                             Player.setActorVar(stock_AnalPlugTrainer, 0)
@@ -907,11 +835,9 @@ OTHER: none
                         EndIf
                     
                     ElseIf 2
-                            
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
                         EndIf
-                        
                         Player(Excited)::"Do I want lubrication before or is it better without?"
                         1:: stock_LubeJOH2O > 0::"Play with my Tango Butt Plug and JO H2O Watermelon"
                         2:: stock_LubeCoconut > 0::"Play with my Tango Butt Plug and Coconut Love Oil"
@@ -930,7 +856,7 @@ OTHER: none
                                 fitness += 0.005
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
@@ -942,7 +868,7 @@ OTHER: none
                                 fitness += 0.004
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                             
@@ -954,7 +880,7 @@ OTHER: none
                                 fitness += 0.003
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                             
@@ -966,7 +892,7 @@ OTHER: none
                                 fitness += 0.002
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                         
@@ -977,13 +903,13 @@ OTHER: none
                                 fitness += 0.005
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
-                            Endif
+                            EndIf
                         
-                        Endif
+                        EndIf
 
                         If stock_AnalPlugTango <= 0
                             Player.setActorVar(stock_AnalPlugTango, 0)
@@ -1014,7 +940,7 @@ OTHER: none
                                 fitness += 0.005
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
@@ -1026,7 +952,7 @@ OTHER: none
                                 fitness += 0.004
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                             
@@ -1038,7 +964,7 @@ OTHER: none
                                 fitness += 0.003
                                 attractiveness += 0.0029
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                             
@@ -1050,7 +976,7 @@ OTHER: none
                                 fitness += 0.002
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                         
@@ -1061,13 +987,13 @@ OTHER: none
                                 fitness += 0.005
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
-                            Endif
+                            EndIf
                         
-                        Endif
+                        EndIf
 
                         If stock_AnalPlugUnbound <= 0
                             Player.setActorVar(stock_AnalPlugUnbound, 0)
@@ -1098,7 +1024,7 @@ OTHER: none
                                 fitness += 0.005
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
@@ -1110,7 +1036,7 @@ OTHER: none
                                 fitness += 0.004
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                             
@@ -1122,7 +1048,7 @@ OTHER: none
                                 fitness += 0.003
                                 attractiveness += 0.0029
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                             
@@ -1134,7 +1060,7 @@ OTHER: none
                                 fitness += 0.002
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                         
@@ -1145,22 +1071,22 @@ OTHER: none
                                 fitness += 0.005
                                 attractiveness += 0.002
                                 Player.strip()
-                                Filter(Anal)
+                                Filter(Anal, Toys)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
-                            Endif
+                            EndIf
                         
-                        Endif
+                        EndIf
 
                         If stock_AnalPlugBVibe <= 0
                             Player.setActorVar(stock_AnalPlugBVibe, 0)
                             Player.modifyActorVar(rk_VB_IBuySextoy, -1)
                         EndIf
                     
-                    Endif
+                    EndIf
 
-                Endif
+                EndIf
             
             ElseIf 3
         
@@ -1187,7 +1113,7 @@ OTHER: none
                         fitness += 0.005
                         attractiveness += 0.002
                         Player.strip()
-                        filter(solo)
+                        Filter(Shower)
                         Sex(Player)
                         passTime(0.25, 0.5)
 
@@ -1197,18 +1123,16 @@ OTHER: none
                         EndIf
                         
                     ElseIf 2
-                            
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -1)
                         EndIf
-                        
                         Player.modifyActorVar(stock_LubeCoconut, -0.15)
                         mood += 2.25
                         energy -= 8.5
                         fitness += 0.004
                         attractiveness += 0.002
                         Player.strip()
-                        filter(solo)
+                        Filter(Shower)
                         Sex(Player)
                         passTime(0.25, 0.5)
 
@@ -1229,7 +1153,7 @@ OTHER: none
                         fitness += 0.003
                         attractiveness += 0.002
                         Player.strip()
-                        filter(solo)
+                        Filter(Shower)
                         Sex(Player)
                         passTime(0.25, 0.5)
 
@@ -1250,7 +1174,7 @@ OTHER: none
                         fitness += 0.002
                         attractiveness += 0.002
                         Player.strip()
-                        filter(solo)
+                        Filter(Shower)
                         Sex(Player)
                         passTime(0.25, 0.5)
 
@@ -1270,37 +1194,39 @@ OTHER: none
                         fitness += 0.005
                         attractiveness += 0.002
                         Player.strip()
-                        filter(solo)
+                        Filter(Shower)
                         Sex(Player)
                         passTime(0.25, 0.5)
-                                
-                    Endif
-                    
-                Endif
-            
+                    EndIf
+                EndIf
             ElseIf 4
-        
                 If stock_SexDollType < 0
                     Player(Anxious)::"Ok, I don't have any sell doll to play with! I have to go shopping or use my hand instead!"
                 Else
-                    
                     Actor = generatePersonTemporary()
                     Actor:mood => 95
                     Actor:arousal => 50
                     Actor:perversion => 75
                     Actor:attractiontoplayer => 95
                     Actor:rapportwithplayer => 95
+                    Actor:fertility_npc => 0
+                    Actor.makeInterested(Player)
                     Actor.hide()
                     Player(Curious)::"Which sex doll gender I'm gonna fuck?"
-                    0::"Female"
+                    2::"Female"
                     1::"Male"
+                    0::"Trans"
                     
                     If 1
-                        While !Actor.isMale()
+                        While !Actor.isMale() || Actor.isTrans()
+                            Actor = generatePersonTemporary()
+                        EndWhile
+                    ElseIf 2
+                        While !Actor.isFemale()
                             Actor = generatePersonTemporary()
                         EndWhile
                     Else
-                        While Actor.isMale()
+                        While !Actor.isTrans()
                             Actor = generatePersonTemporary()
                         EndWhile
                     EndIf
@@ -1341,7 +1267,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                                 
                             ElseIf 2
@@ -1357,7 +1283,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                             
                             ElseIf 3
@@ -1373,7 +1299,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                             
                             ElseIf 4
@@ -1389,7 +1315,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                         
                             ElseIf 99
@@ -1404,12 +1330,12 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                                 
-                            Endif
+                            EndIf
                         
-                        Endif
+                        EndIf
 
                         If stock_SexDollInflatable <= 0
                             Player.setActorVar(stock_SexDollInflatable, 0)
@@ -1445,7 +1371,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                                 
                             ElseIf 2
@@ -1461,7 +1387,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                             
                             ElseIf 3
@@ -1477,7 +1403,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                             
                             ElseIf 4
@@ -1493,7 +1419,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                         
                             ElseIf 99
@@ -1508,12 +1434,12 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                                 
-                            Endif
+                            EndIf
                         
-                        Endif
+                        EndIf
 
                         If stock_SexDollClassic <= 0
                             Player.setActorVar(stock_SexDollClassic, 0)
@@ -1549,7 +1475,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                                 
                             ElseIf 2
@@ -1565,7 +1491,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                             
                             ElseIf 3
@@ -1581,7 +1507,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                             
                             ElseIf 4
@@ -1597,7 +1523,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                         
                             ElseIf 99
@@ -1612,12 +1538,12 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                                 
-                            Endif
+                            EndIf
                         
-                        Endif
+                        EndIf
 
                         If stock_SexDollTPE <= 0
                             Player.setActorVar(stock_SexDollTPE, 0)
@@ -1654,7 +1580,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                                 
                             ElseIf 2
@@ -1670,7 +1596,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                             
                             ElseIf 3
@@ -1686,7 +1612,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                             
                             ElseIf 4
@@ -1702,7 +1628,7 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                         
                             ElseIf 99
@@ -1717,28 +1643,23 @@ OTHER: none
                                 Player.strip()
                                 Actor.strip()
                                 
-                                SexNoAffair(Actor, Player)
+                                SexNoAffair(Player, Actor)
                                 passTime(0.25, 0.5)
                                 
-                            Endif
+                            EndIf
                         
-                        Endif
+                        EndIf
 
                         If stock_SexDollRobot <= 0
                             Player.setActorVar(stock_SexDollRobot, 0)
                             Player.modifyActorVar(rk_VB_IBuySextoy, -1)
                         EndIf
-                    
-                    Endif
-
-                Endif
-                
+                    EndIf
+                EndIf
             ElseIf 5
-        
                 If stock_MassageLotionType < 0
                     Player(Anxious)::"Ok, I don't have any massage lotion! I have to go shopping!"
                 Else
-        
                     1:: stock_LotionHoneydew > 0::"Rub yourself with 0.25 of bottle of honeydew confectionary delights massage oil"
                     2:: stock_LotionRedFlower > 0::"Rub yourself with 0.25 of bottle of red flower massage lotion"
                     3:: stock_LotionNaturale > 0::"Rub yourself with 0.25 of bottle of naturale massage oil"
@@ -1757,7 +1678,7 @@ OTHER: none
                         fitness += 0.005
                         attractiveness += 0.002
                         Player.strip()
-                        filter(solo)
+                        Filter(Shower)
                         Sex(Player)
                         passTime(0.25, 0.5)
 
@@ -1778,7 +1699,7 @@ OTHER: none
                         fitness += 0.004
                         attractiveness += 0.002
                         Player.strip()
-                        filter(solo)
+                        Filter(Shower)
                         Sex(Player)
                         passTime(0.25, 0.5)
 
@@ -1799,7 +1720,7 @@ OTHER: none
                         fitness += 0.003
                         attractiveness += 0.002
                         Player.strip()
-                        filter(solo)
+                        Filter(Shower)
                         Sex(Player)
                         passTime(0.25, 0.5)
 
@@ -1820,7 +1741,7 @@ OTHER: none
                         fitness += 0.002
                         attractiveness += 0.002
                         Player.strip()
-                        filter(solo)
+                        Filter(Shower)
                         Sex(Player)
                         passTime(0.25, 0.5)
 
@@ -1840,20 +1761,15 @@ OTHER: none
                         fitness += 0.005
                         attractiveness += 0.002
                         Player.strip()
-                        filter(solo)
+                        Filter(Shower)
                         Sex(Player)
                         passTime(0.25, 0.5)
-                                
-                    Endif
-
-                Endif
-                
+                    EndIf
+                EndIf
             ElseIf 6
-        
                 If stock_MasturbatorType < 0
                     Player(Anxious)::"Ok, I don't have any masturbator to play with! I have to go shopping!"
                 Else
-        
                     1:: stock_MasturbatorPocket > 0::"Play with my pocket masturbator"
                     2:: stock_MasturbatorBubble > 0::"Play with my bubble butt realistic masturbator"
                     3:: stock_MasturbatorMega > 0::"Play with my mega masturbator"
@@ -1935,9 +1851,9 @@ OTHER: none
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
-                            Endif
+                            EndIf
                         
-                        Endif 
+                        EndIf 
 
                         If stock_MasturbatorPocket <= 0
                             Player.setActorVar(stock_MasturbatorPocket, 0)
@@ -1968,7 +1884,7 @@ OTHER: none
                                 fitness += 0.005
                                 attractiveness += 0.002
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
@@ -1980,7 +1896,7 @@ OTHER: none
                                 fitness += 0.004
                                 attractiveness += 0.002
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                             
@@ -1992,7 +1908,7 @@ OTHER: none
                                 fitness += 0.003
                                 attractiveness += 0.002
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                             
@@ -2004,7 +1920,7 @@ OTHER: none
                                 fitness += 0.002
                                 attractiveness += 0.002
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                         
@@ -2015,13 +1931,13 @@ OTHER: none
                                 fitness += 0.005
                                 attractiveness += 0.002
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
-                            Endif
+                            EndIf
                         
-                        Endif
+                        EndIf
 
                         If stock_MasturbatorBubble <= 0
                             Player.setActorVar(stock_MasturbatorBubble, 0)
@@ -2052,7 +1968,7 @@ OTHER: none
                                 fitness += 0.005
                                 attractiveness += 0.002
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
@@ -2064,7 +1980,7 @@ OTHER: none
                                 fitness += 0.004
                                 attractiveness += 0.002
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                             
@@ -2076,7 +1992,7 @@ OTHER: none
                                 fitness += 0.003
                                 attractiveness += 0.0029
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                             
@@ -2088,7 +2004,7 @@ OTHER: none
                                 fitness += 0.002
                                 attractiveness += 0.002
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                         
@@ -2099,13 +2015,13 @@ OTHER: none
                                 fitness += 0.005
                                 attractiveness += 0.002
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
-                            Endif
+                            EndIf
                         
-                        Endif
+                        EndIf
 
                         If stock_MasturbatorMega <= 0
                             Player.setActorVar(stock_MasturbatorMega, 0)
@@ -2136,7 +2052,7 @@ OTHER: none
                                 fitness += 0.005
                                 attractiveness += 0.002
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                                 
@@ -2148,7 +2064,7 @@ OTHER: none
                                 fitness += 0.004
                                 attractiveness += 0.002
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
                             
@@ -2160,10 +2076,9 @@ OTHER: none
                                 fitness += 0.003
                                 attractiveness += 0.0029
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
-                            
                             ElseIf 4
                                 Player.modifyActorVar(stock_Lovebotz, -0.0045)
                                 Player.modifyActorVar(stock_LubeForia, -0.05)
@@ -2172,10 +2087,9 @@ OTHER: none
                                 fitness += 0.002
                                 attractiveness += 0.002
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
-                        
                             ElseIf 99
                                 Player.modifyActorVar(stock_Lovebotz, -0.005)
                                 mood += 2.35
@@ -2183,24 +2097,17 @@ OTHER: none
                                 fitness += 0.005
                                 attractiveness += 0.002
                                 Player.strip()
-                                
+                                Filter(Fleshlight)
                                 Sex(Player)
                                 passTime(0.25, 0.5)
-                                
-                            Endif
-                        
-                        Endif
-
+                            EndIf
+                        EndIf
                         If stock_Lovebotz <= 0
                             Player.setActorVar(stock_Lovebotz, 0)
                             Player.modifyActorVar(rk_VB_IBuySextoy, -1)
                         EndIf
-                    
-                    Endif
-
-                Endif
-
-            Endif
-
-        Endif
+                    EndIf
+                EndIf
+            EndIf
+        EndIf
     SceneEnd()

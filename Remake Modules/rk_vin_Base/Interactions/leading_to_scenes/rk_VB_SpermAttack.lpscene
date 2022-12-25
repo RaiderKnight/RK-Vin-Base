@@ -40,6 +40,7 @@ OTHER: none
             EndIf
             If DanFasse
                 "I decided to just cum on <Actor.him_or_her> face for fun!"
+                Player.dressExcept(Outerwear, Bottom, Bottom_Under)
                 Filter(CumOnFace)
                 Sex(Player, Actor)
                 If HungerEnable > 0
@@ -49,6 +50,7 @@ OTHER: none
             EndIf
             If SulChess
                 "I decided to just cum on <Actor.him_or_her> chest for fun!"
+                Player.dressExcept(Outerwear, Bottom, Bottom_Under)
                 Filter(CumOnChest)
                 Sex(Player, Actor)
                 If HungerEnable > 0
@@ -58,6 +60,7 @@ OTHER: none
             EndIf
             If SulTorse
                 "I decided to just cum on <Actor.him_or_her> stomach for fun!"
+                Player.dressExcept(Outerwear, Bottom, Bottom_Under)
                 Filter(CumOnStomach)
                 Sex(Player, Actor)
                 If HungerEnable > 0
@@ -67,6 +70,7 @@ OTHER: none
             EndIf
             If Suepied
                 "I decided to just cum on <Actor.him_or_her> feet for fun!"
+                Player.dressExcept(Outerwear, Bottom, Bottom_Under)
                 Filter(CumOnFeet)
                 Sex(Player, Actor)
                 If HungerEnable > 0
@@ -95,9 +99,10 @@ OTHER: none
                     EndIf
                 ElseIf Actor:arousal > 15 && Actor:perversion > 50 && Actor.isInterestedIn(Player)
                     Actor(Wink)::"That was funny and your cum taste good!..."
-                    If !Actor.isContactExchanged()
+                    Actor:arousal += random(0, 2)
+                    If !Actor.isRelative() || !Actor.isContactExchanged()
                         Actor(Wink)::"Let's exchange numbers so we can call each other later... right now I'm a little busy!"
-                        
+                        exchangeContact(Actor)
                     Else
                         Actor(Wink)::"Next time, call me if you want to play instead of jerking off on me...!"
                     EndIf
@@ -107,6 +112,8 @@ OTHER: none
                     ForceA = Actor:muscle
                     ForceB = Actor:martial
                     ForceAB = ForceA + ForceB
+                    Actor:rapportwithplayer -= random(0, 5)
+                    Actor:attractiontoplayer -= random(0, 5)
                     If ForceAB < 50
                         Actor(Shocked)::"Help, I'm under attack!"
                         "<Actor.He_or_She> runs out and screams..."

@@ -1,11 +1,14 @@
 WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_hotel, -rk_VB_small_sleep
 WHERE: home
 WHEN: 0-24
-WHO: Actor = getCreature(); If Actor.isCreatureType(Dog) && Random(0, 40) > Actor:sneak 
+WHO: Actor = getCreature(); If Actor.isCreatureType(Dog) && random(0, 40) > Actor:sneak 
 OTHER: isAtHome()
 
     SceneStart()
-    
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         Actor.show(2)
         Player.closeEyes(true)
         Actor:: "Wuff! Wuff! Wuff!"
@@ -16,19 +19,15 @@ OTHER: isAtHome()
         1:: "Just bear it"
         
         If 0
-        
             Player(Angry):: "Bad doggy! Shut it, now!"
-            Actor:rapportwithplayer -= Random(0, 2)
-            Actor:attractiontoplayer -= Random(0, 2)
-            Actor:sneak += Random(0, 2)
-            energy -= Random(0, 10)
-            
+            Actor:rapportwithplayer -= random(0, 2)
+            Actor:attractiontoplayer -= random(0, 2)
+            Actor:masochist += random(0, 2)
+            energy -= random(0, 10)
         Else
-        
             "Dogs bark. That's what they do. Let's just try to get back to sleep."
-            energy -= Random(0, 20)
-            
-        Endif
-
+            Actor:masochist -= random(0, 2)
+            energy -= random(0, 20)
+        EndIf
     SceneEnd() // Improved by Raddeck
     timeout(672, pet_annoying)

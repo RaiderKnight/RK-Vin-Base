@@ -2,7 +2,7 @@ WHAT: all
 WHERE: all, -work
 WHEN: 8 - 18
 WHO: none
-OTHER: Random(1, 150) < pornfame && !Player.isMale()
+OTHER: random(1, 150) < pornfame
 
     SceneStart()
         porn_shoot_bdsm = porn_shoot_bdsm.getGlobal()
@@ -10,11 +10,11 @@ OTHER: Random(1, 150) < pornfame && !Player.isMale()
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
         UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
-        CashFlow = Random(200, 500)
+        CashFlow = random(200, 500)
         CashFlowloc = CashFlow.convertToLocalCurrency()
         Bonu = attractiveness + pornfame
         sito = Bonu/2.88
-        BDice = Random(600, 2000)
+        BDice = random(600, 2000)
         Dice = BDice + sito
         P1C = Dice.convertToLocalCurrency(true)
         P2 = Dice/2
@@ -24,7 +24,7 @@ OTHER: Random(1, 150) < pornfame && !Player.isMale()
         Actor = generatePersonTemporary()
         While !Player.isInterestedIn(Actor)
             Actor = generatePersonTemporary()
-        Endwhile
+        EndWhile
         Actor.makeInterested(Player)
         Actor.randomizeFace()
         Actor.randomizeHairs()
@@ -32,7 +32,7 @@ OTHER: Random(1, 150) < pornfame && !Player.isMale()
         Actor.show(2)
         DoneBeast = Player.getActorVar(tag_beastporn)
         Actor2 = generatePersonTemporary()
-        Actor2:age => Random(35, 55)
+        Actor2:age => random(35, 55)
         Actor2.randomizeFace()
         Actor2.randomizeHairs()
         Actor2.hide()
@@ -41,7 +41,7 @@ OTHER: Random(1, 150) < pornfame && !Player.isMale()
         Accept2 = false
         Accept3 = false
         OfferRefuse = false
-        If DoneBeast > 0 && Random(0, 100) < 50
+        If DoneBeast > 0 && random(0, 100) < 50
             "One of the most famous porn directors was planning to shoot me, but pulled out in the last minute after finding out about me being involved in a bestiality shoot earlier in my career."
             "<Actor2.He_or_She> didn't think I would fit the glamcore market."
             pornfame -= 0.25
@@ -60,21 +60,21 @@ OTHER: Random(1, 150) < pornfame && !Player.isMale()
             
             If 0
                 Player(Sad):: "Sorry, but I have a holiday planned on the day of the shoot ..."
-            Elseif 1
+            ElseIf 1
                 If random(1, 300) < 150 + Bonu
                     DirAccepted = true
                     Accept1 = true
                 Else
                     OfferRefuse = true
                 EndIf
-            Elseif 2
+            ElseIf 2
                 If random(1, 300) < 100 + Bonu
                     DirAccepted = true
                     Accept2 = true
                 Else
                     OfferRefuse = true
                 EndIf
-            Elseif 3
+            ElseIf 3
                 DirAccepted = true
                 Accept3 = true
             EndIf
@@ -104,7 +104,7 @@ OTHER: Random(1, 150) < pornfame && !Player.isMale()
                     setBackground(supermarket)
                     setBackground(theatre)
                     setBackground3D(Modules/rk_vin_Base/World/toilets___vin01.lpworld)
-                endRandom
+                EndRandom
                 Actor2.dress()
                 Actor2.show(3)
                 Actor.strip()
@@ -129,16 +129,16 @@ OTHER: Random(1, 150) < pornfame && !Player.isMale()
                     If HungerEnable > 0
                         Player.modifyActorVar(rk_VB_Hunger, -3)
                     EndIf
-                Endif
+                EndIf
                 If Accept1
                     money += Dice
                 ElseIf Accept2
                     money += P3
                 ElseIf Accept3  
                     money += CashFlow
-                Endif
+                EndIf
                 porn_shoot_bdsm.setGlobal(0)
-            Endif
+            EndIf
             If OfferRefuse
                 Actor2(Furious):: "No way, that's way above the market rate for this type of shoots! You have too high an opinion of yourself, honey!"
                 Actor2(Furious):: "You should ask the other pornstars how much they charge."
@@ -146,20 +146,20 @@ OTHER: Random(1, 150) < pornfame && !Player.isMale()
                 1:: "Cheap motherfucker!"
                 
                 If 1
-                    If Random(0, 100) < 30
+                    If random(0, 100) < 30
                         "The director got pissed off and tried to hit me"
-                        If Random(0, 100) < martial
+                        If random(0, 100) < martial
                             "Unfortunately for him, I was no pushover and gave him a good spanking."
                             "As things would have it, our little incident went viral in the porn industry media and somehow made me even more popular. I guess no publicity is bad publicity. Besides, other directors will have to think twice now before trying to bully me in the future."
-                            pornfame += Random(2, 5)
+                            pornfame += random(2, 5)
                         Else
                             "I tried to stand my ground but ..."
                             "Unfortunately for me, he was a powerful man and I got quite seriously hurt."
                             "As things would have it, our little incident went viral in the porn industry media and somehow made me a butt of jokes. No doubt this would affect my future prospects with other directors."
-                            pornfame -= Random(1, 3)                
-                        Endif
+                            pornfame -= random(1, 3)                
+                        EndIf
                         porn_shoot_bdsm.setGlobal(0)
-                    Elseif Random(0, 100) < 50
+                    ElseIf random(0, 100) < 50
                         Actor2(Furious)::"How dare you? You'll never work for this studio again!"
                         pornfame -= 1
                         porn_shoot_bdsm.setGlobal(0)
@@ -170,11 +170,11 @@ OTHER: Random(1, 150) < pornfame && !Player.isMale()
                             Actor2(Serene)::"Fine, I changed my mind. Let's try negotiating again ..."
                             porn_shoot_bdsm.setGlobal(1)
                             followUp(porn_shoot_bdsm)
-                        Endif
-                    Endif
-                Endif
-            Endif
-        Endif
+                        EndIf
+                    EndIf
+                EndIf
+            EndIf
+        EndIf
     
     SceneEnd() // scene improved by Raddeck
     timeout(100, porn_shoot_bdsm)

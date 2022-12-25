@@ -122,7 +122,7 @@ OTHER: none
                             Actor.dressUniform(sexwork)
                         ElseIf mascOui
                             Actor = generatePersonTemporary()
-                            While !Actor.isMale() && Actor.isTrans()
+                            While !Actor.isMale() || Actor.isTrans()
                                 Actor = generatePersonTemporary()
                             EndWhile
                             Actor.dress()
@@ -374,6 +374,7 @@ OTHER: none
                         Player.modifyActorVar(rk_VB_Hunger, -2)
                     EndIf
                 EndIf
+                passTime(0.5, 1)
                 perversion += random(0, 0.5)
                 AmNotVirgin => 1
                 If beastEnabl
@@ -404,6 +405,7 @@ OTHER: none
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
+                        passTime(0.5, 1)
                         "I paid the hooker and left for another clients. Good service that was!"
                         conti7 = false
                     ElseIf 1
@@ -467,6 +469,7 @@ OTHER: none
                     EndIf
                 EndIf
                 "I paid the hooker and <Actor2.he_or_she> left for another clients. Good service that was!"
+                passTime(0.5, 1)
             EndIf
             If DitNon
                 If Actor.isInterestedIn(Player)
@@ -484,4 +487,5 @@ OTHER: none
                 "No way. I'm not so desperate that I have to pay to get laid."
             EndIf
         EndIf
+        passTime(0.15, 0.25)
     SceneEnd() // Created by Raddeck

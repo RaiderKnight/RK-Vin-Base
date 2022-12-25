@@ -5,7 +5,6 @@ WHO: Actor = getPerson(tag_DaddyKnows)
 OTHER: Player.isPregnant() && !Player.isMale()
 
     SceneStart()
-
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -23,7 +22,7 @@ OTHER: Player.isPregnant() && !Player.isMale()
             setBackground(community_centre)
             SpouseCame = false
             If 1
-                If Random(0, 50) < Actor:attractiontoplayer
+                If random(0, 50) < Actor:attractiontoplayer
                     "<Actor.name> was happy to drive me to the prenatal class."
                     Actor.dress()
                     Actor.show()
@@ -31,19 +30,19 @@ OTHER: Player.isPregnant() && !Player.isMale()
                 Else
                     "Despite my request, <Actor.name> said <Actor.he_or_she> was too busy to take me there."
                     "It's no big deal. I can go there myself."
-                Endif
-            Endif
-            If Random(0, 100) < 50   // instructor
+                EndIf
+            EndIf
+            If random(0, 100) < 50   // instructor
                 Actor2 = generatePersonTemporary()
                 While Actor2.isMale()
                     Actor2 = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor2.dress()
                 Actor2.show()
                 "The instructor for today's class is <Actor2.name>. She's very knowledgeable and helpful."
                 If SpouseCame
                     Actor2.makeInterested(Actor)
-                    "I couldn't help but notice that the instructor was eyeing my <Actor.boyfriend_or_girlfriend> up quite flirtatously though."
+                    "I couldn't help but notice that the instructor was eyeing my <Actor.boyfriend_or_girlfriend> up quite flirtatiously though."
                     "Is this what prenatal instuctors do? Trying to sleep with all their pregnant students' spouses?"
                     0:: "Just go home"
                     1:: "Invite the instructor for a threesome with <Actor.name>"
@@ -55,15 +54,15 @@ OTHER: Player.isPregnant() && !Player.isMale()
                         "Besides, I suppose this is a good reward for <Actor.name>, having been a supportive enough partner to drive me to prenatal classes."
                         If OpenRelationship()
                             "After all, we're in an open relationship, so these spontaneous threesomes should be part of the experience really ..."
-                        Endif
+                        EndIf
                         SexNoAffair(Actor, Actor2, Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -3)
                         EndIf
-                    Endif
+                    EndIf
                 Else
                     Actor2.makeInterested(Player)
-                    "I couldn't help but notice that the instructor was eyeing me up quite flirtatously though."
+                    "I couldn't help but notice that the instructor was eyeing me up quite flirtatiously though."
                     "Is this what prenatal instuctors do? Trying to sleep with all their pregnant students?"
                     0:: "Just go home"
                     1:: "Have some fun with the instructor"
@@ -72,22 +71,22 @@ OTHER: Player.isPregnant() && !Player.isMale()
                         "The instructor was at first taken aback by my invitation, but quickly warmed up to the idea and followed me home. After all, it was her that wasn't so subtle in showing an interest in me, in all my pregnant glory, after all."
                         moveTo(home)
                         setBackground(home)
-                        "<Actor.name> should be kicking <Actor.himself_or_herself> for not taking me to the class today, otherwise I might have been generous enough to share the intructor with <Actor.him_or_her> for a threesome."
+                        "<Actor.name> should be kicking <Actor.himself_or_herself> for not taking me to the class today, otherwise I might have been generous enough to share the instructor with <Actor.him_or_her> for a threesome."
                         Sex(Actor2, Player)
                         If HungerEnable > 0
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
-                    Endif
-                Endif
+                    EndIf
+                EndIf
             Else  // another couple
                 Actor2 = generatePersonTemporary()
                 While !Actor2.isMale()
                     Actor2 = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor3 = generatePersonTemporary()
                 While Actor3.isMale()
                     Actor3 = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor3.setMorphValue(Genesis8Female__PBMPregnant, 0.5)
                 Actor2.dress()
                 Actor3.dress()
@@ -100,7 +99,7 @@ OTHER: Player.isPregnant() && !Player.isMale()
                     "I'm in an open relationship myself so this sort of thing isn't anything too strange for me."
                 Else    
                     "What a strange lifestyle, I wonder if <Actor.name> would have been as open-minded?"
-                Endif
+                EndIf
                 If SpouseCame
                     "After the class finishes, the couple asks me and <Actor.name> if we would want to swing with them." 
                     0:: "Not for us"
@@ -113,7 +112,7 @@ OTHER: Player.isPregnant() && !Player.isMale()
                         setBackground(home)
                         If OpenRelationship()
                             "After all, we're in an open relationship ourselves, we're no stranger to swinging ourselves."
-                        Endif
+                        EndIf
                         "First, <Actor.name> and <Actor3.name> got it on."
                         SexNoAffair(Actor, Actor3)
                         "Then it was my and <Actor2.name>'s turn."
@@ -124,7 +123,7 @@ OTHER: Player.isPregnant() && !Player.isMale()
                         If UrgeToPeeEnable > 0
                             Player.modifyActorVar(rk_VB_UrgeToPee, 1)
                         EndIf
-                    Endif
+                    EndIf
                 Else
                     "After the class finishes, the couple asks me to join them for a threesome." 
                     0:: "Not for me"
@@ -142,9 +141,9 @@ OTHER: Player.isPregnant() && !Player.isMale()
                         If UrgeToPeeEnable > 0
                             Player.modifyActorVar(rk_VB_UrgeToPee, 1)
                         EndIf
-                    Endif
-                Endif            
-            Endif
-        Endif
+                    EndIf
+                EndIf            
+            EndIf
+        EndIf
     SceneEnd() // Scene improved by Raddeck
     timeout(200, prenatal_attend)

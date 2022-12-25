@@ -1,11 +1,14 @@
 WHAT: all
 WHERE: all, -home, -work
 WHEN: 0-24
-WHO: Actor = getCompanionCreature(); If Actor.isCreatureType(Horse) && Random(50, 200) < Actor:martial
+WHO: Actor = getCompanionCreature(); If Actor.isCreatureType(Horse) && random(50, 200) < Actor:martial
 OTHER: none
 
     SceneStart()
-    
+        UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
+        UrgeToPee = Player.getActorVar(rk_VB_UrgeToPee)
+        Hunger = Player.getActorVar(rk_VB_Hunger)
+        HungerEnable = rk_VB_EnableHunger.getGlobal()
         Actor2 = generatePersonTemporary()
         Actor2.dress()
         Actor2.show(2)
@@ -18,21 +21,16 @@ OTHER: none
         1:: "Defend <Actor.name>"
         
         If 0
-        
             Player(Scared):: "Oh my god! I'm so sorry."
             Player(Angry):: "Bad horse! I thought I already trained you not to kick people."
-            masochist += Random(0, 2)
-            Actor:rapportwithplayer -= Random(0, 2)
-            Actor:attractiontoplayer -= Random(0, 2)  
-            
+            masochist += random(0, 2)
+            Actor:rapportwithplayer -= random(0, 2)
+            Actor:attractiontoplayer -= random(0, 2)
         Else
-        
             Player(Angry):: "You deserved that! You provoked <Actor.him_or_her>! Fuck off!"
-            masochist -= Random(0, 1)
-            Actor:rapportwithplayer += Random(0, 2)
-            Actor:attractiontoplayer += Random(0, 2)
-            
-        Endif
-        
+            masochist -= random(0, 1)
+            Actor:rapportwithplayer += random(0, 2)
+            Actor:attractiontoplayer += random(0, 2)
+        EndIf
     SceneEnd() // Improved by Raddeck
     timeout(500, horse_kicks)

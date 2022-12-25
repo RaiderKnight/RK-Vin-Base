@@ -174,7 +174,7 @@ OTHER: none
                             Actor.dressUniform(sexwork)
                         ElseIf mascOui
                             Actor = generatePersonTemporary()
-                            While !Actor.isMale() && !Actor.isTrans()
+                            While !Actor.isMale() || Actor.isTrans()
                                 Actor = generatePersonTemporary()
                             EndWhile
                             Actor.dress()
@@ -501,6 +501,7 @@ OTHER: none
                             Player.modifyActorVar(rk_VB_Hunger, -2)
                         EndIf
                     EndIf
+                    passTime(0.5, 1)
                     perversion += random(0, 0.5)
                     AmNotVirgin => 1
                     If beastEnabl
@@ -514,12 +515,13 @@ OTHER: none
                         3:: "Do nothing"
                     
                         If 0
-                            "I paid the hooker and left for another clients. Good service that was!"
                             Actor.hide()
                             Sex(Player, Actor2)
                             If HungerEnable > 0
                                 Player.modifyActorVar(rk_VB_Hunger, -2)
                             EndIf
+                            "I paid the hooker and left for another clients. Good service that was!"
+                            passTime(0.5, 1)
                         ElseIf 1
                             If !Actor.isInterestedIn(Actor2)
                                 DitNon = true
@@ -580,6 +582,7 @@ OTHER: none
                         Player.modifyActorVar(rk_VB_Hunger, -3)
                     EndIf
                 EndIf
+                passTime(0.5, 1)
                 "I paid the hooker and <Actor.he_or_she> left for another clients. Good service that was!"
             EndIf
             If DitNon
@@ -598,4 +601,5 @@ OTHER: none
                 "No way. I'm not so desperate that I have to pay to get laid."
             EndIf
         EndIf
+        passTime(0.15, 0.25)
     SceneEnd() // Improved by Raddeck

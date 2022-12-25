@@ -25,11 +25,11 @@ OTHER: isModEnabled(vin_NonConsensual)
         setBackground3D(Modules/rk_vin_Base/World/gl_street1.lpworld)
         "My <Actor.Master_or_Mistress> asks me to go for a walk, alone and completely naked, through the streets at night..."
         "I must be careful to not attract the attention of others ... this could turn out to be dangerous ..."
-        SneakGame()
-        BadLuckD = Random(0, 100)
-        If Random(0, 100) < sneak
+        sneakGame()
+        BadLuckD = random(0, 100)
+        If random(0, 100) < sneak
             "Thankfully, I was sneaky enough that no-one saw me walking around naked."
-        ElseIf Random(0, 100) > 75
+        ElseIf random(0, 100) > 75
             "Fuck, someone called the Police!"
             followUp(rk_VB_public_indecency)
         Else
@@ -40,10 +40,10 @@ OTHER: isModEnabled(vin_NonConsensual)
                 Actor2 = generatePersonTemporary()
                 While !Actor2.isInterestedIn(Player)
                     Actor2 = generatePersonTemporary()
-                Endwhile
+                EndWhile
                 Actor2.dress()
                 Actor2.show()
-                AChooseL = Random(1, 3)
+                AChooseL = random(1, 3)
                 AChooseL = AChooseL.round()
                 Actor2.moveToPersonStand(Player, 50)
                 If AChooseL == 1
@@ -102,7 +102,7 @@ OTHER: isModEnabled(vin_NonConsensual)
                     1::"No"
                     
                     If 0
-                        If Random(0, 200) < fitness + martial
+                        If random(0, 200) < fitness + martial
                             "I managed to break free of the most important restrains holding me in place ..."
                             Actor2.hide()
                             If energy < 50 && random(0, 10) > 6

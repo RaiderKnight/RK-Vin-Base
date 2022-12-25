@@ -5,7 +5,11 @@ WHO: Actor = getPerson(tag_DaddyKnows)
 OTHER: Player.isPregnant() && !Player.isMale()
 
     SceneStart()
-
+        reste = false
+        SpouseCame = false
+        titssip = false
+        funWdoc = false
+        conti3 = false
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -21,9 +25,8 @@ OTHER: Player.isPregnant() && !Player.isMale()
             Dest = findNearbyBuilding(hospital)
             moveTo(Dest)
             setBackground(hospital)
-            SpouseCame = false
             If 1
-                If Random(0, 50) < Actor:attractiontoplayer
+                If random(0, 50) < Actor:attractiontoplayer
                     "<Actor.name> was happy to drive me to the hospital."
                     Actor.dress()
                     Actor.show()
@@ -31,32 +34,105 @@ OTHER: Player.isPregnant() && !Player.isMale()
                 Else
                     "Despite my request, <Actor.name> said <Actor.he_or_she> was too busy to take me there."
                     "It's no big deal. I can go there myself."
-                Endif
-            Endif
+                EndIf
+            EndIf
             Actor2 = generatePersonTemporary()
             While !Actor2.isSameGender(Actor)
                 Actor2 = generatePersonTemporary()
-            Endwhile
-            DressFormal()
+            EndWhile
+            dressFormal()
             Actor2.dress()
             Actor2.show()
             Player.strip()
             Actor.hide()
-            "The doctor doing my scans and tests today is Dr <Actor2.name> <Actor2.name_last>."
-            Actor2.makeInterested(Player)
-            "I couldn't help but notice that the doctor was eyeing up my nude body quite flirtatously though."
+            Actor2(Happy)::"Hi <Player.Mrs_or_Miss>. <Actor2.name_last>, I'm <Actor2.name> <Actor2.name_last> I'm the one who will be doing your scans and tests!"
+            Player(Happy)::"No problem!"
+            If Actor2.isInterestedIn(Player) && Actor:perversion > 50 && Actor:arousal > 15
+                Actor2(Serene)::"According to your file, I have to do some checkup. Please undress so I can get started."
+                Player(Happy)::"Yes, of course!"
+                Player.strip()
+                Actor2(Serene)::"First, I will test the elasticity of your vulva. A too tight vulva could cause you discomfort during your delivery. .... Let's see!"
+                Filter(Fingering)
+                Sex(Actor2, Player)
+                Player(Curious)::"Did you just masturbate me or did I hallucinate?"
+                Actor2(Happy)::"No, you all say that, that's really what I have to do! Please let me finish!"
+                "What I should do?"
+                1::"Scold <Actor2.him_or_her> and leave"
+                2::"Stay... In fact, I like it"
+                
+                If 1
+                    Player(Furious)::"No way! That's end here! I'm leaving, you're just a fucking pervert!"
+                    Player.dress()
+                    Actor2(Flirty)::"Fine, up to you!"
+                    mood -= random(3, 5)
+                Else
+                    reste = true
+                EndIf
+            ElseIf Actor2.isInterestedIn(Player)
+                "I couldn't help but notice that the doctor was eyeing up my nude body quite flirtatiously though."
+                Actor2(Flirty)::"Ok, all fine miss! Your forms... I mean, your health is excellent"
+                "I guess that's why <Actor2.he_or_she> became an obstetrician? Because <Actor2.his_or_her> fantasy is surely to sleep with pregnant women or <Actor2.he_or_she> is a pussy addict?"
+                "Do I make a move or...?"
+                1:: "Ask if <Actor2.he_or_she> wants to taste my boob milk"
+                2:: "Have some fun with the doctor right there"
+                99:: "Nothing"
+                
+                If 1
+                    titssip = true
+                ElseIf 2
+                    funWdoc = true
+                Else
+                    Player(Happy)::"Thank you! Have a nice day!"
+                    mood += random(0, 3)
+                EndIf
+            Else
+                Actor2(Flirty)::"Ok, all fine miss! Your health is excellent!"
+                Player(Happy)::"Thank you! Have a nice day!"
+                mood += random(0, 3)
+            EndIf
             If HungerEnable > 0
                 Player.modifyActorVar(rk_VB_Hunger, -2)
             EndIf
             If UrgeToPeeEnable > 0
                 Player.modifyActorVar(rk_VB_UrgeToPee, 1)
             EndIf
-                
-            "Is this why <Actor2.he_or_she> becomes an obstetrician? Because <Actor2.he_or_she> has a huge fetish for sleeping with pregnant women?"
-            0:: "Just go home"
-            1:: "Have some fun with the doctor right there"
+        EndIf
+        If reste
+            Actor2(Serene)::"Now, let's check if your boob milk is healthy..."
+            Filter(LickBoobs)
+            Sex(Actor2, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+            If UrgeToPeeEnable > 0
+                Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+            EndIf
+            Actor2(Serene)::"Perfect and tasty! Your boob milk is healthy..."
+            Player(Happy)::"Nice! I'm happy to hear that!"
+            conti3 = true
+        EndIf
+        If titssip
+            Actor2(Flirty)::"Sure!"
+            Filter(LickBoobs)
+            Sex(Actor2, Player)
+            If HungerEnable > 0
+                Player.modifyActorVar(rk_VB_Hunger, -1)
+            EndIf
+            If UrgeToPeeEnable > 0
+                Player.modifyActorVar(rk_VB_UrgeToPee, 1)
+            EndIf
+            conti3 = true
+        EndIf
+        If conti3
+            If reste || titssip
+                "Now that <Actor2.he_or_she> had fun with my body, do I ask <Actor2.him_or_her> for something more concrete, to fuck?"
+            Else
+                "Do I stay to extend the fun or ...?"
+            EndIf
+            2:: "Have some fun with the doctor right here"
+            3:: "Go home"
             
-            If 1
+            If 2
                 "The doctor was at first taken aback by my boldness, but quickly showed that this isn't the first time <Actor2.he_or_she> messes around with a patient. After all, it was <Actor2.him_or_her> that wasn't so subtle in showing an interest in me, in all my pregnant glory, after all."
                 Sex(Actor2, Player)
                 If HungerEnable > 0
@@ -69,11 +145,13 @@ OTHER: Player.isPregnant() && !Player.isMale()
                     "Poor <Actor.name>, sitting just meters away in the hospital waiting room, having no idea <Actor.his_or_her> pregnant <Player.boyfriend_or_girlfriend> is having a lot more fun with the doctor than just the usual scans and tests."
                     If OpenRelationship()
                         "Of course, we're in an open relationship so I must make sure to tell <Actor.him_or_her> all the dirty details when we get back home today."
-                    Endif
+                    EndIf
                 Else
                     "This serves my <Actor.boyfriend_or_girlfriend> right for not driving me to the hospital today."
-                Endif
-            Endif
-        Endif
+                EndIf
+            Else
+                moveTo(home)
+            EndIf
+        EndIf
     SceneEnd()
     timeout(700, checkup_attend) // Improved by Raddeck

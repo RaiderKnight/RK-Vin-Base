@@ -2,9 +2,10 @@ WHAT: all, -pickpocket, -go_to_the_bathroom, -sleep, -sleep_hotel, -nap, -nap_ho
 WHERE: all
 WHEN: 8 - 20
 WHO: none
-OTHER: isModEnabled(vin_NonConsensual) && [[Player.isMale() && Player.isGay()] || [Player.isMale() && !Player.isGay() && 80 > Random(0, 100)]]
+OTHER: isModEnabled(vin_NonConsensual) && [[Player.isMale() && Player.isGay()] || [Player.isMale() && !Player.isGay() && 80 > random(0, 100)]]
 
     SceneStart()
+        Player.animate()
         Hunger = Player.getActorVar(rk_VB_Hunger)
         HungerEnable = rk_VB_EnableHunger.getGlobal()
         UrgeToPeeEnable = rk_VB_UrgeToPeeEnable.getGlobal()
@@ -57,7 +58,7 @@ OTHER: isModEnabled(vin_NonConsensual) && [[Player.isMale() && Player.isGay()] |
             Actor = generatePersonTemporary()
             While !Actor.isMale()
                 Actor = generatePersonTemporary()
-            Endwhile
+            EndWhile
             
             Actor.dress()
             Actor.show()
@@ -208,7 +209,7 @@ OTHER: isModEnabled(vin_NonConsensual) && [[Player.isMale() && Player.isGay()] |
                             Player(Shocked):: "Yeah, right!"
                             Actor(Wink)::"Sorry big guy, that was a bad joke!"
                             mood -= 5
-                            Actor:rapportwithplayer -= Random(0, 2)
+                            Actor:rapportwithplayer -= random(0, 2)
                             
                         Endif
                         
@@ -221,7 +222,7 @@ OTHER: isModEnabled(vin_NonConsensual) && [[Player.isMale() && Player.isGay()] |
                 EndIf
                 energy -= 5
                 
-                CashPGives = Random(100, 500)
+                CashPGives = random(100, 500)
                 CashPGives_loc = CashPGives.convertToLocalCurrency()
                 Actor(Happy):: "Ok…That is all, class. I hope you don’t missed any pose. Don’t forget the homework for tomorrow… Thanks again, big guy."
                 Actor(Happy):: "So <Player.name>, here's <CashPGives_loc> for your good performance today."
@@ -229,7 +230,7 @@ OTHER: isModEnabled(vin_NonConsensual) && [[Player.isMale() && Player.isGay()] |
                 Player.setNoRedress(false)
                 If GetFucked
                 
-                    CashPEGives = Random(150, 250)
+                    CashPEGives = random(150, 250)
                     CashPEGives_loc = CashPEGives.convertToLocalCurrency()
                     Actor(Grin):: "Also, before I forget, I'll give you this extra <CashPEGives_loc> for letting me fuck you. "
                     
@@ -239,7 +240,7 @@ OTHER: isModEnabled(vin_NonConsensual) && [[Player.isMale() && Player.isGay()] |
                     
                     If 0
                     
-                        CashGives = Random(500, 5000)
+                        CashGives = random(500, 5000)
                         CashGives_loc = CashGives.convertToLocalCurrency()
                         "I wait until everyone leaves the class and ask the teacher…"
                         Player(Wink)::"Well, since everyone is gone my little clown, it's time to pay your debt my dear friend!"
