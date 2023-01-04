@@ -2,8 +2,7 @@
 <p>Total remake of the game LifePlay</p>
 <p>https://github.com/vinfamy/LifePlay</p>
 <br>
-<h3>rk_vin_Base :</h3>
-<p>Version: 2.0.10</p>
+<h3>rk_vin_Base: Available via LifePlay Mods Flix</h3>
 <br>
 <br>
 <p><strong>What else does this project bring more?</strong></p>
