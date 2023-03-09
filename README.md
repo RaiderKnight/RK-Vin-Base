@@ -67,7 +67,7 @@
 <hr>
 <br>
 <h3> How to install</h3>
-<p>Visit the Wiki: <a href="https://lifeplay.site/viewtopic.php?t=398">Remake Wiki</a></p>
+<p>Visit the Wiki: <a href="https://forums.raiderknight.com/viewtopic.php?t=398">Remake Wiki</a></p>
 <br>
 <hr>
 <br>
@@ -80,7 +80,7 @@
 <br>
 <h3>How to contribute</h3>
 <ul>
-<li>Visit the <a href="https://lifeplay.site" title="Raider Knight forums">Raider Knight community forums</a></li>
+<li>Visit the <a href="https://forums.raiderknight.com" title="Raider Knight forums">Raider Knight community forums</a></li>
 <li>Supporting me on <a href="https://www.patreon.com/raiderknight">Patreon</a></li>
 <li>Sending your ideas or feedback: Here on Github or on <a href="https://discord.gg/d3U9E2wb4Y">Discord</a></li>
 <li>Adding more content to the module.</li>
